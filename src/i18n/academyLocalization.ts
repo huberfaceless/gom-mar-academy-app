@@ -1775,6 +1775,90 @@ No course can guarantee durable wealth, business success or future-proof technol
         },
       },
     },
+    21: {
+      title: '21. CRM, Pipeline Management & Responsible Lead Prioritisation',
+      subtitle: 'Useful contact context without opaque surveillance',
+      description: 'Organise contacts and opportunities with proportionate data, explainable prioritisation, clear pipeline ownership and human review.',
+      lessons: {
+        '21.1': {
+          stageTitle: '21. CRM, Pipeline Management & Responsible Lead Prioritisation', title: 'Explainable lead scoring & contact qualification',
+          description: 'Use a score as a limited prioritisation signal—not as proof of purchase intent or permission to contact someone.',
+          learnContent: {
+            videoTitle: 'Lead scoring: a testable aid, not a “hot lead” detector',
+            summaryText: 'A score such as 85/100 reflects chosen rules or a model. It does not reveal readiness to buy, and arbitrary points or an assumed 80/20 revenue split must be validated with your own outcomes.',
+            bulletPoints: ['Define the purpose, eligible population, lawful data, feature meaning and score owner', 'Avoid treating opens, page views or inactivity as certain intent; technical and contextual noise is common', 'Validate predictions against real outcomes and require human review before consequential follow-up'],
+            fullArticleGuide: `### Build lead prioritisation that can be explained
+
+Lead scoring ranks records according to assumptions. Those assumptions may be wrong, become outdated or disadvantage groups with different behaviour.
+
+#### Responsible scoring workflow
+
+1. **Define the decision**: State whether the score orders a work queue, suggests an information request or supports another limited action.
+2. **Choose lawful signals**: Use necessary, documented data consistent with notices, consent and the contact’s communication preferences. Avoid sensitive traits and unjustified proxies.
+3. **Create transparent rules**: Document why each signal matters, its weight, decay and exclusions. A pricing-page visit or email open is not automatically buying intent.
+4. **Validate**: Compare bands against suitable outcomes, calibration and error rates over time and across relevant groups. Test whether using the score improves results over a simple baseline.
+5. **Control action**: Let a trained person review context, frequency, consent and suitability before outreach. Provide correction, suppression and objection handling.
+6. **Monitor and retire**: Review drift, complaints and harmful false positives; change or stop a score when evidence no longer supports it.
+
+Do not label a person “hot” as a fact. Prefer neutral operational bands such as “review next”, with the reason and last validation date visible.`,
+            practicalExamples: ['Review one CRM score, inspect the contributing signals and consent status, and record whether a human agrees before scheduling any follow-up.'],
+          },
+          understandContent: { coreTakeaway: 'A lead score is useful only as an explainable, validated and reviewable prioritisation aid.', keyPrinciples: ['Never equate activity with certain purchase intent', 'Validate scoring and keep outreach under human control'] },
+          actionTask: { instruction: 'Review score reasons, consent and validation status for selected CRM contacts:', placeholder: 'Lead-prioritisation controls reviewed' },
+        },
+        '21.2': {
+          stageTitle: '21. CRM, Pipeline Management & Responsible Lead Prioritisation', title: 'Proportionate interaction history & CRM notes',
+          description: 'Record only necessary customer context with clear provenance, access controls, retention and correction procedures.',
+          learnContent: {
+            videoTitle: 'A useful CRM history without collecting everything',
+            summaryText: 'A complete surveillance timeline is neither necessary nor automatically lawful. CRM records should serve a defined relationship or process and remain accurate, respectful and limited.',
+            bulletPoints: ['Record relevant communications, commitments and next steps rather than every observable action', 'Separate facts, customer statements, consent records and internal assessments with author and date', 'Restrict access, define retention and let authorised staff correct or delete inappropriate notes'],
+            fullArticleGuide: `### Create CRM context that helps the customer relationship
+
+Website visits, email activity, calls and notes can reveal personal information. Collecting more data does not automatically produce better service and can increase privacy, security and discrimination risk.
+
+#### CRM note standards
+
+1. **Purpose and necessity**: Record information needed to deliver the service, honour a request or manage a legitimate sales process.
+2. **Source and accuracy**: Mark whether a field is customer-provided, system-observed or staff assessment. Add author, time and uncertainty where relevant.
+3. **Respectful language**: Use neutral facts and agreed next steps; avoid insults, speculation, health details, financial vulnerability or unrelated personal observations.
+4. **Sensitive details**: Do not request or store budget, health, family or identity information unless it is necessary, lawful, secured and transparently handled.
+5. **Access and retention**: Apply role-based access, audit important changes and remove records when their defined retention period expires.
+6. **Before contact**: Verify the contact route, permission, suppression status, last interaction and promised next step—not merely the latest tracking events.
+
+Secure quick actions against accidental sends and wrong recipients with previews, confirmation and permission checks.`,
+            practicalExamples: ['Add a factual follow-up note containing the agreed action and date, then confirm who may access it and when it should be reviewed or deleted.'],
+          },
+          understandContent: { coreTakeaway: 'Good CRM notes are necessary, factual, attributable, protected and retained only as long as justified.', keyPrinciples: ['Record useful context, not exhaustive surveillance', 'Protect, review and delete CRM data deliberately'] },
+          actionTask: { instruction: 'Create and review a proportionate follow-up note in the CRM:', placeholder: 'CRM note reviewed' },
+        },
+        '21.3': {
+          stageTitle: '21. CRM, Pipeline Management & Responsible Lead Prioritisation', title: 'Segmentation, tagging & accountable pipelines',
+          description: 'Use well-defined tags and stages to coordinate work without turning assumptions into customer facts or triggering inappropriate automation.',
+          learnContent: {
+            videoTitle: 'Segments and pipeline stages with clear ownership',
+            summaryText: 'A pipeline improves coordination when stages have objective entry and exit criteria, owners and next actions. It cannot ensure that every opportunity converts or is remembered.',
+            bulletPoints: ['Maintain a small tag dictionary with purpose, owner, source and expiry rules', 'Define stages from observable process events rather than arbitrary score thresholds', 'Place approval and consent checks before automated messages or consequential stage actions'],
+            fullArticleGuide: `### Build a pipeline that reflects real work
+
+Pipeline stages should describe the current process—not make psychological claims about a person.
+
+#### Example stage design
+
+1. **Enquiry received**: A permitted contact or request entered the system; source and communication preference are recorded.
+2. **Fit review**: An owner checks stated needs, service scope, capacity and missing information. A score may inform order but does not decide alone.
+3. **Conversation or proposal**: The customer has knowingly entered the relevant process; the proposal version, terms and next date are recorded.
+4. **Decision**: Mark won, lost, paused or withdrawn with a neutral reason where appropriate. Do not keep sending sales messages after objection or withdrawal.
+5. **Onboarding or closure**: Start only approved fulfilment actions, or apply the correct retention and deletion workflow.
+
+Prevent uncontrolled tag growth, conflicting stages and duplicate automation. Audit bulk changes, offer rollback and review inactive opportunities instead of hiding them indefinitely.`,
+            practicalExamples: ['Create one consent-compatible segment and a four- or five-stage pipeline with documented entry, exit, owner and next-action rules.'],
+          },
+          understandContent: { coreTakeaway: 'Clear definitions, ownership and communication controls make segmentation and pipelines useful without overstating intent.', keyPrinciples: ['Use neutral, documented tags and stages', 'Require consent and approval before automated outreach'] },
+          actionTask: { instruction: 'Complete the CRM module and confirm responsible pipeline controls:', checklistItems: ['I understand that a lead score is a validated prioritisation aid, not proof of intent', 'I can keep necessary, factual and access-controlled interaction records', 'I can define neutral segments and pipeline stages with consent, ownership and review'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -3533,6 +3617,90 @@ Poznałeś szeroki zestaw tematów marketingu cyfrowego i AI. Trwała wartość 
           },
           understandContent: { coreTakeaway: 'Dyplom oznacza ukończenie uporządkowanego etapu nauki; wiarygodny rozwój nadal wymaga dowodów, utrzymania i odpowiedzialnego działania.', keyPrinciples: ['Świętuj ukończenie bez wyolbrzymiania', 'Kontynuuj przegląd, testowanie i ulepszanie'] },
           actionTask: { instruction: 'Ukończ Etap 20 i potwierdź odpowiedzialny przegląd końcowy:', checklistItems: ['Rozumiem odpowiedzialny i przejrzysty marketing AI', 'Mam opisane zależności i przetestowaną legalną ścieżkę kopii lub odzyskiwania', 'Rozumiem, co dyplom GOM-MAR potwierdza, a czego nie certyfikuje'] },
+        },
+      },
+    },
+    21: {
+      title: '21. CRM, zarządzanie pipeline i odpowiedzialna priorytetyzacja kontaktów',
+      subtitle: 'Użyteczny kontekst bez nieprzejrzystego śledzenia',
+      description: 'Porządkuj kontakty i szanse z proporcjonalnymi danymi, wyjaśnialną priorytetyzacją, jasną odpowiedzialnością za pipeline i kontrolą człowieka.',
+      lessons: {
+        '21.1': {
+          stageTitle: '21. CRM, zarządzanie pipeline i odpowiedzialna priorytetyzacja kontaktów', title: 'Wyjaśnialny lead scoring i kwalifikacja',
+          description: 'Używaj wyniku jako ograniczonego sygnału kolejności, a nie dowodu zamiaru zakupu lub pozwolenia na kontakt.',
+          learnContent: {
+            videoTitle: 'Lead scoring: testowalna pomoc, nie wykrywacz „gorących leadów”',
+            summaryText: 'Wynik 85/100 odzwierciedla wybrane reguły lub model. Nie ujawnia gotowości do zakupu, a arbitralne punkty i założenie 80/20 trzeba sprawdzić na własnych wynikach.',
+            bulletPoints: ['Określ cel, uprawnioną grupę, legalne dane, znaczenie cech i właściciela wyniku', 'Nie traktuj otwarć, wizyt i braku aktywności jako pewnej intencji; często zawierają szum techniczny i kontekstowy', 'Waliduj prognozę na rzeczywistych wynikach i wymagaj kontroli człowieka przed istotnym follow-upem'],
+            fullArticleGuide: `### Buduj priorytetyzację, którą można wyjaśnić
+
+Lead scoring szereguje rekordy według założeń. Założenia mogą być błędne, zestarzeć się lub gorzej traktować grupy o innym zachowaniu.
+
+#### Odpowiedzialny workflow scoringu
+
+1. **Określ decyzję**: Wskaż, czy wynik porządkuje kolejkę, sugeruje prośbę o informację czy wspiera inne ograniczone działanie.
+2. **Wybierz legalne sygnały**: Używaj potrzebnych, opisanych danych zgodnych z informacjami, zgodą i preferencjami kontaktu. Unikaj cech wrażliwych i nieuzasadnionych proxy.
+3. **Twórz przejrzyste reguły**: Zapisz znaczenie sygnału, wagę, wygaszanie i wyłączenia. Wizyta na stronie ceny czy otwarcie e-maila nie jest automatycznie intencją zakupu.
+4. **Waliduj**: Porównuj przedziały z właściwymi wynikami, kalibracją i błędami w czasie i grupach. Sprawdź, czy wynik poprawia rezultat względem prostego baseline.
+5. **Kontroluj działanie**: Przed kontaktem wyszkolona osoba sprawdza kontekst, częstotliwość, zgodę i dopasowanie. Zapewnij korektę, wykluczenie i obsługę sprzeciwu.
+6. **Monitoruj i wycofuj**: Sprawdzaj dryf, skargi i szkodliwe fałszywe alarmy; zmień lub zatrzymaj wynik, gdy dowody go nie wspierają.
+
+Nie oznaczaj osoby jako „gorącej” jak faktu. Stosuj neutralne kategorie operacyjne, np. „do następnego przeglądu”, z widocznym powodem i datą walidacji.`,
+            practicalExamples: ['Sprawdź jeden wynik CRM, jego sygnały i stan zgody oraz zapisz, czy człowiek potwierdził kolejny kontakt.'],
+          },
+          understandContent: { coreTakeaway: 'Lead score jest użyteczny wyłącznie jako wyjaśnialna, zwalidowana i kontrolowana pomoc w priorytetyzacji.', keyPrinciples: ['Nie utożsamiaj aktywności z pewną intencją zakupu', 'Waliduj scoring i zachowaj kontrolę człowieka nad kontaktem'] },
+          actionTask: { instruction: 'Sprawdź powody wyniku, zgodę i stan walidacji wybranych kontaktów CRM:', placeholder: 'Kontrole priorytetyzacji sprawdzone' },
+        },
+        '21.2': {
+          stageTitle: '21. CRM, zarządzanie pipeline i odpowiedzialna priorytetyzacja kontaktów', title: 'Proporcjonalna historia interakcji i notatki CRM',
+          description: 'Zapisuj wyłącznie potrzebny kontekst klienta z jasnym pochodzeniem, kontrolą dostępu, retencją i procedurą korekty.',
+          learnContent: {
+            videoTitle: 'Użyteczna historia CRM bez zbierania wszystkiego',
+            summaryText: 'Pełna oś śledzenia nie jest konieczna ani automatycznie legalna. Rekordy CRM powinny służyć określonej relacji lub procesowi i pozostawać dokładne, pełne szacunku oraz ograniczone.',
+            bulletPoints: ['Zapisuj istotne komunikacje, zobowiązania i kolejne kroki zamiast każdej możliwej aktywności', 'Oddzielaj fakty, wypowiedzi klienta, zapisy zgody i oceny wewnętrzne wraz z autorem i datą', 'Ogranicz dostęp, określ retencję i pozwól uprawnionym osobom poprawiać lub usuwać niewłaściwe notatki'],
+            fullArticleGuide: `### Twórz kontekst CRM wspierający relację
+
+Wizyty, aktywność e-mail, rozmowy i notatki mogą ujawniać informacje osobiste. Więcej danych nie oznacza automatycznie lepszej obsługi i zwiększa ryzyko prywatności, bezpieczeństwa i dyskryminacji.
+
+#### Standard notatek CRM
+
+1. **Cel i konieczność**: Zapisuj informacje potrzebne do realizacji usługi, obsługi prośby lub legalnego procesu sprzedaży.
+2. **Źródło i dokładność**: Oznacz dane podane przez klienta, zaobserwowane przez system i ocenę pracownika. Dodaj autora, czas i niepewność.
+3. **Język z szacunkiem**: Używaj neutralnych faktów i uzgodnionych kroków; unikaj obelg, spekulacji, zdrowia, trudności finansowych i niezwiązanych obserwacji.
+4. **Dane wrażliwe**: Nie pytaj i nie przechowuj budżetu, zdrowia, rodziny ani tożsamości, jeśli nie są konieczne, legalne, zabezpieczone i przejrzyście obsługiwane.
+5. **Dostęp i retencja**: Stosuj role, audytuj ważne zmiany i usuwaj rekordy po upływie uzasadnionego okresu.
+6. **Przed kontaktem**: Sprawdź kanał, pozwolenie, wykluczenie, ostatnią interakcję i obiecany krok, a nie tylko najnowsze zdarzenia śledzenia.
+
+Zabezpiecz szybkie akcje przed przypadkową wysyłką i złym odbiorcą przez podgląd, potwierdzenie oraz kontrolę uprawnień.`,
+            practicalExamples: ['Dodaj rzeczową notatkę z uzgodnionym działaniem i datą, a potem potwierdź, kto ma dostęp i kiedy należy ją sprawdzić lub usunąć.'],
+          },
+          understandContent: { coreTakeaway: 'Dobre notatki CRM są potrzebne, rzeczowe, przypisane do autora, chronione i przechowywane tylko tak długo, jak uzasadnione.', keyPrinciples: ['Zapisuj użyteczny kontekst, nie pełne śledzenie', 'Świadomie chroń, przeglądaj i usuwaj dane CRM'] },
+          actionTask: { instruction: 'Utwórz i sprawdź proporcjonalną notatkę follow-up w CRM:', placeholder: 'Notatka CRM sprawdzona' },
+        },
+        '21.3': {
+          stageTitle: '21. CRM, zarządzanie pipeline i odpowiedzialna priorytetyzacja kontaktów', title: 'Segmentacja, tagi i odpowiedzialne pipeline',
+          description: 'Używaj zdefiniowanych tagów i etapów do koordynacji pracy bez zamieniania założeń w fakty o kliencie lub uruchamiania niewłaściwej automatyzacji.',
+          learnContent: {
+            videoTitle: 'Segmenty i etapy pipeline z jasną odpowiedzialnością',
+            summaryText: 'Pipeline poprawia koordynację, gdy etapy mają obiektywne kryteria wejścia i wyjścia, właściciela oraz kolejny krok. Nie gwarantuje konwersji ani zapamiętania każdej szansy.',
+            bulletPoints: ['Utrzymuj mały słownik tagów z celem, właścicielem, źródłem i regułami wygasania', 'Definiuj etapy według obserwowalnych zdarzeń procesu, a nie arbitralnych progów wyniku', 'Umieść kontrolę zgody i akceptacji przed automatycznymi wiadomościami oraz istotnymi działaniami etapu'],
+            fullArticleGuide: `### Zbuduj pipeline odzwierciedlający prawdziwą pracę
+
+Etapy powinny opisywać stan procesu, a nie psychologiczne twierdzenia o osobie.
+
+#### Przykładowy projekt etapów
+
+1. **Zapytanie otrzymane**: Do systemu wpłynął dozwolony kontakt lub prośba; zapisano źródło i preferencję komunikacji.
+2. **Przegląd dopasowania**: Właściciel sprawdza podane potrzeby, zakres usługi, możliwości i brakujące informacje. Wynik może ustalać kolejność, ale nie decyduje sam.
+3. **Rozmowa lub oferta**: Klient świadomie wszedł w proces; zapisano wersję propozycji, warunki i kolejny termin.
+4. **Decyzja**: Oznacz wygrane, przegrane, wstrzymane lub wycofane z neutralnym powodem. Nie wysyłaj sprzedaży po sprzeciwie lub wycofaniu.
+5. **Onboarding lub zamknięcie**: Uruchom tylko zatwierdzone działania realizacji albo właściwy workflow retencji i usunięcia.
+
+Zapobiegaj niekontrolowanym tagom, sprzecznym etapom i duplikatom automatyzacji. Audytuj zmiany masowe, zapewnij rollback i przeglądaj nieaktywne szanse zamiast ukrywać je bezterminowo.`,
+            practicalExamples: ['Utwórz jeden segment zgodny ze zgodą oraz pipeline z czterema lub pięcioma etapami i opisanymi regułami wejścia, wyjścia, właściciela i kolejnego działania.'],
+          },
+          understandContent: { coreTakeaway: 'Jasne definicje, odpowiedzialność i kontrola komunikacji czynią segmentację oraz pipeline użytecznymi bez zawyżania intencji.', keyPrinciples: ['Stosuj neutralne, opisane tagi i etapy', 'Wymagaj zgody i akceptacji przed automatycznym kontaktem'] },
+          actionTask: { instruction: 'Ukończ moduł CRM i potwierdź odpowiedzialne kontrole pipeline:', checklistItems: ['Rozumiem, że lead score jest zwalidowaną pomocą w priorytetyzacji, a nie dowodem intencji', 'Potrafię utrzymywać potrzebne, rzeczowe i chronione rolem rekordy interakcji', 'Potrafię definiować neutralne segmenty i etapy ze zgodą, właścicielem i przeglądem'] },
         },
       },
     },
