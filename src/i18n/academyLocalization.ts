@@ -957,6 +957,85 @@ Keep unsubscribe options visible, respect consent, and stop promotional follow-u
         },
       },
     },
+    11: {
+      title: '11. Funnel Analytics & Performance Scaling',
+      subtitle: 'Data-Informed Decisions & KPI Optimisation',
+      description: 'Analyse funnel metrics such as conversion rate, click-through rate, and cost per lead, identify bottlenecks, and improve performance through controlled tests.',
+      lessons: {
+        '11.1': {
+          stageTitle: '11. Funnel Analytics & Performance Scaling', title: 'Four Core KPIs for a Healthy Funnel',
+          description: 'Understand opt-in rate, email open rate, click-through rate, and sales conversion rate so you can diagnose your funnel.',
+          learnContent: {
+            videoTitle: 'Funnel Analysis: Reading the Numbers',
+            summaryText: 'Reliable measurements help you decide what to improve. Learn four important performance indicators, how to calculate them, and how to interpret them in context.',
+            bulletPoints: ['Opt-in rate: leads divided by eligible landing-page visitors', 'Email open rate: measured opens divided by delivered emails; treat privacy-related tracking as an estimate', 'Click-through rate: unique clicks divided by delivered emails or opens—use one definition consistently', 'Sales conversion rate: verified purchases divided by qualified clicks or leads'],
+            fullArticleGuide: `### Four pillars of funnel analytics
+
+Useful marketing decisions rely on consistent data rather than isolated impressions. When you know where people leave the funnel, you can investigate that stage first.
+
+#### Four KPI formulas
+
+1. **Opt-in rate**: How many eligible visitors become leads? *(Leads ÷ eligible visitors × 100)*
+2. **Open rate**: How many delivered emails register an open? *(Measured unique opens ÷ delivered emails × 100)*
+3. **Click-through rate**: How many recipients click? *(Unique clicks ÷ delivered emails × 100)* Use click-to-open rate separately if needed.
+4. **Sales conversion rate**: How many qualified clicks or leads result in a verified purchase? *(Purchases ÷ chosen denominator × 100)*
+
+Targets vary by market, traffic quality, offer, device, consent, and tracking method. Record the exact definition and date range for every report before comparing results.`,
+            practicalExamples: ['Example: If measured opens are relatively strong but clicks remain weak, investigate message relevance, offer clarity, link placement, and the call to action before changing the subject line.'],
+          },
+          understandContent: { coreTakeaway: 'Consistent definitions and sufficient data help you find the largest measurable bottleneck and improve it first.', keyPrinciples: ['Change one meaningful variable at a time', 'Avoid conclusions from tiny or biased samples'] },
+          actionTask: { instruction: 'Review and document your campaign metrics in the GOM-MAR dashboard:', placeholder: 'Funnel metrics documented' },
+        },
+        '11.2': {
+          stageTitle: '11. Funnel Analytics & Performance Scaling', title: 'A/B Testing & Bottleneck Analysis with Mara',
+          description: 'Compare headlines, subject lines, and button copy systematically to learn which version performs better for your audience.',
+          learnContent: {
+            videoTitle: 'Systematic A/B Testing in Online Marketing',
+            summaryText: 'Learn how to split eligible traffic between two versions, define one primary metric, and adopt a winner only when the result is sufficiently reliable.',
+            bulletPoints: ['Compare one substantial subject-line difference at a time', 'Test specific button wording while keeping placement and design stable', 'Use Mara to draft variants, then review them for accuracy and fairness'],
+            fullArticleGuide: `### The practice of responsible A/B testing
+
+Small copy changes can affect behaviour, but a short-term difference does not automatically prove that one version is better.
+
+#### A/B testing rules
+
+* **Rule 1**: Change one meaningful variable per test so the result remains interpretable.
+* **Rule 2**: Define the audience, primary metric, minimum sample, and test duration before starting.
+* **Rule 3**: Split traffic randomly and run both versions during the same period.
+* **Rule 4**: Check practical impact as well as statistical uncertainty. Do not stop merely because one version is temporarily ahead.
+* **Rule 5**: Document the outcome, implement a credible winner, and test the next hypothesis.
+
+For low traffic, collect data for longer or treat the result as directional rather than definitive.`,
+            practicalExamples: ['Ask Mara for three truthful subject-line concepts, select two genuinely different approaches, and test them with the same audience and sending window.'],
+          },
+          understandContent: { coreTakeaway: 'A/B testing replaces guesswork with structured learning when the test is designed and interpreted carefully.', keyPrinciples: ['Test hypotheses instead of random details', 'Let evidence guide the decision'] },
+          actionTask: { instruction: 'Create and review one subject-line test variant with GOM-MAR AI:', placeholder: 'A/B test variant reviewed' },
+        },
+        '11.3': {
+          stageTitle: '11. Funnel Analytics & Performance Scaling', title: 'Re-Engagement & Customer-Value Strategy',
+          description: 'Reconnect with inactive subscribers and improve long-term customer value through relevant, permission-based follow-up.',
+          learnContent: {
+            videoTitle: 'Customer Lifetime Value: Serve Subscribers Over Time',
+            summaryText: 'Many customers need several useful interactions before making a decision. Build measured re-engagement and follow-up flows that respect consent and preferences.',
+            bulletPoints: ['Send a short re-engagement sequence after a defined period of inactivity', 'Offer relevant follow-up products only when they match the original need', 'Use optional surveys and preference controls to improve communication'],
+            fullArticleGuide: `### The customer lifetime value perspective
+
+Long-term value grows when subscribers receive relevant support over time—not when they are pressured with more messages.
+
+#### Three responsible optimisation steps
+
+1. **Re-engagement**: Ask inactive contacts whether they still want the content and offer a clear preference or unsubscribe option.
+2. **Cross-selling**: Recommend a complementary tool or course only when it logically supports the customer’s existing goal; disclose affiliate relationships.
+3. **List hygiene**: Suppress or remove persistently inactive addresses according to your retention policy, while preserving legally required records and opt-out status.
+
+Use only consented data, minimise tracking, honour withdrawal immediately, and avoid sensitive profiling without an appropriate legal basis.`,
+            practicalExamples: ['Use the re-engagement template in the email editor to send a concise preference check instead of an aggressive sales message.'],
+          },
+          understandContent: { coreTakeaway: 'Sustainable customer value comes from relevant follow-up, trust, and respect for subscriber choices.', keyPrinciples: ['Provide value consistently', 'Automate follow-up with clear consent and safeguards'] },
+          actionTask: { instruction: 'Complete the Analytics & Scaling module and confirm your measurement process:', checklistItems: ['I can define and calculate the four core funnel KPIs', 'I understand how to design and interpret an A/B test', 'I can improve customer value with relevant, consent-based follow-up'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -1897,6 +1976,85 @@ Wyraźnie pokazuj możliwość rezygnacji, respektuj zgodę i zatrzymaj komunika
           },
           understandContent: { coreTakeaway: 'Dobra kampania prowadzi odbiorców przez jasną historię, zachowując ich możliwość podjęcia świadomej decyzji.', keyPrinciples: ['Stosuj wyłącznie prawdziwe terminy', 'Dostarczaj użyteczne informacje w całej sekwencji'] },
           actionTask: { instruction: 'Ukończ moduł Copywritingu e-mail i potwierdź przygotowanie kampanii:', checklistItems: ['Znam pięć elementów skutecznego e-maila', 'Potrafię odpowiedzialnie używać i sprawdzać generator AI', 'Rozumiem pięciodniową strukturę launchu i stosuję wyłącznie prawdziwą pilność'] },
+        },
+      },
+    },
+    11: {
+      title: '11. Analityka lejka i skalowanie wyników',
+      subtitle: 'Decyzje oparte na danych i optymalizacja KPI',
+      description: 'Analizuj wskaźniki lejka, takie jak konwersja, współczynnik kliknięć i koszt pozyskania leada, identyfikuj wąskie gardła i poprawiaj wyniki za pomocą kontrolowanych testów.',
+      lessons: {
+        '11.1': {
+          stageTitle: '11. Analityka lejka i skalowanie wyników', title: 'Cztery główne KPI zdrowego lejka',
+          description: 'Zrozum współczynnik zapisu, otwarć e-maili, kliknięć i konwersji sprzedażowej, aby trafnie diagnozować lejek.',
+          learnContent: {
+            videoTitle: 'Analiza lejka: jak czytać liczby',
+            summaryText: 'Wiarygodne pomiary pomagają zdecydować, co poprawić. Poznaj cztery ważne wskaźniki, sposób ich obliczania i interpretację w odpowiednim kontekście.',
+            bulletPoints: ['Współczynnik zapisu: leady podzielone przez kwalifikujące się wizyty na landing page', 'Współczynnik otwarć: zarejestrowane otwarcia podzielone przez dostarczone e-maile; traktuj śledzenie ograniczone prywatnością jako szacunek', 'CTR: unikalne kliknięcia podzielone przez dostarczone wiadomości lub otwarcia—stosuj jedną definicję konsekwentnie', 'Konwersja sprzedażowa: potwierdzone zakupy podzielone przez kwalifikujące się kliknięcia lub leady'],
+            fullArticleGuide: `### Cztery filary analityki lejka
+
+Użyteczne decyzje marketingowe opierają się na spójnych danych, a nie na pojedynczych wrażeniach. Gdy wiesz, na którym etapie ludzie opuszczają lejek, możesz najpierw zbadać właśnie ten fragment.
+
+#### Cztery formuły KPI
+
+1. **Współczynnik zapisu**: Ilu kwalifikujących się odwiedzających zostaje leadami? *(Leady ÷ kwalifikujące się wizyty × 100)*
+2. **Współczynnik otwarć**: Ile dostarczonych e-maili rejestruje otwarcie? *(Zmierzone unikalne otwarcia ÷ dostarczone e-maile × 100)*
+3. **Współczynnik kliknięć**: Ilu odbiorców klika? *(Unikalne kliknięcia ÷ dostarczone e-maile × 100)* W razie potrzeby osobno mierz click-to-open rate.
+4. **Konwersja sprzedażowa**: Ile kwalifikujących się kliknięć lub leadów kończy się potwierdzonym zakupem? *(Zakupy ÷ wybrany mianownik × 100)*
+
+Cele zależą od rynku, jakości ruchu, oferty, urządzenia, zgody i metody pomiaru. Przed porównaniem wyników zapisz dokładną definicję oraz zakres dat każdego raportu.`,
+            practicalExamples: ['Przykład: Jeśli zmierzone otwarcia są stosunkowo wysokie, ale kliknięcia pozostają niskie, zbadaj trafność treści, jasność oferty, położenie linku i wezwanie do działania przed zmianą tematu.'],
+          },
+          understandContent: { coreTakeaway: 'Spójne definicje i wystarczająca ilość danych pomagają znaleźć największe mierzalne wąskie gardło i poprawić je jako pierwsze.', keyPrinciples: ['Zmieniaj jedną istotną zmienną naraz', 'Nie wyciągaj wniosków z bardzo małych lub stronniczych prób'] },
+          actionTask: { instruction: 'Sprawdź i udokumentuj wskaźniki kampanii w panelu GOM-MAR:', placeholder: 'Wskaźniki lejka udokumentowane' },
+        },
+        '11.2': {
+          stageTitle: '11. Analityka lejka i skalowanie wyników', title: 'Testy A/B i analiza wąskich gardeł z Marą',
+          description: 'Systematycznie porównuj nagłówki, tematy i teksty przycisków, aby sprawdzić, która wersja lepiej działa dla Twoich odbiorców.',
+          learnContent: {
+            videoTitle: 'Systematyczne testy A/B w marketingu online',
+            summaryText: 'Dowiedz się, jak dzielić kwalifikujący się ruch między dwie wersje, ustalić jeden główny wskaźnik i wybrać zwycięzcę dopiero wtedy, gdy wynik jest wystarczająco wiarygodny.',
+            bulletPoints: ['Porównuj jedną istotną różnicę w temacie wiadomości naraz', 'Testuj konkretny tekst przycisku przy zachowaniu stałego miejsca i wyglądu', 'Użyj Mary do tworzenia wariantów, a potem sprawdź ich poprawność i uczciwość'],
+            fullArticleGuide: `### Praktyka odpowiedzialnych testów A/B
+
+Niewielkie zmiany tekstu mogą wpływać na zachowanie, ale krótkotrwała różnica nie dowodzi automatycznie, że jedna wersja jest lepsza.
+
+#### Zasady testów A/B
+
+* **Zasada 1**: Zmieniaj jedną istotną zmienną w teście, aby wynik pozostał możliwy do interpretacji.
+* **Zasada 2**: Przed startem określ odbiorców, główny wskaźnik, minimalną próbę i czas trwania testu.
+* **Zasada 3**: Dziel ruch losowo i uruchamiaj obie wersje w tym samym okresie.
+* **Zasada 4**: Sprawdzaj praktyczny wpływ oraz niepewność statystyczną. Nie kończ testu tylko dlatego, że jedna wersja chwilowo prowadzi.
+* **Zasada 5**: Udokumentuj wynik, wdroż wiarygodnego zwycięzcę i przetestuj kolejną hipotezę.
+
+Przy małym ruchu zbieraj dane dłużej albo traktuj wynik jako wskazówkę, a nie ostateczny dowód.`,
+            practicalExamples: ['Poproś Marę o trzy uczciwe koncepcje tematów, wybierz dwa wyraźnie różne podejścia i przetestuj je na tej samej grupie w tym samym oknie wysyłki.'],
+          },
+          understandContent: { coreTakeaway: 'Testy A/B zastępują zgadywanie uporządkowaną nauką, jeśli są starannie zaprojektowane i interpretowane.', keyPrinciples: ['Testuj hipotezy zamiast przypadkowych detali', 'Pozwól dowodom kierować decyzją'] },
+          actionTask: { instruction: 'Utwórz i sprawdź jeden wariant testowy tematu z GOM-MAR AI:', placeholder: 'Wariant testu A/B sprawdzony' },
+        },
+        '11.3': {
+          stageTitle: '11. Analityka lejka i skalowanie wyników', title: 'Strategia reaktywacji i wartości klienta',
+          description: 'Nawiąż ponowny kontakt z nieaktywnymi subskrybentami i zwiększaj długoterminową wartość klienta dzięki trafnej komunikacji opartej na zgodzie.',
+          learnContent: {
+            videoTitle: 'Wartość klienta w czasie: wspieraj subskrybentów długoterminowo',
+            summaryText: 'Wielu klientów potrzebuje kilku użytecznych kontaktów przed podjęciem decyzji. Buduj mierzalne procesy reaktywacji i follow-up, które respektują zgodę oraz preferencje.',
+            bulletPoints: ['Wyślij krótką sekwencję reaktywacyjną po określonym okresie braku aktywności', 'Polecaj produkty uzupełniające tylko wtedy, gdy odpowiadają pierwotnej potrzebie', 'Korzystaj z dobrowolnych ankiet i ustawień preferencji, aby poprawiać komunikację'],
+            fullArticleGuide: `### Perspektywa wartości klienta w czasie
+
+Długoterminowa wartość rośnie, gdy subskrybenci otrzymują trafne wsparcie—nie wtedy, gdy wywiera się na nich presję większą liczbą wiadomości.
+
+#### Trzy odpowiedzialne kroki optymalizacji
+
+1. **Reaktywacja**: Zapytaj nieaktywne kontakty, czy nadal chcą otrzymywać treści, i zapewnij jasny wybór preferencji lub rezygnacji.
+2. **Cross-selling**: Polecaj uzupełniające narzędzie lub kurs tylko wtedy, gdy logicznie wspiera istniejący cel klienta; ujawnij relację afiliacyjną.
+3. **Higiena listy**: Wstrzymaj lub usuń stale nieaktywne adresy zgodnie z polityką przechowywania, zachowując wymagane prawem zapisy i status rezygnacji.
+
+Korzystaj wyłącznie z danych objętych zgodą, ograniczaj śledzenie, natychmiast respektuj wycofanie zgody i unikaj profilowania wrażliwego bez odpowiedniej podstawy prawnej.`,
+            practicalExamples: ['Użyj szablonu reaktywacji w edytorze e-mail, aby wysłać krótkie pytanie o preferencje zamiast agresywnej wiadomości sprzedażowej.'],
+          },
+          understandContent: { coreTakeaway: 'Trwała wartość klienta wynika z trafnego follow-upu, zaufania i szacunku dla wyborów subskrybenta.', keyPrinciples: ['Regularnie dostarczaj wartość', 'Automatyzuj follow-up z jasną zgodą i zabezpieczeniami'] },
+          actionTask: { instruction: 'Ukończ moduł Analityki i Skalowania oraz potwierdź proces pomiaru:', checklistItems: ['Potrafię definiować i obliczać cztery główne KPI lejka', 'Rozumiem, jak projektować i interpretować test A/B', 'Potrafię zwiększać wartość klienta dzięki trafnemu follow-upowi opartemu na zgodzie'] },
         },
       },
     },
