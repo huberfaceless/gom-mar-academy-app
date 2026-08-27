@@ -1859,6 +1859,73 @@ Prevent uncontrolled tag growth, conflicting stages and duplicate automation. Au
         },
       },
     },
+    22: {
+      title: '22. Conversion Optimisation & Landing Page Masterclass',
+      subtitle: 'Clear, accessible landing pages improved through reliable evidence',
+      description: 'Design focused landing pages, communicate claims honestly and improve the experience with privacy-aware measurement and disciplined experiments.',
+      lessons: {
+        '22.1': {
+          stageTitle: '22. Conversion Optimisation & Landing Page Masterclass', title: 'A clear and trustworthy landing-page structure',
+          description: 'Build a focused, accessible landing page that helps visitors understand the offer and make an informed decision.',
+          learnContent: {
+            videoTitle: 'Landing-page structure: clarity, trust and accessibility',
+            summaryText: 'A useful landing page explains the audience, value, evidence, conditions and next step without distraction, fabricated proof or pressure.',
+            bulletPoints: ['State the offer and intended audience in plain language near the top', 'Use genuine, permission-based evidence and qualify all measurable claims', 'Make the primary action prominent, descriptive and accessible on mobile and desktop', 'Include essential price, privacy, cancellation and contact information before commitment'],
+            coreConcepts: [
+              { iconName: 'title', title: 'CLEAR HEADING', description: 'Explain what is offered and for whom. A three-second rule is a heuristic, not a universal law.', highlight: true },
+              { iconName: 'anchor', title: 'RELEVANT INTRODUCTION', description: 'Connect the visitor’s stated need with the offer without exaggerating pain, fear or urgency.' },
+              { iconName: 'stars', title: 'VERIFIABLE EVIDENCE', description: 'Use authentic testimonials with permission and context. Never invent identities, numbers or outcomes.' },
+              { iconName: 'touch_app', title: 'ACCESSIBLE ACTION', description: 'Use a descriptive button, sufficient contrast, keyboard focus and a clear explanation of what happens next.' },
+            ],
+            fullArticleGuide: `### A landing page that supports an informed choice
+
+A landing page usually has one primary objective, but it still needs enough context for a visitor to understand the decision.
+
+#### Recommended structure
+
+1. **Heading and introduction**: Name the offer, intended audience and main value in plain language. Avoid unsupported guarantees and artificial scarcity.
+2. **Benefits and fit**: Explain relevant benefits, limitations and who may not be a suitable customer.
+3. **Evidence**: Support claims with current sources, representative results and necessary qualifications. Testimonials require permission and should not imply typical results when they are exceptional.
+4. **Offer details**: Present price, recurring charges, cancellation, delivery, eligibility and material conditions before the visitor commits.
+5. **Primary action**: Use a descriptive label such as “Download the free checklist”. Do not disguise consent or preselect optional marketing.
+6. **Trust and access**: Provide contact, privacy and legal information. Check headings, labels, focus order, contrast, zoom and screen-reader meaning.
+
+Visual prominence should not come at the expense of accessibility. Contrast must be sufficient for text and controls, while colour should never be the only signal. Review every page on real mobile devices and slower connections before publishing.`,
+            practicalExamples: ['Weak: “Innovative synergies for modern growth.” Better: “Plan your first permission-based email sequence with a guided checklist.”', 'Replace “5–10 qualified leads every week—fully automated” with a substantiated description of the process and factors that affect results.'],
+          },
+          understandContent: { coreTakeaway: 'A strong landing page combines clarity, truthful evidence, accessible interaction and transparent conditions.', keyPrinciples: ['One clear primary action with enough decision context', 'Use only substantiated claims and authorised proof', 'Test accessibility and mobile usability'] },
+          actionTask: { instruction: 'Review your landing page before publication:', checklistItems: ['The heading clearly explains the offer and audience', 'Claims and testimonials are genuine, authorised and appropriately qualified', 'The primary action is descriptive and keyboard accessible', 'Price, consent, privacy and material conditions are visible at the right time'], toolboxCategory: 'landingpage' },
+        },
+        '22.2': {
+          stageTitle: '22. Conversion Optimisation & Landing Page Masterclass', title: 'A/B testing, behavioural maps & performance',
+          description: 'Find friction with validated events, privacy-aware behavioural data and experiments planned around a specific decision.',
+          learnContent: {
+            videoTitle: 'Responsible conversion experiments and page diagnostics',
+            summaryText: 'A/B tests estimate uncertain effects; heatmaps visualise sampled interactions. Neither guarantees uplift nor explains motivation on its own.',
+            bulletPoints: ['Write one hypothesis and primary metric before viewing results', 'Estimate the required sample and duration from baseline, useful effect and error tolerance', 'Check consent, data minimisation, bot filtering and event quality before collecting behavioural data', 'Treat mobile speed, accessibility and task completion as guardrails—not only conversion'],
+            coreConcepts: [
+              { iconName: 'compare', title: 'A/B TESTING', description: 'Randomly compare controlled variants with stable assignment and a predeclared analysis plan. Start where evidence suggests the greatest uncertainty—not automatically with the headline.', highlight: true },
+              { iconName: 'thermostat', title: 'BEHAVIOURAL MAPS', description: 'Use aggregated click and scroll patterns as clues. Exclude sensitive fields, mask personal data and investigate causes with additional evidence.' },
+            ],
+            fullArticleGuide: `### Evidence-led conversion improvement
+
+Optimisation is a cycle of diagnosis, hypothesis, measurement and review—not a promise to double conversion.
+
+1. Confirm that analytics events, eligibility and consent states are correct.
+2. Identify one meaningful friction point from quantitative and qualitative evidence.
+3. Define the audience, change, mechanism, primary metric, guardrails, minimum useful effect, duration and stopping rule.
+4. Randomise consistently and avoid changing traffic or the experience during the test.
+5. Evaluate effect size, uncertainty, missing data, sample-ratio mismatch and practical value.
+6. Document the decision and limitations, then monitor after rollout.
+
+Heatmaps can miss keyboard use, dynamic content and cross-device behaviour. Session recordings can capture personal information, so use strict masking, short retention, access controls and an appropriate legal basis. Performance checks should include real-user measures where available and laboratory tests under representative mobile conditions.`,
+            practicalExamples: ['Test whether clearer pricing information improves qualified completions while monitoring errors, refunds and support requests as guardrails.'],
+          },
+          understandContent: { coreTakeaway: 'Reliable optimisation requires trustworthy measurement, a planned experiment, privacy controls and an honest account of uncertainty.', keyPrinciples: ['Do not rely on universal uplift or significance shortcuts', 'Use behavioural maps as diagnostic clues, not mind-reading', 'Protect usability, accessibility and customer outcomes'] },
+          actionTask: { instruction: 'Prepare one responsible landing-page experiment:', checklistItems: ['One hypothesis, primary metric and guardrails documented', 'Sample, duration and stopping rule planned', 'Mobile performance and accessibility checked', 'Tracking, consent and privacy controls verified'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -3701,6 +3768,73 @@ Zapobiegaj niekontrolowanym tagom, sprzecznym etapom i duplikatom automatyzacji.
           },
           understandContent: { coreTakeaway: 'Jasne definicje, odpowiedzialność i kontrola komunikacji czynią segmentację oraz pipeline użytecznymi bez zawyżania intencji.', keyPrinciples: ['Stosuj neutralne, opisane tagi i etapy', 'Wymagaj zgody i akceptacji przed automatycznym kontaktem'] },
           actionTask: { instruction: 'Ukończ moduł CRM i potwierdź odpowiedzialne kontrole pipeline:', checklistItems: ['Rozumiem, że lead score jest zwalidowaną pomocą w priorytetyzacji, a nie dowodem intencji', 'Potrafię utrzymywać potrzebne, rzeczowe i chronione rolem rekordy interakcji', 'Potrafię definiować neutralne segmenty i etapy ze zgodą, właścicielem i przeglądem'] },
+        },
+      },
+    },
+    22: {
+      title: '22. Optymalizacja konwersji i masterclass landing page',
+      subtitle: 'Jasne, dostępne strony ulepszane na podstawie wiarygodnych dowodów',
+      description: 'Projektuj skoncentrowane landing page, komunikuj twierdzenia uczciwie i ulepszaj doświadczenie dzięki pomiarom chroniącym prywatność oraz zdyscyplinowanym eksperymentom.',
+      lessons: {
+        '22.1': {
+          stageTitle: '22. Optymalizacja konwersji i masterclass landing page', title: 'Jasna i wiarygodna struktura landing page',
+          description: 'Zbuduj skoncentrowaną, dostępną stronę, która pomaga odwiedzającym zrozumieć ofertę i podjąć świadomą decyzję.',
+          learnContent: {
+            videoTitle: 'Struktura landing page: jasność, zaufanie i dostępność',
+            summaryText: 'Użyteczna landing page wyjaśnia odbiorcę, wartość, dowody, warunki i następny krok bez rozpraszania, fałszywego dowodu społecznego ani presji.',
+            bulletPoints: ['U góry strony prostym językiem określ ofertę i właściwego odbiorcę', 'Używaj prawdziwych dowodów za zgodą i odpowiednio kwalifikuj mierzalne twierdzenia', 'Główne działanie powinno być widoczne, opisowe i dostępne na urządzeniach mobilnych oraz komputerach', 'Przed zobowiązaniem pokaż istotne informacje o cenie, prywatności, rezygnacji i kontakcie'],
+            coreConcepts: [
+              { iconName: 'title', title: 'JASNY NAGŁÓWEK', description: 'Wyjaśnij, co oferujesz i dla kogo. Reguła trzech sekund jest wskazówką, a nie uniwersalnym prawem.', highlight: true },
+              { iconName: 'anchor', title: 'TRAFNE WPROWADZENIE', description: 'Połącz deklarowaną potrzebę odwiedzającego z ofertą bez wyolbrzymiania bólu, strachu lub pilności.' },
+              { iconName: 'stars', title: 'WERYFIKOWALNE DOWODY', description: 'Używaj autentycznych opinii za zgodą i z kontekstem. Nigdy nie wymyślaj osób, liczb ani wyników.' },
+              { iconName: 'touch_app', title: 'DOSTĘPNE DZIAŁANIE', description: 'Zastosuj opisowy przycisk, odpowiedni kontrast, widoczny fokus klawiatury i jasną informację, co wydarzy się dalej.' },
+            ],
+            fullArticleGuide: `### Landing page wspierająca świadomy wybór
+
+Landing page ma zwykle jeden główny cel, ale nadal musi przekazać wystarczający kontekst do zrozumienia decyzji.
+
+#### Zalecana struktura
+
+1. **Nagłówek i wprowadzenie**: Prostym językiem nazwij ofertę, odbiorcę i główną wartość. Unikaj niepopartych gwarancji i sztucznego niedoboru.
+2. **Korzyści i dopasowanie**: Wyjaśnij istotne korzyści, ograniczenia i komu oferta może nie odpowiadać.
+3. **Dowody**: Popieraj twierdzenia aktualnymi źródłami, reprezentatywnymi wynikami i koniecznymi zastrzeżeniami. Opinie wymagają zgody i nie powinny sugerować typowego wyniku, jeśli są wyjątkowe.
+4. **Szczegóły oferty**: Przed zobowiązaniem pokaż cenę, opłaty cykliczne, rezygnację, dostawę, warunki udziału i inne istotne zasady.
+5. **Główne działanie**: Użyj opisu, np. „Pobierz bezpłatną checklistę”. Nie ukrywaj zgody ani nie zaznaczaj z góry opcjonalnego marketingu.
+6. **Zaufanie i dostęp**: Podaj kontakt, prywatność i informacje prawne. Sprawdź nagłówki, etykiety, kolejność fokusu, kontrast, powiększenie i znaczenie dla czytnika ekranu.
+
+Widoczność nie może pogarszać dostępności. Kontrast tekstu i elementów sterujących musi być wystarczający, a kolor nie może być jedynym sygnałem. Przed publikacją sprawdź stronę na prawdziwych urządzeniach mobilnych i wolniejszych połączeniach.`,
+            practicalExamples: ['Słabo: „Innowacyjne synergie dla nowoczesnego wzrostu”. Lepiej: „Zaplanuj pierwszą sekwencję e-mail opartą na zgodzie z prowadzoną checklistą”.', 'Zastąp „5–10 kwalifikowanych leadów tygodniowo — całkowicie automatycznie” popartym dowodami opisem procesu i czynników wpływających na wynik.'],
+          },
+          understandContent: { coreTakeaway: 'Mocna landing page łączy jasność, prawdziwe dowody, dostępną interakcję i przejrzyste warunki.', keyPrinciples: ['Jedno jasne działanie główne z wystarczającym kontekstem decyzji', 'Używaj tylko uzasadnionych twierdzeń i autoryzowanych dowodów', 'Testuj dostępność i użyteczność mobilną'] },
+          actionTask: { instruction: 'Sprawdź landing page przed publikacją:', checklistItems: ['Nagłówek jasno wyjaśnia ofertę i odbiorcę', 'Twierdzenia i opinie są prawdziwe, autoryzowane i właściwie objaśnione', 'Główne działanie jest opisowe i dostępne z klawiatury', 'Cena, zgoda, prywatność i istotne warunki pojawiają się we właściwym momencie'], toolboxCategory: 'landingpage' },
+        },
+        '22.2': {
+          stageTitle: '22. Optymalizacja konwersji i masterclass landing page', title: 'Testy A/B, mapy zachowań i wydajność',
+          description: 'Znajduj tarcia za pomocą zweryfikowanych zdarzeń, danych behawioralnych chroniących prywatność i eksperymentów zaplanowanych pod konkretną decyzję.',
+          learnContent: {
+            videoTitle: 'Odpowiedzialne eksperymenty konwersji i diagnostyka strony',
+            summaryText: 'Testy A/B szacują niepewne efekty, a heatmapy pokazują próbkowane interakcje. Żadne z nich nie gwarantuje wzrostu ani samo nie wyjaśnia motywacji.',
+            bulletPoints: ['Przed obejrzeniem wyników zapisz jedną hipotezę i główny miernik', 'Oszacuj próbę i czas na podstawie poziomu bazowego, wartościowego efektu i tolerancji błędu', 'Przed zbieraniem danych behawioralnych sprawdź zgodę, minimalizację danych, filtrowanie botów i jakość zdarzeń', 'Traktuj szybkość mobilną, dostępność i ukończenie zadania jako ograniczenia ochronne, a nie tylko konwersję'],
+            coreConcepts: [
+              { iconName: 'compare', title: 'TESTY A/B', description: 'Losowo porównuj kontrolowane warianty ze stałym przypisaniem i wcześniej określonym planem analizy. Zacznij tam, gdzie dowody wskazują największą niepewność — nie zawsze od nagłówka.', highlight: true },
+              { iconName: 'thermostat', title: 'MAPY ZACHOWAŃ', description: 'Traktuj zagregowane wzorce kliknięć i przewijania jako wskazówki. Wyklucz pola wrażliwe, maskuj dane osobowe i badaj przyczyny dodatkowymi metodami.' },
+            ],
+            fullArticleGuide: `### Optymalizacja konwersji oparta na dowodach
+
+Optymalizacja to cykl diagnozy, hipotezy, pomiaru i przeglądu — nie obietnica podwojenia konwersji.
+
+1. Potwierdź poprawność zdarzeń analitycznych, kryteriów udziału i stanów zgody.
+2. Wskaż jedno istotne tarcie na podstawie danych ilościowych i jakościowych.
+3. Określ odbiorców, zmianę, mechanizm, główny miernik, ograniczenia, minimalny wartościowy efekt, czas i regułę zatrzymania.
+4. Stosuj stabilną randomizację i nie zmieniaj ruchu ani doświadczenia podczas testu.
+5. Oceń wielkość efektu, niepewność, brakujące dane, nierówny podział próby i wartość praktyczną.
+6. Zapisz decyzję i ograniczenia, a po wdrożeniu kontynuuj monitoring.
+
+Heatmapy mogą pomijać obsługę klawiaturą, treści dynamiczne i zachowania między urządzeniami. Nagrania sesji mogą przechwycić dane osobowe, dlatego stosuj ścisłe maskowanie, krótką retencję, kontrolę dostępu i odpowiednią podstawę prawną. Kontrole wydajności powinny obejmować dostępne dane rzeczywistych użytkowników oraz testy laboratoryjne w reprezentatywnych warunkach mobilnych.`,
+            practicalExamples: ['Sprawdź, czy jaśniejsza informacja o cenie zwiększa liczbę właściwych zgłoszeń, jednocześnie monitorując błędy, zwroty i prośby do supportu.'],
+          },
+          understandContent: { coreTakeaway: 'Wiarygodna optymalizacja wymaga rzetelnego pomiaru, zaplanowanego eksperymentu, ochrony prywatności i uczciwego przedstawienia niepewności.', keyPrinciples: ['Nie polegaj na uniwersalnych obietnicach wzrostu ani skrótach istotności', 'Używaj map zachowań jako wskazówek diagnostycznych, nie czytania w myślach', 'Chroń użyteczność, dostępność i wyniki klientów'] },
+          actionTask: { instruction: 'Przygotuj jeden odpowiedzialny eksperyment landing page:', checklistItems: ['Udokumentowano hipotezę, główny miernik i ograniczenia ochronne', 'Zaplanowano próbę, czas i regułę zatrzymania', 'Sprawdzono wydajność mobilną i dostępność', 'Zweryfikowano tracking, zgodę i ochronę prywatności'], toolboxCategory: 'landingpage' },
         },
       },
     },
