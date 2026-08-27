@@ -1926,6 +1926,81 @@ Heatmaps can miss keyboard use, dynamic content and cross-device behaviour. Sess
         },
       },
     },
+    23: {
+      title: '23. Email Marketing Masterclass: Subject Lines & Automation',
+      subtitle: 'Relevant subject lines and respectful lifecycle communication',
+      description: 'Write accurate subject lines and build permission-based automated sequences that deliver value, respect preferences and are measured with reliable signals.',
+      lessons: {
+        '23.1': {
+          stageTitle: '23. Email Marketing Masterclass', title: 'Subject lines that set honest expectations',
+          description: 'Create concise, relevant subject lines and preview text without fabricated urgency, misleading curiosity or unsupported outcome claims.',
+          learnContent: {
+            videoTitle: 'Subject-line design: relevance, clarity and trustworthy testing',
+            summaryText: 'A subject line influences whether a delivered message is noticed, but it does not determine campaign success by itself. Sender recognition, consent, timing, deliverability and content all matter.',
+            bulletPoints: ['Useful: state a genuine benefit or purpose that the message fulfils', 'Specific: use numbers or facts only when they are accurate, substantiated and properly contextualised', 'Timely: mention a deadline only when it is real and material', 'Consistent: align the subject, preview text, sender and message content'],
+            coreConcepts: [
+              { iconName: 'zap', title: 'REAL TIMELINESS', description: 'Use urgency only for an actual deadline, availability change or time-sensitive need. Do not manufacture FOMO.', highlight: true },
+              { iconName: 'sparkles', title: 'DISTINCTIVE BUT ACCURATE', description: 'Use a relevant angle or question without clickbait, false replies, deceptive prefixes or hidden commercial intent.' },
+              { iconName: 'target', title: 'SUPPORTED SPECIFICITY', description: 'Specific claims need evidence and context. Never invent revenue, percentages, case studies or personalisation.' },
+              { iconName: 'gift', title: 'USEFUL PROMISE', description: 'Promise only what the email actually provides, and make the next step easy to understand.' },
+            ],
+            actionBanner: { title: 'Need ideas for the next newsletter?', description: 'Use the AI-assisted generator to draft ten subject-line options, then verify every claim, condition and personalisation field before use.', buttonText: 'Open Email Generator', actionUrl: 'email', iconName: 'auto_awesome' },
+            resources: [
+              { title: 'Email Generator (AI tool)', subtitle: 'Draft ten subject-line options', type: 'tool', iconName: 'smart_toy', actionUrl: 'email' },
+              { title: 'Subject-line review templates', subtitle: 'PDF review resource', type: 'pdf', iconName: 'picture_as_pdf' },
+            ],
+            fullArticleGuide: `### The subject line begins an expectation
+
+The subject line, sender name and preview text form the first visible context of an email. Their job is to help the recipient recognise relevance—not to force an open.
+
+#### A responsible review framework
+
+* **Useful**: Does the message provide the promised information or benefit?
+* **Specific**: Are names, figures, deadlines and claims accurate, authorised and meaningful?
+* **Timely**: Is urgency genuine, and will the stated deadline really be enforced?
+* **Distinctive**: Is the wording easy to recognise without mimicking a personal reply or security warning?
+* **Accessible**: Does the important meaning survive truncation, screen readers, emojis being omitted and dark mode?
+
+There is no universal ideal length. Test rendering in the main inboxes and place essential meaning early. Preview text should complement rather than repeat the subject. Avoid relying on “spam-word” lists: deliverability also depends on permission, reputation, authentication, complaints, engagement and content.
+
+Open tracking is incomplete and can be inflated by privacy protections or automated scanners. Evaluate downstream actions, replies, unsubscribes, complaints and customer outcomes alongside opens. Test one meaningful hypothesis with a predefined metric and sufficient evidence.`,
+            practicalExamples: ['Misleading: “[Case study] How Thomas doubled opens by 42%” when the case or calculation cannot be verified.', 'Clear: “Your five-step welcome-sequence checklist” when the email contains exactly that resource.', 'Timely: “Registration closes Friday at 18:00” only when the deadline is real and the terms are visible.'],
+          },
+          understandContent: { coreTakeaway: 'A subject line should create an accurate, relevant expectation; campaign quality depends on the complete permission, delivery and message experience.', keyPrinciples: ['Never fabricate urgency, personalisation or results', 'Optimise for meaning across devices rather than a fixed character limit', 'Measure trustworthy downstream outcomes, not opens alone'] },
+          actionTask: { instruction: 'Complete the pre-send review for the subject line and email:', checklistItems: ['Subject and preview text accurately match the message', 'Claims, deadlines and personalisation have been verified', 'Mobile truncation and accessibility have been checked', 'Consent, suppression, sender identity and authentication are valid', 'The test hypothesis and decision metric are documented'], toolboxCategory: 'email' },
+        },
+        '23.2': {
+          stageTitle: '23. Email Marketing Masterclass', title: 'Permission-based welcome & nurture sequences',
+          description: 'Build a measured automated sequence that fulfils the sign-up promise, adapts to preferences and stops appropriately.',
+          learnContent: {
+            videoTitle: 'Designing a responsible welcome and nurture flow',
+            summaryText: 'Automation can deliver consistent support, but it cannot turn every new contact into a buyer. Relevance, permission, frequency and customer value require ongoing human oversight.',
+            bulletPoints: ['Message 1: deliver the requested resource, identify the sender and set expectations', 'Messages 2–3: provide useful guidance and invite feedback without inventing a personal story', 'Message 4: share a genuine, authorised example with limitations', 'Message 5: present an appropriate offer with complete terms and no artificial deadline', 'Pause or exit when a person unsubscribes, objects, completes the goal or needs human help'],
+            coreConcepts: [
+              { iconName: 'mail', title: 'WELCOME FLOW', description: 'Deliver the promised resource promptly and explain content, frequency, sender and preference options.', highlight: true },
+              { iconName: 'user_check', title: 'RELEVANT NURTURE', description: 'Use declared needs and consent-compatible behaviour carefully. Do not infer vulnerabilities or pretend automation is personal human contact.' },
+            ],
+            resources: [{ title: 'Email Automation Workflow', subtitle: 'Open templates in the automation editor', type: 'tool', iconName: 'mail', actionUrl: 'email' }],
+            fullArticleGuide: `### Build a welcome sequence around the recipient’s expectation
+
+A fixed five-email pattern is a starting template, not a guarantee of higher opens, loyalty or three-times more customers.
+
+1. **Define entry**: Record the source, permission, promised content, locale and applicable preferences.
+2. **Deliver first**: Send the requested resource, sender identity, support route and realistic expectations.
+3. **Add value**: Teach one useful step per message and distinguish evidence, opinion and affiliate recommendation.
+4. **Offer transparently**: Explain price, material terms, relationship or commission disclosure and who the offer is for.
+5. **Control frequency**: Choose delays from audience context and test results rather than applying a universal one-day rule.
+6. **Handle exits**: Honour unsubscribes and objections promptly, prevent duplicate journeys and stop sales messages after conversion where inappropriate.
+7. **Monitor quality**: Review delivery, clicks, replies, task completion, complaints, unsubscribes and business outcomes. Opens alone are unreliable.
+
+Authenticate the sending domain with SPF and DKIM and configure DMARC deliberately. Test links, fallback text, language, accessibility and merge fields. Keep an accountable owner and a safe manual override for every automation.`,
+            practicalExamples: ['A subscriber requesting a checklist receives it first, then two optional educational messages and an accurately disclosed offer; unsubscribe and preference changes stop the relevant path immediately.'],
+          },
+          understandContent: { coreTakeaway: 'A responsible nurture flow consistently fulfils permission-based expectations and improves through measured customer outcomes—not pressure or unsupported multipliers.', keyPrinciples: ['Deliver the promised value before promoting', 'Respect consent, frequency preferences and exits', 'Monitor deliverability and customer impact with human oversight'] },
+          actionTask: { instruction: 'Create and test your first responsible welcome sequence:', checklistItems: ['Entry source, consent and promise are documented', 'Resource-delivery and educational messages are complete', 'Offer terms and affiliate relationship are disclosed where applicable', 'Delays, exits, suppression and duplicate prevention are configured', 'SPF, DKIM, DMARC, links, merge fields and accessibility are tested'], toolboxCategory: 'email' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -3835,6 +3910,81 @@ Heatmapy mogą pomijać obsługę klawiaturą, treści dynamiczne i zachowania m
           },
           understandContent: { coreTakeaway: 'Wiarygodna optymalizacja wymaga rzetelnego pomiaru, zaplanowanego eksperymentu, ochrony prywatności i uczciwego przedstawienia niepewności.', keyPrinciples: ['Nie polegaj na uniwersalnych obietnicach wzrostu ani skrótach istotności', 'Używaj map zachowań jako wskazówek diagnostycznych, nie czytania w myślach', 'Chroń użyteczność, dostępność i wyniki klientów'] },
           actionTask: { instruction: 'Przygotuj jeden odpowiedzialny eksperyment landing page:', checklistItems: ['Udokumentowano hipotezę, główny miernik i ograniczenia ochronne', 'Zaplanowano próbę, czas i regułę zatrzymania', 'Sprawdzono wydajność mobilną i dostępność', 'Zweryfikowano tracking, zgodę i ochronę prywatności'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
+    23: {
+      title: '23. Masterclass e-mail marketingu: tematy i automatyzacja',
+      subtitle: 'Trafne tematy i komunikacja cyklu życia z szacunkiem',
+      description: 'Pisz zgodne z treścią tematy i buduj automatyczne sekwencje oparte na zgodzie, które dostarczają wartość, respektują preferencje i są mierzone wiarygodnymi sygnałami.',
+      lessons: {
+        '23.1': {
+          stageTitle: '23. Masterclass e-mail marketingu', title: 'Tematy wiadomości tworzące uczciwe oczekiwania',
+          description: 'Twórz krótkie, trafne tematy i preheadery bez sztucznej pilności, mylącej ciekawości ani niepopartych obietnic wyniku.',
+          learnContent: {
+            videoTitle: 'Projektowanie tematów: trafność, jasność i wiarygodne testy',
+            summaryText: 'Temat wpływa na zauważenie dostarczonej wiadomości, ale sam nie decyduje o sukcesie kampanii. Znaczenie mają też rozpoznawalność nadawcy, zgoda, czas, dostarczalność i treść.',
+            bulletPoints: ['Użyteczny: nazwij prawdziwą korzyść lub cel realizowany przez wiadomość', 'Konkretny: używaj liczb i faktów tylko wtedy, gdy są dokładne, udokumentowane i mają kontekst', 'Aktualny: wspominaj termin tylko wtedy, gdy jest prawdziwy i istotny', 'Spójny: dopasuj temat, preheader, nadawcę i treść wiadomości'],
+            coreConcepts: [
+              { iconName: 'zap', title: 'PRAWDZIWA PILNOŚĆ', description: 'Używaj pilności wyłącznie przy realnym terminie, zmianie dostępności lub potrzebie zależnej od czasu. Nie twórz sztucznego FOMO.', highlight: true },
+              { iconName: 'sparkles', title: 'WYRÓŻNIENIE BEZ WPROWADZANIA W BŁĄD', description: 'Użyj trafnego kąta lub pytania bez clickbaitu, fałszywych odpowiedzi, mylących prefiksów i ukrytego celu handlowego.' },
+              { iconName: 'target', title: 'UZASADNIONA KONKRETNOŚĆ', description: 'Konkretne twierdzenia wymagają dowodów i kontekstu. Nie wymyślaj przychodu, procentów, case studies ani personalizacji.' },
+              { iconName: 'gift', title: 'UŻYTECZNA OBIETNICA', description: 'Obiecuj tylko to, co wiadomość faktycznie dostarcza, i jasno przedstaw kolejny krok.' },
+            ],
+            actionBanner: { title: 'Brakuje pomysłu na newsletter?', description: 'Użyj generatora wspieranego przez AI do przygotowania dziesięciu propozycji, a przed użyciem sprawdź każde twierdzenie, warunek i pole personalizacji.', buttonText: 'Otwórz generator e-maili', actionUrl: 'email', iconName: 'auto_awesome' },
+            resources: [
+              { title: 'Generator e-maili (narzędzie AI)', subtitle: 'Przygotuj dziesięć propozycji tematów', type: 'tool', iconName: 'smart_toy', actionUrl: 'email' },
+              { title: 'Szablony przeglądu tematów', subtitle: 'Materiał PDF do kontroli', type: 'pdf', iconName: 'picture_as_pdf' },
+            ],
+            fullArticleGuide: `### Temat rozpoczyna oczekiwanie
+
+Temat, nazwa nadawcy i preheader tworzą pierwszy widoczny kontekst wiadomości. Mają pomóc odbiorcy rozpoznać trafność, a nie wymusić otwarcie.
+
+#### Odpowiedzialny schemat kontroli
+
+* **Użyteczny**: Czy wiadomość dostarcza obiecaną informację lub korzyść?
+* **Konkretny**: Czy nazwy, liczby, terminy i twierdzenia są prawdziwe, autoryzowane i znaczące?
+* **Aktualny**: Czy pilność jest realna i czy podany termin zostanie faktycznie zachowany?
+* **Wyróżniający**: Czy tekst jest rozpoznawalny bez udawania prywatnej odpowiedzi lub alertu bezpieczeństwa?
+* **Dostępny**: Czy istotny sens pozostaje po skróceniu, pominięciu emoji, w czytniku ekranu i trybie ciemnym?
+
+Nie istnieje uniwersalna idealna długość. Sprawdź wyświetlanie w głównych skrzynkach i umieść kluczowy sens na początku. Preheader powinien uzupełniać, nie powtarzać temat. Nie polegaj na listach „słów spamowych”: dostarczalność zależy też od zgody, reputacji, uwierzytelnienia, skarg, zaangażowania i treści.
+
+Śledzenie otwarć jest niepełne i może być zawyżane przez ochronę prywatności oraz automatyczne skanery. Oceniaj działania po otwarciu, odpowiedzi, rezygnacje, skargi i wyniki klienta. Testuj jedną istotną hipotezę z wcześniej określonym miernikiem i wystarczającymi dowodami.`,
+            practicalExamples: ['Mylące: „[Case study] Jak Thomas podwoił otwarcia o 42%”, gdy nie można potwierdzić historii ani obliczenia.', 'Jasne: „Twoja checklista pięcioetapowej sekwencji powitalnej”, jeśli wiadomość rzeczywiście ją zawiera.', 'Terminowe: „Rejestracja kończy się w piątek o 18:00” tylko wtedy, gdy termin jest realny, a warunki widoczne.'],
+          },
+          understandContent: { coreTakeaway: 'Temat powinien tworzyć trafne i prawdziwe oczekiwanie; jakość kampanii zależy od całego procesu zgody, dostarczenia i treści.', keyPrinciples: ['Nie wymyślaj pilności, personalizacji ani wyników', 'Optymalizuj sens na różnych urządzeniach zamiast sztywnego limitu znaków', 'Mierz wiarygodne działania końcowe, nie tylko otwarcia'] },
+          actionTask: { instruction: 'Przeprowadź kontrolę tematu i wiadomości przed wysyłką:', checklistItems: ['Temat i preheader dokładnie odpowiadają treści', 'Zweryfikowano twierdzenia, terminy i personalizację', 'Sprawdzono skracanie mobilne i dostępność', 'Zgoda, wykluczenia, tożsamość nadawcy i uwierzytelnienie są prawidłowe', 'Udokumentowano hipotezę testu i miernik decyzji'], toolboxCategory: 'email' },
+        },
+        '23.2': {
+          stageTitle: '23. Masterclass e-mail marketingu', title: 'Sekwencje powitalne i nurture oparte na zgodzie',
+          description: 'Zbuduj mierzoną automatyczną sekwencję, która spełnia obietnicę zapisu, dostosowuje się do preferencji i zatrzymuje we właściwym momencie.',
+          learnContent: {
+            videoTitle: 'Projektowanie odpowiedzialnego flow powitalnego i nurture',
+            summaryText: 'Automatyzacja może konsekwentnie wspierać odbiorców, ale nie zamieni każdego nowego kontaktu w klienta. Trafność, zgoda, częstotliwość i wartość wymagają stałego nadzoru człowieka.',
+            bulletPoints: ['Wiadomość 1: dostarcz zamówiony materiał, przedstaw nadawcę i ustaw oczekiwania', 'Wiadomości 2–3: przekaż użyteczne wskazówki i zaproś do odpowiedzi bez wymyślania osobistej historii', 'Wiadomość 4: pokaż prawdziwy, autoryzowany przykład wraz z ograniczeniami', 'Wiadomość 5: przedstaw odpowiednią ofertę z pełnymi warunkami i bez sztucznego terminu', 'Wstrzymaj lub zakończ ścieżkę po rezygnacji, sprzeciwie, osiągnięciu celu albo potrzebie pomocy człowieka'],
+            coreConcepts: [
+              { iconName: 'mail', title: 'FLOW POWITALNY', description: 'Szybko dostarcz obiecany materiał i wyjaśnij treść, częstotliwość, nadawcę oraz opcje preferencji.', highlight: true },
+              { iconName: 'user_check', title: 'TRAFNY NURTURE', description: 'Ostrożnie używaj zadeklarowanych potrzeb i zachowań zgodnych ze zgodą. Nie wnioskuj o podatności ani nie udawaj, że automatyzacja jest osobistym kontaktem człowieka.' },
+            ],
+            resources: [{ title: 'Workflow automatyzacji e-mail', subtitle: 'Otwórz szablony w edytorze automatyzacji', type: 'tool', iconName: 'mail', actionUrl: 'email' }],
+            fullArticleGuide: `### Buduj sekwencję powitalną wokół oczekiwań odbiorcy
+
+Stały schemat pięciu wiadomości jest szablonem startowym, a nie gwarancją większej liczby otwarć, lojalności czy trzykrotnie większej liczby klientów.
+
+1. **Określ wejście**: Zapisz źródło, zgodę, obiecaną treść, język i właściwe preferencje.
+2. **Najpierw dostarcz**: Wyślij zamówiony materiał, tożsamość nadawcy, drogę pomocy i realistyczne oczekiwania.
+3. **Dodaj wartość**: Ucz jednego użytecznego kroku w wiadomości i odróżnij dowody, opinię oraz rekomendację afiliacyjną.
+4. **Przedstaw ofertę przejrzyście**: Wyjaśnij cenę, istotne warunki, relację lub prowizję oraz właściwego odbiorcę.
+5. **Kontroluj częstotliwość**: Dobierz opóźnienia do kontekstu i wyników testów, nie do uniwersalnej reguły jednego dnia.
+6. **Obsłuż wyjścia**: Szybko respektuj rezygnacje i sprzeciwy, zapobiegaj duplikatom ścieżek i zatrzymuj niewłaściwe wiadomości sprzedażowe po konwersji.
+7. **Monitoruj jakość**: Sprawdzaj dostarczenie, kliknięcia, odpowiedzi, ukończenie zadania, skargi, rezygnacje i wyniki biznesowe. Same otwarcia są niewiarygodne.
+
+Uwierzytelnij domenę nadawczą przez SPF i DKIM oraz świadomie skonfiguruj DMARC. Sprawdź linki, tekst zastępczy, język, dostępność i pola scalania. Każda automatyzacja musi mieć odpowiedzialnego właściciela i bezpieczne ręczne zatrzymanie.`,
+            practicalExamples: ['Osoba prosząca o checklistę otrzymuje ją najpierw, potem dwie opcjonalne wiadomości edukacyjne i prawidłowo ujawnioną ofertę; rezygnacja lub zmiana preferencji natychmiast zatrzymuje właściwą ścieżkę.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialny nurture konsekwentnie spełnia oczekiwania oparte na zgodzie i poprawia się dzięki mierzonym wynikom klienta, nie presji ani niepopartym mnożnikom.', keyPrinciples: ['Dostarcz obiecaną wartość przed promocją', 'Respektuj zgodę, preferencje częstotliwości i wyjścia', 'Monitoruj dostarczalność i wpływ na klienta z nadzorem człowieka'] },
+          actionTask: { instruction: 'Utwórz i przetestuj pierwszą odpowiedzialną sekwencję powitalną:', checklistItems: ['Udokumentowano źródło wejścia, zgodę i obietnicę', 'Wiadomość z materiałem i treści edukacyjne są gotowe', 'W razie potrzeby ujawniono warunki oferty i relację afiliacyjną', 'Skonfigurowano opóźnienia, wyjścia, wykluczenia i ochronę przed duplikatami', 'Przetestowano SPF, DKIM, DMARC, linki, pola scalania i dostępność'], toolboxCategory: 'email' },
         },
       },
     },
