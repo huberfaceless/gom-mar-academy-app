@@ -1119,6 +1119,84 @@ Do not use real customer data for testing, and avoid publishing until failures a
         },
       },
     },
+    13: {
+      title: '13. Community, Evergreen Funnels & Business Mastery',
+      subtitle: 'Sustainable Growth & Recurring Customer Value',
+      description: 'Build a supportive community, create transparent evergreen presentations, and develop repeatable systems for long-term customer value.',
+      lessons: {
+        '13.1': {
+          stageTitle: '13. Community, Evergreen Funnels & Business Mastery', title: 'Build Your Brand & VIP Community',
+          description: 'Turn customers and subscribers into engaged community members through useful groups, peer exchange, and well-moderated events.',
+          learnContent: {
+            videoTitle: 'Community Building: From Subscribers to Active Members',
+            summaryText: 'An engaged community can strengthen learning, retention, and trust when its purpose, rules, moderation, and member benefits are clear.',
+            bulletPoints: ['Choose a suitable community platform and define its purpose', 'Encourage participation through surveys, Q&As, practical challenges, and member spotlights', 'Protect members with clear rules, moderation, privacy controls, and reporting routes'],
+            fullArticleGuide: `### Why community can strengthen a digital business
+
+People may value not only educational content, but also access to peers who share similar goals and can exchange practical experience.
+
+#### Three stages of community building
+
+1. **Onboarding**: Welcome members, explain the purpose and rules, show where to begin, and let them control notifications and profile visibility.
+2. **Participation**: Ask useful weekly questions, host transparent Q&As, celebrate verified progress, and encourage respectful peer support.
+3. **Recognition**: Thank helpful members through fair, clearly explained recognition or optional VIP benefits without manipulating participation.
+
+Appoint moderators, obtain consent before featuring member stories, minimise collected data, and create a clear process for complaints, removal, and account deletion.`,
+            practicalExamples: ['Example: Offer interested email subscribers optional access to a moderated peer group, clearly explaining its purpose, rules, price if any, and privacy settings.'],
+          },
+          understandContent: { coreTakeaway: 'A healthy community earns trust through useful exchange, consistent moderation, and respect for every member.', keyPrinciples: ['Build trust through authenticity and safeguards', 'Celebrate progress without exaggeration'] },
+          actionTask: { instruction: 'Create and review a community concept with the AI tutor Mara:', placeholder: 'Community concept reviewed' },
+        },
+        '13.2': {
+          stageTitle: '13. Community, Evergreen Funnels & Business Mastery', title: 'Evergreen Webinars & Automated VSL Funnels',
+          description: 'Create an on-demand video presentation that educates prospects, explains an offer, and supports informed decisions.',
+          learnContent: {
+            videoTitle: 'Evergreen Funnels: An On-Demand Presentation System',
+            summaryText: 'An evergreen webinar can be available at any time. It should be labelled as recorded or on demand and must not imitate a live event deceptively.',
+            bulletPoints: ['Structure a concise 15-minute video sales letter', 'Offer genuine on-demand viewing or real scheduled support sessions', 'Send consent-based reminders before and after the presentation'],
+            fullArticleGuide: `### The principle of a transparent evergreen webinar
+
+An evergreen webinar is a prerecorded or automated presentation that visitors can watch on demand or at scheduled playback times. Tell viewers clearly which format they are using.
+
+#### A practical 15-minute VSL structure
+
+* **Hook—minutes 0–2**: State the audience, problem, and value of watching without using misleading claims.
+* **Context—minutes 2–5**: Share a relevant, truthful story or explain why the problem matters.
+* **Approach—minutes 5–10**: Teach the core method, show its limits, and provide enough value to stand alone.
+* **Call to action—minutes 10–15**: Present the offer, price, conditions, suitability, and one clear next step.
+
+Do not use fake attendee counts, simulated chat messages, invented scarcity, or resetting countdown timers. If a bonus or deadline is shown, it must be real and consistently enforced.`,
+            practicalExamples: ['Use the GOM-MAR Toolbox to create a VSL draft, then verify every factual claim and add a visible “recorded” or “on-demand” label before publishing.'],
+          },
+          understandContent: { coreTakeaway: 'A transparent on-demand presentation can educate prospects consistently without pretending to be live.', keyPrinciples: ['Use a clear educational structure', 'Be transparent about automation and availability'] },
+          actionTask: { instruction: 'Generate and review a VSL script in the Email & Content Generator:', placeholder: 'VSL script reviewed' },
+        },
+        '13.3': {
+          stageTitle: '13. Community, Evergreen Funnels & Business Mastery', title: 'Business Mastery Blueprint & Certificate',
+          description: 'Review your systems, organise your next improvements, and complete the GOM-MAR Business Mastery milestone.',
+          learnContent: {
+            videoTitle: 'Your Next Stage as a Digital Entrepreneur',
+            summaryText: 'Congratulations on completing this learning milestone. You now have a structured foundation for building, measuring, and improving responsible digital marketing systems.',
+            bulletPoints: ['Review the complete funnel and customer journey', 'Complete the requirements for the GOM-MAR Business Mastery certificate', 'Join the graduate peer community if it supports your goals'],
+            fullArticleGuide: `### A milestone—and the beginning of continuous improvement
+
+You have worked through core and advanced tools for planning, communicating, measuring, and improving digital offers.
+
+#### Your next milestones
+
+1. **Protect the system**: Maintain backups, access controls, documentation, privacy settings, and a recovery procedure.
+2. **Improve deliberately**: Choose the largest verified bottleneck, run a controlled test, and document the result before increasing spend.
+3. **Support customers**: Review feedback, delivery quality, refunds, accessibility, and support response times.
+4. **Share responsibly**: Contribute useful experience to the graduate community without exposing customer information or promising guaranteed results.
+
+A certificate documents completion of the Academy requirements; it does not guarantee commercial success, regulated professional status, or a particular income.`,
+            practicalExamples: ['Complete the required lessons and tasks, then download the GOM-MAR graduate certificate if the progress check confirms eligibility.'],
+          },
+          understandContent: { coreTakeaway: 'Completion is a meaningful milestone; sustainable progress comes from continued implementation, measurement, and learning.', keyPrinciples: ['Implement and review consistently', 'Keep learning and protect customer trust'] },
+          actionTask: { instruction: 'Complete the GOM-MAR Academy milestone and confirm your Business Mastery foundations:', checklistItems: ['I understand the principles of safe community building', 'I can create a transparent evergreen VSL funnel', 'I reviewed my system and understand what the certificate represents'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -2221,6 +2299,84 @@ Nie używaj prawdziwych danych klientów do testów i nie publikuj, dopóki bł�
           },
           understandContent: { coreTakeaway: 'Lejek jest gotowy dopiero po pomyślnym sprawdzeniu całej ścieżki subskrybenta.', keyPrinciples: ['Przetestuj pełną ścieżkę przed publikacją', 'Po publikacji monitoruj błędy, dostarczenie i zgodę'] },
           actionTask: { instruction: 'Ukończ moduł Landing Page i potwierdź gotowość do publikacji:', checklistItems: ['Rozumiem strukturę skoncentrowanej strony zapisu', 'Sprawdziłem użyteczność mobilną, dostępność i wydajność ładowania', 'Połączyłem i przetestowałem stronę z automatyzacją e-mail opartą na zgodzie'] },
+        },
+      },
+    },
+    13: {
+      title: '13. Społeczność, lejki evergreen i rozwój biznesu',
+      subtitle: 'Trwały rozwój i długoterminowa wartość klienta',
+      description: 'Buduj wspierającą społeczność, twórz przejrzyste prezentacje evergreen i rozwijaj powtarzalne systemy zapewniające długoterminową wartość klienta.',
+      lessons: {
+        '13.1': {
+          stageTitle: '13. Społeczność, lejki evergreen i rozwój biznesu', title: 'Zbuduj markę i społeczność VIP',
+          description: 'Zmieniaj klientów i subskrybentów w zaangażowanych członków społeczności dzięki użytecznym grupom, wymianie doświadczeń i dobrze moderowanym wydarzeniom.',
+          learnContent: {
+            videoTitle: 'Budowanie społeczności: od subskrybentów do aktywnych członków',
+            summaryText: 'Zaangażowana społeczność może wzmacniać naukę, utrzymanie i zaufanie, gdy jej cel, zasady, moderacja oraz korzyści dla członków są jasne.',
+            bulletPoints: ['Wybierz właściwą platformę i jasno określ cel społeczności', 'Zachęcaj do udziału przez ankiety, Q&A, praktyczne wyzwania i prezentowanie członków', 'Chroń członków za pomocą jasnych zasad, moderacji, ustawień prywatności i sposobu zgłaszania problemów'],
+            fullArticleGuide: `### Dlaczego społeczność może wzmacniać biznes cyfrowy
+
+Ludzie mogą cenić nie tylko materiały edukacyjne, lecz także dostęp do osób o podobnych celach, z którymi mogą wymieniać praktyczne doświadczenia.
+
+#### Trzy etapy budowania społeczności
+
+1. **Onboarding**: Powitaj członków, wyjaśnij cel i zasady, pokaż pierwszy krok oraz pozwól im kontrolować powiadomienia i widoczność profilu.
+2. **Uczestnictwo**: Zadawaj użyteczne cotygodniowe pytania, prowadź przejrzyste Q&A, świętuj potwierdzone postępy i wspieraj kulturalną pomoc wzajemną.
+3. **Uznanie**: Dziękuj pomocnym członkom poprzez uczciwie opisane wyróżnienia lub dobrowolne korzyści VIP bez manipulowania aktywnością.
+
+Wyznacz moderatorów, uzyskuj zgodę przed publikacją historii członków, ograniczaj zbierane dane i przygotuj jasny proces skarg, usunięcia treści oraz konta.`,
+            practicalExamples: ['Przykład: Zaproponuj zainteresowanym subskrybentom dobrowolny dostęp do moderowanej grupy, jasno opisując jej cel, zasady, ewentualną cenę i ustawienia prywatności.'],
+          },
+          understandContent: { coreTakeaway: 'Zdrowa społeczność buduje zaufanie dzięki użytecznej wymianie, konsekwentnej moderacji i szacunkowi dla każdego członka.', keyPrinciples: ['Buduj zaufanie autentycznością i zabezpieczeniami', 'Świętuj postępy bez przesady'] },
+          actionTask: { instruction: 'Utwórz i sprawdź koncepcję społeczności z tutorem AI Marą:', placeholder: 'Koncepcja społeczności sprawdzona' },
+        },
+        '13.2': {
+          stageTitle: '13. Społeczność, lejki evergreen i rozwój biznesu', title: 'Webinary evergreen i automatyczne lejki VSL',
+          description: 'Stwórz prezentację wideo na żądanie, która edukuje zainteresowanych, wyjaśnia ofertę i wspiera świadome decyzje.',
+          learnContent: {
+            videoTitle: 'Lejki evergreen: system prezentacji na żądanie',
+            summaryText: 'Webinar evergreen może być dostępny w dowolnym czasie. Powinien być oznaczony jako nagrany lub dostępny na żądanie i nie może w mylący sposób imitować wydarzenia na żywo.',
+            bulletPoints: ['Zbuduj zwięzłą, 15-minutową prezentację video sales letter', 'Zapewnij prawdziwy dostęp na żądanie albo realne terminy spotkań ze wsparciem', 'Wysyłaj przypomnienia przed i po prezentacji wyłącznie na podstawie zgody'],
+            fullArticleGuide: `### Zasada przejrzystego webinaru evergreen
+
+Webinar evergreen to nagrana lub automatyczna prezentacja, którą można obejrzeć na żądanie albo o wyznaczonych porach odtwarzania. Jasno poinformuj odbiorców, z jakiego formatu korzystają.
+
+#### Praktyczna struktura 15-minutowego VSL
+
+* **Hook—minuty 0–2**: Określ odbiorcę, problem i wartość obejrzenia bez mylących twierdzeń.
+* **Kontekst—minuty 2–5**: Opowiedz trafną, prawdziwą historię albo wyjaśnij znaczenie problemu.
+* **Podejście—minuty 5–10**: Naucz podstawowej metody, pokaż jej ograniczenia i zapewnij samodzielnie użyteczną wartość.
+* **Wezwanie do działania—minuty 10–15**: Przedstaw ofertę, cenę, warunki, dopasowanie i jeden jasny kolejny krok.
+
+Nie używaj fałszywej liczby uczestników, symulowanych wiadomości czatu, wymyślonego niedoboru ani resetujących się liczników. Jeśli pokazujesz bonus lub termin, musi być prawdziwy i konsekwentnie egzekwowany.`,
+            practicalExamples: ['Użyj GOM-MAR Toolbox do stworzenia szkicu VSL, sprawdź każde twierdzenie i przed publikacją dodaj widoczne oznaczenie „nagranie” lub „na żądanie”.'],
+          },
+          understandContent: { coreTakeaway: 'Przejrzysta prezentacja na żądanie może konsekwentnie edukować zainteresowanych bez udawania transmisji na żywo.', keyPrinciples: ['Stosuj jasną strukturę edukacyjną', 'Informuj przejrzyście o automatyzacji i dostępności'] },
+          actionTask: { instruction: 'Wygeneruj i sprawdź skrypt VSL w generatorze e-mail i treści:', placeholder: 'Skrypt VSL sprawdzony' },
+        },
+        '13.3': {
+          stageTitle: '13. Społeczność, lejki evergreen i rozwój biznesu', title: 'Plan rozwoju biznesu i certyfikat',
+          description: 'Sprawdź systemy, uporządkuj kolejne ulepszenia i ukończ etap GOM-MAR Business Mastery.',
+          learnContent: {
+            videoTitle: 'Twój kolejny etap jako przedsiębiorca cyfrowy',
+            summaryText: 'Gratulacje z okazji ukończenia tego etapu nauki. Masz teraz uporządkowaną podstawę do budowania, mierzenia i poprawiania odpowiedzialnych systemów marketingu cyfrowego.',
+            bulletPoints: ['Sprawdź cały lejek i ścieżkę klienta', 'Ukończ wymagania certyfikatu GOM-MAR Business Mastery', 'Dołącz do społeczności absolwentów, jeśli wspiera Twoje cele'],
+            fullArticleGuide: `### Ważny etap—i początek ciągłego doskonalenia
+
+Poznałeś podstawowe i zaawansowane narzędzia do planowania, komunikowania, mierzenia oraz poprawiania ofert cyfrowych.
+
+#### Twoje kolejne kroki
+
+1. **Zabezpiecz system**: Utrzymuj kopie zapasowe, kontrolę dostępu, dokumentację, ustawienia prywatności i procedurę odzyskiwania.
+2. **Ulepszaj świadomie**: Wybierz największe potwierdzone wąskie gardło, przeprowadź kontrolowany test i udokumentuj wynik przed zwiększeniem wydatków.
+3. **Wspieraj klientów**: Analizuj opinie, jakość realizacji, zwroty, dostępność i czas odpowiedzi supportu.
+4. **Dziel się odpowiedzialnie**: Wnoś użyteczne doświadczenia do społeczności absolwentów bez ujawniania danych klientów i obietnic gwarantowanych wyników.
+
+Certyfikat dokumentuje spełnienie wymagań Academy; nie gwarantuje sukcesu komercyjnego, regulowanych uprawnień zawodowych ani określonego dochodu.`,
+            practicalExamples: ['Ukończ wymagane lekcje i zadania, a następnie pobierz certyfikat absolwenta GOM-MAR, jeśli kontrola postępu potwierdzi uprawnienie.'],
+          },
+          understandContent: { coreTakeaway: 'Ukończenie jest ważnym etapem; trwały postęp wynika z dalszego wdrażania, pomiaru i nauki.', keyPrinciples: ['Wdrażaj i regularnie sprawdzaj', 'Ucz się dalej i chroń zaufanie klientów'] },
+          actionTask: { instruction: 'Ukończ etap GOM-MAR Academy i potwierdź podstawy Business Mastery:', checklistItems: ['Rozumiem zasady bezpiecznego budowania społeczności', 'Potrafię stworzyć przejrzysty lejek VSL evergreen', 'Sprawdziłem system i rozumiem znaczenie certyfikatu'] },
         },
       },
     },
