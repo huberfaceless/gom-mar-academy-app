@@ -1525,6 +1525,88 @@ More posts do not automatically create more presence. Coherent, useful and well-
         },
       },
     },
+    18: {
+      title: '18. AI Agents, Governed Systems & Enterprise Readiness',
+      subtitle: 'Bounded agent workflows with accountable human control',
+      description: 'Design single- and multi-agent workflows with explicit permissions, budgets, approvals, evidence, monitoring and safe termination.',
+      lessons: {
+        '18.1': {
+          stageTitle: '18. AI Agents, Governed Systems & Enterprise Readiness', title: 'Bounded AI agents & task execution',
+          description: 'Understand how agents plan and use tools while keeping their goals, data, permissions, spending and stopping conditions constrained.',
+          learnContent: {
+            videoTitle: 'AI agents: useful autonomy within defined limits',
+            summaryText: 'An agent can decompose work and call tools, but it may still misunderstand objectives, use unreliable information or take unintended actions. Self-review is not independent validation.',
+            bulletPoints: ['Define the goal, permitted tools, data sources, budget, time and deliverable before execution', 'Require approval for external messages, purchases, publishing, deletion, permissions and sensitive-data access', 'Record tool calls and outputs, cap loops and costs, and provide pause, cancel and rollback paths'],
+            fullArticleGuide: `### From a prompt to a governed agent task
+
+Treat an agent as fallible software operating under delegated authority—not as an employee who can safely improvise without supervision.
+
+#### A controlled execution cycle
+
+1. **Specify**: Define the task, success criteria, prohibited actions, approved sources and data classification.
+2. **Constrain**: Grant temporary least-privilege tools, a spending and time limit, a maximum number of steps and a restricted working area.
+3. **Plan and inspect**: Let the agent propose steps, but require approval before consequential or irreversible actions.
+4. **Execute observably**: Log tool calls, decisions, costs, errors and produced artefacts without exposing secrets or unnecessary personal data.
+5. **Validate independently**: Check citations, calculations, files and real-world state with tests or an accountable reviewer. Do not accept the agent’s own confidence as proof.
+6. **Stop safely**: End on success, uncertainty, repeated failure, limit breach or human cancellation; preserve enough state for review and recovery.
+
+Begin with read-only, reversible tasks. Expand authority only after measured reliability and a documented risk review.`,
+            practicalExamples: ['Ask Mara to research a narrowly defined content topic using approved sources and a fixed step limit; require a cited draft for review rather than automatic publication.'],
+          },
+          understandContent: { coreTakeaway: 'Agentic work is useful when authority is limited, execution is observable and outcomes are independently verified.', keyPrinciples: ['Grant minimum necessary authority', 'Require approval and independent validation'] },
+          actionTask: { instruction: 'Run and review a bounded AI-agent task with Mara:', placeholder: 'Bounded agent task reviewed' },
+        },
+        '18.2': {
+          stageTitle: '18. AI Agents, Governed Systems & Enterprise Readiness', title: 'Multi-agent orchestration & control',
+          description: 'Coordinate specialised agent roles through typed handoffs, shared evidence and one accountable approval chain.',
+          learnContent: {
+            videoTitle: 'Multi-agent workflows: orchestration without multiplied risk',
+            summaryText: 'Additional agents can separate roles, but they also add cost, latency, duplicated errors and new attack surfaces. They do not guarantee tenfold productivity or constant quality.',
+            bulletPoints: ['Use multiple agents only where role separation produces measurable value', 'Define structured inputs, outputs, evidence and ownership for every handoff', 'Keep shared memory minimal, protect secrets and place human approval before external action'],
+            fullArticleGuide: `### Design the smallest system that solves the task
+
+A multi-agent workflow is appropriate when distinct roles, permissions or evaluation methods genuinely improve the process. For many tasks, one constrained agent plus a reviewer is simpler and safer.
+
+#### A governed role pattern
+
+* **Research role**: May read approved sources and return claims with citations; it cannot publish or contact people.
+* **Drafting role**: Uses the approved brief and evidence; it cannot invent facts or expand the task scope.
+* **Review role**: Checks the output against an explicit rubric, but does not certify legal, privacy or factual compliance by itself.
+* **Human owner**: Resolves conflicts, checks material claims and approves publishing, spending, access changes and customer-facing actions.
+
+Use structured handoffs, unique run identifiers, provenance, versioned prompts and isolated credentials. Prevent agents from passing untrusted instructions as commands. Set a total budget and stop the workflow when agents loop, disagree materially or lose required evidence.`,
+            practicalExamples: ['Configure a research-to-draft-to-review workflow for one campaign brief, then inspect every handoff, citation, cost and permission before approving any output.'],
+          },
+          understandContent: { coreTakeaway: 'Multi-agent systems help only when clear role separation outweighs their additional complexity, cost and risk.', keyPrinciples: ['Prefer the smallest sufficient architecture', 'Control every handoff and external action'] },
+          actionTask: { instruction: 'Configure and review a governed multi-agent brief in the AI Dashboard:', placeholder: 'Multi-agent brief reviewed' },
+        },
+        '18.3': {
+          stageTitle: '18. AI Agents, Governed Systems & Enterprise Readiness', title: 'Enterprise readiness review & Academy certificate',
+          description: 'Complete an evidence-based review of your AI operating controls and document completion of this Academy stage.',
+          learnContent: {
+            videoTitle: 'Enterprise readiness: evidence before scale',
+            summaryText: 'Completing the lessons is a learning milestone. It does not prove enterprise-grade security, regulatory compliance, market leadership or membership in a top percentile.',
+            bulletPoints: ['Inventory agent owners, purposes, data, vendors, permissions and critical dependencies', 'Test approvals, incident response, audit logs, backups, termination and manual fallback', 'Document Academy completion separately from professional accreditation or external certification'],
+            fullArticleGuide: `### Turn learning into a readiness plan
+
+Enterprise readiness is demonstrated through governance, evidence and repeated operational testing—not through a label or fully autonomous setup.
+
+#### Final control review
+
+1. **Ownership and inventory**: Record every material model, agent, integration, data source, processor and responsible owner.
+2. **Risk and access**: Classify use cases, minimise data, review permissions and prohibit agent access to secrets or systems it does not need.
+3. **Evaluation**: Maintain representative tests for accuracy, safety, bias, security, cost and task completion before and after changes.
+4. **Operations**: Monitor production, log decisions, handle incidents, rotate credentials, test backups and maintain manual alternatives.
+5. **Change and retirement**: Version prompts and models, approve releases, track dependencies and define how a system can be disabled and its data removed.
+
+The GOM-MAR certificate records completion of defined Academy requirements. It is not a government-recognised qualification, regulated professional licence, security audit, compliance opinion or guarantee of commercial results.`,
+            practicalExamples: ['Download the certificate only after completing the required lessons and control checklist, and describe it accurately as an Academy completion credential.'],
+          },
+          understandContent: { coreTakeaway: 'Enterprise readiness requires accountable governance and tested evidence; a course certificate documents learning completion only.', keyPrinciples: ['Validate controls with evidence and recurring tests', 'Describe credentials accurately without inflated status claims'] },
+          actionTask: { instruction: 'Complete the agent-systems review and confirm the meaning of the certificate:', checklistItems: ['I can bound agent tools, data, budget, steps and stopping conditions', 'I can govern multi-agent handoffs and critical approvals', 'I understand that Academy completion is not external accreditation or proof of enterprise compliance'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -3033,6 +3115,88 @@ Więcej postów nie tworzy automatycznie większej obecności. Spójna, użytecz
           },
           understandContent: { coreTakeaway: 'Skuteczny omnichannel zachowuje zweryfikowany rdzeń i dopasowuje każdy format do odbiorcy, kanału oraz ryzyka.', keyPrinciples: ['Przekształcaj selektywnie ze sprawdzonego źródła', 'Wymagaj kontroli kanałowej przed publikacją'] },
           actionTask: { instruction: 'Ukończ moduł omnichannel i potwierdź kontrolę mediów:', checklistItems: ['Potrafię tworzyć faceless video bez wprowadzania w błąd i naruszania praw', 'Rozumiem zgodę, oznaczenie i kontrolę audio generowanego przez AI', 'Potrafię przekształcać treści z kanałową kontrolą jakości i publikacji'] },
+        },
+      },
+    },
+    18: {
+      title: '18. Agenci AI, systemy nadzorowane i gotowość enterprise',
+      subtitle: 'Ograniczone workflow agentowe z odpowiedzialną kontrolą człowieka',
+      description: 'Projektuj procesy jedno- i wieloagentowe z jasnymi uprawnieniami, budżetami, akceptacjami, dowodami, monitorowaniem i bezpiecznym zatrzymaniem.',
+      lessons: {
+        '18.1': {
+          stageTitle: '18. Agenci AI, systemy nadzorowane i gotowość enterprise', title: 'Ograniczeni agenci AI i wykonywanie zadań',
+          description: 'Zrozum, jak agenci planują i używają narzędzi, zachowując ograniczenia celu, danych, uprawnień, kosztów i warunków zatrzymania.',
+          learnContent: {
+            videoTitle: 'Agenci AI: użyteczna autonomia w określonych granicach',
+            summaryText: 'Agent może dzielić pracę i wywoływać narzędzia, ale nadal może źle zrozumieć cel, użyć niewiarygodnych informacji lub wykonać niezamierzone działania. Samokontrola nie jest niezależną walidacją.',
+            bulletPoints: ['Przed wykonaniem określ cel, dozwolone narzędzia, źródła, budżet, czas i rezultat', 'Wymagaj akceptacji dla wiadomości zewnętrznych, zakupów, publikacji, usuwania, uprawnień i dostępu do danych wrażliwych', 'Rejestruj wywołania i wyniki, ogranicz pętle oraz koszty i zapewnij pauzę, anulowanie oraz wycofanie'],
+            fullArticleGuide: `### Od promptu do nadzorowanego zadania agenta
+
+Traktuj agenta jako omylne oprogramowanie działające z delegowanymi uprawnieniami, a nie pracownika, który może bezpiecznie improwizować bez nadzoru.
+
+#### Kontrolowany cykl wykonania
+
+1. **Specyfikacja**: Określ zadanie, kryteria sukcesu, zakazane działania, zatwierdzone źródła i klasyfikację danych.
+2. **Ograniczenie**: Przyznaj tymczasowe minimalne narzędzia, limit kosztów, czasu i kroków oraz ograniczony obszar pracy.
+3. **Plan i kontrola**: Pozwól agentowi zaproponować kroki, ale wymagaj akceptacji przed działaniami istotnymi lub nieodwracalnymi.
+4. **Obserwowalne wykonanie**: Loguj narzędzia, decyzje, koszty, błędy i artefakty bez ujawniania sekretów i zbędnych danych osobowych.
+5. **Niezależna walidacja**: Sprawdź źródła, obliczenia, pliki i stan rzeczywisty testami lub odpowiedzialnym recenzentem. Pewność agenta nie jest dowodem.
+6. **Bezpieczne zatrzymanie**: Kończ po sukcesie, niepewności, powtarzalnym błędzie, przekroczeniu limitu lub anulowaniu; zachowaj stan do kontroli i odzyskania.
+
+Zaczynaj od zadań tylko do odczytu i odwracalnych. Zwiększaj uprawnienia dopiero po zmierzeniu niezawodności i udokumentowanej analizie ryzyka.`,
+            practicalExamples: ['Poproś Marę o zbadanie wąskiego tematu z zatwierdzonych źródeł i limitem kroków; wymagaj szkicu ze źródłami do kontroli zamiast automatycznej publikacji.'],
+          },
+          understandContent: { coreTakeaway: 'Praca agentowa jest użyteczna, gdy uprawnienia są ograniczone, wykonanie obserwowalne, a wyniki niezależnie sprawdzane.', keyPrinciples: ['Przyznawaj minimalne niezbędne uprawnienia', 'Wymagaj akceptacji i niezależnej walidacji'] },
+          actionTask: { instruction: 'Uruchom i sprawdź ograniczone zadanie agenta z Marą:', placeholder: 'Ograniczone zadanie agenta sprawdzone' },
+        },
+        '18.2': {
+          stageTitle: '18. Agenci AI, systemy nadzorowane i gotowość enterprise', title: 'Orkiestracja i kontrola wielu agentów',
+          description: 'Koordynuj wyspecjalizowane role agentów przez ustrukturyzowane przekazania, wspólne dowody i jeden odpowiedzialny łańcuch akceptacji.',
+          learnContent: {
+            videoTitle: 'Workflow wieloagentowe: orkiestracja bez mnożenia ryzyka',
+            summaryText: 'Dodatkowi agenci rozdzielają role, ale zwiększają koszt, opóźnienie, powielanie błędów i powierzchnię ataku. Nie gwarantują dziesięciokrotnej produktywności ani stałej jakości.',
+            bulletPoints: ['Stosuj wielu agentów tylko wtedy, gdy rozdział ról daje mierzalną wartość', 'Określ strukturalne dane wejściowe, wyniki, dowody i właściciela każdego przekazania', 'Minimalizuj wspólną pamięć, chroń sekrety i umieść akceptację człowieka przed działaniem zewnętrznym'],
+            fullArticleGuide: `### Projektuj najmniejszy system rozwiązujący zadanie
+
+Workflow wieloagentowy ma sens, gdy różne role, uprawnienia lub metody oceny rzeczywiście poprawiają proces. W wielu zadaniach jeden ograniczony agent z recenzentem jest prostszy i bezpieczniejszy.
+
+#### Nadzorowany schemat ról
+
+* **Badacz**: Może czytać zatwierdzone źródła i zwracać twierdzenia z cytowaniami; nie publikuje i nie kontaktuje ludzi.
+* **Autor**: Korzysta z zatwierdzonego briefu i dowodów; nie wymyśla faktów ani nie rozszerza zakresu.
+* **Recenzent**: Sprawdza rezultat według jawnych kryteriów, ale sam nie potwierdza zgodności prawnej, prywatności ani prawdy.
+* **Właściciel-człowiek**: Rozwiązuje konflikty, sprawdza istotne twierdzenia i zatwierdza publikację, wydatki, zmiany dostępu oraz działania wobec klientów.
+
+Stosuj ustrukturyzowane przekazania, unikalne identyfikatory, pochodzenie danych, wersjonowane prompty i odizolowane poświadczenia. Nie pozwalaj agentom przekazywać niezaufanych instrukcji jako poleceń. Ustal wspólny budżet i zatrzymaj proces przy pętli, istotnej rozbieżności lub utracie dowodów.`,
+            practicalExamples: ['Skonfiguruj proces badanie–szkic–kontrola dla jednego briefu kampanii, a przed akceptacją sprawdź każde przekazanie, źródło, koszt i uprawnienie.'],
+          },
+          understandContent: { coreTakeaway: 'Systemy wieloagentowe pomagają tylko wtedy, gdy jasny rozdział ról przewyższa dodatkową złożoność, koszt i ryzyko.', keyPrinciples: ['Preferuj najmniejszą wystarczającą architekturę', 'Kontroluj każde przekazanie i działanie zewnętrzne'] },
+          actionTask: { instruction: 'Skonfiguruj i sprawdź nadzorowany brief wieloagentowy w dashboardzie AI:', placeholder: 'Brief wieloagentowy sprawdzony' },
+        },
+        '18.3': {
+          stageTitle: '18. Agenci AI, systemy nadzorowane i gotowość enterprise', title: 'Przegląd gotowości enterprise i certyfikat Academy',
+          description: 'Ukończ oparty na dowodach przegląd kontroli operacyjnych AI i udokumentuj ukończenie tej części Academy.',
+          learnContent: {
+            videoTitle: 'Gotowość enterprise: dowody przed skalowaniem',
+            summaryText: 'Ukończenie lekcji jest etapem nauki. Nie dowodzi bezpieczeństwa klasy enterprise, zgodności prawnej, pozycji lidera rynku ani przynależności do najwyższego percentyla.',
+            bulletPoints: ['Zinwentaryzuj właścicieli, cele, dane, dostawców, uprawnienia i krytyczne zależności agentów', 'Przetestuj akceptacje, reakcję na incydenty, logi audytowe, kopie, zatrzymanie i ręczny proces awaryjny', 'Oddziel ukończenie Academy od zawodowej akredytacji i zewnętrznej certyfikacji'],
+            fullArticleGuide: `### Zamień naukę w plan gotowości
+
+Gotowość enterprise wykazuje się nadzorem, dowodami i powtarzalnymi testami operacyjnymi, a nie etykietą lub w pełni autonomicznym systemem.
+
+#### Końcowy przegląd kontroli
+
+1. **Własność i inwentarz**: Zapisz każdy istotny model, agenta, integrację, źródło danych, procesora i odpowiedzialnego właściciela.
+2. **Ryzyko i dostęp**: Klasyfikuj zastosowania, minimalizuj dane, sprawdzaj uprawnienia i zabroń dostępu do niepotrzebnych sekretów oraz systemów.
+3. **Ewaluacja**: Utrzymuj reprezentatywne testy dokładności, bezpieczeństwa, uprzedzeń, kosztów i wykonania przed oraz po zmianach.
+4. **Operacje**: Monitoruj produkcję, loguj decyzje, obsługuj incydenty, rotuj poświadczenia, testuj kopie i zachowuj ręczne alternatywy.
+5. **Zmiana i wycofanie**: Wersjonuj prompty oraz modele, zatwierdzaj wydania, śledź zależności i określ sposób wyłączenia systemu oraz usunięcia danych.
+
+Certyfikat GOM-MAR dokumentuje spełnienie określonych wymagań Academy. Nie jest państwowym kwalifikowaniem, licencją zawodową, audytem bezpieczeństwa, opinią prawną ani gwarancją wyniku komercyjnego.`,
+            practicalExamples: ['Pobierz certyfikat dopiero po ukończeniu wymaganych lekcji i listy kontroli oraz opisuj go dokładnie jako potwierdzenie ukończenia Academy.'],
+          },
+          understandContent: { coreTakeaway: 'Gotowość enterprise wymaga odpowiedzialnego nadzoru i sprawdzonych dowodów; certyfikat kursu dokumentuje wyłącznie ukończenie nauki.', keyPrinciples: ['Waliduj kontrole dowodami i powtarzalnymi testami', 'Opisuj certyfikat dokładnie bez zawyżania jego znaczenia'] },
+          actionTask: { instruction: 'Ukończ przegląd systemów agentowych i potwierdź znaczenie certyfikatu:', checklistItems: ['Potrafię ograniczyć narzędzia, dane, budżet, kroki i warunki zatrzymania agenta', 'Potrafię nadzorować przekazania wielu agentów i krytyczne akceptacje', 'Rozumiem, że ukończenie Academy nie jest zewnętrzną akredytacją ani dowodem zgodności enterprise'] },
         },
       },
     },
