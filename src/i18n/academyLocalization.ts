@@ -1360,6 +1360,88 @@ Scale gradually only when results remain credible after costs. Do not let an AI 
         },
       },
     },
+    16: {
+      title: '16. AI Automation, Processes & Reliable Operations',
+      subtitle: 'Efficient workflows with controls and accountable oversight',
+      description: 'Connect CRM, email, payment and AI services through observable workflows that fail safely and keep consequential actions under human control.',
+      lessons: {
+        '16.1': {
+          stageTitle: '16. AI Automation, Processes & Reliable Operations', title: 'Integrated workflows & secure webhooks',
+          description: 'Connect lead sources, email, CRM and payment services while validating data, authenticating events and handling failures safely.',
+          learnContent: {
+            videoTitle: 'Workflow automation: integrations, webhooks and safeguards',
+            summaryText: 'Automations reduce repetitive work, but reliable data flow requires authentication, validation, idempotency, monitoring and a recovery path.',
+            bulletPoints: ['Authenticate webhook senders and grant each integration only the permissions it needs', 'Validate, minimise and map incoming data before using it', 'Prevent duplicate actions and route failed events to logs, alerts and controlled retries'],
+            fullArticleGuide: `### Build automation that can be trusted
+
+No workflow is permanently error-free. Providers time out, payloads change, users submit duplicate forms and credentials expire. A production workflow must detect and contain these failures.
+
+#### A safe event lifecycle
+
+1. **Trigger**: Receive an event through an authenticated connection. Verify the signature, timestamp and expected source.
+2. **Validate and minimise**: Check the schema, required fields and consent state. Reject malformed input and retain only necessary data.
+3. **Deduplicate**: Use a stable event or transaction identifier so a retry cannot send duplicate emails, invoices or access grants.
+4. **Execute with limits**: Apply least-privilege credentials, timeouts, rate limits and bounded retries with backoff.
+5. **Observe and recover**: Record non-sensitive operational logs, alert on failures, quarantine unresolved events and document manual replay or rollback.
+
+Payment, refunds, account deletion, public publishing and large sends should use explicit approval or stronger controls. Never place secrets in source code, browser-visible variables or logs.`,
+            practicalExamples: ['Test a GOM-MAR lead workflow with a valid event, a duplicate event and a deliberately invalid payload; verify that each produces the expected safe outcome.'],
+          },
+          understandContent: { coreTakeaway: 'Reliable automation assumes failures will occur and makes them visible, limited and recoverable.', keyPrinciples: ['Authenticate, validate and deduplicate every event', 'Use bounded retries, alerts and recovery procedures'] },
+          actionTask: { instruction: 'Review active GOM-MAR automation triggers and their failure controls:', placeholder: 'Automation controls reviewed' },
+        },
+        '16.2': {
+          stageTitle: '16. AI Automation, Processes & Reliable Operations', title: 'AI-assisted customer support & safe escalation',
+          description: 'Use AI for approved FAQs, classification and drafting while preserving privacy, honest disclosure and dependable access to a person.',
+          learnContent: {
+            videoTitle: 'Support automation with boundaries and human handoff',
+            summaryText: 'AI can speed up routine support, but resolution rates vary and sensitive, uncertain or consequential cases need trained human review.',
+            bulletPoints: ['Ground answers in an approved, versioned knowledge base and show when information was last reviewed', 'Minimise personal data and restrict access to tickets and conversation history', 'Escalate uncertainty, complaints, payments, safety, privacy and account-access cases to a person'],
+            fullArticleGuide: `### Design support around customer safety
+
+An AI assistant should clearly identify itself, describe its limits and provide a visible route to human help. Do not promise 24/7 resolution merely because an automated reply is always available.
+
+#### A responsible support workflow
+
+* **Curated knowledge**: Use approved FAQs, product instructions and policies with owners, review dates and source links.
+* **Constrained answers**: Require the assistant to say when it is uncertain and prevent invented policies, refunds, legal conclusions or account changes.
+* **Data protection**: Avoid requesting passwords, full payment credentials or unnecessary sensitive information. Redact logs and define retention.
+* **Risk-based escalation**: Immediately hand off security, privacy, billing disputes, vulnerable customers, threats, repeated failures and low-confidence answers.
+* **Quality review**: Sample conversations, measure correct resolution and escalation—not only response speed—and provide a correction channel.
+
+Automated password resets must use the product’s secure identity flow; a chatbot should never bypass authentication or reveal account data.`,
+            practicalExamples: ['Use Mara to draft five FAQ responses, attach an approved source to each, add an uncertainty response and define exactly when a human ticket is created.'],
+          },
+          understandContent: { coreTakeaway: 'Useful AI support combines fast routine assistance with privacy safeguards, honest limits and reliable human escalation.', keyPrinciples: ['Ground responses in reviewed sources', 'Escalate sensitive or uncertain cases'] },
+          actionTask: { instruction: 'Create and review sourced FAQ answers and escalation rules with Mara:', placeholder: 'FAQ and escalation rules reviewed' },
+        },
+        '16.3': {
+          stageTitle: '16. AI Automation, Processes & Reliable Operations', title: 'An operational control system—not a business autopilot',
+          description: 'Combine automations into a manageable operating system with ownership, dashboards, approval gates and regular maintenance.',
+          learnContent: {
+            videoTitle: 'From repetitive operations to supervised systems',
+            summaryText: 'Automation can reduce manual effort, but a business still needs accountable decisions, customer care, security updates, financial control and incident response.',
+            bulletPoints: ['Assign an owner, purpose, permissions and recovery procedure to every critical workflow', 'Monitor customer outcomes, failures, costs and security—not only marketing KPIs', 'Schedule reviews for credentials, vendors, knowledge, consent, backups and approval rules'],
+            fullArticleGuide: `### Your goal: a supervised and resilient operating system
+
+The useful version of “autopilot” is not an unattended business. It is a set of documented routines that handle low-risk repetition while people retain responsibility for strategy and consequential decisions.
+
+#### Weekly operational review
+
+1. **Customer journey**: Check delivery, access, support, complaints, refunds and accessibility problems.
+2. **Workflow health**: Review failures, retries, duplicates, queue age, provider status and unusual volume.
+3. **Marketing and economics**: Examine qualified outcomes, consent, campaign spend, contribution margin and misleading or outdated content.
+4. **Security and privacy**: Review access changes, suspicious events, secret expiry, processor issues and deletion or rights requests.
+5. **Improvement decision**: Select one verified bottleneck, assign an owner and test a bounded change with rollback criteria.
+
+Maintain an incident contact list, backups, restoration tests and a manual fallback for critical customer processes. Automation changes the work; it does not remove accountability.`,
+            practicalExamples: ['Create a one-page register listing each critical automation, owner, data used, credentials, failure alert, approval requirement and recovery procedure.'],
+          },
+          understandContent: { coreTakeaway: 'Sustainable automation reduces repetition while keeping ownership, oversight and recovery firmly in place.', keyPrinciples: ['Automate low-risk repetition, not accountability', 'Review and test critical systems regularly'] },
+          actionTask: { instruction: 'Complete the operations module and confirm your control foundations:', checklistItems: ['I can secure, validate, deduplicate and monitor webhook workflows', 'I can define grounded AI support with reliable human escalation', 'Every critical automation has an owner, controls and a recovery path'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -2703,6 +2785,88 @@ Skaluj stopniowo tylko wtedy, gdy wyniki pozostają wiarygodne po kosztach. Nie 
           },
           understandContent: { coreTakeaway: 'Płatny rozwój staje się łatwiejszy do zarządzania dzięki prawdziwym kreacjom, kontrolowanym testom i pełnej ekonomii jednostkowej, a nie obietnicy autopilota.', keyPrinciples: ['Stosuj limity budżetu i zgodności', 'Skaluj potwierdzoną marżę, nie sam nagłówkowy ROAS'] },
           actionTask: { instruction: 'Ukończ moduł skalowania i potwierdź kontrolowany plan rozwoju:', checklistItems: ['Potrafię walidować jeden rynek i zlokalizowaną ścieżkę naraz', 'Potrafię zbudować przejrzysty proces kwalifikacji kontrolowany przez człowieka', 'Potrafię określić ograniczony test reklamowy z kontrolą twierdzeń, budżetu i zatrzymania'] },
+        },
+      },
+    },
+    16: {
+      title: '16. Automatyzacja AI, procesy i niezawodne operacje',
+      subtitle: 'Wydajne workflow z kontrolą i odpowiedzialnym nadzorem',
+      description: 'Połącz CRM, e-mail, płatności i usługi AI w obserwowalne procesy, które bezpiecznie obsługują błędy, a istotne działania pozostawiają pod kontrolą człowieka.',
+      lessons: {
+        '16.1': {
+          stageTitle: '16. Automatyzacja AI, procesy i niezawodne operacje', title: 'Zintegrowane workflow i bezpieczne webhooki',
+          description: 'Połącz źródła kontaktów, e-mail, CRM i płatności, jednocześnie walidując dane, uwierzytelniając zdarzenia i bezpiecznie obsługując błędy.',
+          learnContent: {
+            videoTitle: 'Automatyzacja workflow: integracje, webhooki i zabezpieczenia',
+            summaryText: 'Automatyzacja ogranicza powtarzalną pracę, lecz niezawodny przepływ wymaga uwierzytelniania, walidacji, idempotencji, monitorowania i procedury odzyskiwania.',
+            bulletPoints: ['Uwierzytelniaj nadawców webhooków i przyznawaj integracjom tylko niezbędne uprawnienia', 'Waliduj, minimalizuj i mapuj dane przed ich użyciem', 'Zapobiegaj duplikatom, a błędy kieruj do logów, alertów i kontrolowanych ponowień'],
+            fullArticleGuide: `### Buduj automatyzację, której można zaufać
+
+Żaden workflow nie jest trwale bezbłędny. Dostawcy mają przerwy, format danych się zmienia, użytkownicy wysyłają formularz dwukrotnie, a poświadczenia wygasają. Proces produkcyjny musi wykrywać i ograniczać te awarie.
+
+#### Bezpieczny cykl zdarzenia
+
+1. **Wyzwalacz**: Odbierz zdarzenie przez uwierzytelnione połączenie. Sprawdź podpis, czas i oczekiwane źródło.
+2. **Walidacja i minimalizacja**: Sprawdź schemat, pola oraz stan zgody. Odrzuć błędne dane i zachowaj tylko to, co potrzebne.
+3. **Usuwanie duplikatów**: Użyj stałego identyfikatora zdarzenia lub transakcji, aby ponowienie nie wysłało kolejnego e-maila, faktury lub dostępu.
+4. **Wykonanie z limitami**: Stosuj minimalne uprawnienia, limity czasu i częstotliwości oraz ograniczone ponowienia z opóźnieniem.
+5. **Obserwacja i odzyskiwanie**: Zapisuj bezpieczne logi operacyjne, alarmuj o błędach, izoluj nierozwiązane zdarzenia i opisz ręczne odtworzenie lub wycofanie.
+
+Płatności, zwroty, usuwanie kont, publikacja i masowe wysyłki powinny wymagać jawnej akceptacji lub silniejszych kontroli. Nie umieszczaj sekretów w kodzie, zmiennych widocznych w przeglądarce ani logach.`,
+            practicalExamples: ['Przetestuj workflow kontaktu GOM-MAR poprawnym zdarzeniem, duplikatem i celowo błędnymi danymi; sprawdź, czy każde kończy się oczekiwanym bezpiecznym wynikiem.'],
+          },
+          understandContent: { coreTakeaway: 'Niezawodna automatyzacja zakłada wystąpienie błędów i czyni je widocznymi, ograniczonymi oraz możliwymi do naprawienia.', keyPrinciples: ['Uwierzytelniaj, waliduj i deduplikuj każde zdarzenie', 'Stosuj ograniczone ponowienia, alerty i procedury odzyskiwania'] },
+          actionTask: { instruction: 'Sprawdź aktywne wyzwalacze GOM-MAR oraz kontrolę błędów:', placeholder: 'Kontrole automatyzacji sprawdzone' },
+        },
+        '16.2': {
+          stageTitle: '16. Automatyzacja AI, procesy i niezawodne operacje', title: 'Obsługa klienta wspierana przez AI i bezpieczna eskalacja',
+          description: 'Używaj AI do zatwierdzonych FAQ, klasyfikacji i szkiców, zachowując prywatność, uczciwe informowanie i niezawodny dostęp do człowieka.',
+          learnContent: {
+            videoTitle: 'Automatyzacja obsługi z granicami i przekazaniem człowiekowi',
+            summaryText: 'AI może przyspieszyć rutynową obsługę, lecz skuteczność jest różna, a sprawy wrażliwe, niepewne lub istotne wymagają kontroli wyszkolonej osoby.',
+            bulletPoints: ['Opieraj odpowiedzi na zatwierdzonej, wersjonowanej bazie wiedzy i pokazuj datę kontroli', 'Minimalizuj dane osobowe i ogranicz dostęp do zgłoszeń oraz historii rozmów', 'Przekazuj człowiekowi niepewność, reklamacje, płatności, bezpieczeństwo, prywatność i dostęp do konta'],
+            fullArticleGuide: `### Projektuj obsługę wokół bezpieczeństwa klienta
+
+Asystent AI powinien jasno się identyfikować, opisywać ograniczenia i udostępniać widoczną drogę do pomocy człowieka. Całodobowa automatyczna odpowiedź nie oznacza całodobowego rozwiązania sprawy.
+
+#### Odpowiedzialny workflow obsługi
+
+* **Kontrolowana wiedza**: Używaj zatwierdzonych FAQ, instrukcji i zasad z właścicielem, datą kontroli oraz źródłami.
+* **Ograniczone odpowiedzi**: Wymagaj przyznania niepewności i blokuj wymyślanie zasad, zwrotów, wniosków prawnych lub zmian konta.
+* **Ochrona danych**: Nie proś o hasła, pełne dane płatnicze ani zbędne informacje wrażliwe. Redaguj logi i określ okres przechowywania.
+* **Eskalacja według ryzyka**: Natychmiast przekazuj bezpieczeństwo, prywatność, spory płatnicze, osoby podatne, groźby, powtarzalne błędy i odpowiedzi o niskiej pewności.
+* **Kontrola jakości**: Przeglądaj próbki rozmów i mierz poprawne rozwiązanie oraz eskalację, nie tylko szybkość. Zapewnij sposób korekty.
+
+Reset hasła musi korzystać z bezpiecznego procesu tożsamości produktu; chatbot nie może omijać uwierzytelniania ani ujawniać danych konta.`,
+            practicalExamples: ['Użyj Mary do przygotowania pięciu FAQ, dodaj zatwierdzone źródło do każdego, odpowiedź na niepewność i dokładne reguły utworzenia zgłoszenia dla człowieka.'],
+          },
+          understandContent: { coreTakeaway: 'Użyteczna obsługa AI łączy szybką rutynową pomoc z ochroną prywatności, uczciwymi ograniczeniami i niezawodną eskalacją.', keyPrinciples: ['Opieraj odpowiedzi na sprawdzonych źródłach', 'Eskaluj sprawy wrażliwe lub niepewne'] },
+          actionTask: { instruction: 'Utwórz i sprawdź oparte na źródłach FAQ oraz reguły eskalacji z Marą:', placeholder: 'FAQ i reguły eskalacji sprawdzone' },
+        },
+        '16.3': {
+          stageTitle: '16. Automatyzacja AI, procesy i niezawodne operacje', title: 'System kontroli operacyjnej zamiast autopilota biznesu',
+          description: 'Połącz automatyzacje w zarządzalny system z właścicielami, dashboardami, progami akceptacji i regularnym utrzymaniem.',
+          learnContent: {
+            videoTitle: 'Od powtarzalnych operacji do nadzorowanych systemów',
+            summaryText: 'Automatyzacja może zmniejszyć wysiłek ręczny, ale firma nadal wymaga odpowiedzialnych decyzji, obsługi klienta, aktualizacji zabezpieczeń, kontroli finansowej i reakcji na incydenty.',
+            bulletPoints: ['Przypisz właściciela, cel, uprawnienia i procedurę odzyskiwania do każdego krytycznego workflow', 'Monitoruj wyniki klientów, błędy, koszty i bezpieczeństwo, a nie tylko KPI marketingu', 'Planuj przeglądy poświadczeń, dostawców, wiedzy, zgód, kopii zapasowych i reguł akceptacji'],
+            fullArticleGuide: `### Cel: nadzorowany i odporny system operacyjny
+
+Użyteczny „autopilot” nie oznacza firmy bez nadzoru. To udokumentowane procedury obsługujące powtarzalne zadania niskiego ryzyka, podczas gdy ludzie odpowiadają za strategię i istotne decyzje.
+
+#### Cotygodniowy przegląd operacyjny
+
+1. **Ścieżka klienta**: Sprawdź dostarczenie, dostęp, support, reklamacje, zwroty i problemy dostępności.
+2. **Stan workflow**: Przejrzyj błędy, ponowienia, duplikaty, wiek kolejki, status dostawców i nietypowy wolumen.
+3. **Marketing i ekonomia**: Oceń kwalifikowane wyniki, zgody, wydatki, marżę i mylące lub nieaktualne treści.
+4. **Bezpieczeństwo i prywatność**: Sprawdź zmiany dostępu, podejrzane zdarzenia, wygasanie sekretów, problemy procesorów i żądania praw lub usunięcia.
+5. **Decyzja o poprawie**: Wybierz jedno potwierdzone wąskie gardło, przypisz właściciela i przetestuj ograniczoną zmianę z kryterium wycofania.
+
+Utrzymuj listę kontaktów incydentowych, kopie zapasowe, testy odtworzenia i ręczny proces awaryjny dla krytycznej obsługi klienta. Automatyzacja zmienia pracę, ale nie usuwa odpowiedzialności.`,
+            practicalExamples: ['Utwórz jednostronicowy rejestr każdego krytycznego procesu: właściciel, używane dane, poświadczenia, alert błędu, wymagana akceptacja i procedura odzyskiwania.'],
+          },
+          understandContent: { coreTakeaway: 'Trwała automatyzacja ogranicza powtarzalność, zachowując jasną odpowiedzialność, nadzór i odzyskiwanie.', keyPrinciples: ['Automatyzuj rutynę niskiego ryzyka, nie odpowiedzialność', 'Regularnie sprawdzaj i testuj systemy krytyczne'] },
+          actionTask: { instruction: 'Ukończ moduł operacyjny i potwierdź podstawy kontroli:', checklistItems: ['Potrafię zabezpieczyć, walidować, deduplikować i monitorować webhooki', 'Potrafię określić obsługę AI opartą na wiedzy z niezawodną eskalacją', 'Każda krytyczna automatyzacja ma właściciela, kontrolę i procedurę odzyskiwania'] },
         },
       },
     },
