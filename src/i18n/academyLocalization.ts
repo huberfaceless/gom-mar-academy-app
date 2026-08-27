@@ -2040,6 +2040,81 @@ Do not impose rules such as “90% means contact within four hours” unless a s
         },
       },
     },
+    25: {
+      title: '25. Coordinated Channels & Responsible Scaling',
+      subtitle: 'Sustainable reach, consent-aware retargeting and controlled sales operations',
+      description: 'Coordinate a manageable channel mix, reuse content appropriately and scale only after measurement, customer safeguards and operational capacity are proven.',
+      lessons: {
+        '25.1': {
+          stageTitle: '25. Coordinated Channels & Responsible Scaling', title: 'Multi-channel planning, retargeting & content reuse',
+          description: 'Build a focused channel plan that respects consent, platform context, frequency and audience wellbeing instead of pursuing omnipresence.',
+          learnContent: {
+            videoTitle: 'Coordinated channels and privacy-aware retargeting',
+            summaryText: 'More touchpoints do not automatically create trust or sales. Choose channels from evidence, adapt content to each context and limit repeated advertising.',
+            bulletPoints: ['Select channels from audience evidence, capacity and measurable purpose rather than trying to appear everywhere', 'Use discovery, education and decision support as flexible journey states—not labels of a person’s psychology', 'Repurpose a source only when rights, accuracy, accessibility and platform context are preserved', 'Apply consent, suppression, retention and frequency controls before creating or synchronising audiences', 'Use UTM parameters and permitted events as partial attribution evidence, not “complete” conversion tracking'],
+            coreConcepts: [
+              { iconName: 'layers', title: 'JOURNEY-BASED COMMUNICATION', description: 'Match useful information to an observed process state without inferring sensitive traits or using artificial scarcity.', highlight: true },
+              { iconName: 'trending_up', title: 'SUSTAINABLE CHANNEL MIX', description: 'Coordinate only the channels the team can maintain, measure and support. Familiarity is not the same as authority or trust.' },
+              { iconName: 'sparkles', title: 'CONTEXTUAL REPURPOSING', description: 'Transform a verified source into fewer, useful formats with platform-specific editing, captions, attribution and quality review.' },
+            ],
+            resources: [
+              { title: 'Retargeting Planning Blueprints', subtitle: 'Campaign safeguards and budget worksheet', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Email & CRM Campaigns', subtitle: 'Coordinate permitted follow-up journeys', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Design coordinated reach without surveillance or pressure
+
+“Omnipresence” can create excessive frequency, wasted spend and a poor customer experience. The goal is useful continuity across a limited set of channels.
+
+#### A responsible three-part journey
+
+1. **Discovery**: Offer accessible organic content or ads to an eligible audience. Explain tracking and collect only the data needed for a defined purpose.
+2. **Education and evaluation**: Provide tutorials, comparisons and authorised case studies. Include limitations and do not hide commercial relationships.
+3. **Decision support**: Present a clear offer, price, terms and genuine availability. Never use fabricated scarcity, countdowns that reset or targeting based on vulnerability.
+
+Before activating a pixel, audience upload or CRM synchronisation, confirm the legal basis, consent requirements, platform terms, retention, deletion, suppression and cross-border arrangements. Hashing an identifier does not make personal data anonymous.
+
+Set frequency caps by channel and campaign, exclude converted or objecting users where appropriate and provide a way to change preferences. Validate UTM governance and event definitions, but expect attribution gaps across devices and privacy controls. Monitor reach, incremental outcomes, complaints, fatigue, accessibility and marginal cost—not revenue alone.`,
+            practicalExamples: ['Run a small, consent-compatible campaign on one primary and one supporting channel, with a documented frequency cap, exclusion rules and an incrementality check.', 'Turn one verified guide into a short video, email and platform post only after adapting the format and rechecking claims, rights and captions.'],
+          },
+          understandContent: { coreTakeaway: 'Coordinated marketing is effective when it is relevant, limited, measurable and respectful—not when a brand follows people everywhere.', keyPrinciples: ['Establish privacy and audience controls before retargeting', 'Optimise incremental value and customer experience, not raw frequency', 'Adapt repurposed content to each channel'] },
+          actionTask: { instruction: 'Create a responsible channel and retargeting plan:', checklistItems: ['Purpose, audience eligibility and channel capacity documented', 'Consent, pixel, retention and suppression controls verified', 'Journey content contains no artificial scarcity or unsupported case studies', 'Frequency caps and converted-user exclusions configured', 'A four-week contextual content-reuse workflow defined'], toolboxCategory: 'landingpage' },
+        },
+        '25.2': {
+          stageTitle: '25. Coordinated Channels & Responsible Scaling', title: 'Controlled funnel scaling & high-consideration sales',
+          description: 'Scale a high-consideration sales process only when qualification is fair, follow-up is permitted and unit economics, delivery and customer outcomes support growth.',
+          learnContent: {
+            videoTitle: 'High-consideration funnel design and scaling controls',
+            summaryText: 'Automation can organise applications, reminders and drafts, but it cannot guarantee five-figure customers, 40% close rates or 85% attendance. Scale follows validated economics and service capacity.',
+            bulletPoints: ['Use a short application only for information necessary to assess mutual fit', 'Offer accessible reminders through permitted channels with clear rescheduling and cancellation', 'Prepare prospects with accurate material rather than persuasive sequences designed to remove every objection', 'Track CAC, contribution margin, payback, retention, refunds, complaints and delivery capacity by cohort', 'Route records with explainable rules and human review; generate proposals and contracts from approved data only'],
+            coreConcepts: [
+              { iconName: 'target', title: 'FAIR MUTUAL QUALIFICATION', description: 'Assess whether the offer and customer needs fit each other. Do not screen people through unnecessary sensitive or financial questions.', highlight: true },
+              { iconName: 'zap', title: 'RESPECTFUL ATTENDANCE SUPPORT', description: 'Improve attendance with confirmations, calendar details and easy rescheduling—not pressure or unsupported “booster” claims.' },
+            ],
+            resources: [
+              { title: 'High-Consideration Qualification Questionnaire', subtitle: 'Accessible template for a reviewed application flow', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Prioritisation', subtitle: 'Review explainable routing suggestions', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Scale a sales process only after proving it works safely
+
+Higher-priced or complex offers often require more context, but automation should reduce administrative friction rather than manipulate decisions.
+
+#### A controlled process
+
+1. **Mutual-fit form**: Ask only relevant questions about goals, needs, timing and service fit. Explain why data is needed, make optional fields clear and avoid sensitive data unless strictly necessary and lawful.
+2. **Booking and preparation**: Confirm time zone, accessibility needs, agenda, cancellation and rescheduling. Use genuine examples with permission and representative limitations.
+3. **Reviewed routing**: Apply documented, testable rules. A human checks unusual cases, capacity and fairness before assignment.
+4. **Conversation and decision**: Give the prospect time, accurate terms and a contact route. Do not exploit urgency, financial distress or other vulnerabilities.
+5. **Post-call workflow**: Generate drafts from approved facts, require review for price and contractual terms, record consent and stop inappropriate follow-up.
+6. **Scaling gate**: Increase spend or volume only if data quality, contribution margin, refund and complaint rates, service capacity, response time and customer outcomes remain acceptable.
+
+CAC and LTV are estimates shaped by attribution, cohort and time horizon. Define them consistently, include relevant costs and run sensitivity scenarios. Keep budget caps, staged rollouts and rollback criteria.`,
+            practicalExamples: ['Pilot the flow with a small cohort and a weekly human review. Increase volume only if economics, fairness, delivery quality and customer outcomes remain within predefined limits.'],
+          },
+          understandContent: { coreTakeaway: 'Responsible scaling grows a validated and supportable process; it does not automate pressure or promise fixed close and attendance rates.', keyPrinciples: ['Qualify for mutual fit with necessary data only', 'Require review for routing, proposals and contracts', 'Scale through staged evidence and rollback thresholds'] },
+          actionTask: { instruction: 'Prepare a controlled high-consideration sales flow:', checklistItems: ['Qualification questions are necessary, explained and accessible', 'Reminder consent, time zone, rescheduling and cancellation are configured', 'Routing rules are explainable and tested for unfair exclusions', 'Pricing, proposal and contract drafts require human approval', 'CAC, margin, delivery capacity, complaints and rollback thresholds are documented'], toolboxCategory: 'email' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -4063,6 +4138,81 @@ Nie narzucaj reguł typu „90% oznacza kontakt w cztery godziny”, jeśli nie 
           },
           understandContent: { coreTakeaway: 'Mara Insights to sprawdzalne i niepewne wsparcie decyzji; zgoda, walidacja i odpowiedzialna ocena człowieka decydują, czy follow-up jest właściwy.', keyPrinciples: ['Nie utożsamiaj trackingu zachowań z pewną intencją zakupu', 'Wyjaśniaj i waliduj każdą metodę priorytetyzacji', 'Przed kontaktem wymagaj kontroli pozwolenia i akceptacji człowieka'] },
           actionTask: { instruction: 'Bezpiecznie sprawdź Mara Insights na syntetycznym lub autoryzowanym rekordzie:', checklistItems: ['Cel, zgoda, źródło i status wykluczenia są widoczne', 'Można wyjaśnić sygnały, czas, niepewność i wersję scoringu', 'Sugestię działania sprawdzono względem częstotliwości, czasu lokalnego i kontekstu klienta', 'Szkic AI nie zawiera wymyślonych faktów, presji ani niepopartych twierdzeń', 'Bez wyraźnej akceptacji człowieka nie startuje wiadomość ani kampania'], toolboxCategory: 'email' },
+        },
+      },
+    },
+    25: {
+      title: '25. Skoordynowane kanały i odpowiedzialne skalowanie',
+      subtitle: 'Trwały zasięg, retargeting zgodny ze zgodą i kontrolowane działania sprzedażowe',
+      description: 'Koordynuj możliwy do utrzymania zestaw kanałów, właściwie adaptuj treści i skaluj dopiero po potwierdzeniu pomiaru, zabezpieczeń klienta oraz możliwości operacyjnych.',
+      lessons: {
+        '25.1': {
+          stageTitle: '25. Skoordynowane kanały i odpowiedzialne skalowanie', title: 'Plan wielokanałowy, retargeting i ponowne użycie treści',
+          description: 'Zbuduj skoncentrowany plan kanałów respektujący zgodę, kontekst platformy, częstotliwość i dobro odbiorców zamiast dążyć do wszechobecności.',
+          learnContent: {
+            videoTitle: 'Skoordynowane kanały i retargeting chroniący prywatność',
+            summaryText: 'Więcej punktów kontaktu nie tworzy automatycznie zaufania ani sprzedaży. Wybierz kanały na podstawie dowodów, dopasuj treść do kontekstu i ogranicz powtarzanie reklam.',
+            bulletPoints: ['Wybieraj kanały według danych o odbiorcach, możliwości i mierzalnego celu zamiast próbować być wszędzie', 'Traktuj odkrycie, edukację i wsparcie decyzji jako elastyczne stany ścieżki, a nie etykiety psychologii osoby', 'Adaptuj materiał źródłowy tylko z zachowaniem praw, dokładności, dostępności i kontekstu platformy', 'Przed tworzeniem lub synchronizacją grup stosuj kontrolę zgody, wykluczeń, retencji i częstotliwości', 'Traktuj parametry UTM i dozwolone zdarzenia jako częściowe dowody atrybucji, nie „pełny” tracking konwersji'],
+            coreConcepts: [
+              { iconName: 'layers', title: 'KOMUNIKACJA WEDŁUG ŚCIEŻKI', description: 'Dopasuj użyteczną informację do zaobserwowanego stanu procesu bez wnioskowania o cechach wrażliwych i bez sztucznej dostępności.', highlight: true },
+              { iconName: 'trending_up', title: 'TRWAŁY ZESTAW KANAŁÓW', description: 'Koordynuj tylko kanały, które zespół może utrzymać, mierzyć i obsługiwać. Rozpoznawalność nie oznacza autorytetu ani zaufania.' },
+              { iconName: 'sparkles', title: 'ADAPTACJA DO KONTEKSTU', description: 'Przekształć zweryfikowane źródło w mniejszą liczbę użytecznych formatów z redakcją dla platformy, napisami, atrybucją i kontrolą jakości.' },
+            ],
+            resources: [
+              { title: 'Plany retargetingu', subtitle: 'Zabezpieczenia kampanii i arkusz budżetu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kampanie e-mail i CRM', subtitle: 'Koordynuj dozwolone ścieżki follow-up', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Projektuj skoordynowany zasięg bez nadzoru i presji
+
+„Wszechobecność” może prowadzić do nadmiernej częstotliwości, marnowania budżetu i złego doświadczenia klienta. Celem jest użyteczna ciągłość w ograniczonej liczbie kanałów.
+
+#### Odpowiedzialna ścieżka w trzech częściach
+
+1. **Odkrycie**: Oferuj dostępne treści organiczne lub reklamy uprawnionej grupie. Wyjaśnij tracking i zbieraj tylko dane potrzebne do określonego celu.
+2. **Edukacja i ocena**: Udostępniaj poradniki, porównania i autoryzowane case studies. Pokazuj ograniczenia i nie ukrywaj relacji handlowych.
+3. **Wsparcie decyzji**: Przedstaw jasną ofertę, cenę, warunki i prawdziwą dostępność. Nie używaj fałszywego niedoboru, resetowanych liczników ani targetowania podatności.
+
+Przed aktywacją piksela, przesłaniem grupy lub synchronizacją CRM potwierdź podstawę prawną, wymagania zgody, zasady platformy, retencję, usuwanie, wykluczenia i transfery międzynarodowe. Haszowanie identyfikatora nie czyni danych osobowych anonimowymi.
+
+Ustaw limity częstotliwości według kanału i kampanii, wyklucz osoby po konwersji lub sprzeciwie, gdy właściwe, i umożliw zmianę preferencji. Waliduj parametry UTM oraz definicje zdarzeń, ale licz się z lukami atrybucji między urządzeniami i przez ochronę prywatności. Monitoruj zasięg, wynik przyrostowy, skargi, zmęczenie, dostępność i koszt krańcowy, nie tylko przychód.`,
+            practicalExamples: ['Uruchom małą kampanię zgodną ze zgodą w jednym głównym i jednym wspierającym kanale, z opisanym limitem częstotliwości, regułami wykluczenia i kontrolą przyrostowości.', 'Przekształć jeden zweryfikowany poradnik w krótki film, e-mail i post dopiero po dopasowaniu formatu i ponownym sprawdzeniu twierdzeń, praw oraz napisów.'],
+          },
+          understandContent: { coreTakeaway: 'Skoordynowany marketing działa, gdy jest trafny, ograniczony, mierzalny i pełen szacunku, a nie gdy marka śledzi ludzi wszędzie.', keyPrinciples: ['Przed retargetingiem ustaw ochronę prywatności i kontrolę grup', 'Optymalizuj wartość przyrostową i doświadczenie klienta, nie surową częstotliwość', 'Dopasuj ponownie używaną treść do każdego kanału'] },
+          actionTask: { instruction: 'Utwórz odpowiedzialny plan kanałów i retargetingu:', checklistItems: ['Udokumentowano cel, uprawnienie odbiorców i możliwości kanałów', 'Zweryfikowano zgodę, piksele, retencję i wykluczenia', 'Treści ścieżki nie zawierają sztucznego niedoboru ani niepopartych case studies', 'Ustawiono limity częstotliwości i wykluczenia po konwersji', 'Zdefiniowano czterotygodniowy workflow adaptacji treści'], toolboxCategory: 'landingpage' },
+        },
+        '25.2': {
+          stageTitle: '25. Skoordynowane kanały i odpowiedzialne skalowanie', title: 'Kontrolowane skalowanie lejka i sprzedaż wymagająca namysłu',
+          description: 'Skaluj proces sprzedaży ofert wymagających namysłu tylko wtedy, gdy kwalifikacja jest uczciwa, follow-up dozwolony, a ekonomia, realizacja i wyniki klientów wspierają wzrost.',
+          learnContent: {
+            videoTitle: 'Projekt lejka ofert wymagających namysłu i kontrola skalowania',
+            summaryText: 'Automatyzacja może porządkować zgłoszenia, przypomnienia i szkice, ale nie gwarantuje pięciocyfrowych klientów, 40% zamknięć ani 85% obecności. Skalowanie następuje po walidacji ekonomii i możliwości obsługi.',
+            bulletPoints: ['Używaj krótkiego formularza zgłoszeniowego tylko do informacji potrzebnych do oceny wzajemnego dopasowania', 'Oferuj dostępne przypomnienia w dozwolonych kanałach z łatwą zmianą lub anulowaniem terminu', 'Przygotuj odbiorców rzetelnymi materiałami zamiast sekwencji perswazji usuwających każdy sprzeciw', 'Mierz CAC, marżę pokrycia, czas zwrotu, retencję, zwroty, skargi i możliwości realizacji według kohorty', 'Kieruj rekordy wyjaśnialnymi regułami i kontrolą człowieka; generuj oferty oraz umowy wyłącznie z zatwierdzonych danych'],
+            coreConcepts: [
+              { iconName: 'target', title: 'UCZCIWA WZAJEMNA KWALIFIKACJA', description: 'Oceń, czy oferta i potrzeby klienta pasują do siebie. Nie filtruj ludzi przez zbędne pytania wrażliwe lub finansowe.', highlight: true },
+              { iconName: 'zap', title: 'WSPARCIE OBECNOŚCI Z SZACUNKIEM', description: 'Wspieraj obecność potwierdzeniami, danymi kalendarza i łatwą zmianą terminu, nie presją ani niepopartymi obietnicami „boostera”.' },
+            ],
+            resources: [
+              { title: 'Kwestionariusz kwalifikacji oferty wymagającej namysłu', subtitle: 'Dostępny szablon do kontrolowanego flow', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Priorytetyzacja Mara CRM', subtitle: 'Sprawdź wyjaśnialne sugestie routingu', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Skaluj proces sprzedaży dopiero po potwierdzeniu, że działa bezpiecznie
+
+Droższe lub złożone oferty często wymagają więcej kontekstu, lecz automatyzacja powinna zmniejszać tarcie administracyjne, a nie manipulować decyzjami.
+
+#### Kontrolowany proces
+
+1. **Formularz wzajemnego dopasowania**: Pytaj tylko o istotne cele, potrzeby, czas i zakres usługi. Wyjaśnij cel danych, oznacz pola opcjonalne i unikaj danych wrażliwych, jeśli nie są bezwzględnie konieczne i legalne.
+2. **Rezerwacja i przygotowanie**: Potwierdź strefę czasową, potrzeby dostępności, agendę, anulowanie i zmianę terminu. Używaj prawdziwych przykładów za zgodą i z reprezentatywnymi ograniczeniami.
+3. **Kontrolowany routing**: Stosuj opisane, testowalne reguły. Człowiek sprawdza nietypowe przypadki, możliwości i uczciwość przed przypisaniem.
+4. **Rozmowa i decyzja**: Daj odbiorcy czas, dokładne warunki i drogę kontaktu. Nie wykorzystuj pilności, trudności finansowych ani innych podatności.
+5. **Workflow po rozmowie**: Twórz szkice z zatwierdzonych faktów, wymagaj kontroli ceny i warunków umowy, zapisuj zgodę i zatrzymuj niewłaściwy follow-up.
+6. **Brama skalowania**: Zwiększaj budżet lub wolumen tylko, gdy jakość danych, marża, zwroty, skargi, możliwości obsługi, czas odpowiedzi i wyniki klientów pozostają akceptowalne.
+
+CAC i LTV są szacunkami zależnymi od atrybucji, kohorty i horyzontu. Definiuj je spójnie, uwzględniaj istotne koszty i analizuj scenariusze. Zachowaj limity budżetu, etapowe wdrożenie i kryteria rollbacku.`,
+            practicalExamples: ['Przetestuj flow na małej kohorcie z cotygodniowym przeglądem człowieka. Zwiększaj wolumen tylko wtedy, gdy ekonomia, uczciwość, jakość realizacji i wyniki klientów mieszczą się w określonych granicach.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialne skalowanie rozwija zwalidowany i możliwy do obsługi proces; nie automatyzuje presji ani nie obiecuje stałych wskaźników zamknięcia i obecności.', keyPrinciples: ['Kwalifikuj wzajemne dopasowanie tylko potrzebnymi danymi', 'Wymagaj kontroli routingu, ofert i umów', 'Skaluj etapowo na podstawie dowodów i progów rollbacku'] },
+          actionTask: { instruction: 'Przygotuj kontrolowany proces sprzedaży wymagającej namysłu:', checklistItems: ['Pytania kwalifikacyjne są potrzebne, wyjaśnione i dostępne', 'Skonfigurowano zgodę na przypomnienia, strefę czasową, zmianę i anulowanie', 'Reguły routingu są wyjaśnialne i sprawdzone pod kątem niesprawiedliwych wykluczeń', 'Cena, oferta i szkice umów wymagają akceptacji człowieka', 'Udokumentowano CAC, marżę, możliwości realizacji, skargi i progi rollbacku'], toolboxCategory: 'email' },
         },
       },
     },
