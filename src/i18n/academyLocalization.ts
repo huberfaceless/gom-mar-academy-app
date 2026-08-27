@@ -1278,6 +1278,88 @@ This lesson is a planning checklist, not legal, tax or accounting advice.`,
         },
       },
     },
+    15: {
+      title: '15. AI-Assisted Scaling & Global Markets',
+      subtitle: 'International funnels, qualification & paid growth',
+      description: 'Test international markets, qualify suitable prospects, and use AI to support—rather than blindly automate—responsible paid-growth workflows.',
+      lessons: {
+        '15.1': {
+          stageTitle: '15. AI-Assisted Scaling & Global Markets', title: 'Multilingual localisation & global market testing',
+          description: 'Use AI-assisted translation and human review to adapt funnels, emails and landing pages for selected international audiences.',
+          learnContent: {
+            videoTitle: 'International expansion through responsible localisation',
+            summaryText: 'A translation can open a market test, but successful localisation also requires cultural, legal, commercial and linguistic validation.',
+            bulletPoints: ['Select one promising market using evidence instead of assumed audience multiples', 'Use AI for a first draft, then review meaning, tone, terminology and claims with a proficient human', 'Adapt currency, examples, support, consent, taxes and consumer information to the target market'],
+            fullArticleGuide: `### International growth is a validation process
+
+AI can reduce the time needed to prepare a localised draft, but it does not remove language risk, cultural differences, local law, customer support needs or product-market fit.
+
+#### A practical market-entry sequence
+
+1. **Choose one market**: Study demand, competition, acquisition cost, purchasing power, payment preferences and your ability to serve customers there.
+2. **Localise the complete journey**: Adapt the message, examples, units, currencies, dates, forms, emails, checkout, support and legal information—not only the headline.
+3. **Review quality**: Have a proficient person check meaning, brand voice, idioms, sensitive wording and factual claims. Back-translation can reveal important errors.
+4. **Run a limited test**: Start with a small audience and measure qualified leads, conversion, refunds, support demand and customer feedback by language.
+5. **Improve before expanding**: Fix the largest verified problem before adding another language or increasing spend.
+
+AI output requires human accountability. Never publish invented testimonials, inaccurate guarantees or untranslated legal and checkout elements.`,
+            practicalExamples: ['Switch the GOM-MAR landing-page and Academy language, then test the complete path with a proficient English- or Polish-speaking reviewer before sending campaign traffic.'],
+          },
+          understandContent: { coreTakeaway: 'International growth comes from careful localisation and market validation, not translation alone.', keyPrinciples: ['Validate one market at a time', 'Use qualified human review for customer-facing content'] },
+          actionTask: { instruction: 'Test and review the language switch and one complete localised user journey:', placeholder: 'Localised journey reviewed' },
+        },
+        '15.2': {
+          stageTitle: '15. AI-Assisted Scaling & Global Markets', title: 'Higher-value offers & responsible qualification',
+          description: 'Build a transparent qualification and booking flow for coaching, agency or consulting offers that genuinely match the prospect’s needs.',
+          learnContent: {
+            videoTitle: 'Higher-value offers: fit before automation',
+            summaryText: 'Forms and scheduling can organise enquiries, but a higher price does not guarantee higher profit, easier delivery or suitable customers.',
+            bulletPoints: ['Ask only necessary questions about goals, context, timing and fit', 'Use AI to summarise information—not to make opaque eligibility decisions', 'Explain scope, price, requirements, limitations and the purpose of the call before booking'],
+            fullArticleGuide: `### The purpose of a qualification funnel
+
+Qualification should help both parties decide whether a conversation is useful. It must not manipulate people, discriminate unlawfully or present an automated score as professional judgement.
+
+#### A responsible qualification chain
+
+1. **Clear offer page**: Describe the intended customer, scope, price or price range, delivery format, exclusions and realistic outcomes.
+2. **Short enquiry form**: Ask a small number of relevant questions. Avoid sensitive personal data unless it is necessary, lawful and properly protected.
+3. **Human-owned review**: AI may structure or summarise answers, but a responsible person should validate consequential decisions and provide a contact route.
+4. **Booking and preparation**: Offer suitable prospects a genuine consultation slot and explain duration, participants, preparation and cancellation terms.
+5. **Honest sales conversation**: Diagnose needs, disclose limitations and recommend against purchase when the offer is not a good fit.
+
+Revenue per sale is not profit. Include fulfilment time, support, refunds, acquisition costs, taxes and capacity before deciding that a higher-value offer is commercially better.`,
+            practicalExamples: ['Use Mara to draft five neutral qualification questions, then remove unnecessary or sensitive fields and define a documented human-review step.'],
+          },
+          understandContent: { coreTakeaway: 'Good qualification protects prospects and delivery quality by establishing genuine fit before a sales conversation.', keyPrinciples: ['Collect only information needed for fit', 'Keep consequential decisions explainable and human-owned'] },
+          actionTask: { instruction: 'Create and review a transparent qualification script with Mara:', placeholder: 'Qualification script reviewed' },
+        },
+        '15.3': {
+          stageTitle: '15. AI-Assisted Scaling & Global Markets', title: 'Measured traffic scaling & AI-assisted advertising',
+          description: 'Use AI to develop ad variants, then control claims, consent, measurement, budgets and optimisation with human oversight.',
+          learnContent: {
+            videoTitle: 'Paid growth: controlled experiments instead of autopilot',
+            summaryText: 'AI can accelerate creative drafts and analysis, but no platform, campaign or model can guarantee conversions, profitable traffic or a maximum ROAS.',
+            bulletPoints: ['Create distinct, policy-compliant concepts and verify every factual or performance claim', 'Test one meaningful variable at a time with a defined budget and decision rule', 'Assess contribution margin, refunds and lead quality—not ROAS in isolation'],
+            fullArticleGuide: `### A controlled approach to paid traffic
+
+Paid advertising buys opportunities to reach an audience; it does not create predictable customers by itself. Results depend on the offer, audience, creative, landing page, tracking quality, competition and fulfilment.
+
+#### Five parts of a useful experiment
+
+1. **Define the objective**: Choose a business outcome and the event that validly represents it.
+2. **Build truthful variants**: Use AI for ideas and drafts, then verify claims, assets, rights, disclosures and platform-policy compliance.
+3. **Align the journey**: The ad and landing page should describe the same offer without hidden conditions or misleading urgency.
+4. **Set guardrails**: Define the test budget, duration, minimum evidence, stop conditions and who may approve changes.
+5. **Evaluate business value**: Review tracking limitations, qualified conversions, acquisition cost, contribution margin, refunds, retention and support load.
+
+Scale gradually only when results remain credible after costs. Do not let an AI system independently change budgets, targeting or claims without limits, logging and accountable human review.`,
+            practicalExamples: ['Generate five clearly different ad-hook drafts, verify every claim, select two for a limited test and document the budget, metric and stop rule before launch.'],
+          },
+          understandContent: { coreTakeaway: 'Paid growth becomes more manageable through truthful creative, controlled testing and complete unit economics—not through an autopilot promise.', keyPrinciples: ['Use budget and policy guardrails', 'Scale only verified contribution, not headline ROAS'] },
+          actionTask: { instruction: 'Complete the scaling module and confirm your controlled growth plan:', checklistItems: ['I can validate one international market and localised journey at a time', 'I can build a transparent, human-reviewed qualification flow', 'I can define a limited paid-ad experiment with claims, budget and stop controls'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -2539,6 +2621,88 @@ To lista planowania, a nie porada prawna, podatkowa ani księgowa.`,
           },
           understandContent: { coreTakeaway: 'Rzetelny biznes zaczyna się od właściwych dla kraju decyzji rejestracyjnych, podatkowych i dokumentacyjnych opartych na aktualnych faktach.', keyPrinciples: ['Weryfikuj obowiązki w kompetentnych lokalnych źródłach', 'Od początku prowadź pełną i chronioną dokumentację'] },
           actionTask: { instruction: 'Ukończ moduł Prawo i zgodność oraz potwierdź kolejne kroki weryfikacji:', checklistItems: ['Wiem, jak dokumentować zgodę i testować rezygnację', 'Dopasuję informacje prawne i prywatności do jurysdykcji oraz rzeczywistych przepływów danych', 'Wiem, który lokalny urząd lub doradca powinien potwierdzić moje obowiązki rejestracyjne i podatkowe'] },
+        },
+      },
+    },
+    15: {
+      title: '15. Skalowanie wspierane przez AI i rynki globalne',
+      subtitle: 'Międzynarodowe lejki, kwalifikacja i płatny rozwój',
+      description: 'Testuj rynki międzynarodowe, kwalifikuj odpowiednich zainteresowanych i wykorzystuj AI do wspierania—nie bezkrytycznej automatyzacji—odpowiedzialnego płatnego wzrostu.',
+      lessons: {
+        '15.1': {
+          stageTitle: '15. Skalowanie wspierane przez AI i rynki globalne', title: 'Wielojęzyczna lokalizacja i testowanie rynków',
+          description: 'Wykorzystaj tłumaczenie wspierane przez AI i kontrolę człowieka, aby dopasować lejki, wiadomości i landing page do wybranych odbiorców międzynarodowych.',
+          learnContent: {
+            videoTitle: 'Ekspansja międzynarodowa przez odpowiedzialną lokalizację',
+            summaryText: 'Tłumaczenie może otworzyć test rynku, ale skuteczna lokalizacja wymaga także weryfikacji kulturowej, prawnej, handlowej i językowej.',
+            bulletPoints: ['Wybierz jeden obiecujący rynek na podstawie danych, a nie założonych mnożników odbiorców', 'Użyj AI do pierwszej wersji, a następnie sprawdź znaczenie, ton, terminologię i twierdzenia z biegłą osobą', 'Dopasuj walutę, przykłady, obsługę, zgodę, podatki i informacje konsumenckie do rynku docelowego'],
+            fullArticleGuide: `### Rozwój międzynarodowy to proces walidacji
+
+AI może skrócić przygotowanie pierwszej wersji lokalizacji, lecz nie usuwa ryzyka językowego, różnic kulturowych, lokalnego prawa, potrzeb obsługi ani konieczności dopasowania produktu do rynku.
+
+#### Praktyczna kolejność wejścia na rynek
+
+1. **Wybierz jeden rynek**: Zbadaj popyt, konkurencję, koszt pozyskania, siłę nabywczą, preferencje płatnicze i możliwość obsługi klientów.
+2. **Zlokalizuj całą ścieżkę**: Dopasuj komunikat, przykłady, jednostki, waluty, daty, formularze, e-maile, zakup, obsługę i informacje prawne—a nie tylko nagłówek.
+3. **Sprawdź jakość**: Poproś biegłą osobę o kontrolę znaczenia, głosu marki, idiomów, wrażliwych sformułowań i twierdzeń. Tłumaczenie zwrotne może ujawnić ważne błędy.
+4. **Przeprowadź ograniczony test**: Zacznij od małej grupy i mierz kwalifikowane kontakty, konwersję, zwroty, obciążenie obsługi i opinie w danym języku.
+5. **Popraw przed ekspansją**: Usuń największy potwierdzony problem przed dodaniem języka lub zwiększeniem wydatków.
+
+Za wynik AI odpowiada człowiek. Nie publikuj zmyślonych opinii, nieprawdziwych gwarancji ani nieprzetłumaczonych elementów prawnych i zakupowych.`,
+            practicalExamples: ['Przełącz język landing page i Academy GOM-MAR, a potem przetestuj całą ścieżkę z biegłą osobą mówiącą po angielsku lub polsku przed uruchomieniem ruchu.'],
+          },
+          understandContent: { coreTakeaway: 'Rozwój międzynarodowy wynika ze starannej lokalizacji i walidacji rynku, a nie z samego tłumaczenia.', keyPrinciples: ['Waliduj jeden rynek naraz', 'Treści dla klientów poddawaj kontroli biegłej osoby'] },
+          actionTask: { instruction: 'Przetestuj zmianę języka i sprawdź jedną pełną zlokalizowaną ścieżkę użytkownika:', placeholder: 'Zlokalizowana ścieżka sprawdzona' },
+        },
+        '15.2': {
+          stageTitle: '15. Skalowanie wspierane przez AI i rynki globalne', title: 'Oferty o wyższej wartości i odpowiedzialna kwalifikacja',
+          description: 'Zbuduj przejrzysty proces kwalifikacji i rezerwacji dla coachingu, agencji lub doradztwa, który rzeczywiście odpowiada potrzebom zainteresowanego.',
+          learnContent: {
+            videoTitle: 'Oferty o wyższej wartości: dopasowanie przed automatyzacją',
+            summaryText: 'Formularze i kalendarz porządkują zapytania, lecz wyższa cena nie gwarantuje większego zysku, łatwiejszej realizacji ani odpowiednich klientów.',
+            bulletPoints: ['Pytaj tylko o potrzebne cele, kontekst, termin i dopasowanie', 'Używaj AI do podsumowania informacji, a nie nieprzejrzystych decyzji o kwalifikacji', 'Przed rezerwacją wyjaśnij zakres, cenę, wymagania, ograniczenia i cel rozmowy'],
+            fullArticleGuide: `### Cel lejka kwalifikacyjnego
+
+Kwalifikacja powinna pomóc obu stronom ocenić, czy rozmowa ma sens. Nie może manipulować, bezprawnie dyskryminować ani przedstawiać automatycznej punktacji jako profesjonalnej oceny.
+
+#### Odpowiedzialny proces kwalifikacji
+
+1. **Jasna strona oferty**: Opisz właściwego klienta, zakres, cenę lub przedział cenowy, sposób realizacji, wyłączenia i realistyczne rezultaty.
+2. **Krótki formularz**: Zadaj niewiele istotnych pytań. Unikaj danych wrażliwych, jeśli nie są konieczne, legalnie przetwarzane i chronione.
+3. **Kontrola człowieka**: AI może porządkować lub podsumowywać odpowiedzi, lecz odpowiedzialna osoba powinna zatwierdzać istotne decyzje i zapewnić kontakt.
+4. **Rezerwacja i przygotowanie**: Zaproponuj właściwym osobom prawdziwy termin i wyjaśnij czas, uczestników, przygotowanie oraz zasady odwołania.
+5. **Uczciwa rozmowa**: Zdiagnozuj potrzeby, ujawnij ograniczenia i odradź zakup, jeśli oferta nie pasuje.
+
+Przychód ze sprzedaży nie jest zyskiem. Uwzględnij realizację, obsługę, zwroty, koszt pozyskania, podatki i możliwości czasowe przed uznaniem droższej oferty za lepszą.`,
+            practicalExamples: ['Użyj Mary do przygotowania pięciu neutralnych pytań, usuń zbędne lub wrażliwe pola i określ udokumentowany etap kontroli człowieka.'],
+          },
+          understandContent: { coreTakeaway: 'Dobra kwalifikacja chroni zainteresowanego i jakość realizacji, ustalając prawdziwe dopasowanie przed rozmową sprzedażową.', keyPrinciples: ['Zbieraj tylko dane potrzebne do oceny dopasowania', 'Istotne decyzje pozostaw wyjaśnialne i pod kontrolą człowieka'] },
+          actionTask: { instruction: 'Utwórz i sprawdź przejrzysty skrypt kwalifikacyjny z Marą:', placeholder: 'Skrypt kwalifikacyjny sprawdzony' },
+        },
+        '15.3': {
+          stageTitle: '15. Skalowanie wspierane przez AI i rynki globalne', title: 'Mierzone skalowanie ruchu i reklamy wspierane przez AI',
+          description: 'Używaj AI do opracowania wariantów reklam, a twierdzenia, zgodę, pomiar, budżet i optymalizację kontroluj z udziałem człowieka.',
+          learnContent: {
+            videoTitle: 'Płatny rozwój: kontrolowane eksperymenty zamiast autopilota',
+            summaryText: 'AI może przyspieszyć tworzenie kreacji i analizę, ale żadna platforma, kampania ani model nie gwarantuje konwersji, rentownego ruchu lub maksymalnego ROAS.',
+            bulletPoints: ['Twórz odrębne koncepcje zgodne z zasadami i sprawdzaj każde twierdzenie faktyczne lub wynikowe', 'Testuj jedną istotną zmienną naraz z określonym budżetem i regułą decyzji', 'Oceniaj marżę pokrycia, zwroty i jakość kontaktów, a nie sam ROAS'],
+            fullArticleGuide: `### Kontrolowane podejście do płatnego ruchu
+
+Reklama płatna kupuje możliwość dotarcia do odbiorców; sama nie tworzy przewidywalnych klientów. Wyniki zależą od oferty, grupy, kreacji, landing page, jakości pomiaru, konkurencji i realizacji.
+
+#### Pięć elementów użytecznego eksperymentu
+
+1. **Określ cel**: Wybierz rezultat biznesowy i zdarzenie, które prawidłowo go reprezentuje.
+2. **Twórz prawdziwe warianty**: Użyj AI do pomysłów i szkiców, a następnie sprawdź twierdzenia, materiały, prawa, oznaczenia i zgodność z zasadami platformy.
+3. **Ujednolić ścieżkę**: Reklama i landing page powinny przedstawiać tę samą ofertę bez ukrytych warunków i mylącej presji czasu.
+4. **Ustal zabezpieczenia**: Określ budżet, czas, minimalne dowody, warunki zatrzymania i osobę zatwierdzającą zmiany.
+5. **Oceń wartość biznesową**: Sprawdź ograniczenia pomiaru, kwalifikowane konwersje, koszt pozyskania, marżę, zwroty, utrzymanie i obciążenie obsługi.
+
+Skaluj stopniowo tylko wtedy, gdy wyniki pozostają wiarygodne po kosztach. Nie pozwalaj AI samodzielnie zmieniać budżetu, targetowania ani twierdzeń bez limitów, logów i odpowiedzialnej kontroli człowieka.`,
+            practicalExamples: ['Wygeneruj pięć wyraźnie różnych hooków, sprawdź każde twierdzenie, wybierz dwa do ograniczonego testu i przed startem zapisz budżet, miernik oraz warunek zatrzymania.'],
+          },
+          understandContent: { coreTakeaway: 'Płatny rozwój staje się łatwiejszy do zarządzania dzięki prawdziwym kreacjom, kontrolowanym testom i pełnej ekonomii jednostkowej, a nie obietnicy autopilota.', keyPrinciples: ['Stosuj limity budżetu i zgodności', 'Skaluj potwierdzoną marżę, nie sam nagłówkowy ROAS'] },
+          actionTask: { instruction: 'Ukończ moduł skalowania i potwierdź kontrolowany plan rozwoju:', checklistItems: ['Potrafię walidować jeden rynek i zlokalizowaną ścieżkę naraz', 'Potrafię zbudować przejrzysty proces kwalifikacji kontrolowany przez człowieka', 'Potrafię określić ograniczony test reklamowy z kontrolą twierdzeń, budżetu i zatrzymania'] },
         },
       },
     },
