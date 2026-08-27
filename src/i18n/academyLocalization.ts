@@ -1036,6 +1036,89 @@ Use only consented data, minimise tracking, honour withdrawal immediately, and a
         },
       },
     },
+    12: {
+      title: '12. High-Performing Landing Pages & No-Code Builder',
+      subtitle: 'Build Fast, Accessible Pages Without Coding',
+      description: 'Create clear, fast landing pages without programming and improve mobile usability, consent, accessibility, and measurement.',
+      lessons: {
+        '12.1': {
+          stageTitle: '12. High-Performing Landing Pages & No-Code Builder', title: 'Anatomy of a Focused Opt-In Landing Page',
+          description: 'Combine a clear hero section, useful subheadline, simple form, and credible trust elements around one conversion goal.',
+          learnContent: {
+            videoTitle: 'Landing-Page Structure for Clearer Decisions',
+            summaryText: 'Learn a practical template for opt-in pages that explains the value, sets accurate expectations, and makes the next step easy to understand.',
+            bulletPoints: ['A clear above-the-fold value proposition', 'One primary action without unnecessary distractions', 'A responsive, accessible mobile-first layout'],
+            fullArticleGuide: `### A practical landing-page structure
+
+An opt-in page should help an eligible visitor understand the offer and decide whether to subscribe. Conversion rate matters, but informed consent and relevance come first.
+
+#### Essential elements
+
+1. **Simple header**: Use a recognisable logo and only genuine trust indicators.
+2. **Hero headline**: State the audience, problem, or desired outcome in plain language without exaggerated promises.
+3. **Subheadline**: Explain the specific value of the lead magnet and what the subscriber will receive.
+4. **Form and call to action**: Request only necessary information and describe the action accurately.
+5. **Consent and privacy**: Explain email use, link the privacy notice, and include any required consent wording.
+
+Treat benchmark conversion rates as context, not guarantees. Measure your own eligible traffic and improve the page through controlled tests.`,
+            practicalExamples: ['Use the GOM-MAR Landing Page Generator to create a first draft, then replace every placeholder and review the wording, consent, links, and mobile layout.'],
+          },
+          understandContent: { coreTakeaway: 'A focused page combines a clear benefit with transparent expectations and one easy next step.', keyPrinciples: ['Explain the value clearly', 'Keep forms minimal and consent transparent'] },
+          actionTask: { instruction: 'Configure and review your page in the GOM-MAR Landing Page Generator:', placeholder: 'Landing page reviewed' },
+        },
+        '12.2': {
+          stageTitle: '12. High-Performing Landing Pages & No-Code Builder', title: 'Mobile Optimisation & Fast Loading',
+          description: 'Improve smartphone usability, reduce loading time, and remove technical or visual barriers.',
+          learnContent: {
+            videoTitle: 'Speed, Accessibility & Mobile UX Optimisation',
+            summaryText: 'Learn how to create touch-friendly controls, readable layouts, efficient media, and reliable performance across common mobile devices.',
+            bulletPoints: ['Use touch targets that are easy to tap and clear form labels', 'Compress and correctly size images while preserving sufficient quality', 'Use HTTPS, an appropriate privacy notice, and accessible interaction states'],
+            fullArticleGuide: `### Mobile first: remove barriers for visitors
+
+Slow loading, unreadable text, and controls that are difficult to tap can interrupt a visitor before they understand the offer.
+
+#### Mobile review checklist
+
+* Use readable text—normally at least 16 px for body copy—and sufficient colour contrast.
+* Make interactive controls large enough to tap comfortably, with clear labels and visible focus states.
+* Serve modern, correctly sized images and avoid loading media that is not needed above the fold.
+* Do not use intrusive pop-ups that hide the page or make closing difficult.
+* Test keyboard navigation, screen-reader labels, error messages, and different viewport widths.
+* Measure real-user performance where possible instead of relying on one laboratory result.
+
+Fast is valuable, but stable layout, accessibility, and reliable functionality are equally important.`,
+            practicalExamples: ['Check the mobile preview in the GOM-MAR Builder and complete a real test on at least one iPhone-sized and one Android-sized viewport before publishing.'],
+          },
+          understandContent: { coreTakeaway: 'A fast, readable, accessible mobile page gives more visitors a fair chance to complete the intended action.', keyPrinciples: ['Optimise images and critical content', 'Design and test mobile first'] },
+          actionTask: { instruction: 'Complete the mobile and accessibility preview in the Landing Page Generator:', placeholder: 'Mobile review completed' },
+        },
+        '12.3': {
+          stageTitle: '12. High-Performing Landing Pages & No-Code Builder', title: 'Automated Connection & Go-Live',
+          description: 'Connect your landing page to a domain and consent-based email automation, then verify the complete subscriber journey.',
+          learnContent: {
+            videoTitle: 'Landing-Page Go-Live, Email Connection & Measurement',
+            summaryText: 'Connect the form to the correct email workflow, configure the domain, and run a complete test before sending live traffic.',
+            bulletPoints: ['Connect the form to the intended GOM-MAR email list and automation', 'Use your verified domain or an approved GOM-MAR subdomain with HTTPS', 'Submit a test entry and verify consent, confirmation, delivery, links, and unsubscribe behaviour'],
+            fullArticleGuide: `### The final steps to a working funnel
+
+Go-live is a verification process, not merely a publish button. Test each hand-off so subscribers receive exactly what the page promised.
+
+#### Go-live sequence
+
+1. **Connect the form**: Select the correct list, lawful consent method, field mapping, and welcome workflow.
+2. **Configure the destination**: Use an appropriate confirmation, thank-you, or bridge page without hiding essential conditions.
+3. **Connect the domain**: Verify DNS, HTTPS, canonical URL, and expected redirects.
+4. **Run a complete test**: Use a controlled test address and check submission, validation, consent record, confirmation, lead-magnet delivery, links, and unsubscribe.
+5. **Verify measurement**: Confirm that analytics records only the intended events and respects consent choices.
+
+Do not use real customer data for testing, and avoid publishing until failures and misleading states have been corrected.`,
+            practicalExamples: ['Publish to a preview or limited test URL first, complete the checklist, and only then direct live campaign traffic to the page.'],
+          },
+          understandContent: { coreTakeaway: 'A funnel is ready only after the complete subscriber journey has been tested successfully.', keyPrinciples: ['Test the full journey before launch', 'Monitor errors, delivery, and consent after publication'] },
+          actionTask: { instruction: 'Complete the Landing Page module and confirm your go-live readiness:', checklistItems: ['I understand the structure of a focused opt-in landing page', 'I tested mobile usability, accessibility, and loading performance', 'I connected and tested the page with consent-based email automation'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -2055,6 +2138,89 @@ Korzystaj wyłącznie z danych objętych zgodą, ograniczaj śledzenie, natychmi
           },
           understandContent: { coreTakeaway: 'Trwała wartość klienta wynika z trafnego follow-upu, zaufania i szacunku dla wyborów subskrybenta.', keyPrinciples: ['Regularnie dostarczaj wartość', 'Automatyzuj follow-up z jasną zgodą i zabezpieczeniami'] },
           actionTask: { instruction: 'Ukończ moduł Analityki i Skalowania oraz potwierdź proces pomiaru:', checklistItems: ['Potrafię definiować i obliczać cztery główne KPI lejka', 'Rozumiem, jak projektować i interpretować test A/B', 'Potrafię zwiększać wartość klienta dzięki trafnemu follow-upowi opartemu na zgodzie'] },
+        },
+      },
+    },
+    12: {
+      title: '12. Skuteczne landing page i kreator no-code',
+      subtitle: 'Szybkie i dostępne strony bez programowania',
+      description: 'Twórz jasne, szybkie landing page bez kodowania oraz poprawiaj użyteczność mobilną, zgodę, dostępność i pomiar.',
+      lessons: {
+        '12.1': {
+          stageTitle: '12. Skuteczne landing page i kreator no-code', title: 'Anatomia skoncentrowanej strony zapisu',
+          description: 'Połącz jasną sekcję hero, użyteczny podtytuł, prosty formularz i wiarygodne elementy zaufania wokół jednego celu.',
+          learnContent: {
+            videoTitle: 'Struktura landing page ułatwiająca decyzję',
+            summaryText: 'Poznaj praktyczny szablon strony zapisu, który wyjaśnia wartość, uczciwie określa oczekiwania i ułatwia zrozumienie kolejnego kroku.',
+            bulletPoints: ['Jasna propozycja wartości widoczna bez przewijania', 'Jedno główne działanie bez niepotrzebnych rozproszeń', 'Responsywny i dostępny układ mobile-first'],
+            fullArticleGuide: `### Praktyczna struktura landing page
+
+Strona zapisu powinna pomóc właściwemu odwiedzającemu zrozumieć ofertę i zdecydować, czy chce się zapisać. Konwersja jest ważna, ale świadoma zgoda i trafność są ważniejsze.
+
+#### Podstawowe elementy
+
+1. **Prosty nagłówek strony**: Użyj rozpoznawalnego logo i wyłącznie prawdziwych elementów zaufania.
+2. **Nagłówek hero**: Jasno określ grupę, problem lub oczekiwany rezultat bez przesadzonych obietnic.
+3. **Podtytuł**: Wyjaśnij konkretną wartość lead magnetu i co otrzyma subskrybent.
+4. **Formularz i wezwanie do działania**: Proś tylko o niezbędne informacje i dokładnie opisuj działanie.
+5. **Zgoda i prywatność**: Wyjaśnij sposób wykorzystania e-maila, podlinkuj politykę prywatności i dodaj wymagane informacje o zgodzie.
+
+Traktuj branżowe wskaźniki konwersji jako kontekst, a nie gwarancję. Mierz własny kwalifikujący się ruch i poprawiaj stronę kontrolowanymi testami.`,
+            practicalExamples: ['Użyj generatora landing page GOM-MAR do stworzenia pierwszego szkicu, a potem zastąp wszystkie pola i sprawdź tekst, zgodę, linki oraz układ mobilny.'],
+          },
+          understandContent: { coreTakeaway: 'Skoncentrowana strona łączy jasną korzyść, przejrzyste oczekiwania i jeden łatwy kolejny krok.', keyPrinciples: ['Jasno wyjaśnij wartość', 'Ogranicz formularz i przejrzyście przedstaw zgodę'] },
+          actionTask: { instruction: 'Skonfiguruj i sprawdź stronę w generatorze landing page GOM-MAR:', placeholder: 'Landing page sprawdzona' },
+        },
+        '12.2': {
+          stageTitle: '12. Skuteczne landing page i kreator no-code', title: 'Optymalizacja mobilna i szybkie ładowanie',
+          description: 'Popraw użyteczność na smartfonach, skróć czas ładowania i usuń bariery techniczne oraz wizualne.',
+          learnContent: {
+            videoTitle: 'Optymalizacja szybkości, dostępności i mobilnego UX',
+            summaryText: 'Dowiedz się, jak tworzyć wygodne elementy dotykowe, czytelne układy, wydajne media i niezawodne działanie na popularnych urządzeniach mobilnych.',
+            bulletPoints: ['Stosuj łatwe do dotknięcia elementy i jasne etykiety formularza', 'Kompresuj obrazy i dobieraj właściwe rozmiary przy zachowaniu odpowiedniej jakości', 'Używaj HTTPS, odpowiedniej polityki prywatności i dostępnych stanów interakcji'],
+            fullArticleGuide: `### Mobile first: usuń bariery dla odwiedzających
+
+Powolne ładowanie, nieczytelny tekst i trudne do dotknięcia elementy mogą przerwać wizytę, zanim odbiorca zrozumie ofertę.
+
+#### Lista kontroli mobilnej
+
+* Stosuj czytelny tekst—zwykle co najmniej 16 px dla treści—i odpowiedni kontrast kolorów.
+* Zapewnij wygodny rozmiar elementów interaktywnych, jasne etykiety i widoczny fokus.
+* Udostępniaj nowoczesne obrazy o właściwym rozmiarze i nie wczytuj zbędnych mediów nad linią przewijania.
+* Nie stosuj nachalnych popupów, które zasłaniają stronę lub trudno je zamknąć.
+* Sprawdź obsługę klawiaturą, etykiety czytnika ekranu, komunikaty błędów i różne szerokości ekranu.
+* Jeśli to możliwe, mierz wydajność prawdziwych użytkowników zamiast polegać na jednym teście laboratoryjnym.
+
+Szybkość ma znaczenie, ale stabilny układ, dostępność i niezawodna funkcjonalność są równie ważne.`,
+            practicalExamples: ['Sprawdź podgląd mobilny w kreatorze GOM-MAR i przed publikacją wykonaj prawdziwy test co najmniej w widoku odpowiadającym iPhone’owi oraz urządzeniu z Androidem.'],
+          },
+          understandContent: { coreTakeaway: 'Szybka, czytelna i dostępna strona mobilna daje większej liczbie osób realną szansę wykonania zamierzonego działania.', keyPrinciples: ['Optymalizuj obrazy i treści krytyczne', 'Projektuj i testuj mobile first'] },
+          actionTask: { instruction: 'Ukończ podgląd mobilny i kontrolę dostępności w generatorze landing page:', placeholder: 'Kontrola mobilna ukończona' },
+        },
+        '12.3': {
+          stageTitle: '12. Skuteczne landing page i kreator no-code', title: 'Automatyczne połączenie i publikacja',
+          description: 'Połącz landing page z domeną i automatyzacją e-mail opartą na zgodzie, a następnie sprawdź pełną ścieżkę subskrybenta.',
+          learnContent: {
+            videoTitle: 'Publikacja landing page, połączenie e-mail i pomiar',
+            summaryText: 'Połącz formularz z właściwym workflow e-mail, skonfiguruj domenę i wykonaj pełny test przed skierowaniem ruchu na stronę.',
+            bulletPoints: ['Połącz formularz z odpowiednią listą i automatyzacją GOM-MAR', 'Użyj zweryfikowanej domeny lub zatwierdzonej subdomeny GOM-MAR z HTTPS', 'Wykonaj testowy zapis i sprawdź zgodę, potwierdzenie, dostarczenie, linki oraz rezygnację'],
+            fullArticleGuide: `### Ostatnie kroki do działającego lejka
+
+Publikacja jest procesem weryfikacji, a nie tylko kliknięciem przycisku. Sprawdź każde przekazanie danych, aby subskrybenci otrzymali dokładnie to, co obiecuje strona.
+
+#### Kolejność publikacji
+
+1. **Połącz formularz**: Wybierz właściwą listę, zgodną z prawem metodę zgody, mapowanie pól i workflow powitalny.
+2. **Skonfiguruj stronę docelową**: Użyj odpowiedniej strony potwierdzenia, podziękowania lub bridge page bez ukrywania ważnych warunków.
+3. **Połącz domenę**: Sprawdź DNS, HTTPS, adres kanoniczny i oczekiwane przekierowania.
+4. **Wykonaj pełny test**: Użyj kontrolowanego adresu testowego i sprawdź wysłanie, walidację, zapis zgody, potwierdzenie, dostarczenie lead magnetu, linki i rezygnację.
+5. **Sprawdź pomiar**: Potwierdź, że analityka rejestruje tylko zamierzone zdarzenia i respektuje wybory dotyczące zgody.
+
+Nie używaj prawdziwych danych klientów do testów i nie publikuj, dopóki błędy oraz mylące stany nie zostaną poprawione.`,
+            practicalExamples: ['Najpierw opublikuj stronę pod adresem podglądu lub ograniczonego testu, ukończ listę kontrolną i dopiero potem skieruj na nią ruch kampanii.'],
+          },
+          understandContent: { coreTakeaway: 'Lejek jest gotowy dopiero po pomyślnym sprawdzeniu całej ścieżki subskrybenta.', keyPrinciples: ['Przetestuj pełną ścieżkę przed publikacją', 'Po publikacji monitoruj błędy, dostarczenie i zgodę'] },
+          actionTask: { instruction: 'Ukończ moduł Landing Page i potwierdź gotowość do publikacji:', checklistItems: ['Rozumiem strukturę skoncentrowanej strony zapisu', 'Sprawdziłem użyteczność mobilną, dostępność i wydajność ładowania', 'Połączyłem i przetestowałem stronę z automatyzacją e-mail opartą na zgodzie'] },
         },
       },
     },
