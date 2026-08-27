@@ -879,6 +879,84 @@ Tell users when they are communicating with AI, minimise stored personal data, o
         },
       },
     },
+    10: {
+      title: '10. Email Copywriting & AI Generator',
+      subtitle: 'Persuasive Copy & Responsible Sales Launches',
+      description: 'Master clear, persuasive email copywriting and use AI-assisted templates for subject lines, hooks, and structured launch campaigns.',
+      lessons: {
+        '10.1': {
+          stageTitle: '10. Email Copywriting & AI Generator', title: 'Anatomy of a Persuasive Email',
+          description: 'Learn the five building blocks of an effective sales email: subject line, opening hook, story, offer, and clear call to action.',
+          learnContent: {
+            videoTitle: 'The AIDA Framework for Email Marketers',
+            summaryText: 'Learn how to structure emails that are relevant, easy to read, and guide interested readers toward one clear next step.',
+            bulletPoints: ['Relevant subject lines that set accurate expectations', 'Audience-focused opening hooks that earn attention', 'A clear offer without pressure or misleading claims'],
+            fullArticleGuide: `### Five essential building blocks of an effective email
+
+1. **Subject line**: Keep it concise, specific, and consistent with the message. Curiosity is useful only when the email fulfils the promise.
+2. **Opening hook**: Connect the first two lines to a recognisable situation, goal, or question from the audience.
+3. **Story or value**: Link an everyday problem to a useful insight, example, or practical lesson.
+4. **Offer**: Explain how the recommended product or next step may help, who it is for, and any relevant limitations.
+5. **Call to action**: Use one clear link or button that accurately describes what happens next.
+
+Before sending, check every claim, disclose affiliate relationships where required, and make unsubscribing simple.`,
+            practicalExamples: ['Example: Replace “Our new product is here” with “A simpler way to plan your weekly content”—then explain the method honestly in the email.'],
+          },
+          understandContent: { coreTakeaway: 'Write for a real person: combine empathy and useful information with clear, verifiable details.', keyPrinciples: ['Clarity beats cleverness', 'Use one primary call to action per email'] },
+          actionTask: { instruction: 'Use the email generator in the GOM-MAR Toolbox to create and review your first subject line:', placeholder: 'Subject line reviewed' },
+        },
+        '10.2': {
+          stageTitle: '10. Email Copywriting & AI Generator', title: 'The Mara AI Email Generator',
+          description: 'Create audience-specific email drafts with the integrated GOM-MAR AI generator, then review and personalise them.',
+          learnContent: {
+            videoTitle: 'A Step-by-Step Brief for Better AI Email Drafts',
+            summaryText: 'Provide the goal, audience, offer details, and constraints. Mara creates a subject line, preview text, and editable email draft.',
+            bulletPoints: ['Draft welcome, newsletter, promotional, and re-engagement emails', 'Choose an appropriate professional, enthusiastic, or direct tone', 'Review facts, links, placeholders, and consent requirements before sending'],
+            fullArticleGuide: `### AI-assisted copywriting without the blank-page problem
+
+The GOM-MAR email generator can produce a useful first draft, while you remain responsible for accuracy, tone, and the final sending decision.
+
+#### How to brief the generator effectively
+
+* **Define the objective**: Choose welcome, promotion, newsletter, education, or re-engagement.
+* **Describe the audience**: Include the reader’s situation, goal, knowledge level, and likely questions.
+* **Provide verified facts**: Add two or three confirmed benefits, conditions, prices, or deadlines.
+* **Set constraints**: Specify tone, length, prohibited claims, and the desired call to action.
+* **Review and personalise**: Replace placeholders such as [NAME], verify every link, and add your own experience or perspective.
+
+Never enter unnecessary personal or confidential customer data into a prompt.`,
+            practicalExamples: ['Use the generator to draft a promotional email for a genuine discount code, then verify the price, validity period, conditions, and destination link.'],
+          },
+          understandContent: { coreTakeaway: 'AI is a drafting assistant: you provide direction, evidence, and final editorial control.', keyPrinciples: ['Give clear, verified instructions', 'Review and personalise before sending'] },
+          actionTask: { instruction: 'Open the email generator and create a reviewed draft:', placeholder: 'Email draft reviewed' },
+        },
+        '10.3': {
+          stageTitle: '10. Email Copywriting & AI Generator', title: 'The Five-Day Product Launch Flow',
+          description: 'Plan a structured email campaign for a genuine launch, promotion, or special offer without artificial pressure.',
+          learnContent: {
+            videoTitle: 'The Five-Day Sales Campaign Blueprint',
+            summaryText: 'Introduce the topic, present the offer, provide credible evidence, answer questions, and close with an honest reminder when a real deadline applies.',
+            bulletPoints: ['Day 1: Topic introduction and useful preview', 'Day 2: Offer launch and primary benefits', 'Day 3: Verified customer experience or demonstration', 'Day 4: Objection handling and frequently asked questions', 'Day 5: Final reminder for a genuine deadline'],
+            fullArticleGuide: `### A five-day launch plan for clear customer communication
+
+A structured launch gives readers enough context to understand an offer and decide whether it fits their needs.
+
+#### The five phases
+
+1. **Preparation—day 1**: Introduce the problem, share a useful insight, and explain what readers can expect next.
+2. **Launch—day 2**: Open the offer with clear benefits, price, conditions, and a transparent call to action.
+3. **Evidence—day 3**: Share an authorised testimonial, verified case study, product demonstration, or your own documented experience.
+4. **Questions—day 4**: Address common objections, suitability, required effort, limitations, refunds, and support.
+5. **Close—day 5**: Remind readers of a real deadline or availability limit. If there is no genuine deadline, do not invent one.
+
+Keep unsubscribe options visible, respect consent, and stop promotional follow-up when a recipient opts out.`,
+            practicalExamples: ['Load the five-day launch outline into the sequence editor, replace every placeholder, and verify the offer details before scheduling.'],
+          },
+          understandContent: { coreTakeaway: 'A good campaign guides readers through a clear story while preserving their ability to make an informed decision.', keyPrinciples: ['Use only genuine deadlines', 'Provide useful information throughout the sequence'] },
+          actionTask: { instruction: 'Complete the Email Copywriting module and confirm your launch preparation:', checklistItems: ['I know the five building blocks of an effective email', 'I can use and review the AI email generator responsibly', 'I understand the five-day launch structure and use only genuine urgency'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -1741,6 +1819,84 @@ Informuj użytkowników, że rozmawiają z AI, ograniczaj przechowywanie danych 
           },
           understandContent: { coreTakeaway: 'Szybkie odpowiedzi mają wartość, gdy są poprawne, przejrzyste, chronią prywatność i umożliwiają przekazanie sprawy człowiekowi.', keyPrinciples: ['Odpowiadaj szybko zatwierdzonymi informacjami', 'Przekazuj niepewne przypadki człowiekowi'] },
           actionTask: { instruction: 'Ukończ moduł Agentów AI i potwierdź odpowiedzialną konfigurację:', checklistItems: ['Rozumiem połączone workflow promptów AI', 'Potrafię planować i sprawdzać wizualizacje wspierane przez AI', 'Rozumiem przejrzysty i nadzorowany lead nurturing 24/7'] },
+        },
+      },
+    },
+    10: {
+      title: '10. Copywriting e-mail i generator AI',
+      subtitle: 'Przekonujące teksty i odpowiedzialne kampanie sprzedażowe',
+      description: 'Opanuj jasny, przekonujący copywriting e-mail i korzystaj z szablonów wspieranych przez AI do tematów, hooków oraz uporządkowanych kampanii launchowych.',
+      lessons: {
+        '10.1': {
+          stageTitle: '10. Copywriting e-mail i generator AI', title: 'Anatomia przekonującego e-maila',
+          description: 'Poznaj pięć elementów skutecznego e-maila sprzedażowego: temat, hook otwierający, historię, ofertę i jasne wezwanie do działania.',
+          learnContent: {
+            videoTitle: 'Formuła AIDA dla marketerów e-mail',
+            summaryText: 'Dowiedz się, jak tworzyć wiadomości trafne, łatwe do przeczytania i prowadzące zainteresowanego odbiorcę do jednego jasnego kolejnego kroku.',
+            bulletPoints: ['Trafne tematy, które uczciwie zapowiadają treść', 'Hooki skupione na sytuacji odbiorcy', 'Jasna oferta bez presji i mylących obietnic'],
+            fullArticleGuide: `### Pięć podstawowych elementów skutecznego e-maila
+
+1. **Temat wiadomości**: Powinien być krótki, konkretny i zgodny z treścią. Ciekawość ma sens tylko wtedy, gdy e-mail spełnia złożoną obietnicę.
+2. **Hook otwierający**: W pierwszych dwóch zdaniach nawiąż do rozpoznawalnej sytuacji, celu albo pytania odbiorcy.
+3. **Historia lub wartość**: Połącz codzienny problem z użyteczną wskazówką, przykładem albo praktyczną lekcją.
+4. **Oferta**: Wyjaśnij, w jaki sposób polecany produkt lub kolejny krok może pomóc, dla kogo jest przeznaczony i jakie ma ograniczenia.
+5. **Wezwanie do działania**: Użyj jednego jasnego linku lub przycisku, który dokładnie opisuje kolejny krok.
+
+Przed wysyłką sprawdź każde twierdzenie, ujawnij relację afiliacyjną, jeśli jest to wymagane, i zapewnij prostą rezygnację z subskrypcji.`,
+            practicalExamples: ['Przykład: Zamiast „Nasz nowy produkt już jest” napisz „Prostszy sposób na planowanie tygodniowych treści”, a następnie uczciwie wyjaśnij metodę w wiadomości.'],
+          },
+          understandContent: { coreTakeaway: 'Pisz do prawdziwej osoby: łącz empatię i użyteczne informacje z jasnymi, możliwymi do sprawdzenia szczegółami.', keyPrinciples: ['Jasność jest ważniejsza niż spryt', 'Stosuj jedno główne wezwanie do działania w e-mailu'] },
+          actionTask: { instruction: 'Użyj generatora e-mail w GOM-MAR Toolbox, aby stworzyć i sprawdzić pierwszy temat wiadomości:', placeholder: 'Temat wiadomości sprawdzony' },
+        },
+        '10.2': {
+          stageTitle: '10. Copywriting e-mail i generator AI', title: 'Generator e-mail AI z Marą',
+          description: 'Twórz szkice e-maili dopasowane do odbiorców za pomocą zintegrowanego generatora GOM-MAR AI, a potem je sprawdzaj i personalizuj.',
+          learnContent: {
+            videoTitle: 'Brief krok po kroku dla lepszych szkiców AI',
+            summaryText: 'Podaj cel, grupę docelową, szczegóły oferty i ograniczenia. Mara przygotuje temat, tekst podglądu i edytowalny szkic e-maila.',
+            bulletPoints: ['Twórz szkice wiadomości powitalnych, newsletterów, promocji i reaktywacji', 'Wybierz odpowiedni ton: profesjonalny, entuzjastyczny albo bezpośredni', 'Przed wysyłką sprawdź fakty, linki, pola zastępcze i wymogi zgody'],
+            fullArticleGuide: `### Copywriting wspierany przez AI bez strachu przed pustą stroną
+
+Generator e-mail GOM-MAR może przygotować użyteczny pierwszy szkic, natomiast odpowiedzialność za poprawność, ton i ostateczną decyzję o wysyłce pozostaje po Twojej stronie.
+
+#### Jak skutecznie przygotować brief
+
+* **Określ cel**: Wybierz wiadomość powitalną, promocyjną, newsletter, edukację albo reaktywację.
+* **Opisz odbiorcę**: Uwzględnij jego sytuację, cel, poziom wiedzy i prawdopodobne pytania.
+* **Podaj sprawdzone fakty**: Dodaj dwa lub trzy potwierdzone benefity, warunki, ceny lub terminy.
+* **Ustal ograniczenia**: Określ ton, długość, zakazane twierdzenia i oczekiwane wezwanie do działania.
+* **Sprawdź i spersonalizuj**: Zastąp pola takie jak [IMIĘ], zweryfikuj każdy link i dodaj własne doświadczenie lub perspektywę.
+
+Nie wpisuj do promptu zbędnych danych osobowych ani poufnych informacji klientów.`,
+            practicalExamples: ['Użyj generatora do stworzenia szkicu e-maila promującego prawdziwy kod rabatowy, a następnie sprawdź cenę, okres ważności, warunki i link docelowy.'],
+          },
+          understandContent: { coreTakeaway: 'AI jest asystentem tworzącym szkic: Ty wyznaczasz kierunek, dostarczasz dowody i zachowujesz końcową kontrolę redakcyjną.', keyPrinciples: ['Podawaj jasne i sprawdzone instrukcje', 'Sprawdzaj i personalizuj przed wysyłką'] },
+          actionTask: { instruction: 'Otwórz generator e-mail i przygotuj sprawdzony szkic:', placeholder: 'Szkic e-maila sprawdzony' },
+        },
+        '10.3': {
+          stageTitle: '10. Copywriting e-mail i generator AI', title: 'Pięciodniowy flow launchu produktu',
+          description: 'Zaplanuj uporządkowaną kampanię e-mail dla prawdziwego launchu, promocji lub oferty specjalnej bez sztucznej presji.',
+          learnContent: {
+            videoTitle: 'Plan pięciodniowej kampanii sprzedażowej',
+            summaryText: 'Wprowadź temat, przedstaw ofertę, pokaż wiarygodne dowody, odpowiedz na pytania i zakończ uczciwym przypomnieniem, jeśli obowiązuje prawdziwy termin.',
+            bulletPoints: ['Dzień 1: Wprowadzenie tematu i użyteczna zapowiedź', 'Dzień 2: Otwarcie oferty i główne korzyści', 'Dzień 3: Zweryfikowane doświadczenie klienta lub demonstracja', 'Dzień 4: Odpowiedzi na obiekcje i częste pytania', 'Dzień 5: Ostatnie przypomnienie o prawdziwym terminie'],
+            fullArticleGuide: `### Pięciodniowy plan launchu dla jasnej komunikacji z klientami
+
+Uporządkowany launch daje odbiorcom wystarczający kontekst, aby zrozumieli ofertę i ocenili, czy pasuje do ich potrzeb.
+
+#### Pięć etapów
+
+1. **Przygotowanie—dzień 1**: Przedstaw problem, podziel się użyteczną wskazówką i wyjaśnij, czego czytelnicy mogą oczekiwać dalej.
+2. **Launch—dzień 2**: Otwórz ofertę, jasno podając korzyści, cenę, warunki i przejrzyste wezwanie do działania.
+3. **Dowody—dzień 3**: Udostępnij autoryzowaną opinię, zweryfikowane studium przypadku, demonstrację produktu albo własne udokumentowane doświadczenie.
+4. **Pytania—dzień 4**: Omów częste obiekcje, dopasowanie, wymagany wysiłek, ograniczenia, zwroty i wsparcie.
+5. **Zamknięcie—dzień 5**: Przypomnij o prawdziwym terminie albo ograniczeniu dostępności. Jeśli nie ma realnego terminu, nie wymyślaj go.
+
+Wyraźnie pokazuj możliwość rezygnacji, respektuj zgodę i zatrzymaj komunikację promocyjną po wypisaniu odbiorcy.`,
+            practicalExamples: ['Wczytaj zarys pięciodniowego launchu do edytora sekwencji, zastąp wszystkie pola i sprawdź szczegóły oferty przed zaplanowaniem wysyłki.'],
+          },
+          understandContent: { coreTakeaway: 'Dobra kampania prowadzi odbiorców przez jasną historię, zachowując ich możliwość podjęcia świadomej decyzji.', keyPrinciples: ['Stosuj wyłącznie prawdziwe terminy', 'Dostarczaj użyteczne informacje w całej sekwencji'] },
+          actionTask: { instruction: 'Ukończ moduł Copywritingu e-mail i potwierdź przygotowanie kampanii:', checklistItems: ['Znam pięć elementów skutecznego e-maila', 'Potrafię odpowiedzialnie używać i sprawdzać generator AI', 'Rozumiem pięciodniową strukturę launchu i stosuję wyłącznie prawdziwą pilność'] },
         },
       },
     },
