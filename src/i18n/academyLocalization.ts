@@ -1607,6 +1607,91 @@ The GOM-MAR certificate records completion of defined Academy requirements. It i
         },
       },
     },
+    19: {
+      title: '19. Data Analytics, Experimentation & AI Insights',
+      subtitle: 'Evidence-based improvement with uncertainty and privacy controls',
+      description: 'Measure funnels, run valid experiments and use cautious forecasts while protecting consent, data quality and customer interests.',
+      lessons: {
+        '19.1': {
+          stageTitle: '19. Data Analytics, Experimentation & AI Insights', title: 'A/B testing & conversion measurement',
+          description: 'Test a clear hypothesis with trustworthy events, a pre-defined analysis plan and enough evidence for the decision at hand.',
+          learnContent: {
+            videoTitle: 'Conversion experiments: learn without promising uplift',
+            summaryText: 'An A/B test estimates an effect under uncertainty. It does not turn assumptions into permanent facts or guarantee more sales.',
+            bulletPoints: ['Define the population, primary metric, minimum meaningful effect, duration and stopping rule before launch', 'Assign users consistently and check tracking, consent, sample-ratio mismatch and cross-device contamination', 'Report effect size and uncertainty, not only a significance label or the variant with the larger raw number'],
+            fullArticleGuide: `### A disciplined A/B-testing cycle
+
+A fixed rule such as “100 conversions” is not a universal sample-size requirement. Required evidence depends on baseline rate, minimum effect worth detecting, variability, desired error rates, allocation and test design.
+
+#### Practical sequence
+
+1. **State the hypothesis**: Describe one change, the expected mechanism, the primary outcome and why the effect would matter commercially or for users.
+2. **Prepare measurement**: Validate event definitions, consent state, bot filtering, internal traffic, attribution and stable user assignment.
+3. **Plan before looking**: Choose the analysis method, sample-size calculation, duration, exclusions and stopping rule. Account for multiple metrics or repeated checking.
+4. **Run without interference**: Avoid changing the experience, audience or campaign mix mid-test unless the test is stopped and documented.
+5. **Interpret cautiously**: Review effect size, confidence or credible interval, practical value, segments, data loss and possible novelty or seasonal effects.
+6. **Decide and document**: Adopt, reject or retest the change and preserve the hypothesis, setup, result and limitations.
+
+Experiments can reveal evidence for a specific context. Results may not generalise to another audience, season, channel or page.`,
+            practicalExamples: ['Use the GOM-MAR dashboard to identify one measurable bottleneck, then write the hypothesis and decision rule before creating a variant.'],
+          },
+          understandContent: { coreTakeaway: 'A useful experiment combines reliable measurement, a pre-committed plan and an honest account of uncertainty.', keyPrinciples: ['Calculate evidence needs for the actual test', 'Judge effect size and practical value, not significance alone'] },
+          actionTask: { instruction: 'Review current metrics and prepare one test plan in the Analytics Dashboard:', placeholder: 'Metrics and test plan reviewed' },
+        },
+        '19.2': {
+          stageTitle: '19. Data Analytics, Experimentation & AI Insights', title: 'Funnel analysis & decision-ready KPIs',
+          description: 'Analyse journey drop-off, acquisition cost, contribution margin and customer value with definitions that match your business.',
+          learnContent: {
+            videoTitle: 'Funnel analytics: metrics in context',
+            summaryText: 'KPIs are useful only when their definitions, data sources, time windows and limitations are clear. Universal targets for opt-in rate, CTR or ROAS do not exist.',
+            bulletPoints: ['Document the numerator, denominator, time window, cohort, currency and source for every KPI', 'Segment carefully by channel, campaign, device and customer type without over-interpreting small groups', 'Connect marketing metrics to contribution margin, refunds, retention, cash timing and operational capacity'],
+            fullArticleGuide: `### Build a funnel view you can act on
+
+Benchmarks such as 30% opt-in, 15% click-through or ROAS above 2 may be irrelevant or harmful without context. Performance varies by offer, audience, traffic intent, attribution, margin and measurement method.
+
+#### Core measures and caveats
+
+* **Conversion rate**: Completed target actions divided by eligible opportunities. Define eligibility and remove invalid traffic consistently.
+* **Email click rate**: Clicks may be measured against delivered messages, recipients or opens; privacy features and automated scanners can distort activity.
+* **CAC**: Include the acquisition costs relevant to the decision, not only ad spend. State whether it measures a new customer, first order or qualified lead.
+* **ROAS**: Revenue attributed to ads divided by ad spend. It excludes many costs and is not profit.
+* **Contribution and payback**: Subtract variable fulfilment, fees, refunds and support, then assess how long acquisition cash takes to return.
+* **LTV**: Use a clearly defined cohort and horizon; distinguish observed value from a modelled forecast.
+
+Prioritise a bottleneck only after confirming it is real, material and within your control. Improvement is possible, but doubling profit is never guaranteed.`,
+            practicalExamples: ['Ask Mara to organise your metric definitions and surface missing inputs, then verify every number against the source system before acting.'],
+          },
+          understandContent: { coreTakeaway: 'Decision-ready KPIs use consistent definitions and connect customer behaviour to real economics and uncertainty.', keyPrinciples: ['Define every metric before comparing it', 'Optimise contribution and customer outcomes, not vanity ratios'] },
+          actionTask: { instruction: 'Run a documented funnel review with Mara and verify it against source data:', placeholder: 'Funnel review verified' },
+        },
+        '19.3': {
+          stageTitle: '19. Data Analytics, Experimentation & AI Insights', title: 'Predictive analytics & responsible customer-value modelling',
+          description: 'Estimate future customer outcomes cautiously and use models to support fair, consent-aware decisions rather than automated pressure.',
+          learnContent: {
+            videoTitle: 'Predictive analytics: forecasts are estimates, not certainty',
+            summaryText: 'AI models can estimate churn or future value only when data, labels and assumptions are suitable. Predictions can be wrong, drift over time and affect groups unevenly.',
+            bulletPoints: ['Separate observed historical value from forecast LTV and publish the horizon and uncertainty', 'Use only lawful, necessary and sufficiently representative behavioural data', 'Validate accuracy, calibration, drift and group impacts before any automated action'],
+            fullArticleGuide: `### Use customer forecasts as decision support
+
+A prediction is not knowledge of an individual’s intent. Opens, clicks and course progress can be incomplete, privacy-sensitive or distorted by technical systems.
+
+#### Responsible modelling workflow
+
+1. **Define the decision**: Specify what action the forecast may influence and whether a simpler cohort analysis is sufficient.
+2. **Check lawful data use**: Confirm purpose, legal basis, consent where required, data minimisation, retention and customer information.
+3. **Prepare data carefully**: Assess missingness, leakage, changing definitions, selection bias and whether the target outcome is meaningful.
+4. **Validate out of sample**: Compare against a simple baseline and measure discrimination, calibration, error by relevant group and financial consequences.
+5. **Deploy with limits**: Use thresholds, frequency caps, suppression lists, human review and a route for customers to object or seek help where applicable.
+6. **Monitor and retire**: Watch drift, complaints, false positives, cost and incremental benefit; pause the model when evidence degrades.
+
+Never use a predicted score to exploit vulnerability, hide opportunities, spam inactive contacts or claim the “perfect” purchase moment. Test whether an intervention helps customers and creates incremental value.`,
+            practicalExamples: ['Review one dashboard recommendation, identify its data and assumptions, and approve no campaign action until the forecast is validated against a baseline and current cohort.'],
+          },
+          understandContent: { coreTakeaway: 'Forecasts are uncertain decision aids that require lawful data, strong validation, fairness checks and ongoing monitoring.', keyPrinciples: ['Distinguish observed value from predicted LTV', 'Keep customer interventions proportionate and reviewable'] },
+          actionTask: { instruction: 'Complete the Analytics module and confirm your measurement controls:', checklistItems: ['I can plan an A/B test without a universal sample-size shortcut', 'I can define CAC, ROAS, contribution and LTV in business context', 'I can evaluate predictive insights for privacy, uncertainty, fairness and incremental value'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -3197,6 +3282,91 @@ Certyfikat GOM-MAR dokumentuje spełnienie określonych wymagań Academy. Nie je
           },
           understandContent: { coreTakeaway: 'Gotowość enterprise wymaga odpowiedzialnego nadzoru i sprawdzonych dowodów; certyfikat kursu dokumentuje wyłącznie ukończenie nauki.', keyPrinciples: ['Waliduj kontrole dowodami i powtarzalnymi testami', 'Opisuj certyfikat dokładnie bez zawyżania jego znaczenia'] },
           actionTask: { instruction: 'Ukończ przegląd systemów agentowych i potwierdź znaczenie certyfikatu:', checklistItems: ['Potrafię ograniczyć narzędzia, dane, budżet, kroki i warunki zatrzymania agenta', 'Potrafię nadzorować przekazania wielu agentów i krytyczne akceptacje', 'Rozumiem, że ukończenie Academy nie jest zewnętrzną akredytacją ani dowodem zgodności enterprise'] },
+        },
+      },
+    },
+    19: {
+      title: '19. Analityka danych, eksperymenty i wnioski AI',
+      subtitle: 'Ulepszanie oparte na dowodach, niepewności i ochronie prywatności',
+      description: 'Mierz lejki, prowadź poprawne eksperymenty i ostrożnie korzystaj z prognoz, chroniąc zgodę, jakość danych i interes klientów.',
+      lessons: {
+        '19.1': {
+          stageTitle: '19. Analityka danych, eksperymenty i wnioski AI', title: 'Testy A/B i pomiar konwersji',
+          description: 'Testuj jasną hipotezę z wiarygodnymi zdarzeniami, wcześniej określonym planem analizy i dowodami odpowiednimi do decyzji.',
+          learnContent: {
+            videoTitle: 'Eksperymenty konwersji: nauka bez obietnic wzrostu',
+            summaryText: 'Test A/B szacuje efekt w warunkach niepewności. Nie zmienia założeń w trwałe fakty ani nie gwarantuje większej sprzedaży.',
+            bulletPoints: ['Przed startem określ populację, główny miernik, minimalny istotny efekt, czas i regułę zatrzymania', 'Przypisuj użytkowników konsekwentnie i sprawdź tracking, zgodę, nierówny podział próby oraz przenikanie między urządzeniami', 'Raportuj wielkość efektu i niepewność, a nie tylko istotność lub wariant z większą surową liczbą'],
+            fullArticleGuide: `### Zdyscyplinowany cykl testu A/B
+
+Stała reguła „100 konwersji” nie jest uniwersalnym wymaganiem próby. Potrzebne dowody zależą od poziomu bazowego, najmniejszego wartościowego efektu, zmienności, akceptowanych błędów, podziału i projektu testu.
+
+#### Praktyczna kolejność
+
+1. **Postaw hipotezę**: Opisz jedną zmianę, oczekiwany mechanizm, główny wynik i powód, dla którego efekt ma znaczenie biznesowe lub użytkowe.
+2. **Przygotuj pomiar**: Sprawdź definicje zdarzeń, stan zgody, filtrowanie botów, ruch wewnętrzny, atrybucję i stały przydział użytkownika.
+3. **Zaplanuj przed podglądem**: Wybierz metodę, obliczenie próby, czas, wyłączenia i regułę zatrzymania. Uwzględnij wiele metryk i częste sprawdzanie.
+4. **Prowadź bez ingerencji**: Nie zmieniaj doświadczenia, grupy ani miksu kampanii w trakcie, chyba że zatrzymasz i udokumentujesz test.
+5. **Interpretuj ostrożnie**: Oceń efekt, przedział ufności lub wiarygodności, wartość praktyczną, segmenty, utratę danych oraz efekty nowości i sezonu.
+6. **Zdecyduj i zapisz**: Wdróż, odrzuć lub powtórz zmianę oraz zachowaj hipotezę, konfigurację, wynik i ograniczenia.
+
+Eksperyment daje dowody dla konkretnego kontekstu. Wynik może nie przenosić się na inną grupę, sezon, kanał lub stronę.`,
+            practicalExamples: ['Użyj dashboardu GOM-MAR, aby znaleźć jedno mierzalne wąskie gardło, a przed utworzeniem wariantu zapisz hipotezę i regułę decyzji.'],
+          },
+          understandContent: { coreTakeaway: 'Użyteczny eksperyment łączy wiarygodny pomiar, wcześniej przyjęty plan i uczciwe przedstawienie niepewności.', keyPrinciples: ['Obliczaj potrzebne dowody dla konkretnego testu', 'Oceniaj wielkość efektu i wartość praktyczną, nie samą istotność'] },
+          actionTask: { instruction: 'Sprawdź obecne metryki i przygotuj jeden plan testu w dashboardzie Analytics:', placeholder: 'Metryki i plan testu sprawdzone' },
+        },
+        '19.2': {
+          stageTitle: '19. Analityka danych, eksperymenty i wnioski AI', title: 'Analiza lejka i KPI gotowe do decyzji',
+          description: 'Analizuj odpływ w ścieżce, koszt pozyskania, marżę pokrycia i wartość klienta według definicji pasujących do firmy.',
+          learnContent: {
+            videoTitle: 'Analityka lejka: metryki w kontekście',
+            summaryText: 'KPI są użyteczne tylko wtedy, gdy jasne są definicje, źródła, okresy i ograniczenia. Nie istnieją uniwersalne cele dla opt-in, CTR ani ROAS.',
+            bulletPoints: ['Dla każdego KPI zapisz licznik, mianownik, okres, kohortę, walutę i źródło', 'Segmentuj ostrożnie według kanału, kampanii, urządzenia i typu klienta bez nadinterpretacji małych grup', 'Połącz metryki marketingu z marżą, zwrotami, retencją, przepływem gotówki i możliwościami operacyjnymi'],
+            fullArticleGuide: `### Zbuduj widok lejka przydatny w decyzjach
+
+Benchmarki typu 30% opt-in, 15% kliknięć lub ROAS powyżej 2 mogą być nieistotne albo szkodliwe bez kontekstu. Wyniki zależą od oferty, odbiorców, intencji ruchu, atrybucji, marży i metody pomiaru.
+
+#### Główne mierniki i zastrzeżenia
+
+* **Współczynnik konwersji**: Wykonane działania podzielone przez uprawnione okazje. Zdefiniuj uprawnienie i konsekwentnie usuwaj nieważny ruch.
+* **Kliknięcia w e-mailu**: Mogą być liczone względem dostarczonych wiadomości, odbiorców lub otwarć; funkcje prywatności i skanery automatyczne zniekształcają aktywność.
+* **CAC**: Uwzględnij koszty pozyskania istotne dla decyzji, nie tylko reklamę. Określ, czy mierzysz klienta, pierwsze zamówienie czy kwalifikowany kontakt.
+* **ROAS**: Przychód przypisany reklamom podzielony przez wydatki. Pomija wiele kosztów i nie jest zyskiem.
+* **Marża i zwrot nakładu**: Odejmij zmienne koszty realizacji, opłaty, zwroty i support oraz oceń czas odzyskania wydatku.
+* **LTV**: Użyj jasno określonej kohorty i horyzontu; odróżniaj wartość obserwowaną od prognozy modelu.
+
+Nadaj priorytet wąskiemu gardłu dopiero po potwierdzeniu, że jest realne, istotne i pod Twoją kontrolą. Poprawa jest możliwa, ale podwojenie zysku nigdy nie jest gwarantowane.`,
+            practicalExamples: ['Poproś Marę o uporządkowanie definicji i wskazanie brakujących danych, a następnie sprawdź każdą liczbę w systemie źródłowym przed działaniem.'],
+          },
+          understandContent: { coreTakeaway: 'KPI gotowe do decyzji mają spójne definicje i łączą zachowanie klientów z realną ekonomią oraz niepewnością.', keyPrinciples: ['Definiuj każdą metrykę przed porównaniem', 'Optymalizuj marżę i wyniki klientów, nie próżne wskaźniki'] },
+          actionTask: { instruction: 'Przeprowadź udokumentowany przegląd lejka z Marą i sprawdź go w danych źródłowych:', placeholder: 'Przegląd lejka zweryfikowany' },
+        },
+        '19.3': {
+          stageTitle: '19. Analityka danych, eksperymenty i wnioski AI', title: 'Analityka predykcyjna i odpowiedzialne modelowanie wartości klienta',
+          description: 'Ostrożnie szacuj przyszłe wyniki klientów i używaj modeli do wspierania uczciwych decyzji zgodnych ze zgodą, zamiast automatycznej presji.',
+          learnContent: {
+            videoTitle: 'Analityka predykcyjna: prognoza jest szacunkiem, nie pewnością',
+            summaryText: 'Modele AI mogą szacować odejście lub przyszłą wartość tylko przy odpowiednich danych, etykietach i założeniach. Prognozy bywają błędne, dryfują i różnie wpływają na grupy.',
+            bulletPoints: ['Oddziel obserwowaną wartość historyczną od prognozowanego LTV i podaj horyzont oraz niepewność', 'Używaj wyłącznie legalnych, potrzebnych i wystarczająco reprezentatywnych danych behawioralnych', 'Przed automatycznym działaniem sprawdź trafność, kalibrację, dryf i wpływ na grupy'],
+            fullArticleGuide: `### Używaj prognoz jako wsparcia decyzji
+
+Prognoza nie jest wiedzą o zamiarze konkretnej osoby. Otwarcia, kliknięcia i postęp kursu mogą być niepełne, wrażliwe prywatnościowo lub zniekształcone technicznie.
+
+#### Odpowiedzialny workflow modelowania
+
+1. **Określ decyzję**: Wskaż działanie, na które prognoza może wpływać, i oceń, czy prostsza analiza kohortowa wystarczy.
+2. **Sprawdź legalność danych**: Potwierdź cel, podstawę prawną, zgodę, gdy potrzebna, minimalizację, przechowywanie i informację dla klienta.
+3. **Starannie przygotuj dane**: Oceń braki, wyciek informacji, zmiany definicji, bias doboru i sens wyniku docelowego.
+4. **Waliduj poza próbą**: Porównaj z prostym baseline i zmierz rozróżnianie, kalibrację, błędy według grup oraz konsekwencje finansowe.
+5. **Wdrażaj z limitami**: Użyj progów, limitów częstotliwości, list wykluczeń, kontroli człowieka i drogi sprzeciwu lub pomocy, gdy ma zastosowanie.
+6. **Monitoruj i wycofuj**: Śledź dryf, skargi, błędne alarmy, koszt i przyrostową korzyść; wstrzymaj model przy spadku jakości dowodów.
+
+Nie używaj wyniku do wykorzystywania podatności, ukrywania szans, spamowania nieaktywnych osób ani twierdzenia, że istnieje „idealny” moment zakupu. Testuj, czy interwencja pomaga i tworzy przyrostową wartość.`,
+            practicalExamples: ['Sprawdź jedną rekomendację dashboardu, określ jej dane i założenia, a działanie kampanii zatwierdź dopiero po walidacji prognozy względem baseline i obecnej kohorty.'],
+          },
+          understandContent: { coreTakeaway: 'Prognozy są niepewnym wsparciem decyzji i wymagają legalnych danych, mocnej walidacji, kontroli uczciwości oraz ciągłego monitorowania.', keyPrinciples: ['Odróżniaj obserwowaną wartość od prognozowanego LTV', 'Interwencje wobec klientów utrzymuj proporcjonalne i podlegające kontroli'] },
+          actionTask: { instruction: 'Ukończ moduł Analytics i potwierdź kontrolę pomiaru:', checklistItems: ['Potrafię zaplanować test A/B bez uniwersalnego skrótu wielkości próby', 'Potrafię zdefiniować CAC, ROAS, marżę i LTV w kontekście firmy', 'Potrafię ocenić wnioski predykcyjne pod kątem prywatności, niepewności, uczciwości i wartości przyrostowej'] },
         },
       },
     },
