@@ -803,6 +803,82 @@ Respect applicable advertising rules, recommend only what fits the audience, and
         },
       },
     },
+    9: {
+      title: '9. AI Agents & Autonomous Workflows',
+      subtitle: 'AI Hyperautomation & Prompt Workflows',
+      description: 'Learn how to use advanced AI agents for automated market research, content creation, visual generation, and responsive customer interaction.',
+      lessons: {
+        '9.1': {
+          stageTitle: '9. AI Agents & Autonomous Workflows', title: 'Autonomous AI Prompts & Multi-Agent Workflows',
+          description: 'Build connected AI prompts that turn one niche idea into a complete marketing bundle.',
+          learnContent: {
+            videoTitle: 'Connecting Multiple Prompts for Greater Efficiency',
+            summaryText: 'By combining focused AI prompts, you can create headlines, landing-page copy, social-media scripts, and email sequences in one structured workflow.',
+            bulletPoints: ['Create structured master prompts for your specific niche', 'Connect audience research with immediate content generation', 'Reduce repetitive manual creation work significantly'],
+            fullArticleGuide: `### The multi-agent principle for marketing automation
+
+Modern AI systems become especially useful when you treat them not as a single question-and-answer tool, but as a coordinated team of specialised assistants.
+
+#### Three roles in your AI team
+
+1. **Research agent**: Analyses the audience’s problems, goals, language, and objections using reliable source material.
+2. **Copywriting agent**: Turns those findings into clear headlines, landing-page copy, and email drafts.
+3. **Design agent**: Develops visual directions, advertising concepts, and social-media carousel ideas.
+
+Define the goal, source material, constraints, and review criteria for every role. Always review generated claims, links, and recommendations before publishing.`,
+            practicalExamples: ['Example: Give the AI tutor Mara a clearly defined audience idea and request a five-email draft bundle, then verify and edit every message before activation.'],
+          },
+          understandContent: { coreTakeaway: 'Clear context and review criteria make AI output more useful; automation saves time but does not replace human responsibility.', keyPrinciples: ['Provide clear context and audience', 'Review each step before publishing'] },
+          actionTask: { instruction: 'Use GOM-MAR AI Mara for your first structured marketing workflow:', placeholder: 'AI workflow created' },
+        },
+        '9.2': {
+          stageTitle: '9. AI Agents & Autonomous Workflows', title: 'AI Image & Visual Generation for Content Funnels',
+          description: 'Create consistent visual concepts, thumbnails, and social-media graphics with AI-assisted tools.',
+          learnContent: {
+            videoTitle: 'High-Impact Visuals Without Complex Design Software',
+            summaryText: 'Learn how to write image prompts for recognisable thumbnails, post visuals, and advertising concepts in a consistent brand style.',
+            bulletPoints: ['Generate coherent visual worlds that match your colour palette', 'Develop hooks and visual concepts for Reels and Pinterest Pins', 'Use AI drafts as a starting point and check licences, accuracy, and brand fit'],
+            fullArticleGuide: `### Visual attention with AI-assisted graphics
+
+On fast-moving social platforms, a clear visual can help an audience understand the topic before reading the caption.
+
+#### The three-component image recipe
+
+* **Focus subject**: Choose one unmistakable main subject, such as an entrepreneur at work or an abstract technology scene.
+* **Colour harmony**: Use defined brand colours such as indigo, deep navy, and accent gold for recognition.
+* **Atmosphere**: Keep the composition bright, clear, professional, and free from unnecessary visual noise.
+
+Check every generated image for distorted details, misleading representations, third-party trademarks, and usage rights before publishing it commercially.`,
+            practicalExamples: ['Example: Use the image-prompt assistant in the Toolbox to create three visual directions for one campaign, then select and refine the option that best matches your brand.'],
+          },
+          understandContent: { coreTakeaway: 'Visuals attract attention, while a clear and relevant headline helps the audience decide whether to continue.', keyPrinciples: ['Use consistent brand elements', 'Prioritise clarity over visual noise'] },
+          actionTask: { instruction: 'Generate and review an image concept with the AI prompt tool in the Toolbox:', placeholder: 'Image concept reviewed' },
+        },
+        '9.3': {
+          stageTitle: '9. AI Agents & Autonomous Workflows', title: 'Automated 24/7 Lead Nurturing with AI',
+          description: 'Set up AI-assisted response systems that answer common questions and help qualify enquiries responsibly.',
+          learnContent: {
+            videoTitle: 'Helpful Customer Interaction Around the Clock',
+            summaryText: 'Connect email sequences and chat channels with a supervised AI assistant so prospects receive timely answers based on approved information.',
+            bulletPoints: ['Answer common product and course questions at any time', 'Collect qualification information before appropriate appointments', 'Escalate sensitive, uncertain, or individual questions to a person'],
+            fullArticleGuide: `### A supervised 24/7 assistant for customer enquiries
+
+An unanswered question can interrupt a customer journey. A well-configured assistant can provide immediate orientation while keeping people in control of important decisions.
+
+#### Why supervised AI nurturing is useful
+
+* It responds promptly using approved FAQs, product information, and Academy content.
+* It can collect relevant context and route qualified enquiries to the right next step.
+* It reduces repetitive support work while escalating unclear, sensitive, or high-impact questions to a person.
+
+Tell users when they are communicating with AI, minimise stored personal data, offer a human contact route, and never let the assistant invent prices, guarantees, or income claims.`,
+            practicalExamples: ['Use Mara in the AI chat to turn frequently asked objections into helpful FAQ drafts, then approve the answers before automation.'],
+          },
+          understandContent: { coreTakeaway: 'Fast responses are valuable when they are accurate, transparent, privacy-conscious, and supported by human escalation.', keyPrinciples: ['Respond promptly with approved information', 'Escalate uncertainty to a person'] },
+          actionTask: { instruction: 'Complete the AI Agents module and confirm your responsible AI setup:', checklistItems: ['I understand connected AI prompt workflows', 'I can plan and review AI-assisted visuals', 'I understand transparent, supervised 24/7 lead nurturing'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -1589,6 +1665,82 @@ Przestrzegaj zasad reklamy, polecaj tylko rozwiązania pasujące do odbiorców i
           },
           understandContent: { coreTakeaway: 'Silna sieć pomaga uczestnikom szybciej się uczyć i rozwijać dzięki wymianie doświadczeń.', keyPrinciples: ['Dziel się użytecznym doświadczeniem', 'Buduj cykliczny dochód odpowiedzialnie'] },
           actionTask: { instruction: 'Ukończ moduł Mastermind i aktywuj odznakę VIP:', checklistItems: ['Rozumiem odpowiedzialne skalowanie płatnymi reklamami', 'Rozumiem oferty backend high-ticket', 'Jestem gotowy na GOM-MAR VIP Mastermind'] },
+        },
+      },
+    },
+    9: {
+      title: '9. Agenci AI i autonomiczne workflow',
+      subtitle: 'Hiperautomatyzacja z AI i promptami',
+      description: 'Dowiedz się, jak wykorzystywać zaawansowanych agentów AI do automatycznych badań rynku, tworzenia treści, generowania obrazów i sprawnej obsługi klientów.',
+      lessons: {
+        '9.1': {
+          stageTitle: '9. Agenci AI i autonomiczne workflow', title: 'Autonomiczne prompty AI i workflow wielu agentów',
+          description: 'Twórz połączone prompty AI, które przekształcają jeden pomysł na niszę w kompletny pakiet marketingowy.',
+          learnContent: {
+            videoTitle: 'Łączenie wielu promptów dla większej efektywności',
+            summaryText: 'Łącząc ukierunkowane prompty AI, możesz w jednym uporządkowanym workflow tworzyć nagłówki, teksty landing page, skrypty social media i sekwencje e-mail.',
+            bulletPoints: ['Twórz uporządkowane prompty główne dla swojej niszy', 'Łącz analizę grupy docelowej z natychmiastowym tworzeniem treści', 'Znacznie ogranicz powtarzalną pracę ręczną'],
+            fullArticleGuide: `### Zasada wielu agentów w automatyzacji marketingu
+
+Nowoczesne systemy AI są szczególnie użyteczne, gdy traktujesz je nie jako pojedyncze narzędzie do pytań i odpowiedzi, lecz jako skoordynowany zespół wyspecjalizowanych asystentów.
+
+#### Trzy role w zespole AI
+
+1. **Agent badawczy**: Analizuje problemy, cele, język i obiekcje grupy docelowej na podstawie wiarygodnych materiałów źródłowych.
+2. **Agent copywriterski**: Przekształca wyniki w jasne nagłówki, teksty landing page i szkice e-maili.
+3. **Agent projektowy**: Opracowuje kierunki wizualne, koncepcje reklam i pomysły na karuzele social media.
+
+Dla każdej roli określ cel, materiały źródłowe, ograniczenia i kryteria kontroli. Przed publikacją zawsze sprawdzaj wygenerowane twierdzenia, linki i rekomendacje.`,
+            practicalExamples: ['Przykład: Przekaż tutorowi AI Mara jasno zdefiniowany pomysł na grupę docelową i poproś o pakiet pięciu szkiców e-maili, a następnie sprawdź i popraw każdą wiadomość przed aktywacją.'],
+          },
+          understandContent: { coreTakeaway: 'Jasny kontekst i kryteria kontroli zwiększają użyteczność wyników AI; automatyzacja oszczędza czas, ale nie zastępuje odpowiedzialności człowieka.', keyPrinciples: ['Podaj jasny kontekst i grupę docelową', 'Sprawdzaj każdy etap przed publikacją'] },
+          actionTask: { instruction: 'Użyj GOM-MAR AI Mara do stworzenia pierwszego uporządkowanego workflow marketingowego:', placeholder: 'Workflow AI utworzony' },
+        },
+        '9.2': {
+          stageTitle: '9. Agenci AI i autonomiczne workflow', title: 'Generowanie obrazów i wizualizacji AI dla lejków treści',
+          description: 'Twórz spójne koncepcje wizualne, miniatury i grafiki social media przy wsparciu narzędzi AI.',
+          learnContent: {
+            videoTitle: 'Skuteczne wizualizacje bez skomplikowanego oprogramowania',
+            summaryText: 'Dowiedz się, jak pisać prompty obrazowe dla rozpoznawalnych miniatur, grafik do postów i koncepcji reklamowych w spójnym stylu marki.',
+            bulletPoints: ['Generuj spójne światy wizualne dopasowane do palety kolorów', 'Opracowuj hooki i koncepcje dla Reelsów oraz Pinów na Pintereście', 'Traktuj szkice AI jako punkt wyjścia i sprawdzaj licencje, poprawność oraz zgodność z marką'],
+            fullArticleGuide: `### Wizualna uwaga dzięki grafikom wspieranym przez AI
+
+Na szybko zmieniających się platformach społecznościowych jasny obraz może pomóc odbiorcom zrozumieć temat jeszcze przed przeczytaniem opisu.
+
+#### Trzyelementowy przepis na obraz
+
+* **Główny motyw**: Wybierz jeden wyraźny temat, na przykład przedsiębiorcę przy pracy albo abstrakcyjną scenę technologiczną.
+* **Harmonia kolorów**: Stosuj określone kolory marki, takie jak indygo, głęboki granat i złoty akcent.
+* **Atmosfera**: Utrzymuj kompozycję jasną, czytelną, profesjonalną i wolną od niepotrzebnego wizualnego szumu.
+
+Przed komercyjną publikacją sprawdź każdy wygenerowany obraz pod kątem zniekształconych detali, mylących przedstawień, cudzych znaków towarowych i praw do wykorzystania.`,
+            practicalExamples: ['Przykład: Użyj asystenta promptów obrazowych w Toolboxie, aby stworzyć trzy kierunki wizualne dla jednej kampanii, a potem wybierz i dopracuj wariant najlepiej pasujący do marki.'],
+          },
+          understandContent: { coreTakeaway: 'Wizualizacje przyciągają uwagę, a jasny i trafny nagłówek pomaga odbiorcom zdecydować, czy chcą czytać dalej.', keyPrinciples: ['Stosuj spójne elementy marki', 'Przedkładaj jasność nad wizualny szum'] },
+          actionTask: { instruction: 'Wygeneruj i sprawdź koncepcję obrazu za pomocą narzędzia promptów AI w Toolboxie:', placeholder: 'Koncepcja obrazu sprawdzona' },
+        },
+        '9.3': {
+          stageTitle: '9. Agenci AI i autonomiczne workflow', title: 'Automatyczny lead nurturing 24/7 z AI',
+          description: 'Skonfiguruj systemy odpowiedzi wspierane przez AI, które odpowiadają na częste pytania i pomagają odpowiedzialnie kwalifikować zapytania.',
+          learnContent: {
+            videoTitle: 'Pomocna obsługa klientów przez całą dobę',
+            summaryText: 'Połącz sekwencje e-mail i kanały czatu z nadzorowanym asystentem AI, aby zainteresowani otrzymywali szybkie odpowiedzi oparte na zatwierdzonych informacjach.',
+            bulletPoints: ['Odpowiadaj na częste pytania o produkty i kursy o każdej porze', 'Zbieraj informacje kwalifikacyjne przed odpowiednimi spotkaniami', 'Przekazuj wrażliwe, niepewne lub indywidualne pytania człowiekowi'],
+            fullArticleGuide: `### Nadzorowany asystent 24/7 do obsługi zapytań klientów
+
+Pytanie bez odpowiedzi może przerwać ścieżkę klienta. Dobrze skonfigurowany asystent zapewnia natychmiastową orientację, pozostawiając ważne decyzje pod kontrolą człowieka.
+
+#### Dlaczego nadzorowany lead nurturing AI jest użyteczny
+
+* Szybko odpowiada na podstawie zatwierdzonych FAQ, informacji o produktach i treści Academy.
+* Może zebrać istotny kontekst i skierować zakwalifikowane zapytania do właściwego kolejnego kroku.
+* Ogranicza powtarzalną pracę supportu, a niejasne, wrażliwe lub istotne pytania przekazuje człowiekowi.
+
+Informuj użytkowników, że rozmawiają z AI, ograniczaj przechowywanie danych osobowych, zapewnij kontakt z człowiekiem i nigdy nie pozwalaj asystentowi wymyślać cen, gwarancji ani obietnic dochodu.`,
+            practicalExamples: ['Użyj Mary w czacie AI, aby zamienić często zgłaszane obiekcje w pomocne szkice FAQ, a następnie zatwierdź odpowiedzi przed automatyzacją.'],
+          },
+          understandContent: { coreTakeaway: 'Szybkie odpowiedzi mają wartość, gdy są poprawne, przejrzyste, chronią prywatność i umożliwiają przekazanie sprawy człowiekowi.', keyPrinciples: ['Odpowiadaj szybko zatwierdzonymi informacjami', 'Przekazuj niepewne przypadki człowiekowi'] },
+          actionTask: { instruction: 'Ukończ moduł Agentów AI i potwierdź odpowiedzialną konfigurację:', checklistItems: ['Rozumiem połączone workflow promptów AI', 'Potrafię planować i sprawdzać wizualizacje wspierane przez AI', 'Rozumiem przejrzysty i nadzorowany lead nurturing 24/7'] },
         },
       },
     },
