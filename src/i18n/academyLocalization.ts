@@ -1442,6 +1442,89 @@ Maintain an incident contact list, backups, restoration tests and a manual fallb
         },
       },
     },
+    17: {
+      title: '17. Omnichannel Marketing & Responsible AI Media',
+      subtitle: 'Video, audio and channel-specific content systems',
+      description: 'Create and repurpose AI-assisted video and audio while protecting rights, consent, authenticity and quality on every channel.',
+      lessons: {
+        '17.1': {
+          stageTitle: '17. Omnichannel Marketing & Responsible AI Media', title: 'AI video & faceless short-form content',
+          description: 'Produce useful short videos without appearing on camera, while respecting media rights, platform rules and truthful representation.',
+          learnContent: {
+            videoTitle: 'Faceless short video: clear value without viral promises',
+            summaryText: 'Short-form video can test ideas and reach new viewers, but AI, hooks and frequent posting cannot guarantee views, leads or virality.',
+            bulletPoints: ['Use footage, images, music, fonts, avatars and voices only with suitable rights or licences', 'Write a clear opening, one useful idea and an honest next step', 'Review captions, pronunciation, accessibility, factual claims and required AI disclosure before publishing'],
+            fullArticleGuide: `### Build useful faceless short-form content
+
+You do not need to show your face, but you remain responsible for every generated image, voice, claim and call to action. Synthetic presenters must not impersonate real people or mislead viewers about endorsements or events.
+
+#### A practical short-video structure
+
+1. **Opening**: State the relevant problem or outcome quickly without sensational guarantees.
+2. **Value**: Explain one actionable idea with accurate examples and readable captions.
+3. **Context**: Mention important limitations, eligibility or evidence when the topic requires it.
+4. **Next step**: Offer a clear, proportionate action that matches the linked page.
+5. **Quality and rights check**: Confirm licences, consent, platform disclosure, audio levels, captions, spelling, links and mobile rendering.
+
+Keep proof of licences and consent. Do not clone a person’s appearance or voice, fabricate testimonials, conceal sponsorships or present generated scenes as real evidence.`,
+            practicalExamples: ['Generate three hook drafts with Mara, choose the clearest one, verify every claim and asset, then publish a limited test without promising a viral result.'],
+          },
+          understandContent: { coreTakeaway: 'Faceless content succeeds through useful ideas, lawful assets, honest presentation and consistent testing—not guaranteed virality.', keyPrinciples: ['Verify rights, claims and disclosures', 'Optimise for viewer value and accessibility'] },
+          actionTask: { instruction: 'Create and review short-video hooks with Mara:', placeholder: 'Video hooks reviewed' },
+        },
+        '17.2': {
+          stageTitle: '17. Omnichannel Marketing & Responsible AI Media', title: 'Voice cloning, podcasts & audio marketing',
+          description: 'Create accessible audio and podcasts using voices you are authorised to use and a review process that prevents impersonation and misinformation.',
+          learnContent: {
+            videoTitle: 'AI audio: consent, quality and accountable publishing',
+            summaryText: 'AI can turn approved scripts into audio, but voice cloning requires explicit informed permission, secure source recordings and clear limits on use.',
+            bulletPoints: ['Clone only your own voice or a voice covered by explicit, documented permission and tool terms', 'Disclose synthetic or materially altered audio where required or where listeners could otherwise be misled', 'Review pronunciation, facts, music rights, loudness, metadata, transcript and distribution settings'],
+            fullArticleGuide: `### Build trust with responsible audio
+
+Audio can be convenient and personal, but a realistic synthetic voice can also enable fraud or impersonation. Consent to record someone is not automatically consent to clone, edit, publish or reuse their voice for every purpose.
+
+#### A safe AI-audio workflow
+
+1. **Rights and consent**: Document whose voice and script are used, permitted purposes, channels, duration, compensation and withdrawal process.
+2. **Approved script**: Check facts, names, advertisements, quotations, sensitive claims and calls to action before generation.
+3. **Generate securely**: Protect source recordings and model access; do not upload confidential material to an unapproved provider.
+4. **Human listening review**: Check meaning, pronunciation, tone, artefacts, accessibility and whether disclosure is needed.
+5. **Publish deliberately**: Add accurate title, description, transcript, credits and advertising labels; verify platform and music licences before syndication.
+
+An audio player may improve accessibility for some visitors, but it does not guarantee longer visits or more conversions. Measure actual use and keep a text alternative.`,
+            practicalExamples: ['Plan an audio introduction using your own authorised voice or a licensed synthetic voice, add a transcript and disclosure, and review it fully before embedding it.'],
+          },
+          understandContent: { coreTakeaway: 'Responsible AI audio combines documented voice rights, secure handling, transparent presentation and human review.', keyPrinciples: ['Obtain specific permission before voice cloning', 'Provide disclosure and an accessible transcript'] },
+          actionTask: { instruction: 'Plan and review an authorised audio introduction in the Content Editor:', placeholder: 'Audio concept reviewed' },
+        },
+        '17.3': {
+          stageTitle: '17. Omnichannel Marketing & Responsible AI Media', title: 'Channel-specific content repurposing',
+          description: 'Transform one verified source into selected formats while adapting context, rights, accessibility and calls to action for each channel.',
+          learnContent: {
+            videoTitle: 'Content repurposing: one source, carefully adapted outputs',
+            summaryText: 'Repurposing can reduce drafting time, but copying one message everywhere often produces weak, repetitive or non-compliant content.',
+            bulletPoints: ['Start from a reviewed source with clear claims, ownership and purpose', 'Choose formats based on audience behaviour rather than an arbitrary “one-to-ten” quota', 'Review every output for channel conventions, media rights, accessibility, links and current information'],
+            fullArticleGuide: `### A controlled omnichannel workflow
+
+Use one strong source as the factual anchor, then create only the formats that serve a defined audience and objective.
+
+#### Repurposing sequence
+
+1. **Approve the source**: Verify facts, dates, permissions, disclosures and the primary message.
+2. **Select channels**: Choose channels you can maintain and where the intended audience is demonstrably active.
+3. **Adapt—not copy**: Rewrite length, opening, visual framing, metadata, accessibility and call to action for each format.
+4. **Run channel QA**: Preview the actual post, check crops, captions, alt text, links, tags, audio, legal labels and scheduling time.
+5. **Publish with controls**: Use approval states, least-privilege connections, duplicate prevention, failure alerts and a pause mechanism.
+6. **Learn from outcomes**: Compare meaningful engagement, qualified actions, complaints and production effort; retire formats that do not justify maintenance.
+
+More posts do not automatically create more presence. Coherent, useful and well-maintained content is more valuable than maximum volume.`,
+            practicalExamples: ['Use GOM-MAR to turn one reviewed message into three chosen formats, then complete a separate preview and rights check for each channel.'],
+          },
+          understandContent: { coreTakeaway: 'Effective omnichannel publishing preserves a verified core while adapting each output to its audience, channel and risks.', keyPrinciples: ['Repurpose selectively from an approved source', 'Require channel-specific review before publishing'] },
+          actionTask: { instruction: 'Complete the omnichannel module and confirm your media controls:', checklistItems: ['I can produce faceless video without misleading viewers or violating media rights', 'I understand consent, disclosure and review for AI-generated audio', 'I can repurpose content with channel-specific quality and publishing controls'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -2867,6 +2950,89 @@ Utrzymuj listę kontaktów incydentowych, kopie zapasowe, testy odtworzenia i r�
           },
           understandContent: { coreTakeaway: 'Trwała automatyzacja ogranicza powtarzalność, zachowując jasną odpowiedzialność, nadzór i odzyskiwanie.', keyPrinciples: ['Automatyzuj rutynę niskiego ryzyka, nie odpowiedzialność', 'Regularnie sprawdzaj i testuj systemy krytyczne'] },
           actionTask: { instruction: 'Ukończ moduł operacyjny i potwierdź podstawy kontroli:', checklistItems: ['Potrafię zabezpieczyć, walidować, deduplikować i monitorować webhooki', 'Potrafię określić obsługę AI opartą na wiedzy z niezawodną eskalacją', 'Każda krytyczna automatyzacja ma właściciela, kontrolę i procedurę odzyskiwania'] },
+        },
+      },
+    },
+    17: {
+      title: '17. Marketing omnichannel i odpowiedzialne media AI',
+      subtitle: 'Systemy wideo, audio i treści dopasowanych do kanału',
+      description: 'Twórz i przekształcaj wideo oraz audio wspierane przez AI, chroniąc prawa, zgodę, autentyczność i jakość w każdym kanale.',
+      lessons: {
+        '17.1': {
+          stageTitle: '17. Marketing omnichannel i odpowiedzialne media AI', title: 'Wideo AI i faceless short-form content',
+          description: 'Twórz użyteczne krótkie filmy bez występowania przed kamerą, respektując prawa do mediów, zasady platform i prawdziwy przekaz.',
+          learnContent: {
+            videoTitle: 'Faceless short video: jasna wartość bez obietnic viralności',
+            summaryText: 'Krótkie wideo pozwala testować pomysły i docierać do nowych widzów, lecz AI, hooki i regularne publikowanie nie gwarantują wyświetleń, kontaktów ani viralności.',
+            bulletPoints: ['Używaj nagrań, obrazów, muzyki, fontów, awatarów i głosów tylko z właściwymi prawami lub licencjami', 'Napisz jasne otwarcie, jedną użyteczną ideę i uczciwy kolejny krok', 'Przed publikacją sprawdź napisy, wymowę, dostępność, twierdzenia i wymagane oznaczenie AI'],
+            fullArticleGuide: `### Twórz użyteczny faceless short-form content
+
+Nie musisz pokazywać twarzy, ale odpowiadasz za każdy wygenerowany obraz, głos, twierdzenie i wezwanie do działania. Syntetyczni prezenterzy nie mogą podszywać się pod prawdziwe osoby ani wprowadzać w błąd co do rekomendacji lub wydarzeń.
+
+#### Praktyczna struktura krótkiego wideo
+
+1. **Otwarcie**: Szybko określ istotny problem lub rezultat bez sensacyjnych gwarancji.
+2. **Wartość**: Wyjaśnij jedną możliwą do użycia ideę z poprawnymi przykładami i czytelnymi napisami.
+3. **Kontekst**: Podaj ważne ograniczenia, warunki lub dowody, gdy temat tego wymaga.
+4. **Kolejny krok**: Zaproponuj jasne, proporcjonalne działanie zgodne ze stroną docelową.
+5. **Kontrola jakości i praw**: Potwierdź licencje, zgodę, oznaczenie, dźwięk, napisy, pisownię, linki i widok mobilny.
+
+Zachowuj dowody licencji i zgody. Nie klonuj wyglądu ani głosu osoby, nie wymyślaj opinii, nie ukrywaj sponsoringu i nie przedstawiaj wygenerowanych scen jako prawdziwego dowodu.`,
+            practicalExamples: ['Wygeneruj z Marą trzy hooki, wybierz najjaśniejszy, sprawdź każde twierdzenie i materiał, a następnie opublikuj ograniczony test bez obietnicy viralności.'],
+          },
+          understandContent: { coreTakeaway: 'Faceless content opiera się na użytecznych ideach, legalnych materiałach, uczciwym przekazie i regularnym testowaniu, a nie gwarantowanej viralności.', keyPrinciples: ['Sprawdzaj prawa, twierdzenia i oznaczenia', 'Optymalizuj wartość i dostępność dla widza'] },
+          actionTask: { instruction: 'Utwórz i sprawdź hooki krótkiego wideo z Marą:', placeholder: 'Hooki wideo sprawdzone' },
+        },
+        '17.2': {
+          stageTitle: '17. Marketing omnichannel i odpowiedzialne media AI', title: 'Klonowanie głosu, podcasty i audio marketing',
+          description: 'Twórz dostępne audio i podcasty przy użyciu głosów, do których masz uprawnienia, oraz procesu kontroli zapobiegającego podszywaniu się i dezinformacji.',
+          learnContent: {
+            videoTitle: 'Audio AI: zgoda, jakość i odpowiedzialna publikacja',
+            summaryText: 'AI może zamienić zatwierdzony skrypt w audio, lecz klonowanie głosu wymaga wyraźnej świadomej zgody, bezpiecznych nagrań źródłowych i jasnych granic użycia.',
+            bulletPoints: ['Klonuj wyłącznie własny głos lub głos objęty wyraźnym, udokumentowanym pozwoleniem i warunkami narzędzia', 'Oznacz syntetyczne lub istotnie zmienione audio, gdy wymagają tego zasady albo brak oznaczenia mógłby wprowadzać w błąd', 'Sprawdź wymowę, fakty, prawa do muzyki, głośność, metadane, transkrypcję i ustawienia dystrybucji'],
+            fullArticleGuide: `### Buduj zaufanie odpowiedzialnym audio
+
+Audio jest wygodne i osobiste, ale realistyczny syntetyczny głos może także służyć oszustwu lub podszywaniu się. Zgoda na nagranie nie oznacza automatycznie zgody na klonowanie, edycję, publikację i każde przyszłe użycie.
+
+#### Bezpieczny workflow audio AI
+
+1. **Prawa i zgoda**: Zapisz, czyj głos i skrypt są używane, dozwolone cele, kanały, czas, wynagrodzenie i procedurę wycofania.
+2. **Zatwierdzony skrypt**: Przed generowaniem sprawdź fakty, nazwy, reklamy, cytaty, wrażliwe twierdzenia i CTA.
+3. **Bezpieczne generowanie**: Chroń nagrania źródłowe i dostęp do modelu; nie przesyłaj poufnych treści niezatwierdzonemu dostawcy.
+4. **Odsłuch człowieka**: Sprawdź znaczenie, wymowę, ton, artefakty, dostępność i potrzebę oznaczenia.
+5. **Świadoma publikacja**: Dodaj poprawny tytuł, opis, transkrypcję, autorstwo i oznaczenie reklamy; sprawdź zasady platformy oraz licencje muzyczne.
+
+Odtwarzacz może poprawić dostępność dla części osób, ale nie gwarantuje dłuższych wizyt ani konwersji. Mierz użycie i zachowaj alternatywę tekstową.`,
+            practicalExamples: ['Zaplanuj intro audio własnym autoryzowanym głosem lub licencjonowanym głosem syntetycznym, dodaj transkrypcję i oznaczenie oraz odsłuchaj całość przed osadzeniem.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialne audio AI łączy udokumentowane prawa do głosu, bezpieczną obsługę, przejrzysty przekaz i kontrolę człowieka.', keyPrinciples: ['Uzyskaj konkretną zgodę przed klonowaniem głosu', 'Zapewnij oznaczenie i dostępną transkrypcję'] },
+          actionTask: { instruction: 'Zaplanuj i sprawdź autoryzowane intro audio w edytorze treści:', placeholder: 'Koncepcja audio sprawdzona' },
+        },
+        '17.3': {
+          stageTitle: '17. Marketing omnichannel i odpowiedzialne media AI', title: 'Przekształcanie treści dopasowane do kanału',
+          description: 'Przekształć jedno sprawdzone źródło w wybrane formaty, dopasowując kontekst, prawa, dostępność i CTA do każdego kanału.',
+          learnContent: {
+            videoTitle: 'Repurposing: jedno źródło, starannie dopasowane formaty',
+            summaryText: 'Repurposing skraca tworzenie szkiców, ale kopiowanie tej samej wiadomości wszędzie często daje słabe, powtarzalne lub niezgodne treści.',
+            bulletPoints: ['Zacznij od sprawdzonego źródła z jasnymi twierdzeniami, prawami i celem', 'Wybierz formaty według zachowania odbiorców zamiast arbitralnej zasady „jeden do dziesięciu”', 'Sprawdzaj każdy format pod kątem specyfiki kanału, praw, dostępności, linków i aktualności'],
+            fullArticleGuide: `### Kontrolowany workflow omnichannel
+
+Użyj jednego mocnego źródła jako kotwicy faktów, a potem twórz tylko formaty służące określonej grupie i celowi.
+
+#### Kolejność przekształcania
+
+1. **Zatwierdź źródło**: Sprawdź fakty, daty, pozwolenia, oznaczenia i główny przekaz.
+2. **Wybierz kanały**: Korzystaj z kanałów, które możesz utrzymać i w których odbiorcy faktycznie są aktywni.
+3. **Dopasuj zamiast kopiować**: Zmień długość, otwarcie, warstwę wizualną, metadane, dostępność i CTA dla każdego formatu.
+4. **Kontrola kanałowa**: Obejrzyj prawdziwy podgląd; sprawdź kadrowanie, napisy, alt text, linki, tagi, dźwięk, oznaczenia i termin.
+5. **Publikuj z kontrolą**: Stosuj status akceptacji, minimalne uprawnienia, ochronę przed duplikatami, alert błędu i możliwość zatrzymania.
+6. **Ucz się z wyników**: Porównuj wartościowe zaangażowanie, kwalifikowane działania, skargi i nakład pracy; wyłączaj formaty niewarte utrzymania.
+
+Więcej postów nie tworzy automatycznie większej obecności. Spójna, użyteczna i aktualna treść jest cenniejsza niż maksymalna ilość.`,
+            practicalExamples: ['Użyj GOM-MAR do zmiany jednej sprawdzonej wiadomości w trzy wybrane formaty, a następnie wykonaj osobny podgląd i kontrolę praw dla każdego kanału.'],
+          },
+          understandContent: { coreTakeaway: 'Skuteczny omnichannel zachowuje zweryfikowany rdzeń i dopasowuje każdy format do odbiorcy, kanału oraz ryzyka.', keyPrinciples: ['Przekształcaj selektywnie ze sprawdzonego źródła', 'Wymagaj kontroli kanałowej przed publikacją'] },
+          actionTask: { instruction: 'Ukończ moduł omnichannel i potwierdź kontrolę mediów:', checklistItems: ['Potrafię tworzyć faceless video bez wprowadzania w błąd i naruszania praw', 'Rozumiem zgodę, oznaczenie i kontrolę audio generowanego przez AI', 'Potrafię przekształcać treści z kanałową kontrolą jakości i publikacji'] },
         },
       },
     },
