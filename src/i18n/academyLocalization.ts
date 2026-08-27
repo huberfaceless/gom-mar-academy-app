@@ -1197,6 +1197,87 @@ A certificate documents completion of the Academy requirements; it does not guar
         },
       },
     },
+    14: {
+      title: '14. Legal, Compliance & GDPR',
+      subtitle: 'Responsible foundations for online businesses',
+      description: 'Learn practical privacy, marketing, website-disclosure, consumer and record-keeping basics—and when local professional advice is required.',
+      lessons: {
+        '14.1': {
+          stageTitle: '14. Legal, Compliance & GDPR', title: 'GDPR & compliant email marketing',
+          description: 'Collect and use email addresses transparently, document consent, and make withdrawal and objections easy.',
+          learnContent: {
+            videoTitle: 'Privacy-aware email marketing under the GDPR',
+            summaryText: 'Email marketing needs a valid legal basis and clear information. Double opt-in is a widely used way to verify an address and document consent, but the precise requirements also depend on national electronic-marketing law.',
+            bulletPoints: ['Record the wording, time, source and confirmation of consent', 'Link the privacy notice and use a clear, unbundled choice where consent is required', 'Provide a visible, working unsubscribe route and honour withdrawals promptly'],
+            fullArticleGuide: `### Three foundations for responsible email marketing
+
+Privacy compliance is not a badge a tool can guarantee. The organisation using the tool remains responsible for its purpose, legal basis, information, records and recipients.
+
+#### Practical checklist
+
+1. **Choose and document the legal basis**: For promotional newsletters, consent is commonly required. State who sends what, how often, and for which purpose. Do not use pre-ticked or vague consent.
+2. **Verify and retain evidence**: Double opt-in can verify control of an address and strengthen the evidence of consent. Keep a proportionate audit record; do not claim that DOI alone makes every campaign lawful.
+3. **Enable withdrawal and objections**: Make unsubscribing as easy as subscribing, process it promptly, and suppress the address from further marketing unless another lawful reason requires limited retention.
+4. **Minimise and protect data**: Collect only necessary fields, restrict access, set retention periods, and review processors and international transfers.
+
+Rules differ by country and type of message. Obtain qualified local advice for unusual campaigns, purchased lists, profiling, sensitive data or cross-border activity. This lesson is general education, not legal advice.`,
+            practicalExamples: ['In the GOM-MAR email editor, review the form wording, privacy link, DOI flow, consent log and unsubscribe test yourself; the presence of these features is not an automatic compliance guarantee.'],
+          },
+          understandContent: { coreTakeaway: 'Transparent choices, reliable evidence and easy withdrawal protect recipients and support trustworthy marketing.', keyPrinciples: ['Document the legal basis and consent evidence', 'Make withdrawal as easy as sign-up'] },
+          actionTask: { instruction: 'Review and test the consent, DOI, privacy and unsubscribe flow in the GOM-MAR Email Editor:', placeholder: 'Email compliance flow reviewed' },
+        },
+        '14.2': {
+          stageTitle: '14. Legal, Compliance & GDPR', title: 'Legal notice, terms & consumer information',
+          description: 'Make required provider, privacy, advertising and consumer information accurate, accessible and appropriate to your jurisdiction and offer.',
+          learnContent: {
+            videoTitle: 'Website disclosures and avoidable compliance risks',
+            summaryText: 'Required disclosures vary by country, legal form, audience and transaction. They should be easy to find, current and tailored to the actual operator and offer.',
+            bulletPoints: ['Provide the operator identity, a serviceable address and required contact or registration details', 'Clearly label advertising and affiliate relationships where required', 'Use reviewed, jurisdiction-specific privacy, terms and withdrawal information instead of relying blindly on a generator'],
+            fullArticleGuide: `### Legal information for websites and social profiles
+
+A footer or profile link is useful, but there is no universal statutory “two-click rule” that makes every site compliant. Applicable duties depend on the operator, jurisdiction, service, audience and sales process.
+
+#### Review these areas
+
+* **Provider information**: Identify the responsible business and include the address, contact, registration, supervisory and tax details required in the relevant country.
+* **Privacy information**: Explain purposes, legal bases, recipients, retention, rights, transfers and contact details in clear language matching the real data flows.
+* **Commercial communication**: Label ads, sponsorships and affiliate relationships clearly enough that users understand the commercial nature before acting.
+* **Contracts and consumers**: If selling online, check pre-contract information, prices, payment, delivery, cancellation or withdrawal rights, digital-content rules and the required ordering flow. Terms are not a substitute for mandatory law and may not be necessary in every model.
+* **Current information**: Do not copy obsolete references—for example, the former EU online dispute-resolution platform was discontinued in 2025.
+
+Use official local guidance and have material or cross-border offers reviewed by a qualified professional. This lesson is general education, not legal advice.`,
+            practicalExamples: ['Link the legal notice and privacy information prominently, then test every link and compare the content with the actual business, tools, tracking and checkout flow.'],
+          },
+          understandContent: { coreTakeaway: 'Accurate, accessible and jurisdiction-specific disclosures reduce risk and help customers make informed decisions.', keyPrinciples: ['Match disclosures to the real operator and data flows', 'Review consumer information before selling'] },
+          actionTask: { instruction: 'Add and review the required legal and privacy links in the Landing Page Generator:', placeholder: 'Legal information reviewed' },
+        },
+        '14.3': {
+          stageTitle: '14. Legal, Compliance & GDPR', title: 'Business registration, tax & record keeping',
+          description: 'Identify the registration, tax, invoicing and bookkeeping duties that apply where you operate instead of relying on another country’s thresholds.',
+          learnContent: {
+            videoTitle: 'Business and tax setup: a jurisdiction-aware checklist',
+            summaryText: 'Registration and tax obligations depend on your country, legal form, activity, customers and turnover. German terms such as §19 UStG and EÜR must not be treated as universal EU rules.',
+            bulletPoints: ['Confirm whether and when your activity must be registered locally', 'Clarify income tax, VAT, invoicing and cross-border obligations before taking payments', 'Keep complete, secure records and follow local retention requirements'],
+            fullArticleGuide: `### Set up the administrative foundation responsibly
+
+There is no single EU-wide registration process or small-business VAT threshold. Austria, Germany, Poland and other countries use different authorities, classifications, thresholds and reporting rules.
+
+#### Practical sequence
+
+1. **Define the activity and location**: Record what you sell, where the business is established, who the customers are and where delivery occurs.
+2. **Check registrations**: Ask the competent trade or business authority and tax office which registrations, licences and social-insurance duties apply and from which date.
+3. **Clarify VAT and invoicing**: Check the current local small-business rules, B2B/B2C place-of-supply rules, digital-service rules and invoice requirements. Do not copy an old threshold from another jurisdiction.
+4. **Separate and retain records**: Store invoices, receipts, contracts and payment records consistently, protect personal data and follow applicable retention periods.
+5. **Get advice when needed**: A tax adviser or relevant authority should review cross-border sales, platforms, employees, regulated activities and uncertain classifications.
+
+This lesson is a planning checklist, not legal, tax or accounting advice.`,
+            practicalExamples: ['Create a weekly bookkeeping routine in a suitable spreadsheet or accounting system, then confirm the setup and retention rules with the competent local authority or adviser.'],
+          },
+          understandContent: { coreTakeaway: 'A reliable business starts with country-specific registration, tax and record-keeping decisions based on current facts.', keyPrinciples: ['Verify duties with competent local sources', 'Keep complete and protected records from day one'] },
+          actionTask: { instruction: 'Complete the Legal & Compliance module and confirm your next verification steps:', checklistItems: ['I know how to document consent and test withdrawal', 'I will tailor legal and privacy information to my jurisdiction and real data flows', 'I know which local authority or adviser must confirm my registration and tax duties'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -2377,6 +2458,87 @@ Certyfikat dokumentuje spełnienie wymagań Academy; nie gwarantuje sukcesu kome
           },
           understandContent: { coreTakeaway: 'Ukończenie jest ważnym etapem; trwały postęp wynika z dalszego wdrażania, pomiaru i nauki.', keyPrinciples: ['Wdrażaj i regularnie sprawdzaj', 'Ucz się dalej i chroń zaufanie klientów'] },
           actionTask: { instruction: 'Ukończ etap GOM-MAR Academy i potwierdź podstawy Business Mastery:', checklistItems: ['Rozumiem zasady bezpiecznego budowania społeczności', 'Potrafię stworzyć przejrzysty lejek VSL evergreen', 'Sprawdziłem system i rozumiem znaczenie certyfikatu'] },
+        },
+      },
+    },
+    14: {
+      title: '14. Prawo, zgodność i RODO',
+      subtitle: 'Odpowiedzialne podstawy biznesu online',
+      description: 'Poznaj praktyczne podstawy prywatności, marketingu, informacji na stronie, praw konsumenta i dokumentacji—oraz sytuacje wymagające lokalnej porady specjalisty.',
+      lessons: {
+        '14.1': {
+          stageTitle: '14. Prawo, zgodność i RODO', title: 'RODO i zgodny e-mail marketing',
+          description: 'Zbieraj i wykorzystuj adresy e-mail przejrzyście, dokumentuj zgodę oraz ułatwiaj jej wycofanie i wniesienie sprzeciwu.',
+          learnContent: {
+            videoTitle: 'E-mail marketing z poszanowaniem prywatności',
+            summaryText: 'E-mail marketing wymaga właściwej podstawy prawnej i jasnej informacji. Double opt-in jest powszechnym sposobem weryfikacji adresu i udokumentowania zgody, lecz szczegóły zależą także od krajowych przepisów o komunikacji elektronicznej.',
+            bulletPoints: ['Zapisuj treść, czas, źródło i potwierdzenie zgody', 'Podaj link do polityki prywatności i stosuj jasny, odrębny wybór, gdy wymagana jest zgoda', 'Zapewnij widoczną i działającą rezygnację oraz szybko respektuj wycofanie zgody'],
+            fullArticleGuide: `### Trzy podstawy odpowiedzialnego e-mail marketingu
+
+Zgodność z prawem nie jest odznaką, którą może zagwarantować narzędzie. Organizacja korzystająca z narzędzia odpowiada za cel, podstawę prawną, informacje, rejestry i odbiorców.
+
+#### Praktyczna lista kontrolna
+
+1. **Wybierz i udokumentuj podstawę prawną**: W przypadku newsletterów promocyjnych często wymagana jest zgoda. Wyjaśnij, kto, co, jak często i w jakim celu wysyła. Nie stosuj zaznaczonych z góry ani niejasnych zgód.
+2. **Zweryfikuj i zachowaj dowody**: Double opt-in może potwierdzić kontrolę nad adresem i wzmocnić dowód zgody. Zachowaj proporcjonalny zapis, ale nie twierdź, że sam DOI czyni każdą kampanię zgodną z prawem.
+3. **Umożliw wycofanie i sprzeciw**: Rezygnacja powinna być równie łatwa jak zapis. Obsłuż ją szybko i zablokuj dalszy marketing na ten adres, chyba że inna podstawa wymaga ograniczonego przechowywania.
+4. **Minimalizuj i chroń dane**: Zbieraj tylko potrzebne pola, ogranicz dostęp, ustal okresy przechowywania oraz sprawdź podmioty przetwarzające i transfery międzynarodowe.
+
+Zasady różnią się zależnie od kraju i rodzaju wiadomości. W nietypowych kampaniach, zakupionych bazach, profilowaniu, danych wrażliwych lub działalności transgranicznej skorzystaj z lokalnej porady. To materiał edukacyjny, nie porada prawna.`,
+            practicalExamples: ['W edytorze e-mail GOM-MAR samodzielnie sprawdź treść formularza, link prywatności, przebieg DOI, rejestr zgody i rezygnację; sama obecność funkcji nie gwarantuje zgodności.'],
+          },
+          understandContent: { coreTakeaway: 'Przejrzysty wybór, wiarygodne dowody i łatwa rezygnacja chronią odbiorców oraz wspierają uczciwy marketing.', keyPrinciples: ['Dokumentuj podstawę prawną i dowody zgody', 'Uczyń rezygnację równie łatwą jak zapis'] },
+          actionTask: { instruction: 'Sprawdź i przetestuj zgodę, DOI, prywatność i rezygnację w edytorze e-mail GOM-MAR:', placeholder: 'Przebieg zgodności e-mail sprawdzony' },
+        },
+        '14.2': {
+          stageTitle: '14. Prawo, zgodność i RODO', title: 'Dane operatora, regulaminy i informacje konsumenckie',
+          description: 'Zapewnij dokładne, dostępne i właściwe dla jurysdykcji oraz oferty informacje o operatorze, prywatności, reklamie i prawach konsumenta.',
+          learnContent: {
+            videoTitle: 'Informacje na stronie i ryzyka zgodności',
+            summaryText: 'Wymagane informacje zależą od kraju, formy prawnej, odbiorców i transakcji. Powinny być łatwe do znalezienia, aktualne i dopasowane do rzeczywistego operatora oraz oferty.',
+            bulletPoints: ['Podaj tożsamość operatora, adres do doręczeń oraz wymagane dane kontaktowe lub rejestrowe', 'Wyraźnie oznacz reklamę i relacje afiliacyjne, gdy jest to wymagane', 'Korzystaj ze sprawdzonych, lokalnych informacji o prywatności, warunkach i odstąpieniu zamiast bezkrytycznie ufać generatorowi'],
+            fullArticleGuide: `### Informacje prawne na stronach i profilach społecznościowych
+
+Link w stopce lub profilu jest przydatny, ale nie istnieje uniwersalna ustawowa „zasada dwóch kliknięć”, która zapewnia zgodność każdej strony. Obowiązki zależą od operatora, jurysdykcji, usługi, odbiorców i procesu sprzedaży.
+
+#### Sprawdź następujące obszary
+
+* **Dane usługodawcy**: Wskaż odpowiedzialny podmiot i podaj adres, kontakt, dane rejestrowe, nadzorcze i podatkowe wymagane w danym kraju.
+* **Informacje o prywatności**: Jasno opisz cele, podstawy prawne, odbiorców, okresy przechowywania, prawa, transfery i dane kontaktowe zgodnie z rzeczywistym przepływem danych.
+* **Komunikacja handlowa**: Oznacz reklamy, sponsoring i afiliację tak, aby użytkownik rozumiał charakter komercyjny przed podjęciem działania.
+* **Umowy i konsumenci**: Przy sprzedaży online sprawdź informacje przedumowne, ceny, płatność, dostawę, prawo odstąpienia, treści cyfrowe i przebieg zamówienia. Regulamin nie zastępuje prawa i nie zawsze jest potrzebny.
+* **Aktualność**: Nie kopiuj nieaktualnych odniesień—dawna unijna platforma internetowego rozstrzygania sporów została wyłączona w 2025 roku.
+
+Korzystaj z oficjalnych lokalnych źródeł, a istotne lub transgraniczne oferty poddaj kontroli specjalisty. To materiał edukacyjny, nie porada prawna.`,
+            practicalExamples: ['Umieść wyraźne linki do danych prawnych i informacji o prywatności, a następnie sprawdź każdy link oraz zgodność treści z firmą, narzędziami, śledzeniem i procesem zakupu.'],
+          },
+          understandContent: { coreTakeaway: 'Dokładne, dostępne i lokalnie dopasowane informacje ograniczają ryzyko i pomagają klientom podejmować świadome decyzje.', keyPrinciples: ['Dopasuj informacje do operatora i rzeczywistych przepływów danych', 'Sprawdź informacje konsumenckie przed sprzedażą'] },
+          actionTask: { instruction: 'Dodaj i sprawdź wymagane linki prawne i prywatności w generatorze landing page:', placeholder: 'Informacje prawne sprawdzone' },
+        },
+        '14.3': {
+          stageTitle: '14. Prawo, zgodność i RODO', title: 'Rejestracja firmy, podatki i dokumentacja',
+          description: 'Ustal obowiązki rejestracyjne, podatkowe, fakturowe i księgowe właściwe dla miejsca działalności zamiast polegać na progach z innego kraju.',
+          learnContent: {
+            videoTitle: 'Firma i podatki: lista kontrolna uwzględniająca jurysdykcję',
+            summaryText: 'Obowiązki zależą od kraju, formy prawnej, działalności, klientów i obrotu. Niemieckich pojęć, takich jak §19 UStG i EÜR, nie należy traktować jako uniwersalnych zasad UE.',
+            bulletPoints: ['Potwierdź, czy i od kiedy działalność wymaga lokalnej rejestracji', 'Wyjaśnij podatek dochodowy, VAT, fakturowanie i obowiązki transgraniczne przed przyjęciem płatności', 'Prowadź pełną, bezpieczną dokumentację i przestrzegaj lokalnych okresów przechowywania'],
+            fullArticleGuide: `### Odpowiedzialnie przygotuj podstawy administracyjne
+
+Nie istnieje jeden unijny proces rejestracji ani wspólny próg zwolnienia małych firm z VAT. Austria, Niemcy, Polska i inne kraje stosują różne urzędy, klasyfikacje, progi i zasady raportowania.
+
+#### Praktyczna kolejność
+
+1. **Określ działalność i miejsce**: Zapisz, co sprzedajesz, gdzie firma ma siedzibę, kim są klienci i gdzie następuje świadczenie.
+2. **Sprawdź rejestracje**: Zapytaj właściwy urząd gospodarczy i podatkowy o wymagane rejestracje, licencje, ubezpieczenia społeczne i datę rozpoczęcia obowiązków.
+3. **Wyjaśnij VAT i faktury**: Sprawdź aktualne lokalne zasady dla małych firm, miejsce świadczenia B2B/B2C, usługi cyfrowe i wymagania fakturowe. Nie kopiuj starego progu z innej jurysdykcji.
+4. **Oddziel i przechowuj dokumenty**: Systematycznie zapisuj faktury, rachunki, umowy i płatności, chroń dane osobowe i przestrzegaj okresów przechowywania.
+5. **W razie potrzeby skorzystaj z porady**: Doradca podatkowy lub właściwy urząd powinien sprawdzić sprzedaż transgraniczną, platformy, pracowników, działalność regulowaną i niejasne klasyfikacje.
+
+To lista planowania, a nie porada prawna, podatkowa ani księgowa.`,
+            practicalExamples: ['Ustal cotygodniowy proces księgowy w odpowiednim arkuszu lub systemie, a następnie potwierdź konfigurację i okresy przechowywania we właściwym urzędzie lub u doradcy.'],
+          },
+          understandContent: { coreTakeaway: 'Rzetelny biznes zaczyna się od właściwych dla kraju decyzji rejestracyjnych, podatkowych i dokumentacyjnych opartych na aktualnych faktach.', keyPrinciples: ['Weryfikuj obowiązki w kompetentnych lokalnych źródłach', 'Od początku prowadź pełną i chronioną dokumentację'] },
+          actionTask: { instruction: 'Ukończ moduł Prawo i zgodność oraz potwierdź kolejne kroki weryfikacji:', checklistItems: ['Wiem, jak dokumentować zgodę i testować rezygnację', 'Dopasuję informacje prawne i prywatności do jurysdykcji oraz rzeczywistych przepływów danych', 'Wiem, który lokalny urząd lub doradca powinien potwierdzić moje obowiązki rejestracyjne i podatkowe'] },
         },
       },
     },
