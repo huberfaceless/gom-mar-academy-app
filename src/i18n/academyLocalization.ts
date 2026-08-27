@@ -1692,6 +1692,89 @@ Never use a predicted score to exploit vulnerability, hide opportunities, spam i
         },
       },
     },
+    20: {
+      title: '20. AI Ecosystems, Ethics & Sustainable Growth',
+      subtitle: 'Adaptable systems, responsible AI and a credible completion milestone',
+      description: 'Build a resilient digital operating foundation, govern AI responsibly and complete the first twenty Academy stages without promises of permanent prosperity or immunity from change.',
+      lessons: {
+        '20.1': {
+          stageTitle: '20. AI Ecosystems, Ethics & Sustainable Growth', title: 'Responsible AI & transparency in marketing',
+          description: 'Use AI with clear accountability, proportionate disclosure, privacy safeguards and evidence-based quality review.',
+          learnContent: {
+            videoTitle: 'Responsible AI: earning trust through accountable practice',
+            summaryText: 'Transparency and human responsibility can support trust, but no ethics checklist makes a brand infallible or guarantees customer confidence.',
+            bulletPoints: ['Tell people when automation or synthetic media materially affects their interaction or understanding', 'Verify claims, sources, rights, tone and potentially harmful effects before customer-facing use', 'Collect only necessary data and provide accessible human help, correction and objection routes'],
+            fullArticleGuide: `### Make responsible AI an operating practice
+
+Ethical marketing is not a one-time tone check. It requires defined ownership, evidence, safeguards and a willingness to stop or correct a system when it causes harm.
+
+#### A practical review
+
+1. **Purpose and necessity**: State the customer problem and determine whether AI is appropriate or a simpler process is safer.
+2. **Transparency**: Explain meaningful automation, synthetic media, personalisation and data use in language the intended audience can understand.
+3. **Truth and provenance**: Verify claims and sources; preserve permissions; do not fabricate people, testimonials, scarcity or outcomes.
+4. **Privacy and fairness**: Minimise data, restrict access, review group impacts and avoid exploiting age, health, financial stress or other vulnerabilities.
+5. **Human accountability**: Name an owner, create an escalation and correction route, log material decisions and test the system after changes.
+
+Mara can assist with a review, but an AI cannot certify its own output as ethical, accurate, lawful or emotionally appropriate. The accountable publisher makes the final decision.`,
+            practicalExamples: ['Use Mara to flag tone, unsupported claims and disclosure questions, then have the responsible person resolve each issue against evidence and the real campaign context.'],
+          },
+          understandContent: { coreTakeaway: 'Responsible AI marketing depends on truthful content, proportionate transparency, protected data and accountable human decisions.', keyPrinciples: ['Treat ethics as an ongoing control process', 'Give people clear information and meaningful recourse'] },
+          actionTask: { instruction: 'Perform and document a human-owned tone, claims and AI-ethics review with Mara:', placeholder: 'Responsible AI review completed' },
+        },
+        '20.2': {
+          stageTitle: '20. AI Ecosystems, Ethics & Sustainable Growth', title: 'Platform resilience, portability & recoverability',
+          description: 'Reduce concentration risk with portable data, documented dependencies, tested backups and realistic migration plans.',
+          learnContent: {
+            videoTitle: 'Platform resilience: control without pretending independence',
+            summaryText: 'A website, email list or community still depends on hosting, domains, email providers, processors, identity systems, law and deliverability. The goal is resilience, not complete independence.',
+            bulletPoints: ['Inventory critical providers, data formats, contracts, credentials and single points of failure', 'Export only data you may lawfully retain and preserve consent, suppression and deletion status', 'Test encrypted backups, restoration, domain control, documented fallbacks and provider migration'],
+            fullArticleGuide: `### Build a recoverable ecosystem
+
+Customer data is not an untouchable asset that belongs to a business “100%”. People retain rights over their personal data, and its use remains limited by consent, law, contracts, security and the original purpose.
+
+#### Resilience foundations
+
+* **Direct channels**: Maintain permission-based contact routes, but respect withdrawals, objections, deletion and retention limits.
+* **Portable content and data**: Use documented, common export formats and preserve field definitions, consent evidence and suppression lists.
+* **Dependency register**: Record domains, DNS, hosting, email, payments, analytics, AI vendors, licences, owners and renewal dates.
+* **Verified backups**: Encrypt backups, separate access, define retention and regularly restore a sample into a safe environment.
+* **Migration plan**: Document how to replace a critical provider, rotate credentials, update integrations, notify customers and maintain a manual fallback.
+* **Channel diversification**: Test a manageable mix of search, social, email, referral and partnership channels without duplicating risk or workload blindly.
+
+No ecosystem is indestructible. Resilience comes from understanding dependencies and proving that recovery and migration actually work.`,
+            practicalExamples: ['Export an authorised GOM-MAR dataset, store it securely, verify the consent and suppression fields, and perform a documented sample restoration instead of assuming the download is a usable backup.'],
+          },
+          understandContent: { coreTakeaway: 'Digital resilience comes from lawful portability, tested recovery and replaceable dependencies—not absolute ownership or platform independence.', keyPrinciples: ['Preserve rights and consent state during exports', 'Test restoration and migration regularly'] },
+          actionTask: { instruction: 'Review and test your backup, dependency and migration strategy:', placeholder: 'Resilience plan tested' },
+        },
+        '20.3': {
+          stageTitle: '20. AI Ecosystems, Ethics & Sustainable Growth', title: 'Twenty-stage review & GOM-MAR completion diploma',
+          description: 'Review the first twenty Academy stages, document remaining gaps and recognise completion without inflated status or income claims.',
+          learnContent: {
+            videoTitle: 'A meaningful milestone—and the next review cycle',
+            summaryText: 'Completing twenty stages demonstrates sustained learning. It does not prove that every feature is implemented, that a business is profitable or scalable, or that the learner is a market-leading performer.',
+            bulletPoints: ['Review completed evidence, unresolved risks and the next responsible improvement', 'Unlock the GOM-MAR completion diploma when defined lesson and task requirements are met', 'Treat alumni access and duration according to the actual published programme terms'],
+            fullArticleGuide: `### Congratulations on completing the twenty-stage milestone
+
+You have explored a broad set of digital-marketing and AI topics. The lasting value now comes from applying the relevant parts carefully, measuring outcomes and maintaining the systems you actually use.
+
+#### Your next operating cycle
+
+1. **Review evidence**: List what is live, tested, documented and owned—and separate it from drafts, demonstrations and planned features.
+2. **Close critical gaps**: Prioritise security, privacy, customer harm, billing, delivery and recovery before adding more automation.
+3. **Choose one improvement**: Define a measurable customer or business outcome, a bounded test and a rollback rule.
+4. **Maintain competence**: Revisit laws, provider policies, models, permissions, content and procedures as they change.
+5. **Describe the milestone accurately**: Share the Academy diploma as evidence of completing stated requirements, not as proof of income, professional licensing, market rank or mastery of every system.
+
+No course can guarantee durable wealth, business success or future-proof technology. Sustainable progress depends on market fit, execution, customer value, resources, risk management and continued learning.`,
+            practicalExamples: ['Download the GOM-MAR diploma after the progress check confirms completion and accompany it with a truthful description of the skills and projects you actually completed.'],
+          },
+          understandContent: { coreTakeaway: 'The diploma marks completion of a structured learning stage; credible growth still requires evidence, maintenance and responsible execution.', keyPrinciples: ['Celebrate completion without overstating it', 'Continue reviewing, testing and improving'] },
+          actionTask: { instruction: 'Complete Stage 20 and confirm your responsible completion review:', checklistItems: ['I understand accountable and transparent AI marketing', 'I have documented dependencies and tested a lawful backup or recovery path', 'I understand what the GOM-MAR completion diploma does and does not certify'] },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -3367,6 +3450,89 @@ Nie używaj wyniku do wykorzystywania podatności, ukrywania szans, spamowania n
           },
           understandContent: { coreTakeaway: 'Prognozy są niepewnym wsparciem decyzji i wymagają legalnych danych, mocnej walidacji, kontroli uczciwości oraz ciągłego monitorowania.', keyPrinciples: ['Odróżniaj obserwowaną wartość od prognozowanego LTV', 'Interwencje wobec klientów utrzymuj proporcjonalne i podlegające kontroli'] },
           actionTask: { instruction: 'Ukończ moduł Analytics i potwierdź kontrolę pomiaru:', checklistItems: ['Potrafię zaplanować test A/B bez uniwersalnego skrótu wielkości próby', 'Potrafię zdefiniować CAC, ROAS, marżę i LTV w kontekście firmy', 'Potrafię ocenić wnioski predykcyjne pod kątem prywatności, niepewności, uczciwości i wartości przyrostowej'] },
+        },
+      },
+    },
+    20: {
+      title: '20. Ekosystemy AI, etyka i trwały rozwój',
+      subtitle: 'Elastyczne systemy, odpowiedzialne AI i wiarygodny etap ukończenia',
+      description: 'Buduj odporną podstawę cyfrową, odpowiedzialnie nadzoruj AI i ukończ pierwsze dwadzieścia etapów Academy bez obietnic trwałego dobrobytu lub odporności na zmiany.',
+      lessons: {
+        '20.1': {
+          stageTitle: '20. Ekosystemy AI, etyka i trwały rozwój', title: 'Odpowiedzialne AI i przejrzystość w marketingu',
+          description: 'Używaj AI z jasną odpowiedzialnością, proporcjonalnym oznaczeniem, ochroną prywatności i kontrolą jakości opartą na dowodach.',
+          learnContent: {
+            videoTitle: 'Odpowiedzialne AI: zdobywanie zaufania przez rozliczalną praktykę',
+            summaryText: 'Przejrzystość i odpowiedzialność człowieka mogą wspierać zaufanie, ale żadna lista etyczna nie czyni marki nieomylną ani nie gwarantuje zaufania klientów.',
+            bulletPoints: ['Informuj, gdy automatyzacja lub media syntetyczne istotnie wpływają na interakcję albo jej rozumienie', 'Przed użyciem wobec klientów sprawdź twierdzenia, źródła, prawa, ton i możliwe szkody', 'Zbieraj tylko potrzebne dane i zapewnij dostępną pomoc człowieka, korektę oraz możliwość sprzeciwu'],
+            fullArticleGuide: `### Uczyń odpowiedzialne AI praktyką operacyjną
+
+Etyczny marketing nie jest jednorazową kontrolą tonu. Wymaga właściciela, dowodów, zabezpieczeń oraz gotowości do zatrzymania lub poprawienia systemu, gdy wyrządza szkodę.
+
+#### Praktyczny przegląd
+
+1. **Cel i konieczność**: Określ problem klienta i sprawdź, czy AI jest właściwe, czy prostszy proces będzie bezpieczniejszy.
+2. **Przejrzystość**: Wyjaśnij istotną automatyzację, media syntetyczne, personalizację i użycie danych językiem zrozumiałym dla odbiorcy.
+3. **Prawda i pochodzenie**: Sprawdzaj twierdzenia i źródła; zachowuj pozwolenia; nie wymyślaj osób, opinii, niedoboru ani wyników.
+4. **Prywatność i uczciwość**: Minimalizuj dane, ogranicz dostęp, sprawdzaj wpływ na grupy i nie wykorzystuj wieku, zdrowia, trudności finansowych ani innych podatności.
+5. **Odpowiedzialność człowieka**: Wyznacz właściciela, drogę eskalacji i korekty, loguj istotne decyzje i testuj system po zmianach.
+
+Mara może pomóc w przeglądzie, ale AI nie może samo potwierdzić, że jego wynik jest etyczny, prawdziwy, legalny lub emocjonalnie właściwy. Ostateczną decyzję podejmuje odpowiedzialny wydawca.`,
+            practicalExamples: ['Użyj Mary do wskazania problemów tonu, niepopartych twierdzeń i pytań o oznaczenie, a następnie odpowiedzialna osoba powinna rozwiązać każdy punkt na podstawie dowodów i kontekstu kampanii.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialny marketing AI wymaga prawdziwej treści, proporcjonalnej przejrzystości, chronionych danych i rozliczalnych decyzji człowieka.', keyPrinciples: ['Traktuj etykę jako ciągły proces kontroli', 'Zapewnij ludziom jasne informacje i realną drogę odwołania'] },
+          actionTask: { instruction: 'Przeprowadź i udokumentuj kontrolowany przez człowieka przegląd tonu, twierdzeń i etyki AI z Marą:', placeholder: 'Przegląd odpowiedzialnego AI ukończony' },
+        },
+        '20.2': {
+          stageTitle: '20. Ekosystemy AI, etyka i trwały rozwój', title: 'Odporność platformowa, przenośność i odzyskiwanie',
+          description: 'Ogranicz ryzyko koncentracji dzięki przenośnym danym, opisanym zależnościom, sprawdzonym kopiom zapasowym i realistycznym planom migracji.',
+          learnContent: {
+            videoTitle: 'Odporność platformowa: kontrola bez udawania niezależności',
+            summaryText: 'Strona, lista e-mail i społeczność nadal zależą od hostingu, domen, dostawców poczty, procesorów, tożsamości, prawa i dostarczalności. Celem jest odporność, nie całkowita niezależność.',
+            bulletPoints: ['Zinwentaryzuj krytycznych dostawców, formaty danych, umowy, poświadczenia i pojedyncze punkty awarii', 'Eksportuj tylko dane, które możesz legalnie zachować, wraz ze stanem zgód, wykluczeń i usunięć', 'Testuj szyfrowane kopie, odtworzenie, kontrolę domeny, opisane alternatywy i zmianę dostawcy'],
+            fullArticleGuide: `### Zbuduj ekosystem możliwy do odzyskania
+
+Dane klientów nie są nietykalnym aktywem należącym do firmy „w 100%”. Osoby zachowują prawa do danych, a użycie ograniczają zgoda, prawo, umowy, bezpieczeństwo i pierwotny cel.
+
+#### Podstawy odporności
+
+* **Kanały bezpośrednie**: Utrzymuj kontakt oparty na pozwoleniu, respektując wycofanie, sprzeciw, usunięcie i okresy przechowywania.
+* **Przenośne treści i dane**: Używaj udokumentowanych, popularnych formatów eksportu i zachowuj definicje pól, dowody zgód oraz listy wykluczeń.
+* **Rejestr zależności**: Zapisz domeny, DNS, hosting, e-mail, płatności, analitykę, dostawców AI, licencje, właścicieli i daty odnowienia.
+* **Sprawdzone kopie**: Szyfruj kopie, rozdziel dostęp, określ retencję i regularnie odtwarzaj próbkę w bezpiecznym środowisku.
+* **Plan migracji**: Opisz zmianę dostawcy, rotację poświadczeń, aktualizację integracji, informowanie klientów i ręczny proces awaryjny.
+* **Dywersyfikacja kanałów**: Testuj możliwy do utrzymania miks wyszukiwania, social media, e-maila, poleceń i partnerstw bez ślepego powielania ryzyka oraz pracy.
+
+Żaden ekosystem nie jest niezniszczalny. Odporność wynika ze znajomości zależności i dowodu, że odzyskanie oraz migracja naprawdę działają.`,
+            practicalExamples: ['Wyeksportuj autoryzowany zestaw GOM-MAR, zapisz bezpiecznie, sprawdź pola zgód i wykluczeń oraz wykonaj udokumentowane próbne odtworzenie zamiast zakładać, że plik jest użyteczną kopią.'],
+          },
+          understandContent: { coreTakeaway: 'Odporność cyfrowa wynika z legalnej przenośności, sprawdzonego odzyskiwania i wymiennych zależności, a nie absolutnej własności lub niezależności.', keyPrinciples: ['Zachowuj prawa i stan zgody podczas eksportu', 'Regularnie testuj odtwarzanie i migrację'] },
+          actionTask: { instruction: 'Sprawdź i przetestuj strategię kopii, zależności i migracji:', placeholder: 'Plan odporności przetestowany' },
+        },
+        '20.3': {
+          stageTitle: '20. Ekosystemy AI, etyka i trwały rozwój', title: 'Przegląd dwudziestu etapów i dyplom GOM-MAR',
+          description: 'Przejrzyj pierwsze dwadzieścia etapów Academy, udokumentuj pozostałe luki i uznaj ukończenie bez zawyżania statusu lub dochodów.',
+          learnContent: {
+            videoTitle: 'Ważny etap i kolejny cykl przeglądu',
+            summaryText: 'Ukończenie dwudziestu etapów potwierdza systematyczną naukę. Nie dowodzi wdrożenia każdej funkcji, rentownego i skalowalnego biznesu ani pozycji czołowego marketera.',
+            bulletPoints: ['Przejrzyj ukończone dowody, nierozwiązane ryzyka i następną odpowiedzialną poprawę', 'Odblokuj dyplom GOM-MAR po spełnieniu określonych wymagań lekcji i zadań', 'Traktuj dostęp absolwencki i jego czas zgodnie z rzeczywiście opublikowanymi warunkami programu'],
+            fullArticleGuide: `### Gratulacje z okazji ukończenia dwudziestu etapów
+
+Poznałeś szeroki zestaw tematów marketingu cyfrowego i AI. Trwała wartość powstaje teraz przez staranne wdrażanie właściwych elementów, mierzenie wyników i utrzymanie używanych systemów.
+
+#### Następny cykl operacyjny
+
+1. **Przejrzyj dowody**: Wypisz, co działa, zostało przetestowane, opisane i ma właściciela, oddzielając to od szkiców, demonstracji i planów.
+2. **Zamknij krytyczne luki**: Nadaj pierwszeństwo bezpieczeństwu, prywatności, szkodom klienta, płatnościom, dostarczeniu i odzyskiwaniu przed dalszą automatyzacją.
+3. **Wybierz jedną poprawę**: Określ mierzalny wynik klienta lub firmy, ograniczony test i regułę wycofania.
+4. **Utrzymuj kompetencje**: Wracaj do prawa, zasad dostawców, modeli, uprawnień, treści i procedur, gdy się zmieniają.
+5. **Dokładnie opisuj etap**: Przedstawiaj dyplom jako dowód spełnienia wymagań Academy, nie jako dowód dochodu, licencję zawodową, ranking rynkowy czy znajomość każdego systemu.
+
+Żaden kurs nie gwarantuje trwałego dobrobytu, sukcesu biznesu ani technologii odpornej na przyszłość. Trwały postęp zależy od dopasowania rynkowego, wykonania, wartości dla klienta, zasobów, zarządzania ryzykiem i dalszej nauki.`,
+            practicalExamples: ['Pobierz dyplom po potwierdzeniu ukończenia i dołącz prawdziwy opis umiejętności oraz projektów, które rzeczywiście wykonałeś.'],
+          },
+          understandContent: { coreTakeaway: 'Dyplom oznacza ukończenie uporządkowanego etapu nauki; wiarygodny rozwój nadal wymaga dowodów, utrzymania i odpowiedzialnego działania.', keyPrinciples: ['Świętuj ukończenie bez wyolbrzymiania', 'Kontynuuj przegląd, testowanie i ulepszanie'] },
+          actionTask: { instruction: 'Ukończ Etap 20 i potwierdź odpowiedzialny przegląd końcowy:', checklistItems: ['Rozumiem odpowiedzialny i przejrzysty marketing AI', 'Mam opisane zależności i przetestowaną legalną ścieżkę kopii lub odzyskiwania', 'Rozumiem, co dyplom GOM-MAR potwierdza, a czego nie certyfikuje'] },
         },
       },
     },
