@@ -2348,6 +2348,91 @@ The sales process must allow a clear “no”, sufficient decision time and accu
         },
       },
     },
+    29: {
+      title: '29. Financial Resilience, Cashflow & Context-Specific Compliance',
+      subtitle: 'Scenario-based liquidity planning, accurate records and qualified legal review',
+      description: 'Build financial and legal controls without relying on universal tax percentages, fixed reserve formulas or promises of complete legal protection.',
+      lessons: {
+        '29.1': {
+          stageTitle: '29. Financial Resilience', title: 'Cashflow planning, reserves & contribution economics',
+          description: 'Use forecasts, reconciled records and context-specific reserve policies instead of treating a four-account system or fixed percentage split as a universal rule.',
+          learnContent: {
+            videoTitle: 'Design a cash-control system for uncertainty',
+            summaryText: 'Separate accounts or subaccounts can support discipline, but they are an optional operating method—not a legal requirement, tax strategy or guarantee of liquidity.',
+            bulletPoints: ['Map opening cash, receivables, payables, payroll, taxes, debt, refunds and subscriptions in a rolling forecast', 'Set tax reserves with a qualified adviser for the jurisdiction, legal form, profit and VAT position', 'Choose a reserve target from volatility, fixed commitments, seasonality, recovery time and available finance', 'Calculate contribution margin by product, cohort and channel before allocating overhead or profit', 'Reconcile bank, payment-provider and accounting records and investigate every unexplained difference'],
+            coreConcepts: [
+              { iconName: 'wallet', title: 'CONTROLLED CASH BUCKETS', description: 'Use accounts or ledger categories only where fees, deposit protection, access controls and reconciliation make them suitable. Do not automate transfers into an overdraft.', highlight: true },
+              { iconName: 'line-chart', title: 'SCENARIO FORECAST', description: 'Maintain a rolling 13-week view and a 12-month base, downside and upside scenario. A forecast is a decision aid, not a promise.' },
+              { iconName: 'calculator', title: 'CONTRIBUTION ECONOMICS', description: 'Subtract discounts, refunds, payment fees, affiliates, fulfilment, support and attributable acquisition cost before interpreting margin.' },
+            ],
+            resources: [
+              { title: 'Cashflow & Scenario Workbook', subtitle: 'Forecast, reserve and reconciliation template', type: 'tool', iconName: 'calculator', actionUrl: 'tools' },
+              { title: 'Finance-Control Review', subtitle: 'Checklist to discuss with accounting and tax advisers', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Build liquidity controls around your actual business
+
+No single account structure, transfer date or percentage split fits every business. Tax, VAT, payroll and safeguarding obligations vary by country, entity and activity. Confirm them with qualified advisers and keep regulated or client money separate where required.
+
+#### A practical control cycle
+
+1. **Establish the records**: Reconcile bank, payment-provider, invoicing and accounting data. Define the owner, cut-off time and correction process.
+2. **Forecast 13 weeks**: Record opening cash and dated inflows and outflows, including tax, payroll, refunds, debt, subscriptions and capital expenditure. Mark uncertain amounts rather than hiding them.
+3. **Model scenarios**: Maintain base, downside and upside assumptions for conversion, collection time, refund rate, acquisition cost and supplier changes. State the trigger and response for each scenario.
+4. **Set reserves deliberately**: Document the target and rationale from cash volatility, fixed commitments, seasonality, recovery time and access to finance. Three months may be suitable in one case and unsafe or excessive in another.
+5. **Confirm tax treatment**: Ask an appropriately qualified adviser to determine filing obligations, payment dates and reserve logic. A fixed 40% reserve is not universal, and reserved tax money remains subject to the applicable legal and accounting treatment.
+6. **Measure contribution**: For each offer and channel, start with collected revenue and subtract discounts, refunds, payment fees, affiliate costs, fulfilment, support and attributable advertising. Reconcile the result to overhead and accounting profit.
+7. **Govern transfers**: Schedule transfers only after checking forecast headroom and bank balances. Require approval for exceptions and never use automation that can create an overdraft or missed statutory payment.
+
+This material is educational and does not replace accounting, tax, treasury or legal advice for your circumstances.`,
+            practicalExamples: ['A downside scenario assumes slower collections and higher refunds, identifies the date cash becomes tight and defines which discretionary spend pauses first.', 'A monthly close compares bank, payment-provider and ledger balances; the owner records the cause and correction of each difference.'],
+          },
+          understandContent: { coreTakeaway: 'Financial resilience comes from reconciled evidence, scenario planning and adviser-confirmed obligations—not a universal bank-account or percentage formula.', keyPrinciples: ['Forecast cash timing, not revenue alone', 'Set reserves from risk and jurisdiction', 'Measure contribution before allocating profit'] },
+          actionTask: { instruction: 'Create a reviewable cash-control plan for your business:', checklistItems: ['Bank, payment and accounting records have an owner and reconciliation schedule', 'A 13-week forecast includes taxes, payroll, refunds, debt and uncertainty', 'Base, downside and upside scenarios have documented triggers and responses', 'Tax reserve and filing assumptions are marked for qualified-adviser confirmation', 'Reserve target and contribution margin are documented by product or channel'], toolboxCategory: 'finance' },
+        },
+        '29.2': {
+          stageTitle: '29. Context-Specific Compliance', title: 'Contracts, consumer rights, privacy & compliant operations',
+          description: 'Create a jurisdiction-aware compliance system and seek qualified review instead of relying on blanket B2B exclusions, mandatory-checkbox myths or “watertight” templates.',
+          learnContent: {
+            videoTitle: 'Build a maintainable legal and privacy control system',
+            summaryText: 'Customer type, country, offer and data flow determine the applicable rules. Labels and templates do not override the real circumstances, and this lesson is not legal advice.',
+            bulletPoints: ['Classify B2C and B2B relationships from the customer’s actual status and purpose, not the wording of a form', 'Give required pre-contract information and durable confirmation; review withdrawal rules and exceptions for each offer', 'Use fair, accessible terms with appropriate evidence of acceptance rather than assuming one checkbox solves every case', 'Request consent before non-essential cookies and document the legal basis and retention for each data purpose', 'Review vendors, processor terms, international transfers, access, incidents and deletion on a recurring schedule'],
+            coreConcepts: [
+              { iconName: 'scale', title: 'CUSTOMER & JURISDICTION MATRIX', description: 'Map where the business and customer are located, whether the buyer acts as a consumer, the contract channel and the product type before choosing documents.', highlight: true },
+              { iconName: 'shield-check', title: 'PRIVACY BY DESIGN', description: 'Collect only necessary data, state the purpose, restrict access and retention, and remember that hashed or pseudonymised identifiers can remain personal data.' },
+              { iconName: 'refresh-cw', title: 'ONGOING REVIEW', description: 'Track document versions, legal changes, complaints, incidents, vendors and scheduled review. A template is a starting point, not guaranteed protection.' },
+            ],
+            resources: [
+              { title: 'Contract & Consumer-Rights Review Template', subtitle: 'Requires qualified local legal review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Privacy, Cookie & Vendor Register', subtitle: 'Purpose, basis, retention, access and transfer review', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Turn legal obligations into maintained operations
+
+This material is general education, not legal advice. Rules differ by country, customer type, product, sales channel and data use. Ask qualified local counsel and, where appropriate, a tax adviser or data-protection specialist to review the implementation.
+
+#### Contract and consumer controls
+
+1. **Classify the relationship**: Determine whether the buyer is genuinely acting as a consumer or in business. A “B2B” label cannot remove consumer rights when the facts indicate a consumer transaction.
+2. **Map the sales journey**: Record advertising claims, pre-contract information, price, renewal, delivery, cancellation, complaints and durable confirmation. For EU consumer distance and off-premises contracts, a 14-day withdrawal right commonly applies, subject to defined exceptions and conditions for services and digital content.
+3. **Use fair documents**: Keep terms accessible before purchase, explain important clauses and preserve proportionate evidence of the version and acceptance method. A checkbox may be useful, but it is not the sole universal test of a valid contract.
+4. **Review delivery and refunds**: Align fulfilment with withdrawal, cancellation and refund obligations. Do not promise that a template is “watertight” or eliminates warnings, disputes or liability.
+
+#### Privacy, cookies and marketing
+
+1. **Inventory data**: Record purpose, categories, people affected, recipients, location, retention, security and legal basis. Apply purpose limitation and data minimisation.
+2. **Manage cookies**: Do not set non-essential cookies before valid consent where consent is required. Necessary-storage exceptions are narrow and must be assessed by function, not label.
+3. **Document email rules**: Check the legal basis plus local electronic-marketing rules. Double opt-in can provide useful evidence but is not a universal legal mandate for every situation. Retain the source, notice and consent version, timestamp and confirmation or suppression event; avoid retaining IP addresses unless necessary and lawful.
+4. **Control vendors**: Identify controller and processor roles, sign required processing terms, restrict access and assess international transfers and safeguards case by case.
+5. **Protect confidential work**: Use role-appropriate confidentiality and data clauses, access controls and offboarding. An NDA is not automatically necessary for every freelancer and never replaces security controls.
+6. **Review intellectual property**: Search relevant registers and market use, document licences and obtain professional clearance for important names or assets.
+
+Maintain a named owner, review date, change log and escalation route. Respond to rights requests, complaints and incidents through tested procedures rather than a static folder of templates.`,
+            practicalExamples: ['A digital-course checkout shows price, delivery, cancellation and applicable withdrawal information before purchase, then sends a durable confirmation containing the accepted version.', 'A consent record stores the form wording and version, source, time and confirmation event while the privacy review decides whether any network identifier is actually necessary.'],
+          },
+          understandContent: { coreTakeaway: 'Compliance is a maintained, jurisdiction-aware operating system supported by qualified review—not a one-time template or blanket exclusion.', keyPrinciples: ['Classify customers and offers from facts', 'Minimise data and document purpose and basis', 'Version, review and test every compliance control'] },
+          actionTask: { instruction: 'Prepare a qualified-review pack for one real customer journey:', checklistItems: ['Customer type, countries, channel and product classification documented', 'Pre-contract, withdrawal, delivery, cancellation and refund information mapped', 'Contract and terms versions plus acceptance evidence identified for legal review', 'Privacy, cookies, email, vendors, transfers, retention and rights processes recorded', 'Named owner, review date, incident escalation and adviser questions assigned'], toolboxCategory: 'legal' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -4679,6 +4764,91 @@ Proces sprzedaży musi pozwalać na jasne „nie”, wystarczający czas decyzji
           },
           understandContent: { coreTakeaway: 'Trwały zespół sprzedaży łączy uczciwą pracę, świadomy wybór klienta, opisane role i kontekstowe dowody jakości.', keyPrinciples: ['Projektuj premie przeciw missellingowi i presji', 'Nagrywaj tylko legalnie i proporcjonalnie', 'Traktuj brak sprzedaży i eskalację jako prawidłowe wyniki'] },
           actionTask: { instruction: 'Przygotuj odpowiedzialny model pracy zespołu sprzedaży:', checklistItems: ['Udokumentowano uprawnienia roli, przekazania, obciążenia i dostęp', 'Kryteria rekrutacji oraz płatne próbki są związane z pracą i dostępne', 'Wynagrodzenie zawiera zabezpieczenia jakości, anulowania i skarg', 'Przewodniki wspierają świadomy wybór i dopuszczają brak sprzedaży', 'Sprawdzono nagrywanie, retencję, metryki CRM, coaching i odwołanie'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
+    29: {
+      title: '29. Odporność finansowa, cashflow i zgodność zależna od kontekstu',
+      subtitle: 'Scenariuszowe planowanie płynności, rzetelne rekordy i przegląd specjalistyczny',
+      description: 'Buduj kontrole finansowe i prawne bez uniwersalnych procentów podatkowych, sztywnych formuł rezerwy ani obietnic pełnej ochrony prawnej.',
+      lessons: {
+        '29.1': {
+          stageTitle: '29. Odporność finansowa', title: 'Planowanie cashflow, rezerwy i ekonomia marży',
+          description: 'Korzystaj z prognoz, uzgodnionych rekordów i polityk rezerw właściwych dla kontekstu zamiast traktować system czterech kont lub stały podział procentowy jako regułę uniwersalną.',
+          learnContent: {
+            videoTitle: 'Zaprojektuj system kontroli gotówki na czas niepewności',
+            summaryText: 'Oddzielne konta lub subkonta mogą wspierać dyscyplinę, ale są opcjonalną metodą operacyjną, a nie wymogiem prawnym, strategią podatkową ani gwarancją płynności.',
+            bulletPoints: ['Uwzględniaj gotówkę początkową, należności, zobowiązania, płace, podatki, dług, zwroty i subskrypcje w prognozie kroczącej', 'Ustalaj rezerwę podatkową z właściwym doradcą według jurysdykcji, formy prawnej, zysku i VAT', 'Dobierz rezerwę do zmienności, stałych zobowiązań, sezonowości, czasu odbudowy i dostępnego finansowania', 'Licz marżę kontrybucyjną według produktu, kohorty i kanału przed alokacją kosztów stałych lub zysku', 'Uzgadniaj dane banku, operatorów płatności i księgowości oraz wyjaśniaj każdą różnicę'],
+            coreConcepts: [
+              { iconName: 'wallet', title: 'KONTROLOWANE KOSZYKI GOTÓWKI', description: 'Używaj kont lub kategorii księgowych tylko wtedy, gdy opłaty, ochrona środków, kontrola dostępu i uzgodnienie są odpowiednie. Nie automatyzuj przelewów prowadzących do debetu.', highlight: true },
+              { iconName: 'line-chart', title: 'PROGNOZA SCENARIUSZOWA', description: 'Utrzymuj kroczące 13 tygodni oraz 12-miesięczny wariant bazowy, negatywny i pozytywny. Prognoza wspiera decyzję, nie jest obietnicą.' },
+              { iconName: 'calculator', title: 'EKONOMIA KONTRYBUCJI', description: 'Odejmij rabaty, zwroty, opłaty płatnicze, afiliację, realizację, wsparcie i przypisywalny koszt pozyskania przed interpretacją marży.' },
+            ],
+            resources: [
+              { title: 'Arkusz cashflow i scenariuszy', subtitle: 'Szablon prognozy, rezerwy i uzgodnienia', type: 'tool', iconName: 'calculator', actionUrl: 'tools' },
+              { title: 'Przegląd kontroli finansowych', subtitle: 'Checklista do omówienia z księgowością i doradcą podatkowym', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Buduj kontrolę płynności wokół realnego biznesu
+
+Nie istnieje jedna struktura kont, data przelewu ani podział procentowy odpowiedni dla każdej firmy. Obowiązki podatkowe, VAT, płacowe i dotyczące powierzonych środków różnią się według kraju, formy i działalności. Potwierdź je ze specjalistami i oddziel środki regulowane lub klientów, gdy jest to wymagane.
+
+#### Praktyczny cykl kontroli
+
+1. **Ustal rekordy**: Uzgadniaj bank, operatora płatności, faktury i księgowość. Określ właściciela, moment zamknięcia i proces korekty.
+2. **Prognozuj 13 tygodni**: Zapisz gotówkę początkową oraz datowane wpływy i wydatki, w tym podatki, płace, zwroty, dług, subskrypcje i inwestycje. Oznaczaj niepewność.
+3. **Modeluj scenariusze**: Utrzymuj założenia bazowe, negatywne i pozytywne dla konwersji, czasu zapłaty, zwrotów, pozyskania i dostawców. Określ trigger i reakcję.
+4. **Ustalaj rezerwy świadomie**: Udokumentuj cel i uzasadnienie z uwzględnieniem zmienności, stałych zobowiązań, sezonowości, czasu odbudowy i finansowania. Trzy miesiące mogą być właściwe w jednym przypadku, a złe w innym.
+5. **Potwierdź podatki**: Poproś właściwego doradcę o ustalenie obowiązków, terminów i logiki rezerwy. Stałe 40% nie jest zasadą uniwersalną, a środki rezerwy podlegają właściwym zasadom prawnym i księgowym.
+6. **Mierz kontrybucję**: Od przychodu otrzymanego odejmij rabaty, zwroty, opłaty, afiliację, realizację, wsparcie i reklamę przypisaną ofercie. Uzgodnij wynik z kosztami stałymi i zyskiem księgowym.
+7. **Nadzoruj przelewy**: Planuj je dopiero po sprawdzeniu prognozy i sald. Wymagaj akceptacji wyjątków i nie dopuszczaj automatyzacji powodującej debet lub pominięcie płatności ustawowej.
+
+Materiał ma charakter edukacyjny i nie zastępuje porady księgowej, podatkowej, skarbowej ani prawnej dla Twojej sytuacji.`,
+            practicalExamples: ['Scenariusz negatywny zakłada wolniejsze płatności i więcej zwrotów, wskazuje dzień napięcia gotówkowego oraz wydatki wstrzymywane jako pierwsze.', 'Miesięczne zamknięcie porównuje bank, operatorów i księgę; właściciel zapisuje przyczynę oraz korektę każdej różnicy.'],
+          },
+          understandContent: { coreTakeaway: 'Odporność finansowa wynika z uzgodnionych dowodów, scenariuszy i obowiązków potwierdzonych przez doradcę, nie z uniwersalnej formuły kont lub procentów.', keyPrinciples: ['Prognozuj terminy gotówki, nie sam przychód', 'Dobieraj rezerwę do ryzyka i jurysdykcji', 'Mierz kontrybucję przed podziałem zysku'] },
+          actionTask: { instruction: 'Utwórz możliwy do przeglądu plan kontroli gotówki:', checklistItems: ['Bank, płatności i księgowość mają właściciela oraz harmonogram uzgodnienia', 'Prognoza 13-tygodniowa obejmuje podatki, płace, zwroty, dług i niepewność', 'Scenariusze mają udokumentowane triggery i reakcje', 'Założenia podatkowe są oznaczone do potwierdzenia przez doradcę', 'Udokumentowano cel rezerwy i marżę według produktu lub kanału'], toolboxCategory: 'finance' },
+        },
+        '29.2': {
+          stageTitle: '29. Zgodność zależna od kontekstu', title: 'Umowy, prawa konsumenta, prywatność i zgodne operacje',
+          description: 'Buduj system zgodności uwzględniający jurysdykcję i szukaj właściwego przeglądu zamiast polegać na ogólnym wyłączeniu B2B, micie obowiązkowego checkboxa lub „szczelnych” szablonach.',
+          learnContent: {
+            videoTitle: 'Buduj utrzymywalny system prawny i prywatności',
+            summaryText: 'Typ klienta, kraj, oferta i przepływ danych określają zasady. Etykiety i szablony nie zmieniają faktów, a ta lekcja nie jest poradą prawną.',
+            bulletPoints: ['Klasyfikuj B2C i B2B według rzeczywistego statusu i celu klienta, nie tekstu formularza', 'Przekazuj wymagane informacje przed umową i trwałe potwierdzenie; sprawdzaj odstąpienie oraz wyjątki dla każdej oferty', 'Stosuj uczciwe, dostępne warunki i odpowiedni dowód akceptacji, nie zakładając, że jeden checkbox rozwiązuje każdy przypadek', 'Uzyskuj zgodę przed niekoniecznymi cookies i dokumentuj podstawę oraz retencję dla każdego celu danych', 'Cyklicznie sprawdzaj dostawców, umowy powierzenia, transfery, dostęp, incydenty i usuwanie'],
+            coreConcepts: [
+              { iconName: 'scale', title: 'MACIERZ KLIENTA I JURYSDYKCJI', description: 'Przed doborem dokumentów mapuj lokalizację firmy i klienta, status konsumenta, kanał umowy i rodzaj produktu.', highlight: true },
+              { iconName: 'shield-check', title: 'PRYWATNOŚĆ W PROJEKCIE', description: 'Zbieraj niezbędne dane, określ cel, ogranicz dostęp i retencję; hashowane lub pseudonimizowane identyfikatory nadal mogą być danymi osobowymi.' },
+              { iconName: 'refresh-cw', title: 'CIĄGŁY PRZEGLĄD', description: 'Śledź wersje, zmiany prawa, skargi, incydenty, dostawców i terminy przeglądu. Szablon jest punktem startu, nie gwarancją ochrony.' },
+            ],
+            resources: [
+              { title: 'Szablon przeglądu umowy i praw konsumenta', subtitle: 'Wymaga lokalnego przeglądu prawnego', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Rejestr prywatności, cookies i dostawców', subtitle: 'Cel, podstawa, retencja, dostęp i transfer', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Zamień obowiązki prawne w utrzymywane operacje
+
+Materiał jest edukacyjny, a nie poradą prawną. Zasady różnią się według kraju, klienta, produktu, kanału i użycia danych. Poproś właściwego lokalnego prawnika, a w razie potrzeby doradcę podatkowego lub specjalistę ochrony danych, o przegląd wdrożenia.
+
+#### Umowy i kontrola konsumencka
+
+1. **Klasyfikuj relację**: Ustal, czy kupujący faktycznie działa jako konsument czy przedsiębiorca. Etykieta „B2B” nie usuwa praw konsumenta, gdy fakty wskazują inaczej.
+2. **Mapuj sprzedaż**: Zapisz reklamę, informacje przedumowne, cenę, odnowienie, dostawę, rezygnację, skargi i trwałe potwierdzenie. W unijnych umowach konsumenckich na odległość i poza lokalem zwykle obowiązuje 14-dniowe prawo odstąpienia, z określonymi wyjątkami i warunkami dla usług oraz treści cyfrowych.
+3. **Stosuj uczciwe dokumenty**: Udostępnij warunki przed zakupem, wyjaśnij ważne klauzule i zachowaj proporcjonalny dowód wersji oraz akceptacji. Checkbox może pomagać, ale nie jest jedynym uniwersalnym testem ważnej umowy.
+4. **Sprawdzaj dostawę i zwroty**: Dopasuj realizację do odstąpienia, anulowania i zwrotów. Nie obiecuj, że szablon jest „szczelny” ani eliminuje spory lub odpowiedzialność.
+
+#### Prywatność, cookies i marketing
+
+1. **Inwentaryzuj dane**: Zapisz cel, kategorie, osoby, odbiorców, lokalizację, retencję, bezpieczeństwo i podstawę. Stosuj ograniczenie celu oraz minimalizację.
+2. **Zarządzaj cookies**: Nie ustawiaj niekoniecznych cookies przed ważną zgodą, gdy jest wymagana. Wyjątki dla niezbędnego przechowywania są wąskie i ocenia się je według funkcji.
+3. **Dokumentuj e-mail**: Sprawdź podstawę i lokalne reguły marketingu elektronicznego. Double opt-in może być dobrym dowodem, ale nie jest uniwersalnym wymogiem w każdej sytuacji. Zachowaj źródło, wersję informacji i zgody, czas oraz potwierdzenie lub wykluczenie; nie przechowuj IP bez potrzeby i podstawy.
+4. **Kontroluj dostawców**: Ustal role administratora i procesora, zawrzyj wymagane umowy, ogranicz dostęp i oceniaj transfery międzynarodowe indywidualnie.
+5. **Chroń poufność**: Stosuj adekwatne klauzule poufności i danych, kontrolę dostępu i offboarding. NDA nie jest automatycznie konieczne dla każdego freelancera i nie zastępuje zabezpieczeń.
+6. **Sprawdzaj własność intelektualną**: Szukaj w odpowiednich rejestrach i użyciu rynkowym, dokumentuj licencje i uzyskaj profesjonalną weryfikację ważnych nazw lub materiałów.
+
+Utrzymuj właściciela, termin przeglądu, historię zmian i eskalację. Obsługuj prawa osób, skargi i incydenty przez przetestowane procedury, nie statyczny folder szablonów.`,
+            practicalExamples: ['Checkout kursu cyfrowego pokazuje cenę, dostawę, anulowanie i właściwe informacje o odstąpieniu przed zakupem, a potem wysyła trwałe potwierdzenie zaakceptowanej wersji.', 'Rekord zgody zapisuje tekst i wersję formularza, źródło, czas i potwierdzenie, a przegląd prywatności ustala, czy identyfikator sieciowy jest potrzebny.'],
+          },
+          understandContent: { coreTakeaway: 'Compliance to utrzymywany, świadomy jurysdykcji system operacyjny wsparty kwalifikowanym przeglądem, nie jednorazowy szablon lub ogólne wyłączenie.', keyPrinciples: ['Klasyfikuj klientów i oferty według faktów', 'Minimalizuj dane i dokumentuj cel oraz podstawę', 'Wersjonuj, przeglądaj i testuj kontrole'] },
+          actionTask: { instruction: 'Przygotuj pakiet do specjalistycznego przeglądu jednej ścieżki klienta:', checklistItems: ['Udokumentowano typ klienta, kraje, kanał i klasyfikację produktu', 'Zmapowano informacje przedumowne, odstąpienie, dostawę, anulowanie i zwroty', 'Wersje umowy i warunków oraz dowód akceptacji wskazano do przeglądu prawnego', 'Zapisano prywatność, cookies, e-mail, dostawców, transfery, retencję i prawa osób', 'Przypisano właściciela, termin przeglądu, eskalację incydentu i pytania do doradcy'], toolboxCategory: 'legal' },
         },
       },
     },
