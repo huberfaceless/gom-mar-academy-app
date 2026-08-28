@@ -2513,6 +2513,85 @@ The aim is not maximum scale at any price. It is a business and life design that
         },
       },
     },
+    31: {
+      title: '31. Internationalisation, Cross-Border Commerce & Responsible Expansion',
+      subtitle: 'Evidence-led market entry, genuine localisation, tax review and measurable acquisition',
+      description: 'Enter new markets through staged research, accessible local experiences, compliant tax and data operations, and controlled experiments—not promised market multipliers or country stereotypes.',
+      lessons: {
+        '31.1': {
+          stageTitle: '31. Market Entry & Localisation', title: 'International market validation: demand, feasibility & local fit',
+          description: 'Evaluate a market with customer evidence, unit economics, operational capability and jurisdiction-specific review before translating a funnel or committing substantial spend.',
+          learnContent: {
+            videoTitle: 'Responsible cross-border market selection and validation',
+            summaryText: 'Success in one country does not establish product-market fit elsewhere. Language, regulation, payment behaviour, competition, accessibility, support and fulfilment can require material changes.',
+            bulletPoints: ['Score demand quality, reachable audience, competition, contribution economics, regulation, operations and downside risk with documented evidence', 'Validate messages with local users and qualified reviewers rather than relying on literal or unreviewed AI translation', 'Show currency, taxes, fees and conversion terms clearly and let users override language or region detection', 'Determine VAT, sales-tax, invoicing, consumer, product and establishment obligations for each customer journey', 'Pilot fulfilment, refunds, support, accessibility and incident handling before scaling acquisition'],
+            coreConcepts: [
+              { iconName: 'globe', title: 'LOCALISATION SYSTEM', description: 'Localise meaning, examples, formats, accessibility, claims and support. Geo-IP may suggest a locale but must not silently determine legal status or block user choice.', highlight: true },
+              { iconName: 'credit-card', title: 'PAYMENT & PRICE CLARITY', description: 'Offer suitable lawful payment methods only after checking fees, settlement, refunds, disputes and accessibility. No method guarantees a conversion uplift.' },
+              { iconName: 'file-text', title: 'TAX & DUTY MATRIX', description: 'Map supply type, customer status and location evidence. OSS can simplify eligible EU B2C VAT reporting but does not make every sale or registration automatically compliant.' },
+            ],
+            resources: [
+              { title: 'Market Evidence & Entry Scorecard', subtitle: 'Demand, economics, compliance and operational gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Locale & Currency Setup', subtitle: 'Configure explicit preferences and reporting dimensions', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Treat each new market as a new hypothesis
+
+International expansion can increase the reachable audience, but it can also increase cost, complexity and liability. There is no reliable 5x–10x market multiplier or universal daily test budget.
+
+#### Stage-gated market entry
+
+1. **Define the hypothesis**: Specify customer, problem, offer, channel, geography, success metric, maximum loss and review date. Separate market size from the audience you can lawfully and economically reach.
+2. **Collect local evidence**: Interview representative users, review search and competitor evidence, test comprehension and involve native subject-matter reviewers. Do not publish machine-translated legal, medical, financial or safety claims without qualified review.
+3. **Model unit economics**: Include local price, tax, payment and foreign-exchange fees, refunds, chargebacks, support, fulfilment, localisation and acquisition. PPP may inform research but does not determine a fair or profitable price by itself.
+4. **Map obligations**: Classify B2C/B2B, goods/services/digital content, customer location, establishment, invoicing, consumer rights, licences, sanctions and data transfers with qualified advisers. In the EU, OSS may simplify eligible cross-border B2C VAT declarations; different schemes, destination rates and record duties can apply.
+5. **Design the experience**: Provide explicit language and currency controls, transparent totals, local formats, accessible content and clear delivery, cancellation and support information. Do not infer citizenship or legal status from IP.
+6. **Test the whole journey**: Use a limited cohort to test payment, tax evidence, confirmation, delivery, refund, dispute, support and incident recovery—not clicks alone.
+7. **Decide from gates**: Scale, revise, pause or stop against pre-agreed thresholds for customer outcome, contribution margin, complaints, compliance and operational load.
+
+Document the evidence and uncertainty. Tax and legal implementation requires current professional advice for the relevant countries and transaction facts.`,
+            practicalExamples: ['A pilot offers a visible locale selector and shows price, VAT treatment and refund terms before payment; the team tests the journey with local users and support staff.', 'A market with cheap leads is paused because refund, support and payment-failure costs make contribution margin negative.'],
+          },
+          understandContent: { coreTakeaway: 'A credible market entry combines local customer evidence, complete economics, operational readiness and jurisdiction-specific review before scale.', keyPrinciples: ['Validate the full customer journey, not ad clicks', 'Give users control over locale and clear pricing', 'Treat OSS and payment tools as mechanisms, not compliance guarantees'] },
+          actionTask: { instruction: 'Prepare a stage-gated plan for one target market:', checklistItems: ['Customer hypothesis, evidence sources, maximum loss and decision date documented', 'Local-language, cultural and accessibility review has named owners', 'Price model includes tax, FX, payments, refunds, support and acquisition', 'Customer, supply, VAT/sales-tax, consumer and data obligations marked for expert review', 'End-to-end pilot and scale, revise, pause or stop gates defined'], toolboxCategory: 'landingpage' },
+        },
+        '31.2': {
+          stageTitle: '31. International Acquisition', title: 'Global paid media: controlled experiments, localisation & measurement',
+          description: 'Run country-aware campaigns with lawful targeting, human-reviewed creative, comparable reporting and incrementality tests instead of ranking populations by “tier” or optimising for cheap traffic.',
+          learnContent: {
+            videoTitle: 'Design measurable and responsible international campaigns',
+            summaryText: 'Lower CPM does not mean better customers or profitable growth. Compare contribution, customer outcome and incremental lift while respecting local advertising, privacy and platform rules.',
+            bulletPoints: ['Separate or combine countries from language, offer, legal, budget and learning needs—not a rigid global tier list', 'Have local reviewers verify meaning, pronunciation, claims, rights and accessibility of AI-assisted creative', 'Set budgets, schedules and alerts in a documented reporting timezone while preserving local customer context', 'Obtain required consent and minimise data before advertising or analytics tags; test event quality and deduplication', 'Evaluate contribution margin, refunds, complaints, retention and incrementality alongside attribution and ROAS'],
+            coreConcepts: [
+              { iconName: 'target', title: 'EVIDENCE-BASED SEGMENTATION', description: 'Group markets only when offer, language, economics, legal conditions and performance are sufficiently comparable. Reassess the grouping as evidence changes.', highlight: true },
+              { iconName: 'video', title: 'REVIEWED LOCAL CREATIVE', description: 'AI can draft variants but cannot guarantee cultural accuracy, consent, voice rights or compliant claims. A responsible local reviewer approves production use.' },
+              { iconName: 'activity', title: 'INCREMENTAL MEASUREMENT', description: 'Normalise currency, timezone and definitions; monitor data loss and compare platform attribution with experiments, backend outcomes and uncertainty.' },
+            ],
+            resources: [
+              { title: 'International Campaign Experiment Plan', subtitle: 'Segmentation, budget, compliance and decision gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Multilingual Creative Review Workspace', subtitle: 'Draft, rights, accessibility and native-review checklist', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Scale evidence, not stereotypes
+
+Country labels such as “Tier 1”, “Tier 2” and “emerging high volume” can hide large differences within populations and encourage low-quality or discriminatory decisions. Build segments from the actual offer, language, legal context and observed economics.
+
+#### Controlled international campaign workflow
+
+1. **Set a test contract**: Define hypothesis, audience, exclusions, offer, countries, budget cap, duration, primary metric, guardrails and stop rule before launch.
+2. **Review eligibility and targeting**: Check local advertising law, platform policy, age limits, restricted products, political or sensitive categories and anti-discrimination requirements. Avoid inferred sensitive traits and exploitative targeting.
+3. **Localise responsibly**: Translate the intended meaning, not just words. Verify claims, prices, disclosures, humour, pronunciation, captions, contrast, licences, likeness and synthetic voice permission with a local reviewer.
+4. **Configure measurement**: Use a documented canonical timezone and currency while retaining source values. Validate consent signals, event names, deduplication, server/browser overlap, refunds and CRM matching with minimised data.
+5. **Protect budgets**: Start with an amount the business can lose, use account and campaign caps, role-based approvals and anomaly alerts. Automated rules must handle timezone and reporting delay safely.
+6. **Read complete outcomes**: Compare incremental qualified demand, contribution margin, retention, refund and complaint rates, support burden and customer outcome. Cheap CPM or attributed ROAS alone cannot establish success.
+7. **Scale gradually**: Increase spend only after sufficient stable evidence, capacity and compliance review. Hold back a comparison group where feasible and record changes that break comparability.
+
+Platform reports are estimates affected by attribution windows, consent, modelling and currency conversion. State uncertainty and never claim that one campaign structure is always fastest or correct.`,
+            practicalExamples: ['Two countries remain separate because refund policy, language and payment mix differ, even though their CPMs look similar.', 'An AI voice-over is withheld until the voice licence, pronunciation, subtitles, claims and local disclosure are reviewed.'],
+          },
+          understandContent: { coreTakeaway: 'Responsible international advertising scales only after local review, lawful measurement and complete economic evidence show incremental value.', keyPrinciples: ['Segment from evidence, not country stereotypes', 'Human-review AI-assisted creative and rights', 'Optimise for incremental contribution and customer outcome'] },
+          actionTask: { instruction: 'Design one controlled international campaign experiment:', checklistItems: ['Hypothesis, countries, audience, exclusions, cap, metric and stop rule documented', 'Local law, platform policy and sensitive-targeting risks reviewed', 'Creative has native-language, claim, accessibility and rights approval', 'Consent, events, deduplication, timezone, currency and backend reconciliation tested', 'Decision view includes incrementality, margin, refunds, complaints and capacity'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -5009,6 +5088,85 @@ Celem nie jest maksymalna skala za każdą cenę, lecz firma i życie pozostają
           },
           understandContent: { coreTakeaway: 'Zrównoważone przywództwo zachowuje świadomy wybór przez dowody, granice, ciągłość i przegląd zamiast utożsamiać mistrzostwo z niekończącym się wzrostem.', keyPrinciples: ['Mierz wyniki, nie samo ukończenie programu', 'Chroń zdrowie, obowiązki i dobro klienta', 'Utrzymuj plany jako scenariusze do aktualizacji'] },
           actionTask: { instruction: 'Utwórz odpowiedzialny przegląd ukończenia i długiego horyzontu:', checklistItems: ['Podsumowano dowody, nierozwiązane ryzyka i potrzeby doradcze', 'Udokumentowano wartości, granice pracy i definicję „wystarczy”', 'Porównano scenariusze utrzymania, delegowania, transferu i spadku', 'Teza roczna i eksperymenty 90-dniowe mają właścicieli i kryteria stop', 'Zaplanowano test ciągłości, przegląd kwartalny i uczciwe zasady certyfikatu'], toolboxCategory: 'content' },
+        },
+      },
+    },
+    31: {
+      title: '31. Internacjonalizacja, handel transgraniczny i odpowiedzialna ekspansja',
+      subtitle: 'Wejście oparte na dowodach, prawdziwa lokalizacja, przegląd podatkowy i mierzalne pozyskanie',
+      description: 'Wchodź na rynki przez etapowe badanie, dostępne doświadczenie lokalne, zgodne operacje podatkowe i danych oraz kontrolowane eksperymenty, nie obietnice mnożnika rynku lub stereotypy krajów.',
+      lessons: {
+        '31.1': {
+          stageTitle: '31. Wejście na rynek i lokalizacja', title: 'Walidacja rynku międzynarodowego: popyt, wykonalność i lokalne dopasowanie',
+          description: 'Oceń rynek przez dowody klientów, unit economics, zdolność operacyjną i przegląd lokalny przed tłumaczeniem lejka lub dużą inwestycją.',
+          learnContent: {
+            videoTitle: 'Odpowiedzialny wybór i walidacja rynku transgranicznego',
+            summaryText: 'Sukces w jednym kraju nie potwierdza product-market fit gdzie indziej. Język, prawo, płatności, konkurencja, dostępność, support i realizacja mogą wymagać istotnych zmian.',
+            bulletPoints: ['Oceniaj jakość popytu, osiągalną grupę, konkurencję, ekonomię kontrybucji, prawo, operacje i ryzyko na podstawie opisanych dowodów', 'Waliduj komunikaty z lokalnymi użytkownikami i specjalistami zamiast dosłownego lub niekontrolowanego tłumaczenia AI', 'Jasno pokazuj walutę, podatki, opłaty i zasady przewalutowania oraz pozwól zmienić język lub region', 'Ustal obowiązki VAT, sales tax, fakturowania, konsumenckie, produktowe i dotyczące zakładu dla każdej ścieżki', 'Przed skalowaniem testuj realizację, zwroty, support, dostępność i incydenty'],
+            coreConcepts: [
+              { iconName: 'globe', title: 'SYSTEM LOKALIZACJI', description: 'Lokalizuj znaczenie, przykłady, formaty, dostępność, claims i support. Geo-IP może sugerować locale, ale nie może po cichu określać statusu prawnego ani odbierać wyboru.', highlight: true },
+              { iconName: 'credit-card', title: 'JASNOŚĆ PŁATNOŚCI I CENY', description: 'Dodawaj odpowiednie legalne metody po sprawdzeniu opłat, rozliczenia, zwrotów, sporów i dostępności. Żadna metoda nie gwarantuje wzrostu konwersji.' },
+              { iconName: 'file-text', title: 'MACIERZ PODATKÓW I OBOWIĄZKÓW', description: 'Mapuj rodzaj świadczenia, status i dowód lokalizacji klienta. OSS może uprościć kwalifikowane rozliczenie VAT B2C w UE, ale nie gwarantuje pełnej zgodności.' },
+            ],
+            resources: [
+              { title: 'Scorecard dowodów rynku i wejścia', subtitle: 'Popyt, ekonomia, compliance i bramki operacyjne', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Konfiguracja locale i walut Mara CRM', subtitle: 'Jawne preferencje i wymiary raportowania', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Traktuj każdy nowy rynek jako nową hipotezę
+
+Ekspansja może zwiększyć osiągalną grupę, ale także koszt, złożoność i odpowiedzialność. Nie ma pewnego mnożnika 5x–10x ani uniwersalnego budżetu dziennego.
+
+#### Wejście etapowe
+
+1. **Zdefiniuj hipotezę**: Określ klienta, problem, ofertę, kanał, geografię, metrykę, maksymalną stratę i termin decyzji. Oddziel rozmiar rynku od grupy osiągalnej legalnie i ekonomicznie.
+2. **Zbierz lokalne dowody**: Rozmawiaj z reprezentatywnymi użytkownikami, sprawdzaj wyszukiwanie i konkurencję, testuj zrozumienie oraz angażuj rodzimych specjalistów. Nie publikuj tłumaczonych maszynowo claims prawnych, medycznych, finansowych lub bezpieczeństwa bez właściwego przeglądu.
+3. **Modeluj unit economics**: Uwzględnij cenę, podatek, płatność i FX, zwroty, chargebacki, support, realizację, lokalizację i pozyskanie. PPP może wspierać badanie, ale samo nie wyznacza uczciwej ani rentownej ceny.
+4. **Mapuj obowiązki**: Klasyfikuj B2C/B2B, towary/usługi/treści cyfrowe, lokalizację, zakład, faktury, prawa konsumenta, licencje, sankcje i transfery ze specjalistami. OSS może uprościć kwalifikowane deklaracje VAT B2C; obowiązują różne procedury, stawki kraju konsumenta i rekordy.
+5. **Projektuj doświadczenie**: Daj jawny wybór języka i waluty, pełną cenę, lokalne formaty, dostępność i jasne zasady dostawy, anulowania i pomocy. Nie wnioskuj obywatelstwa ani statusu prawnego z IP.
+6. **Testuj całą ścieżkę**: Na ograniczonej kohorcie sprawdź płatność, dowód podatkowy, potwierdzenie, dostawę, zwrot, spór, support i odzyskiwanie, nie same kliknięcia.
+7. **Decyduj według bramek**: Skaluj, poprawiaj, wstrzymaj lub zakończ według progów wyniku klienta, marży, skarg, compliance i obciążenia.
+
+Dokumentuj dowody i niepewność. Wdrożenie podatkowe i prawne wymaga aktualnej porady dla konkretnych krajów i faktów transakcji.`,
+            practicalExamples: ['Pilot ma widoczny wybór locale i pokazuje cenę, VAT oraz zwroty przed płatnością; zespół testuje ścieżkę z lokalnymi użytkownikami i supportem.', 'Rynek z tanimi leadami zostaje wstrzymany, bo zwroty, wsparcie i nieudane płatności tworzą ujemną marżę.'],
+          },
+          understandContent: { coreTakeaway: 'Wiarygodne wejście łączy lokalne dowody klientów, pełną ekonomię, gotowość operacyjną i przegląd jurysdykcji przed skalą.', keyPrinciples: ['Waliduj całą ścieżkę, nie kliknięcia', 'Daj kontrolę locale i jasną cenę', 'Traktuj OSS i płatności jako mechanizmy, nie gwarancję compliance'] },
+          actionTask: { instruction: 'Przygotuj etapowy plan dla jednego rynku:', checklistItems: ['Udokumentowano hipotezę, źródła, maksymalną stratę i termin decyzji', 'Przegląd języka, kultury i dostępności ma właścicieli', 'Cena obejmuje podatki, FX, płatności, zwroty, support i pozyskanie', 'Obowiązki klienta, świadczenia, podatków, konsumenta i danych wskazano do przeglądu', 'Zdefiniowano pilot end-to-end i bramki decyzji'], toolboxCategory: 'landingpage' },
+        },
+        '31.2': {
+          stageTitle: '31. Pozyskanie międzynarodowe', title: 'Global paid media: kontrolowane eksperymenty, lokalizacja i pomiar',
+          description: 'Prowadź kampanie uwzględniające kraj z legalnym targetingiem, sprawdzonym creative, porównywalnym raportowaniem i testami inkrementalności zamiast rankingów populacji i taniego ruchu.',
+          learnContent: {
+            videoTitle: 'Mierzalne i odpowiedzialne kampanie międzynarodowe',
+            summaryText: 'Niższy CPM nie oznacza lepszych klientów ani rentownego wzrostu. Porównuj kontrybucję, wynik klienta i efekt inkrementalny z poszanowaniem prawa reklamy, prywatności i platform.',
+            bulletPoints: ['Łącz lub rozdzielaj kraje według języka, oferty, prawa, budżetu i potrzeb uczenia, nie sztywnej listy tierów', 'Zleć lokalnym reviewerom sprawdzenie znaczenia, wymowy, claims, praw i dostępności creative wspieranego AI', 'Ustal budżety, harmonogram i alerty w opisanej strefie raportowej, zachowując lokalny kontekst', 'Uzyskaj wymaganą zgodę i minimalizuj dane przed tagami reklamowymi lub analitycznymi; testuj jakość i deduplikację', 'Oceniaj marżę, zwroty, skargi, retencję i inkrementalność obok atrybucji i ROAS'],
+            coreConcepts: [
+              { iconName: 'target', title: 'SEGMENTACJA OPARTA NA DOWODACH', description: 'Grupuj rynki tylko przy porównywalnej ofercie, języku, ekonomii, prawie i wynikach. Aktualizuj grupę wraz z dowodami.', highlight: true },
+              { iconName: 'video', title: 'LOKALNY CREATIVE PO PRZEGLĄDZIE', description: 'AI może tworzyć szkice, ale nie gwarantuje kultury, zgody, praw do głosu ani legalnych claims. Produkcję zatwierdza odpowiedzialny lokalny reviewer.' },
+              { iconName: 'activity', title: 'POMIAR INKREMENTALNY', description: 'Normalizuj walutę, strefę i definicje; monitoruj utratę danych i porównuj atrybucję z eksperymentami, backendem oraz niepewnością.' },
+            ],
+            resources: [
+              { title: 'Plan eksperymentu kampanii międzynarodowej', subtitle: 'Segmentacja, budżet, compliance i bramki decyzji', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Workspace przeglądu wielojęzycznego creative', subtitle: 'Szkic, prawa, dostępność i checklista native review', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Skaluj dowody, nie stereotypy
+
+Etykiety „Tier 1”, „Tier 2” i „emerging high volume” ukrywają różnice wewnątrz populacji i mogą prowadzić do złych lub dyskryminujących decyzji. Segmentuj według oferty, języka, prawa i obserwowanej ekonomii.
+
+#### Workflow kontrolowanej kampanii
+
+1. **Ustal kontrakt testu**: Przed startem określ hipotezę, audience, wykluczenia, ofertę, kraje, cap, czas, metrykę, guardrails i stop rule.
+2. **Sprawdź eligibility i targeting**: Oceń lokalne prawo reklamy, politykę platformy, wiek, produkty ograniczone, politykę i kategorie wrażliwe oraz antydyskryminację. Unikaj wnioskowanych cech wrażliwych i wykorzystywania podatności.
+3. **Lokalizuj odpowiedzialnie**: Tłumacz znaczenie. Sprawdź claims, ceny, disclosure, humor, wymowę, napisy, kontrast, licencje, wizerunek i zgodę na głos syntetyczny z lokalnym reviewerem.
+4. **Konfiguruj pomiar**: Używaj opisanej strefy i waluty kanonicznej, zachowując wartości źródłowe. Waliduj sygnały zgody, eventy, deduplikację, server/browser, zwroty i CRM z minimalnymi danymi.
+5. **Chroń budżet**: Zacznij od kwoty możliwej do utraty, ustaw limity konta i kampanii, akceptacje rolami i alerty anomalii. Reguły automatyczne muszą bezpiecznie uwzględniać strefy i opóźnienia.
+6. **Czytaj pełny wynik**: Porównuj inkrementalny popyt, marżę, retencję, zwroty, skargi, support i rezultat klienta. Tani CPM lub przypisany ROAS nie dowodzą sukcesu.
+7. **Skaluj stopniowo**: Zwiększaj wydatki po stabilnych dowodach, dostępnej obsłudze i przeglądzie compliance. Jeśli możliwe, utrzymuj grupę porównawczą i zapisuj zmiany niszczące porównywalność.
+
+Raporty platform są estymacją zależną od okien atrybucji, zgody, modelowania i FX. Pokazuj niepewność i nie twierdź, że jedna struktura jest zawsze najszybsza lub poprawna.`,
+            practicalExamples: ['Dwa kraje pozostają osobno, bo różnią się zwrotami, językiem i płatnościami mimo podobnego CPM.', 'Voice-over AI czeka na potwierdzenie licencji, wymowy, napisów, claims i lokalnego disclosure.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialna reklama międzynarodowa skaluje po lokalnym przeglądzie, legalnym pomiarze i pełnych dowodach ekonomicznych inkrementalnej wartości.', keyPrinciples: ['Segmentuj według dowodów, nie stereotypów', 'Sprawdzaj creative AI i prawa przez człowieka', 'Optymalizuj inkrementalną kontrybucję i wynik klienta'] },
+          actionTask: { instruction: 'Zaprojektuj kontrolowany eksperyment kampanii:', checklistItems: ['Udokumentowano hipotezę, kraje, audience, wykluczenia, cap, metrykę i stop rule', 'Sprawdzono prawo, politykę platformy i ryzyko targetingu wrażliwego', 'Creative ma akceptację języka, claims, dostępności i praw', 'Przetestowano zgodę, eventy, deduplikację, strefę, walutę i uzgodnienie backendu', 'Widok decyzji obejmuje inkrementalność, marżę, zwroty, skargi i capacity'], toolboxCategory: 'landingpage' },
         },
       },
     },
