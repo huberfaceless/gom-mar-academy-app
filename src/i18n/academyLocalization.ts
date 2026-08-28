@@ -2779,7 +2779,7 @@ Measure informed fit, cancellations, refunds, complaints, affordability issues, 
               { title: 'Licensing Readiness & Contract-Issues Workbook', subtitle: 'Rights, economics, controls, data, competition and exit questions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
               { title: 'Mara CRM Partner Access Register', subtitle: 'Role-based accounts, approvals, training and audit evidence', type: 'tool', iconName: 'users', actionUrl: 'settings' },
             ],
-            fullArticleGuide: \`### Make the system licensable before selling the licence
+            fullArticleGuide: `### Make the system licensable before selling the licence
 
 A successful internal workflow is not automatically transferable intellectual property. Licensing creates continuing obligations around rights, training, quality, security, partner support and enforcement.
 
@@ -2796,7 +2796,7 @@ A successful internal workflow is not automatically transferable intellectual pr
 9. **Allocate data and security duties**: Identify controller, processor or independent roles for each data flow; minimise access, define purpose, retention, deletion, breach response, subprocessors and cross-border transfers. Give every user an individual account and least-privilege access.
 10. **Write the operating and exit plan**: Address invoices, reporting, royalty calculation, audit, underpayment, support levels, changes, continuity, insurance, liability, complaints, suspension, termination, customer handover, data return and deletion.
 
-Use qualified intellectual-property, franchise, competition, tax, employment, data-protection and commercial advisers for each intended jurisdiction. A template is an issue list, not legal approval.\`,
+Use qualified intellectual-property, franchise, competition, tax, employment, data-protection and commercial advisers for each intended jurisdiction. A template is an issue list, not legal approval.`,
             practicalExamples: ['A white-label pilot excludes a stock-image library that prohibits sublicensing, limits the partner to one market and defines support, approved claims, data roles and a 90-day review.', 'A proposed exclusive territory is paused until demand, partner capacity and competition-law implications are reviewed; no partner is promised protected revenue.'],
           },
           understandContent: { coreTakeaway: 'A responsible licence is a precisely bounded, economically tested and actively governed relationship—not passive income or a transfer of every business risk.', keyPrinciples: ['Clear every asset before granting rights', 'Document quality, data, economics and exit', 'Review classification and restrictions by jurisdiction'] },
@@ -2818,7 +2818,7 @@ Use qualified intellectual-property, franchise, competition, tax, employment, da
               { title: 'Partner Due-Diligence & Onboarding Pack', subtitle: 'Fit, evidence, conflicts, competence, launch and remediation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
               { title: 'Mara CRM Partner Governance Dashboard', subtitle: 'Approvals, access, customer quality and corrective actions', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
             ],
-            fullArticleGuide: \`### Scale partner capability, not partner promises
+            fullArticleGuide: `### Scale partner capability, not partner promises
 
 Established providers may have customers and sales capacity, but that does not prove fit, safe delivery or incremental value. Recruitment is a two-way diligence process.
 
@@ -2835,7 +2835,7 @@ Established providers may have customers and sales capacity, but that does not p
 9. **Monitor and support**: Review service evidence, customer outcomes, refunds, complaints, incident logs, system access, partner economics and support load. Separate coaching from formal audit and document remediation deadlines.
 10. **Manage conflict and exit**: Maintain routes for complaints, whistleblowing, conflicts, suspension and appeal. On exit, protect customers, revoke access, stop brand use, reconcile fees, return or delete data and preserve required records.
 
-If recognition, awards or leaderboards are used, apply transparent criteria, protect personal and commercial information and never reward volume at the expense of suitability or customer welfare.\`,
+If recognition, awards or leaderboards are used, apply transparent criteria, protect personal and commercial information and never reward volume at the expense of suitability or customer welfare.`,
             practicalExamples: ['A prospective agency receives a written economics model with assumptions and downside, completes conflicts and security checks, and pilots with one consenting customer before wider access.', 'A partner with rising complaints enters a documented remediation plan; new sales access is paused while affected customers receive support rather than hiding the issue to protect rankings.'],
           },
           understandContent: { coreTakeaway: 'A durable partner network grows through suitability, truthful expectations, demonstrated competence, customer safeguards and accountable oversight.', keyPrinciples: ['Never guarantee partner revenue or customer impact', 'Gate access by competence and risk', 'Reward quality and customer outcomes, not volume alone'] },
@@ -5608,7 +5608,7 @@ Mierz fit, anulowania, zwroty, skargi, affordability, jakość realizacji i wyni
               { title: 'Workbook gotowości licencyjnej i kwestii umownych', subtitle: 'Prawa, ekonomia, kontrole, dane, konkurencja i exit', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
               { title: 'Rejestr dostępu partnerów Mara CRM', subtitle: 'Konta rolami, akceptacje, szkolenia i dowody audytu', type: 'tool', iconName: 'users', actionUrl: 'settings' },
             ],
-            fullArticleGuide: \`### Przygotuj system do licencji przed sprzedażą licencji
+            fullArticleGuide: `### Przygotuj system do licencji przed sprzedażą licencji
 
 Skuteczny workflow wewnętrzny nie jest automatycznie transferowalną własnością intelektualną. Licencjonowanie tworzy stałe obowiązki dotyczące praw, szkolenia, jakości, security, wsparcia i egzekwowania.
 
@@ -5625,7 +5625,7 @@ Skuteczny workflow wewnętrzny nie jest automatycznie transferowalną własnośc
 9. **Przydziel obowiązki danych i security**: Określ controller, processor lub niezależne role dla każdego przepływu; minimalizuj dostęp i opisz cel, retencję, usunięcie, breach, subprocessors oraz transfery. Każdy użytkownik otrzymuje własne konto i least privilege.
 10. **Napisz plan operacyjny i exit**: Ureguluj faktury, raporty, obliczenie royalty, audyt, niedopłatę, SLA, zmiany, ciągłość, ubezpieczenie, odpowiedzialność, skargi, zawieszenie, rozwiązanie, przejęcie klientów, zwrot i usunięcie danych.
 
-Dla każdej jurysdykcji korzystaj z właściwych doradców IP, franczyzy, konkurencji, podatków, zatrudnienia, danych i prawa handlowego. Template jest listą kwestii, a nie akceptacją prawną.\`,
+Dla każdej jurysdykcji korzystaj z właściwych doradców IP, franczyzy, konkurencji, podatków, zatrudnienia, danych i prawa handlowego. Template jest listą kwestii, a nie akceptacją prawną.`,
             practicalExamples: ['Pilot white label wyłącza bibliotekę stock, która zakazuje sublicencji, ogranicza partnera do jednego rynku i opisuje support, zatwierdzone claims, role danych oraz przegląd po 90 dniach.', 'Planowane wyłączne terytorium zostaje wstrzymane do przeglądu popytu, capacity partnera i prawa konkurencji; partner nie dostaje obietnicy chronionego przychodu.'],
           },
           understandContent: { coreTakeaway: 'Odpowiedzialna licencja jest precyzyjnie ograniczoną, przetestowaną ekonomicznie i aktywnie nadzorowaną relacją—nie pasywnym dochodem ani transferem całego ryzyka.', keyPrinciples: ['Sprawdź każdy zasób przed udzieleniem praw', 'Dokumentuj jakość, dane, ekonomię i exit', 'Przeglądaj klasyfikację i ograniczenia według jurysdykcji'] },
@@ -5647,7 +5647,7 @@ Dla każdej jurysdykcji korzystaj z właściwych doradców IP, franczyzy, konkur
               { title: 'Pakiet due diligence i onboardingu partnera', subtitle: 'Fit, dowody, konflikty, kompetencja, start i remediation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
               { title: 'Dashboard nadzoru partnerów Mara CRM', subtitle: 'Akceptacje, dostęp, jakość klienta i działania naprawcze', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
             ],
-            fullArticleGuide: \`### Skaluj kompetencje partnerów, nie obietnice partnerów
+            fullArticleGuide: `### Skaluj kompetencje partnerów, nie obietnice partnerów
 
 Istniejący klienci i capacity sprzedaży nie dowodzą dopasowania, bezpiecznej realizacji ani dodatkowej wartości. Rekrutacja jest dwustronnym procesem diligence.
 
@@ -5664,7 +5664,7 @@ Istniejący klienci i capacity sprzedaży nie dowodzą dopasowania, bezpiecznej 
 9. **Monitoruj i wspieraj**: Przeglądaj dowody usługi, wyniki klienta, zwroty, skargi, incydenty, dostęp, ekonomię partnera i support. Oddziel coaching od audytu i zapisuj terminy remediation.
 10. **Zarządzaj konfliktem i wyjściem**: Utrzymuj ścieżki skarg, whistleblowing, konfliktów, zawieszenia i odwołania. Przy exit chroń klientów, odbierz dostęp, zatrzymaj markę, rozlicz opłaty, zwróć lub usuń dane i zachowaj wymagane rekordy.
 
-Jeśli używasz wyróżnień lub leaderboardów, stosuj jawne kryteria, chroń informacje osobowe i handlowe oraz nigdy nie nagradzaj wolumenu kosztem dopasowania lub dobra klienta.\`,
+Jeśli używasz wyróżnień lub leaderboardów, stosuj jawne kryteria, chroń informacje osobowe i handlowe oraz nigdy nie nagradzaj wolumenu kosztem dopasowania lub dobra klienta.`,
             practicalExamples: ['Agencja otrzymuje pisemny model ekonomii z assumptions i downside, przechodzi kontrolę konfliktów oraz security i pilotuje z jednym świadomym klientem przed szerszym dostępem.', 'Partner z rosnącą liczbą skarg wchodzi w plan naprawy; nowa sprzedaż jest wstrzymana, a klienci dostają pomoc zamiast ukrywania problemu dla rankingu.'],
           },
           understandContent: { coreTakeaway: 'Trwała sieć rośnie przez dopasowanie, prawdziwe oczekiwania, wykazaną kompetencję, zabezpieczenia klienta i odpowiedzialny nadzór.', keyPrinciples: ['Nigdy nie gwarantuj przychodu partnera ani wyniku klienta', 'Dostęp zależy od kompetencji i ryzyka', 'Nagradzaj jakość i wynik klienta, nie sam wolumen'] },
