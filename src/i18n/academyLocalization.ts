@@ -2192,6 +2192,84 @@ One-click upgrades still need explicit confirmation, accessible terms and approp
         },
       },
     },
+    27: {
+      title: '27. AI Assistants, Automation Workflows & Operational Reliability',
+      subtitle: 'Bounded assistance, secure integrations and recoverable processes',
+      description: 'Use AI and no-code tools for suitable routine work while preserving informed user choice, least-privilege access, human escalation and reliable recovery.',
+      lessons: {
+        '27.1': {
+          stageTitle: '27. AI-Assisted Workflows', title: 'Bounded chat assistants, intake & booking',
+          description: 'Configure assistants that answer within a defined scope, collect only necessary information and hand uncertain or consequential cases to people.',
+          learnContent: {
+            videoTitle: 'AI assistants in customer intake: useful, transparent and supervised',
+            summaryText: 'Fast responses can help, but no universal 60-second rule guarantees conversion. An assistant should disclose automation, avoid autonomous sales qualification and provide an easy human route.',
+            bulletPoints: ['State that the user is interacting with automation and explain its purpose and data use', 'Answer from approved sources and decline or escalate when evidence, authority or confidence is insufficient', 'Collect only necessary intake details; avoid sensitive, financial or vulnerability data unless strictly justified', 'Check calendar availability safely and ask for explicit confirmation before creating or changing a booking', 'Log essential actions and decisions without retaining complete conversations by default'],
+            coreConcepts: [
+              { iconName: 'bot', title: 'APPROPRIATE RESPONSE', description: 'Set service-level targets from user need and staffing. Prioritise accurate help over unsupported speed-to-lead claims.', highlight: true },
+              { iconName: 'cpu', title: 'EXPLAINABLE ROUTING', description: 'Route by observable request type, language, urgency and service fit—not opaque A/B/C labels or inferred personal worth.' },
+              { iconName: 'calendar', title: 'CONFIRMED BOOKING', description: 'Offer available slots with time zone, accessibility and cancellation details, then require confirmation before writing to the calendar.' },
+            ],
+            resources: [
+              { title: 'AI Assistant Safety Prompt Library', subtitle: 'Scope, refusal, escalation and testing templates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR AI Assistant', subtitle: 'Test drafting and routing with synthetic data', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Design an assistant with clear limits
+
+An AI assistant may reduce waiting and administrative work, but it can misunderstand users, invent information or act on the wrong record. Begin with a narrow, reversible scope.
+
+#### Safe intake flow
+
+1. **Disclosure and choice**: Identify the assistant, explain what it can do and provide a visible route to a person.
+2. **Minimal intake**: Ask only for information needed to answer or route the request. Mark optional fields and avoid collecting secrets in chat.
+3. **Grounded response**: Retrieve from approved, versioned sources; show uncertainty and never invent prices, policy, availability or prior contact.
+4. **Routing**: Use documented criteria and permit manual correction. Do not make eligibility, credit, employment or other consequential decisions autonomously.
+5. **Booking**: Read only the availability needed, prevent duplicates and race conditions, display time zone and terms, and request final confirmation.
+6. **Escalation**: Transfer safety, legal, payment, complaint, accessibility and low-confidence cases with context but without unnecessary personal data.
+7. **Evaluation**: Test adversarial prompts, prompt injection, data leakage, tool misuse, multilingual quality, accessibility and failure recovery before launch.
+
+Rate-limit tools, restrict permissions and require approval for sending messages, changing records or booking on behalf of a user. Monitor helpful resolution, corrections, escalations, complaints and harmful errors—not conversion alone.`,
+            practicalExamples: ['The assistant offers three available times and creates nothing until the user confirms one slot and the relevant terms.', 'When asked for a guaranteed income result, it refuses the claim, provides approved factual information and offers human support.'],
+          },
+          understandContent: { coreTakeaway: 'A trustworthy assistant is transparent, narrowly authorised, grounded in approved information and designed to escalate safely.', keyPrinciples: ['Accuracy and user choice take priority over response speed', 'Consequential actions require confirmation or human review', 'Minimise data and tool permissions'] },
+          actionTask: { instruction: 'Prepare a supervised assistant workflow with synthetic data:', checklistItems: ['Disclosure, scope, data purpose and human route are visible', 'Approved knowledge sources and refusal rules are tested', 'Calendar access uses least privilege and requires booking confirmation', 'Sensitive and consequential cases escalate to a named owner', 'Prompt injection, leakage, duplicate booking and failure recovery are tested'], toolboxCategory: 'landingpage' },
+        },
+        '27.2': {
+          stageTitle: '27. Operational Reliability', title: 'Secure webhooks, no-code pipelines & recovery',
+          description: 'Connect systems with authenticated events, idempotent processing, least privilege, monitoring and manual recovery instead of assuming error-free end-to-end automation.',
+          learnContent: {
+            videoTitle: 'Reliable no-code automation from event to reconciliation',
+            summaryText: 'Automation can reduce repetitive work but creates new failure modes. Webhooks may be delayed, duplicated, reordered or forged, so every critical flow needs verification and reconciliation.',
+            bulletPoints: ['Verify webhook signatures, timestamps and source before processing data', 'Use idempotency keys, durable state and event IDs to prevent duplicate fulfilment or charges', 'Separate payment, access, invoicing and messaging steps with explicit success and failure states', 'Retry transient failures with backoff and route permanent failures to a dead-letter or human queue', 'Monitor outcomes, permissions, latency and reconciliation—not only daily performance dashboards'],
+            coreConcepts: [
+              { iconName: 'zap', title: 'CONTROLLED DATA MOVEMENT', description: 'Map necessary fields and validate them at each boundary. Real-time synchronisation is neither universal nor automatically correct.', highlight: true },
+              { iconName: 'git-branch', title: 'RECOVERABLE PIPELINES', description: 'Design branches with explicit conditions, retries, compensating actions and a documented manual process.' },
+            ],
+            resources: [
+              { title: 'No-Code Reliability Blueprint Pack', subtitle: 'Security, testing and recovery patterns for Make or Zapier', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Webhook Configuration', subtitle: 'Manage authenticated test integrations', type: 'tool', iconName: 'link', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Build automation that fails safely
+
+Do not automate a process merely because it occurred twice. Automate when the task is stable, understood, authorised and worth the operational risk.
+
+#### Purchase and onboarding example
+
+1. **Receive**: Accept an authenticated event over TLS, preserve its event ID and timestamp, and reject invalid signatures or stale replays.
+2. **Record**: Store the event and current state before side effects. Minimise payloads and redact secrets from logs.
+3. **Process idempotently**: A repeated event must not create a second invoice, membership or message.
+4. **Separate steps**: Payment confirmation, CRM update, access provisioning, invoice creation and email delivery each have their own status and owner.
+5. **Handle failure**: Retry temporary errors with exponential backoff and jitter; quarantine permanent errors for review. Never retry unsafe operations blindly.
+6. **Reconcile**: Compare payment-provider, CRM, access and accounting records on a schedule. Alert on mismatches and document correction.
+7. **Recover**: Maintain rollback or compensating actions, a manual fulfilment route, backups, credential rotation and incident records.
+
+Use separate test and production environments, synthetic data, scoped service accounts, secret management and change review. Test timeout, duplication, reordering, partial completion, provider outage and rate limits. Notifications must be actionable and avoid exposing customer data in Slack or Telegram.`,
+            practicalExamples: ['A duplicated paid-order webhook returns the previously recorded result rather than issuing a second invoice or welcome email.', 'If access provisioning fails after payment, the system records “paid—access pending”, alerts the responsible queue and supports safe manual fulfilment.'],
+          },
+          understandContent: { coreTakeaway: 'Reliable automation assumes failure and protects each boundary with authentication, idempotency, observable state and recoverable human procedures.', keyPrinciples: ['Verify every external event and minimise permissions', 'Make critical side effects idempotent', 'Reconcile systems and practise recovery'] },
+          actionTask: { instruction: 'Build and test a recoverable purchase and onboarding pipeline:', checklistItems: ['Webhook signature, replay protection and secret storage configured', 'Event IDs and idempotency prevent duplicate side effects', 'Each step exposes success, pending and failure states', 'Retries, dead-letter handling, alerts and responsible owners are defined', 'Duplicate, delayed, reordered, partial and outage scenarios are tested'], toolboxCategory: 'email' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -4367,6 +4445,84 @@ Rozszerzenie jednym kliknięciem nadal wymaga wyraźnego potwierdzenia, dostępn
           },
           understandContent: { coreTakeaway: 'Długoterminowa wartość klienta jest trwała, gdy opcjonalne oferty poprawiają zweryfikowane dopasowanie i wynik, a ekonomia oraz prawa pozostają przejrzyste.', keyPrinciples: ['Nie traktuj oceny satysfakcji jako intencji zakupu osoby', 'Mierz marżę i wyniki klientów według kohorty', 'Rozszerzenia, subskrypcje i polecenia muszą być jawne i opcjonalne'] },
           actionTask: { instruction: 'Zaprojektuj uczciwy system wartości klienta:', checklistItems: ['Elastyczne ścieżki obejmują rozszerzenie, pauzę, wyjście i polecenie gdzie indziej', 'Każda oferta podaje cenę, odnowienie, anulowanie, dopasowanie i ograniczenia', 'Obserwowany LTV używa określonej kohorty, horyzontu, kosztów i zwrotów', 'Przetestowano potwierdzenie rozszerzenia i ochronę przed przypadkowym zakupem', 'Udokumentowano zachęty, ujawnienia i kontrolę jakości poleceń'], toolboxCategory: 'affiliate' },
+        },
+      },
+    },
+    27: {
+      title: '27. Asystenci AI, workflow automatyzacji i niezawodność operacyjna',
+      subtitle: 'Ograniczone wsparcie, bezpieczne integracje i procesy możliwe do odzyskania',
+      description: 'Używaj AI i narzędzi no-code do odpowiednich rutynowych zadań, zachowując świadomy wybór użytkownika, minimalne uprawnienia, eskalację do człowieka i niezawodne odzyskiwanie.',
+      lessons: {
+        '27.1': {
+          stageTitle: '27. Workflow wspierane przez AI', title: 'Ograniczeni asystenci czatu, intake i rezerwacja',
+          description: 'Konfiguruj asystentów odpowiadających w określonym zakresie, zbierających tylko konieczne informacje i przekazujących niepewne lub istotne sprawy ludziom.',
+          learnContent: {
+            videoTitle: 'Asystenci AI w obsłudze zapytań: użyteczni, przejrzyści i nadzorowani',
+            summaryText: 'Szybka odpowiedź może pomóc, lecz uniwersalna reguła 60 sekund nie gwarantuje konwersji. Asystent powinien ujawniać automatyzację, unikać autonomicznej kwalifikacji sprzedażowej i zapewniać łatwy kontakt z człowiekiem.',
+            bulletPoints: ['Poinformuj o interakcji z automatyzacją oraz wyjaśnij jej cel i użycie danych', 'Odpowiadaj z zatwierdzonych źródeł, a przy braku dowodów, uprawnień lub pewności odmawiaj albo eskaluj', 'Zbieraj tylko konieczne dane; unikaj informacji wrażliwych, finansowych i o podatności, jeśli nie są ściśle uzasadnione', 'Bezpiecznie sprawdzaj dostępność kalendarza i wymagaj wyraźnego potwierdzenia przed utworzeniem lub zmianą terminu', 'Loguj istotne działania i decyzje bez domyślnego przechowywania pełnych rozmów'],
+            coreConcepts: [
+              { iconName: 'bot', title: 'ODPOWIEDNIA REAKCJA', description: 'Ustal cele czasu obsługi według potrzeb użytkowników i możliwości zespołu. Stawiaj dokładną pomoc ponad niepoparte twierdzenia speed-to-lead.', highlight: true },
+              { iconName: 'cpu', title: 'WYJAŚNIALNY ROUTING', description: 'Kieruj według obserwowalnego typu prośby, języka, pilności i dopasowania usługi, nie przez nieprzejrzyste etykiety A/B/C ani ocenę wartości osoby.' },
+              { iconName: 'calendar', title: 'POTWIERDZONA REZERWACJA', description: 'Pokaż dostępne terminy ze strefą czasową, dostępnością i zasadami anulowania, a przed zapisem do kalendarza wymagaj potwierdzenia.' },
+            ],
+            resources: [
+              { title: 'Biblioteka bezpiecznych promptów asystenta AI', subtitle: 'Szablony zakresu, odmowy, eskalacji i testów', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Asystent AI GOM-MAR', subtitle: 'Testuj szkice i routing na danych syntetycznych', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Projektuj asystenta z jasnymi granicami
+
+Asystent AI może zmniejszyć oczekiwanie i pracę administracyjną, ale może też źle zrozumieć użytkownika, wymyślić informację lub działać na złym rekordzie. Zacznij od wąskiego, odwracalnego zakresu.
+
+#### Bezpieczny flow intake
+
+1. **Ujawnienie i wybór**: Przedstaw asystenta, wyjaśnij jego możliwości i pokaż widoczną drogę do człowieka.
+2. **Minimalny intake**: Pytaj tylko o dane potrzebne do odpowiedzi lub routingu. Oznacz pola opcjonalne i nie zbieraj sekretów na czacie.
+3. **Odpowiedź oparta na źródłach**: Korzystaj z zatwierdzonych, wersjonowanych materiałów; pokazuj niepewność i nie wymyślaj cen, zasad, dostępności ani poprzedniego kontaktu.
+4. **Routing**: Używaj opisanych kryteriów i umożliw ręczną korektę. Nie podejmuj autonomicznie decyzji o kwalifikacji, kredycie, zatrudnieniu ani innych istotnych sprawach.
+5. **Rezerwacja**: Odczytuj tylko potrzebną dostępność, zapobiegaj duplikatom i konfliktom, pokaż strefę oraz zasady i poproś o końcowe potwierdzenie.
+6. **Eskalacja**: Przekazuj sprawy bezpieczeństwa, prawne, płatnicze, skargi, dostępność i niską pewność wraz z kontekstem, ale bez zbędnych danych osobowych.
+7. **Ewaluacja**: Przed startem testuj wrogie prompty, prompt injection, wycieki, nadużycie narzędzi, jakość wielojęzyczną, dostępność i odzyskiwanie po błędzie.
+
+Ograniczaj częstotliwość wywołań, uprawnienia i wymagaj akceptacji przy wysyłaniu wiadomości, zmianie rekordów lub rezerwacji w imieniu użytkownika. Monitoruj skuteczną pomoc, korekty, eskalacje, skargi i szkodliwe błędy, nie tylko konwersję.`,
+            practicalExamples: ['Asystent proponuje trzy dostępne terminy i niczego nie tworzy, dopóki użytkownik nie potwierdzi jednego slotu oraz zasad.', 'Na prośbę o gwarantowany wynik dochodu odmawia twierdzenia, podaje zatwierdzone fakty i oferuje pomoc człowieka.'],
+          },
+          understandContent: { coreTakeaway: 'Godny zaufania asystent jest przejrzysty, wąsko uprawniony, oparty na zatwierdzonych informacjach i zaprojektowany do bezpiecznej eskalacji.', keyPrinciples: ['Dokładność i wybór użytkownika są ważniejsze niż szybkość', 'Istotne działania wymagają potwierdzenia lub kontroli człowieka', 'Minimalizuj dane i uprawnienia narzędzi'] },
+          actionTask: { instruction: 'Przygotuj nadzorowany workflow asystenta na danych syntetycznych:', checklistItems: ['Widoczne są ujawnienie, zakres, cel danych i droga do człowieka', 'Przetestowano zatwierdzone źródła wiedzy i reguły odmowy', 'Dostęp do kalendarza ma minimalne uprawnienia i wymaga potwierdzenia', 'Sprawy wrażliwe i istotne eskalują do wskazanego właściciela', 'Przetestowano prompt injection, wyciek, duplikaty rezerwacji i odzyskiwanie'], toolboxCategory: 'landingpage' },
+        },
+        '27.2': {
+          stageTitle: '27. Niezawodność operacyjna', title: 'Bezpieczne webhooki, pipeline no-code i odzyskiwanie',
+          description: 'Łącz systemy przez uwierzytelnione zdarzenia, idempotentne przetwarzanie, minimalne uprawnienia, monitoring i ręczne odzyskiwanie zamiast zakładać bezbłędną automatyzację end-to-end.',
+          learnContent: {
+            videoTitle: 'Niezawodna automatyzacja no-code od zdarzenia do uzgodnienia',
+            summaryText: 'Automatyzacja może zmniejszyć pracę powtarzalną, ale tworzy nowe tryby awarii. Webhooki mogą być opóźnione, zduplikowane, w złej kolejności lub sfałszowane, więc krytyczny flow wymaga weryfikacji i uzgodnienia.',
+            bulletPoints: ['Przed przetworzeniem sprawdzaj podpis webhooka, czas i źródło', 'Używaj kluczy idempotencji, trwałego stanu i identyfikatorów zdarzeń, by zapobiec podwójnej realizacji lub obciążeniu', 'Oddziel kroki płatności, dostępu, faktury i wiadomości z jawnymi stanami sukcesu oraz błędu', 'Błędy przejściowe ponawiaj z backoffem, a trwałe kieruj do dead-letter lub kolejki człowieka', 'Monitoruj wyniki, uprawnienia, opóźnienie i uzgodnienie, nie tylko codzienny dashboard'],
+            coreConcepts: [
+              { iconName: 'zap', title: 'KONTROLOWANY PRZEPŁYW DANYCH', description: 'Mapuj potrzebne pola i waliduj je na każdej granicy. Synchronizacja w czasie rzeczywistym nie jest uniwersalna ani automatycznie poprawna.', highlight: true },
+              { iconName: 'git-branch', title: 'PIPELINE MOŻLIWE DO ODZYSKANIA', description: 'Projektuj gałęzie z jawnymi warunkami, retry, działaniami kompensującymi i opisanym procesem ręcznym.' },
+            ],
+            resources: [
+              { title: 'Pakiet planów niezawodności no-code', subtitle: 'Wzorce bezpieczeństwa, testów i odzyskiwania dla Make lub Zapier', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Konfiguracja webhooków Mara CRM', subtitle: 'Zarządzaj uwierzytelnionymi integracjami testowymi', type: 'tool', iconName: 'link', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Buduj automatyzację, która bezpiecznie ulega awarii
+
+Nie automatyzuj procesu tylko dlatego, że wystąpił dwa razy. Automatyzuj, gdy zadanie jest stabilne, zrozumiane, dozwolone i warte ryzyka operacyjnego.
+
+#### Przykład zakupu i onboardingu
+
+1. **Odbierz**: Przyjmij uwierzytelnione zdarzenie przez TLS, zachowaj jego ID i czas oraz odrzuć nieprawidłowy podpis lub stare powtórzenie.
+2. **Zapisz**: Utrwal zdarzenie i obecny stan przed skutkami ubocznymi. Minimalizuj payload i usuwaj sekrety z logów.
+3. **Przetwarzaj idempotentnie**: Powtórzone zdarzenie nie może tworzyć drugiej faktury, subskrypcji ani wiadomości.
+4. **Oddziel kroki**: Potwierdzenie płatności, aktualizacja CRM, nadanie dostępu, faktura i e-mail mają własny status oraz właściciela.
+5. **Obsłuż awarię**: Błędy tymczasowe ponawiaj z wykładniczym backoffem i jitterem; trwałe izoluj do przeglądu. Nie ponawiaj w ciemno niebezpiecznych operacji.
+6. **Uzgadniaj**: Regularnie porównuj rekordy płatności, CRM, dostępu i księgowości. Alarmuj o różnicach i opisuj korektę.
+7. **Odzyskuj**: Utrzymuj rollback lub działania kompensujące, ręczną realizację, kopie, rotację poświadczeń i rejestr incydentów.
+
+Używaj osobnych środowisk testowych i produkcyjnych, danych syntetycznych, kont o ograniczonym zakresie, menedżera sekretów i przeglądu zmian. Testuj timeout, duplikację, zmianę kolejności, częściowe wykonanie, awarię dostawcy i limity. Powiadomienia muszą prowadzić do działania i nie ujawniać danych klienta w Slacku lub Telegramie.`,
+            practicalExamples: ['Zduplikowany webhook opłaconego zamówienia zwraca wcześniej zapisany wynik zamiast wystawiać drugą fakturę lub e-mail powitalny.', 'Jeśli nadanie dostępu nie powiedzie się po płatności, system zapisuje „opłacone — dostęp oczekuje”, alarmuje właściwą kolejkę i wspiera bezpieczną ręczną realizację.'],
+          },
+          understandContent: { coreTakeaway: 'Niezawodna automatyzacja zakłada awarie i chroni każdą granicę uwierzytelnieniem, idempotencją, widocznym stanem oraz możliwą do odzyskania procedurą człowieka.', keyPrinciples: ['Weryfikuj każde zewnętrzne zdarzenie i minimalizuj uprawnienia', 'Krytyczne skutki uboczne muszą być idempotentne', 'Uzgadniaj systemy i ćwicz odzyskiwanie'] },
+          actionTask: { instruction: 'Zbuduj i przetestuj możliwy do odzyskania pipeline zakupu i onboardingu:', checklistItems: ['Skonfigurowano podpis webhooka, ochronę przed replay i przechowywanie sekretów', 'ID zdarzeń i idempotencja zapobiegają duplikatom skutków', 'Każdy krok pokazuje stan sukcesu, oczekiwania i błędu', 'Zdefiniowano retry, dead-letter, alerty i odpowiedzialnych właścicieli', 'Przetestowano duplikaty, opóźnienia, zmianę kolejności, częściowe wykonanie i awarie'], toolboxCategory: 'email' },
         },
       },
     },
