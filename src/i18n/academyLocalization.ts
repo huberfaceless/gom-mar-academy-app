@@ -2674,6 +2674,90 @@ Advertising and endorsement rules vary by jurisdiction. Claims must remain truth
         },
       },
     },
+    33: {
+      title: '33. Safe, Accessible Live Events, Workshops & Retreats',
+      subtitle: 'Scenario budgets, transparent ticketing, responsible sponsorship and participant-centred delivery',
+      description: 'Design useful in-person experiences with realistic economics, genuine availability, clear sponsor relationships, inclusive access and safe operations—not guaranteed profit or pressure-led upgrades.',
+      lessons: {
+        '33.1': {
+          stageTitle: '33. Event Architecture & Ticketing', title: 'Event feasibility, transparent ticketing & responsible sponsorship',
+          description: 'Test demand and operational readiness, model downside scenarios and sell clearly differentiated tickets without fake countdowns, hidden fees or assuming sponsors will cover fixed costs.',
+          learnContent: {
+            videoTitle: 'Build a viable, safe and accessible live-event plan',
+            summaryText: 'An event can strengthen a community, but it can also lose money or cause harm. Venue, staffing, safety, accessibility, cancellation and participant outcomes must be planned before a sales funnel.',
+            bulletPoints: ['Define participant outcomes, scope, capacity, exclusions and success evidence before choosing a venue or ticket model', 'Model break-even, base and downside scenarios with every material cost, tax, refund, contingency and cash-timing assumption', 'Show the full payable price and honest availability; countdowns and “last seats” must reflect real, documented conditions', 'Give every ticket a clearly described service level and provide reasonable accessibility adjustments without turning dignity into an upsell', 'Contract sponsor deliverables, data access, safety duties, disclosures and conflicts without guaranteeing funding or editorial influence'],
+            coreConcepts: [
+              { iconName: 'calculator', title: 'SCENARIO EVENT BUDGET', description: 'Include venue, production, staff, speakers, travel, catering, accessibility, security, insurance, licences, tax, payment fees, refunds and contingency. Fifty-percent sell-through is not a universal break-even rule.', highlight: true },
+              { iconName: 'ticket', title: 'FAIR TICKET DESIGN', description: 'Different tiers may offer real additional services, but must not hide essential access, mandatory fees or fabricated scarcity. Publish transfer, cancellation and refund terms before purchase.' },
+              { iconName: 'shield-check', title: 'SAFE PARTICIPANT JOURNEY', description: 'Plan risk assessment, emergency response, safeguarding, accessibility, dietary needs, privacy, complaints and incident ownership from registration through departure.' },
+            ],
+            resources: [
+              { title: 'Event Feasibility, Safety & Budget Workbook', subtitle: 'Scenarios, accessibility, contingency and decision gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Participant Preferences', subtitle: 'Collect only necessary consented logistics data', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Approve feasibility before launching tickets
+
+Live events are not inherently profitable or stronger than digital delivery. Start from the participant outcome and the risks the organisation can safely carry.
+
+#### Event approval workflow
+
+1. **Define the event**: State audience, learning or community outcomes, format, capacity, age limits, prerequisites, speakers, included services and what the event is not. Validate interest without presenting non-binding interest as sales.
+2. **Model scenarios and cash**: Build break-even, base and downside cases with ticket mix, tax, payment timing, refunds and sponsor uncertainty. Include venue, production, staffing, travel, accommodation, catering, accessibility, security, medical provision, insurance, licences, marketing and contingency.
+3. **Review venue and safety**: Confirm lawful capacity, step-free access, accessible toilets and seating, evacuation, weather, transport, food safety, allergens, safeguarding, emergency contacts and responsibilities with competent local providers and authorities.
+4. **Design fair tickets**: Explain exactly what each tier includes, all mandatory costs, availability and material restrictions. Accessibility adjustments should be available through a respectful process and not be packaged as prestige benefits.
+5. **Use honest pricing**: A real early-booking price may use a documented date or allocation. Do not reset countdowns, invent scarcity or reveal unavoidable service fees late. Check local price-reduction and consumer-contract rules.
+6. **Contract sponsors carefully**: Assess fit, reputation and conflicts; define deliverables, payment, cancellation, brand use, attendee contact, booth rules, stage content and disclosures. Sponsored sessions must be recognisable, and participant data is not transferred without a valid basis and notice.
+7. **Communicate by choice**: Offer an event portal, email and accessible alternatives. Do not force attendees into a messaging group that reveals phone numbers. Obtain consent before optional groups or postal gifts and provide a way to leave.
+8. **Set go/no-go gates**: Use cash received, supplier deadlines, accessibility readiness, safety sign-off and minimum service quality—not hoped-for upgrades—to decide whether to proceed, resize, postpone or cancel.
+9. **Prepare recovery**: Publish cancellation, transfer and refund processes; maintain attendee support, incident logging, backup suppliers and a communications plan.
+
+Engage qualified local event, insurance, tax, accessibility, safety and legal professionals for the actual location and format.`,
+            practicalExamples: ['A downside budget assumes lower ticket sales and no sponsor income; the organiser can cancel before a non-refundable venue milestone and process refunds from reserved cash.', 'An optional attendee community uses an opt-in channel that does not expose personal phone numbers and offers equivalent updates by accessible email.'],
+          },
+          understandContent: { coreTakeaway: 'A viable event is approved through complete economics, honest ticketing, documented safety and inclusive participant operations—not projected on-site sales.', keyPrinciples: ['Budget for downside and sponsor uncertainty', 'Use genuine prices, availability and benefits', 'Treat accessibility, safety and privacy as core delivery'] },
+          actionTask: { instruction: 'Prepare a go/no-go event plan before selling tickets:', checklistItems: ['Participant outcomes, scope, capacity and service levels documented', 'Break-even, base and downside cash scenarios include full costs and contingency', 'Venue, safety, accessibility, insurance and emergency owners identified', 'Ticket price, fees, availability, cancellation, transfer and refund terms reviewed', 'Sponsor contracts, disclosures, participant-data limits and go/no-go gates defined'], toolboxCategory: 'landingpage' },
+        },
+        '33.2': {
+          stageTitle: '33. Ethical Event Offers & Fulfilment', title: 'Transparent stage offers, informed choice & secure on-site fulfilment',
+          description: 'Present optional next steps without exploiting group emotion, fear, fatigue or artificial urgency, and give attendees accurate terms, privacy and sufficient decision space.',
+          learnContent: {
+            videoTitle: 'Design an ethical event offer and fulfilment process',
+            summaryText: 'A 30–50% room-close target can push staff toward manipulation and unsuitable sales. Judge an offer by informed customer fit, delivery capacity and durable outcomes—not immediate conversion.',
+            bulletPoints: ['Separate promised educational value from the optional sales segment and disclose timing, commercial purpose and speaker interests', 'Describe scope, price, taxes, recurring charges, financing, cancellation, eligibility, capacity and realistic outcomes before asking for a decision', 'Use genuine availability and deadlines; do not manufacture event-only bonuses or imply failure without the paid programme', 'Provide a quiet, accessible consultation route and allow attendees to decline or leave without embarrassment or loss of purchased benefits', 'Process orders through secure systems with written confirmation, consented follow-up and a tested cancellation and refund workflow'],
+            coreConcepts: [
+              { iconName: 'presentation', title: 'DISCLOSED OPTIONAL OFFER', description: 'Tell attendees when education ends and a commercial presentation begins. The event must deliver its advertised value even when nobody buys more.', highlight: true },
+              { iconName: 'user-check', title: 'INFORMED CUSTOMER FIT', description: 'Check needs, eligibility, affordability and conflicts without diagnosing, shaming or defeating objections. “No sale” can be the correct outcome.' },
+              { iconName: 'credit-card', title: 'SECURE FULFILMENT', description: 'Use approved payment systems, individual staff accounts and private screens. Never write card data on paper or expose contracts at a crowded table.' },
+            ],
+            resources: [
+              { title: 'Ethical Event Offer & Review Template', subtitle: 'Disclosure, fit, terms, accessibility and safeguards', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Secure On-Site Orders', subtitle: 'Role-based records, consent and fulfilment states', type: 'tool', iconName: 'dollar-sign', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Make the next step optional in practice, not only in wording
+
+Event energy, social proof, fatigue and authority can materially affect decisions. Saying “no pressure” does not remove pressure if the design uses public commitment, fear, hidden terms or expiring fiction.
+
+#### Participant-centred offer process
+
+1. **Protect the core event**: Deliver the advertised programme independently of additional purchases. Publish the agenda and identify commercial sessions in advance where appropriate.
+2. **Disclose the transition**: Clearly state that an offer is beginning, who benefits financially and how long it will take. Let attendees take a break or leave without losing access to purchased content.
+3. **Explain the complete offer**: Present provider, scope, delivery, prerequisites, support, limitations, total and recurring price, taxes, payment schedule, financing cost, cancellation, refund and applicable withdrawal information in plain language.
+4. **Substantiate value**: Avoid inflated “value stacks”, unrepresentative testimonials and outcome guarantees. Bonuses and capacity limits must be real, documented and available on the stated terms.
+5. **Preserve decision quality**: Do not frighten attendees about implementing alone, shame hesitation, use peer pressure or set a room conversion target. Offer a written summary and reasonable review time proportionate to price and complexity.
+6. **Check fit privately**: Train staff to clarify needs and exclusions, recognise vulnerability and financial distress, and escalate rather than sell. Compensation must not reward unsuitable contracts or conceal complaints and cancellations.
+7. **Follow consumer and credit rules**: Venue contracts, digital content, services and financing can have different information, withdrawal and regulatory duties. Obtain qualified review for the jurisdiction and transaction.
+8. **Process securely**: Use PCI-compliant payment providers, protected connectivity, role-based CRM access, receipts and double-checks for price and instalments. Never collect full card details in forms, notes or chat.
+9. **Confirm and fulfil**: Send the signed terms, payment status, cancellation route, delivery schedule and support contact. Reconcile payments and access and resolve duplicates or failed provisioning.
+10. **Follow up by permission**: Contact non-buyers only under the applicable consent or legitimate-contact rules, respect opt-outs and do not convert a genuine deadline into rolling pressure.
+
+Measure informed fit, cancellations, refunds, complaints, affordability issues, fulfilment quality and customer outcomes alongside sales.`,
+            practicalExamples: ['A high-priced programme is introduced in a labelled 20-minute commercial session; attendees receive full written terms and can book a later private suitability call.', 'An on-site payment uses a provider terminal and immediately emails the selected instalment plan, contract version, receipt and cancellation contact.'],
+          },
+          understandContent: { coreTakeaway: 'An ethical event offer protects informed choice, makes every commercial condition visible and treats secure, suitable fulfilment as more important than room conversion.', keyPrinciples: ['The paid event stands on its own', 'No fear, shame or fabricated urgency', 'Private, secure and reviewable contracting'] },
+          actionTask: { instruction: 'Design an optional offer and fulfilment process with safeguards:', checklistItems: ['Commercial segment and financial interests are clearly disclosed', 'Complete written offer, price, recurring terms, financing and cancellation information prepared', 'Claims, testimonials, bonuses, capacity and deadlines have evidence', 'Private fit review, vulnerability escalation and no-sale criteria defined', 'Secure payment, confirmation, reconciliation, refund and consented follow-up tested'], toolboxCategory: 'content' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -5331,6 +5415,90 @@ Reguły reklamy i endorsementu różnią się. Claims muszą być prawdziwe, nie
           },
           understandContent: { coreTakeaway: 'Wiarygodny PR jest transparentną pracą źródłową opartą na dowodach, niezależności redakcyjnej, prawach i dokładnym opisie coverage.', keyPrinciples: ['Nie ukrywaj promocji jako niezależnego newsa', 'Sprawdzaj fakty, cytaty i źródła AI', 'Wzmianka nie jest automatycznie endorsementem ani licencją na badge'] },
           actionTask: { instruction: 'Przygotuj weryfikowalny pakiet medialny i politykę publikacji:', checklistItems: ['Udokumentowano news value, claims, źródła, metody, daty i limity', 'Cytaty, cases, obrazy i dane mają właściwe zgody', 'Określono listę kontaktów, limit follow-up i suppression', 'Relacje sponsorowane, afiliacyjne i materialne mają reguły disclosure', 'Polityka obejmuje korekty, backlinki, fragmenty, screenshoty, znaki i logo'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
+    33: {
+      title: '33. Bezpieczne i dostępne eventy, warsztaty i retreaty',
+      subtitle: 'Budżety scenariuszowe, transparentne bilety, odpowiedzialny sponsoring i uczestnik w centrum',
+      description: 'Projektuj użyteczne doświadczenia z realną ekonomią, prawdziwą dostępnością miejsc, jasnymi relacjami sponsorskimi, dostępnością i bezpieczeństwem, bez gwarancji zysku lub presji na upgrade.',
+      lessons: {
+        '33.1': {
+          stageTitle: '33. Architektura eventu i bilety', title: 'Wykonalność eventu, transparentne bilety i odpowiedzialny sponsoring',
+          description: 'Testuj popyt i gotowość, modeluj scenariusze negatywne i sprzedawaj jasno różniące się bilety bez fałszywych countdownów, ukrytych opłat lub założenia, że sponsor pokryje koszty.',
+          learnContent: {
+            videoTitle: 'Plan rentownego, bezpiecznego i dostępnego eventu',
+            summaryText: 'Event może wzmacniać społeczność, ale może też stracić pieniądze lub zaszkodzić. Miejsce, personel, bezpieczeństwo, dostępność, anulowanie i wynik uczestnika trzeba zaplanować przed funnelem.',
+            bulletPoints: ['Przed miejscem lub modelem biletu określ wyniki uczestnika, zakres, pojemność, wykluczenia i dowody sukcesu', 'Modeluj break-even, wariant bazowy i negatywny ze wszystkimi kosztami, podatkami, zwrotami, contingency i timingiem cash', 'Pokazuj pełną cenę i prawdziwą dostępność; countdown oraz „ostatnie miejsca” muszą odpowiadać realnym warunkom', 'Każdy ticket ma jasno opisany poziom usługi, a rozsądne dostosowania dostępności nie mogą być prestiżowym upsellem', 'Kontraktuj deliverables sponsora, dane, bezpieczeństwo, disclosure i konflikty bez gwarantowania finansowania lub wpływu redakcyjnego'],
+            coreConcepts: [
+              { iconName: 'calculator', title: 'BUDŻET SCENARIUSZOWY', description: 'Uwzględnij miejsce, produkcję, personel, speakerów, podróże, catering, dostępność, ochronę, ubezpieczenie, licencje, podatki, płatności, zwroty i rezerwę. Sprzedaż 50% nie jest regułą break-even.', highlight: true },
+              { iconName: 'ticket', title: 'UCZCIWY PROJEKT BILETÓW', description: 'Tiery mogą oferować realne dodatkowe usługi, ale nie ukrywają podstawowego dostępu, obowiązkowych opłat ani sztucznego braku. Warunki transferu, anulowania i zwrotu podaj przed zakupem.' },
+              { iconName: 'shield-check', title: 'BEZPIECZNA ŚCIEŻKA UCZESTNIKA', description: 'Planuj ryzyko, awarie, safeguarding, dostępność, dietę, alergeny, prywatność, skargi i właściciela incydentu od rejestracji do wyjścia.' },
+            ],
+            resources: [
+              { title: 'Workbook wykonalności, bezpieczeństwa i budżetu', subtitle: 'Scenariusze, dostępność, contingency i bramki', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Preferencje uczestników Mara CRM', subtitle: 'Zbieraj tylko konieczne dane logistyczne za zgodą', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Zatwierdź wykonalność przed sprzedażą
+
+Eventy nie są z natury rentowne ani silniejsze od dostawy cyfrowej. Zacznij od wyniku uczestnika i ryzyka, które organizacja może bezpiecznie ponieść.
+
+#### Workflow zatwierdzenia
+
+1. **Zdefiniuj event**: Podaj audience, wyniki, format, capacity, wiek, prerequisites, speakerów, usługi i to, czym event nie jest. Waliduj zainteresowanie bez przedstawiania go jako sprzedaży.
+2. **Modeluj scenariusze i cash**: Buduj break-even, bazowy i negatywny z mixem ticketów, podatkiem, timingiem, zwrotami i niepewnym sponsorem. Uwzględnij miejsce, produkcję, staffing, podróże, noclegi, catering, dostępność, ochronę, medyków, ubezpieczenie, licencje, marketing i contingency.
+3. **Sprawdź miejsce i bezpieczeństwo**: Potwierdź legalną pojemność, dostęp bez stopni, toalety i miejsca, ewakuację, pogodę, transport, bezpieczeństwo żywności, alergeny, safeguarding, kontakty i obowiązki z właściwymi dostawcami oraz władzami.
+4. **Projektuj uczciwe bilety**: Wyjaśnij zawartość tierów, obowiązkowe koszty, dostępność i ograniczenia. Dostosowania dostępności oferuj godnie, nie jako benefit prestige.
+5. **Używaj prawdziwej ceny**: Realny early booking może mieć opisaną datę lub pulę. Nie resetuj timerów, nie wymyślaj scarcity ani nie dodawaj obowiązkowych opłat późno. Sprawdź lokalne prawo ceny i umowy.
+6. **Kontraktuj sponsorów**: Oceń dopasowanie, reputację i konflikty; określ świadczenia, płatność, anulowanie, markę, kontakt do attendee, booth, stage i disclosure. Sesje sponsorowane muszą być rozpoznawalne, a dane nie przechodzą bez podstawy i informacji.
+7. **Komunikuj z wyboru**: Oferuj portal, e-mail i dostępne alternatywy. Nie zmuszaj do grupy ujawniającej telefony. Uzyskaj zgodę na grupy lub paczki i umożliw wyjście.
+8. **Ustal go/no-go**: Decyduj według otrzymanego cash, terminów dostawców, dostępności, safety sign-off i jakości, nie oczekiwanych upgrade’ów.
+9. **Przygotuj recovery**: Publikuj anulowanie, transfer i zwrot; utrzymuj support, log incydentów, backup i plan komunikacji.
+
+Zaangażuj lokalnych specjalistów eventu, ubezpieczenia, podatków, dostępności, bezpieczeństwa i prawa dla rzeczywistego miejsca oraz formatu.`,
+            practicalExamples: ['Budżet negatywny zakłada słabszą sprzedaż i brak sponsora; organizator może anulować przed bezzwrotnym terminem i oddać pieniądze z rezerwy.', 'Opcjonalna społeczność attendee nie ujawnia telefonów i oferuje równoważne dostępne aktualizacje e-mailem.'],
+          },
+          understandContent: { coreTakeaway: 'Event zatwierdza się przez pełną ekonomię, uczciwe bilety, bezpieczeństwo i inkluzywne operacje, nie przyszłą sprzedaż na miejscu.', keyPrinciples: ['Budżetuj downside i niepewnego sponsora', 'Stosuj prawdziwe ceny, miejsca i benefity', 'Dostępność, safety i privacy są rdzeniem'] },
+          actionTask: { instruction: 'Przygotuj plan go/no-go przed sprzedażą:', checklistItems: ['Udokumentowano wyniki, zakres, capacity i poziomy usługi', 'Scenariusze cash obejmują wszystkie koszty i contingency', 'Wskazano właścicieli miejsca, safety, dostępności, ubezpieczenia i awarii', 'Sprawdzono cenę, opłaty, dostępność, anulowanie, transfer i zwroty', 'Określono sponsorów, disclosure, limity danych i bramki go/no-go'], toolboxCategory: 'landingpage' },
+        },
+        '33.2': {
+          stageTitle: '33. Etyczne oferty i realizacja', title: 'Transparentna oferta ze sceny, świadomy wybór i bezpieczna realizacja',
+          description: 'Prezentuj opcjonalne kroki bez wykorzystywania emocji grupy, strachu, zmęczenia lub sztucznej pilności i daj pełne warunki, prywatność oraz czas decyzji.',
+          learnContent: {
+            videoTitle: 'Etyczna oferta eventowa i proces realizacji',
+            summaryText: 'Cel zamknięcia 30–50% sali może popychać do manipulacji i złej sprzedaży. Oceniaj ofertę według świadomego dopasowania, capacity i trwałych wyników, nie natychmiastowej konwersji.',
+            bulletPoints: ['Oddziel obiecaną edukację od opcjonalnej sprzedaży i ujawnij czas, cel komercyjny oraz interes speakera', 'Przed decyzją opisz zakres, cenę, podatki, opłaty cykliczne, finansowanie, anulowanie, eligibility, capacity i realne wyniki', 'Używaj prawdziwej dostępności i terminów; nie twórz fikcyjnych event-only bonusów ani nie sugeruj porażki bez programu', 'Zapewnij cichą, dostępną konsultację i pozwól odmówić lub wyjść bez wstydu i utraty zakupionych benefitów', 'Przetwarzaj zamówienia bezpiecznie z pisemnym potwierdzeniem, follow-up za zgodą oraz testem anulowania i zwrotu'],
+            coreConcepts: [
+              { iconName: 'presentation', title: 'UJAWNIONA OPCJONALNA OFERTA', description: 'Powiedz, kiedy kończy się edukacja i zaczyna prezentacja komercyjna. Event musi dostarczyć obiecaną wartość, nawet gdy nikt nie kupi.', highlight: true },
+              { iconName: 'user-check', title: 'ŚWIADOME DOPASOWANIE', description: 'Sprawdzaj potrzeby, eligibility, affordability i konflikty bez diagnozowania, zawstydzania ani zwalczania obiekcji. Brak sprzedaży może być prawidłowy.' },
+              { iconName: 'credit-card', title: 'BEZPIECZNA REALIZACJA', description: 'Używaj zatwierdzonych płatności, indywidualnych kont i prywatnych ekranów. Nie zapisuj danych karty na papierze ani nie pokazuj umów przy zatłoczonym stole.' },
+            ],
+            resources: [
+              { title: 'Szablon etycznej oferty eventowej', subtitle: 'Disclosure, fit, warunki, dostępność i zabezpieczenia', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Bezpieczne zamówienia eventowe Mara CRM', subtitle: 'Role, zgoda i stany realizacji', type: 'tool', iconName: 'dollar-sign', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Uczyń następny krok opcjonalnym także w praktyce
+
+Energia eventu, social proof, zmęczenie i autorytet wpływają na decyzje. „Bez presji” nie usuwa presji, jeśli projekt używa publicznej deklaracji, strachu, ukrytych warunków lub fikcyjnego końca.
+
+#### Proces oferty z uczestnikiem w centrum
+
+1. **Chroń rdzeń eventu**: Dostarcz reklamowany program niezależnie od dalszych zakupów. Publikuj agendę i oznacz sesje komercyjne, gdy właściwe.
+2. **Ujawnij przejście**: Powiedz, że zaczyna się oferta, kto zarabia i ile potrwa. Pozwól wyjść lub zrobić przerwę bez utraty contentu.
+3. **Wyjaśnij pełną ofertę**: Podaj dostawcę, zakres, delivery, prerequisites, support, limity, pełną i cykliczną cenę, podatki, raty, koszt finansowania, anulowanie, zwrot i właściwe odstąpienie prostym językiem.
+4. **Poprzyj wartość**: Unikaj zawyżonego value stacku, niereprezentatywnych testimonials i gwarancji. Bonusy oraz capacity muszą być realne, opisane i dostępne na podanych zasadach.
+5. **Chroń jakość decyzji**: Nie strasz wdrożeniem bez mentoringu, nie zawstydzaj, nie używaj peer pressure ani targetu sali. Daj pisemne podsumowanie i czas proporcjonalny do ceny oraz złożoności.
+6. **Sprawdź fit prywatnie**: Szkol personel w potrzebach, wykluczeniach, podatności i problemach finansowych oraz eskalacji. Wynagrodzenie nie może premiować złych umów ani ukrywania skarg i anulowań.
+7. **Przestrzegaj praw konsumenta i kredytu**: Umowy w miejscu, digital content, usługi i finansowanie mogą mieć różne obowiązki. Uzyskaj przegląd jurysdykcji i transakcji.
+8. **Przetwarzaj bezpiecznie**: Używaj dostawców zgodnych z PCI, chronionej sieci, ról CRM, receiptów i kontroli ceny oraz rat. Nie zbieraj pełnych kart w formularzu, notatce lub czacie.
+9. **Potwierdź i realizuj**: Wyślij warunki, status płatności, drogę anulowania, plan dostawy i support. Uzgadniaj płatność z dostępem i naprawiaj duplikaty lub błędy.
+10. **Follow-up za pozwoleniem**: Kontaktuj non-buyers według zgody lub właściwych reguł, respektuj opt-out i nie zamieniaj terminu w ciągłą presję.
+
+Mierz fit, anulowania, zwroty, skargi, affordability, jakość realizacji i wynik klienta obok sprzedaży.`,
+            practicalExamples: ['Drogi program pojawia się w oznaczonej 20-minutowej sesji; attendee dostaje pełne warunki i może umówić późniejszą prywatną rozmowę o dopasowaniu.', 'Płatność używa terminala operatora i od razu wysyła raty, wersję umowy, receipt oraz kontakt anulowania.'],
+          },
+          understandContent: { coreTakeaway: 'Etyczna oferta chroni świadomy wybór, pokazuje wszystkie warunki i stawia bezpieczną, właściwą realizację ponad konwersję sali.', keyPrinciples: ['Zakupiony event działa samodzielnie', 'Bez strachu, wstydu i fikcyjnej pilności', 'Prywatne, bezpieczne i możliwe do sprawdzenia umowy'] },
+          actionTask: { instruction: 'Zaprojektuj opcjonalną ofertę i realizację z zabezpieczeniami:', checklistItems: ['Ujawniono segment komercyjny i interes finansowy', 'Przygotowano pełną ofertę, cenę, cykliczność, finansowanie i anulowanie', 'Claims, testimonials, bonusy, capacity i terminy mają dowody', 'Określono prywatny fit review, eskalację podatności i no-sale', 'Przetestowano płatność, potwierdzenie, uzgodnienie, zwrot i follow-up za zgodą'], toolboxCategory: 'content' },
         },
       },
     },
