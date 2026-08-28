@@ -2270,6 +2270,84 @@ Use separate test and production environments, synthetic data, scoped service ac
         },
       },
     },
+    28: {
+      title: '28. Team Design, Delegation & Sustainable Operations',
+      subtitle: 'Useful SOPs, fair employment and secure role-based collaboration',
+      description: 'Document critical work, delegate with appropriate training and build teams through lawful, inclusive hiring, fair compensation, safe access and measurable service quality.',
+      lessons: {
+        '28.1': {
+          stageTitle: '28. Team Design & Delegation', title: 'Living SOPs, training & safe handover',
+          description: 'Turn stable processes into accessible, versioned instructions and transfer responsibility gradually without assuming zero quality loss or error-free execution.',
+          learnContent: {
+            videoTitle: 'SOP and delegation design for reliable work',
+            summaryText: 'An SOP supports judgement; it does not replace context, training or accountability. The appropriate documentation and onboarding time depend on task risk and worker experience.',
+            bulletPoints: ['Prioritise delegation by risk, repetition, customer impact and skill fit—not revenue contribution alone', 'Document purpose, prerequisites, steps, decision points, examples, controls, owner and review date', 'Use accessible text and visuals; recordings are optional aids and must not expose customer data or credentials', 'Progress from observation to supervised practice and independent work only after demonstrated competence', 'Grant least-privilege access, separate duties and remove permissions promptly when roles change'],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'LIVING SOP SYSTEM', description: 'Keep a searchable, versioned source with owner, approval criteria, exceptions and change history. A quick recording is not automatically a complete SOP.', highlight: true },
+              { iconName: 'user-check', title: 'ROLE-BASED ONBOARDING', description: 'Set training time from complexity and risk rather than promising readiness within 48 hours. Pay people for required training and trial work.' },
+              { iconName: 'shield-check', title: 'QUALITY & ESCALATION', description: 'Define acceptance checks, sampling, error severity, escalation and correction. No checklist can guarantee error-free work.' },
+            ],
+            resources: [
+              { title: 'SOP Template & Delegation Matrix', subtitle: 'Versioning, risk and acceptance templates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Roles & Permissions', subtitle: 'Create scoped team access and review logs', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Delegate outcomes without delegating accountability
+
+Operational overload can constrain a business, but delegation is not automatically the right answer. First remove unnecessary work, simplify the process and assess whether automation or a specialist is appropriate.
+
+#### Safe handover workflow
+
+1. **Select**: Map frequency, impact, reversibility, data sensitivity, required judgement and dependencies. Keep high-risk approvals with an accountable owner.
+2. **Document**: State the purpose, inputs, outputs, steps, decision points, prohibited actions, examples, acceptance criteria and escalation route.
+3. **Protect information**: Redact recordings, use password and secret managers, create individual accounts and prohibit credential sharing.
+4. **Train**: Explain context, demonstrate, practise with synthetic data, supervise real work and record competence. Adapt for language and accessibility needs.
+5. **Transfer gradually**: Start with low-risk cases, sample outcomes and expand scope only when quality and confidence are stable.
+6. **Maintain**: Assign an owner and version; review after incidents, system changes and scheduled intervals. Archive obsolete instructions.
+7. **Offboard safely**: Revoke access, transfer ownership, recover devices or files and preserve required records according to policy.
+
+Do not use unpaid speculative work disguised as a “trial”. Classify workers correctly, follow applicable employment, contractor, tax and data rules, agree working hours and provide a safe way to report concerns.`,
+            practicalExamples: ['A refund SOP defines eligible cases, approval limits and escalation; trainees practise on synthetic orders before receiving restricted production access.', 'Replace a customer-data screen recording with a redacted demonstration and a written checklist that remains usable without video.'],
+          },
+          understandContent: { coreTakeaway: 'Reliable delegation combines maintained instructions, paid role-appropriate training, least privilege, clear escalation and accountable quality review.', keyPrinciples: ['Simplify before documenting or delegating', 'Match autonomy to demonstrated competence and risk', 'Maintain access and SOPs throughout the role lifecycle'] },
+          actionTask: { instruction: 'Create one safe operational SOP and handover plan:', checklistItems: ['Task risk, required judgement and accountable owner documented', 'SOP includes version, decision points, exceptions, acceptance and escalation', 'Training uses synthetic or redacted data and is appropriately compensated', 'Individual least-privilege CRM access and audit logging configured', 'Review, incident update and offboarding steps defined'], toolboxCategory: 'content' },
+        },
+        '28.2': {
+          stageTitle: '28. Fair Sales-Team Operations', title: 'Sales roles, compensation & quality assurance',
+          description: 'Build sales capacity with clear responsibilities, lawful recording, fair pay and customer-centred quality measures instead of pressure scripts and arbitrary growth formulas.',
+          learnContent: {
+            videoTitle: 'Designing and leading a responsible sales team',
+            summaryText: 'Dividing intake and consultation roles may help some teams, but it does not automatically double capacity or revenue. Team design should follow demand, customer needs, economics and legal obligations.',
+            bulletPoints: ['Define responsibilities, authority, handoffs and conflicts between intake, consultation, support and approval roles', 'Use structured conversation guides as support—not word-for-word pressure or scripts designed to defeat objections', 'Combine stable pay with carefully designed incentives that do not reward mis-selling, discrimination or unwanted contact', 'Review a sampled set of interactions for accuracy, consent, customer outcome, accessibility and respectful conduct', 'Use CRM metrics as operational evidence with context, not public rankings or surveillance of individual workers'],
+            coreConcepts: [
+              { iconName: 'phone-call', title: 'INTAKE & SCHEDULING', description: 'Confirm the request, permission, service fit and next step without manipulating urgency or using unnecessary personal data.', highlight: true },
+              { iconName: 'target', title: 'CONSULTATIVE GUIDES', description: 'Support discovery, accurate explanation and informed choice. An objection may mean the correct outcome is no sale.' },
+            ],
+            resources: [
+              { title: 'Consultative Sales Guide', subtitle: 'Needs, disclosure, consent and escalation template', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Deal Pipeline', subtitle: 'Monitor reviewed process and customer outcomes', type: 'tool', iconName: 'trending_up', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build sales capacity around customer fit
+
+There is no universal limit of 15–20 founder calls or mandatory sequence of thirty founder-led conversations. Choose a structure from actual demand, complexity, service capacity, skills and economics.
+
+#### Responsible team design
+
+1. **Role definition**: Document the purpose, decision authority, data access, handoff, workload and escalation of every role. Avoid misleading titles and false scarcity.
+2. **Fair recruitment**: Use job-related criteria, accessible applications, structured interviews and paid work samples. Check local employment, contractor, equal-treatment and commission rules.
+3. **Compensation**: Provide predictable terms in writing. Balance revenue incentives with cancellations, refunds, complaint quality, compliance and customer outcomes; prevent clawbacks or quotas from encouraging harm.
+4. **Training**: Teach the offer, limitations, privacy, consent, accessibility, vulnerable-customer safeguards and when to stop or escalate—not only objection handling.
+5. **Interaction review**: Record only with a valid basis and required notice or consent. Limit access and retention, provide alternatives where necessary and never use recordings for covert monitoring.
+6. **Metrics**: Define stage conversion, response time and forecast uncertainty consistently. Review by cohort and context and do not expose individual league tables.
+7. **Improvement**: Coach from representative samples, investigate systemic causes and document corrections. Respect worker voice and appeal.
+
+The sales process must allow a clear “no”, sufficient decision time and accurate price and contract terms. A respectful non-sale can be the correct result.`,
+            practicalExamples: ['A compensation plan combines stable pay with a modest quality-adjusted variable component and excludes sales later cancelled for misrepresentation.', 'A reviewed call sample uses explicit recording notice, restricted storage and a rubric covering accuracy, consent, respect and customer fit.'],
+          },
+          understandContent: { coreTakeaway: 'A sustainable sales team aligns fair work, informed customer choice, documented roles and contextual quality evidence.', keyPrinciples: ['Design incentives against mis-selling and pressure', 'Record interactions only lawfully and proportionately', 'Treat no-sale and escalation as valid outcomes'] },
+          actionTask: { instruction: 'Prepare a responsible sales-team operating model:', checklistItems: ['Role authority, handoffs, workloads and access documented', 'Recruitment criteria and paid work samples are job-related and accessible', 'Compensation includes quality, cancellation and complaint safeguards', 'Guides support informed choice and permit no-sale outcomes', 'Recording, retention, CRM metrics, coaching and appeal processes reviewed'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -4523,6 +4601,84 @@ Używaj osobnych środowisk testowych i produkcyjnych, danych syntetycznych, kon
           },
           understandContent: { coreTakeaway: 'Niezawodna automatyzacja zakłada awarie i chroni każdą granicę uwierzytelnieniem, idempotencją, widocznym stanem oraz możliwą do odzyskania procedurą człowieka.', keyPrinciples: ['Weryfikuj każde zewnętrzne zdarzenie i minimalizuj uprawnienia', 'Krytyczne skutki uboczne muszą być idempotentne', 'Uzgadniaj systemy i ćwicz odzyskiwanie'] },
           actionTask: { instruction: 'Zbuduj i przetestuj możliwy do odzyskania pipeline zakupu i onboardingu:', checklistItems: ['Skonfigurowano podpis webhooka, ochronę przed replay i przechowywanie sekretów', 'ID zdarzeń i idempotencja zapobiegają duplikatom skutków', 'Każdy krok pokazuje stan sukcesu, oczekiwania i błędu', 'Zdefiniowano retry, dead-letter, alerty i odpowiedzialnych właścicieli', 'Przetestowano duplikaty, opóźnienia, zmianę kolejności, częściowe wykonanie i awarie'], toolboxCategory: 'email' },
+        },
+      },
+    },
+    28: {
+      title: '28. Projektowanie zespołu, delegowanie i trwałe operacje',
+      subtitle: 'Użyteczne SOP, uczciwe zatrudnienie i bezpieczna współpraca oparta na rolach',
+      description: 'Dokumentuj krytyczną pracę, deleguj z odpowiednim szkoleniem i buduj zespoły przez legalną, inkluzywną rekrutację, uczciwe wynagrodzenie, bezpieczny dostęp i mierzalną jakość obsługi.',
+      lessons: {
+        '28.1': {
+          stageTitle: '28. Projektowanie zespołu i delegowanie', title: 'Żywe SOP, szkolenie i bezpieczne przekazanie',
+          description: 'Przekształć stabilne procesy w dostępne, wersjonowane instrukcje i stopniowo przekazuj odpowiedzialność bez zakładania zerowej utraty jakości lub bezbłędnego wykonania.',
+          learnContent: {
+            videoTitle: 'Projektowanie SOP i delegowania dla niezawodnej pracy',
+            summaryText: 'SOP wspiera ocenę, ale nie zastępuje kontekstu, szkolenia ani odpowiedzialności. Właściwa dokumentacja i czas onboardingu zależą od ryzyka zadania oraz doświadczenia pracownika.',
+            bulletPoints: ['Nadaj priorytet delegowaniu według ryzyka, powtarzalności, wpływu na klienta i dopasowania umiejętności, nie tylko przychodu', 'Dokumentuj cel, warunki wstępne, kroki, punkty decyzji, przykłady, kontrole, właściciela i datę przeglądu', 'Używaj dostępnego tekstu i obrazu; nagrania są opcjonalnym wsparciem i nie mogą ujawniać danych klientów ani poświadczeń', 'Przechodź od obserwacji przez praktykę nadzorowaną do samodzielnej pracy dopiero po wykazaniu kompetencji', 'Przyznawaj minimalne uprawnienia, rozdzielaj obowiązki i szybko odbieraj dostęp przy zmianie roli'],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'SYSTEM ŻYWYCH SOP', description: 'Utrzymuj przeszukiwalne, wersjonowane źródło z właścicielem, kryteriami odbioru, wyjątkami i historią zmian. Szybkie nagranie nie jest automatycznie pełnym SOP.', highlight: true },
+              { iconName: 'user-check', title: 'ONBOARDING OPARTY NA ROLI', description: 'Dobierz czas szkolenia do złożoności i ryzyka zamiast obiecywać gotowość w 48 godzin. Płać za wymagane szkolenia i zadania próbne.' },
+              { iconName: 'shield-check', title: 'JAKOŚĆ I ESKALACJA', description: 'Określ kontrole odbioru, próbkowanie, wagę błędów, eskalację i korektę. Żadna checklista nie gwarantuje bezbłędnej pracy.' },
+            ],
+            resources: [
+              { title: 'Szablon SOP i macierz delegowania', subtitle: 'Szablony wersjonowania, ryzyka i kryteriów odbioru', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Role i uprawnienia Mara CRM', subtitle: 'Twórz ograniczony dostęp zespołu i sprawdzaj logi', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Deleguj wyniki bez delegowania odpowiedzialności
+
+Przeciążenie operacyjne może ograniczać firmę, ale delegowanie nie zawsze jest właściwą odpowiedzią. Najpierw usuń zbędną pracę, uprość proces i oceń, czy odpowiednia jest automatyzacja lub specjalista.
+
+#### Bezpieczny workflow przekazania
+
+1. **Wybierz**: Określ częstotliwość, wpływ, odwracalność, wrażliwość danych, wymagany osąd i zależności. Akceptację wysokiego ryzyka pozostaw odpowiedzialnemu właścicielowi.
+2. **Udokumentuj**: Podaj cel, wejścia, wyjścia, kroki, punkty decyzji, działania zabronione, przykłady, kryteria odbioru i drogę eskalacji.
+3. **Chroń informacje**: Redaguj nagrania, używaj menedżerów haseł i sekretów, twórz indywidualne konta i zabroń współdzielenia poświadczeń.
+4. **Szkol**: Wyjaśnij kontekst, pokaż, ćwicz na danych syntetycznych, nadzoruj realną pracę i zapisuj kompetencje. Dostosuj szkolenie do języka i dostępności.
+5. **Przekazuj stopniowo**: Zacznij od przypadków niskiego ryzyka, próbkuj wyniki i rozszerzaj zakres tylko przy stabilnej jakości oraz pewności.
+6. **Utrzymuj**: Przypisz właściciela i wersję; przeglądaj po incydentach, zmianach systemu i cyklicznie. Archiwizuj stare instrukcje.
+7. **Bezpiecznie kończ współpracę**: Odbierz dostęp, przekaż własność, odzyskaj urządzenia lub pliki i zachowaj wymagane rekordy zgodnie z polityką.
+
+Nie stosuj bezpłatnej pracy spekulacyjnej jako „próby”. Prawidłowo klasyfikuj pracowników, przestrzegaj zasad zatrudnienia, kontraktorów, podatków i danych, ustal godziny oraz zapewnij bezpieczne zgłaszanie problemów.`,
+            practicalExamples: ['SOP zwrotów określa kwalifikację, limity akceptacji i eskalację; osoby szkolone ćwiczą na syntetycznych zamówieniach przed ograniczonym dostępem produkcyjnym.', 'Zastąp nagranie z danymi klienta zredagowaną demonstracją i pisemną checklistą użyteczną także bez filmu.'],
+          },
+          understandContent: { coreTakeaway: 'Niezawodne delegowanie łączy utrzymywane instrukcje, płatne szkolenie właściwe dla roli, minimalne uprawnienia, jasną eskalację i odpowiedzialną kontrolę jakości.', keyPrinciples: ['Uprość przed dokumentowaniem lub delegowaniem', 'Dopasuj autonomię do wykazanej kompetencji i ryzyka', 'Utrzymuj dostęp i SOP przez cały cykl roli'] },
+          actionTask: { instruction: 'Utwórz jeden bezpieczny SOP operacyjny i plan przekazania:', checklistItems: ['Udokumentowano ryzyko zadania, wymagany osąd i odpowiedzialnego właściciela', 'SOP zawiera wersję, punkty decyzji, wyjątki, odbiór i eskalację', 'Szkolenie używa danych syntetycznych lub zredagowanych i jest właściwie opłacone', 'Skonfigurowano indywidualny minimalny dostęp CRM i logi audytowe', 'Określono przegląd, aktualizację po incydencie i offboarding'], toolboxCategory: 'content' },
+        },
+        '28.2': {
+          stageTitle: '28. Uczciwe działania zespołu sprzedaży', title: 'Role sprzedażowe, wynagrodzenie i kontrola jakości',
+          description: 'Buduj możliwości sprzedaży przez jasne obowiązki, legalne nagrywanie, uczciwą płacę i mierniki jakości skupione na kliencie zamiast skryptów presji oraz arbitralnych formuł wzrostu.',
+          learnContent: {
+            videoTitle: 'Projektowanie i prowadzenie odpowiedzialnego zespołu sprzedaży',
+            summaryText: 'Podział intake i konsultacji może pomóc niektórym zespołom, ale nie podwaja automatycznie możliwości ani przychodu. Projekt zespołu powinien wynikać z popytu, potrzeb klienta, ekonomii i obowiązków prawnych.',
+            bulletPoints: ['Określ odpowiedzialność, uprawnienia, przekazania i konflikty między intake, konsultacją, supportem i akceptacją', 'Używaj uporządkowanych przewodników rozmowy jako wsparcia, nie słowo-w-słowo presji lub skryptów pokonywania sprzeciwu', 'Łącz stabilne wynagrodzenie z ostrożnie zaprojektowanymi premiami, które nie nagradzają missellingu, dyskryminacji ani niechcianego kontaktu', 'Sprawdzaj próbkę interakcji pod kątem dokładności, zgody, wyniku klienta, dostępności i szacunku', 'Traktuj metryki CRM jako dowody operacyjne z kontekstem, nie publiczne rankingi ani nadzór pracownika'],
+            coreConcepts: [
+              { iconName: 'phone-call', title: 'INTAKE I TERMINY', description: 'Potwierdź prośbę, pozwolenie, dopasowanie usługi i kolejny krok bez manipulowania pilnością lub zbędnych danych osobowych.', highlight: true },
+              { iconName: 'target', title: 'PRZEWODNIKI KONSULTACYJNE', description: 'Wspieraj odkrycie potrzeb, dokładne wyjaśnienie i świadomy wybór. Sprzeciw może oznaczać, że właściwym wynikiem jest brak sprzedaży.' },
+            ],
+            resources: [
+              { title: 'Przewodnik sprzedaży konsultacyjnej', subtitle: 'Szablon potrzeb, ujawnień, zgody i eskalacji', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Pipeline transakcji Mara CRM', subtitle: 'Monitoruj kontrolowany proces i wyniki klienta', type: 'tool', iconName: 'trending_up', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj możliwości sprzedaży wokół dopasowania klienta
+
+Nie istnieje uniwersalny limit 15–20 rozmów założyciela ani obowiązek przeprowadzenia trzydziestu pierwszych rozmów samodzielnie. Wybierz strukturę według popytu, złożoności, możliwości obsługi, umiejętności i ekonomii.
+
+#### Odpowiedzialny projekt zespołu
+
+1. **Definicja roli**: Opisz cel, uprawnienia decyzyjne, dostęp do danych, przekazanie, obciążenie i eskalację każdej roli. Unikaj mylących tytułów i sztucznego niedoboru.
+2. **Uczciwa rekrutacja**: Stosuj kryteria związane z pracą, dostępne aplikacje, uporządkowane rozmowy i płatne próbki pracy. Sprawdź lokalne zasady pracy, kontraktorów, równego traktowania i prowizji.
+3. **Wynagrodzenie**: Podaj przewidywalne warunki na piśmie. Równoważ premię od przychodu anulowaniami, zwrotami, jakością skarg, compliance i wynikami klienta; zapobiegaj szkodliwym skutkom clawbacków i targetów.
+4. **Szkolenie**: Ucz oferty, ograniczeń, prywatności, zgody, dostępności, ochrony podatnych klientów oraz zatrzymania lub eskalacji, nie tylko obiekcji.
+5. **Przegląd interakcji**: Nagrywaj wyłącznie z ważną podstawą oraz wymaganym powiadomieniem lub zgodą. Ogranicz dostęp i retencję, oferuj alternatywę i nie stosuj nagrań do ukrytego nadzoru.
+6. **Metryki**: Spójnie definiuj konwersję etapów, czas reakcji i niepewność prognozy. Analizuj według kohorty oraz kontekstu i nie publikuj rankingów osób.
+7. **Ulepszanie**: Coachuj z reprezentatywnych próbek, badaj przyczyny systemowe i dokumentuj korekty. Respektuj głos pracownika i odwołanie.
+
+Proces sprzedaży musi pozwalać na jasne „nie”, wystarczający czas decyzji oraz dokładną cenę i warunki umowy. Pełen szacunku brak sprzedaży może być właściwym wynikiem.`,
+            practicalExamples: ['Plan płac łączy stabilną pensję z umiarkowaną premią skorygowaną o jakość i wyklucza sprzedaże anulowane później z powodu wprowadzenia w błąd.', 'Próbka rozmów używa jasnej informacji o nagrywaniu, ograniczonego przechowywania i rubryki dokładności, zgody, szacunku i dopasowania.'],
+          },
+          understandContent: { coreTakeaway: 'Trwały zespół sprzedaży łączy uczciwą pracę, świadomy wybór klienta, opisane role i kontekstowe dowody jakości.', keyPrinciples: ['Projektuj premie przeciw missellingowi i presji', 'Nagrywaj tylko legalnie i proporcjonalnie', 'Traktuj brak sprzedaży i eskalację jako prawidłowe wyniki'] },
+          actionTask: { instruction: 'Przygotuj odpowiedzialny model pracy zespołu sprzedaży:', checklistItems: ['Udokumentowano uprawnienia roli, przekazania, obciążenia i dostęp', 'Kryteria rekrutacji oraz płatne próbki są związane z pracą i dostępne', 'Wynagrodzenie zawiera zabezpieczenia jakości, anulowania i skarg', 'Przewodniki wspierają świadomy wybór i dopuszczają brak sprzedaży', 'Sprawdzono nagrywanie, retencję, metryki CRM, coaching i odwołanie'], toolboxCategory: 'landingpage' },
         },
       },
     },
