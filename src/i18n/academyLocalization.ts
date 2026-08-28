@@ -2592,6 +2592,88 @@ Platform reports are estimates affected by attribution windows, consent, modelli
         },
       },
     },
+    32: {
+      title: '32. Podcasts, Earned Media & Credible Brand Authority',
+      subtitle: 'Relevant outreach, editorial independence, source quality and rights-cleared reuse',
+      description: 'Earn appropriate media opportunities through accurate expertise and useful evidence—without guaranteed replies, “free” coverage, viral promises or misleading publication badges.',
+      lessons: {
+        '32.1': {
+          stageTitle: '32. Podcast Outreach & Media Participation', title: 'Relevant podcast pitching, guest preparation & consented reuse',
+          description: 'Research audience fit, offer a truthful editorial contribution and measure outcomes while respecting inboxes, recording consent, intellectual-property rights and the host’s independence.',
+          learnContent: {
+            videoTitle: 'Plan a respectful, evidence-led podcast outreach programme',
+            summaryText: 'A long-form appearance may build understanding, but it cannot be assumed to outperform advertising or produce qualified leads. The host controls editorial selection and the audience chooses whether to engage.',
+            bulletPoints: ['Prioritise programmes by topic, audience, format, recent episodes and credible public contact routes—not an arbitrary “top 30” list', 'Pitch one evidence-backed contribution tailored to the programme and avoid manufactured controversy or guaranteed-result claims', 'Agree recording, editing, disclosure, publication, clip, transcript, likeness and music rights before reuse', 'Make any guest page accessible, privacy-respecting and consistent with what was actually discussed', 'Evaluate audience feedback, qualified visits, consented leads and downstream outcomes with uncertainty—not vanity reach alone'],
+            coreConcepts: [
+              { iconName: 'mic', title: 'EDITORIAL FIT', description: 'Offer a relevant perspective, verifiable experience and useful takeaways. A pitch template cannot guarantee an open, response or booking.', highlight: true },
+              { iconName: 'shield-check', title: 'RECORDING & REUSE RIGHTS', description: 'Confirm who owns the episode and what each party may edit, caption, quote, promote or monetise. Obtain separate permissions where necessary.' },
+              { iconName: 'bar-chart-2', title: 'PROPORTIONATE MEASUREMENT', description: 'Use a memorable or tagged URL only when useful, explain tracking and minimise data. Attribution is incomplete and not every appearance needs a dedicated funnel.' },
+            ],
+            resources: [
+              { title: 'Podcast Research, Pitch & Rights Checklist', subtitle: 'Editorial fit, evidence, disclosure and reuse permissions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Media-Source Review', subtitle: 'Track consented referrals without overstating attribution', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Contribute to a programme instead of demanding exposure
+
+Podcast outreach is a professional request, not a shortcut to “media dominance”. Audience size may be private or estimated, and a small specialist programme can be more relevant than a large general one.
+
+#### Responsible outreach and production
+
+1. **Research fit**: Review recent episodes, audience, format, guest policy, host interests, accessibility and public contact instructions. Keep only the business contact data needed for the pitch and honour opt-outs.
+2. **Develop an evidence-backed angle**: State why the topic matters now, what you can substantiate and what listeners will learn. Disclose conflicts, commercial interests and limits. Never invent a “controversial” claim for attention.
+3. **Write a concise personal pitch**: Reference a specific episode, propose two or three adaptable talking points and include credible samples. Do not falsely imply a referral, urgency or previous relationship.
+4. **Follow up proportionately**: Use a limited cadence, stop after a clear refusal or opt-out and do not move the person across channels to evade consent or platform rules.
+5. **Agree production terms**: Clarify recording consent, editorial control, corrections, sponsorship or affiliate disclosure, accessibility, release timing, confidentiality and cancellation.
+6. **Clear reuse rights**: Obtain written permission before publishing clips, transcripts, images, music or logos. Preserve context, caption accurately and avoid edits that change meaning.
+7. **Offer a truthful next step**: A landing page or resource should match the episode, identify the business, explain data use and avoid fake exclusivity. The host must be free to accept, change or reject a call to action.
+8. **Measure carefully**: Record publication, referral and outcome data with consistent definitions, but acknowledge dark traffic, delayed action and other channels. Do not claim causation from a tracking URL alone.
+
+Respect editorial independence. Payment, free products, affiliate relationships and other material connections may require clear disclosure under the rules that apply to the audience.`,
+            practicalExamples: ['A pitch cites a recent episode, offers new primary data with methodology and makes clear which claims are the guest’s interpretation.', 'Before posting a 45-second clip, the guest obtains the producer’s written permission, retains the full context, adds accurate captions and discloses the commercial relationship.'],
+          },
+          understandContent: { coreTakeaway: 'Credible podcast outreach combines editorial relevance, substantiated expertise, respectful contact, clear disclosure and permission-based reuse.', keyPrinciples: ['The host retains editorial choice', 'Clear recording and reuse rights before publishing', 'Measure outcomes without pretending complete attribution'] },
+          actionTask: { instruction: 'Prepare one responsible podcast outreach pilot:', checklistItems: ['Five relevant programmes researched using public contact guidance', 'Pitch claims, evidence, conflicts and audience value verified', 'Follow-up limit and opt-out handling documented', 'Recording, disclosure, clip, transcript, logo and likeness permissions listed', 'Accessible next step and proportionate measurement plan prepared'], toolboxCategory: 'landingpage' },
+        },
+        '32.2': {
+          stageTitle: '32. Earned Media & Digital PR', title: 'Accurate press materials, journalist relations & truthful media references',
+          description: 'Support journalists with verifiable information and use coverage accurately, without disguising ads as news, guaranteeing backlinks or implying endorsement through unauthorised logos.',
+          learnContent: {
+            videoTitle: 'Build an evidence-led digital PR practice',
+            summaryText: 'Coverage is earned through editorial judgement and is never guaranteed or truly cost-free. A mention may help awareness, but it does not automatically lift conversion or double other channels.',
+            bulletPoints: ['Offer genuine news value supported by named sources, methods, dates, sample limits and accessible evidence', 'Separate press material, sponsored content, affiliate promotion and independent editorial coverage with clear disclosure', 'Respond to relevant journalist requests accurately and never misrepresent credentials, clients, results or availability', 'Request permission before using publisher names, trademarks, screenshots, quotes or logos and describe the coverage precisely', 'Track publication quality, referral, corrections, sentiment and business outcomes without assuming a dofollow link or endorsement'],
+            coreConcepts: [
+              { iconName: 'newspaper', title: 'VERIFIABLE PRESS MATERIAL', description: 'A release labels claims, sources, methodology, date, spokesperson and contact. AI-assisted drafts require human fact-checking and source verification.', highlight: true },
+              { iconName: 'scale', title: 'EDITORIAL INDEPENDENCE', description: 'Journalists decide whether and how to report. Do not condition access, gifts or payment on favourable independent coverage.' },
+              { iconName: 'award', title: 'ACCURATE MEDIA REFERENCE', description: '“Featured in” wording must reflect the real appearance and date without implying approval. Logos and excerpts require applicable permission and licence review.' },
+            ],
+            resources: [
+              { title: 'Press Evidence & Outreach Template', subtitle: 'Sources, methodology, contacts, corrections and disclosures', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'AI-Assisted PR Draft Review', subtitle: 'Human verification for facts, rights and confidential data', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Make it easy to verify, not hard to resist
+
+PR should give an editor reliable material and the freedom to reject it. A press release is a source document from an interested party, not an independent news article.
+
+#### Evidence-led media workflow
+
+1. **Confirm news value**: Identify what is new, affected, independently relevant and timely. Routine promotion is not converted into news by adding a trend headline.
+2. **Build an evidence pack**: Preserve source links, raw or aggregated data, methodology, sample and field dates, limitations, consent, conflicts and a reachable spokesperson. Do not fabricate surveys, quotes or customers.
+3. **Draft transparently**: Use a factual headline and lead, distinguish fact from forecast and opinion, and label the organisation and commercial interest. AI may assist wording but a named human verifies every fact, citation and quotation.
+4. **Protect people and information**: Obtain appropriate permission for case studies, images and quotes; minimise personal data; respect embargoes and confidentiality; provide accessible formats when possible.
+5. **Target relevant contacts**: Follow published submission rules, use professional public contact information and personalise only from relevant sources. Limit follow-up and maintain suppression records.
+6. **Preserve independence**: Disclose payment, sponsorship, affiliate or supplied-product relationships. Sponsored placement must not be presented as independent editorial coverage.
+7. **Handle publication accurately**: Check facts, request corrections respectfully and archive the final URL, title, publisher and date. Do not demand editorial wording, a dofollow backlink or favourable sentiment.
+8. **Reference coverage truthfully**: Quote only within permission and context. Review trademark and copyright rights before using a media logo or screenshot, and never imply that a mere mention is endorsement, certification or partnership.
+9. **Measure and learn**: Track relevant coverage, qualified referral, branded search, enquiries, corrections and negative outcomes. Avoid attributing a conversion change to one article without a credible comparison.
+
+Advertising and endorsement rules vary by jurisdiction. Claims must remain truthful, non-misleading and supported, with material commercial relationships clearly disclosed where required.`,
+            practicalExamples: ['A release about survey results links the questionnaire and methodology, gives sample and field dates, states limitations and provides an independent expert contact.', 'A company writes “Founder quoted in [article title], 12 May 2026” with permission instead of placing a publisher logo above checkout as an implied endorsement.'],
+          },
+          understandContent: { coreTakeaway: 'Credible PR is transparent source work governed by evidence, editorial independence, rights and accurate description of any resulting coverage.', keyPrinciples: ['Never disguise promotion as independent news', 'Verify AI-assisted facts, quotes and sources', 'A mention is not automatically an endorsement or licensed badge'] },
+          actionTask: { instruction: 'Prepare one verifiable media package and publication policy:', checklistItems: ['News value, claims, sources, methods, dates and limitations documented', 'Quotes, cases, images and personal data have appropriate permissions', 'Relevant contact list, follow-up limit and suppression process defined', 'Sponsored, affiliate and other material connections have disclosure rules', 'Policy covers corrections, backlinks, excerpts, screenshots, trademarks and logos'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -5167,6 +5249,88 @@ Raporty platform są estymacją zależną od okien atrybucji, zgody, modelowania
           },
           understandContent: { coreTakeaway: 'Odpowiedzialna reklama międzynarodowa skaluje po lokalnym przeglądzie, legalnym pomiarze i pełnych dowodach ekonomicznych inkrementalnej wartości.', keyPrinciples: ['Segmentuj według dowodów, nie stereotypów', 'Sprawdzaj creative AI i prawa przez człowieka', 'Optymalizuj inkrementalną kontrybucję i wynik klienta'] },
           actionTask: { instruction: 'Zaprojektuj kontrolowany eksperyment kampanii:', checklistItems: ['Udokumentowano hipotezę, kraje, audience, wykluczenia, cap, metrykę i stop rule', 'Sprawdzono prawo, politykę platformy i ryzyko targetingu wrażliwego', 'Creative ma akceptację języka, claims, dostępności i praw', 'Przetestowano zgodę, eventy, deduplikację, strefę, walutę i uzgodnienie backendu', 'Widok decyzji obejmuje inkrementalność, marżę, zwroty, skargi i capacity'], toolboxCategory: 'landingpage' },
+        },
+      },
+    },
+    32: {
+      title: '32. Podcasty, earned media i wiarygodny autorytet marki',
+      subtitle: 'Trafny outreach, niezależność redakcyjna, jakość źródeł i ponowne użycie z prawami',
+      description: 'Zdobywaj odpowiednie okazje medialne przez rzetelną wiedzę i użyteczne dowody, bez gwarancji odpowiedzi, „darmowego” coverage, obietnic viralu lub mylących badge’y publikacji.',
+      lessons: {
+        '32.1': {
+          stageTitle: '32. Outreach podcastowy i udział w mediach', title: 'Trafny pitching, przygotowanie gościa i ponowne użycie za zgodą',
+          description: 'Badaj dopasowanie odbiorców, proponuj prawdziwy wkład redakcyjny i mierz wyniki z poszanowaniem skrzynek, zgody na nagranie, praw IP oraz niezależności hosta.',
+          learnContent: {
+            videoTitle: 'Odpowiedzialny program outreachu podcastowego oparty na dowodach',
+            summaryText: 'Długi wywiad może budować zrozumienie, lecz nie można zakładać, że pokona reklamę lub da kwalifikowane leady. Host wybiera redakcyjnie, a audience decyduje o reakcji.',
+            bulletPoints: ['Wybieraj programy według tematu, audience, formatu, ostatnich odcinków i publicznych kontaktów, nie arbitralnego „top 30”', 'Pitchuj jeden wkład oparty na dowodach i dopasowany do programu; unikaj sztucznej kontrowersji i gwarantowanych wyników', 'Przed reuse ustal nagranie, edycję, disclosure, publikację, klipy, transkrypcję, wizerunek i muzykę', 'Zadbaj, by strona gościa była dostępna, respektowała prywatność i odpowiadała rozmowie', 'Oceniaj feedback, jakościowe wizyty, leady za zgodą i dalsze wyniki z niepewnością, nie sam reach'],
+            coreConcepts: [
+              { iconName: 'mic', title: 'DOPASOWANIE REDAKCYJNE', description: 'Proponuj trafną perspektywę, sprawdzalne doświadczenie i użyteczne wnioski. Szablon nie gwarantuje otwarcia, odpowiedzi ani zaproszenia.', highlight: true },
+              { iconName: 'shield-check', title: 'PRAWA DO NAGRANIA I REUSE', description: 'Potwierdź właściciela odcinka i zakres edycji, napisów, cytowania, promocji oraz monetyzacji. Uzyskaj osobne zgody, gdy trzeba.' },
+              { iconName: 'bar-chart-2', title: 'PROPORCJONALNY POMIAR', description: 'Używaj łatwego lub tagowanego URL tylko, gdy pomaga, wyjaśniaj tracking i minimalizuj dane. Atrybucja jest niepełna, a osobny funnel nie zawsze potrzebny.' },
+            ],
+            resources: [
+              { title: 'Checklista researchu, pitchu i praw podcastu', subtitle: 'Dopasowanie, dowody, disclosure i zgody na reuse', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Przegląd źródeł medialnych Mara CRM', subtitle: 'Mierz polecenia za zgodą bez zawyżania atrybucji', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Wnoś wkład do programu zamiast żądać ekspozycji
+
+Outreach podcastowy jest profesjonalną prośbą, nie skrótem do „dominacji”. Wielkość audience bywa prywatna lub szacowana, a mały program specjalistyczny może być trafniejszy niż duży ogólny.
+
+#### Odpowiedzialny outreach i produkcja
+
+1. **Zbadaj dopasowanie**: Przejrzyj odcinki, audience, format, politykę gości, zainteresowania, dostępność i instrukcje kontaktu. Zachowuj tylko potrzebne dane służbowe i respektuj opt-out.
+2. **Opracuj kąt oparty na dowodach**: Wyjaśnij aktualność, możliwe do potwierdzenia fakty i wartość dla słuchacza. Ujawnij konflikty, interes komercyjny i limity. Nie wymyślaj kontrowersji.
+3. **Napisz krótki osobisty pitch**: Odnieś się do odcinka, zaproponuj 2–3 elastyczne punkty i wiarygodne próbki. Nie sugeruj fałszywego polecenia, pilności ani relacji.
+4. **Follow-up proporcjonalny**: Ogranicz liczbę prób, zatrzymaj po odmowie lub opt-out i nie zmieniaj kanału, by obejść zgodę lub zasady.
+5. **Ustal produkcję**: Wyjaśnij zgodę na nagranie, kontrolę redakcyjną, korekty, sponsor/affiliate disclosure, dostępność, termin, poufność i anulowanie.
+6. **Ustal prawa reuse**: Uzyskaj pisemną zgodę przed klipami, transkrypcją, obrazem, muzyką lub logo. Zachowaj kontekst, poprawne napisy i znaczenie.
+7. **Zaoferuj prawdziwy następny krok**: Strona lub zasób mają odpowiadać odcinkowi, wskazywać firmę, dane i nie tworzyć fałszywej ekskluzywności. Host może zmienić lub odrzucić CTA.
+8. **Mierz ostrożnie**: Stosuj spójne definicje publikacji, referral i wyniku, uznając dark traffic, opóźnienia i inne kanały. Sam URL nie dowodzi przyczyny.
+
+Respektuj niezależność redakcyjną. Płatność, produkty, afiliacja i inne istotne relacje mogą wymagać jasnego disclosure według reguł odbiorców.`,
+            practicalExamples: ['Pitch cytuje niedawny odcinek, oferuje nowe dane pierwotne z metodologią i wskazuje, które claims są interpretacją gościa.', 'Przed publikacją klipu gość uzyskuje pisemną zgodę producenta, zachowuje kontekst, dodaje napisy i ujawnia relację komercyjną.'],
+          },
+          understandContent: { coreTakeaway: 'Wiarygodny outreach łączy trafność, dowody, szacunek do kontaktu, disclosure i reuse za zgodą.', keyPrinciples: ['Host zachowuje wybór redakcyjny', 'Prawa do nagrania i reuse przed publikacją', 'Mierz bez udawania pełnej atrybucji'] },
+          actionTask: { instruction: 'Przygotuj jeden odpowiedzialny pilot outreachu:', checklistItems: ['Zbadano pięć trafnych programów według publicznych instrukcji', 'Zweryfikowano claims, dowody, konflikty i wartość', 'Udokumentowano limit follow-up i opt-out', 'Wymieniono zgody na nagranie, disclosure, klip, tekst, logo i wizerunek', 'Przygotowano dostępny następny krok i proporcjonalny pomiar'], toolboxCategory: 'landingpage' },
+        },
+        '32.2': {
+          stageTitle: '32. Earned media i cyfrowy PR', title: 'Rzetelne materiały prasowe, relacje z dziennikarzami i prawdziwe odniesienia medialne',
+          description: 'Wspieraj dziennikarzy sprawdzalną informacją i opisuj coverage zgodnie z prawdą, bez ukrywania reklamy, gwarancji backlinków lub sugerowania endorsementu przez logo.',
+          learnContent: {
+            videoTitle: 'Cyfrowy PR oparty na dowodach',
+            summaryText: 'Coverage wynika z oceny redakcyjnej i nie jest gwarantowany ani naprawdę bezkosztowy. Wzmianka może wspierać awareness, ale nie podnosi automatycznie konwersji ani nie podwaja kanałów.',
+            bulletPoints: ['Oferuj realny news value z nazwanymi źródłami, metodą, datami, ograniczeniami próby i dostępnymi dowodami', 'Oddziel materiał prasowy, sponsored content, afiliację i niezależną publikację przez jasne disclosure', 'Odpowiadaj na trafne zapytania bez fałszowania kompetencji, klientów, wyników lub dostępności', 'Proś o zgodę przed użyciem nazw, znaków, screenshotów, cytatów lub logo i precyzyjnie opisuj coverage', 'Mierz jakość publikacji, referral, korekty, sentyment i wynik bez zakładania dofollow lub endorsementu'],
+            coreConcepts: [
+              { iconName: 'newspaper', title: 'WERYFIKOWALNY MATERIAŁ', description: 'Release oznacza claims, źródła, metodologię, datę, rzecznika i kontakt. Draft AI wymaga ludzkiego fact-checku i sprawdzenia źródeł.', highlight: true },
+              { iconName: 'scale', title: 'NIEZALEŻNOŚĆ REDAKCYJNA', description: 'Dziennikarz decyduje, czy i jak opisze temat. Nie uzależniaj dostępu, prezentów lub płatności od korzystnego niezależnego coverage.' },
+              { iconName: 'award', title: 'DOKŁADNE ODNIESIENIE', description: '„Featured in” musi odpowiadać realnej publikacji i dacie bez sugerowania akceptacji. Logo i fragmenty wymagają przeglądu zgody lub licencji.' },
+            ],
+            resources: [
+              { title: 'Szablon dowodów i outreachu prasowego', subtitle: 'Źródła, metoda, kontakty, korekty i disclosure', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Przegląd draftu PR wspieranego AI', subtitle: 'Weryfikacja faktów, praw i danych poufnych', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Ułatwiaj weryfikację, nie wywieraj presji
+
+PR powinien dać redakcji wiarygodny materiał i swobodę odrzucenia. Informacja prasowa jest dokumentem strony zainteresowanej, nie niezależnym artykułem.
+
+#### Workflow mediów oparty na dowodach
+
+1. **Potwierdź news value**: Wskaż, co jest nowe, istotne niezależnie i aktualne. Rutynowa promocja nie staje się newsem przez trendową headline.
+2. **Zbuduj pakiet dowodów**: Zachowaj źródła, dane, metodę, próbę i daty badania, limity, zgodę, konflikty i rzecznika. Nie twórz fałszywych ankiet, cytatów ani klientów.
+3. **Pisz transparentnie**: Użyj faktycznego nagłówka i leadu, rozdziel fakt od prognozy i opinii, wskaż organizację oraz interes. AI może pomóc, ale człowiek sprawdza każdy fakt, cytat i źródło.
+4. **Chroń ludzi i informacje**: Uzyskaj zgodę na case studies, obrazy i cytaty; minimalizuj dane; respektuj embargo i poufność; oferuj dostępny format.
+5. **Kontaktuj trafnie**: Stosuj instrukcje redakcji, publiczne kontakty zawodowe i personalizację tylko z istotnych źródeł. Ogranicz follow-up i prowadź suppression.
+6. **Zachowaj niezależność**: Ujawnij płatność, sponsoring, afiliację lub dostarczony produkt. Sponsored placement nie może udawać niezależnej publikacji.
+7. **Obsłuż publikację rzetelnie**: Sprawdź fakty, grzecznie poproś o korektę i archiwizuj URL, tytuł, wydawcę i datę. Nie żądaj treści, dofollow ani pozytywnego tonu.
+8. **Opisuj coverage prawdziwie**: Cytuj tylko za zgodą i w kontekście. Sprawdź znak i copyright przed logo lub screenshotem i nie sugeruj endorsementu, certyfikatu ani partnerstwa.
+9. **Mierz i ucz się**: Śledź trafne publikacje, referral, branded search, zapytania, korekty i skutki negatywne. Nie przypisuj zmiany konwersji jednemu artykułowi bez porównania.
+
+Reguły reklamy i endorsementu różnią się. Claims muszą być prawdziwe, niemylnące i poparte, a istotne relacje komercyjne jasno ujawnione, gdy wymagane.`,
+            practicalExamples: ['Release o ankiecie linkuje kwestionariusz i metodę, podaje próbę, daty oraz ograniczenia i oferuje kontakt niezależnego eksperta.', 'Firma pisze „Założyciel cytowany w [tytuł], 12 maja 2026” za zgodą zamiast logo wydawcy nad checkoutem jako rzekomej rekomendacji.'],
+          },
+          understandContent: { coreTakeaway: 'Wiarygodny PR jest transparentną pracą źródłową opartą na dowodach, niezależności redakcyjnej, prawach i dokładnym opisie coverage.', keyPrinciples: ['Nie ukrywaj promocji jako niezależnego newsa', 'Sprawdzaj fakty, cytaty i źródła AI', 'Wzmianka nie jest automatycznie endorsementem ani licencją na badge'] },
+          actionTask: { instruction: 'Przygotuj weryfikowalny pakiet medialny i politykę publikacji:', checklistItems: ['Udokumentowano news value, claims, źródła, metody, daty i limity', 'Cytaty, cases, obrazy i dane mają właściwe zgody', 'Określono listę kontaktów, limit follow-up i suppression', 'Relacje sponsorowane, afiliacyjne i materialne mają reguły disclosure', 'Polityka obejmuje korekty, backlinki, fragmenty, screenshoty, znaki i logo'], toolboxCategory: 'landingpage' },
         },
       },
     },
