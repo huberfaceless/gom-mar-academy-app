@@ -2115,6 +2115,83 @@ CAC and LTV are estimates shaped by attribution, cohort and time horizon. Define
         },
       },
     },
+    26: {
+      title: '26. Community Care, Retention & Sustainable Customer Value',
+      subtitle: 'Supportive participation, fair recognition and value-led customer relationships',
+      description: 'Build a safe, useful community and improve retention through genuine member outcomes, transparent membership terms and relevant offers—not status pressure or compulsive engagement.',
+      lessons: {
+        '26.1': {
+          stageTitle: '26. Community Care & Retention', title: 'Healthy engagement, onboarding & moderation',
+          description: 'Design a community where participation is voluntary, accessible and safe, with clear governance and evidence-based retention work.',
+          learnContent: {
+            videoTitle: 'Community architecture: belonging without manipulation',
+            summaryText: 'A community can support learning and connection, but it does not automatically retain customers for years or moderate itself. Safety, value and accountable human stewardship come first.',
+            bulletPoints: ['Define purpose, membership expectations, moderation rules, reporting and appeal before pursuing engagement', 'Offer optional onboarding paths without requiring members to disclose personal goals publicly', 'Recognise helpful contributions with consent and avoid public rankings that shame, exclude or encourage unhealthy activity', 'Support moderators and volunteer ambassadors with training, boundaries, escalation and fair recognition', 'Measure member outcomes, safety, accessibility and voluntary retention—not posts and time spent alone'],
+            coreConcepts: [
+              { iconName: 'users', title: 'USEFUL PARTICIPATION', description: 'Run a maintainable rhythm of optional questions, peer support and live sessions based on member needs—not permanent activity.', highlight: true },
+              { iconName: 'award', title: 'FAIR RECOGNITION', description: 'Recognise meaningful contributions with permission. Provide non-competitive alternatives and prevent points from rewarding spam or dominance.' },
+              { iconName: 'heart', title: 'MEMBER CARE', description: 'Treat inactivity as an ambiguous signal. Offer one respectful preference-based check-in rather than automated pressure.' },
+            ],
+            resources: [
+              { title: 'Community Care Roadmap', subtitle: 'Moderation, accessibility and programme-planning templates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Member Preference Email Templates', subtitle: 'Consent-aware check-in and exit messages', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Build a community people can use safely
+
+Retention is not a reason to maximise attention or make departure difficult. A healthy community helps members achieve relevant goals while preserving choice and wellbeing.
+
+#### Community lifecycle controls
+
+1. **Entry and orientation**: Explain purpose, price, renewal, privacy, conduct, moderation and support. Let members introduce themselves at their own comfort level.
+2. **Participation options**: Provide asynchronous, live, low-bandwidth and accessible routes. Do not make public posting a condition of receiving paid value.
+3. **Recognition**: Celebrate work only with consent and accurate context. Avoid leaderboards where they amplify inequality, spam or unhealthy comparison.
+4. **Safety and moderation**: Train named moderators; publish reporting, response, appeal and emergency boundaries. Bots may assist triage but must not make high-impact moderation decisions alone.
+5. **Ambassadors**: Define duties, time, compensation or benefits, conflicts, confidentiality and a route to step down. Volunteers are not a substitute for adequate staffing.
+6. **Inactivity and exit**: Respect preferences, send limited check-ins, offer easy cancellation and export or deletion where applicable. Never hide cancellation or repeatedly reactivate opted-out members.
+
+Test onboarding and programmes with member feedback. Segment carefully and monitor participation gaps, safety incidents, response time, accessibility barriers, support load and member-reported outcomes.`,
+            practicalExamples: ['Offer a seven-day optional orientation with a quiet-learning track, clear help route and no public disclosure requirement.', 'Replace a “top poster” leaderboard with member-nominated helpful contributions and private progress milestones.'],
+          },
+          understandContent: { coreTakeaway: 'Sustainable community retention grows from safety, relevant value, genuine belonging and freedom to participate or leave.', keyPrinciples: ['Moderation and governance require accountable people', 'Recognition must be voluntary and fair', 'Treat inactivity with respect, not pressure'] },
+          actionTask: { instruction: 'Prepare a responsible community-retention plan:', checklistItems: ['Purpose, rules, reporting, appeals and moderator ownership documented', 'Accessible and low-pressure onboarding options defined', 'Recognition mechanics reviewed for consent, fairness and abuse', 'One preference-based inactivity check-in and easy exit configured', 'Member outcomes, safety and support capacity included in measurement'], toolboxCategory: 'email' },
+        },
+        '26.2': {
+          stageTitle: '26. Sustainable Customer Value', title: 'Customer value, relevant next offers & fair referrals',
+          description: 'Develop optional next-step offers that fit verified customer needs and measure sustainable value after costs, refunds and customer outcomes.',
+          learnContent: {
+            videoTitle: 'Value paths and responsible expansion offers',
+            summaryText: 'An existing customer is not automatically the most profitable prospect. Additional offers should improve fit and outcomes, not exploit sunk cost, loyalty or behavioural scores.',
+            bulletPoints: ['Map flexible next steps from customer needs rather than forcing everyone up a four-tier price ladder', 'Offer upgrades after relevant evidence or an explicit request—not at a supposedly perfect psychological moment', 'Use NPS only as one aggregate feedback signal, never as proof that an individual wants an upsell', 'Calculate observed cohort value with revenue, variable costs, refunds, support and retention horizon', 'Make referral and affiliate terms, eligibility, incentives and disclosures clear to customers'],
+            coreConcepts: [
+              { iconName: 'trending_up', title: 'SUSTAINABLE CONTRIBUTION', description: 'Measure the contribution of each offer and cohort. Do not assume that 80% of net profit must come from later stages.', highlight: true },
+              { iconName: 'gift', title: 'FRICTION-SMART UPGRADES', description: 'Make legitimate upgrades convenient while retaining price confirmation, cancellation rights, authentication and protection against accidental purchases.' },
+            ],
+            resources: [
+              { title: 'Customer Value Path Blueprint', subtitle: 'Needs, pricing and cohort-economics worksheet', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Customer Segmentation', subtitle: 'Review authorised purchase and service context', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Create customer value without manufacturing the next problem
+
+Customer value grows when a business reliably solves relevant needs at a sustainable cost. It is not maximised simply by increasing price or number of purchases.
+
+#### A flexible value-path model
+
+1. **Free or introductory support**: Helps a person evaluate fit without deceptive bait or hidden recurring charges.
+2. **Core offer**: Delivers the primary promised outcome with complete terms and adequate support.
+3. **Optional continuity**: Provides ongoing value only where a recurring need exists. Make renewal, cancellation and changes clear.
+4. **Specialist implementation**: Offers higher-touch help to suitable customers without implying exclusivity equals superiority.
+5. **Pause, exit or referral elsewhere**: Sometimes the responsible next step is no purchase, a lower-cost option or another provider.
+
+Define LTV by cohort, horizon and contribution basis. Separate observed results from forecasts and run sensitivity checks. Review retention, refunds, complaints, support effort and customer-reported outcomes alongside revenue.
+
+One-click upgrades still need explicit confirmation, accessible terms and appropriate authentication. Referral programmes require clear incentive disclosure, fraud controls, tax or contractual review where relevant and no pressure on members to recruit.`,
+            practicalExamples: ['After a customer completes the core programme, ask what help is still needed and present relevant options—including no upgrade—with price and cancellation terms.', 'Pilot a referral programme with transparent commission disclosure, quality checks and an easy way for customers to decline promotional participation.'],
+          },
+          understandContent: { coreTakeaway: 'Long-term customer value is sustainable when optional offers improve verified fit and outcomes while economics and rights remain transparent.', keyPrinciples: ['Do not treat satisfaction scores as individual purchase intent', 'Measure contribution and customer outcomes by cohort', 'Keep upgrades, subscriptions and referrals explicit and optional'] },
+          actionTask: { instruction: 'Design a fair customer-value system:', checklistItems: ['Flexible value paths include upgrade, pause, exit and referral elsewhere', 'Every offer states price, renewal, cancellation, fit and limitations', 'Observed LTV uses a defined cohort, horizon, costs and refunds', 'Upgrade confirmation and accidental-purchase safeguards are tested', 'Referral incentives, disclosures and quality controls are documented'], toolboxCategory: 'affiliate' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -4213,6 +4290,83 @@ CAC i LTV są szacunkami zależnymi od atrybucji, kohorty i horyzontu. Definiuj 
           },
           understandContent: { coreTakeaway: 'Odpowiedzialne skalowanie rozwija zwalidowany i możliwy do obsługi proces; nie automatyzuje presji ani nie obiecuje stałych wskaźników zamknięcia i obecności.', keyPrinciples: ['Kwalifikuj wzajemne dopasowanie tylko potrzebnymi danymi', 'Wymagaj kontroli routingu, ofert i umów', 'Skaluj etapowo na podstawie dowodów i progów rollbacku'] },
           actionTask: { instruction: 'Przygotuj kontrolowany proces sprzedaży wymagającej namysłu:', checklistItems: ['Pytania kwalifikacyjne są potrzebne, wyjaśnione i dostępne', 'Skonfigurowano zgodę na przypomnienia, strefę czasową, zmianę i anulowanie', 'Reguły routingu są wyjaśnialne i sprawdzone pod kątem niesprawiedliwych wykluczeń', 'Cena, oferta i szkice umów wymagają akceptacji człowieka', 'Udokumentowano CAC, marżę, możliwości realizacji, skargi i progi rollbacku'], toolboxCategory: 'email' },
+        },
+      },
+    },
+    26: {
+      title: '26. Troska o społeczność, retencja i trwała wartość klienta',
+      subtitle: 'Wspierające uczestnictwo, uczciwe uznanie i wartościowe relacje z klientami',
+      description: 'Buduj bezpieczną i użyteczną społeczność oraz poprawiaj retencję przez realne wyniki członków, przejrzyste warunki członkostwa i trafne oferty, a nie presję statusu lub kompulsywne zaangażowanie.',
+      lessons: {
+        '26.1': {
+          stageTitle: '26. Troska o społeczność i retencja', title: 'Zdrowe zaangażowanie, onboarding i moderacja',
+          description: 'Zaprojektuj społeczność, w której udział jest dobrowolny, dostępny i bezpieczny, z jasnym zarządzaniem oraz retencją opartą na dowodach.',
+          learnContent: {
+            videoTitle: 'Architektura społeczności: przynależność bez manipulacji',
+            summaryText: 'Społeczność może wspierać naukę i relacje, ale nie zatrzymuje automatycznie klientów na lata ani nie moderuje się sama. Najważniejsze są bezpieczeństwo, wartość i odpowiedzialna opieka człowieka.',
+            bulletPoints: ['Przed zwiększaniem aktywności określ cel, oczekiwania, zasady moderacji, zgłoszenia i odwołania', 'Oferuj opcjonalne ścieżki onboardingu bez wymuszania publicznego ujawniania osobistych celów', 'Doceniaj pomocne wkłady za zgodą i unikaj publicznych rankingów, które zawstydzają, wykluczają lub promują niezdrową aktywność', 'Wspieraj moderatorów i ambasadorów szkoleniem, granicami, eskalacją i uczciwym uznaniem', 'Mierz wyniki członków, bezpieczeństwo, dostępność i dobrowolną retencję, nie tylko posty oraz czas spędzony'],
+            coreConcepts: [
+              { iconName: 'users', title: 'UŻYTECZNE UCZESTNICTWO', description: 'Prowadź możliwy do utrzymania rytm opcjonalnych pytań, wsparcia rówieśniczego i spotkań według potrzeb członków, nie dla stałej aktywności.', highlight: true },
+              { iconName: 'award', title: 'UCZCIWE UZNANIE', description: 'Doceniaj znaczące wkłady za zgodą. Zapewnij alternatywy bez rywalizacji i nie pozwól, by punkty nagradzały spam lub dominację.' },
+              { iconName: 'heart', title: 'TROSKA O CZŁONKA', description: 'Traktuj brak aktywności jako niejednoznaczny sygnał. Zaoferuj jedną pełną szacunku wiadomość zgodną z preferencjami zamiast automatycznej presji.' },
+            ],
+            resources: [
+              { title: 'Plan troski o społeczność', subtitle: 'Szablony moderacji, dostępności i planowania programu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Szablony e-maili o preferencjach członka', subtitle: 'Wiadomości kontrolne i wyjścia zgodne ze zgodą', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Buduj społeczność, z której można bezpiecznie korzystać
+
+Retencja nie uzasadnia maksymalizacji uwagi ani utrudniania odejścia. Zdrowa społeczność pomaga członkom osiągać istotne cele, zachowując wybór i dobrostan.
+
+#### Kontrole cyklu życia społeczności
+
+1. **Wejście i orientacja**: Wyjaśnij cel, cenę, odnowienie, prywatność, zasady zachowania, moderację i pomoc. Pozwól członkom przedstawiać się według własnego komfortu.
+2. **Opcje uczestnictwa**: Zapewnij ścieżki asynchroniczne, na żywo, oszczędne transferowo i dostępne. Publiczne postowanie nie może być warunkiem otrzymania opłaconej wartości.
+3. **Uznanie**: Świętuj pracę tylko za zgodą i z dokładnym kontekstem. Unikaj rankingów, jeśli nasilają nierówność, spam lub niezdrowe porównania.
+4. **Bezpieczeństwo i moderacja**: Szkol nazwanych moderatorów; opublikuj zasady zgłoszeń, reakcji, odwołań i granic sytuacji nagłych. Boty mogą wspierać triage, ale nie powinny samodzielnie podejmować istotnych decyzji moderacyjnych.
+5. **Ambasadorzy**: Określ obowiązki, czas, wynagrodzenie lub korzyści, konflikty, poufność i możliwość rezygnacji. Wolontariusze nie zastępują właściwej obsady.
+6. **Brak aktywności i wyjście**: Respektuj preferencje, wysyłaj ograniczone przypomnienia, umożliw łatwe anulowanie oraz eksport lub usunięcie, gdy właściwe. Nie ukrywaj rezygnacji i nie reaktywuj osób po opt-out.
+
+Testuj onboarding i program z opiniami członków. Segmentuj ostrożnie i monitoruj różnice uczestnictwa, incydenty, czas reakcji, bariery dostępności, obciążenie supportu i deklarowane wyniki członków.`,
+            practicalExamples: ['Zaoferuj opcjonalną siedmiodniową orientację ze ścieżką cichej nauki, jasną pomocą i bez obowiązku publicznego ujawniania.', 'Zastąp ranking „najwięcej postów” nominowanymi przez członków pomocnymi wkładami i prywatnymi kamieniami milowymi.'],
+          },
+          understandContent: { coreTakeaway: 'Trwała retencja społeczności wynika z bezpieczeństwa, trafnej wartości, prawdziwej przynależności i wolności uczestnictwa lub odejścia.', keyPrinciples: ['Moderacja i zarządzanie wymagają odpowiedzialnych ludzi', 'Uznanie musi być dobrowolne i uczciwe', 'Brak aktywności traktuj z szacunkiem, nie presją'] },
+          actionTask: { instruction: 'Przygotuj odpowiedzialny plan retencji społeczności:', checklistItems: ['Udokumentowano cel, zasady, zgłoszenia, odwołania i właściciela moderacji', 'Określono dostępny onboarding bez presji', 'Mechanizmy uznania sprawdzono pod kątem zgody, uczciwości i nadużyć', 'Skonfigurowano jedną wiadomość zgodną z preferencjami oraz łatwe wyjście', 'Pomiar obejmuje wyniki członków, bezpieczeństwo i możliwości supportu'], toolboxCategory: 'email' },
+        },
+        '26.2': {
+          stageTitle: '26. Trwała wartość klienta', title: 'Wartość klienta, trafne kolejne oferty i uczciwe polecenia',
+          description: 'Twórz opcjonalne kolejne oferty dopasowane do zweryfikowanych potrzeb i mierz trwałą wartość po kosztach, zwrotach oraz wynikach klientów.',
+          learnContent: {
+            videoTitle: 'Ścieżki wartości i odpowiedzialne oferty rozszerzające',
+            summaryText: 'Obecny klient nie jest automatycznie najbardziej dochodowym odbiorcą. Dodatkowe oferty powinny poprawiać dopasowanie i wynik, a nie wykorzystywać poniesione koszty, lojalność czy scoring zachowań.',
+            bulletPoints: ['Mapuj elastyczne kolejne kroki z potrzeb klientów zamiast zmuszać wszystkich do czteropoziomowej drabiny cen', 'Proponuj rozszerzenie po istotnym dowodzie lub wyraźnej prośbie, nie w rzekomo idealnym momencie psychologicznym', 'Używaj NPS tylko jako jednego zbiorczego sygnału opinii, nigdy jako dowodu chęci upsellu konkretnej osoby', 'Obliczaj obserwowaną wartość kohorty z przychodem, kosztami zmiennymi, zwrotami, supportem i horyzontem retencji', 'Jasno przedstawiaj klientom warunki, kwalifikację, zachęty i ujawnienia programu poleceń lub afiliacji'],
+            coreConcepts: [
+              { iconName: 'trending_up', title: 'TRWAŁA MARŻA POKRYCIA', description: 'Mierz wkład każdej oferty i kohorty. Nie zakładaj, że 80% zysku netto musi pochodzić z późniejszych etapów.', highlight: true },
+              { iconName: 'gift', title: 'WYGODNE, BEZPIECZNE ROZSZERZENIA', description: 'Ułatwiaj legalne rozszerzenia, zachowując potwierdzenie ceny, prawa anulowania, uwierzytelnienie i ochronę przed przypadkowym zakupem.' },
+            ],
+            resources: [
+              { title: 'Plan ścieżek wartości klienta', subtitle: 'Arkusz potrzeb, cen i ekonomii kohorty', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Segmentacja klientów Mara CRM', subtitle: 'Sprawdź autoryzowany kontekst zakupów i obsługi', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Twórz wartość klienta bez produkowania kolejnego problemu
+
+Wartość klienta rośnie, gdy firma niezawodnie rozwiązuje istotne potrzeby przy trwałych kosztach. Nie maksymalizuje się jej samym zwiększaniem ceny lub liczby zakupów.
+
+#### Elastyczny model ścieżki wartości
+
+1. **Wsparcie bezpłatne lub wprowadzające**: Pomaga ocenić dopasowanie bez mylącej przynęty i ukrytych opłat cyklicznych.
+2. **Oferta podstawowa**: Dostarcza główny obiecany wynik z pełnymi warunkami i właściwym wsparciem.
+3. **Opcjonalna ciągłość**: Zapewnia stałą wartość tylko przy realnej potrzebie cyklicznej. Jasno pokaż odnowienie, rezygnację i zmiany.
+4. **Wdrożenie specjalistyczne**: Oferuje bardziej intensywną pomoc odpowiednim klientom bez sugerowania, że ekskluzywność oznacza wyższą wartość człowieka.
+5. **Pauza, wyjście lub polecenie gdzie indziej**: Czasem odpowiednim krokiem jest brak zakupu, tańsza opcja albo inny dostawca.
+
+Definiuj LTV według kohorty, horyzontu i podstawy marży. Oddzielaj obserwowane wyniki od prognoz i analizuj wrażliwość. Oceniaj retencję, zwroty, skargi, nakład supportu i deklarowane wyniki klientów obok przychodu.
+
+Rozszerzenie jednym kliknięciem nadal wymaga wyraźnego potwierdzenia, dostępnych warunków i właściwego uwierzytelnienia. Programy poleceń wymagają jasnego ujawnienia zachęty, ochrony przed oszustwami, odpowiedniego przeglądu podatkowego lub umownego i braku presji na rekrutowanie.`,
+            practicalExamples: ['Po ukończeniu programu podstawowego zapytaj klienta, jakiej pomocy nadal potrzebuje, i przedstaw trafne opcje, w tym brak rozszerzenia, wraz z ceną i warunkami anulowania.', 'Przetestuj program poleceń z przejrzystym ujawnieniem prowizji, kontrolą jakości i łatwą odmową udziału promocyjnego.'],
+          },
+          understandContent: { coreTakeaway: 'Długoterminowa wartość klienta jest trwała, gdy opcjonalne oferty poprawiają zweryfikowane dopasowanie i wynik, a ekonomia oraz prawa pozostają przejrzyste.', keyPrinciples: ['Nie traktuj oceny satysfakcji jako intencji zakupu osoby', 'Mierz marżę i wyniki klientów według kohorty', 'Rozszerzenia, subskrypcje i polecenia muszą być jawne i opcjonalne'] },
+          actionTask: { instruction: 'Zaprojektuj uczciwy system wartości klienta:', checklistItems: ['Elastyczne ścieżki obejmują rozszerzenie, pauzę, wyjście i polecenie gdzie indziej', 'Każda oferta podaje cenę, odnowienie, anulowanie, dopasowanie i ograniczenia', 'Obserwowany LTV używa określonej kohorty, horyzontu, kosztów i zwrotów', 'Przetestowano potwierdzenie rozszerzenia i ochronę przed przypadkowym zakupem', 'Udokumentowano zachęty, ujawnienia i kontrolę jakości poleceń'], toolboxCategory: 'affiliate' },
         },
       },
     },
