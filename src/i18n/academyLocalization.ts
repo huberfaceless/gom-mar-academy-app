@@ -2843,6 +2843,95 @@ If recognition, awards or leaderboards are used, apply transparent criteria, pro
         },
       },
     },
+    35: {
+      title: '35. Responsible Micro-SaaS & Platform Integration',
+      subtitle: 'Validated products, secure delivery, transparent subscriptions and user-controlled ecosystems',
+      description: 'Extend services with focused software only where evidence supports it, using secure development, accessible design, reliable operations, fair billing and practical portability instead of engineered lock-in or guaranteed valuation.',
+      lessons: {
+        '35.1': {
+          stageTitle: '35. Software & Micro-SaaS', title: 'From service workflow to a safe, useful Micro-SaaS product',
+          description: 'Validate a recurring user problem, define the smallest responsible product and operate it with security, privacy, accessibility, support and measurable reliability from the start.',
+          learnContent: {
+            videoTitle: 'Evidence-led service-to-software transformation',
+            summaryText: 'Software can reduce repeated manual work, but a web app is an ongoing service—not a one-time build. Delivery time, daily use, valuation and churn are outcomes to measure, never promises.',
+            bulletPoints: ['Observe and quantify a repeated user job before replacing a spreadsheet or service workflow with software', 'Define an MVP around one valuable end-to-end outcome plus the safety, accessibility, support and recovery needed to deliver it responsibly', 'Use no-code or AI assistance only with human review, rights clearance, threat modelling, testing, dependency controls and maintainable ownership', 'Compare free, flat-rate and usage-based pricing with full cost, customer predictability, metering accuracy, cancellation and refund implications', 'Earn retention through continuing utility, trustworthy data handling and easy export—not by trapping customer records or making switching painful'],
+            coreConcepts: [
+              { iconName: 'cpu', title: 'VALIDATED PRODUCT SLICE', description: 'The MVP is the smallest safe solution to one evidenced workflow, not merely the fewest screens. Define user, context, acceptance criteria, exclusions and a stop condition.', highlight: true },
+              { iconName: 'shield-check', title: 'SECURE & ACCESSIBLE BY DESIGN', description: 'Include identity, least privilege, encryption, logging, dependency review, backups, accessibility and incident response in the design rather than postponing them until scale.' },
+              { iconName: 'database', title: 'USER-CONTROLLED DATA', description: 'Collect only necessary data, explain retention and purposes, support correction, deletion and useful export, and test restoration. Retention is not a lock-in strategy.' },
+            ],
+            resources: [
+              { title: 'Micro-SaaS Discovery, Risk & MVP Workbook', subtitle: 'Evidence, scope, accessibility, security, economics and launch gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM API Sandbox & Access Register', subtitle: 'Test data, scoped credentials, webhooks and audit evidence', type: 'tool', iconName: 'code', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Build a service that can be trusted, changed and retired
+
+Turning a manual workflow into software changes the risk model. The provider becomes responsible for updates, availability, security, billing, data handling and recovery for as long as customers rely on the service.
+
+#### Responsible Micro-SaaS lifecycle
+
+1. **Research the real job**: Interview and observe representative users with permission. Document frequency, severity, current workaround, errors, willingness to change and who is excluded. Do not treat one enthusiastic customer as market validation.
+2. **Define an outcome hypothesis**: State the user, situation, expected improvement, evidence threshold, time box, maximum investment and reasons to stop. Separate customer value from engagement or daily-open metrics.
+3. **Map the complete service**: Include onboarding, authentication, accessibility, customer support, billing, cancellation, data export, deletion, outage handling and offboarding—not only the core feature.
+4. **Set the minimum responsible scope**: Prioritise one end-to-end job, then add controls necessary to avoid foreseeable harm. Record non-goals and manual fallbacks. A functional app in 30 days is possible in some contexts but never a universal plan.
+5. **Choose architecture proportionately**: Evaluate build, buy, no-code and AI-assisted options for data sensitivity, vendor terms, portability, performance, accessibility, security, maintainability and total cost. Keep source, configuration and ownership documented.
+6. **Develop securely**: Maintain a threat model, reviewed changes, protected branches, dependency and secret scanning, separate environments, test data, least-privilege service accounts and reproducible releases. Review AI-generated code and licences rather than accepting output blindly.
+7. **Design privacy and accessibility**: Minimise fields, define purpose, legal basis where required, retention, processors and transfers. Test keyboard use, focus, labels, contrast, errors, zoom and assistive technology with people who use them.
+8. **Protect integrations**: Use scoped credentials, authenticated and signed webhooks, replay protection, idempotency, rate limits, validation, timeouts, retries with backoff and safe failure states. Never place production secrets in client code or screenshots.
+9. **Test with a controlled beta**: Obtain informed participation, define what is experimental, isolate beta data, provide support and rollback, collect structured feedback and avoid exposing one customer's information to another.
+10. **Price transparently**: Explain the billable unit, included usage, taxes, overage, renewal, price-change notice, trial conversion, cancellation, refunds and data access after exit. Metering must reconcile and disputes need a human route.
+11. **Prove operations before scale**: Monitor availability, latency, errors, security events, accessibility barriers, support load, restore tests, unit economics and customer outcomes. Set incident owners, status communication, escalation and recovery objectives.
+12. **Review continuation honestly**: Improve, reposition, pause or retire based on evidence. Give adequate notice, export, deletion and migration support and preserve records required for tax, security or legal obligations.
+
+Secure-development frameworks provide adaptable practices, not automatic certification. Select controls according to the product's risks and obtain qualified legal, security, tax and accessibility review where needed.`,
+            practicalExamples: ['A CRM add-on first automates one approved handoff, uses synthetic test records, scoped API access, signed webhooks and a manual fallback; it expands only after restore and permission tests pass.', 'A usage-based plan shows the unit and current consumption before purchase, sends threshold alerts and lets the customer export data and cancel without contacting sales.'],
+          },
+          understandContent: { coreTakeaway: 'A Micro-SaaS is a continuing operational commitment whose value comes from a safely delivered user outcome—not daily engagement, data captivity or a promised churn rate.', keyPrinciples: ['Validate the job and downside before building', 'Treat security, accessibility and support as MVP work', 'Make billing, data use and exit understandable and testable'] },
+          actionTask: { instruction: 'Prepare one Micro-SaaS discovery and launch brief:', checklistItems: ['User job, evidence, exclusions, acceptance metric, budget and stop rule documented', 'MVP includes core outcome, accessibility, security, support, billing and offboarding', 'Architecture, dependencies, rights, data flows and API risks reviewed', 'Controlled beta, rollback, incident and restore tests assigned', 'Pricing, metering, renewal, cancellation, export and retirement terms drafted'], toolboxCategory: 'content' },
+        },
+        '35.2': {
+          stageTitle: '35. Platform Ecosystems & Integration', title: 'Connect software, learning, services and community without trapping users',
+          description: 'Create coherent journeys through modular services, shared identity and clear entitlements while preserving security boundaries, accessibility, informed choice, portability and graceful recovery.',
+          learnContent: {
+            videoTitle: 'Architecture for a resilient, user-centred platform ecosystem',
+            summaryText: 'Integration can reduce friction, but it also concentrates outages, permissions, billing and privacy risk. No ecosystem is indestructible or impossible to copy; trust comes from useful coordination and dependable exits.',
+            bulletPoints: ['Map each component, owner, dependency, data flow, service promise and fallback before calling the offer an all-in-one platform', 'Use SSO with strong account recovery, modern authentication, least privilege, session controls and separate authorisation for sensitive actions', 'Connect learning and tools through optional, accessible next steps instead of engagement pressure, public rankings or forced community participation', 'Explain bundle components, individual availability, entitlements, recurring price, upgrades, downgrades, renewal, cancellation and consequences before confirmation', 'Provide documented exports, deletion, account closure and migration routes and test recovery from identity, vendor, integration and billing failures'],
+            coreConcepts: [
+              { iconName: 'layers', title: 'MODULAR SERVICE MAP', description: 'Each component has an owner, contract, data boundary, health signal, fallback and exit route. Integration should not turn one fault into a platform-wide failure.', highlight: true },
+              { iconName: 'shield', title: 'IDENTITY & ENTITLEMENT CONTROL', description: 'Authentication proves identity; authorisation controls access. Central login needs secure recovery, role review, revocation, audit logs and step-up protection for sensitive operations.' },
+              { iconName: 'refresh-cw', title: 'PORTABLE VALUE', description: 'Customers should understand and retrieve their data and content where applicable. Durable loyalty is earned through usefulness, not technical or contractual obstruction.' },
+            ],
+            resources: [
+              { title: 'Platform Dependency & Recovery Blueprint', subtitle: 'Identity, data, billing, accessibility, fallback and exit map', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Service Health & Access Dashboard', subtitle: 'Entitlements, incidents, integrations and recovery evidence', type: 'tool', iconName: 'layout', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Integrate the journey without concentrating unmanageable risk
+
+Courses, tools, CRM and community may complement one another, but a bundle is not automatically better than focused products. Every connection creates dependencies that need owners, permissions, monitoring and an exit.
+
+#### Resilient platform workflow
+
+1. **Define the shared outcome**: State which customer problem the combined experience solves better, for whom, under what conditions and how improvement will be measured. Preserve a usable core path for people who do not want every component.
+2. **Create a service and dependency map**: Record internal services, vendors, APIs, identity, billing, messaging, analytics, community and support; assign owners, contracts, data classes, failure effects and alternatives.
+3. **Design identity separately from access**: Use a maintained identity provider, multi-factor options, secure reset, session expiry, suspicious-login controls and tested account recovery. Keep entitlement decisions server-side, review roles and revoke access promptly.
+4. **Minimise connected data**: Share only fields required for a defined purpose. Document sources, recipients, retention, permissions and deletion propagation. Do not silently reuse learning or community behaviour for sales scoring or sensitive inference.
+5. **Build accessible navigation and progress**: Keep language, focus, labels, status and errors consistent across components. Progress indicators must reflect real completion, remain private by default and never penalise a user for declining community or gamification.
+6. **Make community participation voluntary and safe**: Publish conduct and moderation rules, reporting, appeals, privacy choices and safeguarding where relevant. Do not expose membership, progress, phone numbers or purchases without an appropriate basis and clear control.
+7. **Explain the commercial model**: Itemise what a bundle includes, optional components, total and recurring price, usage limits, trial conversion, renewal, upgrades, downgrades, cancellation, refunds and access after cancellation. Avoid preselected additions and obstructive cancellation.
+8. **Engineer isolation and recovery**: Use timeouts, circuit breakers where suitable, queues, idempotency, graceful degradation, backups and tested restore. A community or analytics outage should not block a paid core tool unless strictly necessary.
+9. **Operate transparent changes**: Version APIs, test migrations, publish material changes, maintain release and incident notes and give reasonable notice when functionality, price, data use or compatibility changes.
+10. **Support switching and closure**: Provide useful machine-readable export where applicable, documented account closure, deletion status and migration guidance. Cloud and data-switching obligations depend on service and jurisdiction and require current review.
+11. **Measure balanced outcomes**: Monitor task success, reliability, accessibility, support, complaints, refunds, security, privacy, portability and customer-reported value. A flywheel diagram or low churn does not prove causation.
+12. **Exercise systemic failure**: Rehearse identity loss, vendor outage, compromised integration, incorrect entitlement, billing duplication, failed deletion and community incident. Record recovery time, customer communication and corrective action.
+
+The strongest ecosystem is understandable, modular and recoverable. Customers remain because the coordinated service helps them—not because their data or workflow is held hostage.`,
+            practicalExamples: ['If the community provider fails, users can still access paid lessons and core tools while a status page explains the isolated incident and recovery path.', 'A customer downgrades a bundle, sees the exact access changes before confirmation, exports relevant data and retains account records required for invoices without hidden reactivation.'],
+          },
+          understandContent: { coreTakeaway: 'A trustworthy platform coordinates useful services while preserving boundaries, transparent choice, secure access, portability and recovery from inevitable failures.', keyPrinciples: ['Integration requires explicit owners and failure boundaries', 'SSO never replaces authorisation and recovery controls', 'Earn retention through value and reversible choice'] },
+          actionTask: { instruction: 'Design a resilient platform-integration plan:', checklistItems: ['Shared customer outcome, optional paths and component scope documented', 'Dependencies, owners, contracts, data flows, fallbacks and exits mapped', 'Identity, authorisation, recovery, accessibility and community safeguards specified', 'Bundle price, entitlements, changes, cancellation and data portability explained', 'Failure exercises, monitoring, incident communication and switching process scheduled'], toolboxCategory: 'content' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -5669,6 +5758,95 @@ Jeśli używasz wyróżnień lub leaderboardów, stosuj jawne kryteria, chroń i
           },
           understandContent: { coreTakeaway: 'Trwała sieć rośnie przez dopasowanie, prawdziwe oczekiwania, wykazaną kompetencję, zabezpieczenia klienta i odpowiedzialny nadzór.', keyPrinciples: ['Nigdy nie gwarantuj przychodu partnera ani wyniku klienta', 'Dostęp zależy od kompetencji i ryzyka', 'Nagradzaj jakość i wynik klienta, nie sam wolumen'] },
           actionTask: { instruction: 'Zaprojektuj kontrolowany pilot rekrutacji i onboardingu:', checklistItems: ['Określono profil partnera, wykluczenia, capacity i dowody akceptacji', 'Propozycja zawiera sprawdzone assumptions, pełne koszty, obowiązki, ryzyka i brak gwarancji', 'Udokumentowano due diligence, privacy, konflikty i niezależny review', 'Przygotowano szkolenie, ocenę, nadzorowany pilot i bramki dostępu', 'Przypisano wyniki klientów, skargi, security, remediation i exit'], toolboxCategory: 'affiliate' },
+        },
+      },
+    },
+    35: {
+      title: '35. Odpowiedzialny Micro-SaaS i integracja platformy',
+      subtitle: 'Walidowane produkty, bezpieczna realizacja, jasne subskrypcje i ekosystem pod kontrolą użytkownika',
+      description: 'Rozszerzaj usługi o wyspecjalizowane software tylko wtedy, gdy potwierdzają to dowody, stosując bezpieczny development, dostępny design, niezawodne operacje, fair billing i praktyczną portowalność zamiast lock-in lub gwarantowanej wyceny.',
+      lessons: {
+        '35.1': {
+          stageTitle: '35. Software i Micro-SaaS', title: 'Od workflow usługi do bezpiecznego i użytecznego Micro-SaaS',
+          description: 'Waliduj powtarzalny problem użytkownika, określ najmniejszy odpowiedzialny produkt i od początku prowadź go z security, privacy, dostępnością, supportem oraz mierzalną niezawodnością.',
+          learnContent: {
+            videoTitle: 'Transformacja service-to-software oparta na dowodach',
+            summaryText: 'Software może ograniczyć powtarzalną pracę ręczną, ale web app jest ciągłą usługą, nie jednorazowym buildem. Czas dostawy, codzienne użycie, wycena i churn są wynikami do pomiaru, a nie obietnicami.',
+            bulletPoints: ['Obserwuj i mierz powtarzalne zadanie użytkownika przed zastąpieniem arkusza lub workflow usługi przez software', 'Definiuj MVP wokół jednego wartościowego wyniku end-to-end oraz safety, dostępności, supportu i recovery potrzebnych do odpowiedzialnej realizacji', 'Stosuj no-code lub pomoc AI tylko z ludzkim review, kontrolą praw, threat modelling, testami, kontrolą dependencies i utrzymywalnym ownership', 'Porównuj free, flat-rate i usage-based według pełnego kosztu, przewidywalności klienta, dokładności meteringu, anulowania i zwrotów', 'Buduj retencję przez stałą użyteczność, godne zaufania dane i łatwy eksport, nie przez więzienie rekordów klienta lub utrudnianie zmiany'],
+            coreConcepts: [
+              { iconName: 'cpu', title: 'ZWALIDOWANY FRAGMENT PRODUKTU', description: 'MVP jest najmniejszym bezpiecznym rozwiązaniem jednego potwierdzonego workflow, nie tylko najmniejszą liczbą ekranów. Określ usera, kontekst, kryteria akceptacji, wykluczenia i stop rule.', highlight: true },
+              { iconName: 'shield-check', title: 'SECURITY I DOSTĘPNOŚĆ BY DESIGN', description: 'Uwzględnij identity, least privilege, encryption, logi, dependency review, backup, dostępność i incident response w projekcie zamiast odkładać je do skali.' },
+              { iconName: 'database', title: 'DANE POD KONTROLĄ UŻYTKOWNIKA', description: 'Zbieraj tylko potrzebne dane, wyjaśniaj retencję i cel, wspieraj korektę, usunięcie i użyteczny eksport oraz testuj restore. Retencja nie jest strategią lock-in.' },
+            ],
+            resources: [
+              { title: 'Workbook discovery, ryzyka i MVP Micro-SaaS', subtitle: 'Dowody, zakres, dostępność, security, ekonomia i bramki startu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Sandbox API i rejestr dostępu Mara CRM', subtitle: 'Dane testowe, scoped credentials, webhooki i dowody audytu', type: 'tool', iconName: 'code', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Buduj usługę, której można zaufać, którą można zmienić i zakończyć
+
+Przeniesienie ręcznego workflow do software zmienia model ryzyka. Dostawca odpowiada za aktualizacje, dostępność, security, billing, dane i recovery tak długo, jak klienci polegają na usłudze.
+
+#### Odpowiedzialny cykl życia Micro-SaaS
+
+1. **Zbadaj realne zadanie**: Za zgodą rozmawiaj i obserwuj reprezentatywnych użytkowników. Zapisz częstotliwość, wagę, workaround, błędy, gotowość do zmiany i osoby wykluczone. Jeden entuzjastyczny klient nie jest walidacją rynku.
+2. **Określ hipotezę wyniku**: Podaj użytkownika, sytuację, oczekiwaną poprawę, próg dowodu, time box, maksymalną inwestycję i przyczyny stop. Oddziel wartość klienta od engagement lub daily opens.
+3. **Mapuj pełną usługę**: Uwzględnij onboarding, uwierzytelnienie, dostępność, support, billing, anulowanie, eksport, usunięcie, outage i offboarding, nie tylko funkcję.
+4. **Ustal najmniejszy odpowiedzialny zakres**: Priorytetyzuj jedno zadanie end-to-end i dodaj kontrole zapobiegające przewidywalnej szkodzie. Zapisz non-goals i fallback ręczny. Aplikacja w 30 dni jest czasem możliwa, ale nie jest uniwersalnym planem.
+5. **Wybierz proporcjonalną architekturę**: Porównaj build, buy, no-code i AI pod kątem wrażliwości danych, warunków vendora, portowalności, wydajności, dostępności, security, utrzymania i TCO. Dokumentuj source, konfigurację i ownership.
+6. **Rozwijaj bezpiecznie**: Utrzymuj threat model, reviewed changes, chronione branches, skan dependencies i secrets, osobne środowiska, test data, least-privilege service accounts i powtarzalne releases. Sprawdzaj kod AI i licencje.
+7. **Projektuj privacy i dostępność**: Minimalizuj fields, określ cel, podstawę gdzie wymagana, retencję, processors i transfery. Testuj keyboard, focus, labels, kontrast, errors, zoom i assistive technology z osobami, które ich używają.
+8. **Chroń integracje**: Stosuj scoped credentials, uwierzytelnione i podpisane webhooki, replay protection, idempotency, rate limits, validation, timeout, retries z backoff i bezpieczne failure states. Nie umieszczaj production secrets w kliencie ani screenshotach.
+9. **Testuj kontrolowaną betę**: Uzyskaj świadome uczestnictwo, wyjaśnij eksperyment, izoluj beta data, zapewnij support i rollback, zbieraj strukturalny feedback i nie ujawniaj danych między klientami.
+10. **Wyceniaj transparentnie**: Wyjaśnij billable unit, usage w cenie, podatki, overage, renewal, informację o zmianie ceny, konwersję trial, anulowanie, zwroty i dostęp po exit. Metering musi się uzgadniać, a spory mieć drogę do człowieka.
+11. **Udowodnij operacje przed skalą**: Monitoruj availability, latency, błędy, security events, bariery dostępności, support load, restore tests, unit economics i wyniki klienta. Ustal ownerów incydentu, status, eskalację i cele recovery.
+12. **Uczciwie przeglądaj dalszy los**: Poprawiaj, zmieniaj pozycjonowanie, wstrzymuj lub wycofuj na podstawie dowodów. Daj notice, eksport, usunięcie i migrację oraz zachowaj rekordy wymagane podatkowo, bezpieczeństwem lub prawem.
+
+Frameworki bezpiecznego developmentu dostarczają praktyk do adaptacji, nie automatycznej certyfikacji. Dobierz kontrole do ryzyka i zapewnij właściwy review prawny, security, podatkowy oraz dostępności.`,
+            practicalExamples: ['Dodatek CRM najpierw automatyzuje jeden zatwierdzony handoff, używa syntetycznych rekordów, scoped API, podpisanych webhooków i ręcznego fallbacku; rozszerza się dopiero po restore i permission tests.', 'Plan usage-based pokazuje jednostkę i bieżące zużycie przed zakupem, wysyła alerty progowe i pozwala eksportować dane oraz anulować bez kontaktu ze sprzedażą.'],
+          },
+          understandContent: { coreTakeaway: 'Micro-SaaS jest stałym zobowiązaniem operacyjnym, którego wartość wynika z bezpiecznie realizowanego wyniku użytkownika, nie z daily engagement, uwięzienia danych ani obiecanego churnu.', keyPrinciples: ['Waliduj zadanie i downside przed buildem', 'Security, dostępność i support należą do MVP', 'Billing, dane i exit muszą być zrozumiałe i testowalne'] },
+          actionTask: { instruction: 'Przygotuj brief discovery i startu jednego Micro-SaaS:', checklistItems: ['Udokumentowano zadanie, dowody, wykluczenia, metrykę, budżet i stop rule', 'MVP obejmuje wynik, dostępność, security, support, billing i offboarding', 'Sprawdzono architekturę, dependencies, prawa, data flows i ryzyka API', 'Przypisano betę, rollback, incident i restore tests', 'Napisano pricing, metering, renewal, anulowanie, eksport i retirement'], toolboxCategory: 'content' },
+        },
+        '35.2': {
+          stageTitle: '35. Ekosystemy platform i integracja', title: 'Połącz software, naukę, usługi i community bez więzienia użytkowników',
+          description: 'Twórz spójne ścieżki przez modułowe usługi, wspólną identity i jasne uprawnienia, zachowując granice security, dostępność, świadomy wybór, portowalność i kontrolowane recovery.',
+          learnContent: {
+            videoTitle: 'Architektura odpornego ekosystemu z użytkownikiem w centrum',
+            summaryText: 'Integracja może zmniejszać friction, ale też koncentruje awarie, uprawnienia, billing i privacy. Żaden ekosystem nie jest niezniszczalny ani niemożliwy do skopiowania; zaufanie wynika z użytecznej koordynacji i pewnych wyjść.',
+            bulletPoints: ['Mapuj komponent, ownera, dependency, data flow, service promise i fallback przed nazwaniem oferty platformą all-in-one', 'Stosuj SSO z mocnym account recovery, nowoczesnym uwierzytelnieniem, least privilege, session controls i dodatkową ochroną działań wrażliwych', 'Łącz naukę i tools przez opcjonalne, dostępne kroki zamiast presji engagement, publicznych rankingów lub wymuszonego community', 'Przed potwierdzeniem wyjaśnij bundle, dostępność elementów, entitlements, cenę cykliczną, upgrade, downgrade, renewal, anulowanie i konsekwencje', 'Zapewnij udokumentowany eksport, usunięcie, zamknięcie konta i migrację oraz testuj recovery identity, vendora, integracji i billingu'],
+            coreConcepts: [
+              { iconName: 'layers', title: 'MODUŁOWA MAPA USŁUG', description: 'Każdy komponent ma ownera, kontrakt, granicę danych, health signal, fallback i exit. Integracja nie może zmieniać jednego błędu w awarię całej platformy.', highlight: true },
+              { iconName: 'shield', title: 'KONTROLA IDENTITY I UPRAWNIEŃ', description: 'Authentication potwierdza identity, a authorisation kontroluje dostęp. Centralny login potrzebuje recovery, przeglądu ról, revocation, audit logs i step-up dla działań wrażliwych.' },
+              { iconName: 'refresh-cw', title: 'PRZENOŚNA WARTOŚĆ', description: 'Klienci powinni rozumieć i pobierać dane oraz treści tam, gdzie właściwe. Trwałą lojalność buduje użyteczność, nie blokada techniczna lub umowna.' },
+            ],
+            resources: [
+              { title: 'Blueprint zależności i recovery platformy', subtitle: 'Identity, dane, billing, dostępność, fallback i exit', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Dashboard zdrowia usług i dostępu GOM-MAR', subtitle: 'Entitlements, incydenty, integracje i dowody recovery', type: 'tool', iconName: 'layout', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Integruj ścieżkę bez koncentracji niezarządzalnego ryzyka
+
+Kursy, tools, CRM i community mogą się uzupełniać, ale bundle nie jest automatycznie lepszy niż produkty skupione. Każde połączenie tworzy zależność wymagającą ownera, permission, monitoringu i exit.
+
+#### Workflow odpornej platformy
+
+1. **Zdefiniuj wspólny wynik**: Określ problem, który całość rozwiązuje lepiej, dla kogo, pod jakimi warunkami i jak zmierzysz poprawę. Zachowaj użyteczną core path dla osób, które nie chcą każdego komponentu.
+2. **Utwórz mapę usług i dependencies**: Zapisz usługi, vendors, API, identity, billing, messaging, analytics, community i support; przypisz ownerów, kontrakty, klasy danych, skutki błędu i alternatywy.
+3. **Oddziel identity od dostępu**: Używaj utrzymywanego identity provider, opcji MFA, bezpiecznego resetu, wygasania sesji, wykrywania podejrzanego logowania i testowanego recovery. Entitlements ustalaj po stronie serwera, przeglądaj role i szybko odbieraj dostęp.
+4. **Minimalizuj połączone dane**: Udostępniaj tylko pola niezbędne do określonego celu. Dokumentuj źródła, odbiorców, retencję, permission i propagację usunięcia. Nie używaj po cichu zachowań w nauce lub community do sales scoringu czy wrażliwych inferencji.
+5. **Buduj dostępną nawigację i postęp**: Zachowaj spójny język, focus, labels, status i błędy. Postęp musi oznaczać realne ukończenie, pozostać prywatny domyślnie i nie karać za odmowę community lub gamification.
+6. **Uczyń community dobrowolnym i bezpiecznym**: Publikuj conduct, moderation, reporting, appeals, privacy choices i safeguarding. Nie ujawniaj członkostwa, postępu, telefonu ani zakupów bez właściwej podstawy i kontroli.
+7. **Wyjaśnij model handlowy**: Wymień elementy bundle, opcje, pełną i cykliczną cenę, limity, konwersję trial, renewal, upgrade, downgrade, anulowanie, zwroty i dostęp po anulowaniu. Unikaj zaznaczonych dodatków i utrudnionego cancellation.
+8. **Projektuj izolację i recovery**: Stosuj timeout, circuit breakers gdzie właściwe, queues, idempotency, graceful degradation, backup i test restore. Awaria community lub analytics nie powinna blokować płatnego core tool bez konieczności.
+9. **Prowadź transparentne zmiany**: Wersjonuj API, testuj migracje, publikuj material changes, release i incident notes oraz daj rozsądny notice przy zmianie funkcji, ceny, danych lub kompatybilności.
+10. **Wspieraj zmianę i zamknięcie**: Zapewnij użyteczny machine-readable export gdzie właściwe, udokumentowane closure, status usunięcia i migrację. Obowiązki cloud/data switching zależą od usługi i jurysdykcji i wymagają aktualnego review.
+11. **Mierz zrównoważone wyniki**: Monitoruj task success, reliability, dostępność, support, skargi, zwroty, security, privacy, portowalność i wartość deklarowaną przez klienta. Flywheel lub niski churn nie dowodzą przyczyny.
+12. **Ćwicz awarię systemową**: Przećwicz utratę identity, vendor outage, przejętą integrację, złe entitlement, podwójny billing, nieudane deletion i incident community. Zapisz recovery time, komunikację i działania naprawcze.
+
+Najsilniejszy ekosystem jest zrozumiały, modułowy i możliwy do odzyskania. Klienci zostają, bo skoordynowana usługa im pomaga, nie dlatego, że ich dane lub workflow są zakładnikiem.`,
+            practicalExamples: ['Gdy provider community ma awarię, użytkownicy nadal widzą płatne lekcje i core tools, a status page wyjaśnia izolowany incident i ścieżkę recovery.', 'Klient obniża bundle, przed potwierdzeniem widzi dokładną zmianę dostępu, eksportuje dane i zachowuje rekordy potrzebne do faktur bez ukrytej reaktywacji.'],
+          },
+          understandContent: { coreTakeaway: 'Godna zaufania platforma koordynuje użyteczne usługi, zachowując granice, jasny wybór, bezpieczny dostęp, portowalność i recovery z nieuniknionych błędów.', keyPrinciples: ['Integracja wymaga ownerów i granic awarii', 'SSO nie zastępuje authorisation ani recovery', 'Buduj retencję przez wartość i odwracalny wybór'] },
+          actionTask: { instruction: 'Zaprojektuj odporny plan integracji platformy:', checklistItems: ['Udokumentowano wspólny wynik, opcjonalne ścieżki i zakres komponentów', 'Zmapowano dependencies, ownerów, kontrakty, data flows, fallbacki i exits', 'Określono identity, authorisation, recovery, dostępność i safeguards community', 'Wyjaśniono bundle, entitlements, zmiany, anulowanie i data portability', 'Zaplanowano ćwiczenia awarii, monitoring, komunikację i switching'], toolboxCategory: 'content' },
         },
       },
     },
