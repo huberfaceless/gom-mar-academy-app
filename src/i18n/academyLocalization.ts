@@ -2433,6 +2433,86 @@ Maintain a named owner, review date, change log and escalation route. Respond to
         },
       },
     },
+    30: {
+      title: '30. Durable Enterprise Value, Optionality & Sustainable Leadership',
+      subtitle: 'From owner-dependence to transferable systems, informed valuation and long-term choice',
+      description: 'Build a resilient company that can operate beyond one person and preserve strategic options—without promising a seven-figure exit, a fixed multiple or effortless freedom.',
+      lessons: {
+        '30.1': {
+          stageTitle: '30. Enterprise Value & Transferability', title: 'Valuation architecture: evidence, uncertainty & exit readiness',
+          description: 'Understand how purpose, cash flows, risk, market evidence and transferability shape a valuation range, and prepare reliable due-diligence records without treating EBIT multiples as guarantees.',
+          learnContent: {
+            videoTitle: 'Business valuation and responsible exit preparation',
+            summaryText: 'A business valuation is a purpose- and date-specific professional judgement. Reasonable methods and assumptions can produce different results, so a 3x–8x EBIT range is not a universal price promise.',
+            bulletPoints: ['Define the valuation purpose, date, standard of value, ownership interest and relevant jurisdiction before selecting a method', 'Reconcile reported results and document normalisation adjustments rather than presenting EBITDA or EBIT as self-explanatory', 'Assess concentration, churn, retention quality, contracts, channel dependence, security, compliance and working-capital needs', 'Reduce key-person risk through tested roles, delegated authority, documentation and continuity plans—not the title of a newly appointed manager', 'Build a permission-controlled data room whose contents are accurate, current, proportionate and traceable'],
+            coreConcepts: [
+              { iconName: 'bar-chart-2', title: 'VALUATION RANGE', description: 'Compare income, market and, where relevant, asset approaches. Show sensitivity to forecasts, discount rates, multiples and adjustments instead of one precise headline number.', highlight: true },
+              { iconName: 'users', title: 'TRANSFERABLE OPERATIONS', description: 'Evidence that customers, knowledge, approvals and relationships can continue through trained people and tested systems. Founder dependence is reduced gradually, not switched to zero.' },
+              { iconName: 'file-check', title: 'VERIFIABLE DATA ROOM', description: 'Maintain financial, tax, legal, customer, employment, IP, security and operational evidence with owners, access controls and review dates.' },
+            ],
+            resources: [
+              { title: 'Valuation Assumptions & Readiness Workbook', subtitle: 'Methods, sensitivities, evidence and adviser questions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Cohort & Revenue Analysis', subtitle: 'Inspect retention, concentration and revenue quality', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build transferability before discussing a transaction
+
+An exit is one possible outcome, not the final measure of entrepreneurship. A company may also be retained, transferred internally, sold partly, merged or closed. Each path has different financial, legal, tax and personal consequences.
+
+#### A defensible readiness process
+
+1. **Define the assignment**: Record why the valuation is needed, its date, currency, ownership interest, standard and premise of value, information available and relevant jurisdiction. Engage an appropriately qualified independent valuer for material decisions.
+2. **Reconcile performance**: Tie management reports to accounting records and cash. Document recurring and non-recurring items, owner compensation, capital expenditure, working capital, debt and tax assumptions. Do not relabel expenses solely to inflate adjusted earnings.
+3. **Use more than one lens**: Consider income, market and relevant asset approaches. Explain why each method and comparable is suitable, then show a range and sensitivity rather than multiplying one year's EBIT by a fixed number.
+4. **Test revenue quality**: Separate contracted from merely expected revenue. Analyse retention, churn definitions, cohort behaviour, refunds, concentration, acquisition economics, renewal terms and the cost of serving customers. Subscription revenue does not automatically double a multiple.
+5. **Test transferability**: Map founder-owned decisions, relationships, credentials and knowledge. Train deputies, set approval limits and rehearse absence and incident scenarios. Hiring a COO alone cannot make a company 100% founder-independent.
+6. **Prepare evidence**: Index contracts, corporate records, accounts, tax filings, employment matters, IP ownership, privacy, security, suppliers and disputes. Grant least-privilege access, log disclosure and remove unnecessary personal data.
+7. **Plan the transaction**: Model price structure, working-capital adjustment, debt, tax, warranties, indemnities, escrow, earn-out risk and post-closing obligations with legal, tax and financial advisers.
+
+Valuation contains inherent uncertainty. Keep assumptions transparent, update them when facts change and never present an internal scorecard as a guaranteed sale price or investment recommendation.`,
+            practicalExamples: ['A valuation memo shows base and downside cash-flow cases, explains every earnings adjustment and compares the result with genuinely relevant transactions.', 'A continuity test reveals that only the founder can approve refunds and access a key account; the team creates individual access, documented limits and an emergency delegate.'],
+          },
+          understandContent: { coreTakeaway: 'Transferable enterprise value is supported by reconciled evidence, defensible assumptions and resilient operations; it is not created by applying a universal multiple.', keyPrinciples: ['Define purpose and assumptions before calculating value', 'Communicate a range and its uncertainty', 'Prove continuity through tested systems and people'] },
+          actionTask: { instruction: 'Prepare an evidence-based valuation and transferability review:', checklistItems: ['Valuation purpose, date, interest, jurisdiction and adviser needs documented', 'Accounts, cash and proposed earnings adjustments reconciled with evidence', 'Income, market and relevant asset approaches plus sensitivities considered', 'Revenue quality, concentration, churn and key-person dependencies assessed', 'Secure data-room index, access rules, owners and review dates defined'], toolboxCategory: 'content' },
+        },
+        '30.2': {
+          stageTitle: '30. Sustainable Leadership', title: 'Long-term direction, time autonomy & responsible transition',
+          description: 'Turn the programme into a revisable strategy for customers, team, health and personal choice rather than an “empire”, permanent hustle or a compulsory exit.',
+          learnContent: {
+            videoTitle: 'Closing review: a sustainable ten-year direction',
+            summaryText: 'Completion is a checkpoint, not proof of mastery or guaranteed business success. Long-term leadership combines learning, customer outcomes, financial resilience, ethical operations and realistic personal capacity.',
+            bulletPoints: ['Review evidence and assumptions regularly instead of treating a ten-year vision as a fixed prediction', 'Define enough across money, time, health, relationships, responsibility and impact—not only scale', 'Use leading indicators, downside triggers and decision rules alongside ambitious outcomes', 'Create governance, succession and emergency plans before reducing founder involvement', 'Treat certificates and communities as optional records of participation, subject to actual eligibility and availability'],
+            coreConcepts: [
+              { iconName: 'compass', title: 'STRATEGIC OPTIONALITY', description: 'Preserve the ability to retain, delegate, pause, transfer or sell. Time autonomy depends on resources, responsibilities and tested continuity—not a slogan.', highlight: true },
+              { iconName: 'heart', title: 'SUSTAINABLE CAPACITY', description: 'Set workload, recovery and support boundaries. Mental resilience does not mean ignoring distress or solving health concerns through willpower alone.' },
+              { iconName: 'refresh-cw', title: 'REVIEWABLE DIRECTION', description: 'Translate long horizons into a 12-month thesis, 90-day experiments and scheduled reviews. Change direction when evidence or life circumstances change.' },
+            ],
+            resources: [
+              { title: 'Ten-Year Direction & Optionality Workbook', subtitle: 'Values, scenarios, boundaries and review cadence', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Completion & Evidence Review', subtitle: 'Check completed work and available recognition', type: 'link', iconName: 'award', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Finish the curriculum and begin a review cycle
+
+Working through thirty stages can organise learning, but it does not certify competence in every discipline or guarantee income, valuation, freedom or wellbeing. Verify what you can demonstrate and seek qualified support where decisions exceed your expertise.
+
+#### Build a durable direction
+
+1. **Review the evidence**: List what changed in customer outcomes, finances, controls, skills and workload. Separate completed activities from validated results and unresolved risks.
+2. **Define values and boundaries**: State what you will not trade for growth, including health, relationships, customer welfare, legal duties and financial solvency.
+3. **Write scenarios, not prophecy**: Describe plausible retain, delegate, partial-sale, full-sale and downside paths. For each, record assumptions, early signals and reversible next steps.
+4. **Set layered horizons**: Keep a directional ten-year narrative, a measurable 12-month thesis and a small set of 90-day experiments with owners and stop criteria.
+5. **Plan continuity**: Document authority, succession, emergency access, communication and recovery. Test absences before claiming time autonomy.
+6. **Use support appropriately**: Build peer and professional networks, but evaluate confidentiality, conflicts, cost and evidence. Seek medical or mental-health support when needed; perseverance is not a substitute for care.
+7. **Record completion honestly**: Generate or share a certificate only if the product actually supports it and the eligibility criteria are met. Protect personal information and do not imply regulated accreditation unless it exists.
+8. **Schedule the next review**: Revisit the plan quarterly and after major changes. Celebrate progress without turning constant hunger or overwork into a duty.
+
+The aim is not maximum scale at any price. It is a business and life design that remains lawful, financially resilient, useful to customers and consciously chosen.`,
+            practicalExamples: ['A founder replaces a single ten-year revenue target with retain, partial-sale and downside scenarios, each with a twelve-month test and a clear review date.', 'Before taking a month away, the team runs a shorter absence exercise and corrects missing authority, customer escalation and emergency-access procedures.'],
+          },
+          understandContent: { coreTakeaway: 'Sustainable leadership preserves informed choice through evidence, boundaries, continuity and recurring review rather than equating mastery with endless growth.', keyPrinciples: ['Measure outcomes, not curriculum completion alone', 'Protect health, duties and customer welfare', 'Keep long-term plans revisable and scenario-based'] },
+          actionTask: { instruction: 'Create a responsible completion and long-term review:', checklistItems: ['Evidence, unresolved risks and adviser needs from all stages summarised', 'Values, workload boundaries and definitions of enough documented', 'Retain, delegate, transfer and downside scenarios compared', 'Twelve-month thesis and 90-day experiments have owners and stop criteria', 'Continuity test, quarterly review and truthful certificate rules scheduled'], toolboxCategory: 'content' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -4849,6 +4929,86 @@ Utrzymuj właściciela, termin przeglądu, historię zmian i eskalację. Obsług
           },
           understandContent: { coreTakeaway: 'Compliance to utrzymywany, świadomy jurysdykcji system operacyjny wsparty kwalifikowanym przeglądem, nie jednorazowy szablon lub ogólne wyłączenie.', keyPrinciples: ['Klasyfikuj klientów i oferty według faktów', 'Minimalizuj dane i dokumentuj cel oraz podstawę', 'Wersjonuj, przeglądaj i testuj kontrole'] },
           actionTask: { instruction: 'Przygotuj pakiet do specjalistycznego przeglądu jednej ścieżki klienta:', checklistItems: ['Udokumentowano typ klienta, kraje, kanał i klasyfikację produktu', 'Zmapowano informacje przedumowne, odstąpienie, dostawę, anulowanie i zwroty', 'Wersje umowy i warunków oraz dowód akceptacji wskazano do przeglądu prawnego', 'Zapisano prywatność, cookies, e-mail, dostawców, transfery, retencję i prawa osób', 'Przypisano właściciela, termin przeglądu, eskalację incydentu i pytania do doradcy'], toolboxCategory: 'settings' },
+        },
+      },
+    },
+    30: {
+      title: '30. Trwała wartość firmy, opcjonalność i zrównoważone przywództwo',
+      subtitle: 'Od zależności od właściciela do transferowalnych systemów, świadomej wyceny i długoterminowego wyboru',
+      description: 'Buduj odporną firmę działającą poza jedną osobą i zachowuj opcje strategiczne bez obietnicy siedmiocyfrowego exitu, stałego mnożnika lub łatwej wolności.',
+      lessons: {
+        '30.1': {
+          stageTitle: '30. Wartość i transferowalność firmy', title: 'Architektura wyceny: dowody, niepewność i gotowość do transakcji',
+          description: 'Zrozum, jak cel, przepływy, ryzyko, dane rynkowe i transferowalność kształtują przedział wartości, oraz przygotuj rzetelne due diligence bez traktowania mnożników EBIT jako gwarancji.',
+          learnContent: {
+            videoTitle: 'Wycena firmy i odpowiedzialne przygotowanie exitu',
+            summaryText: 'Wycena firmy jest profesjonalnym osądem dla konkretnego celu i dnia. Rozsądne metody oraz założenia mogą dawać różne wyniki, więc przedział 3x–8x EBIT nie jest uniwersalną obietnicą ceny.',
+            bulletPoints: ['Przed wyborem metody określ cel i datę wyceny, standard wartości, udział oraz jurysdykcję', 'Uzgodnij wyniki i udokumentuj korekty normalizacyjne zamiast traktować EBITDA lub EBIT jako oczywiste', 'Oceń koncentrację, churn, jakość retencji, umowy, kanały, bezpieczeństwo, compliance i kapitał obrotowy', 'Ograniczaj ryzyko kluczowej osoby przez przetestowane role, delegowanie, dokumentację i ciągłość, nie sam tytuł nowego menedżera', 'Buduj kontrolowany uprawnieniami data room z aktualną, proporcjonalną i możliwą do prześledzenia treścią'],
+            coreConcepts: [
+              { iconName: 'bar-chart-2', title: 'PRZEDZIAŁ WYCENY', description: 'Porównaj podejście dochodowe, rynkowe i w razie potrzeby majątkowe. Pokaż wrażliwość na prognozy, stopy, mnożniki i korekty zamiast jednej dokładnej liczby.', highlight: true },
+              { iconName: 'users', title: 'TRANSFEROWALNE OPERACJE', description: 'Udowodnij, że klienci, wiedza, akceptacje i relacje mogą trwać dzięki wyszkolonym ludziom i testowanym systemom. Zależność od założyciela zmniejsza się stopniowo.' },
+              { iconName: 'file-check', title: 'WERYFIKOWALNY DATA ROOM', description: 'Utrzymuj dowody finansowe, podatkowe, prawne, klienckie, pracownicze, IP, bezpieczeństwa i operacji z właścicielami, dostępem i terminami przeglądu.' },
+            ],
+            resources: [
+              { title: 'Arkusz założeń wyceny i gotowości', subtitle: 'Metody, wrażliwość, dowody i pytania do doradców', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Analiza kohort i przychodu Mara CRM', subtitle: 'Sprawdzaj retencję, koncentrację i jakość przychodu', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj transferowalność przed rozmową o transakcji
+
+Exit jest jedną z możliwości, nie końcowym miernikiem przedsiębiorczości. Firmę można zachować, przekazać wewnętrznie, sprzedać częściowo, połączyć albo zamknąć. Każda droga ma inne skutki finansowe, prawne, podatkowe i osobiste.
+
+#### Proces gotowości oparty na dowodach
+
+1. **Zdefiniuj zadanie**: Zapisz cel, datę, walutę, udział, standard i przesłankę wartości, dostępne informacje oraz jurysdykcję. Przy istotnych decyzjach zaangażuj właściwego niezależnego rzeczoznawcę.
+2. **Uzgodnij wyniki**: Połącz raporty zarządcze z księgowością i gotówką. Udokumentuj pozycje powtarzalne i jednorazowe, wynagrodzenie właściciela, inwestycje, kapitał obrotowy, dług i podatki. Nie zmieniaj nazw kosztów tylko po to, by zwiększyć wynik skorygowany.
+3. **Użyj kilku perspektyw**: Rozważ podejście dochodowe, rynkowe i odpowiednie majątkowe. Uzasadnij metody i porównania, a następnie pokaż przedział oraz wrażliwość zamiast mnożyć jeden EBIT przez stałą liczbę.
+4. **Testuj jakość przychodu**: Oddziel przychód zakontraktowany od oczekiwanego. Analizuj retencję, definicję churnu, kohorty, zwroty, koncentrację, ekonomię pozyskania, odnowienia i koszt obsługi. Subskrypcje nie podwajają automatycznie mnożnika.
+5. **Testuj transferowalność**: Mapuj decyzje, relacje, dane dostępowe i wiedzę właściciela. Szkol zastępców, określ limity i ćwicz nieobecność oraz incydenty. Sam COO nie daje 100% niezależności.
+6. **Przygotuj dowody**: Indeksuj umowy, dokumenty spółki, rachunki, podatki, zatrudnienie, IP, prywatność, bezpieczeństwo, dostawców i spory. Ogranicz dostęp, loguj ujawnienia i usuń zbędne dane osobowe.
+7. **Planuj transakcję**: Modeluj strukturę ceny, korektę kapitału obrotowego, dług, podatki, gwarancje, odszkodowania, escrow, earn-out i obowiązki po zamknięciu ze specjalistami.
+
+Wycena zawiera niepewność. Pokazuj założenia, aktualizuj je przy zmianie faktów i nie przedstawiaj wewnętrznego scorecardu jako gwarantowanej ceny ani rekomendacji inwestycyjnej.`,
+            practicalExamples: ['Notatka wyceny pokazuje bazowy i negatywny cashflow, wyjaśnia korekty zysku i porównuje wynik z rzeczywiście podobnymi transakcjami.', 'Test ciągłości ujawnia, że tylko założyciel zatwierdza zwroty i ma dostęp do ważnego konta; zespół tworzy indywidualny dostęp, limity i zastępcę awaryjnego.'],
+          },
+          understandContent: { coreTakeaway: 'Transferowalną wartość wspierają uzgodnione dowody, obronione założenia i odporne operacje, a nie uniwersalny mnożnik.', keyPrinciples: ['Najpierw określ cel i założenia', 'Komunikuj przedział oraz niepewność', 'Udowodnij ciągłość przez systemy i ludzi'] },
+          actionTask: { instruction: 'Przygotuj oparty na dowodach przegląd wyceny i transferowalności:', checklistItems: ['Udokumentowano cel, datę, udział, jurysdykcję i potrzeby doradcze', 'Uzgodniono rachunki, gotówkę i korekty wyniku z dowodami', 'Rozważono podejścia i analizę wrażliwości', 'Oceniono jakość przychodu, koncentrację, churn i zależności od osób', 'Określono indeks data roomu, dostęp, właścicieli i terminy'], toolboxCategory: 'content' },
+        },
+        '30.2': {
+          stageTitle: '30. Zrównoważone przywództwo', title: 'Długoterminowy kierunek, autonomia czasu i odpowiedzialna sukcesja',
+          description: 'Zamień program w aktualizowaną strategię dla klientów, zespołu, zdrowia i osobistego wyboru zamiast „imperium”, stałego hustle lub obowiązkowego exitu.',
+          learnContent: {
+            videoTitle: 'Przegląd końcowy: zrównoważony kierunek na dziesięć lat',
+            summaryText: 'Ukończenie jest punktem kontrolnym, nie dowodem mistrzostwa ani gwarancją sukcesu. Przywództwo łączy naukę, wyniki klientów, odporność finansową, etyczne operacje i realną zdolność osobistą.',
+            bulletPoints: ['Regularnie przeglądaj dowody i założenia zamiast traktować wizję dziesięcioletnią jako stałą prognozę', 'Zdefiniuj „wystarczy” dla pieniędzy, czasu, zdrowia, relacji, odpowiedzialności i wpływu, nie tylko skali', 'Łącz ambitne wyniki z wskaźnikami wyprzedzającymi, triggerami scenariusza negatywnego i regułami decyzji', 'Zbuduj governance, sukcesję i plan awaryjny przed ograniczeniem udziału założyciela', 'Traktuj certyfikaty i społeczności jako opcjonalny zapis uczestnictwa zależny od rzeczywistej dostępności i kryteriów'],
+            coreConcepts: [
+              { iconName: 'compass', title: 'OPCJONALNOŚĆ STRATEGICZNA', description: 'Zachowaj możliwość utrzymania, delegowania, pauzy, przekazania lub sprzedaży. Autonomia czasu zależy od zasobów, obowiązków i testowanej ciągłości.', highlight: true },
+              { iconName: 'heart', title: 'ZRÓWNOWAŻONA ZDOLNOŚĆ', description: 'Ustal granice obciążenia, regeneracji i wsparcia. Odporność psychiczna nie oznacza ignorowania cierpienia ani zastępowania pomocy samą wolą.' },
+              { iconName: 'refresh-cw', title: 'KIERUNEK DO PRZEGLĄDU', description: 'Przełóż długi horyzont na tezę roczną, eksperymenty 90-dniowe i cykliczny przegląd. Zmieniaj kierunek, gdy zmieniają się dowody lub życie.' },
+            ],
+            resources: [
+              { title: 'Workbook kierunku i opcjonalności na 10 lat', subtitle: 'Wartości, scenariusze, granice i rytm przeglądu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Przegląd ukończenia i dowodów', subtitle: 'Sprawdź wykonaną pracę i dostępne potwierdzenia', type: 'link', iconName: 'award', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Zakończ program i rozpocznij cykl przeglądu
+
+Przejście trzydziestu etapów może uporządkować naukę, lecz nie certyfikuje każdej kompetencji i nie gwarantuje dochodu, wyceny, wolności ani dobrostanu. Weryfikuj dowody i korzystaj ze specjalistycznej pomocy, gdy decyzja wykracza poza Twoją wiedzę.
+
+#### Buduj trwały kierunek
+
+1. **Przejrzyj dowody**: Wypisz zmiany w wynikach klientów, finansach, kontrolach, umiejętnościach i obciążeniu. Oddziel wykonane działania od zweryfikowanych wyników i ryzyk.
+2. **Zdefiniuj wartości i granice**: Zapisz, czego nie poświęcisz dla wzrostu, w tym zdrowia, relacji, dobra klienta, obowiązków prawnych i wypłacalności.
+3. **Pisz scenariusze, nie proroctwo**: Opisz wariant utrzymania, delegowania, sprzedaży częściowej, pełnej i negatywny. Zapisz założenia, sygnały i odwracalne kroki.
+4. **Ustal warstwy horyzontów**: Zachowaj kierunkową narrację dziesięcioletnią, mierzalną tezę roczną i kilka eksperymentów 90-dniowych z właścicielami oraz kryteriami stop.
+5. **Planuj ciągłość**: Udokumentuj uprawnienia, sukcesję, dostęp awaryjny, komunikację i odzyskiwanie. Testuj nieobecność przed deklarowaniem autonomii czasu.
+6. **Używaj wsparcia właściwie**: Buduj sieć rówieśniczą i profesjonalną, oceniając poufność, konflikty, koszt i dowody. W razie potrzeby szukaj pomocy medycznej lub psychologicznej; wytrwałość jej nie zastępuje.
+7. **Uczciwie zapisuj ukończenie**: Generuj lub udostępniaj certyfikat tylko, gdy produkt go obsługuje i spełniasz kryteria. Chroń dane i nie sugeruj regulowanej akredytacji, jeśli jej nie ma.
+8. **Zaplanuj kolejny przegląd**: Wracaj kwartalnie i po ważnych zmianach. Świętuj postęp bez obowiązku stałego głodu lub przepracowania.
+
+Celem nie jest maksymalna skala za każdą cenę, lecz firma i życie pozostające legalne, odporne finansowo, użyteczne klientom i świadomie wybrane.`,
+            practicalExamples: ['Założyciel zastępuje jeden cel przychodowy scenariuszami utrzymania, sprzedaży częściowej i spadku, każdy z testem rocznym oraz datą przeglądu.', 'Przed miesięczną przerwą zespół ćwiczy krótszą nieobecność i uzupełnia brakujące uprawnienia, eskalację klientów oraz dostęp awaryjny.'],
+          },
+          understandContent: { coreTakeaway: 'Zrównoważone przywództwo zachowuje świadomy wybór przez dowody, granice, ciągłość i przegląd zamiast utożsamiać mistrzostwo z niekończącym się wzrostem.', keyPrinciples: ['Mierz wyniki, nie samo ukończenie programu', 'Chroń zdrowie, obowiązki i dobro klienta', 'Utrzymuj plany jako scenariusze do aktualizacji'] },
+          actionTask: { instruction: 'Utwórz odpowiedzialny przegląd ukończenia i długiego horyzontu:', checklistItems: ['Podsumowano dowody, nierozwiązane ryzyka i potrzeby doradcze', 'Udokumentowano wartości, granice pracy i definicję „wystarczy”', 'Porównano scenariusze utrzymania, delegowania, transferu i spadku', 'Teza roczna i eksperymenty 90-dniowe mają właścicieli i kryteria stop', 'Zaplanowano test ciągłości, przegląd kwartalny i uczciwe zasady certyfikatu'], toolboxCategory: 'content' },
         },
       },
     },
