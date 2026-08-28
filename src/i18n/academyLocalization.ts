@@ -2758,6 +2758,91 @@ Measure informed fit, cancellations, refunds, complaints, affordability issues, 
         },
       },
     },
+    34: {
+      title: '34. Responsible Licensing, Franchise & White-Label Growth',
+      subtitle: 'Rights clearance, viable partner economics, quality governance and accountable expansion',
+      description: 'Turn documented systems into carefully governed licensing or white-label offers with clear rights, realistic economics, qualified partners and jurisdiction-specific review—not guaranteed royalties or growth without fulfilment.',
+      lessons: {
+        '34.1': {
+          stageTitle: '34. Licensing Architecture & White Label', title: 'Design a licensable system with clear rights, controls and economics',
+          description: 'Assess whether the system is transferable, verify ownership and permissions, choose an appropriate model and document commercial, operational, data and quality obligations before offering a licence.',
+          learnContent: {
+            videoTitle: 'Build a responsible licensing and white-label operating model',
+            summaryText: 'Licensing can reduce some central delivery work, but it does not eliminate support, governance, legal or reputational duties. Revenue depends on partner fit, adoption, customer demand, delivery quality and contract performance.',
+            bulletPoints: ['Inventory trademarks, copyright, software, data, content, know-how and third-party assets before promising any usage rights', 'Compare a limited licence, white-label arrangement, distribution relationship and franchise-like model according to control, support, fees and local classification', 'Define territory, channels, field of use, term, exclusivity, sublicensing, reserved rights, updates, support and exit in writing', 'Model setup, recurring, usage or revenue-share fees from evidenced partner economics, including tax, currency, refunds, support and enforcement costs', 'Protect confidential know-how through proportionate access, security and confidentiality measures while preserving lawful reporting, worker rights and required disclosures'],
+            coreConcepts: [
+              { iconName: 'layers', title: 'RIGHTS & MODEL MAP', description: 'A licence grants specified permissions; it does not transfer every asset or guarantee business results. Map ownership, third-party restrictions, jurisdictions and the operational control each model requires.', highlight: true },
+              { iconName: 'shield-check', title: 'QUALITY & BRAND GOVERNANCE', description: 'Set objective standards, training, review, remediation and brand-use rules. Trademark quality control and recording requirements vary, so obtain qualified local advice.' },
+              { iconName: 'repeat', title: 'TESTED UNIT ECONOMICS', description: 'Forecast fees, partner margin, central support, payment timing, churn, bad debt and downside. A quoted setup fee or royalty is a hypothesis until the market and contract support it.' },
+            ],
+            resources: [
+              { title: 'Licensing Readiness & Contract-Issues Workbook', subtitle: 'Rights, economics, controls, data, competition and exit questions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Partner Access Register', subtitle: 'Role-based accounts, approvals, training and audit evidence', type: 'tool', iconName: 'users', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: \`### Make the system licensable before selling the licence
+
+A successful internal workflow is not automatically transferable intellectual property. Licensing creates continuing obligations around rights, training, quality, security, partner support and enforcement.
+
+#### Licensing readiness workflow
+
+1. **Define the customer outcome and evidence**: Document the problem, intended users, prerequisites, process, exclusions, delivery capacity, observed outcomes and limitations. Do not state that the system guarantees results.
+2. **Create a rights register**: Identify owners and licences for names, logos, text, video, templates, code, databases, images, fonts, music, AI-generated material and customer examples. Remove or replace assets that cannot be sublicensed or rebranded.
+3. **Protect know-how lawfully**: Classify information, restrict access, log versions, use proportionate confidentiality terms and establish incident handling. Trade-secret protection generally depends on information remaining secret, having commercial value and being subject to reasonable protective steps; it is not created by labelling everything confidential.
+4. **Choose the real relationship**: Compare a non-exclusive or exclusive licence, white label, reseller, agency, services arrangement and franchise-like system. The label in the document may not determine its legal classification, disclosure duties, employment or agency risk, tax treatment or registration.
+5. **Specify the grant and boundaries**: State products, territory, channels, customers, language, field of use, term, renewal, exclusivity, sublicensing, modification, ownership of improvements, domain and social-account control, reserved rights and post-termination use.
+6. **Design quality governance**: Publish measurable standards, approved claims and brand materials, accessibility requirements, complaints, security, audit scope, correction periods and proportionate sanctions. Apply reviews consistently and allow a documented appeal or remediation route.
+7. **Model complete economics**: Include onboarding, support, hosting, tools, localisation, payment fees, tax, currency, refunds, insurance, monitoring, disputes, updates and exit. Test base and downside cases for both licensor and partner before setting fees.
+8. **Review competition and commercial restrictions**: Pricing controls, online-sales restrictions, territory or customer allocation, non-competes and exclusivity can raise competition issues. Do not instruct independent partners to fix resale prices or divide markets without specialist review.
+9. **Allocate data and security duties**: Identify controller, processor or independent roles for each data flow; minimise access, define purpose, retention, deletion, breach response, subprocessors and cross-border transfers. Give every user an individual account and least-privilege access.
+10. **Write the operating and exit plan**: Address invoices, reporting, royalty calculation, audit, underpayment, support levels, changes, continuity, insurance, liability, complaints, suspension, termination, customer handover, data return and deletion.
+
+Use qualified intellectual-property, franchise, competition, tax, employment, data-protection and commercial advisers for each intended jurisdiction. A template is an issue list, not legal approval.\`,
+            practicalExamples: ['A white-label pilot excludes a stock-image library that prohibits sublicensing, limits the partner to one market and defines support, approved claims, data roles and a 90-day review.', 'A proposed exclusive territory is paused until demand, partner capacity and competition-law implications are reviewed; no partner is promised protected revenue.'],
+          },
+          understandContent: { coreTakeaway: 'A responsible licence is a precisely bounded, economically tested and actively governed relationship—not passive income or a transfer of every business risk.', keyPrinciples: ['Clear every asset before granting rights', 'Document quality, data, economics and exit', 'Review classification and restrictions by jurisdiction'] },
+          actionTask: { instruction: 'Prepare a licensing-readiness file for one system:', checklistItems: ['Outcome evidence, process, prerequisites and limitations documented', 'Ownership and sublicensing rights checked for every material asset', 'Proposed model, grant, territory, term, exclusivity and reserved rights mapped', 'Base and downside economics calculated for licensor and partner', 'Quality, data, security, support, audit, termination and legal-review issues assigned'], toolboxCategory: 'affiliate' },
+        },
+        '34.2': {
+          stageTitle: '34. Partner Network & Accountable Expansion', title: 'Recruit, onboard and govern suitable B2B licensing partners',
+          description: 'Build a measured partner programme based on due diligence, truthful commercial information, competency, customer protection and sustainable support rather than promised quick revenue or market domination.',
+          learnContent: {
+            videoTitle: 'Responsible B2B partner recruitment, onboarding and oversight',
+            summaryText: 'A partner network can extend reach, but every additional operator creates quality, security, customer and reputation risk. Partner count is not success unless customers receive the agreed standard and both sides have viable economics.',
+            bulletPoints: ['Define an ideal partner profile from capability, customer fit, financial resilience, integrity, conflicts and regulatory readiness—not simply an existing contact list', 'Present verified unit economics, costs, responsibilities, risks and representative results without promising doubled customer value or 14-day revenue', 'Run proportionate due diligence, reference and conflict checks and give both parties enough information and review time before contracting', 'Onboard to measured competence in product, claims, privacy, security, accessibility, complaints and customer support before independent launch', 'Monitor customer outcomes, refunds, complaints, security, support load and partner health with remediation and fair exit—not a sales-only leaderboard'],
+            coreConcepts: [
+              { iconName: 'users', title: 'PARTNER SUITABILITY', description: 'Assess capabilities, customer base, resources, reputation, conflicts, legal readiness and willingness to follow controls. Record the reason for approval, conditions or rejection.', highlight: true },
+              { iconName: 'user-check', title: 'COMPETENCY GATE', description: 'Training attendance is not competence. Require scenario-based assessment, supervised delivery and sign-off before access or customer-facing use expands.' },
+              { iconName: 'activity', title: 'BALANCED NETWORK HEALTH', description: 'Track customer outcome, quality, complaints, refunds, security, compliance, partner margin and support capacity alongside revenue. Avoid incentives that reward unsuitable sales.' },
+            ],
+            resources: [
+              { title: 'Partner Due-Diligence & Onboarding Pack', subtitle: 'Fit, evidence, conflicts, competence, launch and remediation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Partner Governance Dashboard', subtitle: 'Approvals, access, customer quality and corrective actions', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: \`### Scale partner capability, not partner promises
+
+Established providers may have customers and sales capacity, but that does not prove fit, safe delivery or incremental value. Recruitment is a two-way diligence process.
+
+#### Accountable partner lifecycle
+
+1. **Set programme boundaries**: Define markets, customer profiles, permitted and excluded uses, capacity, support, lead handling and the customer standards the network must protect.
+2. **Publish a fair partner proposition**: Explain rights, duties, all fees, typical workload, assumptions, risks, training, support, reporting, termination and what is not provided. Financial illustrations must be clearly labelled, evidenced and representative; avoid earnings guarantees.
+3. **Source proportionately**: Contact relevant businesses through lawful professional channels, respect platform rules and opt-outs, and avoid scraped sensitive data or misleading referral claims. Twenty prospects is a planning choice, not a success formula.
+4. **Perform due diligence**: Verify business identity, authority, references, experience, financial and operational capacity, conflicts, sanctions where applicable, insurance, complaints, security and regulatory permissions. Collect only necessary information and protect it.
+5. **Allow informed review**: Provide the agreement and required disclosures in time for independent legal, tax and financial advice. Record questions and do not create false deadlines or claim that a territory is scarce when it is not.
+6. **Contract before access**: Sign approved terms, complete invoicing and identity checks, establish data and security roles, and provision individual least-privilege accounts. Do not share master credentials or unrestricted customer exports.
+7. **Train and assess**: Cover customer discovery, correct claims, disclosures, pricing boundaries, brand use, privacy, accessibility, security, complaints and escalation. Use knowledge checks, practice cases and supervised delivery before certification.
+8. **Run a controlled pilot**: Agree one limited implementation with the end customer's informed agreement, acceptance criteria, responsibilities, support, measurement and recovery plan. A pilot does not guarantee a sale or broader authorisation.
+9. **Monitor and support**: Review service evidence, customer outcomes, refunds, complaints, incident logs, system access, partner economics and support load. Separate coaching from formal audit and document remediation deadlines.
+10. **Manage conflict and exit**: Maintain routes for complaints, whistleblowing, conflicts, suspension and appeal. On exit, protect customers, revoke access, stop brand use, reconcile fees, return or delete data and preserve required records.
+
+If recognition, awards or leaderboards are used, apply transparent criteria, protect personal and commercial information and never reward volume at the expense of suitability or customer welfare.\`,
+            practicalExamples: ['A prospective agency receives a written economics model with assumptions and downside, completes conflicts and security checks, and pilots with one consenting customer before wider access.', 'A partner with rising complaints enters a documented remediation plan; new sales access is paused while affected customers receive support rather than hiding the issue to protect rankings.'],
+          },
+          understandContent: { coreTakeaway: 'A durable partner network grows through suitability, truthful expectations, demonstrated competence, customer safeguards and accountable oversight.', keyPrinciples: ['Never guarantee partner revenue or customer impact', 'Gate access by competence and risk', 'Reward quality and customer outcomes, not volume alone'] },
+          actionTask: { instruction: 'Design a controlled recruitment and onboarding pilot:', checklistItems: ['Ideal partner profile, exclusions, capacity and approval evidence defined', 'Partner proposition states verified assumptions, full costs, duties, risks and no guarantees', 'Due diligence, privacy, conflicts and independent-review process documented', 'Training, assessment, supervised pilot and access gates prepared', 'Customer outcomes, complaints, security, remediation and exit controls assigned'], toolboxCategory: 'affiliate' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -5499,6 +5584,91 @@ Mierz fit, anulowania, zwroty, skargi, affordability, jakość realizacji i wyni
           },
           understandContent: { coreTakeaway: 'Etyczna oferta chroni świadomy wybór, pokazuje wszystkie warunki i stawia bezpieczną, właściwą realizację ponad konwersję sali.', keyPrinciples: ['Zakupiony event działa samodzielnie', 'Bez strachu, wstydu i fikcyjnej pilności', 'Prywatne, bezpieczne i możliwe do sprawdzenia umowy'] },
           actionTask: { instruction: 'Zaprojektuj opcjonalną ofertę i realizację z zabezpieczeniami:', checklistItems: ['Ujawniono segment komercyjny i interes finansowy', 'Przygotowano pełną ofertę, cenę, cykliczność, finansowanie i anulowanie', 'Claims, testimonials, bonusy, capacity i terminy mają dowody', 'Określono prywatny fit review, eskalację podatności i no-sale', 'Przetestowano płatność, potwierdzenie, uzgodnienie, zwrot i follow-up za zgodą'], toolboxCategory: 'content' },
+        },
+      },
+    },
+    34: {
+      title: '34. Odpowiedzialne licencjonowanie, franczyza i rozwój white label',
+      subtitle: 'Weryfikacja praw, realna ekonomia partnera, nadzór jakości i odpowiedzialna ekspansja',
+      description: 'Przekształcaj udokumentowane systemy w starannie zarządzane oferty licencyjne lub white label z jasnymi prawami, realną ekonomią, właściwymi partnerami i przeglądem jurysdykcji—bez gwarancji royalty lub wzrostu bez realizacji.',
+      lessons: {
+        '34.1': {
+          stageTitle: '34. Architektura licencji i white label', title: 'Zaprojektuj system licencyjny z jasnymi prawami, kontrolami i ekonomią',
+          description: 'Oceń transferowalność systemu, potwierdź własność i zgody, wybierz właściwy model i opisz obowiązki handlowe, operacyjne, dotyczące danych oraz jakości przed ofertą licencji.',
+          learnContent: {
+            videoTitle: 'Odpowiedzialny model operacyjny licencji i white label',
+            summaryText: 'Licencjonowanie może ograniczyć część centralnej realizacji, ale nie usuwa supportu, nadzoru, obowiązków prawnych ani ryzyka reputacji. Przychód zależy od dopasowania partnera, adopcji, popytu, jakości i wykonania umowy.',
+            bulletPoints: ['Przed obietnicą praw użytkowania zinwentaryzuj znaki, copyright, software, dane, content, know-how i zasoby stron trzecich', 'Porównaj ograniczoną licencję, white label, dystrybucję i relację podobną do franczyzy według kontroli, wsparcia, opłat oraz lokalnej klasyfikacji', 'Pisemnie określ terytorium, kanały, pole użycia, termin, wyłączność, sublicencje, prawa zastrzeżone, aktualizacje, support i exit', 'Modeluj setup, opłaty cykliczne, usage lub udział w przychodzie na podstawie ekonomii partnera, uwzględniając podatki, walutę, zwroty, support i egzekwowanie', 'Chroń poufne know-how proporcjonalnym dostępem, security i poufnością, zachowując legalne zgłoszenia, prawa pracowników oraz wymagane ujawnienia'],
+            coreConcepts: [
+              { iconName: 'layers', title: 'MAPA PRAW I MODELU', description: 'Licencja udziela konkretnych uprawnień; nie przenosi każdego zasobu ani nie gwarantuje wyniku biznesowego. Mapuj własność, ograniczenia stron trzecich, jurysdykcje i konieczny poziom kontroli.', highlight: true },
+              { iconName: 'shield-check', title: 'NADZÓR JAKOŚCI I MARKI', description: 'Ustal obiektywne standardy, szkolenia, przegląd, naprawę i reguły marki. Wymogi kontroli jakości znaku i rejestracji różnią się, dlatego potrzebna jest lokalna porada.' },
+              { iconName: 'repeat', title: 'PRZETESTOWANA EKONOMIA', description: 'Prognozuj opłaty, marżę partnera, centralny support, timing płatności, churn, złe długi i downside. Cena setupu lub royalty pozostaje hipotezą, dopóki nie potwierdzą jej rynek i umowa.' },
+            ],
+            resources: [
+              { title: 'Workbook gotowości licencyjnej i kwestii umownych', subtitle: 'Prawa, ekonomia, kontrole, dane, konkurencja i exit', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Rejestr dostępu partnerów Mara CRM', subtitle: 'Konta rolami, akceptacje, szkolenia i dowody audytu', type: 'tool', iconName: 'users', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: \`### Przygotuj system do licencji przed sprzedażą licencji
+
+Skuteczny workflow wewnętrzny nie jest automatycznie transferowalną własnością intelektualną. Licencjonowanie tworzy stałe obowiązki dotyczące praw, szkolenia, jakości, security, wsparcia i egzekwowania.
+
+#### Workflow gotowości licencyjnej
+
+1. **Określ wynik klienta i dowody**: Udokumentuj problem, użytkowników, prerequisites, proces, wykluczenia, capacity, obserwowane wyniki i limity. Nie twierdź, że system gwarantuje rezultaty.
+2. **Utwórz rejestr praw**: Wskaż właścicieli i licencje nazw, logo, tekstu, wideo, templates, kodu, baz, obrazów, fontów, muzyki, materiału AI i przykładów klientów. Usuń lub zastąp to, czego nie wolno sublicencjonować albo rebrandować.
+3. **Chroń know-how zgodnie z prawem**: Klasyfikuj informacje, ograniczaj dostęp, zapisuj wersje, stosuj proporcjonalną poufność i obsługę incydentów. Ochrona tajemnicy przedsiębiorstwa zwykle zależy od sekretności, wartości handlowej i rozsądnych środków ochrony; samo oznaczenie wszystkiego jako poufne jej nie tworzy.
+4. **Wybierz rzeczywistą relację**: Porównaj licencję wyłączną lub niewyłączną, white label, reseller, agency, usługi i system podobny do franczyzy. Nazwa dokumentu może nie decydować o klasyfikacji, ujawnieniach, ryzyku zatrudnienia lub agency, podatku czy rejestracji.
+5. **Określ grant i granice**: Wskaż produkty, terytorium, kanały, klientów, język, pole użycia, termin, odnowienie, wyłączność, sublicencje, modyfikacje, własność ulepszeń, kontrolę domen i social, prawa zastrzeżone i użycie po rozwiązaniu.
+6. **Zaprojektuj nadzór jakości**: Publikuj mierzalne standardy, zatwierdzone claims i materiały, dostępność, skargi, security, zakres audytu, czas naprawy i proporcjonalne sankcje. Stosuj zasady spójnie i daj udokumentowaną drogę naprawy lub odwołania.
+7. **Modeluj pełną ekonomię**: Uwzględnij onboarding, support, hosting, tools, lokalizację, płatności, podatki, walutę, zwroty, ubezpieczenie, monitoring, spory, aktualizacje i exit. Przetestuj wariant bazowy i negatywny dla obu stron.
+8. **Sprawdź konkurencję i ograniczenia handlowe**: Kontrola cen, ograniczenia online, przydział terytoriów lub klientów, non-compete i wyłączność mogą rodzić ryzyko prawa konkurencji. Nie nakazuj niezależnym partnerom ustalania cen odsprzedaży ani podziału rynków bez przeglądu eksperta.
+9. **Przydziel obowiązki danych i security**: Określ controller, processor lub niezależne role dla każdego przepływu; minimalizuj dostęp i opisz cel, retencję, usunięcie, breach, subprocessors oraz transfery. Każdy użytkownik otrzymuje własne konto i least privilege.
+10. **Napisz plan operacyjny i exit**: Ureguluj faktury, raporty, obliczenie royalty, audyt, niedopłatę, SLA, zmiany, ciągłość, ubezpieczenie, odpowiedzialność, skargi, zawieszenie, rozwiązanie, przejęcie klientów, zwrot i usunięcie danych.
+
+Dla każdej jurysdykcji korzystaj z właściwych doradców IP, franczyzy, konkurencji, podatków, zatrudnienia, danych i prawa handlowego. Template jest listą kwestii, a nie akceptacją prawną.\`,
+            practicalExamples: ['Pilot white label wyłącza bibliotekę stock, która zakazuje sublicencji, ogranicza partnera do jednego rynku i opisuje support, zatwierdzone claims, role danych oraz przegląd po 90 dniach.', 'Planowane wyłączne terytorium zostaje wstrzymane do przeglądu popytu, capacity partnera i prawa konkurencji; partner nie dostaje obietnicy chronionego przychodu.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialna licencja jest precyzyjnie ograniczoną, przetestowaną ekonomicznie i aktywnie nadzorowaną relacją—nie pasywnym dochodem ani transferem całego ryzyka.', keyPrinciples: ['Sprawdź każdy zasób przed udzieleniem praw', 'Dokumentuj jakość, dane, ekonomię i exit', 'Przeglądaj klasyfikację i ograniczenia według jurysdykcji'] },
+          actionTask: { instruction: 'Przygotuj plik gotowości licencyjnej jednego systemu:', checklistItems: ['Udokumentowano dowody wyniku, proces, prerequisites i limity', 'Sprawdzono własność i prawa sublicencji każdego istotnego zasobu', 'Zmapowano model, grant, terytorium, termin, wyłączność i prawa zastrzeżone', 'Obliczono ekonomię bazową i downside dla licencjodawcy i partnera', 'Przypisano jakość, dane, security, support, audyt, rozwiązanie i przegląd prawny'], toolboxCategory: 'affiliate' },
+        },
+        '34.2': {
+          stageTitle: '34. Sieć partnerów i odpowiedzialna ekspansja', title: 'Pozyskuj, wdrażaj i nadzoruj właściwych partnerów licencyjnych B2B',
+          description: 'Buduj mierzalny program partnerów oparty na due diligence, prawdziwej informacji handlowej, kompetencji, ochronie klienta i trwałym wsparciu, nie na obietnicy szybkiego przychodu czy dominacji rynku.',
+          learnContent: {
+            videoTitle: 'Odpowiedzialna rekrutacja, onboarding i nadzór partnerów B2B',
+            summaryText: 'Sieć może zwiększyć zasięg, ale każdy operator tworzy ryzyko jakości, security, klienta i reputacji. Sama liczba partnerów nie jest sukcesem, jeśli klienci nie otrzymują standardu, a ekonomia obu stron jest niewykonalna.',
+            bulletPoints: ['Definiuj profil partnera według capability, dopasowania klientów, odporności finansowej, integrity, konfliktów i gotowości regulacyjnej, nie samej listy kontaktów', 'Pokazuj sprawdzoną ekonomię, koszty, obowiązki, ryzyka i reprezentatywne wyniki bez obietnicy podwojenia wartości klienta lub przychodu w 14 dni', 'Prowadź proporcjonalne due diligence, referencje i konflikty oraz daj obu stronom czas i informacje przed umową', 'Przed samodzielnym startem wymagaj zmierzonej kompetencji w produkcie, claims, privacy, security, dostępności, skargach i support', 'Monitoruj wyniki klienta, zwroty, skargi, security, obciążenie supportu i zdrowie partnera z naprawą i fair exit, a nie rankingiem samej sprzedaży'],
+            coreConcepts: [
+              { iconName: 'users', title: 'DOPASOWANIE PARTNERA', description: 'Oceń umiejętności, bazę klientów, zasoby, reputację, konflikty, gotowość prawną i akceptację kontroli. Zapisz podstawę akceptacji, warunków lub odmowy.', highlight: true },
+              { iconName: 'user-check', title: 'BRAMKA KOMPETENCJI', description: 'Obecność na szkoleniu nie dowodzi kompetencji. Wymagaj scenariuszy, nadzorowanej realizacji i sign-off przed rozszerzeniem dostępu lub pracy z klientem.' },
+              { iconName: 'activity', title: 'ZRÓWNOWAŻONE ZDROWIE SIECI', description: 'Śledź wynik klienta, jakość, skargi, zwroty, security, compliance, marżę partnera i capacity supportu obok przychodu. Unikaj bodźców do niedopasowanej sprzedaży.' },
+            ],
+            resources: [
+              { title: 'Pakiet due diligence i onboardingu partnera', subtitle: 'Fit, dowody, konflikty, kompetencja, start i remediation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Dashboard nadzoru partnerów Mara CRM', subtitle: 'Akceptacje, dostęp, jakość klienta i działania naprawcze', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: \`### Skaluj kompetencje partnerów, nie obietnice partnerów
+
+Istniejący klienci i capacity sprzedaży nie dowodzą dopasowania, bezpiecznej realizacji ani dodatkowej wartości. Rekrutacja jest dwustronnym procesem diligence.
+
+#### Odpowiedzialny cykl życia partnera
+
+1. **Ustal granice programu**: Zdefiniuj rynki, profile klientów, dozwolone i zakazane użycia, capacity, support, lead handling i standard klienta chroniony przez sieć.
+2. **Opublikuj uczciwą propozycję**: Wyjaśnij prawa, obowiązki, wszystkie opłaty, typową pracę, assumptions, ryzyka, szkolenie, support, raportowanie, rozwiązanie i to, czego nie zapewniasz. Ilustracje finansowe oznaczaj, popieraj i pokazuj reprezentatywnie; bez gwarancji zarobków.
+3. **Pozyskuj proporcjonalnie**: Kontaktuj właściwe firmy legalnymi kanałami zawodowymi, respektuj zasady platform i opt-out, unikaj scraped danych wrażliwych i fałszywego polecenia. Dwadzieścia prospektów jest wyborem planistycznym, nie formułą sukcesu.
+4. **Wykonaj due diligence**: Sprawdź firmę, umocowanie, referencje, doświadczenie, capacity finansową i operacyjną, konflikty, sankcje gdzie właściwe, ubezpieczenie, skargi, security i pozwolenia. Zbieraj tylko potrzebne informacje i je chroń.
+5. **Zapewnij świadomy przegląd**: Przekaż umowę i wymagane disclosure na czas do niezależnej porady prawnej, podatkowej i finansowej. Zapisuj pytania i nie twórz fałszywych terminów ani niedoboru terytorium.
+6. **Umowa przed dostępem**: Podpisz zatwierdzone warunki, zakończ fakturowanie i identity checks, ustal role danych i security oraz nadaj indywidualny dostęp least privilege. Nie udostępniaj master loginów ani pełnych eksportów klientów.
+7. **Szkol i oceniaj**: Obejmij discovery klienta, poprawne claims, disclosure, granice cen, markę, privacy, dostępność, security, skargi i eskalację. Stosuj testy wiedzy, cases i realizację nadzorowaną przed certyfikacją.
+8. **Uruchom kontrolowany pilot**: Uzgodnij jedno ograniczone wdrożenie za świadomą zgodą klienta końcowego, z kryteriami akceptacji, rolami, wsparciem, pomiarem i recovery. Pilot nie gwarantuje sprzedaży ani szerszej autoryzacji.
+9. **Monitoruj i wspieraj**: Przeglądaj dowody usługi, wyniki klienta, zwroty, skargi, incydenty, dostęp, ekonomię partnera i support. Oddziel coaching od audytu i zapisuj terminy remediation.
+10. **Zarządzaj konfliktem i wyjściem**: Utrzymuj ścieżki skarg, whistleblowing, konfliktów, zawieszenia i odwołania. Przy exit chroń klientów, odbierz dostęp, zatrzymaj markę, rozlicz opłaty, zwróć lub usuń dane i zachowaj wymagane rekordy.
+
+Jeśli używasz wyróżnień lub leaderboardów, stosuj jawne kryteria, chroń informacje osobowe i handlowe oraz nigdy nie nagradzaj wolumenu kosztem dopasowania lub dobra klienta.\`,
+            practicalExamples: ['Agencja otrzymuje pisemny model ekonomii z assumptions i downside, przechodzi kontrolę konfliktów oraz security i pilotuje z jednym świadomym klientem przed szerszym dostępem.', 'Partner z rosnącą liczbą skarg wchodzi w plan naprawy; nowa sprzedaż jest wstrzymana, a klienci dostają pomoc zamiast ukrywania problemu dla rankingu.'],
+          },
+          understandContent: { coreTakeaway: 'Trwała sieć rośnie przez dopasowanie, prawdziwe oczekiwania, wykazaną kompetencję, zabezpieczenia klienta i odpowiedzialny nadzór.', keyPrinciples: ['Nigdy nie gwarantuj przychodu partnera ani wyniku klienta', 'Dostęp zależy od kompetencji i ryzyka', 'Nagradzaj jakość i wynik klienta, nie sam wolumen'] },
+          actionTask: { instruction: 'Zaprojektuj kontrolowany pilot rekrutacji i onboardingu:', checklistItems: ['Określono profil partnera, wykluczenia, capacity i dowody akceptacji', 'Propozycja zawiera sprawdzone assumptions, pełne koszty, obowiązki, ryzyka i brak gwarancji', 'Udokumentowano due diligence, privacy, konflikty i niezależny review', 'Przygotowano szkolenie, ocenę, nadzorowany pilot i bramki dostępu', 'Przypisano wyniki klientów, skargi, security, remediation i exit'], toolboxCategory: 'affiliate' },
         },
       },
     },
