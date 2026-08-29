@@ -6246,6 +6246,116 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "68": {
+      "title": "68. B2B GovTech & Public Procurement",
+      "subtitle": "Public tenders, municipal digital services, EVB-IT contracts and procurement notices",
+      "description": "Learn how to evaluate and bid for public-sector digital and consulting contracts through compliant, evidence-based procurement processes—without assuming award size, payment certainty or future call-offs.",
+      "lessons": {
+        "68.1": {
+          "stageTitle": "68. Procurement Rules & Tender Platforms",
+          "title": "The GovTech System: Competing Systematically for Public Contracts",
+          "description": "How to read German and EU procurement documents, locate notices and reduce avoidable compliance errors with current official guidance.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Public Procurement & GovTech Business Development",
+            "summaryText": "Public bodies procure substantial digital services, but budgets are not guaranteed to be spent with any bidder. Learn to qualify opportunities, meet stated suitability requirements and submit a complete, competitive offer on time.",
+            "bulletPoints": [
+              "Notice sources: monitor TED, official federal and regional portals, and the exact platform named in the procurement documents",
+              "Procedure types: identify the applicable process and follow only the communication, participation and negotiation rules stated for it",
+              "Formal compliance: use a bid-specific checklist for deadlines, forms, declarations, file formats, signatures and authorized submission",
+              "Award criteria: map every response to the published weighting; quality can matter alongside price, but never assume it offsets a higher fee"
+            ],
+            "coreConcepts": [
+              {
+                "title": "FORMAL PRECISION",
+                "description": "A complete, timely and traceable submission protects an otherwise strong offer from avoidable exclusion."
+              },
+              {
+                "title": "PUBLISHED SCORING",
+                "description": "Optimize the response against the disclosed criteria and weighting rather than guessing the authority’s preferences."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Public Procurement Checklist & EVB-IT Guide",
+                "subtitle": "Bid-specific review prompts and contract-risk checklist"
+              },
+              {
+                "title": "Mara CRM GovTech Tender Tracker",
+                "subtitle": "Track notices, clarification deadlines, submissions and responsibilities"
+              }
+            ],
+            "fullArticleGuide": "### A disciplined route to public-sector contracts\n\nPublic entities are generally structured counterparties, but delayed payment, disputes, cancellations and budget changes remain possible. Assess commercial risk and cash flow as you would with any material client.\n\n#### Bid workflow\n\n1. **Qualify the notice:** Check scope, lots, deadlines, suitability evidence, award criteria, contract terms, delivery capacity and conflicts.\n2. **Submit clarification questions:** Use the designated portal and deadline. Ask neutrally and preserve the official answer for the bid file.\n3. **Build the response:** Create a compliance matrix and answer each requirement with verifiable evidence. Never invent references or declarations.\n4. **Validate and submit early:** Confirm authorized users, file limits, required signatures or seals and successful receipt. A qualified electronic signature is not universally required; follow the current notice and platform instructions.\n\nProcurement and contract rules vary by jurisdiction, value, authority and procedure. Use current official documents and qualified legal advice for material bids."
+          },
+          "understandContent": {
+            "coreTakeaway": "Procurement discipline can open multi-year opportunities, but neither a framework award nor a stated ceiling guarantees orders or revenue.",
+            "keyPrinciples": [
+              "Treat the portal deadline as absolute and submit early enough to handle access, upload or validation failures",
+              "Review EVB-IT and all other contract terms against the tender rules; do not assume they must or should always be accepted unchanged"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare your public-procurement profile:",
+            "checklistItems": [
+              "Registered on the official portals relevant to the chosen market and verified account access",
+              "Prepared three truthful reference cases mapped to typical suitability evidence",
+              "Tested submission permissions, file formats and any signature method required by a selected notice"
+            ]
+          }
+        },
+        "68.2": {
+          "stageTitle": "68. Framework Agreements & Municipal Pipelines",
+          "title": "Municipal Framework Agreements: Call-Offs Without Guaranteed Volume",
+          "description": "How framework agreements organize future call-offs or mini-competitions and how to plan delivery without treating ceilings as committed revenue.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Multi-Year Framework Agreements with Public Bodies",
+            "summaryText": "A framework agreement establishes terms for possible future contracts. It is not a subscription and often provides no minimum purchase. Learn to evaluate ceilings, call-off mechanisms, competition, capacity and invoicing requirements.",
+            "bulletPoints": [
+              "Framework structure: distinguish maximum value or quantity, estimated demand, minimum commitments, lots, ranking and call-off rules",
+              "Mini-competitions: respond to each request using the criteria and deadlines defined in the framework",
+              "E-invoicing: generate the required structured format and buyer reference using the recipient’s current instructions",
+              "Options and extensions: track conditions and maximum duration; continuation is never automatic unless validly exercised under the contract"
+            ],
+            "coreConcepts": [
+              {
+                "title": "MULTI-YEAR ELIGIBILITY",
+                "description": "A framework can provide access to future call-offs, but pipeline, volume and annual revenue may remain uncertain."
+              },
+              {
+                "title": "VALID E-INVOICING",
+                "description": "Correct structured data, buyer reference and transmission route reduce rejection risk but do not guarantee immediate payment."
+              }
+            ],
+            "resources": [
+              {
+                "title": "XRechnung & EVB-IT Framework Guide",
+                "subtitle": "Current-format, buyer-reference and contract review checklist"
+              },
+              {
+                "title": "Mara CRM E-Invoice Workflow",
+                "subtitle": "Prepare and validate structured invoices for configured public recipients"
+              }
+            ],
+            "fullArticleGuide": "### Operating a public-sector framework responsibly\n\nA framework may allow call-offs without a new full procurement, but only within its scope, term, value limits and call-off rules. Authorities must still follow the agreement and applicable law.\n\n#### Delivery practices\n\n- **Reliable milestones:** Baseline scope, dependencies, acceptance criteria and change control before delivery.\n- **Transparent records:** Maintain decisions, approvals, service evidence, security documentation and invoice support.\n- **Capacity governance:** Reserve capacity according to realistic forecasts, not the framework ceiling, unless a binding minimum exists.\n- **Invoice validation:** Use the current XRechnung specification or another accepted format, the buyer-provided reference such as a Leitweg-ID where required, and the designated channel."
+          },
+          "understandContent": {
+            "coreTakeaway": "A framework can diversify a pipeline, but sustainable revenue depends on actual call-offs, margins, capacity, performance and payment terms.",
+            "keyPrinciples": [
+              "Use the buyer reference and mandatory invoice fields exactly as instructed; requirements can differ between federal, state and municipal recipients",
+              "Schedule reviews only when useful and permitted by the governance model; document outcomes without creating unauthorized commitments"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare your public-sector e-invoicing workflow:",
+            "checklistItems": [
+              "Validated the current invoice format, buyer reference and transmission channel for a selected recipient",
+              "Created a standardized, auditable service-evidence report",
+              "Completed a bid-readiness review for one suitable municipal framework notice before submission"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -12475,6 +12585,116 @@ Droga paczka nie tworzy dużego klienta.`,
               "Określono kryteria, zgodę, minimalny zakres danych, odwołanie i ponowne wydanie",
               "Utworzono dostępną stronę weryfikacji z informacją o wystawcy i statusie",
               "Przetestowano wydanie, utratę portfela, odwołanie i kopię off-chain przed produkcją"
+            ]
+          }
+        }
+      }
+    },
+
+    "68": {
+      "title": "68. B2B GovTech i zamówienia publiczne",
+      "subtitle": "Przetargi publiczne, cyfryzacja samorządów, umowy EVB-IT i ogłoszenia",
+      "description": "Dowiedz się, jak oceniać i składać oferty na cyfrowe oraz doradcze zamówienia publiczne w zgodnym, opartym na dowodach procesie—bez zakładania wielkości kontraktu, pewności płatności lub przyszłych zleceń.",
+      "lessons": {
+        "68.1": {
+          "stageTitle": "68. Prawo zamówień i platformy przetargowe",
+          "title": "System GovTech: systematyczne konkurowanie o zamówienia publiczne",
+          "description": "Jak czytać niemieckie i unijne dokumenty zamówień, znajdować ogłoszenia i ograniczać błędy formalne przy użyciu aktualnych źródeł urzędowych.",
+          "learnContent": {
+            "videoTitle": "Masterclass: zamówienia publiczne i pozyskiwanie klientów GovTech",
+            "summaryText": "Instytucje publiczne kupują znaczące usługi cyfrowe, ale budżet nie gwarantuje wydatku u konkretnego oferenta. Naucz się kwalifikować szanse, spełniać kryteria i składać kompletną konkurencyjną ofertę na czas.",
+            "bulletPoints": [
+              "Źródła ogłoszeń: monitoruj TED, oficjalne portale federalne i regionalne oraz platformę wskazaną w dokumentacji",
+              "Rodzaje postępowań: rozpoznaj właściwy tryb i przestrzegaj podanych zasad komunikacji, udziału i negocjacji",
+              "Zgodność formalna: użyj checklisty terminów, formularzy, oświadczeń, formatów, podpisów i uprawnionej wysyłki",
+              "Kryteria udzielenia: mapuj odpowiedź do opublikowanych wag; jakość może liczyć się obok ceny, lecz nie zakładaj, że zawsze wyrówna wyższą stawkę"
+            ],
+            "coreConcepts": [
+              {
+                "title": "PRECYZJA FORMALNA",
+                "description": "Kompletne, terminowe i identyfikowalne złożenie chroni dobrą ofertę przed możliwym do uniknięcia odrzuceniem."
+              },
+              {
+                "title": "OPUBLIKOWANA PUNKTACJA",
+                "description": "Optymalizuj odpowiedź według ujawnionych kryteriów i wag, zamiast zgadywać preferencje zamawiającego."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Checklista zamówień publicznych i przewodnik EVB-IT",
+                "subtitle": "Kontrola oferty i ryzyka umownego"
+              },
+              {
+                "title": "Tracker przetargów GovTech w Mara CRM",
+                "subtitle": "Śledź ogłoszenia, pytania, terminy, wysyłkę i odpowiedzialności"
+              }
+            ],
+            "fullArticleGuide": "### Zdyscyplinowana droga do kontraktu publicznego\n\nPodmioty publiczne są zwykle uporządkowanymi kontrahentami, ale opóźnienia płatności, spory, unieważnienia i zmiany budżetu są możliwe. Oceniaj ryzyko i cash flow jak przy każdym istotnym kliencie.\n\n#### Proces ofertowy\n\n1. **Kwalifikacja ogłoszenia:** Sprawdź zakres, części, terminy, dowody zdolności, kryteria, umowę, możliwości realizacji i konflikty.\n2. **Pytania:** Użyj wskazanego portalu i terminu. Pytaj neutralnie i zachowaj oficjalną odpowiedź.\n3. **Odpowiedź:** Utwórz macierz zgodności i poprzyj każdy wymóg prawdziwym dowodem. Nie wymyślaj referencji ani oświadczeń.\n4. **Walidacja i wcześniejsza wysyłka:** Sprawdź uprawnienia, limity plików, wymagane podpisy i potwierdzenie odbioru. Kwalifikowany podpis elektroniczny nie jest wymagany zawsze—stosuj aktualną instrukcję.\n\nReguły zależą od jurysdykcji, wartości, zamawiającego i trybu. Korzystaj z bieżących dokumentów urzędowych i porady prawnej przy ważnych ofertach."
+          },
+          "understandContent": {
+            "coreTakeaway": "Dyscyplina przetargowa otwiera wieloletnie możliwości, ale ani umowa ramowa, ani jej limit nie gwarantują zleceń lub przychodu.",
+            "keyPrinciples": [
+              "Traktuj termin portalu jako bezwzględny i wysyłaj odpowiednio wcześnie na wypadek problemów z dostępem, uploadem lub walidacją",
+              "Analizuj EVB-IT i wszystkie warunki w ramach zasad postępowania; nie zakładaj, że zawsze trzeba je zaakceptować bez zmian"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj profil do zamówień publicznych:",
+            "checklistItems": [
+              "Zarejestrowano się na oficjalnych portalach właściwych dla rynku i zweryfikowano dostęp",
+              "Przygotowano trzy prawdziwe referencje dopasowane do typowych dowodów zdolności",
+              "Przetestowano uprawnienia, formaty i metodę podpisu wymaganą w wybranym ogłoszeniu"
+            ]
+          }
+        },
+        "68.2": {
+          "stageTitle": "68. Umowy ramowe i pipeline samorządowy",
+          "title": "Samorządowe umowy ramowe: zlecenia bez gwarancji wolumenu",
+          "description": "Jak umowy ramowe organizują przyszłe zlecenia lub mini-konkursy i jak planować realizację bez traktowania limitów jako zakontraktowanego przychodu.",
+          "learnContent": {
+            "videoTitle": "Masterclass: wieloletnie umowy ramowe z sektorem publicznym",
+            "summaryText": "Umowa ramowa ustala warunki możliwych przyszłych zamówień. Nie jest abonamentem i często nie zawiera minimalnego zakupu. Oceń limity, mechanizm zleceń, konkurencję, zdolność i fakturowanie.",
+            "bulletPoints": [
+              "Konstrukcja ramowa: odróżnij maksymalną wartość lub ilość, szacunek popytu, minimum, części, ranking i zasady zleceń",
+              "Mini-konkursy: odpowiadaj na każde zapytanie według kryteriów i terminów określonych w umowie",
+              "E-fakturowanie: generuj wymagany format strukturalny i referencję nabywcy zgodnie z aktualnymi instrukcjami odbiorcy",
+              "Opcje i przedłużenia: śledź warunki i maksymalny czas; kontynuacja nie jest automatyczna bez ważnego wykonania opcji"
+            ],
+            "coreConcepts": [
+              {
+                "title": "WIELOLETNIA KWALIFIKACJA",
+                "description": "Umowa ramowa może dawać dostęp do zleceń, ale pipeline, wolumen i roczny przychód pozostają niepewne."
+              },
+              {
+                "title": "POPRAWNA E-FAKTURA",
+                "description": "Prawidłowe dane, referencja i kanał zmniejszają ryzyko odrzucenia, lecz nie gwarantują natychmiastowej płatności."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik XRechnung i umów ramowych EVB-IT",
+                "subtitle": "Checklista formatu, referencji nabywcy i warunków"
+              },
+              {
+                "title": "Obieg e-faktur w Mara CRM",
+                "subtitle": "Przygotuj i zweryfikuj faktury strukturalne dla skonfigurowanych odbiorców"
+              }
+            ],
+            "fullArticleGuide": "### Odpowiedzialna obsługa umowy ramowej\n\nUmowa ramowa może umożliwiać zlecenia bez nowego pełnego przetargu, ale tylko w jej zakresie, czasie, limitach i zasadach. Zamawiający nadal musi stosować umowę i prawo.\n\n#### Praktyki realizacyjne\n\n- **Wiarygodne kamienie milowe:** Ustal zakres, zależności, kryteria odbioru i kontrolę zmian.\n- **Przejrzysta dokumentacja:** Zachowuj decyzje, akceptacje, dowody usług, bezpieczeństwo i dokumenty faktury.\n- **Zarządzanie zdolnością:** Rezerwuj zasoby według realistycznych prognoz, nie limitu umowy, chyba że istnieje wiążące minimum.\n- **Walidacja faktury:** Użyj aktualnej XRechnung lub innego akceptowanego formatu, referencji przekazanej przez nabywcę, np. Leitweg-ID gdy wymagana, oraz wskazanego kanału."
+          },
+          "understandContent": {
+            "coreTakeaway": "Umowa ramowa może urozmaicić pipeline, lecz trwały przychód zależy od rzeczywistych zleceń, marży, zdolności, wykonania i warunków płatności.",
+            "keyPrinciples": [
+              "Stosuj referencję nabywcy i obowiązkowe pola dokładnie według instrukcji; wymagania federalne, krajowe i samorządowe mogą się różnić",
+              "Planuj przeglądy tylko wtedy, gdy są użyteczne i zgodne z modelem zarządzania; dokumentuj wyniki bez nieuprawnionych zobowiązań"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj obieg e-fakturowania dla sektora publicznego:",
+            "checklistItems": [
+              "Zweryfikowano aktualny format, referencję nabywcy i kanał dla wybranego odbiorcy",
+              "Utworzono standaryzowany, audytowalny raport wykonania usług",
+              "Przeprowadzono ocenę gotowości do jednej właściwej samorządowej umowy ramowej przed złożeniem"
             ]
           }
         }
