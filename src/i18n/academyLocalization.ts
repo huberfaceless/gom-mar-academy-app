@@ -5042,6 +5042,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    54: {
+      title: '54. Responsible crisis and reputation management',
+      subtitle: 'Evidence-led communication, fair moderation, review integrity and lawful remedies',
+      description: 'Prepare for incidents, respond accurately and rebuild trust through corrective action—without silencing legitimate criticism, manipulating reviews, misusing legal threats or promising control of search results.',
+      lessons: {
+        '54.1': {
+          stageTitle: '54. Crisis communication and response',
+          title: 'Coordinate the first 24 hours without speculation or retaliation',
+          description: 'Triage facts, protect affected people, preserve evidence and communicate what is known, unknown and being done.',
+          learnContent: {
+            videoTitle: 'Masterclass: responsible crisis communication',
+            summaryText: 'Not every criticism is a crisis and not every crisis can be resolved quickly. A disciplined response protects people first, assigns authority, verifies facts and updates stakeholders without guarantees that one statement will stop escalation.',
+            bulletPoints: [
+              'Classify safety, legal, privacy, security, service and reputation impact with named incident owners',
+              'Preserve evidence and separate verified facts, allegations, uncertainty and opinion',
+              'Use a holding statement only when useful, with a timestamp, contact route and next update',
+              'Moderate under published rules while preserving criticism, appeals and legally required records'
+            ],
+            coreConcepts: [
+              { iconName: 'shield-alert', title: 'PEOPLE-FIRST RESPONSE', description: 'Safety, support, containment and remedy precede image management.', highlight: true },
+              { iconName: 'users', title: 'VERIFIED COMMUNICATION', description: 'Statements are approved, accessible, consistent with evidence and updated when facts change.' }
+            ],
+            resources: [
+              { title: 'Crisis-response and statement workbook', subtitle: 'Triage, owners, evidence, approvals and update log', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM complaint and incident queue', subtitle: 'Restricted case handling, deadlines and audit trail', type: 'tool', iconName: 'help-circle', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### A responsible crisis workflow\n\n1. **Detect and classify**: distinguish a service complaint, coordinated abuse, misinformation, safety event, privacy incident and security breach; each requires different handling.\n2. **Protect people first**: stop ongoing harm, provide support, meet statutory notification duties and make urgent services available.\n3. **Activate ownership**: incident lead, operations, support, communications, privacy, security and qualified legal counsel receive defined authority.\n4. **Preserve evidence**: retain relevant records lawfully, protect chain of custody and avoid editing or deleting material needed for investigation.\n5. **Verify before claiming**: label facts, allegations, estimates and unknowns; never invent certainty to calm the situation.\n6. **Choose whether to speak**: silence, a holding statement, direct customer contact or a full update each has trade-offs. Use the channel that reaches affected people.\n7. **Write accurately**: acknowledge impact without speculating, explain immediate actions, provide support and state when the next update will occur.\n8. **Coordinate without scripting dishonesty**: give staff verified facts, escalation routes and confidentiality boundaries; do not demand false statements or suppress protected reporting.\n9. **Moderate fairly**: apply published rules to threats, doxxing, spam and harassment consistently; preserve legitimate criticism and offer an appeal route.\n10. **Remedy proportionately**: refunds, correction, repair or compensation follow facts, contracts and law—not a blanket VIP giveaway or an attempt to buy silence.\n11. **Update and correct**: timestamp material changes, correct errors visibly and keep an accessible source of truth.\n12. **Learn after containment**: independent review, root cause, control changes, owners and deadlines; measure recurrence and remedy completion rather than sentiment alone.',
+            practicalExamples: [
+              'A service outage statement confirms impact and work in progress, avoids guessing the cause and commits to a timed update.',
+              'A privacy complaint is moved to a restricted incident process while the public response preserves confidentiality and explains the contact route.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Credible crisis response comes from protecting people, verifying facts and completing remedies—not from controlling every reaction.',
+            keyPrinciples: ['Do not retaliate against critics or whistleblowers', 'Correct records and statements transparently', 'Use qualified legal, privacy and security specialists where needed'],
+          },
+          actionTask: {
+            instruction: 'Prepare a crisis-response plan:',
+            checklistItems: ['Incident categories, owners and emergency contacts assigned', 'Evidence, approval and statutory-notification workflows documented', 'Accessible holding statement and update log prepared', 'Moderation, complaint, remedy and post-incident review processes tested'],
+            toolboxCategory: 'settings',
+          },
+        },
+        '54.2': {
+          stageTitle: '54. Ethical reputation and search management',
+          title: 'Improve discoverability and review integrity without suppression tactics',
+          description: 'Publish accurate information, invite representative feedback and challenge unlawful content through proportionate platform or legal processes.',
+          learnContent: {
+            videoTitle: 'Masterclass: ethical online reputation management',
+            summaryText: 'No organisation controls the first page of search results or a future review score. Sustainable reputation work improves products and support, maintains accurate owned profiles and invites honest feedback without review gating, incentives or selective targeting.',
+            bulletPoints: [
+              'Audit branded search and profiles for accuracy, ownership, accessibility and impersonation risk',
+              'Invite all eligible customers under a neutral, platform-compliant rule—not only satisfied customers',
+              'Respond to reviews without revealing personal data, pressuring removal or arguing about confidential facts',
+              'Report demonstrably fake or unlawful material with evidence and use qualified counsel only when proportionate'
+            ],
+            coreConcepts: [
+              { iconName: 'star', title: 'REVIEW INTEGRITY', description: 'Invitations are neutral, representative, disclosed and compliant with platform rules.', highlight: true },
+              { iconName: 'globe', title: 'ACCURATE PUBLIC RECORD', description: 'Useful owned content adds context; it does not guarantee suppression or de-indexing of lawful criticism.' }
+            ],
+            resources: [
+              { title: 'Reputation and review-integrity workbook', subtitle: 'Audit, invitations, responses, evidence and escalation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM neutral review invitations', subtitle: 'Eligibility rules, suppression, consent and audit history', type: 'tool', iconName: 'star', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Build reputation through evidence and service\n\n1. **Establish the baseline**: capture branded queries, profiles, knowledge panels, reviews, press and impersonation with date, country and device context.\n2. **Fix owned information**: correct company details, security contacts, accessibility, authorship and material claims on channels you control.\n3. **Publish useful evidence**: transparent policies, product documentation, incident updates, leadership profiles and independently supportable claims.\n4. **Avoid deceptive profile creation**: do not fabricate personas, undisclosed advertorials, fake communities or pages designed to mislead users or search engines.\n5. **Use neutral eligibility**: invite a defined set of genuine customers regardless of predicted sentiment and follow each platform’s rules.\n6. **Prohibit review gating and manipulation**: no satisfaction pre-screen, purchased reviews, employee reviews, undisclosed incentives or pressure to change a rating.\n7. **Protect privacy in responses**: acknowledge the issue and offer a secure contact route without confirming customer status or exposing case data.\n8. **Distinguish disagreement from violation**: negative opinion is not automatically fake, defamatory or removable. Document specific platform or legal grounds.\n9. **Escalate proportionately**: use platform reporting, correction requests, right of reply and qualified counsel; avoid intimidation, mass reporting and baseless threats.\n10. **Respect journalism and public interest**: corrections should target factual error with evidence, not suppress lawful reporting or criticism.\n11. **Measure without gaming**: response time, issue resolution, invitation coverage, complaint recurrence and verified profile accuracy are more controllable than star targets.\n12. **Monitor and improve the root cause**: route recurring themes to product, support, accessibility, privacy and security owners.',
+            practicalExamples: [
+              'Every customer completing the same service milestone receives the same neutral review invitation, subject to consent and platform rules.',
+              'A false factual statement is challenged with dated source evidence while critical opinion remains visible and receives a respectful response.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'The strongest reputation is an accurate public record supported by good products, fair review practices and completed remedies.',
+            keyPrinciples: ['Do not promise search control or removal', 'Never gate, buy or selectively solicit reviews', 'Treat lawful criticism, privacy and due process with respect'],
+          },
+          actionTask: {
+            instruction: 'Create an ethical reputation programme:',
+            checklistItems: ['Branded search and owned profiles audited with evidence', 'Neutral review eligibility and platform rules documented', 'Privacy-safe response and escalation templates approved', 'Root-cause metrics, owners and review cadence established'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -10068,6 +10150,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Utwórz odpowiedzialny plan integracji:',
             checklistItems: ['Przypisano dostęp, gotówkę, usługę i incydenty dnia pierwszego', 'Zmapowano obowiązki wobec klientów, personelu, umów i prywatności', 'Zatwierdzono baseline KPI i stop rules eksperymentów', 'Utworzono evidence room i rejestr ryzyk'],
             toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
+    54: {
+      title: '54. Odpowiedzialne zarządzanie kryzysem i reputacją',
+      subtitle: 'Komunikacja oparta na dowodach, uczciwa moderacja, integralność opinii i legalne środki',
+      description: 'Przygotuj reakcję, komunikuj dokładnie i odbudowuj zaufanie przez naprawę—bez uciszania uzasadnionej krytyki, manipulacji opiniami, bezpodstawnych gróźb prawnych i obietnicy kontroli wyników wyszukiwania.',
+      lessons: {
+        '54.1': {
+          stageTitle: '54. Komunikacja i reakcja kryzysowa',
+          title: 'Koordynuj pierwsze 24 godziny bez spekulacji i odwetu',
+          description: 'Klasyfikuj fakty, chroń osoby, zachowaj dowody i komunikuj to, co wiadomo, czego nie wiadomo oraz co jest robione.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialna komunikacja kryzysowa',
+            summaryText: 'Nie każda krytyka jest kryzysem i nie każdy kryzys kończy się szybko. Dyscyplina chroni ludzi, przypisuje odpowiedzialność, weryfikuje fakty i aktualizuje informacje bez gwarancji, że jedno oświadczenie zatrzyma eskalację.',
+            bulletPoints: [
+              'Klasyfikuj wpływ na bezpieczeństwo, prawo, prywatność, usługę i reputację z właścicielami incydentu',
+              'Zachowuj dowody i oddzielaj fakty, zarzuty, niepewność i opinie',
+              'Stosuj holding statement tylko, gdy pomaga, z czasem, kontaktem i następną aktualizacją',
+              'Moderuj według opublikowanych reguł, zachowując krytykę, odwołania i wymagane rekordy'
+            ],
+            coreConcepts: [
+              { iconName: 'shield-alert', title: 'NAJPIERW LUDZIE', description: 'Bezpieczeństwo, wsparcie, ograniczenie i naprawa poprzedzają wizerunek.', highlight: true },
+              { iconName: 'users', title: 'ZWERYFIKOWANA KOMUNIKACJA', description: 'Oświadczenia są zatwierdzone, dostępne, zgodne z dowodami i korygowane.' }
+            ],
+            resources: [
+              { title: 'Zeszyt reakcji i oświadczeń kryzysowych', subtitle: 'Triage, właściciele, dowody, zgody i log aktualizacji', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kolejka skarg i incydentów Mara CRM', subtitle: 'Ograniczony dostęp, terminy i ślad audytu', type: 'tool', iconName: 'help-circle', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Odpowiedzialny przepływ kryzysowy\n\n1. **Wykryj i sklasyfikuj**: odróżnij skargę, nadużycie, dezinformację, bezpieczeństwo, prywatność i cyberincydent.\n2. **Najpierw chroń ludzi**: zatrzymaj szkodę, zapewnij wsparcie, wykonaj obowiązki zgłoszenia i udostępnij pilne usługi.\n3. **Aktywuj odpowiedzialność**: lider incydentu, operacje, wsparcie, komunikacja, prywatność, bezpieczeństwo i prawnik mają określone uprawnienia.\n4. **Zachowaj dowody**: legalnie przechowuj rekordy, chroń chain of custody i nie usuwaj materiału potrzebnego do dochodzenia.\n5. **Weryfikuj przed twierdzeniem**: oznacz fakty, zarzuty, szacunki i niewiadome; nie wymyślaj pewności.\n6. **Wybierz komunikację**: cisza, krótki komunikat, bezpośredni kontakt lub pełna aktualizacja mają różne skutki.\n7. **Pisz dokładnie**: uznaj wpływ bez spekulacji, opisz działania, wsparcie i czas następnej aktualizacji.\n8. **Koordynuj bez nieuczciwości**: daj personelowi fakty, eskalację i granice poufności; nie wymagaj fałszu ani tłumienia chronionych zgłoszeń.\n9. **Moderuj uczciwie**: reguły dla gróźb, doxxingu, spamu i nękania stosuj równo; zachowaj krytykę i odwołanie.\n10. **Naprawiaj proporcjonalnie**: zwrot, korekta, naprawa lub rekompensata wynikają z faktów, umów i prawa, nie kupowania ciszy.\n11. **Aktualizuj i koryguj**: oznaczaj czas zmian, widocznie poprawiaj błędy i utrzymuj dostępne źródło prawdy.\n12. **Ucz się po opanowaniu**: niezależny przegląd, przyczyna, kontrole, właściciele i terminy.',
+            practicalExamples: [
+              'Komunikat o awarii potwierdza wpływ i prace, nie zgaduje przyczyny i podaje czas aktualizacji.',
+              'Skarga prywatności trafia do ograniczonego procesu, a publiczna odpowiedź zachowuje poufność.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Wiarygodna reakcja chroni ludzi, weryfikuje fakty i kończy naprawę—nie kontroluje każdej reakcji.',
+            keyPrinciples: ['Nie stosuj odwetu wobec krytyków i sygnalistów', 'Przejrzyście poprawiaj rekordy i komunikaty', 'Włączaj specjalistów prawa, prywatności i bezpieczeństwa'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj plan reakcji kryzysowej:',
+            checklistItems: ['Przypisano kategorie incydentów, właścicieli i kontakty', 'Udokumentowano dowody, zgody i obowiązki zgłoszenia', 'Przygotowano dostępny komunikat i log aktualizacji', 'Przetestowano moderację, skargi, naprawę i retrospektywę'],
+            toolboxCategory: 'settings',
+          },
+        },
+        '54.2': {
+          stageTitle: '54. Etyczna reputacja i wyszukiwanie',
+          title: 'Poprawiaj widoczność i integralność opinii bez tłumienia krytyki',
+          description: 'Publikuj dokładne informacje, zbieraj reprezentatywny feedback i kwestionuj treści przez proporcjonalne procesy platformowe lub prawne.',
+          learnContent: {
+            videoTitle: 'Masterclass: etyczne zarządzanie reputacją online',
+            summaryText: 'Żadna organizacja nie kontroluje pierwszej strony wyszukiwarki ani przyszłej oceny. Trwała reputacja wynika z produktu, obsługi, dokładnych profili i uczciwych zaproszeń bez review gatingu, zachęt i selekcji.',
+            bulletPoints: [
+              'Audytuj wyszukiwanie i profile pod kątem dokładności, własności, dostępności i podszywania',
+              'Zapraszaj wszystkich kwalifikujących się klientów neutralną regułą, nie tylko zadowolonych',
+              'Odpowiadaj bez ujawniania danych, presji na usunięcie i sporu o poufne fakty',
+              'Zgłaszaj udowodnione fałszywe lub bezprawne treści z dowodami i proporcjonalną pomocą prawną'
+            ],
+            coreConcepts: [
+              { iconName: 'star', title: 'INTEGRALNOŚĆ OPINII', description: 'Zaproszenia są neutralne, reprezentatywne, jawne i zgodne z platformą.', highlight: true },
+              { iconName: 'globe', title: 'DOKŁADNY REKORD PUBLICZNY', description: 'Własna treść daje kontekst, lecz nie gwarantuje tłumienia lub de-indeksacji legalnej krytyki.' }
+            ],
+            resources: [
+              { title: 'Zeszyt reputacji i integralności opinii', subtitle: 'Audyt, zaproszenia, odpowiedzi, dowody i eskalacja', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Neutralne zaproszenia Mara CRM', subtitle: 'Reguły kwalifikacji, wykluczenia, zgoda i audyt', type: 'tool', iconName: 'star', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Buduj reputację przez dowody i obsługę\n\n1. **Ustal baseline**: zapisz zapytania, profile, knowledge panels, opinie, prasę i podszywanie z datą oraz krajem.\n2. **Popraw własne informacje**: dane firmy, kontakty bezpieczeństwa, dostępność, autorstwo i twierdzenia.\n3. **Publikuj użyteczne dowody**: polityki, dokumentację, aktualizacje incydentów, profile i twierdzenia możliwe do poparcia.\n4. **Unikaj oszustwa**: nie twórz fałszywych osób, ukrytych advertoriali, fikcyjnych społeczności i stron mylących użytkownika.\n5. **Stosuj neutralną kwalifikację**: zapraszaj określoną grupę prawdziwych klientów niezależnie od przewidywanej opinii.\n6. **Zakazuj manipulacji**: bez preselekcji satysfakcji, kupionych opinii, recenzji pracowników, ukrytych zachęt i presji.\n7. **Chroń prywatność odpowiedzi**: uznaj problem i podaj bezpieczny kontakt bez potwierdzania statusu klienta.\n8. **Odróżnij spór od naruszenia**: negatywna opinia nie jest automatycznie fałszywa, zniesławiająca lub usuwalna.\n9. **Eskaluj proporcjonalnie**: raport platformy, prośba o korektę, prawo odpowiedzi i prawnik; bez zastraszania i masowych zgłoszeń.\n10. **Szanuj dziennikarstwo i interes publiczny**: korekta dotyczy błędu faktycznego, nie tłumienia legalnych materiałów.\n11. **Mierz bez gry systemem**: czas odpowiedzi, rozwiązanie, pokrycie zaproszeń, nawroty skarg i dokładność profili.\n12. **Naprawiaj przyczynę**: kieruj wzorce do produktu, wsparcia, dostępności, prywatności i bezpieczeństwa.',
+            practicalExamples: [
+              'Każdy klient po tym samym etapie usługi otrzymuje neutralne zaproszenie zgodne ze zgodą i zasadami platformy.',
+              'Fałszywy fakt jest kwestionowany datowanym dowodem, a krytyczna opinia pozostaje z pełną szacunku odpowiedzią.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Najsilniejsza reputacja to dokładny rekord wsparty dobrym produktem, uczciwymi opiniami i zakończoną naprawą.',
+            keyPrinciples: ['Nie obiecuj kontroli wyszukiwania ani usunięcia', 'Nie selekcjonuj, kupuj ani wymuszaj opinii', 'Szanuj legalną krytykę, prywatność i due process'],
+          },
+          actionTask: {
+            instruction: 'Utwórz etyczny program reputacji:',
+            checklistItems: ['Zaudytowano wyszukiwanie i profile z dowodami', 'Udokumentowano neutralne kryteria i reguły platform', 'Zatwierdzono prywatne odpowiedzi i eskalację', 'Przypisano metryki przyczyn, właścicieli i przegląd'],
+            toolboxCategory: 'crm',
           },
         },
       },
