@@ -5780,6 +5780,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    63: {
+      title: '63. Responsible enterprise proposals and public procurement',
+      subtitle: 'Opportunity sourcing, fair market engagement, compliant bids and evidence-led presentations',
+      description: 'Prepare for enterprise and public-sector competitions through transparent market engagement, accurate qualifications and auditable proposals—without manipulating specifications, promising contract values or seeking unfair access.',
+      lessons: {
+        '63.1': {
+          stageTitle: '63. Opportunity sourcing and qualification',
+          title: 'Find and qualify procurements without improper pre-RFP influence',
+          description: 'Monitor authorised sources, understand procedure rules and participate in pre-market engagement only through transparent and equally available channels.',
+          learnContent: {
+            videoTitle: 'Masterclass: compliant sourcing and bid qualification',
+            summaryText: 'Early understanding can improve readiness, but relationships do not guarantee an award and may create conflicts or exclusion risk. Supplier engagement must respect equal treatment, transparency, confidentiality, competition, lobbying and anti-corruption rules in the relevant jurisdiction.',
+            bulletPoints: [
+              'Monitor official notices, qualification systems and approved supplier networks with current search criteria',
+              'Build a bid/no-bid decision from fit, evidence, capacity, risk, cost and probability ranges',
+              'Respond to RFIs, consultations and market events without drafting requirements that improperly favour one supplier',
+              'Verify every mandatory qualification, certificate, declaration and subcontractor obligation against the notice'
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'FAIR MARKET ENGAGEMENT', description: 'Questions and supplier input use documented channels and preserve equal access and competition.', highlight: true },
+              { iconName: 'filter', title: 'EVIDENCE-BASED BID DECISION', description: 'The team records fit, gaps, cost, conflicts, delivery capacity and a range—not a guaranteed win probability.' }
+            ],
+            resources: [
+              { title: 'Bid/no-bid and procurement readiness workbook', subtitle: 'Procedure, fit, evidence, cost, risk, conflicts and approvals', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM procurement pipeline', subtitle: 'Notices, deadlines, clarifications, owners and immutable submission evidence', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Qualify opportunities with integrity\n\n1. **Identify the legal and procedural framework**: public, utilities, defence, donor-funded and private RFPs follow different rules. Thresholds, publication duties and remedies vary.\n2. **Use authoritative sources**: official portal, buyer profile, approved framework or named procurement contact; verify notice version and time zone.\n3. **Map the procedure**: qualification, expression of interest, open or restricted process, dialogue, negotiation, framework, auction, award and standstill.\n4. **Control early engagement**: use published consultations, RFIs, supplier days and documented meetings. Do not seek confidential budgets, competitor information or bespoke criteria that distort competition.\n5. **Declare conflicts and prior involvement**: advisers, former officials, partners and incumbency can create actual or perceived advantage. Follow disclosure and mitigation instructions.\n6. **Prohibit inducements**: no gifts, entertainment, charitable donations, jobs, commissions or free work intended to influence officials or evaluators.\n7. **Protect procurement information**: access by need, approved communications, clean teams where needed and no misuse of leaked documents.\n8. **Build the compliance matrix**: instruction, exact source, mandatory or scored status, owner, evidence, format, deadline and review.\n9. **Verify eligibility**: entity, tax, exclusion grounds, licences, financial standing, insurance, security, accessibility, sanctions and beneficial ownership as applicable.\n10. **Validate certifications honestly**: provide current scope and issuing body; never imply ISO, privacy or accessibility certification that does not exist or cover the bid.\n11. **Assess delivery capacity**: people, partners, location, language, mobilisation, cash, guarantees, supply chain, service levels and competing commitments.\n12. **Estimate total bid cost and risk**: legal, solution, pricing, security, travel, bonds, demonstrations and opportunity cost.\n13. **Use a governed bid/no-bid decision**: independent challenge, conflicts, assumptions, probability range and approval; ten minutes may be insufficient for material bids.\n14. **Manage deadlines conservatively**: portal registration, signing, encryption, file size, upload and outage buffer. Follow the specific rule rather than assuming every late bid is treated identically.\n15. **Keep an audit trail**: notice, questions, answers, decisions, evidence versions, access and submission receipt.',
+            practicalExamples: [
+              'A supplier answers a published RFI with vendor-neutral performance information and discloses its commercial interest.',
+              'The team declines a bid because a mandatory certificate is out of scope rather than describing it misleadingly.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Procurement readiness comes from fair access, verified eligibility and delivery capacity—not from shaping criteria to exclude competitors.',
+            keyPrinciples: ['Use documented buyer channels', 'Disclose conflicts and prohibit inducements', 'Treat every mandatory requirement and deadline exactly as published'],
+          },
+          actionTask: {
+            instruction: 'Prepare procurement readiness:',
+            checklistItems: ['Official sources, procedures and buyer communication rules mapped', 'Conflict, anti-corruption and confidentiality controls approved', 'Eligibility, certification and compliance evidence inventoried', 'Bid cost, capacity, risks, deadline buffer and decision authority documented'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '63.2': {
+          stageTitle: '63. Proposal production and evaluation presentation',
+          title: 'Submit a compliant, evidence-led proposal without design theatre',
+          description: 'Map every response to the evaluation method, substantiate claims and protect confidential bid data throughout drafting and presentation.',
+          learnContent: {
+            videoTitle: 'Masterclass: compliant enterprise proposals and evaluation meetings',
+            summaryText: 'Visual clarity can help evaluators navigate a response, but design does not guarantee points and may violate page, format or anonymity rules. The bid succeeds only on compliant, relevant and substantiated evidence under the published evaluation method.',
+            bulletPoints: [
+              'Create a requirements and evaluation matrix before drafting',
+              'Use the buyer’s defined terminology accurately without copying text to imply capability',
+              'Tie methods, team, schedule, price and risk controls to verifiable evidence and assumptions',
+              'Prepare authorised presenters for consistent answers, confidentiality and clarification boundaries'
+            ],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'TRACEABLE PROPOSAL', description: 'Each requirement links to a response, evidence owner, version and final compliance check.', highlight: true },
+              { iconName: 'award', title: 'CONTROLLED PRESENTATION', description: 'The team answers within the rules and never improvises unauthorised commitments.' }
+            ],
+            resources: [
+              { title: 'Enterprise proposal and compliance workbook', subtitle: 'Matrix, outline, evidence, pricing, review and submission record', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR proposal review assistant', subtitle: 'Use only with approved data handling and mandatory human verification', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Produce an auditable proposal\n\n1. **Freeze the source set**: notice, RFP, appendices, amendments, questions and official answers with version and precedence.\n2. **Build the matrix**: mandatory requirements, weighted criteria, pass/fail items, evidence, cross-reference, owner and reviewer.\n3. **Follow instructions literally**: template, language, page and file limits, font, naming, signatures, pricing workbook, anonymity and submission route.\n4. **Write to the criterion**: answer the exact question, method, deliverable, owner, timing, dependency, risk and evidence. Do not repeat keywords without substance.\n5. **Substantiate experience**: obtain client permission where needed, state scope and outcome accurately and avoid confidential or unverifiable claims.\n6. **Name only committed resources**: verify availability, employment or subcontract status, qualifications, substitution rules and consent for personal data.\n7. **Plan delivery realistically**: mobilisation, governance, work packages, milestones, acceptance, change, continuity and exit with dependencies.\n8. **Model price transparently**: assumptions, quantities, taxes, currency, indexation, optional items, exclusions and total evaluated cost as requested.\n9. **Do not manipulate options**: optional packages must follow the pricing and evaluation rules and not conceal unavoidable cost.\n10. **Address risk honestly**: likelihood, impact, prevention, contingency, owner and residual risk; do not promise zero risk or certain ROI.\n11. **Protect confidential data and AI use**: do not upload restricted RFPs, personal data, trade secrets or buyer material to unapproved models. Review vendor terms, retention and training.\n12. **Require human verification**: AI can assist with cross-references but may omit amendments or invent compliance. Named experts approve technical, legal and commercial claims.\n13. **Run independent reviews**: compliance, solution, security, privacy, accessibility, commercial and red-team challenge with issue closure.\n14. **Prepare the presentation**: follow permitted content and attendance; assign speakers, rehearse time, log questions and avoid new commitments outside authority.\n15. **Submit early and verify receipt**: validate files, signatures, malware scan, hash or archive where useful and capture the portal receipt.\n16. **Handle clarification and award lawfully**: respond only through authorised channels, preserve records, respect standstill and use debrief or remedies without retaliation.',
+            practicalExamples: [
+              'A beautiful infographic is removed because the buyer requires anonymous plain-text pages and counts graphics in the page limit.',
+              'During Q&A, the presenter records a new requirement and routes it for authorised written clarification instead of promising it live.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A strong proposal makes compliance and evidence easy to verify while preserving accuracy, confidentiality and authorised commitments.',
+            keyPrinciples: ['Substance and compliance outrank visual polish', 'Never upload restricted bid material to unapproved AI', 'Submit early and retain proof'],
+          },
+          actionTask: {
+            instruction: 'Prepare a governed proposal pack:',
+            checklistItems: ['Current source set and requirement matrix baselined', 'Evidence, resource commitment, price and risk claims verified', 'AI, confidentiality, personal-data and reviewer controls approved', 'Presentation authority, submission buffer and receipt process tested'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -11544,6 +11626,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj uczciwy cykl celów:',
             checklistItems: ['Współtworzono objectives, baseline, dependencies i guardrails', 'Udokumentowano źródła, dostęp, korekty i privacy', 'Zaplanowano workload, accommodation, feedback i escalation', 'Niezależnie przejrzano variable pay, equity, prawo i appeal'],
             toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
+    63: {
+      title: '63. Odpowiedzialne oferty enterprise i zamówienia publiczne',
+      subtitle: 'Pozyskiwanie szans, uczciwy dialog rynkowy, zgodne oferty i prezentacje oparte na dowodach',
+      description: 'Przygotuj konkursy enterprise i publiczne przez przejrzysty dialog, dokładne kwalifikacje i audytowalne oferty—bez manipulacji specyfikacją, obietnic wartości kontraktu i szukania nieuczciwego dostępu.',
+      lessons: {
+        '63.1': {
+          stageTitle: '63. Pozyskanie i kwalifikacja szans',
+          title: 'Znajduj zamówienia bez niewłaściwego wpływu pre-RFP',
+          description: 'Monitoruj autoryzowane źródła, poznaj procedurę i uczestnicz w dialogu tylko przez jawne, równe kanały.',
+          learnContent: {
+            videoTitle: 'Masterclass: zgodne sourcing i kwalifikacja oferty',
+            summaryText: 'Wczesne zrozumienie poprawia gotowość, ale relacje nie gwarantują award i mogą tworzyć konflikt lub wykluczenie. Dialog respektuje równe traktowanie, przejrzystość, poufność, konkurencję, lobbying i antykorupcję.',
+            bulletPoints: [
+              'Monitoruj oficjalne ogłoszenia, systemy kwalifikacji i zatwierdzone sieci dostawców',
+              'Buduj bid/no-bid z fit, dowodów, capacity, ryzyka, kosztu i zakresu prawdopodobieństwa',
+              'Odpowiadaj na RFI i konsultacje bez wymagań niewłaściwie faworyzujących dostawcę',
+              'Weryfikuj obowiązkowe kwalifikacje, certyfikaty, deklaracje i zobowiązania podwykonawców'
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'UCZCIWY DIALOG RYNKOWY', description: 'Pytania i input używają udokumentowanych kanałów oraz zachowują równy dostęp.', highlight: true },
+              { iconName: 'filter', title: 'DECYZJA OPARTA NA DOWODACH', description: 'Zespół zapisuje fit, luki, koszt, konflikty, capacity i zakres zamiast gwarancji.' }
+            ],
+            resources: [
+              { title: 'Zeszyt bid/no-bid i gotowości', subtitle: 'Procedura, fit, dowody, koszt, ryzyko, konflikty i zgody', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Pipeline zamówień Mara CRM', subtitle: 'Ogłoszenia, terminy, pytania, ownerzy i dowód submission', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Kwalifikuj szanse z integralnością\n\n1. **Ustal ramy prawa i procedury**: public, utilities, defence, donor-funded i private RFP mają różne zasady. Progi i remedies się różnią.\n2. **Używaj źródeł autorytatywnych**: portal, buyer profile, framework lub kontakt procurement; sprawdź wersję i timezone.\n3. **Zmapuj procedurę**: qualification, EOI, open/restricted, dialogue, negotiation, framework, auction, award i standstill.\n4. **Kontroluj early engagement**: konsultacje, RFI, supplier days i spotkania w dokumentowanych kanałach. Nie szukaj tajnych budżetów, danych konkurenta ani dyskryminującej specyfikacji.\n5. **Ujawniaj konflikty i wcześniejszy udział**: doradcy, byli urzędnicy, partnerzy i incumbent mogą dać przewagę; stosuj disclosure i mitigation.\n6. **Zakaz korzyści**: bez prezentów, rozrywki, darowizn, pracy, stanowisk, prowizji i free work dla wpływu na oceniających.\n7. **Chroń informacje**: need-to-know, approved communications, clean teams i brak użycia wycieków.\n8. **Buduj compliance matrix**: instrukcja, źródło, mandatory/scored, owner, dowód, format, termin i review.\n9. **Weryfikuj eligibility**: podmiot, podatki, grounds, licencje, finanse, insurance, security, accessibility, sanctions i beneficial ownership.\n10. **Uczciwie pokazuj certyfikaty**: aktualny scope i issuer; nie sugeruj ISO, privacy lub accessibility poza zakresem.\n11. **Oceń capacity**: ludzie, partnerzy, miejsce, język, mobilisation, cash, guarantees, supply chain, SLA i inne zobowiązania.\n12. **Oszacuj koszt i ryzyko**: prawo, solution, price, security, travel, bonds, demo i opportunity cost.\n13. **Governed bid/no-bid**: challenge, conflicts, assumptions, probability range i approval; dziesięć minut może nie wystarczyć.\n14. **Zarządzaj terminem**: registration, signing, encryption, size, upload i outage buffer. Stosuj konkretną regułę.\n15. **Zachowaj audyt**: notice, Q&A, decyzje, wersje, dostęp i receipt.',
+            practicalExamples: [
+              'Dostawca odpowiada na publiczne RFI vendor-neutral informacją i ujawnia interes handlowy.',
+              'Zespół rezygnuje, gdy certyfikat jest poza zakresem, zamiast myląco go opisywać.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Gotowość wynika z równego dostępu, eligibility i capacity—nie z kryteriów wykluczających konkurencję.',
+            keyPrinciples: ['Używaj dokumentowanych kanałów buyer', 'Ujawniaj konflikty i zakazuj korzyści', 'Stosuj każde wymaganie i termin dokładnie'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj gotowość procurement:',
+            checklistItems: ['Zmapowano źródła, procedury i reguły komunikacji', 'Zatwierdzono konflikty, antykorupcję i poufność', 'Zinwentaryzowano eligibility, certyfikaty i dowody', 'Udokumentowano koszt, capacity, ryzyka, buffer i authority'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '63.2': {
+          stageTitle: '63. Produkcja oferty i prezentacja',
+          title: 'Składaj zgodną ofertę bez design theatre',
+          description: 'Mapuj odpowiedź do oceny, potwierdzaj twierdzenia i chroń poufne dane podczas tworzenia i prezentacji.',
+          learnContent: {
+            videoTitle: 'Masterclass: zgodne oferty enterprise i evaluation meeting',
+            summaryText: 'Jasność wizualna pomaga, ale design nie gwarantuje punktów i może naruszać page, format lub anonymity. Oferta wygrywa tylko przez zgodność, relewancję i dowody według opublikowanej metody.',
+            bulletPoints: [
+              'Utwórz matrix wymagań i oceny przed pisaniem',
+              'Używaj terminologii buyer dokładnie bez kopiowania dla pozoru capability',
+              'Łącz metodę, zespół, harmonogram, cenę i ryzyka z dowodami oraz założeniami',
+              'Przygotuj uprawnionych prezenterów do spójnych odpowiedzi i granic clarification'
+            ],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'IDENTYFIKOWALNA OFERTA', description: 'Wymaganie łączy się z odpowiedzią, dowodem, ownerem, wersją i checkiem.', highlight: true },
+              { iconName: 'award', title: 'KONTROLOWANA PREZENTACJA', description: 'Zespół odpowiada w regułach i nie improwizuje nieautoryzowanych zobowiązań.' }
+            ],
+            resources: [
+              { title: 'Zeszyt oferty enterprise i compliance', subtitle: 'Matrix, outline, dowody, pricing, review i submission', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Asystent review oferty GOM-MAR', subtitle: 'Tylko z zatwierdzonymi danymi i obowiązkową weryfikacją człowieka', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Audytowalna oferta\n\n1. **Zamroź źródła**: notice, RFP, attachments, amendments, questions i official answers z wersją i precedence.\n2. **Buduj matrix**: mandatory, weighted, pass/fail, evidence, cross-reference, owner i reviewer.\n3. **Stosuj instrukcje literalnie**: template, language, page/file, font, naming, signatures, pricing, anonymity i route.\n4. **Pisz do criterion**: pytanie, method, deliverable, owner, timing, dependency, risk i evidence. Bez pustych keywords.\n5. **Potwierdzaj experience**: zgoda klienta, dokładny scope/outcome i brak poufnych lub nieweryfikowalnych claims.\n6. **Wymieniaj committed resources**: availability, employment/subcontract, qualifications, substitution i consent dla personal data.\n7. **Realistyczny delivery**: mobilisation, governance, work packages, milestones, acceptance, change, continuity i exit.\n8. **Transparentna cena**: assumptions, quantities, tax, currency, indexation, options, exclusions i evaluated cost.\n9. **Nie manipuluj opcjami**: pakiety stosują reguły i nie ukrywają niezbędnego kosztu.\n10. **Uczciwe ryzyko**: likelihood, impact, prevention, contingency, owner i residual; bez zero risk i sure ROI.\n11. **Chroń dane i AI**: nie wgrywaj restricted RFP, personal data, trade secrets lub buyer materials do niezatwierdzonego modelu. Przejrzyj retencję i training.\n12. **Human verification**: AI może cross-reference, ale pomija amendment lub wymyśla compliance. Eksperci zatwierdzają claims.\n13. **Niezależne review**: compliance, solution, security, privacy, accessibility, commercial i red team z closure.\n14. **Przygotuj prezentację**: dozwolona treść i attendance, role, time, questions i brak commitment poza authority.\n15. **Wyślij wcześnie i potwierdź**: pliki, podpisy, malware, hash/archive i receipt.\n16. **Legalne clarification i award**: authorised channel, records, standstill, debrief i remedies bez retaliation.',
+            practicalExamples: [
+              'Infografika jest usunięta, bo buyer wymaga anonimowego plain text i liczy grafikę do limitu.',
+              'Prezenter zapisuje nowe wymaganie i kieruje do pisemnego clarification zamiast obiecać live.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Silna oferta ułatwia weryfikację zgodności i dowodów, zachowując dokładność, poufność i authority.',
+            keyPrinciples: ['Substance i compliance są ważniejsze niż design', 'Nie wgrywaj restricted bid material do niezatwierdzonej AI', 'Składaj wcześnie i zachowuj dowód'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj governed proposal pack:',
+            checklistItems: ['Ustalono current sources i requirement matrix', 'Zweryfikowano dowody, resources, pricing i risk claims', 'Zatwierdzono AI, confidentiality, personal data i review', 'Przetestowano authority, submission buffer i receipt'],
+            toolboxCategory: 'crm',
           },
         },
       },
