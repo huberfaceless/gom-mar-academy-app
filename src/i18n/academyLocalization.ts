@@ -4017,6 +4017,129 @@ Fast answers are useful only when they are accurate, accessible and easy to leav
         },
       },
     },
+    45: {
+      title: '45. Ethical retention, fair cancellation & sustainable customer value',
+      subtitle: 'Outcome-led onboarding, voluntary support, transparent subscriptions and respectful win-back',
+      description: 'Improve long-term customer value by delivering useful outcomes and removing avoidable friction while preserving an immediate, understandable cancellation path—without churn, profit or reactivation guarantees.',
+      lessons: {
+        '45.1': {
+          stageTitle: '45. Customer outcomes & fair retention',
+          title: 'Detect service friction without profiling or obstructing cancellation',
+          description: 'Use proportionate signals to offer relevant help, improve onboarding and provide genuine pause or downgrade choices without manipulating people into staying.',
+          learnContent: {
+            videoTitle: 'Masterclass: Ethical retention and customer-outcome monitoring',
+            summaryText: 'Cancellation has many causes and inactivity alone does not prove dissatisfaction or churn risk. Retention should come from product fit, clear value and reliable support—not intrusive surveillance, surprise calls, hidden cancellation controls or universal claims about acquisition cost and profit.',
+            bulletPoints: [
+              'Define successful customer outcomes and evidence before selecting engagement or inactivity signals',
+              'Use the minimum necessary account data, explain relevant monitoring and avoid inferring health, finances or vulnerability',
+              'Offer help, pause or downgrade as optional alternatives while keeping cancellation equally visible and easy',
+              'Analyse onboarding, defects, support, accessibility, pricing and expectation gaps instead of blaming low usage',
+            ],
+            coreConcepts: [
+              { iconName: 'shield', title: 'PROPORTIONATE SUPPORT SIGNAL', description: 'A documented signal opens a review or optional support offer; it never automatically labels a person, removes choice or triggers pressure.', highlight: true },
+              { iconName: 'pause-circle', title: 'FAIR SUBSCRIPTION CONTROL', description: 'Pause, downgrade and cancellation show price, timing and consequences clearly, with confirmation and no unnecessary obstacles.' },
+            ],
+            resources: [
+              { title: 'Ethical Retention & Cancellation Workbook', subtitle: 'Outcomes, signals, experiments, rights and service recovery', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Customer-Outcome Monitor', subtitle: 'Privacy-aware cohorts, support signals and review queues', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Earn retention through outcomes and customer control
+
+Retention is useful only when customers continue because the service remains suitable. A lower churn rate can hide lock-in, billing friction or customers who cannot find the exit.
+
+#### Ethical retention workflow
+
+1. **Define the customer promise**: State the intended outcome, prerequisites, time and effort, exclusions and what evidence would show progress.
+2. **Map the lifecycle**: Review purchase, setup, first use, recurring value, support, billing, renewal, pause and cancellation from the customer’s perspective.
+3. **Measure a baseline honestly**: Define customer, active subscription, cancellation, involuntary churn, cohort and observation period. Segment without cherry-picking.
+4. **Research causes directly**: Combine voluntary feedback, support themes, product defects, accessibility findings and cohort behaviour. Do not assume a fixed list of churn causes.
+5. **Minimise behavioural data**: Collect only signals needed for a stated service purpose, restrict access, set retention and avoid sensitive inference or employee-style surveillance.
+6. **Validate an alert before action**: Test whether a signal predicts a service need across relevant groups. Monitor false positives and unequal impact.
+7. **Offer proportionate support**: Use the preferred channel and explain why the message was sent. Make a check-in optional; no surprise call or urgency.
+8. **Fix the product first**: Improve confusing setup, reliability, accessibility, expectations, support and billing before adding persuasion.
+9. **Provide genuine choices**: Pause, downgrade, switch plan or seek assistance only where operationally real. Show price, duration, lost features and automatic restart clearly.
+10. **Keep cancellation simple**: Use a discoverable route, few necessary steps, no preselected retention offer and immediate confirmation. Honour applicable cooling-off and refund rights.
+11. **Handle involuntary churn carefully**: Give accurate payment-failure notices and secure update routes, with bounded retries and no misleading debt threats.
+12. **Run controlled experiments**: Predefine hypothesis, eligible cohort, customer-benefit metric, harm metric, duration and stop rule. Do not optimise only for retained billing.
+13. **Review balanced outcomes**: Examine task success, support demand, accessibility, complaints, refunds, pauses, cancellations, reactivations and longer-term satisfaction.
+14. **Retire harmful tactics**: Remove flows that increase short-term retention through confusion, pressure, unequal treatment or unwanted contact.
+
+A cancellation is not necessarily failure; it can be the correct outcome when needs, timing or product fit change.`,
+            practicalExamples: [
+              'A learner has not logged in recently. The product offers an optional reminder preference and help centre link, while pause and cancellation remain equally accessible.',
+              'A checkout expectation gap causes refunds. The team corrects the product page and onboarding rather than escalating save-offer discounts.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Healthy retention reflects ongoing customer value and informed choice; it is not simply the absence of cancellation.',
+            keyPrinciples: ['Validate signals before contacting customers', 'Fix service friction before adding persuasion', 'Keep cancellation visible, immediate and free of dark patterns'],
+          },
+          actionTask: {
+            instruction: 'Design one ethical retention improvement:',
+            checklistItems: ['Customer outcome, cohort definitions and baseline documented', 'Signal purpose, data minimisation, false positives and access reviewed', 'Support message, preferences and human route tested', 'Pause, downgrade, billing and cancellation terms checked for fairness', 'Benefit, harm, complaint and stop metrics scheduled'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '45.2': {
+          stageTitle: '45. Respectful win-back & sustainable lifetime value',
+          title: 'Invite former customers back without pressure or misleading offers',
+          description: 'Contact eligible former customers only when permission, timing and relevance support it, and evaluate the full customer outcome rather than short-term cash collection.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible win-back and customer value',
+            summaryText: 'A former purchase does not create permanent marketing permission or guarantee renewed trust. Win-back timing and response differ by cancellation reason, market and customer. Honest programmes respect suppression, explain what materially changed and show full renewal terms.',
+            bulletPoints: [
+              'Segment by verified relationship and cancellation context without sensitive profiling or assumptions about personal circumstances',
+              'Check current permission, suppression, frequency and retention before any win-back communication',
+              'Describe real product changes and representative evidence; do not fabricate success stories or exclusive urgency',
+              'Compare discounts and annual plans using total price, renewal, refund, cancellation and usage fit—not cash flow alone',
+            ],
+            coreConcepts: [
+              { iconName: 'repeat', title: 'PERMISSION-AWARE WIN-BACK', description: 'Only eligible people receive a limited, relevant invitation with clear identity, reason, preferences and an easy decline.', highlight: true },
+              { iconName: 'calendar', title: 'SUSTAINABLE CUSTOMER VALUE', description: 'Value includes margin, service cost, refunds, complaints, outcomes and retention quality—not prepaid revenue alone.' },
+            ],
+            resources: [
+              { title: 'Responsible Win-back & Subscription Offer Guide', subtitle: 'Eligibility, evidence, terms, experiments and suppression', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Win-back Governance', subtitle: 'Permission, cancellation reasons, exclusions and outcome review', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Re-earn trust instead of exploiting a past purchase
+
+Win-back can be useful when the product genuinely changed or a customer asked to hear from the business. It should never override withdrawal, conceal renewal terms or use a discount to pull an unsuitable customer back.
+
+#### Responsible win-back lifecycle
+
+1. **Clarify the purpose**: Decide whether the message provides a service update, requested reminder or marketing offer. Apply the correct rules for the market and channel.
+2. **Check eligibility**: Verify current permission, relationship, suppression, complaints, disputes, refunds, vulnerability flags used only for protection and applicable retention limits.
+3. **Respect the cancellation context**: Separate price, missing feature, poor support, technical failure, changed need and unknown reasons. Do not infer that everyone merely lacked time.
+4. **Require a material reason to contact**: Use a real product improvement, resolved defect, requested availability update or suitable offer. “We miss you” alone is not relevance.
+5. **Substantiate what changed**: Keep release evidence, dates, availability, limitations and ownership. Do not exaggerate a minor update or use an unrepresentative testimonial.
+6. **Choose timing empirically**: Test a limited interval appropriate to the product and cancellation reason. There is no universal 60-day optimum.
+7. **Limit the sequence**: Set a small maximum number of contacts, space them reasonably and suppress promptly after opt-out or non-response according to policy.
+8. **Write transparently**: Identify the sender, why the person is receiving the message, what changed, total offer terms and an easy unsubscribe. Avoid guilt and fake exclusivity.
+9. **Present pricing fairly**: Show total cost, discount basis and duration, automatic renewal, next price, taxes, cancellation, refund and feature differences before commitment.
+10. **Evaluate annual plans for fit**: Do not frame prepayment as guaranteed loyalty. Offer monthly and annual comparisons without preselection or countdown pressure.
+11. **Use feedback carefully**: Satisfaction or recommendation surveys are optional, accessible and not a condition of support. Explain whether answers are identifiable and how they are used.
+12. **Run a bounded holdout test**: Predefine audience, duration, success and harm metrics. Include incremental reactivation, margin, refunds, complaints, early re-cancellation and customer outcomes.
+13. **Provide a safe return**: Restore only necessary data, confirm current preferences and avoid reviving obsolete profiles or permissions automatically.
+14. **Review and retire**: Stop segments with poor fit or complaint rates, honour suppression and delete data when the retention purpose expires.
+
+The strongest win-back is a product change that genuinely resolves the reason someone left, communicated once with honesty and choice.`,
+            practicalExamples: [
+              'A former customer who requested feature updates receives one message when that feature launches, with limitations, full price and a preference link.',
+              'An annual-plan experiment increases prepaid revenue but also early refunds and support complaints, so the team stops it despite higher initial cash.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Responsible win-back re-earns trust through permission, material relevance and fair terms; lifetime value is not a licence for repeated pressure.',
+            keyPrinciples: ['Past purchase is not permanent consent', 'Contact only for a material and truthful reason', 'Measure refunds, complaints and customer outcomes beside revenue'],
+          },
+          actionTask: {
+            instruction: 'Prepare one permission-aware win-back pilot:',
+            checklistItems: ['Purpose, eligibility, permission, suppression and retention verified', 'Cancellation context and material product change documented', 'Message sequence, timing, accessibility and contact cap approved', 'Total price, renewal, cancellation, refund and plan comparison reviewed', 'Holdout, margin, complaints, re-cancellation and stop rule configured'],
+            toolboxCategory: 'email',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -8016,6 +8139,129 @@ Fast answers są użyteczne tylko, gdy są accurate, accessible i easy to leave.
             instruction: 'Zbuduj i przetestuj bounded messaging flow:',
             checklistItems: ['Zdefiniowano use case, exclusions, bot disclosure i human handover', 'Zminimalizowano data fields, knowledge sources, permissions i retention', 'Przetestowano correction, exit, accessibility i failure paths', 'Zweryfikowano SMS identity, consent, terms, domain i opt-out', 'Przypisano duplicate prevention, monitoring, stop thresholds i retirement owner'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+    45: {
+      title: '45. Etyczna retencja, uczciwe anulowanie i trwała wartość klienta',
+      subtitle: 'Outcome-led onboarding, dobrowolne wsparcie, transparent subscriptions i respectful win-back',
+      description: 'Poprawiaj long-term customer value przez użyteczne outcomes i usuwanie zbędnego friction, zachowując natychmiastową, zrozumiałą cancellation path — bez churn, profit lub reactivation guarantees.',
+      lessons: {
+        '45.1': {
+          stageTitle: '45. Customer outcomes i fair retention',
+          title: 'Wykrywaj service friction bez profilingu i utrudniania cancellation',
+          description: 'Używaj proportionate signals, by oferować pomoc, poprawiać onboarding i dawać realne pause lub downgrade choices bez manipulowania pozostaniem.',
+          learnContent: {
+            videoTitle: 'Masterclass: Etyczna retencja i customer-outcome monitoring',
+            summaryText: 'Cancellation ma wiele przyczyn, a inactivity sama nie dowodzi dissatisfaction lub churn risk. Retention ma wynikać z product fit, jasnej value i reliable support, nie invasive surveillance, surprise calls, hidden cancellation controls ani universal claims o kosztach i profit.',
+            bulletPoints: [
+              'Zdefiniuj successful customer outcomes i evidence przed wyborem engagement lub inactivity signals',
+              'Używaj minimum necessary account data, wyjaśnij relevant monitoring i nie inferuj health, finances lub vulnerability',
+              'Oferuj help, pause lub downgrade jako optional alternatives, zachowując cancellation równie widoczną i łatwą',
+              'Analizuj onboarding, defects, support, accessibility, pricing i expectation gaps zamiast obwiniać low usage',
+            ],
+            coreConcepts: [
+              { iconName: 'shield', title: 'PROPORTIONATE SUPPORT SIGNAL', description: 'Udokumentowany signal otwiera review lub optional support offer; nie labeluje automatycznie osoby, nie odbiera wyboru i nie uruchamia pressure.', highlight: true },
+              { iconName: 'pause-circle', title: 'FAIR SUBSCRIPTION CONTROL', description: 'Pause, downgrade i cancellation jasno pokazują price, timing i consequences, z confirmation i bez unnecessary obstacles.' },
+            ],
+            resources: [
+              { title: 'Ethical Retention & Cancellation Workbook', subtitle: 'Outcomes, signals, experiments, rights i service recovery', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Customer-Outcome Monitor Mara CRM', subtitle: 'Privacy-aware cohorts, support signals i review queues', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Zdobywaj retention przez outcomes i customer control
+
+Retention ma wartość tylko, gdy customers zostają, bo service nadal jest suitable. Lower churn może ukrywać lock-in, billing friction lub osoby, które nie znajdują exit.
+
+#### Ethical retention workflow
+
+1. **Zdefiniuj customer promise**: Określ intended outcome, prerequisites, time, effort, exclusions i evidence progress.
+2. **Mapuj lifecycle**: Przejrzyj purchase, setup, first use, recurring value, support, billing, renewal, pause i cancellation z perspektywy customer.
+3. **Mierz baseline uczciwie**: Zdefiniuj customer, active subscription, cancellation, involuntary churn, cohort i observation period. Bez cherry-picking.
+4. **Badaj causes bezpośrednio**: Łącz voluntary feedback, support themes, product defects, accessibility i cohort behaviour. Nie zakładaj fixed list of churn causes.
+5. **Minimalizuj behavioural data**: Zbieraj tylko signals potrzebne do stated service purpose, limituj access i retention, unikaj sensitive inference.
+6. **Waliduj alert przed action**: Testuj, czy signal przewiduje service need w relevant groups. Monitoruj false positives i unequal impact.
+7. **Oferuj proportionate support**: Użyj preferred channel i wyjaśnij kontakt. Check-in jest optional; bez surprise call lub urgency.
+8. **Najpierw napraw product**: Popraw confusing setup, reliability, accessibility, expectations, support i billing przed persuasion.
+9. **Daj genuine choices**: Pause, downgrade, switch plan lub assistance tylko, gdy realne. Jasno pokaż price, duration, lost features i automatic restart.
+10. **Uprość cancellation**: Discoverable route, minimum steps, bez preselected retention offer i z immediate confirmation. Respektuj cooling-off i refund rights.
+11. **Ostrożnie obsługuj involuntary churn**: Accurate payment-failure notices, secure update route, bounded retries i bez misleading debt threats.
+12. **Prowadź controlled experiments**: Zdefiniuj hypothesis, cohort, customer-benefit metric, harm metric, duration i stop rule. Nie optymalizuj tylko retained billing.
+13. **Review balanced outcomes**: Analizuj task success, support, accessibility, complaints, refunds, pauses, cancellations, reactivations i satisfaction.
+14. **Retire harmful tactics**: Usuń flows zwiększające short-term retention przez confusion, pressure, unequal treatment lub unwanted contact.
+
+Cancellation nie musi być porażką; może być właściwa, gdy zmienia się need, timing lub product fit.`,
+            practicalExamples: [
+              'Learner ostatnio się nie logował. Product oferuje optional reminder preference i help centre, a pause i cancellation pozostają equally accessible.',
+              'Expectation gap powoduje refunds. Team poprawia product page i onboarding zamiast zwiększać save-offer discounts.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Zdrowa retencja odzwierciedla ongoing customer value i informed choice; nie jest tylko brakiem cancellation.',
+            keyPrinciples: ['Waliduj signals przed kontaktem', 'Napraw service friction przed persuasion', 'Cancellation ma być visible, immediate i bez dark patterns'],
+          },
+          actionTask: {
+            instruction: 'Zaprojektuj ethical retention improvement:',
+            checklistItems: ['Udokumentowano customer outcome, cohort definitions i baseline', 'Sprawdzono signal purpose, data minimisation, false positives i access', 'Przetestowano support message, preferences i human route', 'Oceniono fairness pause, downgrade, billing i cancellation terms', 'Zaplanowano benefit, harm, complaint i stop metrics'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '45.2': {
+          stageTitle: '45. Respectful win-back i sustainable lifetime value',
+          title: 'Zaproś former customers bez pressure lub misleading offers',
+          description: 'Kontaktuj eligible former customers tylko, gdy permission, timing i relevance to wspierają, oceniając full customer outcome zamiast short-term cash.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible win-back i customer value',
+            summaryText: 'Past purchase nie tworzy permanent marketing permission ani nie gwarantuje renewed trust. Win-back timing i response zależą od cancellation reason, market i customer. Honest programmes respektują suppression, wyjaśniają material changes i pokazują full renewal terms.',
+            bulletPoints: [
+              'Segmentuj według verified relationship i cancellation context bez sensitive profiling lub assumptions',
+              'Sprawdź current permission, suppression, frequency i retention przed win-back communication',
+              'Opisuj real product changes i representative evidence; bez fabricated success stories lub exclusive urgency',
+              'Porównuj discounts i annual plans przez total price, renewal, refund, cancellation i usage fit, nie cash flow',
+            ],
+            coreConcepts: [
+              { iconName: 'repeat', title: 'PERMISSION-AWARE WIN-BACK', description: 'Tylko eligible osoby otrzymują limited, relevant invitation z clear identity, reason, preferences i easy decline.', highlight: true },
+              { iconName: 'calendar', title: 'SUSTAINABLE CUSTOMER VALUE', description: 'Value obejmuje margin, service cost, refunds, complaints, outcomes i retention quality, nie tylko prepaid revenue.' },
+            ],
+            resources: [
+              { title: 'Responsible Win-back & Subscription Offer Guide', subtitle: 'Eligibility, evidence, terms, experiments i suppression', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Win-back Governance', subtitle: 'Permission, cancellation reasons, exclusions i outcome review', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Odzyskaj trust zamiast wykorzystywać past purchase
+
+Win-back może mieć wartość, gdy product naprawdę się zmienił lub customer poprosił o updates. Nie może omijać withdrawal, ukrywać renewal terms ani discountem przywracać unsuitable customer.
+
+#### Responsible win-back lifecycle
+
+1. **Wyjaśnij purpose**: Ustal, czy message to service update, requested reminder lub marketing offer. Stosuj właściwe rules dla market i channel.
+2. **Sprawdź eligibility**: Zweryfikuj permission, relationship, suppression, complaints, disputes, refunds, protective vulnerability flags i retention limits.
+3. **Respektuj cancellation context**: Rozdziel price, missing feature, poor support, technical failure, changed need i unknown. Nie zakładaj, że wszystkim brakowało czasu.
+4. **Wymagaj material reason**: Real product improvement, resolved defect, requested availability update lub suitable offer. Samo „tęsknimy” nie tworzy relevance.
+5. **Substantiate changes**: Zachowaj release evidence, dates, availability, limitations i ownership. Nie wyolbrzymiaj minor update ani testimonial.
+6. **Wybieraj timing empirycznie**: Testuj limited interval dopasowany do produktu i reason. Nie ma universal 60-day optimum.
+7. **Ogranicz sequence**: Ustal mały contact cap, rozsądne odstępy i szybkie suppression po opt-out lub non-response zgodnie z policy.
+8. **Pisz transparentnie**: Identyfikuj sender, reason, material change, full offer terms i easy unsubscribe. Bez guilt i fake exclusivity.
+9. **Prezentuj pricing fair**: Pokaż total cost, discount basis/duration, automatic renewal, next price, taxes, cancellation, refund i feature differences.
+10. **Oceń annual plan fit**: Nie przedstawiaj prepayment jako guaranteed loyalty. Porównuj monthly i annual bez preselection lub countdown pressure.
+11. **Używaj feedback ostrożnie**: Surveys są optional, accessible i niezależne od support. Wyjaśnij identifiability i use.
+12. **Prowadź bounded holdout test**: Zdefiniuj audience, duration, success i harm metrics, w tym incremental reactivation, margin, refunds, complaints, early re-cancellation i outcomes.
+13. **Zapewnij safe return**: Przywróć tylko necessary data, potwierdź current preferences i nie reaktywuj obsolete profiles lub permissions.
+14. **Review i retire**: Stop poor-fit lub high-complaint segments, honor suppression i usuń data po końcu purpose.
+
+Najlepszy win-back to real product change rozwiązujący reason odejścia, zakomunikowany raz z honesty i choice.`,
+            practicalExamples: [
+              'Former customer, który prosił o feature updates, dostaje jeden message przy launchu z limits, full price i preference link.',
+              'Annual-plan experiment zwiększa prepaid revenue, ale też early refunds i complaints, więc team go zatrzymuje.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Responsible win-back odzyskuje trust przez permission, material relevance i fair terms; lifetime value nie usprawiedliwia repeated pressure.',
+            keyPrinciples: ['Past purchase nie jest permanent consent', 'Kontaktuj tylko z material truthful reason', 'Mierz refunds, complaints i customer outcomes obok revenue'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj permission-aware win-back pilot:',
+            checklistItems: ['Zweryfikowano purpose, eligibility, permission, suppression i retention', 'Udokumentowano cancellation context i material product change', 'Zatwierdzono sequence, timing, accessibility i contact cap', 'Sprawdzono total price, renewal, cancellation, refund i plan comparison', 'Skonfigurowano holdout, margin, complaints, re-cancellation i stop rule'],
+            toolboxCategory: 'email',
           },
         },
       },
