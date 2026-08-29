@@ -5370,6 +5370,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    58: {
+      title: '58. Accessible masterclass production and studio quality',
+      subtitle: 'Purpose-led camera, lighting, audio, prompting and production workflows for different budgets',
+      description: 'Create clear, trustworthy learning videos with the equipment and format appropriate to the audience—without implying that expensive gear proves authority, guarantees premium pricing or requires appearing on camera.',
+      lessons: {
+        '58.1': {
+          stageTitle: '58. Studio planning, camera and lighting',
+          title: 'Build a safe, repeatable video setup from smartphone to studio camera',
+          description: 'Choose framing, resolution, lens and lighting from learning goals, room, accessibility, budget and production capacity.',
+          learnContent: {
+            videoTitle: 'Masterclass: practical studio design for online education',
+            summaryText: 'Good production reduces distraction, but image quality alone does not establish expertise or justify a price. Clear teaching, accurate claims, accessibility and reliable delivery matter more than a particular camera, aperture or cinematic background.',
+            bulletPoints: [
+              'Start with audience, platform, framing, movement, captions and delivery resolution before buying equipment',
+              'Compare smartphone, webcam, mirrorless and cinema options using total cost, heat, recording limits and support',
+              'Shape light with window light or fixtures while protecting eyes, managing heat and securing stands and cables',
+              'Set exposure, shutter, frame rate, focus and white balance from measured conditions rather than universal presets'
+            ],
+            coreConcepts: [
+              { iconName: 'video', title: 'CLEAR VISUAL HIERARCHY', description: 'Framing, contrast and background support the lesson instead of signalling status.', highlight: true },
+              { iconName: 'sun', title: 'SAFE CONSISTENT LIGHT', description: 'Repeatable exposure and skin tones are achieved within room, budget and safety constraints.' }
+            ],
+            resources: [
+              { title: 'Studio planning and equipment workbook', subtitle: 'Requirements, budget tiers, safety, accessibility and test shots', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR production setup checklist', subtitle: 'Camera, light, captions, backup and recording QA', type: 'tool', iconName: 'settings', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Design the smallest setup that meets the learning goal\n\n1. **Write requirements first**: talking head, screen demonstration, interview, product shot, faceless narration or hybrid; each needs different tools.\n2. **Choose delivery specifications**: platform aspect ratio, frame rate, resolution, file limits, bandwidth and device compatibility. Recording 4K may add cost without improving the final lesson.\n3. **Use the camera you can operate reliably**: test autofocus, battery, heat, storage, clean output, audio input and recording duration.\n4. **Select lens and distance safely**: framing, room size and perspective matter; wide apertures reduce focus tolerance and are not automatically more professional.\n5. **Build lighting progressively**: begin with controlled window light or one diffused key, then add fill, separation or background light only when each solves a visible problem.\n6. **Secure the room**: rated fixtures, stable stands, sandbags where appropriate, cable covers, ventilation, load limits and a clear exit route.\n7. **Set colour consistently**: avoid mixed colour sources where possible; use a grey card or reliable reference and monitor skin tone and product colour.\n8. **Control the background**: remove private data, copyrighted or confidential material and distracting movement. A simple wall can work well with spacing and light.\n9. **Design accessibility**: readable slides, sufficient contrast, captions, transcripts, sign-language or audio-description needs and a non-video alternative where appropriate.\n10. **Respect privacy and likeness**: obtain releases and minimise incidental capture of people, addresses, screens and location clues.\n11. **Record a short test**: inspect focus, exposure, flicker, rolling shutter, sound, captions and upload compression on the target device.\n12. **Document repeatability**: mark positions, save settings and use a checklist so quality does not depend on memory.\n13. **Choose faceless formats freely**: screen recordings, slides, animation, product demonstrations and narration can teach effectively without a presenter’s face.',
+            practicalExamples: [
+              'A phone, window light, lavalier microphone and captions outperform an expensive camera with echo and unclear teaching.',
+              'A faceless screen tutorial uses cursor emphasis, narration, keyboard access and a transcript to explain the workflow.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Professional production means fit for purpose, safe, accessible and repeatable—not necessarily expensive or cinematic.',
+            keyPrinciples: ['Teaching quality and evidence build trust', 'Light and audio choices depend on the room and format', 'Faceless and low-budget formats are valid'],
+          },
+          actionTask: {
+            instruction: 'Prepare a repeatable recording setup:',
+            checklistItems: ['Format, audience, platform and accessibility requirements defined', 'Camera, lens and lighting tested against the actual room', 'Stands, power, cables, heat and privacy risks controlled', 'A recorded sample reviewed on target devices'],
+            toolboxCategory: 'content',
+          },
+        },
+        '58.2': {
+          stageTitle: '58. Audio, prompting and delivery',
+          title: 'Capture intelligible sound and use prompts without misleading performance claims',
+          description: 'Choose microphone placement and processing conservatively, then use notes or a teleprompter in a natural, accessible workflow.',
+          learnContent: {
+            videoTitle: 'Masterclass: reliable audio and presenter support',
+            summaryText: 'Audiences benefit from intelligible, consistent sound, but no microphone, bass boost or teleprompter guarantees trust, error-free delivery, faster production or higher sales. Capture quality at the source, process lightly and verify every export.',
+            bulletPoints: [
+              'Select lavalier, dynamic, condenser or shotgun microphones based on room noise, movement and distance',
+              'Control gain, clipping, plosives, echo and monitoring before relying on noise reduction or AI enhancement',
+              'Use high-pass filtering, de-essing, equalisation and compression only when measurement and listening justify them',
+              'Adapt full script, bullet prompts, voice-over or faceless narration to the presenter and content'
+            ],
+            coreConcepts: [
+              { iconName: 'mic', title: 'INTELLIGIBLE AUDIO', description: 'Good placement, room control, headroom and monitoring precede processing.', highlight: true },
+              { iconName: 'eye', title: 'SUPPORTED DELIVERY', description: 'Prompts improve consistency when pacing, comprehension and authenticity remain intact.' }
+            ],
+            resources: [
+              { title: 'Audio capture and processing workbook', subtitle: 'Room test, gain, headroom, filters, loudness and export QA', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR audio enhancement', subtitle: 'Preview reversible cleanup while retaining the original recording', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Capture first, process second\n\n1. **Assess the room**: listen for HVAC, traffic, computers, reflections and intermittent noise; change location or add soft treatment before buying complex processors.\n2. **Choose placement**: keep a consistent distance, use shock and wind protection and position the microphone outside unwanted reflections and clothing noise.\n3. **Set conservative gain**: leave headroom for unexpected emphasis and monitor with headphones. Meter targets vary by workflow; avoid clipping rather than chasing one universal peak.\n4. **Record a safety path where practical**: backup track, dual-system audio or a lower-gain channel; verify synchronisation and storage.\n5. **Process lightly**: remove rumble, resonances and sibilance only as needed. Excessive gating, compression, denoising or bass boost can reduce clarity and accessibility.\n6. **Compare loudness on delivery**: follow the target platform or broadcaster specification and listen on headphones, phone and speakers.\n7. **Use AI cleanup cautiously**: keep the original, review altered words and artefacts, protect confidential audio and check provider training and retention terms.\n8. **Choose a prompting method**: full script for legal precision, bullet points for conversation, or edited voice-over for faceless production.\n9. **Write for speech**: short sentences, pronunciation notes, pauses, emphasis and visual cues; verify facts and disclosures before recording.\n10. **Set prompter ergonomics individually**: readable type, line length, speed, lens proximity, seating, vision and accessibility—not a mandatory two-metre distance.\n11. **Prioritise meaning over hidden eye movement**: viewers need clarity and honesty, not the illusion of improvisation.\n12. **Plan corrections**: pause, repeat the sentence, mark the take and edit; a teleprompter does not eliminate mistakes.\n13. **Create captions and transcript**: review names, numbers and technical terms manually and identify speakers where needed.\n14. **Run final QA**: sync, noise, clipping, edits, captions, loudness, claims, privacy and export playback.',
+            practicalExamples: [
+              'A presenter uses bullet prompts and records clean pauses for editing instead of forcing an unnatural full-script delivery.',
+              'An AI denoiser changes a product name, so the editor restores the original phrase and corrects the captions.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Reliable audio and prompting improve comprehension through careful capture and QA, not through sales guarantees or hidden performance tricks.',
+            keyPrinciples: ['Monitor before and during recording', 'Keep processing reversible and preserve originals', 'Use the delivery method that fits the presenter, including faceless narration'],
+          },
+          actionTask: {
+            instruction: 'Test an audio and prompting workflow:',
+            checklistItems: ['Room, microphone placement, gain and backup tested', 'Processing compared level-matched against the original', 'Script or prompts checked for accuracy, pacing and accessibility', 'Final export, captions and transcript reviewed on multiple devices'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -10724,6 +10806,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj przejrzystą listę oczekujących:',
             checklistItems: ['Spisano cel, kwalifikację, dostęp i timing', 'Przetestowano integralność kolejki, prywatność, bezpieczeństwo i usuwanie', 'Zweryfikowano opcjonalne milestones i dostarczalność', 'Zatwierdzono limity komunikacji, fairness, odwołania i plan opóźnień'],
             toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+
+    58: {
+      title: '58. Dostępna produkcja masterclass i jakość studia',
+      subtitle: 'Kamera, światło, audio, prompting i workflow dla różnych budżetów',
+      description: 'Twórz jasne i wiarygodne lekcje sprzętem oraz formatem właściwym dla odbiorcy—bez sugerowania, że drogi sprzęt dowodzi autorytetu, gwarantuje wysoką cenę lub wymaga pokazania twarzy.',
+      lessons: {
+        '58.1': {
+          stageTitle: '58. Plan studia, kamera i światło',
+          title: 'Zbuduj bezpieczny, powtarzalny setup od smartfona do kamery studyjnej',
+          description: 'Dobierz kadr, rozdzielczość, obiektyw i światło do celu, pomieszczenia, dostępności, budżetu i zdolności produkcyjnej.',
+          learnContent: {
+            videoTitle: 'Masterclass: praktyczny projekt studia edukacyjnego',
+            summaryText: 'Dobra produkcja ogranicza rozproszenie, ale obraz sam nie dowodzi wiedzy ani nie uzasadnia ceny. Jasne nauczanie, dokładne twierdzenia, dostępność i niezawodność są ważniejsze niż konkretna kamera, przysłona lub tło.',
+            bulletPoints: [
+              'Przed zakupem określ odbiorcę, platformę, kadr, ruch, napisy i rozdzielczość dostawy',
+              'Porównaj telefon, webcam, mirrorless i cinema według pełnego kosztu, ciepła, limitów i wsparcia',
+              'Kształtuj światło oknem lub lampami, chroniąc oczy oraz zabezpieczając statywy i kable',
+              'Ustaw ekspozycję, shutter, fps, focus i white balance według pomiaru, nie uniwersalnego presetu'
+            ],
+            coreConcepts: [
+              { iconName: 'video', title: 'JASNA HIERARCHIA WIZUALNA', description: 'Kadr, kontrast i tło wspierają lekcję zamiast sygnalizować status.', highlight: true },
+              { iconName: 'sun', title: 'BEZPIECZNE STAŁE ŚWIATŁO', description: 'Powtarzalna ekspozycja mieści się w warunkach pokoju, budżetu i bezpieczeństwa.' }
+            ],
+            resources: [
+              { title: 'Zeszyt planowania studia i sprzętu', subtitle: 'Wymagania, budżety, bezpieczeństwo, dostępność i testy', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Checklista produkcji GOM-MAR', subtitle: 'Kamera, światło, napisy, backup i QA nagrania', type: 'tool', iconName: 'settings', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Najmniejszy setup spełniający cel\n\n1. **Spisz wymagania**: talking head, screen demo, wywiad, produkt, faceless narration lub hybryda.\n2. **Wybierz specyfikację dostawy**: proporcje, fps, rozdzielczość, limity, bandwidth i urządzenia. 4K może nie poprawić lekcji.\n3. **Użyj niezawodnej kamery**: testuj autofocus, baterię, ciepło, pamięć, clean output, audio i czas.\n4. **Dobierz obiektyw i dystans**: kadr, pokój i perspektywa; szeroka przysłona zmniejsza tolerancję focusu.\n5. **Buduj światło etapami**: okno lub miękki key, potem fill, separation lub tło tylko dla widocznego problemu.\n6. **Zabezpiecz pokój**: certyfikowane lampy, stabilne statywy, obciążenie, osłony kabli, wentylacja i wyjście.\n7. **Ustal kolor**: ogranicz mieszane źródła, użyj szarej karty i kontroluj skórę oraz produkt.\n8. **Kontroluj tło**: usuń dane prywatne, poufne i rozpraszające elementy. Prosta ściana może działać.\n9. **Projektuj dostępność**: czytelne slajdy, kontrast, napisy, transkrypt, potrzeby języka migowego lub audio description i alternatywa.\n10. **Szanuj prywatność i wizerunek**: uzyskaj zgody i ogranicz przypadkowe osoby, adresy, ekrany oraz lokalizację.\n11. **Nagraj test**: focus, ekspozycja, flicker, rolling shutter, audio, napisy i kompresja na urządzeniu docelowym.\n12. **Dokumentuj powtarzalność**: oznacz pozycje, zapisz ustawienia i używaj checklisty.\n13. **Swobodnie wybieraj faceless**: ekran, slajdy, animacja, produkt i narracja mogą skutecznie uczyć bez twarzy.',
+            practicalExamples: [
+              'Telefon, światło z okna, lavalier i napisy są lepsze niż droga kamera z echem i niejasną lekcją.',
+              'Faceless tutorial używa kursora, narracji, obsługi klawiatury i transkryptu.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Profesjonalna produkcja jest właściwa do celu, bezpieczna, dostępna i powtarzalna—niekoniecznie droga.',
+            keyPrinciples: ['Jakość nauczania i dowody budują zaufanie', 'Światło i audio zależą od pokoju oraz formatu', 'Faceless i niski budżet są pełnoprawne'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj powtarzalny setup:',
+            checklistItems: ['Określono format, odbiorcę, platformę i dostępność', 'Przetestowano kamerę, obiektyw i światło w pokoju', 'Zabezpieczono statywy, prąd, kable, ciepło i prywatność', 'Próbkę oceniono na urządzeniach docelowych'],
+            toolboxCategory: 'content',
+          },
+        },
+        '58.2': {
+          stageTitle: '58. Audio, prompting i prezentacja',
+          title: 'Nagrywaj zrozumiały dźwięk i używaj promptów bez obietnic',
+          description: 'Dobierz mikrofon i processing ostrożnie, a notatki lub teleprompter do naturalnego, dostępnego workflow.',
+          learnContent: {
+            videoTitle: 'Masterclass: niezawodne audio i wsparcie prezentera',
+            summaryText: 'Zrozumiały, stały dźwięk pomaga odbiorcy, lecz mikrofon, bass boost i teleprompter nie gwarantują zaufania, braku błędów, szybkości ani sprzedaży. Najpierw dobre źródło, potem lekki processing i QA.',
+            bulletPoints: [
+              'Dobierz lavalier, dynamiczny, condenser lub shotgun do hałasu, ruchu i dystansu',
+              'Kontroluj gain, clipping, plosives, echo i monitoring przed denoise lub AI',
+              'Stosuj high-pass, de-esser, EQ i compressor tylko po pomiarze i odsłuchu',
+              'Dostosuj pełny skrypt, punkty, voice-over lub faceless narration do osoby i treści'
+            ],
+            coreConcepts: [
+              { iconName: 'mic', title: 'ZROZUMIAŁE AUDIO', description: 'Pozycja, pokój, headroom i monitoring poprzedzają processing.', highlight: true },
+              { iconName: 'eye', title: 'WSPARTA PREZENTACJA', description: 'Prompty poprawiają spójność, gdy tempo, zrozumienie i autentyczność pozostają.' }
+            ],
+            resources: [
+              { title: 'Zeszyt nagrania i processingu audio', subtitle: 'Pokój, gain, headroom, filtry, loudness i QA eksportu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Ulepszanie audio GOM-MAR', subtitle: 'Podgląd odwracalnego czyszczenia z zachowaniem oryginału', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Najpierw nagranie, potem processing\n\n1. **Oceń pokój**: HVAC, ruch, komputer, odbicia i hałas; zmień miejsce lub dodaj miękkie materiały.\n2. **Dobierz pozycję**: stały dystans, shock i wind protection, poza odbiciami i szelestem ubrania.\n3. **Ustaw bezpieczny gain**: zostaw headroom i monitoruj słuchawkami. Unikaj clippingu zamiast gonić jeden peak.\n4. **Nagraj backup, gdy warto**: druga ścieżka, dual system lub niższy gain; sprawdź sync i pamięć.\n5. **Przetwarzaj lekko**: usuń rumble, rezonans i sybilanty tylko w potrzebie. Nadmierny gate, compression, denoise lub bas psuje zrozumienie.\n6. **Porównaj loudness docelowy**: stosuj wymagania platformy i słuchaj na słuchawkach, telefonie oraz głośnikach.\n7. **Ostrożnie używaj AI**: zachowaj oryginał, sprawdź zmienione słowa, poufność, trening i retencję dostawcy.\n8. **Wybierz prompting**: pełny skrypt dla precyzji, punkty dla rozmowy lub edytowany voice-over dla faceless.\n9. **Pisz do mówienia**: krótkie zdania, wymowa, pauzy, akcent i cues; sprawdź fakty oraz disclosure.\n10. **Dobierz ergonomię**: czcionka, długość linii, szybkość, bliskość osi, wzrok i dostępność—bez obowiązkowych dwóch metrów.\n11. **Priorytet znaczenia**: odbiorca potrzebuje jasności i uczciwości, nie iluzji improwizacji.\n12. **Planuj poprawki**: pauza, powtórzenie, marker i montaż; teleprompter nie usuwa błędów.\n13. **Twórz napisy i transkrypt**: ręcznie sprawdź nazwy, liczby i terminy oraz mówców.\n14. **Finalne QA**: sync, hałas, clipping, montaż, napisy, loudness, twierdzenia, prywatność i playback.',
+            practicalExamples: [
+              'Prezenter używa punktów i czystych pauz do montażu zamiast wymuszać nienaturalny skrypt.',
+              'AI denoiser zmienia nazwę produktu, więc montażysta przywraca oryginał i poprawia napisy.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Audio i prompting poprawiają zrozumienie dzięki dobremu nagraniu i QA, nie gwarancjom sprzedaży.',
+            keyPrinciples: ['Monitoruj przed nagraniem i w trakcie', 'Zachowuj oryginały i odwracalny processing', 'Dobierz format do osoby, także faceless narration'],
+          },
+          actionTask: {
+            instruction: 'Przetestuj workflow audio i promptingu:',
+            checklistItems: ['Przetestowano pokój, pozycję, gain i backup', 'Porównano processing z oryginałem przy równym poziomie', 'Sprawdzono skrypt pod kątem faktów, tempa i dostępności', 'Eksport, napisy i transkrypt oceniono na wielu urządzeniach'],
+            toolboxCategory: 'content',
           },
         },
       },
