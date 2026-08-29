@@ -2932,6 +2932,123 @@ The strongest ecosystem is understandable, modular and recoverable. Customers re
         },
       },
     },
+    36: {
+      title: '36. Ethical behavioural copywriting & decision design',
+      subtitle: 'Audience motives, cognitive shortcuts, transparent framing and evidence-led experiments',
+      description: 'Write clearer, more relevant offers by researching customer motives and testing decision-support patterns—without unsupported neuroscience, covert manipulation, false urgency or guaranteed conversion claims.',
+      lessons: {
+        '36.1': {
+          stageTitle: '36. Motive-led copywriting',
+          title: 'Map audience motives without reducing people to fixed brain types',
+          description: 'Use qualitative evidence and behavioural tests to adapt messages around safety, exploration and achievement while preserving customer autonomy.',
+          learnContent: {
+            videoTitle: 'Masterclass: Evidence-led motive mapping for modern copywriting',
+            summaryText: 'Emotions and reasoning can both influence decisions, but there is no universal “95% emotional” rule and no word that bypasses conscious resistance. Responsible copy starts with observed customer needs, makes verifiable claims and tests whether clearer framing helps people choose.',
+            bulletPoints: [
+              'Treat safety, exploration and achievement as research hypotheses—not biological diagnoses or permanent customer types',
+              'Translate interviews, search behaviour, support questions and objections into specific, verifiable message themes',
+              'Use attention cues that improve comprehension and relevance rather than shock, deception or interface obstruction',
+              'Connect a documented problem to a proportionate benefit, evidence, limits and a realistic next step',
+            ],
+            coreConcepts: [
+              { iconName: 'zap', title: 'MOTIVE HYPOTHESIS', description: 'Record the audience, context, observed need, message variation and evidence that would support or reject the hypothesis.', highlight: true },
+              { iconName: 'eye', title: 'ATTENTION WITH AUTONOMY', description: 'Earn attention through relevance, hierarchy and clarity; never disguise advertising, hide material terms or manufacture pressure.' },
+            ],
+            resources: [
+              { title: 'Motive Research & Copy Experiment Workbook', subtitle: 'Interview evidence, claims, variants, safeguards and results', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Copy Review Assistant', subtitle: 'Review clarity, evidence, accessibility and manipulation risks', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Motive-led copy that respects the reader
+
+People make decisions through interacting emotion, attention, memory, context and deliberation. Popular neuromarketing percentages and fixed “brain types” are not a licence to claim certainty about an individual.
+
+#### Responsible workflow
+
+1. **Define the decision**: State who is deciding, in which context, what they need to understand and what a good customer outcome looks like.
+2. **Collect proportionate evidence**: With appropriate permission, use interviews, support records, search terms, surveys and behaviour. Separate direct evidence from interpretation and avoid inferring sensitive traits.
+3. **Group motives cautiously**: Safety, novelty and achievement can be useful themes, but people may hold several motives and change by context. Label segments as hypotheses and allow users to self-identify.
+4. **Build a claim register**: For every material benefit, record the evidence, conditions, typicality, exclusions and owner. Remove claims that cannot be substantiated.
+5. **Draft useful variants**: Pair one motive theme with a concrete benefit, proof, limitations, total commitment and clear next step. Keep essential information prominent and readable.
+6. **Protect autonomy**: Avoid disguised ads, fear amplification, false scarcity, guilt, shame, forced continuity, confirm-shaming and interfaces that make refusal harder than acceptance.
+7. **Test ethically**: Predefine the hypothesis, primary customer-centred metric, guardrails, sample and stop rule. Measure comprehension, suitable completion, cancellation, complaints and regret—not clicks alone.
+8. **Review accessibility and inclusion**: Check plain language, headings, links, focus order, contrast, zoom and screen-reader meaning. Test across relevant languages and devices.
+9. **Learn without overclaiming**: A result applies to the tested population, offer, channel and period. Document uncertainty, unexpected effects and segments harmed or confused.
+10. **Maintain and retire**: Recheck claims when the product, evidence, audience or law changes. Remove patterns that create short-term conversion but worse customer outcomes.
+
+The purpose of behavioural insight is to improve relevance and understanding, not to override a person's judgment.`,
+            practicalExamples: [
+              'A security-focused variant explains backup scope, recovery limits and support evidence instead of promising a risk-free result.',
+              'A novelty-focused variant demonstrates one genuinely new workflow and its learning curve instead of using unexplained “revolutionary” claims.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Useful emotional relevance comes from evidence and clarity; it does not require fixed brain labels or covert psychological control.',
+            keyPrinciples: ['Treat segments and motives as testable hypotheses', 'Substantiate material claims and disclose limits', 'Optimise comprehension and suitable outcomes, not pressure'],
+          },
+          actionTask: {
+            instruction: 'Prepare an ethical motive-led headline experiment:',
+            checklistItems: ['Audience, context, observed motive and evidence documented', 'Three headline variants use specific, supportable benefits', 'Material limits and total commitment remain visible', 'Comprehension, suitability, complaints and cancellation guardrails defined', 'Test duration, sample, stop rule and review owner assigned'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '36.2': {
+          stageTitle: '36. Cognitive heuristics & transparent framing',
+          title: 'Use decision patterns to clarify choices—not steer people deceptively',
+          description: 'Apply anchoring, comparison, immediacy, participation and social evidence with truthful reference points, fair choices and measured customer outcomes.',
+          learnContent: {
+            videoTitle: 'Masterclass: Ethical decision design in offers and checkout',
+            summaryText: 'Cognitive shortcuts can influence judgments, but effects vary by audience and context. A third price is not guaranteed to move a fixed percentage of buyers, and a crossed-out price is lawful or useful only when genuine, relevant and clearly explained.',
+            bulletPoints: [
+              'Anchoring: disclose a genuine and relevant reference point instead of inventing a list price or savings claim',
+              'Choice architecture: make packages meaningfully different and independently useful; never create a deliberately bad decoy',
+              'Immediacy: explain present and future value with realistic timing rather than inflating bonuses or hiding recurring cost',
+              'Participation and social evidence: use consented, representative proof and let setup effort create utility—not artificial commitment',
+            ],
+            coreConcepts: [
+              { iconName: 'tag', title: 'VERIFIABLE REFERENCE', description: 'A comparison price needs a truthful basis, applicable period and clear like-for-like context. Keep the evidence with the campaign.', highlight: true },
+              { iconName: 'check-circle-2', title: 'FAIR CHOICE SET', description: 'Each option states audience, features, limits, total price and renewal. The recommended option must be justified by customer fit rather than margin alone.' },
+            ],
+            resources: [
+              { title: 'Decision Design & Pricing Review Matrix', subtitle: 'References, package fairness, disclosure and experiment guardrails', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Pricing Experiment Register', subtitle: 'Variants, approvals, metrics, incidents and decisions', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Transparent choice architecture
+
+Prices and packages are interpreted in context. That makes comparison design powerful—and creates a duty not to manipulate, misstate value or obstruct a free choice.
+
+#### Review and experiment process
+
+1. **Define customer fit**: Describe the legitimate use case and exclusion for each package. Do not optimise an unsuitable customer into a higher tier.
+2. **Verify every reference**: Record the source, dates, market, conditions and like-for-like basis for previous prices, competitor comparisons, savings and value estimates.
+3. **Design independently useful options**: Each tier should offer coherent value. Do not add a knowingly inferior “decoy” solely to distort comparison.
+4. **Present total commitment**: Show taxes where applicable, billing unit, usage, renewal, minimum term, add-ons, cancellation, refund and post-cancellation access before confirmation.
+5. **Use loss language carefully**: Explain real consequences symmetrically; do not threaten, shame, exaggerate loss or create countdowns and scarcity that are not factual.
+6. **Handle social evidence responsibly**: Obtain permission, verify testimonials and material results, disclose incentives and relevant conditions, and avoid presenting exceptional outcomes as typical.
+7. **Keep refusal easy**: Acceptance and rejection should have comparable visibility and effort. Avoid preselected extras, hidden subscriptions and repeated interruption.
+8. **Pre-register tests**: State the hypothesis, variants, allocation, duration, minimum evidence, primary metric and guardrails before launch. Avoid repeatedly checking and stopping on a favourable fluctuation.
+9. **Measure downstream quality**: Include comprehension, activation, appropriate plan fit, refunds, chargebacks, complaints, cancellation and support—not conversion alone.
+10. **Review protected and vulnerable audiences**: Exclude or add safeguards where age, distress, financial vulnerability or sensitive inference makes behavioural targeting inappropriate.
+11. **Document the decision**: Preserve approvals, screenshots, claim evidence, results and limitations. Roll back when harm or confusion exceeds the agreed threshold.
+12. **Revalidate regularly**: Reference prices, package contents, testimonials and customer expectations change. Expired evidence must not remain live.
+
+Ethical framing helps customers compare; it does not predetermine the answer through deception or friction.`,
+            practicalExamples: [
+              'A three-tier table explains who each plan suits, uses actual current prices and reports plan-fit and refund rates alongside conversion.',
+              'An expiring discount shows the real end date and what happens afterwards; the same checkout offers an equally visible decline path and no preselected add-on.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Good framing makes value and trade-offs easier to evaluate while leaving the customer free to choose or decline.',
+            keyPrinciples: ['Use truthful, documented reference points', 'Every option must be coherent and fairly presented', 'Evaluate downstream welfare as well as conversion'],
+          },
+          actionTask: {
+            instruction: 'Audit and test one pricing table responsibly:',
+            checklistItems: ['Audience and legitimate use case defined for every tier', 'Reference prices, comparisons and savings claims verified', 'Total cost, renewal, limits, cancellation and refund terms prominent', 'No false scarcity, preselection, obstructive refusal or artificial decoy remains', 'Experiment hypothesis, quality guardrails, stop rule and evidence archive prepared'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -5847,6 +5964,123 @@ Najsilniejszy ekosystem jest zrozumiały, modułowy i możliwy do odzyskania. Kl
           },
           understandContent: { coreTakeaway: 'Godna zaufania platforma koordynuje użyteczne usługi, zachowując granice, jasny wybór, bezpieczny dostęp, portowalność i recovery z nieuniknionych błędów.', keyPrinciples: ['Integracja wymaga ownerów i granic awarii', 'SSO nie zastępuje authorisation ani recovery', 'Buduj retencję przez wartość i odwracalny wybór'] },
           actionTask: { instruction: 'Zaprojektuj odporny plan integracji platformy:', checklistItems: ['Udokumentowano wspólny wynik, opcjonalne ścieżki i zakres komponentów', 'Zmapowano dependencies, ownerów, kontrakty, data flows, fallbacki i exits', 'Określono identity, authorisation, recovery, dostępność i safeguards community', 'Wyjaśniono bundle, entitlements, zmiany, anulowanie i data portability', 'Zaplanowano ćwiczenia awarii, monitoring, komunikację i switching'], toolboxCategory: 'content' },
+        },
+      },
+    },
+    36: {
+      title: '36. Etyczny copywriting behawioralny i projektowanie decyzji',
+      subtitle: 'Motywy odbiorców, skróty poznawcze, transparentne framing i eksperymenty oparte na dowodach',
+      description: 'Twórz jaśniejsze i bardziej trafne oferty przez badanie motywów klientów oraz testowanie wzorców wspierających decyzję — bez pseudonaukowych tez, ukrytej manipulacji, fałszywej pilności ani gwarancji konwersji.',
+      lessons: {
+        '36.1': {
+          stageTitle: '36. Copywriting oparty na motywach',
+          title: 'Mapuj motywy odbiorców bez sprowadzania ludzi do stałych typów mózgu',
+          description: 'Wykorzystuj dowody jakościowe i testy zachowań, aby dopasować przekaz wokół bezpieczeństwa, odkrywania i osiągnięć, zachowując autonomię klienta.',
+          learnContent: {
+            videoTitle: 'Masterclass: Mapowanie motywów oparte na dowodach',
+            summaryText: 'Emocje i rozumowanie mogą wpływać na decyzje, lecz nie istnieje uniwersalna reguła „95% emocjonalnie” ani słowo omijające świadomy opór. Odpowiedzialny copywriting zaczyna się od zaobserwowanych potrzeb, sprawdzalnych claims i testu, czy jaśniejsze framing pomaga wybrać.',
+            bulletPoints: [
+              'Traktuj bezpieczeństwo, odkrywanie i osiągnięcia jako hipotezy badawcze, nie biologiczne diagnozy ani stałe typy klientów',
+              'Przekładaj wywiady, wyszukiwanie, pytania supportu i obiekcje na konkretne, sprawdzalne tematy przekazu',
+              'Stosuj sygnały uwagi poprawiające zrozumienie i trafność zamiast szoku, deception lub utrudniania interfejsu',
+              'Łącz udokumentowany problem z proporcjonalną korzyścią, dowodem, ograniczeniami i realistycznym krokiem',
+            ],
+            coreConcepts: [
+              { iconName: 'zap', title: 'HIPOTEZA MOTYWU', description: 'Zapisz odbiorcę, kontekst, zaobserwowaną potrzebę, wariant przekazu i dowód wspierający lub odrzucający hipotezę.', highlight: true },
+              { iconName: 'eye', title: 'UWAGA Z AUTONOMIĄ', description: 'Zdobywaj uwagę trafnością, hierarchią i jasnością; nie ukrywaj reklamy, istotnych warunków ani nie twórz sztucznej presji.' },
+            ],
+            resources: [
+              { title: 'Workbook badania motywów i eksperymentu copy', subtitle: 'Wywiady, claims, warianty, safeguards i wyniki', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Asystent przeglądu copy GOM-MAR', subtitle: 'Jasność, dowody, dostępność i ryzyko manipulacji', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Copy oparty na motywach, który szanuje odbiorcę
+
+Decyzje wynikają ze współdziałania emocji, uwagi, pamięci, kontekstu i namysłu. Popularne procenty neuromarketingowe i stałe „typy mózgu” nie dają pewnej wiedzy o konkretnej osobie.
+
+#### Odpowiedzialny workflow
+
+1. **Zdefiniuj decyzję**: Określ, kto i w jakim kontekście decyduje, co musi zrozumieć i jak wygląda dobry wynik klienta.
+2. **Zbieraj proporcjonalne dowody**: Za właściwą zgodą użyj wywiadów, zapisów supportu, wyszukiwań, ankiet i zachowań. Oddziel dowód od interpretacji i nie wnioskuj o cechach wrażliwych.
+3. **Ostrożnie grupuj motywy**: Bezpieczeństwo, nowość i osiągnięcia są użytecznymi tematami, ale ludzie mają wiele motywów zależnych od kontekstu. Oznacz segmenty jako hipotezy i pozwól na samookreślenie.
+4. **Prowadź rejestr claims**: Dla każdej istotnej korzyści zapisz dowód, warunki, typowość, wykluczenia i ownera. Usuń twierdzenia bez uzasadnienia.
+5. **Twórz użyteczne warianty**: Połącz jeden motyw z konkretną korzyścią, dowodem, ograniczeniami, pełnym zobowiązaniem i jasnym krokiem. Istotne informacje muszą być widoczne i czytelne.
+6. **Chroń autonomię**: Unikaj ukrytej reklamy, wzmacniania strachu, fałszywego niedoboru, wstydu, forced continuity, confirm-shaming i utrudniania odmowy.
+7. **Testuj etycznie**: Z góry określ hipotezę, customer-centred metric, guardrails, próbę i stop rule. Mierz zrozumienie, właściwe ukończenie, anulowania, skargi i żal, nie tylko kliknięcia.
+8. **Sprawdź dostępność i inkluzję**: Oceń prosty język, nagłówki, linki, focus, kontrast, zoom i screen reader. Testuj właściwe języki i urządzenia.
+9. **Ucz się bez nadmiernych wniosków**: Wynik dotyczy badanej populacji, oferty, kanału i okresu. Zapisz niepewność, skutki uboczne oraz grupy, które ucierpiały lub zostały zdezorientowane.
+10. **Utrzymuj i wycofuj**: Ponownie sprawdzaj claims po zmianie produktu, dowodów, odbiorców lub prawa. Wycofuj wzorce podnoszące krótką konwersję kosztem wyniku klienta.
+
+Celem wiedzy behawioralnej jest poprawa trafności i zrozumienia, a nie przejęcie kontroli nad osądem człowieka.`,
+            practicalExamples: [
+              'Wariant bezpieczeństwa wyjaśnia zakres backupu, granice recovery i dowody supportu zamiast obiecywać wynik bez ryzyka.',
+              'Wariant nowości pokazuje jeden rzeczywiście nowy workflow i krzywą nauki zamiast niejasnego claim „rewolucyjny”.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Użyteczna trafność emocjonalna wynika z dowodów i jasności, nie wymaga stałych etykiet mózgu ani ukrytej kontroli.',
+            keyPrinciples: ['Traktuj segmenty i motywy jako hipotezy', 'Uzasadniaj istotne claims i ujawniaj granice', 'Optymalizuj zrozumienie i właściwe wyniki, nie presję'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj etyczny eksperyment headline oparty na motywie:',
+            checklistItems: ['Udokumentowano odbiorcę, kontekst, motyw i dowody', 'Trzy warianty headline używają konkretnych, uzasadnionych korzyści', 'Istotne granice i pełne zobowiązanie są widoczne', 'Określono guardrails zrozumienia, dopasowania, skarg i anulowania', 'Przypisano czas, próbę, stop rule i ownera review'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '36.2': {
+          stageTitle: '36. Heurystyki poznawcze i transparentny framing',
+          title: 'Używaj wzorców decyzji do wyjaśniania wyboru, nie do deceptive steering',
+          description: 'Stosuj anchoring, porównania, natychmiastowość, udział i social evidence z prawdziwymi punktami odniesienia, uczciwym wyborem i pomiarem wyników klienta.',
+          learnContent: {
+            videoTitle: 'Masterclass: Etyczne projektowanie decyzji w ofercie i checkout',
+            summaryText: 'Skróty poznawcze mogą wpływać na ocenę, ale efekt zależy od odbiorcy i kontekstu. Trzecia cena nie gwarantuje stałego udziału kupujących, a przekreślona cena jest użyteczna tylko wtedy, gdy jest prawdziwa, istotna i wyjaśniona.',
+            bulletPoints: [
+              'Anchoring: ujawnij rzeczywisty i istotny punkt odniesienia zamiast wymyślać cenę katalogową lub oszczędność',
+              'Choice architecture: twórz sensownie różne i samodzielnie użyteczne pakiety; nie buduj celowo złego decoy',
+              'Natychmiastowość: wyjaśnij obecną i przyszłą wartość z realistycznym timingiem, bez pompowania bonusów ani ukrywania kosztu cyklicznego',
+              'Udział i social evidence: używaj reprezentatywnych, zweryfikowanych dowodów za zgodą, a wysiłek setupu niech tworzy użyteczność, nie sztuczne commitment',
+            ],
+            coreConcepts: [
+              { iconName: 'tag', title: 'WERYFIKOWALNE ODNIESIENIE', description: 'Cena porównawcza potrzebuje prawdziwej podstawy, okresu i kontekstu like-for-like. Zachowaj dowód kampanii.', highlight: true },
+              { iconName: 'check-circle-2', title: 'UCZCIWY ZESTAW WYBORU', description: 'Każda opcja pokazuje odbiorcę, funkcje, limity, pełną cenę i renewal. Rekomendacja wynika z dopasowania klienta, nie samej marży.' },
+            ],
+            resources: [
+              { title: 'Macierz review decision design i cen', subtitle: 'Odniesienia, uczciwość pakietów, disclosure i guardrails', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Rejestr eksperymentów cenowych Mara CRM', subtitle: 'Warianty, zgody, metryki, incydenty i decyzje', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Transparentna architektura wyboru
+
+Ceny i pakiety są interpretowane w kontekście. To nadaje porównaniom siłę i tworzy obowiązek, by nie manipulować, nie fałszować wartości ani nie utrudniać wolnego wyboru.
+
+#### Proces review i eksperymentu
+
+1. **Zdefiniuj dopasowanie klienta**: Opisz właściwe zastosowanie i wykluczenia każdego pakietu. Nie optymalizuj niedopasowanego klienta do wyższego tier.
+2. **Weryfikuj każde odniesienie**: Zapisz źródło, daty, rynek, warunki i podstawę like-for-like dla wcześniejszych cen, konkurencji, oszczędności i wartości.
+3. **Projektuj samodzielnie użyteczne opcje**: Każdy tier ma spójną wartość. Nie dodawaj świadomie gorszego „decoy” tylko po to, by wypaczyć porównanie.
+4. **Pokaż pełne zobowiązanie**: Przed potwierdzeniem pokaż podatki gdzie właściwe, jednostkę billingową, usage, renewal, minimalny okres, dodatki, anulowanie, zwrot i dostęp po anulowaniu.
+5. **Ostrożnie mów o stracie**: Wyjaśniaj realne skutki symetrycznie; nie strasz, nie zawstydzaj, nie wyolbrzymiaj straty ani nie twórz fałszywych countdowns.
+6. **Odpowiedzialnie stosuj social evidence**: Uzyskaj zgodę, zweryfikuj testimonials i istotne wyniki, ujawnij incentive oraz warunki i nie pokazuj wyjątków jako typowych.
+7. **Ułatw odmowę**: Akceptacja i odrzucenie powinny mieć porównywalną widoczność i wysiłek. Bez preselected extras, ukrytych subskrypcji i powtarzanej presji.
+8. **Rejestruj test przed startem**: Określ hipotezę, warianty, allocation, czas, próg dowodu, primary metric i guardrails. Nie zatrzymuj testu na korzystającej fluktuacji.
+9. **Mierz jakość downstream**: Uwzględnij zrozumienie, aktywację, plan fit, zwroty, chargebacks, skargi, anulowania i support, nie tylko konwersję.
+10. **Sprawdź grupy chronione i wrażliwe**: Wyłącz lub dodaj safeguards tam, gdzie wiek, distress, financial vulnerability lub sensitive inference czynią targeting niewłaściwym.
+11. **Dokumentuj decyzję**: Zachowaj zgody, screenshoty, dowody claims, wyniki i ograniczenia. Wycofaj wariant, gdy szkoda lub confusion przekroczy próg.
+12. **Regularnie rewaliduj**: Ceny, pakiety, testimonials i oczekiwania klientów się zmieniają. Wygasłe dowody nie mogą pozostać aktywne.
+
+Etyczny framing pomaga porównywać; nie narzuca odpowiedzi przez deception lub friction.`,
+            practicalExamples: [
+              'Tabela trzech planów wyjaśnia, komu każdy służy, używa aktualnych cen i raportuje plan-fit oraz refund rate obok konwersji.',
+              'Rabat czasowy pokazuje prawdziwą datę końca i późniejsze warunki; checkout ma równie widoczną odmowę i brak zaznaczonego dodatku.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Dobry framing ułatwia ocenę wartości i trade-offs, pozostawiając klientowi swobodę wyboru lub odmowy.',
+            keyPrinciples: ['Używaj prawdziwych, udokumentowanych odniesień', 'Każda opcja ma być spójna i uczciwie przedstawiona', 'Oceniaj welfare downstream obok konwersji'],
+          },
+          actionTask: {
+            instruction: 'Przeprowadź odpowiedzialny audit i test jednej tabeli cen:',
+            checklistItems: ['Określono odbiorcę i właściwy use case dla każdego tier', 'Zweryfikowano ceny odniesienia, porównania i oszczędności', 'Pełny koszt, renewal, limity, anulowanie i zwroty są widoczne', 'Usunięto false scarcity, preselection, utrudnioną odmowę i sztuczny decoy', 'Przygotowano hipotezę, guardrails jakości, stop rule i archiwum dowodów'],
+            toolboxCategory: 'landingpage',
+          },
         },
       },
     },
