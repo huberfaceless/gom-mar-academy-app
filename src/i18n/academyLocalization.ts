@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 213866)
-Total output lines: 7558
-
 import { Lesson, Stage } from '../types';
 import { LanguageCode } from './translations';
 
@@ -3542,7 +3539,587 @@ Native style can improve relevance, but advertising must remain recognisable and
           title: 'Design progress, feedback and optional streaks without compulsion',
           description: 'Connect feedback, milestones and practice to real learning outcomes while letting people pause, opt out and recover without shame or penalty.',
           learnContent: {
-            videoTitle: 'Masterclass: Ethical gamification in digital learni…13866 tokens truncated…ź, czy strona podziękowania lub oferta otwiera się natychmiast po zapisie.
+            videoTitle: 'Masterclass: Ethical gamification in digital learning',
+            summaryText: 'Course completion varies by learner, goal, difficulty, support and measurement. XP, badges and streaks may help some people and distract or pressure others; “dopamine loops” do not justify addictive design or a promise to multiply completion.',
+            bulletPoints: [
+              'Begin with a measurable learning outcome and use game elements only when they provide useful feedback, choice or practice',
+              'Offer streaks as optional routines with pause, grace and recovery instead of threats about losing progress',
+              'Keep progress and achievement private by default and obtain clear permission before any social sharing',
+              'Provide reduced-motion, sound-off, non-competitive and assistive-technology alternatives to celebrations and points',
+            ],
+            coreConcepts: [
+              { iconName: 'zap', title: 'MEANINGFUL FEEDBACK', description: 'Feedback explains what was completed, what was learned and the next useful option; it does not exploit variable rewards or obscure the learner’s goal.', highlight: true },
+              { iconName: 'award', title: 'RECOVERABLE ROUTINE', description: 'Optional streaks can be paused and restored without losing earned learning, access, status or paid value.' },
+            ],
+            resources: [
+              { title: 'Ethical Gamification & Accessibility Workbook', subtitle: 'Outcomes, choice, privacy, safeguards, tests and retirement', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Private Progress Tracker', subtitle: 'Learner-controlled milestones, reminders and accessibility settings', type: 'tool', iconName: 'award', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Use game elements to support learning, not dependency
+
+Learning requires effort, rest, context and meaningful practice. Animations, points or streaks do not automatically create mastery, and simplified claims about “dopamine kicks” should not substitute for evidence or learner consent.
+
+#### Responsible design workflow
+
+1. **Define the learning outcome**: State what the learner should understand or demonstrate, the evidence of mastery and what completion does and does not prove.
+2. **Understand learner contexts**: Research goals, time, disability, language, device, caregiving, work patterns and reasons for pausing. Do not assume daily use is desirable.
+3. **Choose the minimum useful mechanic**: Add a progress indicator, milestone, practice prompt or feedback only when it helps orientation, recall or skill. Record the hypothesis and a no-gamification alternative.
+4. **Represent progress honestly**: Base progress on meaningful completion, not screen time, clicks or unnecessary activity. Explain calculation and let learners correct errors.
+5. **Make streaks optional and forgiving**: Allow opt-in, quiet days, time-zone control, pause and recovery. Never erase completed work, restrict paid access or use shame because someone rested.
+6. **Design notifications respectfully**: Default to proportionate frequency, show a preview, respect quiet hours and provide granular pause and unsubscribe controls. Avoid urgency or loss language.
+7. **Keep achievements private by default**: The learner chooses whether a badge, certificate, streak or score appears to peers or social networks. Sharing must not expose sensitive learning, purchase or performance data.
+8. **Build accessible feedback**: Support keyboard, screen readers, contrast, zoom and reduced motion. Confetti, colour, sound and haptics require equivalent non-sensory feedback and user controls.
+9. **Avoid deceptive reward systems**: Do not use random rewards, artificial scarcity, purchased status, hidden odds or reward withdrawal to increase time spent. Virtual points need clear meaning and no misleading monetary implication.
+10. **Protect children and vulnerable learners**: Apply stronger safeguards, age-appropriate design and qualified review. Avoid profiling distress, financial vulnerability or compulsive behaviour for engagement.
+11. **Test learning and wellbeing**: Compare knowledge retention, task success, accessibility, pressure, interruptions, opt-outs and support requests—not daily opens alone. Segment results carefully and allow negative findings.
+12. **Maintain and retire**: Monitor complaints, compulsive-use signals, inequity and feature drift. Pause or remove mechanics that increase activity while harming learning, autonomy or wellbeing.
+
+The best indicator of success is useful learning that fits the person’s life, not an unbroken streak.`,
+            practicalExamples: [
+              'A learner pauses reminders during shift work and resumes later with all completed lessons intact; progress remains private unless they choose to share a certificate.',
+              'A celebration uses text confirmation by default, with optional sound and motion; the same milestone is fully understandable to a screen-reader user.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Ethical gamification makes learning clearer and more manageable while preserving rest, privacy, accessibility and the right to opt out.',
+            keyPrinciples: ['Tie mechanics to learning outcomes, not time spent', 'Make streaks and reminders voluntary and recoverable', 'Keep progress private and accessible by default'],
+          },
+          actionTask: {
+            instruction: 'Design one learner-centred gamification pilot:',
+            checklistItems: ['Learning outcome, mastery evidence and non-gamified path defined', 'Progress logic is accurate, understandable and correctable', 'Streak, reminders, pause, recovery and opt-out controls specified', 'Privacy, sharing, reduced-motion, sound-off and assistive alternatives tested', 'Learning, wellbeing, complaint and retirement guardrails scheduled'],
+            toolboxCategory: 'content',
+          },
+        },
+        '41.2': {
+          stageTitle: '41. Inclusive community challenges',
+          title: 'Run collaborative quests without public pressure or unfair rankings',
+          description: 'Create time-bounded, voluntary community activities that encourage practice and peer support while protecting consent, privacy, accessibility and participants with different resources.',
+          learnContent: {
+            videoTitle: 'Masterclass: Inclusive community challenges and peer support',
+            summaryText: 'Community can support learning, but public leaderboards and prizes can also expose personal data, reward spam, intensify comparison and disadvantage people with less time or access. Challenges should be voluntary, cooperative and evaluated by learning—not loyalty.',
+            bulletPoints: [
+              'Define a realistic skill or contribution goal with flexible participation windows and an individual route',
+              'Use private or team progress and opt-in recognition rather than publishing performance or revenue by default',
+              'Match learning partners only with informed agreement, compatible preferences, boundaries and an easy rematch or exit',
+              'Reward evidence of learning, helpfulness and reflection through transparent criteria—not raw activity, sales or constant presence',
+            ],
+            coreConcepts: [
+              { iconName: 'users', title: 'CONSENTED PEER SUPPORT', description: 'Participants choose whether to join, what to share and whether to be matched. Expectations, reporting, safeguarding and exit are clear.', highlight: true },
+              { iconName: 'trophy', title: 'COOPERATIVE MILESTONE', description: 'The group works toward an accessible shared outcome; recognition is optional and does not rank personal worth or commercial success.' },
+            ],
+            resources: [
+              { title: 'Inclusive Challenge & Community Safety Guide', subtitle: 'Consent, accessibility, moderation, criteria and evaluation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Challenge Participation Controls', subtitle: 'Opt-in, preferences, private progress and safeguarding records', type: 'tool', iconName: 'award', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build community practice without turning learners into a leaderboard
+
+A shared challenge can create structure and encouragement, but duration, competition and prizes do not guarantee participation, completion or loyalty. Design for different schedules, abilities and motivations.
+
+#### Inclusive challenge lifecycle
+
+1. **Define the learning purpose**: Choose one skill, habit or contribution that can be practised safely. State prerequisites, non-goals, evidence and why community adds value.
+2. **Make participation voluntary**: Explain workload, dates, data use, communications, visibility, prizes and alternatives before opt-in. Access to paid learning must not depend on joining.
+3. **Offer flexible pacing**: Provide a suggested path plus catch-up, pause and asynchronous options. Avoid a rigid daily schedule where it is not educationally necessary.
+4. **Set accessible tasks**: Use plain language, multiple formats, sufficient time and reasonable alternatives. Do not require public video, income disclosure, purchases or social posting.
+5. **Establish community safeguards**: Publish conduct, moderation, reporting, escalation, privacy and emergency boundaries. Train moderators and clarify that peers are not therapists or professional advisers.
+6. **Match buddies with consent**: Collect only necessary preferences, avoid sensitive inference and let participants decline, block, rematch or leave. Do not share contact details until both sides agree.
+7. **Prefer cooperation to ranking**: Use shared milestones, personal baselines or private reflection. If a leaderboard is genuinely useful, make it opt-in, explain the score, limit visibility and provide a non-ranked mode.
+8. **Use fair criteria**: Do not reward message volume, revenue or uninterrupted attendance. Validate helpfulness and learning evidence, prevent gaming and provide correction and appeal.
+9. **Handle rewards transparently**: State eligibility, selection, value, tax implications where relevant, fulfilment and conflicts. Rewards must not pressure overspending or excessive activity.
+10. **Protect data and identity**: Keep participation, performance, purchases and revenue private by default. Apply retention, access, deletion and image-consent controls.
+11. **Support live and asynchronous access**: Caption sessions, provide summaries and avoid making attendance the only path to essential content. Record only with informed notice and manage replay access.
+12. **Evaluate balanced outcomes**: Measure learning, belonging, accessibility, workload, drop-out, conflict, pressure, reports and support needs. Do not claim that a buddy system doubles completion without valid evidence.
+13. **Close responsibly**: Celebrate privately or publicly according to each person’s choice, deliver promised rewards, revoke temporary access, retain only necessary records and publish what will improve next time.
+
+People may value content, community, quiet independent study or a mixture. Status should never be the price of belonging.`,
+            practicalExamples: [
+              'A 14-day planning challenge offers three tasks per week, asynchronous alternatives and private progress; participants opt separately into buddy matching and public recognition.',
+              'Instead of ranking revenue, a group unlocks a shared resource after completing peer-reviewed practice, while individuals who prefer not to compete receive the same core learning.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A healthy community challenge strengthens practice and support through choice, safety and inclusion—not public comparison, pressure or promised loyalty.',
+            keyPrinciples: ['Community participation and visibility require informed choice', 'Use cooperative or private progress before public rankings', 'Reward learning and helpfulness without disadvantaging limited time or resources'],
+          },
+          actionTask: {
+            instruction: 'Prepare one inclusive community challenge:',
+            checklistItems: ['Learning purpose, workload, flexible path and independent alternative published', 'Opt-in, visibility, communications, data and reward terms are clear', 'Accessibility, moderation, reporting and safeguarding controls assigned', 'Buddy consent, preferences, rematch and exit process configured', 'Learning, belonging, pressure, inequity and closure review scheduled'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+    42: {
+      title: '42. Responsible LinkedIn thought leadership & B2B relationship building',
+      subtitle: 'Evidence-led expertise, accessible content, respectful outreach and accountable lead management',
+      description: 'Build a credible LinkedIn presence and develop relevant B2B conversations without reach guarantees, manipulative engagement tactics, invasive profiling or automated spam.',
+      lessons: {
+        '42.1': {
+          stageTitle: '42. Credible LinkedIn content & profile design',
+          title: 'Publish useful expertise and create an accurate, accessible profile',
+          description: 'Turn verified experience into useful posts and documents while making your role, evidence, offer and next step easy to understand.',
+          learnContent: {
+            videoTitle: 'Masterclass: Evidence-led LinkedIn content for B2B audiences',
+            summaryText: 'LinkedIn distribution changes over time and no format, posting time or engagement window guarantees reach. A sustainable strategy starts with audience needs, reliable evidence, clear authorship and accessible presentation, then tests formats against meaningful business outcomes.',
+            bulletPoints: [
+              'Treat algorithm advice as a testable hypothesis and use current first-party analytics rather than fixed reach formulas',
+              'Choose text, image, video or document posts according to the audience task, available evidence and accessibility needs',
+              'Separate informed professional opinion from fact and link claims, examples and case studies to appropriate evidence',
+              'Design the profile as an accurate professional introduction with a clear offer, disclosures and a low-pressure next step',
+            ],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'EVIDENCE-LED CONTENT', description: 'Every post has a defined audience question, trustworthy source, useful explanation and proportionate claim instead of a promise of virality.', highlight: true },
+              { iconName: 'user-check', title: 'TRUSTWORTHY PROFILE', description: 'Identity, role, experience, services, affiliations and contact route are current, specific and not misleading.' },
+            ],
+            resources: [
+              { title: 'LinkedIn Editorial & Evidence Matrix', subtitle: 'Audience questions, sources, formats, accessibility and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR LinkedIn Draft Assistant', subtitle: 'Create reviewable drafts without fabricated expertise or results', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Build authority by being useful, accurate and accountable
+
+Thought leadership is not a claim of superiority. It is a repeated practice of explaining relevant issues, showing evidence, acknowledging limits and helping a defined professional audience make better decisions.
+
+#### Responsible LinkedIn publishing workflow
+
+1. **Define the audience task**: Identify the role, context and decision the content should support. Avoid targeting people through sensitive inferred traits.
+2. **Select a defensible topic**: Use questions you can address through direct experience, reliable research or clearly attributed expert sources.
+3. **Build an evidence sheet**: Record sources, dates, assumptions, limitations, permissions and review owner. Remove invented statistics, clients and outcomes.
+4. **Choose the appropriate format**: Match text, image, video or document to the explanation. A document post is not inherently superior and reach varies by account, audience and time.
+5. **Write an accurate opening**: State the problem and value without fear, outrage bait, fake controversy or a claim that one view destroys an entire industry myth.
+6. **Explain, do not merely assert**: Show method, context and trade-offs. Label opinion, estimates, simulations and sponsored relationships clearly.
+7. **Protect confidential information**: Obtain permission for names, logos, screenshots, quotes and case studies. Aggregate or anonymise only where re-identification risk is controlled.
+8. **Make content accessible**: Use descriptive headings, plain language, alt text, edited captions, sufficient contrast, readable documents and meaningful link labels.
+9. **Review professional and regulated claims**: Legal, financial, health, employment and safety content may require qualified review and jurisdiction-specific caveats.
+10. **Prepare a fair next step**: Offer a relevant resource, newsletter or conversation with clear terms. Do not disguise lead capture, scarcity or paid promotion.
+11. **Publish and moderate responsibly**: Correct material errors visibly, address good-faith questions and manage harassment without manufacturing early engagement.
+12. **Measure useful outcomes**: Track qualified profile visits, saves, meaningful replies, consented enquiries, accessibility feedback and downstream fit—not impressions alone.
+13. **Maintain the profile**: Keep role, offer, proof, affiliations, featured links, privacy notice and contact preferences current.
+
+Credibility compounds when readers can understand where a claim came from, what it means and where its limits are.`,
+            practicalExamples: [
+              'A consultant publishes a documented process improvement with client permission, explains the baseline and limitations, and links to the methodology instead of promising identical savings.',
+              'A document post includes readable type, a text summary and descriptive link; analytics are reviewed after a defined test period without claiming the format always triples reach.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Durable B2B credibility comes from useful evidence, accurate identity, accessible communication and visible corrections—not algorithm myths or dominance claims.',
+            keyPrinciples: ['Test formats instead of promising reach', 'Distinguish evidence, experience and opinion', 'Protect confidentiality and design for accessibility'],
+          },
+          actionTask: {
+            instruction: 'Prepare one evidence-led LinkedIn profile and content pilot:',
+            checklistItems: ['Audience question, useful outcome and non-goals defined', 'Profile identity, role, offer, proof and disclosures verified', 'Sources, permissions, claims and limitations reviewed', 'Post and destination tested for accessibility and mobile use', 'Metrics, review date, correction route and stop rule documented'],
+            toolboxCategory: 'content',
+          },
+        },
+        '42.2': {
+          stageTitle: '42. Respectful social selling & executive outreach',
+          title: 'Develop relevant B2B conversations without spam or pressure',
+          description: 'Research accounts proportionately, interact genuinely and invite a conversation only when relevance, lawful data use and the recipient’s choices are clear.',
+          learnContent: {
+            videoTitle: 'Masterclass: Permission-aware B2B outreach and discovery',
+            summaryText: 'A profile view, comment sequence or “value-first” message does not guarantee a meeting. Responsible outreach uses minimal relevant data, human review, honest intent, reasonable frequency and an easy way to decline while measuring fit and harm as well as replies.',
+            bulletPoints: [
+              'Define legitimate audience criteria without scraping prohibited data or inferring sensitive personal characteristics',
+              'Use public professional context only where relevant and verify it before personalising a message',
+              'Make identity and commercial intent clear; do not simulate friendship or hide a pitch behind an unsolicited audit',
+              'Use CRM retention, suppression, access and deletion controls and stop promptly after refusal or repeated non-response',
+            ],
+            coreConcepts: [
+              { iconName: 'send', title: 'RESPECTFUL RELEVANCE', description: 'The message explains why this person, why now and what optional value is offered, without surveillance language, pressure or fabricated familiarity.', highlight: true },
+              { iconName: 'calendar', title: 'CONSENTED DISCOVERY', description: 'A call has a clear purpose, duration, participants and cancellation route; discovery is not a disguised commitment.' },
+            ],
+            resources: [
+              { title: 'Responsible B2B Outreach Playbook', subtitle: 'Research boundaries, message patterns, objections and suppression', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM B2B Governance Pipeline', subtitle: 'Source, lawful basis, consent, retention, opt-out and deal fit', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build B2B relationships without turning LinkedIn into a surveillance funnel
+
+Social selling should improve relevance and trust, not automate unwanted contact. Platform rules, privacy and direct-marketing requirements vary by location and context, so obtain qualified advice where needed.
+
+#### Account-based outreach workflow
+
+1. **Define a narrow business problem**: State the organisations and roles that can reasonably benefit, plus exclusions and disqualifiers.
+2. **Set governance before prospecting**: Document data sources, access, retention, lawful basis, suppression, security, owners and escalation. Do not import scraped or purchased lists without verification.
+3. **Research proportionately**: Use relevant public professional information and company signals. Avoid sensitive inferences, personal surveillance or mentioning details that would feel intrusive.
+4. **Verify the record**: Confirm role, organisation, market and source date. Mark uncertainty rather than inventing personalisation.
+5. **Engage only when genuine**: Comment when you can add useful substance. Never deploy generic bot comments to manufacture familiarity or engagement.
+6. **Write a transparent invitation**: Identify yourself, explain the specific relevance and keep the request optional. Do not pretend a sales message is neutral networking.
+7. **Offer value without coercion**: A checklist or observation must be genuinely useful, safe and accessible without requiring a meeting. Do not manufacture flaws in an unsolicited “audit”.
+8. **Control frequency**: Use a small, documented contact sequence with human approval, quiet periods and immediate suppression after opt-out. No endless follow-ups or account rotation.
+9. **Respect platform and channel rules**: Use supported features and current limits. Do not evade restrictions, automate prohibited actions or move contact to email or phone without a valid basis.
+10. **Run a fair discovery call**: Share agenda, duration and participants; ask permission for notes or recording. Explore need, stakeholders, constraints, alternatives and no-fit conditions before presenting an offer.
+11. **Substantiate commercial claims**: Use comparable case evidence with context and permission. Never imply guaranteed ROI, access to executives, meeting volume or five- or six-figure contracts.
+12. **Record responsibly**: Store source, status, objections, commitments and next step in the CRM with role-based access and a retention schedule. Keep sensitive speculation out.
+13. **Measure quality and harm**: Review relevant replies, accepted calls, no-fit decisions, complaints, opt-outs, conversion quality, sales cycle and customer outcomes.
+14. **Pause and improve**: Stop a segment or message when complaints, low relevance or poor downstream fit exceed the agreed threshold.
+
+A respectful “no” is a useful outcome: it protects both parties and improves targeting.`,
+            practicalExamples: [
+              'After reading a public company report, a specialist sends a short note connecting one disclosed operational priority to a relevant checklist and explicitly says no reply is required.',
+              'A prospect declines. The CRM records suppression and retention date, and automation blocks further messages across the campaign.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Good social selling earns permission through relevance, transparency and restraint; it never depends on hidden intent, mass automation or guaranteed meetings.',
+            keyPrinciples: ['Use minimal verified professional data', 'Make identity, intent and opt-out clear', 'Measure complaints and fit alongside meetings and revenue'],
+          },
+          actionTask: {
+            instruction: 'Run a controlled, respectful B2B outreach pilot:',
+            checklistItems: ['Audience, exclusions, data sources and governance approved', 'Ten records manually verified for role, relevance and source', 'Message states identity, relevance, optional value and easy decline', 'Frequency, suppression, retention and human approval controls tested', 'Quality, complaints, opt-outs, call fit and stop rule scheduled for review'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+  },
+  pl: {
+    1: {
+      title: '1. Twój start',
+      subtitle: '🟢 START',
+      description: 'Jak działa dochód online? Jakie są możliwości i czego naprawdę potrzebujesz?',
+      lessons: {
+        '1.1': {
+          stageTitle: 'Twój start',
+          title: 'Jak działa dochód online?',
+          description: 'Poznaj podstawy cyfrowej wartości, automatyzacji tworzenia wartości i skalowalności.',
+          learnContent: {
+            videoTitle: 'Wprowadzenie: fundament dochodu online',
+            summaryText: 'Dochód online nie jest kwestią szczęścia ani magii. Powstaje, gdy rozwiązujesz istniejące problemy i łączysz osobę z potrzebą z odpowiednim rozwiązaniem.',
+            bulletPoints: [
+              'Podaż i popyt: ktoś szuka rozwiązania, a Ty polecasz odpowiedni produkt.',
+              'Automatyzacja: Twój system może pracować przez całą dobę, także gdy śpisz.',
+              'Niezależność od miejsca: laptop jest Twoim centrum działania.',
+            ],
+            fullArticleGuide: `### Podstawowe prawo dochodu online
+
+Zarabianie w internecie nie jest tajemniczą sztuczką i nie wymaga wrodzonego talentu. Opiera się na uniwersalnej zasadzie: **tworzeniu wartości poprzez rozwiązywanie problemów**.
+
+Gdy ktoś mierzy się z pilnym problemem—chce dodatkowego dochodu, lepszej kondycji, spokojniejszego snu albo sukcesu zawodowego—aktywnie szuka prostszej drogi. Jeśli dostarczysz lub polecisz odpowiednie rozwiązanie, możesz otrzymać wynagrodzenie za stworzoną wartość.
+
+#### Trzy filary cyfrowej skalowalności
+
+1. **Niskie koszty krańcowe**: Produkt cyfrowy lub strona rekomendacyjna wymaga jednorazowej pracy, a później może obsłużyć 10, 100 albo 10 000 osób jednocześnie.
+2. **Zautomatyzowane procesy**: Nowoczesne systemy e-mail i sprzedaży cyfrowej komunikują się i dostarczają treści przez całą dobę, niezależnie od Twojego czasu pracy.
+3. **Niezależność od miejsca**: Cała firma może działać z laptopa lub smartfona. Nie potrzebujesz lokalu, magazynu ani pracowników.
+
+#### Twoja rola jako partnera afiliacyjnego
+
+Nie musisz tworzyć własnego produktu. Jako partner afiliacyjny łączysz podaż z popytem. Polecasz sprawdzone produkty uznanych dostawców i otrzymujesz prowizję za każdą skuteczną sprzedaż—często od 30% do 70%.`,
+            practicalExamples: ['Przykład dodatkowego dochodu: pracownik chce zarabiać dodatkowe 500 € miesięcznie. Polecasz mu sprawdzony program krok po kroku i otrzymujesz 50% prowizji.', 'Przykład automatyzacji: zainteresowana osoba zapisuje się na stronie o 23:00. System natychmiast wysyła poradnik i przedstawia ofertę partnerską. Sprzedaż może nastąpić, gdy śpisz.'],
+            videoChapters: [
+              { time: '0:00', title: 'Witamy w GOM-MAR Academy' },
+              { time: '2:15', title: 'Zasada tworzenia wartości' },
+              { time: '4:30', title: 'Dlaczego afiliacja jest dobra na start' },
+              { time: '6:50', title: 'Podsumowanie i pierwsze zadanie' },
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Nie musisz tworzyć własnego produktu—możesz polecać istniejące, sprawdzone rozwiązania w marketingu afiliacyjnym.',
+            keyPrinciples: ['Skup się na rozwiązaniu problemu, nie na presji sprzedażowej', 'Prosty system jest lepszy niż skomplikowany chaos', 'Konsekwencja przez pierwsze 30 dni decyduje o postępie'],
+          },
+          actionTask: {
+            instruction: 'Podejmij zobowiązanie: jaki cel chcesz osiągnąć w ciągu 90 dni?',
+            placeholder: 'Wybierz swój główny cel…',
+          },
+        },
+        '1.2': {
+          stageTitle: 'Twój start',
+          title: 'Jakie są możliwości?',
+          description: 'Przegląd marketingu afiliacyjnego, produktów cyfrowych i automatycznych systemów rekomendacji.',
+          learnContent: {
+            videoTitle: 'Porównanie modeli: która droga pasuje do Ciebie?',
+            summaryText: 'Istnieje wiele sposobów zarabiania online. Dla początkujących afiliacja jest najmniej ryzykowna: bez obsługi klienta, tworzenia produktu i logistyki.',
+            bulletPoints: ['Marketing afiliacyjny: 30–70% prowizji od sprzedaży.', 'Własne produkty cyfrowe: wysoka marża, ale dużo przygotowań.', 'Usługi i coaching: szybszy przychód, ale zależny od Twojego czasu.'],
+            fullArticleGuide: `### Najpopularniejsze modele biznesu online—porównanie
+
+Początkujący często czują się przytłoczeni liczbą możliwości. Nie każdy model nadaje się jednak na start bez specjalistycznej wiedzy lub dużego kapitału.
+
+#### 1. Marketing afiliacyjny—rekomendacja GOM-MAR
+* **Jak działa**: Polecasz produkty innych dostawców przez osobisty link partnerski.
+* **Zalety**: Bez tworzenia produktu, obsługi klienta i realizacji zamówień; możesz zacząć od razu, a produkty cyfrowe często oferują prowizje 30–70%.
+* **Wada**: Nie budujesz przede wszystkim własnej marki produktowej—co na początku często jest zaletą.
+
+#### 2. Własne produkty cyfrowe—e-booki i kursy wideo
+* **Jak działa**: Tworzysz i sprzedajesz własne kursy lub poradniki.
+* **Zalety**: Pełna kontrola nad cenami, ofertą i lejkiem oraz bardzo wysoka marża.
+* **Wady**: Dużo czasu na tworzenie, aktualizacje i obsługę klienta.
+
+#### 3. E-commerce i dropshipping
+* **Jak działa**: Sprzedajesz fizyczne produkty w sklepie internetowym.
+* **Zaleta**: Duży popyt na produkty fizyczne.
+* **Wady**: Zwroty, opóźnienia, odprawa celna i marże wynoszące czasem tylko 10–20% zwiększają ryzyko.
+
+#### Najlepszy punkt startowy
+
+GOM-MAR Academy koncentruje się na **marketingu afiliacyjnym wspieranym przez automatyczną komunikację e-mail**. Łączy on niskie ryzyko z szybką drogą do pierwszego rzeczywistego przychodu online.`,
+            practicalExamples: ['Afiliacja kontra sklep: w dropshippingu wymieniasz wadliwe produkty i odpowiadasz na reklamacje. W afiliacji te zadania przejmuje dostawca produktu.'],
+            videoChapters: [{ time: '0:00', title: 'Przegląd cyfrowych modeli biznesowych' }, { time: '3:20', title: 'Marketing afiliacyjny w praktyce' }, { time: '6:45', title: 'Porównanie czasu i wyniku' }],
+          },
+          understandContent: { coreTakeaway: 'Marketing afiliacyjny to najszybsza i najbezpieczniejsza droga do pierwszego dodatkowego dochodu online.', keyPrinciples: ['Mniejsze ryzyko dzięki sprawdzonym procesom dostawcy', 'Natychmiastowy start bez rozbudowanej infrastruktury firmy', 'Skalowanie dzięki automatycznemu pozyskiwaniu kontaktów'] },
+          actionTask: { instruction: 'Wybierz model, na którym skupimy się w GOM-MAR Academy.', checklistItems: ['Zaczynam od marketingu afiliacyjnego', 'Będę korzystać z automatycznej sprzedaży e-mail', 'Zbuduję prosty system krok po kroku'] },
+        },
+        '1.3': {
+          stageTitle: 'Twój start',
+          title: 'Czego naprawdę potrzebujesz?',
+          description: 'Minimalny zestaw potrzebny do udanego startu bez zbędnego balastu.',
+          learnContent: {
+            videoTitle: 'Startowy system z trzech elementów',
+            summaryText: 'Nie pozwól, by dziesiątki narzędzi marketingowych Cię rozpraszały. Na start potrzebujesz trzech rzeczy: landing page, autorespondera e-mail i oferty partnerskiej.',
+            bulletPoints: ['1. Domena i landing page—Twoja cyfrowa wizytówka', '2. Autoresponder—automatyczny system sprzedaży e-mail', '3. Oferta partnerska—sprawdzony produkt z prowizją'],
+            fullArticleGuide: `### Prosty system GOM-MAR z trzech elementów
+
+Wielu początkujących gubi się w porównywaniu oprogramowania, programach graficznych i szczegółach technicznych. Tygodniami zmieniają ustawienia, nie kontaktując się z ani jedną zainteresowaną osobą.
+
+Ograniczamy system do **absolutnego minimum**, które jest potrzebne do uzyskania mierzalnych wyników.
+
+#### Element 1: Prosty landing page
+
+Jedna strona, na której odwiedzający podaje adres e-mail, aby otrzymać przydatny bezpłatny poradnik. Bez zbędnych dodatków i dziesięciu podstron.
+
+#### Element 2: Automatyczny autoresponder e-mail
+
+Gdy ktoś się zapisze, automatyzacja przejmuje dalszą komunikację. Dostarcza poradnik, a w następnych dniach wysyła przygotowane wiadomości budujące zaufanie i zawierające linki rekomendacyjne.
+
+#### Element 3: Sprawdzona oferta afiliacyjna
+
+Przetestowany produkt z platformy takiej jak Digistore24 lub Copecart, który rozwiązuje realny problem grupy docelowej i zapewnia 30–70% prowizji od sprzedaży.
+
+Wszystko ponadto—logo, wizytówki i skomplikowane lejki—jest na początku rozpraszaczem.`,
+            practicalExamples: ['Minimalny system w praktyce: odwiedzający wpisuje e-mail na stronie → system automatycznie wysyła wiadomość powitalną i link rekomendacyjny → zainteresowany kupuje → otrzymujesz powiadomienie o prowizji.'],
+          },
+          understandContent: { coreTakeaway: 'Mniej znaczy więcej. Im prostszy jest Twój pierwszy system, tym szybciej możesz zarobić pierwsze euro.', keyPrinciples: ['Trzy podstawowe elementy wystarczą do budowy dodatkowego dochodu', 'GOM-MAR udostępnia automatyzację e-mail i narzędzia', 'Perfekcja jest wrogiem postępu'] },
+          actionTask: { instruction: 'Potwierdź minimalną listę potrzebną do uruchomienia systemu.', checklistItems: ['Rozumiem: potrzebuję tylko trzech elementów', 'Jestem gotowy korzystać z automatyzacji e-mail GOM-MAR', 'Skupiam się na natychmiastowym wdrożeniu'] },
+        },
+        '1.4': {
+          stageTitle: 'Twój start',
+          title: 'Czego NIE potrzebujesz?',
+          description: 'Uniknij pięciu najdroższych błędów i pożeraczy czasu początkujących.',
+          learnContent: {
+            videoTitle: 'Unikaj typowych pożeraczy czasu i pułapek',
+            summaryText: 'Większość początkujących ponosi porażkę, ponieważ tygodniami projektuje logo, zajmuje się zbędną biurokracją albo szuka „idealnego” oprogramowania.',
+            bulletPoints: ['❌ Na początku nie potrzebujesz drogiej infrastruktury firmy', '❌ Nie trać tygodni na idealne logo i kolory', '❌ Nie nagrywaj 100 filmów przed startem', '❌ Unikaj drogich narzędzi za 200 € miesięcznie'],
+            fullArticleGuide: `### Pięć najdroższych pożeraczy czasu początkujących
+
+Dlaczego niektórzy osiągają pierwszy przychód w ciągu 14 dni, a inni po sześciu miesiącach nadal stoją w miejscu? Różnicę często tworzą rzeczy, z których **świadomie rezygnujesz**.
+
+#### 1. Perfekcjonizm przy logo i grafice
+
+Nikt nie kupuje produktu dlatego, że logo jest zielone lub niebieskie. Na początku wystarczy czytelny tekst oraz prosty, profesjonalny wygląd.
+
+#### 2. Skomplikowane abonamenty na oprogramowanie
+
+Nie kupuj drogich platform „wszystko w jednym” za setki euro miesięcznie. Korzystaj ze zintegrowanych narzędzi GOM-MAR Academy, aby utrzymać koszty stałe blisko zera.
+
+#### 3. Tworzenie 50 kont w mediach społecznościowych
+
+Skup się na dokładnie **jednym** głównym źródle ruchu—na przykład grupach na Facebooku lub Instagram Reels—zamiast rozpraszać uwagę na dziesięć platform.
+
+#### 4. Niekończące się poszukiwania bez działania—pułapka poradników
+
+Wiedza bez działania nie przynosi dochodu. Poznaj tylko następny krok, od razu go wykonaj, a dopiero potem przejdź do kolejnej lekcji.`,
+            practicalExamples: ['Przykład sukcesu: Marek nie ma logo ani wizytówek i używa prostego zdjęcia profilowego. Zdobywa 15 kontaktów tygodniowo i realizuje pierwsze sprzedaże. Inna osoba przez trzy tygodnie projektuje logo i nie zarabia nic.'],
+          },
+          understandContent: { coreTakeaway: 'Unikaj nadmiernego analizowania. Twoim głównym zadaniem jest kierowanie zainteresowanych osób na landing page.', keyPrinciples: ['Widoczność wygrywa z perfekcjonizmem', 'Najpierw zdobywaj kontakty, później ulepszaj', 'Korzystaj ze sprawdzonych inspiracji zamiast wymyślać wszystko od nowa'] },
+          actionTask: {
+            instruction: 'Usuń rozpraszacze: której pułapki będziesz od dziś świadomie unikać?',
+            placeholder: 'Np. wielogodzinnego poprawiania logo lub kolorów…',
+          },
+        },
+      },
+    },
+    2: {
+      title: '2. Twój kierunek',
+      subtitle: '🔵 FUNDAMENT',
+      description: 'Znajdź niszę, określ grupę docelową, poznaj jej główny problem i wybierz odpowiednią ofertę.',
+      lessons: {
+        '2.1': {
+          stageTitle: '2. Twój kierunek', title: 'Znajdź niszę',
+          description: 'Znajdź dochodową niszę w jednym z trzech najsilniejszych rynków: zdrowie, finanse lub relacje.',
+          learnContent: {
+            videoTitle: 'Formuła rentowności Twojej niszy',
+            summaryText: 'Produkt sprzedaje się, gdy ludzie już szukają rozwiązania i są gotowi za nie zapłacić. Trzy rynki evergreen zawsze mają aktywnych klientów.',
+            bulletPoints: ['1. Finanse i dodatkowy dochód—zarabianie online, oszczędzanie i inwestowanie', '2. Zdrowie i sprawność—odchudzanie, siła, witalność i sen', '3. Relacje i rozwój osobisty—randki, partnerstwo i pewność siebie'],
+            fullArticleGuide: `### Trzy wielkie rynki z trwałym popytem
+
+Nisza jest precyzyjnie wybraną częścią większego rynku. Jeśli wybierzesz temat, którego nikt nie szuka, nawet dobry marketing nie pomoże. Zacznij tam, gdzie ludzie już wydają pieniądze.
+
+#### Trzy rynki evergreen
+
+1. **Finanse, kariera i dodatkowy dochód**
+   * Tematy: biznes online, dochód pasywny, oszczędzanie, inwestowanie i rozwój kariery.
+   * Dlaczego jest rentowny: ludzie inwestują, gdy rezultat może dać im więcej pieniędzy lub wolności.
+
+2. **Zdrowie, sprawność i dobre samopoczucie**
+   * Tematy: zdrowe odchudzanie, ból pleców, lepszy sen i budowanie siły po czterdziestce.
+   * Dlaczego jest rentowny: zdrowie ma ogromną wartość, a ludzie aktywnie szukają ulgi.
+
+3. **Relacje, randki i rozwój osobisty**
+   * Tematy: poprawa relacji, znalezienie partnera, wychowanie psa i większa pewność siebie.
+   * Dlaczego jest rentowny: potrzeby emocjonalne silnie motywują do działania.
+
+#### Jak wybrać subniszę
+
+Wybierz precyzyjny kierunek w dużym rynku. Zamiast „zarabiania pieniędzy” wybierz „dodatkowy dochód online dla zapracowanych pracowników”.`,
+            practicalExamples: ['Precyzyjne pozycjonowanie: rynek = zdrowie → subnisza = zdrowe odchudzanie dla pracujących matek bez wielogodzinnego gotowania.'],
+          },
+          understandContent: { coreTakeaway: 'Nie wymyślaj rynku. Wybierz miejsce, w którym istnieją już popyt i wydatki.', keyPrinciples: ['Konkurencja na dużym rynku potwierdza, że klienci wydają pieniądze', 'Zajmij jasną pozycję w jednej subniszy', 'Korzystaj z AI do tworzenia i oceny pomysłów'] },
+          actionTask: { instruction: 'Użyj wyszukiwarki nisz GOM-MAR lub wpisz tutaj wybraną niszę:', placeholder: 'Np. dodatkowy dochód online dla pracowników' },
+        },
+        '2.2': {
+          stageTitle: '2. Twój kierunek', title: 'Określ grupę docelową',
+          description: 'Stwórz profil idealnego klienta: komu pomagasz i co motywuje tę osobę?',
+          learnContent: {
+            videoTitle: 'Analiza grupy: kim jest Twój idealny klient?',
+            summaryText: 'Im wyraźniej widzisz jedną konkretną osobę, tym bardziej trafne będą Twoje teksty, landing page i wiadomości e-mail.',
+            bulletPoints: ['Demografia: wiek, zawód i sytuacja życiowa', 'Cele: większa wolność, bezpieczeństwo finansowe i czas dla rodziny', 'Obawy: inflacja, emerytura i zależność od jednego pracodawcy'],
+            fullArticleGuide: `### Profil idealnego klienta
+
+Jeśli próbujesz mówić do wszystkich, nie docierasz do nikogo. Wiadomości napisane „do wszystkich” brzmią chłodno i anonimowo. Pisanie jak do jednej prawdziwej osoby natychmiast zwiększa trafność i zaufanie.
+
+#### Cztery pytania o Twojego klienta
+
+1. **Kim jest ta osoba?** Wiek, zawód i sytuacja rodzinna—np. Tomasz, 42 lata, pracownik przemysłu, żonaty, dwoje dzieci.
+2. **Co obecnie ją frustruje?** Mało wolnego czasu, rosnące koszty życia i poczucie utknięcia w rutynie.
+3. **Czego pragnie najbardziej?** Dodatkowych 500–1000 € miesięcznie, aby zmniejszyć presję finansową i dać rodzinie więcej możliwości.
+4. **Jakie ma wątpliwości?** „Czy mam wystarczająco dużo czasu?”, „Czy dam radę bez doświadczenia?” i „Czy to jest wiarygodne?”
+
+Twoja komunikacja powinna odpowiadać na te wątpliwości i pokazywać, że pożądany rezultat jest osiągalny.`,
+            practicalExamples: ['Słaby tekst: „Nasz system oferuje zaawansowane metody syndykacji dla cyfrowych resellerów.” Jest niezrozumiały.', 'Dobry tekst: „Zbuduj dodatkowe źródło dochodu bez doświadczenia w 30 minut dziennie.” Trafia bezpośrednio do odbiorcy.'],
+          },
+          understandContent: { coreTakeaway: 'Jeśli próbujesz mówić do wszystkich, nie docierasz do nikogo.', keyPrinciples: ['Pisz wiadomości tak, jak do dobrego znajomego', 'Używaj dokładnych słów swojej grupy', 'Odnoś się do najbardziej pilnego codziennego problemu'] },
+          actionTask: { instruction: 'Opisz swoją grupę docelową w jednym lub dwóch zdaniach:', placeholder: 'Np. pracownicy w wieku 30–50 lat, którzy bez doświadczenia chcą zarabiać dodatkowe 500–1000 €.' },
+        },
+        '2.3': {
+          stageTitle: '2. Twój kierunek', title: 'Zidentyfikuj problem',
+          description: 'Znajdź palący problem, dla którego Twoja grupa aktywnie poszukuje natychmiastowego rozwiązania.',
+          learnContent: {
+            videoTitle: 'Znajdź i jasno opisz punkty bólu',
+            summaryText: 'Ludzie kupują emocjonalnie, a decyzję uzasadniają racjonalnie. Najsilniejszą motywacją jest uniknięcie bólu lub osiągnięcie ważnego celu.',
+            bulletPoints: ['Ból: „Mimo pełnego etatu pod koniec miesiąca brakuje pieniędzy.”', 'Cel: „Zarabiać dodatkowe 500 € z domu.”', 'Przeszkoda: „Brakuje mi wiedzy technicznej i czasu.”'],
+            fullArticleGuide: `### Palący problem jako impuls zakupowy
+
+Sprzedaż następuje, gdy oferta zamyka lukę między **obecną sytuacją**—bólem i frustracją—a **pożądaną sytuacją**—celem klienta.
+
+#### Przemiana „przed i po”
+
+* **Przed**: Tomasz pod koniec miesiąca prawie nie ma pieniędzy. Martwi go inflacja, czuje się uwięziony w pracy i brakuje mu czasu oraz doświadczenia technicznego.
+* **Po**: Tomasz zbudował prosty system. Zapewnia mu dodatkowe 600 € miesięcznie, większe bezpieczeństwo i spokojniejsze weekendy z rodziną.
+
+Twoją rolą jako partnera afiliacyjnego jest pokazanie wiarygodnego mostu od obecnej sytuacji do pożądanego rezultatu.`,
+            practicalExamples: ['Formuła oferty: „Osiągnij [pożądany rezultat] bez [największej obawy lub przeszkody].”'],
+          },
+          understandContent: { coreTakeaway: 'Twój system usuwa główną przeszkodę i prowadzi odbiorcę od problemu do pożądanego rezultatu.', keyPrinciples: ['Pokaż problem konkretnie', 'Wyjaśnij, dlaczego wcześniejsze próby się nie udały', 'Przedstaw swoją drogę jako najprostszy wiarygodny następny krok'] },
+          actionTask: { instruction: 'Jaki główny problem Twojej grupy rozwiązuje Twój system?', placeholder: 'Np. brak czasu i wiedzy technicznej potrzebnej do startu online' },
+        },
+        '2.4': {
+          stageTitle: '2. Twój kierunek', title: 'Wybierz ofertę',
+          description: 'Wybierz skuteczną ofertę afiliacyjną z platformy takiej jak Digistore24 lub Copecart.',
+          learnContent: {
+            videoTitle: 'Znajdź i oceń odpowiednią ofertę afiliacyjną',
+            summaryText: 'Dobra oferta łączy wysoką konwersję, niski poziom zwrotów, uczciwą prowizję i profesjonalną stronę sprzedażową.',
+            bulletPoints: ['Przeszukaj platformę Digistore24 lub Copecart', 'Oceń stronę sprzedażową i jej wideo', 'Sprawdź dostępność szablonów e-mail, grafik i banerów'],
+            fullArticleGuide: `### Pięć kryteriów dobrego produktu afiliacyjnego
+
+Nie każdy produkt na platformie zasługuje na Twój czas. Przed wyborem oceń pięć punktów.
+
+1. **Profesjonalna strona z dobrym wideo sprzedażowym**: Obejrzyj stronę jak potencjalny klient. Czy obietnica jest jasna i wiarygodna?
+2. **Prowizja**: Kursy cyfrowe powinny zwykle zapewniać co najmniej **30–50%** albo prowizje cykliczne.
+3. **Poziom zwrotów**: Wskaźnik poniżej 10% może świadczyć o wysokim zadowoleniu klientów.
+4. **Materiały promocyjne**: Dobrzy dostawcy udostępniają partnerom szablony e-mail, grafiki i banery.
+5. **Osobisty link promocyjny**: Link zawiera Twój identyfikator afiliacyjny i śledzenie, dzięki któremu sprzedaż zostanie przypisana do Ciebie.
+
+Polecaj tylko oferty, które naprawdę pasują do grupy i dostarczają użyteczną wartość.`,
+            practicalExamples: ['Krok praktyczny: załóż bezpłatne konto Digistore24, przejrzyj bestsellery w kategorii Internet Marketing & Business i zapisz link promocyjny wybranej oferty.'],
+          },
+          understandContent: { coreTakeaway: 'Polecaj tylko produkty, których jakości i przydatności naprawdę ufasz.', keyPrinciples: ['Zaufanie jest najcenniejszym zasobem w biznesie online', 'Zabezpiecz i zapisz swój link afiliacyjny', 'Przetestuj proces sprzedaży z perspektywy klienta'] },
+          actionTask: { instruction: 'Jak nazywa się wybrana oferta lub produkt afiliacyjny?', placeholder: 'Np. nazwa produktu lub identyfikator produktu Digistore' },
+        },
+      },
+    },
+    3: {
+      title: '3. Twój pierwszy system',
+      subtitle: '🟣 BUDOWA',
+      description: 'Domena, landing page, połączenie oferty afiliacyjnej i fundament techniczny.',
+      lessons: {
+        '3.1': {
+          stageTitle: '3. Twój pierwszy system', title: 'Domena i nazwa marki',
+          description: 'Wybierz zapadającą w pamięć nazwę landing page i całego systemu.',
+          learnContent: {
+            videoTitle: 'Idealna domena i nazwa marki',
+            summaryText: 'Domena powinna być krótka, zrozumiała i budzić zaufanie. Unikaj skomplikowanej pisowni oraz znaków specjalnych.',
+            bulletPoints: ['Przykłady: twoj-dodatkowy-dochod.pl, sukces-z-systemem.com', 'Korzystaj z zaufanych końcówek, takich jak .pl, .com, .de lub .net', 'Nie naruszaj znaków towarowych innych firm'],
+            fullArticleGuide: `### Jak wybrać wiarygodną domenę
+
+Domena jest adresem internetowym Twojej strony zapisu. Powinna brzmieć profesjonalnie i być łatwa do zapamiętania.
+
+#### Zasady dobrej nazwy domeny
+
+1. **Jasna i opisowa**: Nazwa powinna sugerować temat strony, np. formula-wolnosci.pl lub madrze-zacznij.pl.
+2. **Krótka**: Użyj maksymalnie dwóch lub trzech słów.
+3. **Odpowiednia końcówka**: .pl budzi zaufanie w Polsce, .de w Niemczech, a .com pasuje do oferty międzynarodowej.
+4. **Bez cudzych marek**: Nie używaj chronionych nazw takich jak Facebook, Digistore ani innych znaków towarowych.`,
+            practicalExamples: ['Dobre przykłady: starter-funnel.pl, twoja-droga-online.pl, kompas-sukcesu.com.', 'Zły przykład: zarabiaj-szybko-i-zostan-bogaty-1234.info.'],
+          },
+          understandContent: { coreTakeaway: 'Prosta domena od razu buduje zaufanie nowych odwiedzających.', keyPrinciples: ['Łatwa do wpisania', 'Zrozumiała podczas rozmowy telefonicznej', 'Bez nadmiaru łączników'] },
+          actionTask: { instruction: 'Wpisz wybraną nazwę lub domenę:', placeholder: 'Np. moja-droga-online.pl' },
+        },
+        '3.2': {
+          stageTitle: '3. Twój pierwszy system', title: 'Podstawy landing page',
+          description: 'Zbuduj skuteczną stronę zapisu, która pozyskuje kontakty.',
+          learnContent: {
+            videoTitle: 'Anatomia landing page z konwersją ponad 50%',
+            summaryText: 'Landing page do pozyskiwania kontaktów ma jeden cel: wymienić wartościowy lead magnet na adres e-mail odwiedzającego. Usuń rozpraszacze i schowaj dodatkowe linki.',
+            bulletPoints: ['1. Nagłówek budzący ciekawość i pokazujący korzyść', '2. Trzy krótkie główne korzyści', '3. Formularz zapisu z polem e-mail i przyciskiem'],
+            fullArticleGuide: `### Anatomia landing page z konwersją ponad 50%
+
+Dlaczego na jednej stronie zapisuje się 50 na 100 osób, a na innej tylko dwie? Różnicę tworzą prostota i jasne prowadzenie odbiorcy.
+
+#### Cztery elementy skutecznej strony zapisu
+
+1. **Główny nagłówek—haczyk ciekawości**: W ciągu trzech sekund powinien wyjaśnić korzyść. Przykład: „Bezpłatna lista kontrolna: zbuduj pierwsze źródło dochodu online w 30 minut dziennie.”
+2. **Trzy konkretne korzyści**: Pokaż dokładnie, co zawiera darmowy poradnik, np. plan krok po kroku, proste wyjaśnienia i natychmiastowy plik PDF.
+3. **Prosty formularz**: Imię jest opcjonalne, adres e-mail obowiązkowy. Użyj aktywnego przycisku, np. „Pobierz bezpłatnie ➔”.
+4. **Elementy zaufania**: Dodaj krótki komunikat: „100% bezpłatnie, rezygnacja w każdej chwili, bez spamu.”`,
+            practicalExamples: ['Skorzystaj z Asystenta Landing Page GOM-MAR w Toolboxie, aby automatycznie ulepszyć tekst.'],
+          },
+          understandContent: { coreTakeaway: 'Usuń wszystkie rozpraszacze. Jedna strona oznacza jeden cel.', keyPrinciples: ['Zastosuj wyraźny kontrast przycisku', 'Użyj formuły nagłówka „Jak [osiągnąć cel] bez [problemu]”', 'Twórz zwięzłe nagłówki z pomocą GOM-MAR Toolbox'] },
+          actionTask: { instruction: 'Użyj Asystenta Landing Page GOM-MAR lub napisz własny nagłówek:', placeholder: 'Np. Jak zbudować dodatkowy dochód online w 30 minut dziennie' },
+        },
+        '3.3': {
+          stageTitle: '3. Twój pierwszy system', title: 'Połącz ofertę afiliacyjną',
+          description: 'Połącz formularz zapisu ze stroną podziękowania i linkiem afiliacyjnym.',
+          learnContent: {
+            videoTitle: 'Strategia przekierowania przez bridge page',
+            summaryText: 'Po wysłaniu formularza skieruj odwiedzającego na stronę podziękowania z ofertą afiliacyjną. System może generować przychód, gdy sekwencja e-mail działa w tle.',
+            bulletPoints: ['Wysłanie formularza → przekierowanie na stronę podziękowania', 'Strona potwierdza lead magnet i pokazuje odpowiednią ofertę partnerską', 'Prowizja jest możliwa już od pierwszego dnia'],
+            fullArticleGuide: `### Strategia bridge page dla szybkiego przychodu
+
+Moment bezpośrednio po zapisie jest najcenniejszy w całym lejku. Odbiorca jest uważny, korzysta z telefonu lub komputera i właśnie okazał zaufanie.
+
+#### Dwuetapowy proces przekierowania
+
+1. **Wysłanie formularza**: Odwiedzający wpisuje adres e-mail i klika przycisk. W tle kontakt trafia do automatyzacji e-mail.
+2. **Inteligentna strona podziękowania**: Zamiast samego „Dziękujemy” pokaż informację, że bezpłatny poradnik dotrze w ciągu dwóch minut, oraz zaproś do obejrzenia krótkiego filmu z rekomendacją. Pod nim umieść przycisk afiliacyjny. Część nowych kontaktów obejrzy materiał i kupi od razu.`,
+            practicalExamples: ['Przykład: ze 100 nowych kontaktów 40 ogląda film, a od dwóch do czterech kupuje jeszcze przed pierwszą wiadomością follow-up.'],
+          },
+          understandContent: { coreTakeaway: 'Dotrzyj do odbiorcy wtedy, gdy jego uwaga jest największa.', keyPrinciples: ['Nie kieruj do linku afiliacyjnego przed zapisem', 'Najpierw pozyskaj kontakt, potem przedstaw rekomendację', 'Kontakt staje się częścią Twojej własnej grupy odbiorców'] },
+          actionTask: { instruction: 'Potwierdź, że rozumiesz logikę przekierowania.', checklistItems: ['Odwiedzający wpisuje adres e-mail', 'Kontakt trafia do automatyzacji e-mail GOM-MAR', 'Odwiedzający zostaje przekierowany na afiliacyjną stronę podziękowania'] },
+        },
+        '3.4': {
+          stageTitle: '3. Twój pierwszy system', title: 'Śledzenie i test systemu',
+          description: 'Dokładnie sprawdź cały system przed wysłaniem pierwszych odwiedzających.',
+          learnContent: {
+            videoTitle: 'Audyt systemu: czy wszystko działa?',
+            summaryText: 'Testowanie jest niezbędne. Zapisz się jako kontakt testowy i sprawdź, czy otrzymasz wiadomość powitalną.',
+            bulletPoints: ['Przetestuj formularz na telefonie i komputerze', 'Sprawdź skrzynkę odbiorczą oraz spam', 'Zweryfikuj prawidłowe śledzenie linku afiliacyjnego'],
+            fullArticleGuide: `### Lista kontrolna przed uruchomieniem
+
+Zanim wyślesz odwiedzających na stronę, upewnij się, że cały system działa. Jeden uszkodzony link lub formularz może kosztować cenne kontakty.
+
+#### Przetestuj samodzielnie cztery kroki
+
+1. **Test zapisu**: Otwórz landing page na telefonie i komputerze, a następnie zapisz się testowym adresem e-mail.
+2. **Test przekierowania**: Sprawdź, czy strona podziękowania lub oferta otwiera się natychmiast po zapisie.
 3. **Test dostarczenia wiadomości**: E-mail powitalny powinien dotrzeć w ciągu jednej do trzech minut. Sprawdź każdy zawarty link.
 4. **Test śledzenia afiliacyjnego**: Kliknij link partnerski i upewnij się, że identyfikator afiliacyjny jest prawidłowo przekazywany w adresie docelowym.`,
             practicalExamples: ['Pięciominutowy test zapobiega problemom i zapewnia prawidłową obsługę każdego przyszłego odwiedzającego.'],
