@@ -5124,6 +5124,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    55: {
+      title: '55. Purpose, reflection and responsible legacy',
+      subtitle: 'Values-led leadership, wellbeing, giving and long-term stewardship',
+      description: 'Reflect on achievement without equating wealth with worth, use philosophy as an optional practice rather than a cure, and plan giving or succession with evidence, professional advice and accountability.',
+      lessons: {
+        '55.1': {
+          stageTitle: '55. Reflection and resilient leadership',
+          title: 'Use Stoic practices without denying emotion or material risk',
+          description: 'Apply selected philosophical exercises to decisions while respecting mental health, diverse values and the realities employees and customers face.',
+          learnContent: {
+            videoTitle: 'Masterclass: reflective leadership and practical resilience',
+            summaryText: 'Stoic writings can offer useful questions about agency, values and uncertainty, but they do not guarantee calm, wealth or correct decisions. Reflection complements—rather than replaces—risk management, rest, social support and qualified mental-health care when needed.',
+            bulletPoints: [
+              'Separate controllable actions from uncertain outcomes without ignoring duties or foreseeable risk',
+              'Use negative visualisation as proportionate scenario planning, not repetitive catastrophising',
+              'Measure success across integrity, health, relationships, learning, customer value and financial sustainability',
+              'Adapt reflection practices to personal beliefs, accessibility and wellbeing'
+            ],
+            coreConcepts: [
+              { iconName: 'compass', title: 'VALUES AND AGENCY', description: 'Focus attention on evidence-based choices while acknowledging uncertainty and interdependence.', highlight: true },
+              { iconName: 'heart', title: 'SUSTAINABLE RESILIENCE', description: 'Rest, support, boundaries and professional help are compatible with strong leadership.' }
+            ],
+            resources: [
+              { title: 'Founder reflection and decision journal', subtitle: 'Values, evidence, uncertainty, wellbeing and next actions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR learning reflection', subtitle: 'Review progress, gaps and next steps without ranking personal worth', type: 'tool', iconName: 'award', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Philosophy as a practical tool, not a promise\n\n1. **Choose your values**: identify principles that matter to you rather than adopting a single tradition as universal truth.\n2. **Map agency accurately**: distinguish decisions you control, factors you influence and outcomes you cannot determine.\n3. **Keep responsibilities visible**: acceptance does not excuse preventable harm, poor controls or failure to support affected people.\n4. **Plan scenarios proportionately**: examine plausible downside, mitigations, triggers and recovery resources; stop if the exercise becomes harmful rumination.\n5. **Name emotions without judgement**: fear, grief and stress can contain useful information. Emotional suppression is not resilience.\n6. **Use evidence and challenge**: invite dissent, document assumptions and revise decisions when facts change.\n7. **Protect recovery**: sleep, time away, health, relationships and delegation are operating controls, not rewards earned after burnout.\n8. **Seek appropriate help**: persistent distress, anxiety, depression or crisis deserves support from qualified professionals and local emergency resources.\n9. **Define a balanced scorecard**: customer outcomes, team health, compliance, cash resilience, learning and personal wellbeing.\n10. **Reflect briefly and act**: record one lesson, one gratitude item and one next action; journalling is optional and should remain useful.\n11. **Review power and impact**: consider who bears the cost of a decision and create safe routes for feedback.\n12. **Revisit priorities**: circumstances and values change; a thoughtful plan may also change.',
+            practicalExamples: [
+              'A founder distinguishes market volatility from controllable cash planning and seeks peer support instead of treating anxiety as failure.',
+              'A pre-mortem identifies supplier concentration and produces a tested backup plan with an owner and trigger.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Resilient leadership combines reflection with evidence, care, accountability and support—not emotional invulnerability.',
+            keyPrinciples: ['Philosophy is optional and not medical care', 'Worth is not determined by revenue or status', 'Rest, dissent and human support improve decisions'],
+          },
+          actionTask: {
+            instruction: 'Create a sustainable reflection practice:',
+            checklistItems: ['Personal values and balanced success measures written down', 'Controllable actions, uncertainties and responsibilities separated', 'Recovery, support and escalation routes included', 'A short review cadence with permission to adapt or stop established'],
+            toolboxCategory: 'content',
+          },
+        },
+        '55.2': {
+          stageTitle: '55. Giving, succession and accountable legacy',
+          title: 'Plan long-term contribution without vanity or permanence claims',
+          description: 'Choose giving, mentoring or succession goals with beneficiaries, evidence, governance, tax and legal advice, and measurable safeguards.',
+          learnContent: {
+            videoTitle: 'Closing module: purpose, contribution and next learning steps',
+            summaryText: 'Completing the learning material is a milestone, not proof of mastery or guaranteed membership, status or impact. Philanthropy and impact investing can help, but good intentions do not replace community input, due diligence, governance and evaluation.',
+            bulletPoints: [
+              'Begin with affected communities and independently verified needs rather than a founder’s preferred solution',
+              'Compare donation, responsible business practice, advocacy, mentoring and impact investment honestly',
+              'Design governance, conflicts, safeguarding, costs, tax, reporting and succession with professionals',
+              'Treat certificates as accurate records of completion only when criteria and verification actually exist'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'VERIFIABLE COMPLETION', description: 'Any credential states its issuer, criteria, evidence, limits and verification method.', highlight: true },
+              { iconName: 'zap', title: 'ACCOUNTABLE CONTRIBUTION', description: 'Impact is defined with communities, measured for benefit and harm, and revised over time.' }
+            ],
+            resources: [
+              { title: 'Giving and legacy planning workbook', subtitle: 'Purpose, beneficiaries, options, governance, risks and evaluation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR completion record', subtitle: 'Generate only available, criteria-based learning records', type: 'tool', iconName: 'award', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Plan contribution with humility and evidence\n\n1. **Listen before designing**: involve people affected by the issue and compensate expertise where appropriate.\n2. **Define the problem and limits**: describe evidence, geography, affected groups, existing work and what you do not know.\n3. **Compare mechanisms**: unrestricted donations, grants, responsible operations, mentoring, policy work and impact investment have different risks and returns.\n4. **Conduct due diligence**: leadership, safeguarding, financial controls, conflicts, outcomes, community legitimacy and unintended harm.\n5. **Avoid saviour narratives**: communicate partners and beneficiaries with consent, dignity and accurate attribution.\n6. **Set governance**: decision rights, independent oversight, conflict policy, complaints, whistleblowing and removal processes.\n7. **Plan legal and tax structure**: foundations, trusts, associations and companies vary by jurisdiction; obtain written professional advice before formation or transfer.\n8. **Protect restricted people and data**: child and vulnerable-person safeguarding, privacy, security and image consent require specific controls.\n9. **Fund operations and learning**: administration, staff, evaluation and long-term maintenance are legitimate costs.\n10. **Measure contribution carefully**: use baselines, additionality, counterfactual limits, qualitative feedback and harm indicators; avoid vanity totals.\n11. **Design succession**: capabilities, documents, decision transfer and sunset clauses may serve the mission better than trying to exist forever.\n12. **Report and correct**: publish methods, material failures and changes proportionately.\n13. **Represent credentials honestly**: a completion certificate is not an accredited degree, professional licence, lifetime entitlement or guarantee of competence unless formally established as such.\n14. **Choose the next step**: continued learning, service, rest or a small pilot can all be valid outcomes.',
+            practicalExamples: [
+              'A giving programme funds an organisation already trusted locally and includes unrestricted support, safeguarding review and community feedback.',
+              'A course certificate names completed modules and verification criteria without implying accreditation or lifelong membership.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A meaningful legacy is accountable, revisable and shaped with others; permanence, status and positive impact cannot be guaranteed.',
+            keyPrinciples: ['Community voice comes before founder prestige', 'Use professional advice and independent governance', 'Describe completion and impact claims precisely'],
+          },
+          actionTask: {
+            instruction: 'Prepare a responsible contribution plan:',
+            checklistItems: ['Purpose, affected communities and evidence documented', 'Options, risks, safeguarding and conflicts reviewed', 'Governance, evaluation, funding and succession outlined', 'Any certificate or membership claim checked against actual criteria'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -10232,6 +10314,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Utwórz etyczny program reputacji:',
             checklistItems: ['Zaudytowano wyszukiwanie i profile z dowodami', 'Udokumentowano neutralne kryteria i reguły platform', 'Zatwierdzono prywatne odpowiedzi i eskalację', 'Przypisano metryki przyczyn, właścicieli i przegląd'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
+    55: {
+      title: '55. Cel, refleksja i odpowiedzialne dziedzictwo',
+      subtitle: 'Przywództwo oparte na wartościach, dobrostan, dawanie i długoterminowa odpowiedzialność',
+      description: 'Oceniaj osiągnięcia bez utożsamiania bogactwa z wartością osoby, używaj filozofii jako opcjonalnej praktyki i planuj dawanie lub sukcesję z dowodami, doradcami oraz rozliczalnością.',
+      lessons: {
+        '55.1': {
+          stageTitle: '55. Refleksja i odporne przywództwo',
+          title: 'Stosuj praktyki stoickie bez zaprzeczania emocjom i ryzyku',
+          description: 'Używaj wybranych ćwiczeń filozoficznych, respektując zdrowie psychiczne, różne wartości i realia klientów oraz personelu.',
+          learnContent: {
+            videoTitle: 'Masterclass: refleksyjne przywództwo i praktyczna odporność',
+            summaryText: 'Teksty stoickie mogą podsuwać pytania o sprawczość, wartości i niepewność, ale nie gwarantują spokoju, bogactwa ani dobrej decyzji. Refleksja uzupełnia zarządzanie ryzykiem, odpoczynek, wsparcie i profesjonalną pomoc, gdy jest potrzebna.',
+            bulletPoints: [
+              'Oddzielaj działania kontrolowane od niepewnych wyników bez ignorowania obowiązków i ryzyka',
+              'Używaj negatywnej wizualizacji jako proporcjonalnego planowania, nie powtarzalnego katastrofizowania',
+              'Mierz sukces przez integralność, zdrowie, relacje, naukę, wartość dla klienta i stabilność finansową',
+              'Dostosuj refleksję do przekonań, dostępności i dobrostanu'
+            ],
+            coreConcepts: [
+              { iconName: 'compass', title: 'WARTOŚCI I SPRAWCZOŚĆ', description: 'Skupiaj się na decyzjach opartych na dowodach, uznając niepewność i współzależność.', highlight: true },
+              { iconName: 'heart', title: 'TRWAŁA ODPORNOŚĆ', description: 'Odpoczynek, wsparcie, granice i profesjonalna pomoc są częścią dobrego przywództwa.' }
+            ],
+            resources: [
+              { title: 'Dziennik refleksji i decyzji założyciela', subtitle: 'Wartości, dowody, niepewność, dobrostan i następne działania', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Refleksja nauki GOM-MAR', subtitle: 'Przegląd postępu i luk bez oceniania wartości osoby', type: 'tool', iconName: 'award', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Filozofia jako narzędzie, nie obietnica\n\n1. **Wybierz wartości**: określ ważne zasady zamiast uznawać jedną tradycję za uniwersalną.\n2. **Dokładnie mapuj sprawczość**: decyzje kontrolowane, czynniki pod wpływem i wyniki poza kontrolą.\n3. **Zachowaj obowiązki**: akceptacja nie usprawiedliwia szkody, słabych kontroli ani braku pomocy.\n4. **Planuj proporcjonalnie**: oceń prawdopodobny downside, środki, triggery i odbudowę; przerwij, gdy ćwiczenie szkodzi.\n5. **Nazywaj emocje bez osądu**: strach, żal i stres niosą informacje. Tłumienie nie jest odpornością.\n6. **Używaj dowodów i krytyki**: zapraszaj sprzeciw, zapisuj założenia i aktualizuj decyzje.\n7. **Chroń regenerację**: sen, czas wolny, zdrowie, relacje i delegacja są kontrolami operacyjnymi.\n8. **Szukaj właściwej pomocy**: trwały stres, lęk, depresja lub kryzys wymagają wsparcia specjalistów i lokalnych służb.\n9. **Zdefiniuj zrównoważone mierniki**: klient, zespół, zgodność, gotówka, nauka i dobrostan.\n10. **Krótko reflektuj i działaj**: jedna lekcja, wdzięczność i następne działanie; journaling jest opcjonalny.\n11. **Przeglądaj władzę i wpływ**: rozważ, kto ponosi koszt decyzji i zapewnij bezpieczny feedback.\n12. **Aktualizuj priorytety**: okoliczności i wartości mogą się zmieniać.',
+            practicalExamples: [
+              'Założyciel oddziela zmienność rynku od planowania gotówki i szuka wsparcia zamiast uważać lęk za porażkę.',
+              'Pre-mortem ujawnia koncentrację dostawcy i tworzy przetestowany plan z właścicielem.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Odporne przywództwo łączy refleksję z dowodami, troską, odpowiedzialnością i wsparciem—nie z niewrażliwością.',
+            keyPrinciples: ['Filozofia jest opcjonalna i nie zastępuje opieki medycznej', 'Przychód i status nie określają wartości osoby', 'Odpoczynek, sprzeciw i wsparcie poprawiają decyzje'],
+          },
+          actionTask: {
+            instruction: 'Utwórz trwałą praktykę refleksji:',
+            checklistItems: ['Spisano wartości i zrównoważone mierniki sukcesu', 'Oddzielono działania, niepewność i obowiązki', 'Uwzględniono regenerację, wsparcie i eskalację', 'Ustalono krótki rytm z prawem zmiany lub przerwania'],
+            toolboxCategory: 'content',
+          },
+        },
+        '55.2': {
+          stageTitle: '55. Dawanie, sukcesja i odpowiedzialne dziedzictwo',
+          title: 'Planuj wkład długoterminowy bez obietnic wieczności',
+          description: 'Wybierz dawanie, mentoring lub sukcesję z beneficjentami, dowodami, ładem, poradą podatkową i prawną oraz mierzalnymi zabezpieczeniami.',
+          learnContent: {
+            videoTitle: 'Moduł końcowy: cel, wkład i dalsza nauka',
+            summaryText: 'Ukończenie materiału jest kamieniem milowym, nie dowodem mistrzostwa ani gwarancją członkostwa, statusu lub wpływu. Filantropia i impact investing mogą pomagać, ale intencje nie zastępują głosu społeczności, due diligence, ładu i oceny.',
+            bulletPoints: [
+              'Zacznij od społeczności i potwierdzonych potrzeb zamiast ulubionego rozwiązania fundatora',
+              'Uczciwie porównaj darowiznę, odpowiedzialny biznes, rzecznictwo, mentoring i impact investment',
+              'Zaprojektuj ład, konflikty, safeguarding, koszty, podatki, raportowanie i sukcesję z doradcami',
+              'Traktuj certyfikat jako dokładny rekord ukończenia tylko, gdy istnieją kryteria i weryfikacja'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'WERYFIKOWALNE UKOŃCZENIE', description: 'Dokument podaje wystawcę, kryteria, dowody, granice i metodę weryfikacji.', highlight: true },
+              { iconName: 'zap', title: 'ROZLICZALNY WKŁAD', description: 'Wpływ jest definiowany ze społecznością, mierzony pod kątem korzyści i szkód oraz aktualizowany.' }
+            ],
+            resources: [
+              { title: 'Zeszyt dawania i planowania dziedzictwa', subtitle: 'Cel, beneficjenci, opcje, ład, ryzyka i ocena', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Rekord ukończenia GOM-MAR', subtitle: 'Generuj tylko dostępne rekordy oparte na kryteriach', type: 'tool', iconName: 'award', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Planuj wkład z pokorą i dowodami\n\n1. **Słuchaj przed projektowaniem**: włącz osoby dotknięte problemem i odpowiednio wynagradzaj wiedzę.\n2. **Określ problem i granice**: dowody, obszar, grupy, istniejące działania i niewiadome.\n3. **Porównaj mechanizmy**: darowizny, granty, odpowiedzialne operacje, mentoring, polityka i inwestycje mają różne ryzyka.\n4. **Wykonaj due diligence**: przywództwo, safeguarding, finanse, konflikty, wyniki, legitymacja i szkody.\n5. **Unikaj narracji wybawcy**: komunikuj partnerów i beneficjentów za zgodą, z godnością i autorstwem.\n6. **Ustal ład**: prawa decyzji, niezależny nadzór, konflikty, skargi, whistleblowing i odwołanie.\n7. **Zaplanuj prawo i podatki**: fundacje, trusty, stowarzyszenia i spółki zależą od kraju; uzyskaj pisemną poradę.\n8. **Chroń osoby i dane**: dzieci, osoby wrażliwe, prywatność, bezpieczeństwo i zgoda na wizerunek wymagają kontroli.\n9. **Finansuj operacje i naukę**: administracja, personel, ewaluacja i utrzymanie są uzasadnionymi kosztami.\n10. **Ostrożnie mierz wkład**: baseline, dodatkowość, granice kontrfaktyczne, feedback i wskaźniki szkody; bez vanity metrics.\n11. **Zaprojektuj sukcesję**: kompetencje, dokumenty, przekazanie decyzji i sunset clauses mogą lepiej służyć misji niż wieczność.\n12. **Raportuj i poprawiaj**: publikuj metody, istotne porażki i zmiany.\n13. **Uczciwie opisuj poświadczenia**: certyfikat nie jest akredytowanym dyplomem, licencją, dożywotnim prawem ani gwarancją kompetencji bez formalnej podstawy.\n14. **Wybierz kolejny krok**: dalsza nauka, służba, odpoczynek lub mały pilotaż są ważnymi wynikami.',
+            practicalExamples: [
+              'Program wspiera organizację z lokalnym zaufaniem i obejmuje finansowanie podstawowe, safeguarding i feedback społeczności.',
+              'Certyfikat kursu podaje moduły i kryteria bez sugerowania akredytacji lub dożywotniego członkostwa.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Znaczące dziedzictwo jest rozliczalne, zmienne i współtworzone; trwałości, statusu i wpływu nie można zagwarantować.',
+            keyPrinciples: ['Głos społeczności poprzedza prestiż fundatora', 'Stosuj profesjonalną poradę i niezależny ład', 'Precyzyjnie opisuj ukończenie i wpływ'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj odpowiedzialny plan wkładu:',
+            checklistItems: ['Udokumentowano cel, społeczności i dowody', 'Przejrzano opcje, ryzyka, safeguarding i konflikty', 'Opisano ład, ocenę, finansowanie i sukcesję', 'Sprawdzono twierdzenia o certyfikacie i członkostwie'],
+            toolboxCategory: 'content',
           },
         },
       },
