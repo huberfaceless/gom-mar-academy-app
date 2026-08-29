@@ -6136,6 +6136,116 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "67": {
+      "title": "67. High-End Web3, Smart Contracts & Token-Gated Memberships",
+      "subtitle": "Digital ownership, on-chain communities, token gating and decentralized loyalty",
+      "description": "Evaluate Web3-based memberships for suitable audiences: use smart contracts for verifiable access and loyalty features while accounting for custody, privacy, security, legal and user-experience risks.",
+      "lessons": {
+        "67.1": {
+          "stageTitle": "67. Token Gating & On-Chain Access",
+          "title": "Smart-Contract Memberships: VIP Passes & Token-Gated Content",
+          "description": "How ERC-721 or ERC-1155 contracts can support access on networks such as Polygon or Base—and what must be designed beyond ownership checks.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Web3 Token Gating & Digital Memberships",
+            "summaryText": "Token gating can make access portable and verifiable, but it is not inherently fraud-proof. Transfers, royalties, wallet security, consumer rights and platform dependencies require deliberate product, legal and technical design.",
+            "bulletPoints": [
+              "Ownership and access: decide whether a pass is transferable, time-limited, revocable or tied to contractual membership terms",
+              "Network selection: compare fees, reliability, decentralization, ecosystem support and long-term operational risk",
+              "Web3-to-Web2 bridge: offer accessible onboarding, informed consent, recovery options and a non-wallet fallback where appropriate",
+              "Secondary sales and royalties: marketplace support and enforcement vary; do not assume a fixed percentage or perpetual payment"
+            ],
+            "coreConcepts": [
+              {
+                "title": "VERIFIABLE ACCESS",
+                "description": "A wallet-ownership check can support authorization, but secure sessions, revocation, recovery and server-side controls remain necessary."
+              },
+              {
+                "title": "CONDITIONAL ROYALTIES",
+                "description": "Creator fees depend on contract design, marketplace behavior, law and transaction path; payment is not guaranteed."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Smart-Contract Deployment & Token-Gating Guide",
+                "subtitle": "Implementation and risk checklist for non-technical founders"
+              },
+              {
+                "title": "Mara CRM Web3 Wallet Integration",
+                "subtitle": "Link wallets to customer profiles only with consent and data-minimization controls"
+              }
+            ],
+            "fullArticleGuide": "### Designing a responsible digital membership\n\nWeb3 can make an access credential portable, but the token is not the complete membership agreement or security model.\n\n#### Implementation sequence\n\n1. **Define the product:** Specify access rights, duration, transfer rules, refunds, revocation, support and jurisdiction before selecting a token standard.\n2. **Design onboarding:** Explain wallet creation and transaction implications clearly. Provide secure recovery and avoid silently creating accounts or accepting terms for the user.\n3. **Develop and review:** Use tested libraries, least-privilege administration, multisignature controls, monitoring and an independent smart-contract security review before production.\n4. **Gate access:** Verify the relevant chain and contract server-side, prevent replay and session abuse, and prepare a fallback for network or provider outages.\n\nObtain qualified legal, tax and regulatory advice, especially where passes are transferable, marketed for appreciation or sold across borders. Never place personal or confidential data directly on a public blockchain."
+          },
+          "understandContent": {
+            "coreTakeaway": "A useful Web3 experience hides unnecessary complexity without hiding costs, risks, consent or recovery responsibilities.",
+            "keyPrinciples": [
+              "Do not rely on seed phrases alone: provide secure, clearly explained recovery and account-export options without creating a single point of failure",
+              "Model fees under congestion and price volatility; a permanently low gas price cannot be promised"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Plan your first token-gated community offer:",
+            "checklistItems": [
+              "Defined rights, duration, transferability, revocation and legal review for a limited pilot",
+              "Tested accessible card-to-wallet onboarding, informed consent and account recovery on a test network",
+              "Documented secure gating, privacy controls, incident response and a non-blockchain fallback"
+            ]
+          }
+        },
+        "67.2": {
+          "stageTitle": "67. Decentralized Loyalty & Rewards",
+          "title": "On-Chain Loyalty: Verifiable Badges & Activity Rewards",
+          "description": "How non-transferable credentials can document course completion while protecting learners from permanent exposure and misleading claims.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Non-Transferable Tokens & On-Chain Credentials",
+            "summaryText": "A blockchain entry can help verify who issued a credential and whether it has been revoked, but it does not prove the quality of a course or make the underlying claim true. Privacy, correction, revocation and wallet recovery must be designed first.",
+            "bulletPoints": [
+              "Non-transferable credentials: prevent ordinary transfers while supporting revocation, reissue and recovery",
+              "Controlled issuance: mint only after validated completion, explicit consent and a successful test transaction",
+              "Verification profiles: disclose issuer, criteria, date, status and evidence without exposing unnecessary personal data",
+              "Dynamic credentials: update only objective, consented attributes; avoid publishing revenue or sensitive performance data"
+            ],
+            "coreConcepts": [
+              {
+                "title": "VERIFIABLE CREDENTIALS",
+                "description": "Cryptographic records can reveal issuer and status, but validation still depends on trustworthy criteria, keys and governance."
+              },
+              {
+                "title": "PRIVACY-AWARE REPUTATION",
+                "description": "Use off-chain personal data and selective disclosure so learners control what others can see."
+              }
+            ],
+            "resources": [
+              {
+                "title": "On-Chain Credential Architecture",
+                "subtitle": "Standards, privacy, revocation and verification guide"
+              },
+              {
+                "title": "GOM-MAR Academy Credential Issuance",
+                "subtitle": "Configure consent-based issuance after verified completion"
+              }
+            ],
+            "fullArticleGuide": "### Responsible digital credentials\n\nOn-chain credentials can simplify verification, but public permanence creates special obligations. A credential should not expose identity, grades, revenue or other personal information on-chain.\n\n#### A safer credential model\n\n- **Minimal on-chain record:** Store only a non-identifying reference or cryptographic proof; keep personal details in a protected, correctable system.\n- **Clear verification:** Show the issuer, award criteria, issue date, current status and revocation mechanism.\n- **Learner control:** Obtain informed consent and support non-blockchain certificates, wallet changes, key loss and reissue.\n- **Operational resilience:** Back up issuer records and verification services. A blockchain does not prevent front-end, provider, key-management or governance failures.\n\nHave privacy and legal specialists review the design for applicable data-protection, education, consumer and accessibility requirements."
+          },
+          "understandContent": {
+            "coreTakeaway": "A credential earns trust through transparent standards, privacy and reliable governance—not immutability or visual effects alone.",
+            "keyPrinciples": [
+              "Non-transferability must not prevent correction, revocation or reissue after compromise; choose standards and controls accordingly",
+              "Make verification accessible and informative; a 3D badge is optional and should never replace readable evidence"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Design a safe credential-issuance pilot:",
+            "checklistItems": [
+              "Defined award criteria, consent, minimal data, revocation and reissue rules",
+              "Created an accessible verification page with issuer and status information",
+              "Tested issuance, wallet loss, revocation and off-chain backup before production"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -12255,6 +12365,116 @@ Droga paczka nie tworzy dużego klienta.`,
               "Zdefiniowano bezpieczną koncepcję CRM, zarządzania tożsamością i dostępem oraz rozliczeń dla wielu marek",
               "Przygotowano katalog cross-sellingu uwzględniający zgody, właścicieli i możliwości realizacji",
               "Utworzono plan integracji na 100 dni z metrykami, bramkami decyzyjnymi i odpowiedzialnymi osobami"
+            ]
+          }
+        }
+      }
+    },
+
+    "67": {
+      "title": "67. Zaawansowany Web3, smart kontrakty i członkostwa token-gated",
+      "subtitle": "Własność cyfrowa, społeczności on-chain, token gating i zdecentralizowana lojalność",
+      "description": "Oceń członkostwa Web3 dla właściwych odbiorców: wykorzystuj smart kontrakty do weryfikowalnego dostępu i lojalności, uwzględniając custody, prywatność, bezpieczeństwo, prawo i UX.",
+      "lessons": {
+        "67.1": {
+          "stageTitle": "67. Token gating i dostęp on-chain",
+          "title": "Członkostwa smart-contract: przepustki VIP i treści token-gated",
+          "description": "Jak kontrakty ERC-721 lub ERC-1155 mogą wspierać dostęp w sieciach Polygon czy Base oraz co trzeba zaprojektować poza sprawdzaniem własności.",
+          "learnContent": {
+            "videoTitle": "Masterclass: token gating Web3 i członkostwa cyfrowe",
+            "summaryText": "Token gating może zapewnić przenośny i weryfikowalny dostęp, ale nie jest z natury odporny na oszustwa. Transfery, royalties, bezpieczeństwo portfela, prawa konsumenta i zależności platformowe wymagają świadomego projektu.",
+            "bulletPoints": [
+              "Własność i dostęp: ustal, czy przepustka jest zbywalna, czasowa, odwoływalna lub powiązana z warunkami umowy członkowskiej",
+              "Wybór sieci: porównaj opłaty, niezawodność, decentralizację, wsparcie ekosystemu i długoterminowe ryzyko",
+              "Most Web3–Web2: zapewnij dostępny onboarding, świadomą zgodę, odzyskiwanie konta i alternatywę bez portfela",
+              "Rynek wtórny i royalties: wsparcie marketplace oraz egzekwowanie są zmienne; nie zakładaj stałego procentu ani wieczystej płatności"
+            ],
+            "coreConcepts": [
+              {
+                "title": "WERYFIKOWALNY DOSTĘP",
+                "description": "Kontrola własności w portfelu może wspierać autoryzację, ale nadal potrzebne są bezpieczne sesje, odwołanie, odzyskiwanie i kontrole serwerowe."
+              },
+              {
+                "title": "WARUNKOWE ROYALTIES",
+                "description": "Opłaty twórcy zależą od kontraktu, marketplace, prawa i ścieżki transakcji; płatność nie jest gwarantowana."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik wdrożenia smart kontraktu i token gatingu",
+                "subtitle": "Checklista wdrożeniowa i ryzyka dla nietechnicznych założycieli"
+              },
+              {
+                "title": "Integracja portfeli Web3 w Mara CRM",
+                "subtitle": "Łącz portfele z profilami klientów tylko za zgodą i przy minimalizacji danych"
+              }
+            ],
+            "fullArticleGuide": "### Odpowiedzialne członkostwo cyfrowe\n\nWeb3 może uczynić poświadczenie dostępu przenośnym, lecz token nie jest pełną umową członkowską ani kompletnym modelem bezpieczeństwa.\n\n#### Kolejność wdrożenia\n\n1. **Zdefiniuj produkt:** Ustal prawa dostępu, czas, transfer, zwroty, odwołanie, wsparcie i jurysdykcję przed wyborem standardu.\n2. **Zaprojektuj onboarding:** Jasno wyjaśnij tworzenie portfela i skutki transakcji. Zapewnij bezpieczne odzyskiwanie i nie twórz po cichu kont ani zgód.\n3. **Opracuj i zweryfikuj:** Użyj sprawdzonych bibliotek, minimalnych uprawnień, multisig, monitoringu i niezależnego audytu bezpieczeństwa przed produkcją.\n4. **Kontroluj dostęp:** Weryfikuj sieć i kontrakt po stronie serwera, zapobiegaj nadużyciom sesji i przygotuj tryb awaryjny.\n\nUzyskaj poradę prawną, podatkową i regulacyjną, szczególnie dla zbywalnych przepustek lub sprzedaży transgranicznej. Nigdy nie zapisuj danych osobowych ani poufnych bezpośrednio w publicznym blockchainie."
+          },
+          "understandContent": {
+            "coreTakeaway": "Dobre doświadczenie Web3 ukrywa zbędną złożoność, ale nie ukrywa kosztów, ryzyka, zgody ani odpowiedzialności za odzyskanie konta.",
+            "keyPrinciples": [
+              "Nie polegaj wyłącznie na seed phrase: zapewnij bezpieczne i jasno opisane odzyskiwanie oraz eksport konta bez jednego punktu awarii",
+              "Modeluj opłaty podczas przeciążenia i zmienności cen; stale niskiego gasu nie można obiecać"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zaplanuj pierwszą ofertę społeczności token-gated:",
+            "checklistItems": [
+              "Określono prawa, czas, zbywalność, odwołanie i przegląd prawny ograniczonego pilota",
+              "Przetestowano dostępny onboarding karta–portfel, świadomą zgodę i odzyskanie konta w sieci testowej",
+              "Udokumentowano bezpieczny gating, prywatność, reakcję na incydenty i alternatywę bez blockchaina"
+            ]
+          }
+        },
+        "67.2": {
+          "stageTitle": "67. Zdecentralizowana lojalność i nagrody",
+          "title": "Lojalność on-chain: weryfikowalne odznaki i nagrody za aktywność",
+          "description": "Jak niezbywalne poświadczenia mogą dokumentować ukończenie kursu, chroniąc uczestników przed trwałą ekspozycją i mylącymi twierdzeniami.",
+          "learnContent": {
+            "videoTitle": "Masterclass: niezbywalne tokeny i poświadczenia on-chain",
+            "summaryText": "Wpis blockchain może pomóc zweryfikować wystawcę i status odwołania, ale nie dowodzi jakości kursu ani prawdziwości twierdzenia. Najpierw trzeba zaprojektować prywatność, korektę, odwołanie i odzyskiwanie portfela.",
+            "bulletPoints": [
+              "Niezbywalne poświadczenia: blokuj zwykły transfer, wspierając jednocześnie odwołanie, ponowne wydanie i odzyskanie",
+              "Kontrolowane wydawanie: mintuj dopiero po potwierdzonym ukończeniu, wyraźnej zgodzie i udanej transakcji testowej",
+              "Profile weryfikacyjne: ujawniaj wystawcę, kryteria, datę, status i dowody bez zbędnych danych osobowych",
+              "Dynamiczne poświadczenia: aktualizuj tylko obiektywne, zaakceptowane atrybuty; nie publikuj przychodów ani danych wrażliwych"
+            ],
+            "coreConcepts": [
+              {
+                "title": "WERYFIKOWALNE POŚWIADCZENIA",
+                "description": "Kryptografia może wskazać wystawcę i status, lecz walidacja nadal zależy od wiarygodnych kryteriów, kluczy i ładu."
+              },
+              {
+                "title": "REPUTACJA Z OCHRONĄ PRYWATNOŚCI",
+                "description": "Przechowuj dane osobowe off-chain i stosuj selektywne ujawnianie, aby uczestnik kontrolował widoczność."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Architektura poświadczeń on-chain",
+                "subtitle": "Standardy, prywatność, odwołanie i weryfikacja"
+              },
+              {
+                "title": "Wydawanie poświadczeń GOM-MAR Academy",
+                "subtitle": "Skonfiguruj wydawanie za zgodą po potwierdzonym ukończeniu"
+              }
+            ],
+            "fullArticleGuide": "### Odpowiedzialne poświadczenia cyfrowe\n\nPoświadczenia on-chain mogą uprościć weryfikację, ale publiczna trwałość tworzy szczególne obowiązki. Nie należy ujawniać w łańcuchu tożsamości, ocen, przychodów ani innych danych osobowych.\n\n#### Bezpieczniejszy model\n\n- **Minimalny zapis on-chain:** Przechowuj jedynie nieidentyfikujący odnośnik lub dowód kryptograficzny, a dane osobowe w chronionym i korygowalnym systemie.\n- **Jasna weryfikacja:** Pokaż wystawcę, kryteria, datę, aktualny status i mechanizm odwołania.\n- **Kontrola uczestnika:** Uzyskaj świadomą zgodę i obsłuż certyfikat bez blockchaina, zmianę portfela, utratę klucza i ponowne wydanie.\n- **Odporność operacyjna:** Twórz kopie dokumentacji i usług weryfikacyjnych. Blockchain nie zapobiega awariom interfejsu, dostawcy, kluczy ani zarządzania.\n\nProjekt powinien przejść przegląd prywatności i prawa pod kątem ochrony danych, edukacji, konsumentów i dostępności."
+          },
+          "understandContent": {
+            "coreTakeaway": "Poświadczenie zyskuje zaufanie przez przejrzyste standardy, prywatność i niezawodny ład, a nie samą niezmienność lub efekt wizualny.",
+            "keyPrinciples": [
+              "Niezbywalność nie może blokować korekty, odwołania ani ponownego wydania po kompromitacji; dobierz odpowiednie standardy i kontrole",
+              "Weryfikacja ma być dostępna i informacyjna; odznaka 3D jest opcjonalna i nie zastępuje czytelnych dowodów"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zaprojektuj bezpieczny pilotaż wydawania poświadczeń:",
+            "checklistItems": [
+              "Określono kryteria, zgodę, minimalny zakres danych, odwołanie i ponowne wydanie",
+              "Utworzono dostępną stronę weryfikacji z informacją o wystawcy i statusie",
+              "Przetestowano wydanie, utratę portfela, odwołanie i kopię off-chain przed produkcją"
             ]
           }
         }
