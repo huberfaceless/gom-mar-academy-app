@@ -4390,6 +4390,147 @@ Scaling is successful only when additional spend continues to create suitable cu
         },
       },
     },
+    48: {
+      "title": "48. Responsible SEO & Topical Authority",
+      "subtitle": "Topic clusters, helpful content, trust signals and supervised AI workflows",
+      "description": "Build a useful, technically sound organic-search programme based on audience needs, reliable evidence and continuous measurement—without guaranteed rankings, traffic promises or content-volume targets.",
+      "lessons": {
+        "48.1": {
+          "stageTitle": "48. Topic architecture and internal linking",
+          "title": "Build topic coverage without treating clusters as a ranking guarantee",
+          "description": "Map genuine audience questions to distinct pages, connect related resources clearly and evaluate search performance without promises about position or timing.",
+          "learnContent": {
+            "videoTitle": "Masterclass: evidence-led topic architecture and internal linking",
+            "summaryText": "Search systems use many signals and change over time. Topic clusters can improve navigation and coverage, but no page count, word count, anchor text or publishing window guarantees a ranking.",
+            "bulletPoints": [
+              "Start with verified audience needs, search intent and the purpose of each page",
+              "Use a pillar-and-cluster model only when it improves navigation and avoids duplication",
+              "Assign overlapping queries by user need rather than forcing one keyword onto exactly one URL",
+              "Measure visibility, qualified visits and business outcomes while recording uncertainty and search changes"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "layers",
+                "title": "USEFUL TOPIC MAP",
+                "description": "A maintained map links each genuine audience need to the most appropriate page and owner.",
+                "highlight": true
+              },
+              {
+                "iconName": "link",
+                "title": "DESCRIPTIVE INTERNAL LINKS",
+                "description": "Relevant links help people and crawlers discover related material without manipulative anchor-text patterns."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Topic-map and content-inventory worksheet",
+                "subtitle": "Needs, intent, page purpose, evidence, owner and review date",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara Blog & CMS Engine",
+                "subtitle": "Draft, review and publish accessible articles with controlled internal links",
+                "type": "tool",
+                "iconName": "layout",
+                "actionUrl": "landingpage"
+              }
+            ],
+            "fullArticleGuide": "### Build a useful information architecture\n\nTopical authority is not a switch that a site activates by publishing a fixed number of articles. Search visibility depends on relevance, quality, competition, technical accessibility, reputation and changing search systems.\n\n#### A responsible workflow\n\n1. **Confirm audience needs**: Combine customer conversations, support questions, site search and search-console data. Treat third-party keyword tools as estimates.\n2. **Define page purpose**: Record the primary audience, task, intent and next step for every proposed URL.\n3. **Audit existing content**: Update, consolidate or retire weak and overlapping pages before creating more.\n4. **Design a practical hierarchy**: Use pillar and supporting pages where the relationship is genuinely helpful; do not force every subject into a rigid silo.\n5. **Prevent harmful duplication**: Pages may address related terms, but each should offer a distinct purpose and value. Diagnose overlap using actual query and landing-page data.\n6. **Write descriptive links**: Link where readers benefit, with natural anchor text and no arbitrary link quotas.\n7. **Protect technical access**: Check status codes, canonicals, indexing directives, sitemaps, mobile rendering and meaningful performance metrics.\n8. **Publish evidence-led content**: Cite suitable sources, disclose limitations and separate fact, experience and opinion.\n9. **Measure qualified outcomes**: Review query coverage, clicks, engagement, conversions and customer quality—not rank snapshots alone.\n10. **Maintain the system**: Assign owners and review dates, correct outdated claims and document major changes.\n\nNo ethical SEO plan can promise position one, a fixed time to rank or a specific volume of free traffic.",
+            "practicalExamples": [
+              "A site merges three near-duplicate beginner guides into one clearer resource and redirects obsolete URLs after checking demand and backlinks.",
+              "A cluster attracts visits but few suitable enquiries, so the team revises intent and calls to action instead of publishing twenty more articles."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Topic architecture helps when it makes information easier to find and understand; it does not guarantee rankings.",
+            "keyPrinciples": [
+              "Map pages to real audience tasks and maintain them",
+              "Use internal links for relevance and navigation, not manipulation",
+              "Judge SEO by qualified outcomes and documented uncertainty"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create a responsible topic-map pilot:",
+            "checklistItems": [
+              "Documented audience evidence, intent and purpose for one pillar topic",
+              "Inventoried existing pages, overlap, gaps and ownership",
+              "Planned useful internal links, technical checks and accessibility",
+              "Defined qualified outcomes, baseline, review date and change log"
+            ],
+            "toolboxCategory": "content"
+          }
+        },
+        "48.2": {
+          "stageTitle": "48. Helpful content, trust and supervised AI",
+          "title": "Use AI to support quality without content quotas or false E-E-A-T claims",
+          "description": "Create original, accurate and accessible material with appropriate human review, transparent authorship and structured data that matches visible content.",
+          "learnContent": {
+            "videoTitle": "Masterclass: supervised AI content and trustworthy search publishing",
+            "summaryText": "AI assistance is not automatically rewarded or penalised. What matters is whether the result helps people and complies with applicable policies. E-E-A-T is a quality concept, not a checklist or schema field that guarantees rankings.",
+            "bulletPoints": [
+              "Use AI for bounded tasks with named reviewers, source checks and a documented publishing standard",
+              "Show real experience only when it exists; never invent authors, credentials, quotations, tests or results",
+              "Add structured data only when it is supported, eligible and consistent with visible page content",
+              "Set publishing capacity by review quality and maintenance needs, not a target such as fifty articles per month"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "award",
+                "title": "TRUSTWORTHY EVIDENCE",
+                "description": "Relevant sources, honest authorship, corrections and real experience support trust without manufacturing authority.",
+                "highlight": true
+              },
+              {
+                "iconName": "cpu",
+                "title": "HUMAN-GOVERNED AI",
+                "description": "AI assists defined tasks while accountable people verify facts, rights, claims, privacy and usefulness."
+              }
+            ],
+            "resources": [
+              {
+                "title": "AI publishing and trust checklist",
+                "subtitle": "Sources, authorship, claims, rights, privacy, accessibility and review dates",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR AI SEO Writer",
+                "subtitle": "Create controlled drafts for human verification and editorial approval",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "tools"
+              }
+            ],
+            "fullArticleGuide": "### Publish useful content with accountable review\n\nSearch guidelines evolve, and no authorship box, schema type, word count or speed score guarantees visibility. Treat E-E-A-T as a way to assess whether content demonstrates appropriate experience, expertise, authority and trust—not as a mechanical scoring formula.\n\n#### A supervised publishing workflow\n\n1. **Define the user task**: State who the page helps, what decision or action it supports and what evidence is required.\n2. **Assess risk**: Apply stronger expert review to health, financial, legal, safety and other consequential topics.\n3. **Choose bounded AI tasks**: AI may help organise notes, suggest questions or draft sections. Do not let it fabricate facts or publish autonomously.\n4. **Protect confidential data**: Do not enter personal, client or licensed material into tools without appropriate authority and safeguards.\n5. **Verify every material claim**: Use current primary or authoritative sources where suitable, follow citations and record access dates.\n6. **Add genuine contribution**: Include original analysis, tested examples or first-hand experience only when it is real and relevant.\n7. **Disclose authorship honestly**: Name accountable authors and reviewers where useful; never invent qualifications or testimonials.\n8. **Check rights and originality**: Confirm licences for text, images and data, avoid close paraphrase and attribute appropriately.\n9. **Ensure accessibility and usability**: Use clear headings, descriptive links, alt text, readable layouts and realistic performance improvements.\n10. **Use structured data carefully**: Mark up only visible, accurate and eligible content. Rich results remain at the search engine's discretion.\n11. **Run editorial approval**: Check accuracy, tone, harmful bias, claims, privacy, links and calls to action before publishing.\n12. **Monitor and correct**: Review feedback, search changes and business outcomes; publish corrections and retire unsafe or outdated pages.\n\nScale only to the volume your team can verify and maintain. Quality, safety and usefulness take priority over output.",
+            "practicalExamples": [
+              "An AI draft cites a non-existent study; the reviewer removes the claim, checks primary sources and records the correction.",
+              "FAQ markup accurately reflects visible questions, but no rich result appears; the team keeps the useful page and avoids claiming that schema guarantees extra search space."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "AI can accelerate parts of production, but accountable people remain responsible for accuracy, rights, safety and usefulness.",
+            "keyPrinciples": [
+              "E-E-A-T is not a guaranteed ranking checklist",
+              "Never invent experience, credentials, sources or results",
+              "Structured data must match visible content and cannot promise rich results"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare one supervised content item:",
+            "checklistItems": [
+              "Documented audience task, risk level, sources and accountable reviewer",
+              "Checked claims, citations, authorship, originality, rights and privacy",
+              "Verified accessibility, links, technical delivery and truthful structured data",
+              "Set approval status, success measures, correction route and review date"
+            ],
+            "toolboxCategory": "content"
+          }
+        }
+      }
+    },
   },
   pl: {
     1: {
@@ -8766,6 +8907,148 @@ Skalowanie ma sens tylko wtedy, gdy dodatkowy wydatek nadal tworzy wartość bez
         },
       },
     },
+    48: {
+      "title": "48. Odpowiedzialne SEO i autorytet tematyczny",
+      "subtitle": "Klastry tematyczne, pomocne treści, sygnały zaufania i nadzorowane procesy AI",
+      "description": "Buduj użyteczny i technicznie solidny program wyszukiwania organicznego oparty na potrzebach odbiorców, wiarygodnych dowodach i ciągłych pomiarach—bez gwarancji pozycji, obietnic ruchu ani norm liczby treści.",
+      "lessons": {
+        "48.1": {
+          "stageTitle": "48. Architektura tematów i linkowanie wewnętrzne",
+          "title": "Buduj pokrycie tematu bez traktowania klastrów jako gwarancji pozycji",
+          "description": "Przypisuj prawdziwe pytania odbiorców do odrębnych stron, jasno łącz powiązane zasoby i oceniaj wyniki bez obietnic dotyczących pozycji lub czasu.",
+          "learnContent": {
+            "videoTitle": "Masterclass: architektura tematów i linkowanie oparte na dowodach",
+            "summaryText": "Systemy wyszukiwania wykorzystują wiele sygnałów i zmieniają się. Klastry mogą poprawiać nawigację i pokrycie tematu, lecz żadna liczba stron, słów, tekst linku ani okres publikacji nie gwarantują pozycji.",
+            "bulletPoints": [
+              "Zacznij od zweryfikowanych potrzeb odbiorców, intencji wyszukiwania i celu każdej strony",
+              "Stosuj model strony filarowej i klastrów tylko wtedy, gdy poprawia nawigację i ogranicza duplikację",
+              "Przypisuj podobne zapytania według potrzeb użytkownika zamiast wymuszać dokładnie jedno słowo kluczowe na jeden adres",
+              "Mierz widoczność, wartościowe wizyty i wyniki biznesowe, zapisując niepewność oraz zmiany w wyszukiwarce"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "layers",
+                "title": "UŻYTECZNA MAPA TEMATÓW",
+                "description": "Utrzymywana mapa łączy każdą realną potrzebę odbiorcy z właściwą stroną i właścicielem.",
+                "highlight": true
+              },
+              {
+                "iconName": "link",
+                "title": "OPISOWE LINKI WEWNĘTRZNE",
+                "description": "Istotne linki pomagają ludziom i robotom odkrywać treści bez manipulacyjnych schematów tekstu kotwicy."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Arkusz mapy tematów i inwentaryzacji treści",
+                "subtitle": "Potrzeby, intencja, cel strony, dowody, właściciel i data przeglądu",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara Blog & CMS Engine",
+                "subtitle": "Twórz, sprawdzaj i publikuj dostępne artykuły z kontrolowanymi linkami",
+                "type": "tool",
+                "iconName": "layout",
+                "actionUrl": "landingpage"
+              }
+            ],
+            "fullArticleGuide": "### Zbuduj użyteczną architekturę informacji\n\nAutorytet tematyczny nie jest przełącznikiem aktywowanym przez publikację ustalonej liczby artykułów. Widoczność zależy od trafności, jakości, konkurencji, dostępności technicznej, reputacji i zmieniających się systemów wyszukiwania.\n\n#### Odpowiedzialny proces\n\n1. **Potwierdź potrzeby odbiorców**: Łącz rozmowy z klientami, pytania do wsparcia, wyszukiwanie w witrynie i dane Search Console. Dane narzędzi zewnętrznych traktuj jako szacunki.\n2. **Określ cel strony**: Zapisz odbiorcę, zadanie, intencję i kolejny krok dla każdego adresu.\n3. **Zrób audyt treści**: Aktualizuj, łącz lub wycofuj słabe i nakładające się strony przed tworzeniem nowych.\n4. **Zaprojektuj praktyczną hierarchię**: Używaj stron filarowych i wspierających, gdy relacja naprawdę pomaga; nie wciskaj każdego tematu w sztywne silo.\n5. **Ogranicz szkodliwe duplikaty**: Strony mogą dotyczyć podobnych pojęć, lecz każda powinna mieć odrębny cel i wartość. Diagnozuj nakładanie na podstawie danych zapytań i stron docelowych.\n6. **Pisz opisowe linki**: Linkuj tam, gdzie korzysta czytelnik, z naturalnym tekstem i bez arbitralnych limitów.\n7. **Chroń dostęp techniczny**: Sprawdź kody stanu, kanoniczne adresy, dyrektywy indeksowania, mapy, widok mobilny i istotne wskaźniki wydajności.\n8. **Publikuj treści oparte na dowodach**: Cytuj odpowiednie źródła, ujawniaj ograniczenia i oddzielaj fakty, doświadczenie oraz opinię.\n9. **Mierz wartościowe wyniki**: Analizuj zapytania, kliknięcia, zaangażowanie, konwersje i jakość klientów—nie tylko migawki pozycji.\n10. **Utrzymuj system**: Wyznacz właścicieli i terminy przeglądu, poprawiaj nieaktualne twierdzenia i dokumentuj ważne zmiany.\n\nŻaden etyczny plan SEO nie może obiecać pierwszej pozycji, stałego czasu ani określonego ruchu.",
+            "practicalExamples": [
+              "Witryna łączy trzy podobne poradniki w jeden czytelniejszy materiał i przekierowuje stare adresy po sprawdzeniu popytu oraz linków.",
+              "Klaster przyciąga wizyty, ale mało odpowiednich zapytań; zespół poprawia intencję i wezwania do działania zamiast publikować kolejne dwadzieścia tekstów."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Architektura tematów pomaga, gdy ułatwia znalezienie i zrozumienie informacji; nie gwarantuje pozycji.",
+            "keyPrinciples": [
+              "Przypisuj strony do realnych zadań odbiorców i je utrzymuj",
+              "Używaj linków dla trafności i nawigacji, nie manipulacji",
+              "Oceniaj SEO przez jakościowe wyniki i udokumentowaną niepewność"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz odpowiedzialny pilotaż mapy tematu:",
+            "checklistItems": [
+              "Udokumentowano dowody potrzeb, intencję i cel jednego tematu filarowego",
+              "Zinwentaryzowano strony, nakładanie, luki i właścicieli",
+              "Zaplanowano użyteczne linki, kontrole techniczne i dostępność",
+              "Określono wyniki jakościowe, bazę, termin przeglądu i dziennik zmian"
+            ],
+            "toolboxCategory": "content"
+          }
+        },
+        "48.2": {
+          "stageTitle": "48. Pomocna treść, zaufanie i nadzorowane AI",
+          "title": "Wspieraj jakość przez AI bez norm ilości i fałszywych twierdzeń E-E-A-T",
+          "description": "Twórz oryginalne, dokładne i dostępne materiały z odpowiednim przeglądem człowieka, uczciwym autorstwem i danymi strukturalnymi zgodnymi z widoczną treścią.",
+          "learnContent": {
+            "videoTitle": "Masterclass: nadzorowane treści AI i wiarygodne publikowanie",
+            "summaryText": "Pomoc AI nie jest automatycznie nagradzana ani karana. Liczy się użyteczność wyniku i zgodność z zasadami. E-E-A-T to koncepcja jakości, a nie lista lub pole schema gwarantujące pozycje.",
+            "bulletPoints": [
+              "Używaj AI do ograniczonych zadań z nazwanymi recenzentami, kontrolą źródeł i standardem publikacji",
+              "Pokazuj realne doświadczenie tylko wtedy, gdy istnieje; nie wymyślaj autorów, kwalifikacji, cytatów, testów ani wyników",
+              "Dodawaj dane strukturalne tylko wtedy, gdy są uzasadnione, kwalifikują się i odpowiadają widocznej treści",
+              "Dostosuj tempo publikacji do jakości przeglądu i utrzymania, a nie celu typu pięćdziesiąt artykułów miesięcznie"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "award",
+                "title": "WIARYGODNE DOWODY",
+                "description": "Trafne źródła, uczciwe autorstwo, korekty i prawdziwe doświadczenie budują zaufanie bez fabrykowania autorytetu.",
+                "highlight": true
+              },
+              {
+                "iconName": "cpu",
+                "title": "AI POD NADZOREM CZŁOWIEKA",
+                "description": "AI wspiera określone zadania, a odpowiedzialne osoby sprawdzają fakty, prawa, twierdzenia, prywatność i użyteczność."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Lista kontroli publikacji AI i zaufania",
+                "subtitle": "Źródła, autorstwo, twierdzenia, prawa, prywatność, dostępność i przeglądy",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR AI SEO Writer",
+                "subtitle": "Twórz kontrolowane szkice do weryfikacji i akceptacji redakcyjnej",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "tools"
+              }
+            ],
+            "fullArticleGuide": "### Publikuj użyteczne treści z odpowiedzialnym przeglądem\n\nWytyczne wyszukiwarek zmieniają się, a żadna sekcja autora, typ schema, liczba słów ani wynik szybkości nie gwarantują widoczności. Traktuj E-E-A-T jako sposób oceny odpowiedniego doświadczenia, wiedzy, autorytetu i zaufania—nie mechaniczną formułę punktową.\n\n#### Nadzorowany proces publikacji\n\n1. **Zdefiniuj zadanie użytkownika**: Określ, komu pomaga strona, jaką decyzję wspiera i jakich dowodów wymaga.\n2. **Oceń ryzyko**: Zapewnij mocniejszy przegląd eksperta dla zdrowia, finansów, prawa, bezpieczeństwa i innych ważnych tematów.\n3. **Wybierz ograniczone zadania AI**: AI może porządkować notatki, proponować pytania lub szkicować sekcje. Nie pozwalaj mu wymyślać faktów ani publikować samodzielnie.\n4. **Chroń poufne dane**: Nie wprowadzaj danych osobowych, klientów ani licencjonowanych materiałów bez uprawnień i zabezpieczeń.\n5. **Weryfikuj istotne twierdzenia**: Korzystaj z aktualnych źródeł pierwotnych lub autorytatywnych, sprawdzaj cytowania i zapisuj daty dostępu.\n6. **Dodaj prawdziwy wkład**: Umieszczaj oryginalną analizę, sprawdzone przykłady lub doświadczenie tylko wtedy, gdy są realne i istotne.\n7. **Uczciwie ujawniaj autorstwo**: W razie potrzeby podawaj odpowiedzialnych autorów i recenzentów; nie wymyślaj kwalifikacji ani opinii.\n8. **Sprawdź prawa i oryginalność**: Potwierdź licencje tekstu, obrazów i danych, unikaj zbyt bliskich parafraz i właściwie przypisuj źródła.\n9. **Zapewnij dostępność**: Stosuj jasne nagłówki, opisowe linki, tekst alternatywny, czytelny układ i realistyczne ulepszenia wydajności.\n10. **Ostrożnie używaj danych strukturalnych**: Oznaczaj tylko widoczną, prawdziwą i kwalifikującą się treść. Wyniki rozszerzone zależą od wyszukiwarki.\n11. **Przeprowadź akceptację**: Przed publikacją sprawdź dokładność, ton, uprzedzenia, twierdzenia, prywatność, linki i wezwania.\n12. **Monitoruj i poprawiaj**: Analizuj opinie, zmiany wyszukiwania i wyniki; publikuj korekty i wycofuj niebezpieczne lub stare strony.\n\nSkaluj tylko do poziomu, który zespół potrafi zweryfikować i utrzymać. Jakość, bezpieczeństwo i użyteczność są ważniejsze niż ilość.",
+            "practicalExamples": [
+              "Szkic AI cytuje nieistniejące badanie; recenzent usuwa twierdzenie, sprawdza źródła pierwotne i zapisuje korektę.",
+              "FAQ schema odzwierciedla widoczne pytania, ale wynik rozszerzony się nie pojawia; zespół zachowuje użyteczną stronę i nie twierdzi, że schema gwarantuje dodatkowe miejsce."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "AI może przyspieszać część produkcji, lecz odpowiedzialni ludzie nadal odpowiadają za dokładność, prawa, bezpieczeństwo i użyteczność.",
+            "keyPrinciples": [
+              "E-E-A-T nie jest listą gwarantującą pozycję",
+              "Nie wymyślaj doświadczenia, kwalifikacji, źródeł ani wyników",
+              "Dane strukturalne muszą odpowiadać widocznej treści i nie obiecują wyników rozszerzonych"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj jeden nadzorowany materiał:",
+            "checklistItems": [
+              "Udokumentowano zadanie odbiorcy, poziom ryzyka, źródła i odpowiedzialnego recenzenta",
+              "Sprawdzono twierdzenia, cytowania, autorstwo, oryginalność, prawa i prywatność",
+              "Zweryfikowano dostępność, linki, dostarczenie techniczne i prawdziwe dane strukturalne",
+              "Ustalono akceptację, mierniki sukcesu, drogę korekty i termin przeglądu"
+            ],
+            "toolboxCategory": "content"
+          }
+        }
+      }
+    },
+
   },
 };
 
