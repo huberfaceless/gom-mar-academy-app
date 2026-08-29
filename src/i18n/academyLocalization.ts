@@ -5698,6 +5698,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    62: {
+      title: '62. Fair recruiting and sustainable team leadership',
+      subtitle: 'Structured selection, inclusive work samples, accountable goals and equitable reward',
+      description: 'Build capable teams through job-relevant evidence, equal opportunity, clear expectations and supportive leadership—without ranking people as A, B or C players, invasive screening, discriminatory culture fit or instant-dismissal slogans.',
+      lessons: {
+        '62.1': {
+          stageTitle: '62. Structured and inclusive recruiting',
+          title: 'Select for job requirements with consistent evidence and due process',
+          description: 'Define essential outcomes and competencies, then use accessible, proportionate and legally reviewed selection methods.',
+          learnContent: {
+            videoTitle: 'Masterclass: fair evidence-based hiring',
+            summaryText: 'Hiring quality cannot be guaranteed by a four-step funnel, video application, work trial or reference check. Reliable selection uses a documented job analysis, consistent scoring, reasonable accommodation, trained reviewers and validation against performance and adverse impact.',
+            bulletPoints: [
+              'Separate essential outcomes and competencies from preferences that may exclude qualified applicants',
+              'Use structured questions and anchored scoring consistently across candidates',
+              'Offer accessible alternatives to video and other formats that reveal protected characteristics unnecessarily',
+              'Keep work samples short, job-relevant and fairly paid when they create material value or law requires payment'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'JOB-RELEVANT SCORECARD', description: 'Criteria are defined before applications and tied to essential work with observable evidence.', highlight: true },
+              { iconName: 'check-square', title: 'FAIR WORK SAMPLE', description: 'The task is proportionate, accessible, secure, compensated where appropriate and scored consistently.' }
+            ],
+            resources: [
+              { title: 'Structured recruiting and scorecard workbook', subtitle: 'Job analysis, criteria, interviews, accommodation and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM applicant pipeline controls', subtitle: 'Purpose-limited records, role access, retention and decision audit', type: 'tool', iconName: 'users', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Design a fair selection process\n\n1. **Analyse the role**: essential duties, expected outcomes, decision authority, working conditions, skills that can be learned and lawful qualification requirements.\n2. **Write an inclusive advertisement**: accurate pay and location information where required, accessible language, reasonable requirements and an accommodation contact.\n3. **Choose sourcing deliberately**: use multiple channels and monitor who enters and leaves the process; referrals must not become the only route.\n4. **Minimise application data**: collect only what is needed at each stage; separate equal-opportunity monitoring data from hiring decisions.\n5. **Avoid mandatory video by default**: video can reveal age, disability, race, religion and other characteristics. Offer an equivalent text, audio or live alternative and document why the format is job-relevant.\n6. **Use structured screening**: the same core questions, anchored scoring and trained reviewers; document evidence rather than personality labels.\n7. **Assess values carefully**: evaluate observable conduct such as integrity and collaboration, not similarity, social style or an undefined culture fit.\n8. **Design work samples proportionately**: short, representative, no use of unpaid candidate work in production, clear IP and confidentiality terms, accessible tools and compensation where appropriate.\n9. **Validate automated tools**: understand features, training data, explainability, accessibility, vendor use, human oversight and disparate impact; do not infer emotion or personality from face or voice.\n10. **Conduct references lawfully**: inform the candidate, obtain appropriate permission, verify the referee, ask job-related questions and provide a route to address material discrepancies.\n11. **Protect applicant data**: purpose, notice, access, security, transfers, retention, deletion and rights; restrict sensitive notes and avoid shadow dossiers.\n12. **Make a documented decision**: compare evidence against pre-set criteria, identify conflicts, review adverse impact and retain a lawful record.\n13. **Communicate respectfully**: timelines, status, accommodation, rejection and feedback where feasible without humiliating labels.\n14. **Review local law and representation rights**: discrimination, pay transparency, works councils, employment status, background checks and trial work vary by jurisdiction.',
+            practicalExamples: [
+              'A candidate who cannot submit video receives an equivalent written response scored against the same communication criteria.',
+              'A paid work sample uses fictional data and is never sold or deployed as unpaid client work.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Good hiring uses consistent job-related evidence and inclusive process—not prestige labels, intuition or forced similarity.',
+            keyPrinciples: ['Offer reasonable accommodation and equivalent formats', 'Never use candidate work commercially without fair terms', 'Monitor outcomes for bias and adverse impact'],
+          },
+          actionTask: {
+            instruction: 'Prepare a structured hiring plan:',
+            checklistItems: ['Essential outcomes, competencies and anchored criteria defined', 'Accessible application, interview and accommodation routes prepared', 'Work-sample scope, pay, IP, privacy and scoring approved', 'Reference, retention, bias review and local legal requirements documented'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '62.2': {
+          stageTitle: '62. Goals, performance and supportive leadership',
+          title: 'Use OKRs and variable pay without surveillance or unfair pressure',
+          description: 'Co-create goals, review dependencies and reward contribution through transparent, lawful and equitable processes.',
+          learnContent: {
+            videoTitle: 'Masterclass: accountable goals and people leadership',
+            summaryText: 'OKRs, dashboards, meetings and incentives can improve clarity, but they do not remove the need for coaching, judgement, workload planning and employee voice. Metrics can be gamed or biased, while poorly designed bonuses may reward risk-taking, discrimination or unpaid work.',
+            bulletPoints: [
+              'Set a small number of meaningful goals with baselines, owners, dependencies and quality safeguards',
+              'Separate learning goals from compensation metrics where uncertainty or experimentation is high',
+              'Review workload, resources, accessibility, caregiving and systemic blockers before judging an individual',
+              'Design variable pay with written rules, pay-equity analysis, deferrals or clawbacks where lawful and an appeal route'
+            ],
+            coreConcepts: [
+              { iconName: 'target', title: 'CONTEXTUAL GOALS', description: 'Results include quality, ethics, collaboration and dependencies—not only volume.', highlight: true },
+              { iconName: 'dollar-sign', title: 'EQUITABLE REWARD', description: 'Compensation is transparent, lawful, controllable, auditable and reviewed for unequal impact.' }
+            ],
+            resources: [
+              { title: 'Team goals and leadership workbook', subtitle: 'Objectives, measures, capacity, check-ins, feedback and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM goal-tracking safeguards', subtitle: 'Defined metrics, permissions, corrections and limited retention', type: 'tool', iconName: 'activity', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Lead with clarity, care and accountability\n\n1. **Start with strategy and capacity**: choose outcomes the team can influence and confirm people, time, budget, data and authority.\n2. **Co-create objectives**: explain purpose, invite challenge and document assumptions, dependencies and trade-offs.\n3. **Write balanced key results**: outcome, baseline, target range, period, source, owner and quality or harm guardrail.\n4. **Avoid metric monoculture**: combine customer, quality, safety, compliance, learning and sustainable financial measures.\n5. **Do not use dashboards as covert surveillance**: disclose data sources, purpose, access, retention and consequences; avoid invasive activity and presence tracking.\n6. **Account for system conditions**: territory, lead quality, tools, staffing, leave, disability accommodation and cross-team dependencies affect results.\n7. **Use check-ins to unblock**: progress, confidence, risks, decisions and help required; meeting cadence should fit the team rather than a universal calendar.\n8. **Provide timely private corrective feedback**: specific behaviour, impact, expected standard, support and follow-up. Public recognition follows individual preference and does not reveal private data.\n9. **Protect psychological safety**: dissent, reporting errors and requesting help must not trigger retaliation.\n10. **Design variable pay carefully**: employee classification, minimum pay, overtime, equal pay, tax, works council and contract rules vary. Obtain specialist review before implementation.\n11. **Use controllable measures**: no bonus should depend mainly on outcomes the person cannot influence or invite harmful shortcuts.\n12. **Document calculation and correction**: source data, formula, cap, threshold, timing, absence treatment, adjustments, disputes and audit.\n13. **Review equity and unintended effects**: compare opportunities and outcomes across groups lawfully and correct structural barriers.\n14. **Manage underperformance with due process**: clarify expectations, investigate causes, offer reasonable support and accommodation, document fairly and follow law and policy—not “fire fast.”\n15. **Protect boundaries in remote work**: asynchronous work should reduce interruptions, not create 24-hour availability. Set response norms, quiet hours and emergency channels.\n16. **Evaluate the system**: quality, wellbeing, attrition, grievances, goal gaming and customer harm alongside output.',
+            practicalExamples: [
+              'A sales target is adjusted after lead quality changes, and quality and complaint guardrails prevent pressure selling.',
+              'An employee challenges an incorrect dashboard source and receives a documented correction before any pay decision.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Performance systems work when goals are contextual, data is transparent and people receive fair support, voice and due process.',
+            keyPrinciples: ['Do not confuse monitoring with leadership', 'Reward only lawful and controllable outcomes', 'Address underperformance fairly rather than instantly'],
+          },
+          actionTask: {
+            instruction: 'Prepare a fair team-goal cycle:',
+            checklistItems: ['Objectives, baselines, dependencies and quality guardrails co-created', 'Metric sources, access, correction and privacy documented', 'Workload, accommodation, feedback and escalation routes planned', 'Variable pay, equity, labour law and appeal process independently reviewed'],
+            toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -11380,6 +11462,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj pilotaż TV-mobile:',
             checklistItems: ['Przetestowano QR, URL, czas, kontrast i dostępność na TV', 'Przejrzano identity, ofertę, terms, privacy i minimum form', 'Oddzielono fulfilment SMS lub e-mail od marketing permission', 'Zatwierdzono security, device QA, attribution i failure handling'],
             toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+
+    62: {
+      title: '62. Uczciwa rekrutacja i trwałe przywództwo zespołu',
+      subtitle: 'Strukturalny wybór, dostępne próbki pracy, rozliczalne cele i równe nagrody',
+      description: 'Buduj zespoły przez dowody związane z pracą, równe szanse, jasne oczekiwania i wspierające przywództwo—bez etykiet A/B/C, inwazyjnego screeningu, dyskryminującego culture fit i haseł o szybkim zwalnianiu.',
+      lessons: {
+        '62.1': {
+          stageTitle: '62. Strukturalna i włączająca rekrutacja',
+          title: 'Wybieraj według wymagań stanowiska z konsekwentnymi dowodami',
+          description: 'Określ istotne wyniki i kompetencje, potem użyj dostępnych, proporcjonalnych i prawnie sprawdzonych metod.',
+          learnContent: {
+            videoTitle: 'Masterclass: uczciwe zatrudnianie oparte na dowodach',
+            summaryText: 'Jakości zatrudnienia nie gwarantuje funnel, wideo, trial ani referencja. Wiarygodny wybór używa analizy pracy, spójnego scoringu, reasonable accommodation, przeszkolonych reviewerów oraz walidacji wyników i adverse impact.',
+            bulletPoints: [
+              'Oddziel istotne wyniki i kompetencje od preferencji wykluczających kwalifikowane osoby',
+              'Stosuj strukturalne pytania i anchored scoring jednakowo dla kandydatów',
+              'Oferuj dostępne alternatywy dla wideo i formatów niepotrzebnie ujawniających cechy chronione',
+              'Próbki pracy są krótkie, związane ze stanowiskiem i płatne, gdy tworzą wartość lub wymaga tego prawo'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'SCORECARD STANOWISKA', description: 'Kryteria powstają przed aplikacjami i łączą się z istotną pracą.', highlight: true },
+              { iconName: 'check-square', title: 'UCZCIWA PRÓBKA PRACY', description: 'Zadanie jest proporcjonalne, dostępne, bezpieczne, odpowiednio płatne i spójnie oceniane.' }
+            ],
+            resources: [
+              { title: 'Zeszyt rekrutacji i scorecard', subtitle: 'Analiza pracy, kryteria, wywiady, accommodation i review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole ATS Mara CRM', subtitle: 'Celowe rekordy, role, retencja i audyt decyzji', type: 'tool', iconName: 'users', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Uczciwy proces wyboru\n\n1. **Analizuj rolę**: istotne obowiązki, wyniki, authority, warunki, umiejętności do nauki i legalne kwalifikacje.\n2. **Pisz inkluzywne ogłoszenie**: dokładna płaca i lokalizacja gdy wymagane, dostępny język, rozsądne wymagania i kontakt accommodation.\n3. **Dobierz sourcing**: wiele kanałów i monitoring, kto wchodzi i odpada; polecenia nie są jedyną drogą.\n4. **Minimalizuj dane**: tylko potrzebne na etapie; monitoring equality oddziel od decyzji.\n5. **Nie wymagaj wideo domyślnie**: ujawnia wiek, niepełnosprawność, rasę, religię i inne cechy. Oferuj równoważny tekst, audio lub live.\n6. **Strukturalny screening**: te same pytania, scoring i przeszkoleni reviewerzy; dowody zamiast etykiet osobowości.\n7. **Ostrożnie oceniaj wartości**: obserwowalne zachowanie jak integralność i współpraca, nie podobieństwo lub social style.\n8. **Proporcjonalna próbka**: krótka, reprezentatywna, bez użycia darmowej pracy w produkcji, z IP, poufnością, dostępnością i płatnością.\n9. **Waliduj automatyzację**: funkcje, dane treningowe, wyjaśnienie, dostępność, vendor use, human oversight i disparate impact; bez emotion inference z twarzy lub głosu.\n10. **Legalne referencje**: informacja, zgoda, weryfikacja osoby, pytania job-related i prawo odpowiedzi na rozbieżność.\n11. **Chroń applicant data**: cel, notice, dostęp, bezpieczeństwo, transfer, retencja, usuwanie i prawa; bez shadow dossier.\n12. **Dokumentuj decyzję**: dowody wobec kryteriów, konflikty, adverse impact i legalny rekord.\n13. **Komunikuj szacunek**: terminy, status, accommodation, rejection i możliwy feedback bez poniżających etykiet.\n14. **Przejrzyj lokalne prawo**: discrimination, pay transparency, works council, employment status, background check i trial różnią się.',
+            practicalExamples: [
+              'Kandydat bez możliwości wideo dostaje równoważną odpowiedź tekstową ocenianą tymi samymi kryteriami.',
+              'Płatna próbka używa fikcyjnych danych i nie jest sprzedawana jako bezpłatna praca klienta.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Dobre zatrudnianie używa spójnych dowodów związanych z pracą—nie etykiet, intuicji i podobieństwa.',
+            keyPrinciples: ['Oferuj accommodation i równoważne formaty', 'Nie używaj pracy kandydata komercyjnie bez uczciwych warunków', 'Monitoruj bias i adverse impact'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj strukturalny plan zatrudnienia:',
+            checklistItems: ['Zdefiniowano wyniki, kompetencje i anchored criteria', 'Przygotowano dostępne aplikacje, wywiady i accommodation', 'Zatwierdzono scope, pay, IP, privacy i scoring próbki', 'Udokumentowano referencje, retencję, bias review i prawo'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '62.2': {
+          stageTitle: '62. Cele, performance i wspierające przywództwo',
+          title: 'Stosuj OKR i variable pay bez nadzoru oraz nieuczciwej presji',
+          description: 'Współtwórz cele, przeglądaj zależności i nagradzaj wkład przez przejrzyste, legalne i równe procesy.',
+          learnContent: {
+            videoTitle: 'Masterclass: rozliczalne cele i people leadership',
+            summaryText: 'OKR, dashboard, meeting i bonus mogą poprawiać jasność, ale nie usuwają coachingu, judgement, workload i voice pracownika. Metryki mogą być manipulowane lub stronnicze, a zły bonus nagradzać ryzyko, dyskryminację lub unpaid work.',
+            bulletPoints: [
+              'Ustalaj mało znaczących celów z baseline, ownerem, zależnościami i quality safeguards',
+              'Oddziel learning goals od compensation, gdy niepewność lub eksperyment jest wysoki',
+              'Przejrzyj workload, zasoby, dostępność, caregiving i blockers przed oceną osoby',
+              'Projektuj variable pay z zasadami, pay-equity, deferral lub clawback gdy legalne oraz appeal'
+            ],
+            coreConcepts: [
+              { iconName: 'target', title: 'CELE W KONTEKŚCIE', description: 'Wyniki obejmują jakość, etykę, współpracę i zależności, nie tylko wolumen.', highlight: true },
+              { iconName: 'dollar-sign', title: 'RÓWNA NAGRODA', description: 'Wynagrodzenie jest jawne, legalne, kontrolowalne, audytowane i sprawdzane pod kątem wpływu.' }
+            ],
+            resources: [
+              { title: 'Zeszyt celów i przywództwa', subtitle: 'Objectives, measures, capacity, check-ins, feedback i review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Zabezpieczenia goal tracking Mara CRM', subtitle: 'Definicje, prawa, korekty i ograniczona retencja', type: 'tool', iconName: 'activity', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Przywództwo z jasnością i troską\n\n1. **Strategia i capacity**: wybierz wyniki pod wpływem zespołu i potwierdź ludzi, czas, budżet, dane i authority.\n2. **Współtwórz objectives**: wyjaśnij cel, zaproś krytykę i zapisz założenia, dependencies i trade-offs.\n3. **Zrównoważone key results**: outcome, baseline, target range, period, source, owner i guardrail jakości lub szkody.\n4. **Unikaj metric monoculture**: klient, jakość, bezpieczeństwo, zgodność, nauka i finanse.\n5. **Dashboard nie jest ukrytym nadzorem**: ujawnij źródło, cel, dostęp, retencję i skutek; unikaj inwazyjnego activity tracking.\n6. **Uwzględnij system**: territory, lead quality, tools, staffing, leave, disability accommodation i dependencies wpływają na wynik.\n7. **Check-in usuwa blokery**: progress, confidence, risks, decisions i help; cadence pasuje do zespołu.\n8. **Prywatny corrective feedback**: zachowanie, wpływ, standard, wsparcie i follow-up. Publiczne uznanie zależy od preferencji.\n9. **Psychological safety**: sprzeciw, raport błędu i prośba o pomoc bez retaliation.\n10. **Ostrożny variable pay**: classification, minimum pay, overtime, equal pay, tax, works council i contract wymagają specjalisty.\n11. **Kontrolowalne mierniki**: bonus nie zależy głównie od czynników poza wpływem i nie zachęca do szkody.\n12. **Dokumentuj calculation**: źródło, formuła, cap, threshold, timing, absence, adjustment, dispute i audit.\n13. **Przeglądaj equity**: porównuj okazje i wyniki legalnie, korygując strukturalne bariery.\n14. **Due process przy underperformance**: oczekiwania, przyczyny, wsparcie, accommodation, dokumentacja i prawo—bez fire fast.\n15. **Granice remote**: async zmniejsza przerwania, nie tworzy 24/7. Response norms, quiet hours i emergency channel.\n16. **Oceniaj system**: jakość, wellbeing, attrition, grievances, gaming i customer harm wraz z output.',
+            practicalExamples: [
+              'Target sprzedaży jest zmieniony po spadku lead quality, a guardrail skarg zapobiega pressure selling.',
+              'Pracownik kwestionuje błędne źródło dashboardu i dostaje korektę przed decyzją płacową.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Performance działa, gdy cele mają kontekst, dane są jawne, a ludzie mają wsparcie, voice i due process.',
+            keyPrinciples: ['Nie myl monitoringu z przywództwem', 'Nagradzaj tylko legalne i kontrolowalne wyniki', 'Rozwiązuj underperformance uczciwie, nie natychmiast'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj uczciwy cykl celów:',
+            checklistItems: ['Współtworzono objectives, baseline, dependencies i guardrails', 'Udokumentowano źródła, dostęp, korekty i privacy', 'Zaplanowano workload, accommodation, feedback i escalation', 'Niezależnie przejrzano variable pay, equity, prawo i appeal'],
+            toolboxCategory: 'settings',
           },
         },
       },
