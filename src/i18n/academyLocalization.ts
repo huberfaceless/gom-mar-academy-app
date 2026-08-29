@@ -5616,6 +5616,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    61: {
+      title: '61. Responsible connected-TV advertising and second-screen journeys',
+      subtitle: 'Inventory verification, privacy-aware targeting, accessible creative and defensible measurement',
+      description: 'Evaluate CTV and streaming advertising through authorised inventory, transparent data use and controlled experiments—without claiming universal platform access, perfect viewability, automatic prestige or covert household-to-device retargeting.',
+      lessons: {
+        '61.1': {
+          stageTitle: '61. Connected-TV media architecture',
+          title: 'Plan CTV campaigns with verified supply, audience safeguards and measurement limits',
+          description: 'Map publishers, exchanges, devices, data providers, consent signals and reporting before buying streaming inventory.',
+          learnContent: {
+            videoTitle: 'Masterclass: accountable CTV planning and media buying',
+            summaryText: 'CTV availability, minimum spend, ad format, skip behaviour and targeting vary by country, publisher, device and buying route. Platform names or household attributes must not be advertised as available without current written confirmation, and an impression is not proof that a person watched or trusted the ad.',
+            bulletPoints: [
+              'Verify authorised inventory, geography, device coverage, pricing, creative rules and supply-path transparency',
+              'Define household, device and audience segments without sensitive or discriminatory profiling',
+              'Respect consent, opt-outs and platform signals before matching or retargeting across devices',
+              'Measure delivery, reach, frequency, completion, outcomes and invalid traffic with uncertainty'
+            ],
+            coreConcepts: [
+              { iconName: 'tv', title: 'VERIFIED CTV SUPPLY', description: 'Publisher, app, device, geography and reseller path are confirmed and monitored.', highlight: true },
+              { iconName: 'smartphone', title: 'PERMISSIONED DEVICE USE', description: 'Cross-device activation uses lawful, disclosed signals and never assumes a household member’s identity.' }
+            ],
+            resources: [
+              { title: 'CTV planning and supply-quality workbook', subtitle: 'Inventory, audience, privacy, creative, measurement and stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM CTV experiment reporting', subtitle: 'Aggregated campaign windows, visits and conversion evidence', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Plan a defensible CTV campaign\n\n1. **Define the objective**: incremental reach, awareness, site visits or a specific conversion; write the decision the test must support.\n2. **Confirm current availability**: publishers and streaming services differ by market and may sell only through selected partners. Obtain current inventory and policy documentation.\n3. **Map the supply chain**: advertiser, agency, DSP, exchange, SSP, reseller, publisher app, device and verification provider; prefer transparent authorised paths.\n4. **Set brand-safety and suitability rules**: content categories, news treatment, children’s content, language and inclusion/exclusion controls without claiming perfect placement.\n5. **Review audience data**: source, collection notice, consent, age, accuracy, retention, sharing and sensitive categories. Avoid targeting that unlawfully discriminates in housing, employment, credit, health or other consequential contexts.\n6. **Treat household identity cautiously**: IP addresses, graphs and device links can be shared, dynamic or wrong; do not infer which person viewed the ad.\n7. **Control cross-device use**: follow law, consent frameworks, platform policies and user opt-outs; do not secretly trigger a phone ad because a television impression occurred.\n8. **Manage frequency**: deduplicate where possible, cap exposure and monitor fragmentation across publishers and devices.\n9. **Specify creative per destination**: aspect, codec, frame rate, audio loudness, captions, safe areas, duration and file limits come from each publisher—not one universal 4K or loudness setting.\n10. **Design accessible creative**: readable text, captions, audio clarity, sufficient on-screen duration, no harmful flashing and alternatives to QR-only action.\n11. **Validate measurement**: impression, completion and viewability definitions vary. Separate served, verified, observed and attributed events.\n12. **Control fraud and quality**: app identity, spoofing, server-side insertion, duplicate supply, invalid traffic and suspicious completion patterns.\n13. **Run an incremental test**: use geographic or audience holdouts where appropriate, pre-period baselines and confidence ranges; account for seasonality and other media.\n14. **Protect logs and identifiers**: minimise event data, restrict access, define retention and review vendors and international transfers.\n15. **Set commercial stop rules**: frequency, invalid traffic, complaints, inaccessible creative, privacy failure and cost thresholds.',
+            practicalExamples: [
+              'A media plan lists a streaming service only after the authorised buying route confirms the country, inventory and creative format.',
+              'A household impression is reported in aggregate and is not used to claim that a named individual watched the spot.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'CTV is a variable media channel whose value must be verified through supply transparency, privacy controls and incremental evidence.',
+            keyPrinciples: ['Never promise platform access or complete viewing', 'Do not equate a household with an individual', 'Use current publisher specifications and policies'],
+          },
+          actionTask: {
+            instruction: 'Prepare a controlled CTV pilot:',
+            checklistItems: ['Objective, authorised inventory and supply path verified', 'Audience data, sensitive exclusions, consent and opt-outs reviewed', 'Creative specifications, accessibility and frequency caps tested', 'Incrementality, fraud, privacy and cost stop rules approved'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '61.2': {
+          stageTitle: '61. QR, SMS and second-screen journeys',
+          title: 'Create accessible TV-to-mobile journeys without pressure or hidden consent',
+          description: 'Use tested QR, short URL or SMS entry points with clear offers, safe scanning, explicit permission and honest attribution.',
+          learnContent: {
+            videoTitle: 'Masterclass: accessible second-screen funnels and measurement',
+            summaryText: 'Second-screen behaviour and QR response vary by audience and context. Animation, page speed and simplified forms can help, but no statistic or design guarantees scans or conversion. The viewer must have enough time and a safe alternative to understand the offer.',
+            bulletPoints: [
+              'Pair QR codes with a readable short URL, spoken option or other accessible fallback',
+              'Show sender, offer, price, eligibility, material conditions and data use before submission',
+              'Separate fulfilment contact from ongoing email or SMS marketing consent',
+              'Measure scans and lift with baselines and controls rather than claiming deterministic attribution'
+            ],
+            coreConcepts: [
+              { iconName: 'qr-code', title: 'SAFE ACCESSIBLE HANDOFF', description: 'A stable code and human-readable fallback remain visible long enough to use safely.', highlight: true },
+              { iconName: 'trending_up', title: 'CAUTIOUS LIFT ANALYSIS', description: 'Campaign windows are compared with baselines while accounting for other media and uncertainty.' }
+            ],
+            resources: [
+              { title: 'CTV landing-page and QR QA workbook', subtitle: 'Readability, safety, accessibility, consent and attribution', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara landing-page CTV diagnostics', subtitle: 'Real-device speed, error, consent and campaign-event review', type: 'tool', iconName: 'zap', actionUrl: 'landingpage' }
+            ],
+            fullArticleGuide: '### Design a trustworthy TV-to-mobile path\n\n1. **Use one clear action**: explain the benefit and who offers it; do not rely on manufactured urgency or a QR code with no context.\n2. **Create a stable destination**: HTTPS, owned or controlled domain, no unexpected redirect chain and a maintained fallback after the campaign ends.\n3. **Generate a robust code**: adequate physical size, contrast, quiet zone and error correction; test compression, viewing distance, glare and screen crop.\n4. **Avoid harmful animation**: motion must not obscure scanning or trigger flashing-related accessibility risk. A static code may perform better.\n5. **Allow enough time**: duration depends on wording, distance and audience testing; do not treat ten seconds as universally sufficient.\n6. **Provide alternatives**: readable short URL, voice-accessible route and support; SMS keywords require country, carrier and shortcode review.\n7. **Minimise the landing page**: fast and focused, but retain identity, terms, privacy, accessibility, navigation needed for trust and cancellation.\n8. **Collect minimum data**: use email or phone only when needed and explain purpose, retention, provider and rights.\n9. **Separate consent**: sending a requested code or coupon does not automatically authorise future marketing. Use an unbundled choice and honour STOP or unsubscribe.\n10. **Secure the flow**: signed or non-sensitive campaign parameters, rate limits, bot protection, no personal data in URLs and validation of dynamic redirects.\n11. **Make discounts truthful**: eligibility, expiry, stock, exclusions, recurring terms and comparison price must be accurate.\n12. **Test real devices and networks**: Safari, Chrome, accessibility tools, slow networks, keyboard, screen reader, form errors and message delivery.\n13. **Measure in layers**: scans, unique sessions, consented leads and conversions with timestamp, denominator and attribution window; QR parameters do not prove causation.\n14. **Estimate incremental lift**: compare matched periods or holdouts and account for search, social, PR, seasonality and simultaneous campaigns.\n15. **Plan failure and support**: expired code, unavailable offer, SMS delay, duplicate fulfilment, consent withdrawal and deletion request.',
+            practicalExamples: [
+              'The spot shows a large QR code plus a short URL and explicitly separates coupon delivery from optional marketing.',
+              'A search increase during airing is reported as an association until a controlled analysis supports incremental effect.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A good second-screen journey is understandable, accessible, secure and permission-based; fast scanning and attribution are not guaranteed.',
+            keyPrinciples: ['Offer a non-QR alternative', 'Separate fulfilment from marketing consent', 'Do not claim that campaign timing proves causation'],
+          },
+          actionTask: {
+            instruction: 'Prepare a TV-to-mobile pilot:',
+            checklistItems: ['QR, short URL, duration, contrast and accessibility tested on a television', 'Identity, offer, terms, privacy and minimal form reviewed', 'SMS or email fulfilment separated from marketing permission', 'Security, real-device QA, attribution and failure handling approved'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -11216,6 +11298,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj pilotaż portalu:',
             checklistItems: ['Zdefiniowano journeys, organizacje, role i fallback', 'Przetestowano pliki, credentials, zaproszenia i tenant isolation', 'Udokumentowano wersje approval i definicje metryk', 'Przejrzano routing, dostępność, eksport i offboarding'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
+    61: {
+      title: '61. Odpowiedzialna reklama CTV i ścieżki second-screen',
+      subtitle: 'Weryfikacja inventory, prywatne targetowanie, dostępna kreacja i obronny pomiar',
+      description: 'Oceniaj reklamę streamingową przez autoryzowane inventory, jawne użycie danych i kontrolowane eksperymenty—bez obietnic dostępu do platform, pełnej oglądalności, prestiżu i ukrytego retargetingu urządzeń.',
+      lessons: {
+        '61.1': {
+          stageTitle: '61. Architektura mediów CTV',
+          title: 'Planuj CTV ze zweryfikowanym supply, ochroną odbiorców i granicami pomiaru',
+          description: 'Zmapuj wydawców, exchange, urządzenia, dostawców danych, sygnały zgody i raport przed zakupem.',
+          learnContent: {
+            videoTitle: 'Masterclass: rozliczalne planowanie i zakup CTV',
+            summaryText: 'Dostępność, budżet, format, skip i targeting różnią się według kraju, wydawcy, urządzenia i drogi zakupu. Nazwy platform i cechy gospodarstw wymagają aktualnego potwierdzenia, a impression nie dowodzi oglądania ani zaufania.',
+            bulletPoints: [
+              'Weryfikuj autoryzowane inventory, kraj, urządzenie, cenę, kreację i przejrzystość supply path',
+              'Definiuj segmenty bez wrażliwego i dyskryminującego profilowania',
+              'Respektuj zgodę, opt-out i sygnały platform przed cross-device matchingiem',
+              'Mierz delivery, reach, frequency, completion, outcomes i invalid traffic z niepewnością'
+            ],
+            coreConcepts: [
+              { iconName: 'tv', title: 'ZWERYFIKOWANY SUPPLY CTV', description: 'Wydawca, app, urządzenie, kraj i reseller są potwierdzone i monitorowane.', highlight: true },
+              { iconName: 'smartphone', title: 'UPRAWNIONE UŻYCIE URZĄDZEŃ', description: 'Cross-device używa legalnych, jawnych sygnałów i nie zakłada tożsamości domownika.' }
+            ],
+            resources: [
+              { title: 'Zeszyt planowania i jakości CTV', subtitle: 'Inventory, odbiorca, prywatność, kreacja, pomiar i stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Raport eksperymentu CTV Mara CRM', subtitle: 'Zagregowane okna, wizyty i dowody konwersji', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Obronny plan CTV\n\n1. **Określ cel**: incremental reach, awareness, wizyty lub konwersja oraz decyzja testu.\n2. **Potwierdź dostępność**: usługi różnią się według rynku i partnerów. Uzyskaj aktualne inventory i politykę.\n3. **Zmapuj supply chain**: reklamodawca, agencja, DSP, exchange, SSP, reseller, publisher app, urządzenie i verification.\n4. **Ustal brand safety**: kategorie, news, dzieci, język i wyłączenia bez obietnicy idealnego placementu.\n5. **Przejrzyj audience data**: źródło, notice, consent, wiek, accuracy, retencja, sharing i sensitive categories. Unikaj dyskryminacji w housing, employment, credit, health i innych ważnych obszarach.\n6. **Ostrożnie traktuj gospodarstwo**: IP, graph i link urządzeń mogą być wspólne, dynamiczne lub błędne; nie wnioskuj osoby.\n7. **Kontroluj cross-device**: prawo, consent framework, polityka i opt-out; nie uruchamiaj potajemnie telefonu po TV impression.\n8. **Zarządzaj frequency**: deduplikuj, cap exposure i monitoruj fragmentację.\n9. **Specyfikuj kreację per destination**: aspect, codec, fps, loudness, captions, safe area, czas i limit pochodzą od wydawcy.\n10. **Dostępna kreacja**: czytelny tekst, napisy, audio, czas, brak szkodliwego flashingu i alternatywa dla QR.\n11. **Waliduj pomiar**: definicje impression, completion i viewability różnią się. Oddziel served, verified, observed i attributed.\n12. **Kontroluj fraud**: app identity, spoofing, SSAI, duplicate supply, invalid traffic i podejrzane completion.\n13. **Testuj inkrementalność**: holdout, baseline, confidence i sezonowość oraz inne media.\n14. **Chroń logi i ID**: minimalizacja, dostęp, retencja, dostawcy i transfery.\n15. **Stop rules**: frequency, fraud, skargi, niedostępność, privacy i koszt.',
+            practicalExamples: [
+              'Plan wymienia streaming service dopiero po potwierdzeniu kraju, inventory i formatu przez autoryzowaną drogę.',
+              'Impression gospodarstwa jest agregowany i nie służy do twierdzenia, że konkretna osoba oglądała.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'CTV jest zmiennym kanałem wymagającym supply transparency, prywatności i dowodów inkrementalnych.',
+            keyPrinciples: ['Nie obiecuj dostępu ani pełnego oglądania', 'Nie utożsamiaj gospodarstwa z osobą', 'Stosuj aktualne specs i polityki wydawcy'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj kontrolowany pilotaż CTV:',
+            checklistItems: ['Zweryfikowano cel, inventory i supply path', 'Przejrzano dane, wyłączenia, zgodę i opt-out', 'Przetestowano specs, dostępność i frequency cap', 'Zatwierdzono incrementality, fraud, privacy i cost stop rules'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '61.2': {
+          stageTitle: '61. QR, SMS i second-screen',
+          title: 'Twórz dostępne ścieżki TV-mobile bez presji i ukrytej zgody',
+          description: 'Używaj QR, short URL lub SMS z jasną ofertą, bezpiecznym skanem, zgodą i uczciwą atrybucją.',
+          learnContent: {
+            videoTitle: 'Masterclass: dostępne second-screen funnels',
+            summaryText: 'Second-screen i reakcja QR różnią się według odbiorców. Animacja, speed i prosty formularz mogą pomóc, ale nie gwarantują skanów ani konwersji. Odbiorca potrzebuje czasu i bezpiecznej alternatywy.',
+            bulletPoints: [
+              'Łącz QR z czytelnym short URL, opcją głosową lub inną alternatywą',
+              'Przed wysłaniem pokaż nadawcę, ofertę, cenę, eligibility, warunki i dane',
+              'Oddziel kontakt do fulfilment od zgody na dalszy e-mail lub SMS marketing',
+              'Mierz skany i lift przez baseline i kontrolę bez deterministycznej atrybucji'
+            ],
+            coreConcepts: [
+              { iconName: 'qr-code', title: 'BEZPIECZNY DOSTĘPNY HANDOFF', description: 'Stabilny kod i czytelna alternatywa są widoczne wystarczająco długo.', highlight: true },
+              { iconName: 'trending_up', title: 'OSTROŻNA ANALIZA LIFT', description: 'Okna kampanii są porównywane z baseline z uwzględnieniem innych mediów.' }
+            ],
+            resources: [
+              { title: 'Zeszyt QA landing page i QR', subtitle: 'Czytelność, bezpieczeństwo, dostępność, zgoda i atrybucja', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Diagnostyka CTV Mara Landingpage', subtitle: 'Real-device speed, błędy, zgoda i eventy kampanii', type: 'tool', iconName: 'zap', actionUrl: 'landingpage' }
+            ],
+            fullArticleGuide: '### Zaufana ścieżka TV-mobile\n\n1. **Jedna jasna akcja**: korzyść i oferent; bez sztucznej pilności i QR bez kontekstu.\n2. **Stabilny cel**: HTTPS, kontrolowana domena, bez niespodziewanych redirectów i z fallbackiem po kampanii.\n3. **Solidny kod**: rozmiar, kontrast, quiet zone i error correction; testuj kompresję, dystans, glare i crop.\n4. **Unikaj szkodliwej animacji**: ruch nie zakłóca skanu ani nie powoduje flashing risk. Static może być lepszy.\n5. **Daj czas**: czas zależy od copy, dystansu i testu; dziesięć sekund nie jest uniwersalne.\n6. **Alternatywy**: short URL, voice route i support; SMS keyword wymaga przeglądu kraju, operatora i shortcode.\n7. **Minimalna strona**: szybka i skupiona, lecz zachowuje identity, terms, privacy, accessibility i potrzebną navigation.\n8. **Minimum danych**: e-mail lub telefon tylko w potrzebie z celem, retencją, dostawcą i prawami.\n9. **Oddziel zgodę**: wysłanie kodu nie autoryzuje dalszego marketingu. Osobny wybór i STOP lub unsubscribe.\n10. **Zabezpiecz flow**: bezpieczne parametry, rate limits, bot protection, bez danych osobowych w URL i valid redirect.\n11. **Prawdziwy rabat**: eligibility, expiry, stock, exclusions, recurring i comparison price są dokładne.\n12. **Testuj urządzenia i sieci**: Safari, Chrome, accessibility, slow network, keyboard, screen reader, form errors i delivery.\n13. **Mierz warstwowo**: scans, unique sessions, consented leads i conversions z czasem, mianownikiem i window; parametr nie dowodzi causation.\n14. **Szacuj lift**: matched periods lub holdout z search, social, PR, seasonality i innymi kampaniami.\n15. **Planuj awarie**: expired code, unavailable offer, SMS delay, duplicate fulfilment, withdrawal i deletion.',
+            practicalExamples: [
+              'Spot pokazuje QR i short URL oraz oddziela dostawę kuponu od opcjonalnego marketingu.',
+              'Wzrost wyszukiwań podczas emisji jest association, dopóki kontrola nie wspiera incrementality.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Second-screen jest dobry, gdy jest jasny, dostępny, bezpieczny i oparty na zgodzie; speed i atrybucja nie są gwarantowane.',
+            keyPrinciples: ['Zapewnij alternatywę dla QR', 'Oddziel fulfilment od marketing consent', 'Timing kampanii nie dowodzi causation'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj pilotaż TV-mobile:',
+            checklistItems: ['Przetestowano QR, URL, czas, kontrast i dostępność na TV', 'Przejrzano identity, ofertę, terms, privacy i minimum form', 'Oddzielono fulfilment SMS lub e-mail od marketing permission', 'Zatwierdzono security, device QA, attribution i failure handling'],
+            toolboxCategory: 'landingpage',
           },
         },
       },
