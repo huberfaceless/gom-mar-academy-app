@@ -3893,6 +3893,130 @@ The objective is wanted, secure and useful email—not the largest possible list
         },
       },
     },
+    44: {
+      title: '44. Responsible WhatsApp & SMS messaging',
+      subtitle: 'Channel-specific consent, approved messaging, safe automation and respectful service',
+      description: 'Use WhatsApp and SMS only for expected, useful communication with clear permission, current platform compliance, secure data handling and easy opt-out—without universal open-rate or sales guarantees.',
+      lessons: {
+        '44.1': {
+          stageTitle: '44. WhatsApp Business Platform & permission',
+          title: 'Set up permission-aware WhatsApp communication',
+          description: 'Choose an official business solution, collect purpose-specific permission and operate templates, service conversations and preferences transparently.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible WhatsApp setup and consent',
+            summaryText: 'WhatsApp is a personal channel governed by platform rules, privacy law and direct-marketing requirements. A checkbox or template approval alone does not prove lawful, informed permission, and no channel guarantees a particular open or conversion rate.',
+            bulletPoints: [
+              'Select the Business App or official Business Platform according to support, scale, integration and governance needs',
+              'Collect separate, specific permission for WhatsApp purpose and frequency; do not bundle it with email, SMS or general terms',
+              'Use currently approved template categories and service-window rules, checking official documentation before launch',
+              'Store source, timestamp, notice version and preferences, and honour opt-out across every connected system',
+            ],
+            coreConcepts: [
+              { iconName: 'message-circle', title: 'EXPECTED MESSAGING', description: 'The recipient knows the sender, channel, purpose and approximate frequency before the first message arrives.', highlight: true },
+              { iconName: 'lock', title: 'VERIFIABLE CHOICE', description: 'Permission and withdrawal are recorded, granular and as easy to use as signup; legal assessment remains context-specific.' },
+            ],
+            resources: [
+              { title: 'WhatsApp Permission & Operations Workbook', subtitle: 'Notices, templates, preferences, retention and incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM WhatsApp Integration', subtitle: 'Connect an official account with governed access and consent records', type: 'tool', iconName: 'message-square', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Treat messaging as invited access, not a guaranteed attention channel
+
+WhatsApp can support reminders, service and opted-in marketing, but the correct setup depends on market, message purpose, business role and current platform terms. Obtain qualified legal advice where required.
+
+#### Responsible WhatsApp lifecycle
+
+1. **Define one message purpose**: Separate service updates, appointments, authentication and marketing. State what the channel will not be used for.
+2. **Choose an official route**: Compare the Business App and supported Business Platform providers. Do not use browser automation, unofficial clients or shared personal accounts.
+3. **Assign accountability**: Name owners for templates, privacy, security, support, billing, incidents and platform changes.
+4. **Collect informed permission**: Show business identity, channel, purpose, content type, likely frequency, data use and withdrawal method before opt-in. Keep WhatsApp optional.
+5. **Verify without dark patterns**: Confirmation can help prevent mistyped numbers, but avoid preselected boxes, forced consent or making service conditional on unrelated marketing.
+6. **Record evidence**: Store the source, time, notice version, purpose and status with restricted access and a retention schedule.
+7. **Prepare approved templates**: Use truthful category, variables and language; preview the final message and re-review after platform policy changes.
+8. **Respect conversation rules**: Check current service-window and pricing conditions. A reply does not create unlimited permission for unrelated promotion.
+9. **Protect data in integrations**: Limit fields, encrypt transport, scope tokens, rotate secrets, log access and assess subprocessors and cross-border transfers.
+10. **Design accessible messages**: Use plain language, descriptive links and text alternatives for essential audio or images. Do not rely on emoji or colour alone.
+11. **Control frequency and timing**: Honour time zones, quiet hours and user preferences. Frequency should match the promised purpose, not a universal weekly quota.
+12. **Make stopping simple**: Recognise clear opt-out language, confirm suppression once and apply it across campaigns. Provide human support for mistakes.
+13. **Measure balanced outcomes**: Review delivery, replies, task completion, opt-outs, blocks, complaints, support burden and customer outcomes; platform metrics have limitations.
+14. **Pause on harm**: Stop a template or segment when complaints, blocks, security events or poor relevance exceed the agreed threshold.
+
+Template approval is a platform control, not legal certification or proof that every recipient expects the message.`,
+            practicalExamples: [
+              'An appointment form offers an optional WhatsApp reminder with stated timing and a separate email choice; withdrawal in either channel updates the CRM immediately.',
+              'A customer replies to a delivery update. Support answers the delivery question but does not treat the reply as consent to marketing.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Responsible WhatsApp communication is specific, expected, secure and reversible; template approval and high attention do not replace permission.',
+            keyPrinciples: ['Separate channel and purpose choices', 'Use only official supported integrations', 'Honour preferences, quiet time and withdrawal everywhere'],
+          },
+          actionTask: {
+            instruction: 'Prepare one controlled WhatsApp pilot:',
+            checklistItems: ['Purpose, market, official solution and accountable owners confirmed', 'Opt-in notice, channel choice, evidence and retention reviewed', 'Template category, variables, language and service rules verified', 'Security, accessibility, quiet hours and human support tested', 'Opt-out sync, complaint threshold, incident pause and review date configured'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '44.2': {
+          stageTitle: '44. Safe chat automation & permission-based SMS',
+          title: 'Automate simple messaging tasks without deceptive bots or urgency',
+          description: 'Build bounded flows with clear bot identity and human escalation, while using SMS only for consented, time-appropriate messages with transparent links and terms.',
+          learnContent: {
+            videoTitle: 'Masterclass: Safe WhatsApp automation and responsible SMS',
+            summaryText: 'Automation can route questions and deliver requested information, but it can also create wrong answers, inaccessible loops and unwanted pressure. SMS brevity does not justify hidden terms, artificial scarcity or tracking links that obscure the destination.',
+            bulletPoints: [
+              'Tell people when they are interacting with automation, what it can do and how to reach a person',
+              'Limit AI answers to reviewed knowledge, apply confidence and safety rules and prevent unsupported professional advice',
+              'Obtain channel- and purpose-specific SMS permission and identify the sender in every message where required',
+              'Use truthful deadlines, recognisable destinations and tested opt-out handling instead of manufactured click urgency',
+            ],
+            coreConcepts: [
+              { iconName: 'cpu', title: 'BOUNDED AUTOMATION', description: 'The bot handles defined low-risk tasks, logs decisions and hands off on uncertainty, distress, complaint, accessibility need or user request.', highlight: true },
+              { iconName: 'zap', title: 'RESPECTFUL SMS', description: 'A short message still identifies the sender, purpose, material terms, destination and withdrawal route without fake scarcity.' },
+            ],
+            resources: [
+              { title: 'Messaging Automation Safety Map', subtitle: 'Flows, knowledge, escalation, consent, testing and incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Governed Multi-Channel Inbox', subtitle: 'WhatsApp, SMS and email with roles, suppression and handover', type: 'tool', iconName: 'inbox', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Automate repeatable tasks while keeping people in control
+
+A bot should reduce friction in a defined task, not impersonate a person, pressure a sale or block access to support. SMS needs its own permission and operational controls.
+
+#### Safe flow design and operation
+
+1. **Choose a bounded use case**: Start with status, FAQ, requested resource, appointment selection or routing. Exclude emergencies and high-stakes professional decisions unless qualified oversight exists.
+2. **Disclose automation early**: State that the user is interacting with a bot, its scope, data use and human-contact route.
+3. **Minimise questions and data**: Request only information necessary for the task. Never use chat answers to infer sensitive traits for targeting.
+4. **Design a simple path**: Provide clear choices, back, repeat, correction and exit. Do not trap users in a loop or require marketing consent for support.
+5. **Ground AI responses**: Use maintained approved sources, citations where useful, versioning and owners. Define prohibited claims and confidence thresholds.
+6. **Escalate safely**: Transfer on uncertainty, repeated failure, complaint, distress, payment dispute, accessibility need or explicit request, with context and consent.
+7. **Protect credentials and transcripts**: Apply least privilege, encryption, retention, redaction, audit logs and incident procedures. Restrict transcript access.
+8. **Test across users and devices**: Include keyboard and screen-reader needs, language variations, typos, unexpected inputs, downtime and delivery duplication.
+9. **Separate SMS permission**: Document sender, purpose, frequency, charges where relevant and opt-out. Do not assume WhatsApp or email consent covers SMS.
+10. **Write transparent SMS**: Identify the business, state the useful action and material terms, use a trustworthy domain and avoid hidden redirects.
+11. **Use real urgency only**: Deadlines, stock and discounts must be accurate, visible at the destination and updated when circumstances change.
+12. **Make delivery idempotent**: Prevent duplicate sends, cap retries, handle delayed events and pause automatically during outages or data mismatch.
+13. **Coordinate channel pressure**: Avoid sending the same promotion by WhatsApp, SMS and email in quick succession unless the recipient explicitly chose it.
+14. **Monitor quality and harm**: Review resolution, handover, wrong answers, abandonment, complaints, opt-outs, duplicates, latency and downstream outcomes.
+15. **Retire safely**: Remove outdated answers and templates, revoke access, preserve necessary suppression records and document lessons.
+
+Fast answers are useful only when they are accurate, accessible and easy to leave.`,
+            practicalExamples: [
+              'A bot supplies a requested guide and offers support; it never recommends a product from inferred vulnerability and deletes unnecessary answers on schedule.',
+              'An SMS reminder names the business and appointment, uses the company domain and includes a tested opt-out; a delivery retry cannot create a duplicate.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Safe messaging automation is transparent, limited and escapable; speed and brevity never justify deception, pressure or removal of human support.',
+            keyPrinciples: ['Disclose the bot and its limits', 'Escalate uncertainty and sensitive cases', 'Treat SMS permission and suppression separately'],
+          },
+          actionTask: {
+            instruction: 'Build and test one bounded messaging flow:',
+            checklistItems: ['Use case, exclusions, bot disclosure and human handover defined', 'Data fields, knowledge sources, permissions and retention minimised', 'Correction, exit, accessibility and failure paths tested', 'SMS identity, consent, terms, domain and opt-out verified', 'Duplicate prevention, monitoring, stop thresholds and retirement owner assigned'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -7768,6 +7892,130 @@ Celem jest oczekiwany, bezpieczny i użyteczny e-mail, nie największa lista lub
             instruction: 'Przeprowadź responsible list-health review:',
             checklistItems: ['Sprawdzono message purposes, acquisition sources, notices i consent evidence', 'Przetestowano hard-bounce, complaint, unsubscribe i retry controls', 'Zdefiniowano inactivity windows i preference options per stream', 'Udokumentowano provider feedback, privacy limits i representative tests', 'Przypisano ramp limits, alerts, stop rule i next review'],
             toolboxCategory: 'email',
+          },
+        },
+      },
+    },
+    44: {
+      title: '44. Odpowiedzialna komunikacja WhatsApp i SMS',
+      subtitle: 'Zgoda per kanał, approved messaging, safe automation i szanująca obsługa',
+      description: 'Używaj WhatsApp i SMS tylko do oczekiwanej, użytecznej komunikacji z jasną zgodą, current platform compliance, secure data handling i łatwym opt-out — bez uniwersalnych open-rate lub sales guarantees.',
+      lessons: {
+        '44.1': {
+          stageTitle: '44. WhatsApp Business Platform i permission',
+          title: 'Skonfiguruj permission-aware komunikację WhatsApp',
+          description: 'Wybierz official business solution, zbieraj purpose-specific permission i transparentnie zarządzaj templates, service conversations oraz preferences.',
+          learnContent: {
+            videoTitle: 'Masterclass: Odpowiedzialny WhatsApp setup i consent',
+            summaryText: 'WhatsApp jest personal channel podlegającym platform rules, privacy law i direct-marketing requirements. Checkbox lub template approval sam nie dowodzi lawful informed permission, a żaden kanał nie gwarantuje open lub conversion rate.',
+            bulletPoints: [
+              'Wybierz Business App lub official Business Platform według support, scale, integration i governance needs',
+              'Zbieraj oddzielną, konkretną zgodę na WhatsApp purpose i frequency; nie łącz jej z email, SMS lub general terms',
+              'Używaj current approved template categories i service-window rules, sprawdzając official documentation przed startem',
+              'Przechowuj source, timestamp, notice version i preferences oraz respektuj opt-out we wszystkich connected systems',
+            ],
+            coreConcepts: [
+              { iconName: 'message-circle', title: 'EXPECTED MESSAGING', description: 'Odbiorca zna sendera, kanał, purpose i approximate frequency przed pierwszą wiadomością.', highlight: true },
+              { iconName: 'lock', title: 'VERIFIABLE CHOICE', description: 'Permission i withdrawal są zapisane, granular i równie łatwe jak signup; legal assessment pozostaje zależny od kontekstu.' },
+            ],
+            resources: [
+              { title: 'WhatsApp Permission & Operations Workbook', subtitle: 'Notices, templates, preferences, retention i incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Integracja WhatsApp Mara CRM', subtitle: 'Official account z governed access i consent records', type: 'tool', iconName: 'message-square', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Traktuj messaging jako zaproszony dostęp, nie gwarantowaną uwagę
+
+WhatsApp może wspierać reminders, service i opted-in marketing, ale setup zależy od rynku, purpose, roli biznesu i current platform terms. W razie potrzeby uzyskaj qualified legal advice.
+
+#### Odpowiedzialny WhatsApp lifecycle
+
+1. **Zdefiniuj jeden message purpose**: Rozdziel service updates, appointments, authentication i marketing. Określ, do czego kanał nie służy.
+2. **Wybierz official route**: Porównaj Business App i supported Business Platform providers. Bez browser automation, unofficial clients lub shared personal accounts.
+3. **Przypisz accountability**: Wyznacz owners dla templates, privacy, security, support, billing, incidents i platform changes.
+4. **Zbieraj informed permission**: Przed opt-in pokaż business identity, channel, purpose, content type, likely frequency, data use i withdrawal. WhatsApp pozostaje optional.
+5. **Weryfikuj bez dark patterns**: Confirmation może ograniczyć wrong numbers, ale unikaj preselected boxes, forced consent i uzależniania service od unrelated marketing.
+6. **Zapisuj evidence**: Przechowuj source, time, notice version, purpose i status z restricted access i retention schedule.
+7. **Przygotuj approved templates**: Używaj truthful category, variables i language; preview final message i review po platform policy changes.
+8. **Respektuj conversation rules**: Sprawdzaj current service-window i pricing conditions. Reply nie daje unlimited permission na unrelated promotion.
+9. **Chroń data w integrations**: Ogranicz fields, encrypt transport, scope tokens, rotate secrets, log access i oceń subprocessors oraz transfers.
+10. **Projektuj accessible messages**: Plain language, descriptive links i text alternatives dla essential audio/images. Nie opieraj znaczenia tylko na emoji lub colour.
+11. **Kontroluj frequency i timing**: Respektuj time zones, quiet hours i preferences. Frequency ma pasować do promised purpose, nie universal quota.
+12. **Ułatw stop**: Rozpoznawaj jasny opt-out, potwierdź suppression raz i zastosuj go w campaigns. Zapewnij human support dla mistakes.
+13. **Mierz balanced outcomes**: Analizuj delivery, replies, task completion, opt-outs, blocks, complaints, support burden i customer outcomes; platform metrics mają limits.
+14. **Pauzuj przy harm**: Zatrzymaj template lub segment po przekroczeniu thresholds complaints, blocks, security events lub poor relevance.
+
+Template approval jest kontrolą platformy, nie legal certification ani dowodem, że każdy odbiorca oczekuje message.`,
+            practicalExamples: [
+              'Appointment form oferuje optional WhatsApp reminder z timingiem i osobnym email choice; withdrawal aktualizuje CRM natychmiast.',
+              'Customer odpowiada na delivery update. Support rozwiązuje temat, ale nie traktuje reply jako marketing consent.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Odpowiedzialny WhatsApp jest specific, expected, secure i reversible; template approval i high attention nie zastępują permission.',
+            keyPrinciples: ['Rozdziel choices kanału i purpose', 'Używaj wyłącznie official supported integrations', 'Respektuj preferences, quiet time i withdrawal wszędzie'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj controlled WhatsApp pilot:',
+            checklistItems: ['Potwierdzono purpose, market, official solution i owners', 'Sprawdzono opt-in notice, channel choice, evidence i retention', 'Zweryfikowano template category, variables, language i service rules', 'Przetestowano security, accessibility, quiet hours i human support', 'Skonfigurowano opt-out sync, complaint threshold, incident pause i review date'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '44.2': {
+          stageTitle: '44. Safe chat automation i permission-based SMS',
+          title: 'Automatyzuj proste tasks bez deceptive botów lub urgency',
+          description: 'Buduj bounded flows z jasną bot identity i human escalation, a SMS używaj tylko dla consented, time-appropriate messages z transparent links i terms.',
+          learnContent: {
+            videoTitle: 'Masterclass: Safe WhatsApp automation i responsible SMS',
+            summaryText: 'Automation może route questions i dostarczać requested information, ale może też tworzyć wrong answers, inaccessible loops i unwanted pressure. Krótki SMS nie usprawiedliwia hidden terms, artificial scarcity ani links ukrywających destination.',
+            bulletPoints: [
+              'Informuj o automation, jej zakresie i sposobie kontaktu z człowiekiem',
+              'Ogranicz AI answers do reviewed knowledge, stosuj confidence i safety rules oraz blokuj unsupported professional advice',
+              'Uzyskaj channel- i purpose-specific SMS permission oraz identyfikuj sendera w każdej wiadomości, gdzie wymagane',
+              'Używaj truthful deadlines, recognisable destinations i tested opt-out zamiast manufactured click urgency',
+            ],
+            coreConcepts: [
+              { iconName: 'cpu', title: 'BOUNDED AUTOMATION', description: 'Bot obsługuje defined low-risk tasks, loguje decisions i przekazuje sprawę przy uncertainty, distress, complaint, accessibility need lub user request.', highlight: true },
+              { iconName: 'zap', title: 'RESPECTFUL SMS', description: 'Krótka wiadomość nadal identyfikuje sendera, purpose, material terms, destination i withdrawal route bez fake scarcity.' },
+            ],
+            resources: [
+              { title: 'Messaging Automation Safety Map', subtitle: 'Flows, knowledge, escalation, consent, testing i incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Governed Multi-Channel Inbox Mara CRM', subtitle: 'WhatsApp, SMS i email z roles, suppression i handover', type: 'tool', iconName: 'inbox', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Automatyzuj powtarzalne tasks, zachowując kontrolę użytkownika
+
+Bot ma ograniczać friction w defined task, nie udawać człowieka, naciskać na sale lub blokować support. SMS wymaga osobnej permission i operational controls.
+
+#### Safe flow design i operation
+
+1. **Wybierz bounded use case**: Zacznij od status, FAQ, requested resource, appointment selection lub routing. Wyklucz emergencies i high-stakes decisions bez oversight.
+2. **Disclose automation wcześnie**: Powiedz, że user rozmawia z botem, jaki ma scope, data use i human-contact route.
+3. **Minimalizuj questions i data**: Pytaj tylko o dane potrzebne do task. Nie inferuj sensitive traits z chat answers dla targeting.
+4. **Projektuj simple path**: Zapewnij clear choices, back, repeat, correction i exit. Nie zamykaj w loop i nie wymagaj marketing consent dla support.
+5. **Ground AI responses**: Używaj maintained approved sources, citations, versioning i owners. Określ prohibited claims i confidence thresholds.
+6. **Escalate safely**: Przekaż przy uncertainty, repeated failure, complaint, distress, payment dispute, accessibility need lub explicit request, z context i consent.
+7. **Chroń credentials i transcripts**: Least privilege, encryption, retention, redaction, audit logs i incidents. Ogranicz transcript access.
+8. **Testuj users i devices**: Uwzględnij keyboard, screen reader, languages, typos, unexpected input, downtime i duplicate delivery.
+9. **Rozdziel SMS permission**: Dokumentuj sender, purpose, frequency, charges i opt-out. WhatsApp lub email consent nie obejmuje automatycznie SMS.
+10. **Pisz transparent SMS**: Identyfikuj business, useful action i material terms, stosuj trustworthy domain i bez hidden redirects.
+11. **Używaj tylko real urgency**: Deadlines, stock i discounts muszą być dokładne, widoczne w destination i aktualizowane.
+12. **Idempotent delivery**: Zapobiegaj duplicates, limituj retries, obsługuj delayed events i automatycznie pauzuj podczas outages lub mismatch.
+13. **Koordynuj channel pressure**: Nie wysyłaj tej samej promotion przez WhatsApp, SMS i email w krótkim czasie bez explicit choice.
+14. **Monitoruj quality i harm**: Analizuj resolution, handover, wrong answers, abandonment, complaints, opt-outs, duplicates, latency i outcomes.
+15. **Retire safely**: Usuń outdated answers i templates, revoke access, zachowaj necessary suppression records i lessons.
+
+Fast answers są użyteczne tylko, gdy są accurate, accessible i easy to leave.`,
+            practicalExamples: [
+              'Bot dostarcza requested guide i oferuje support; nie rekomenduje produktu z inferred vulnerability i usuwa unnecessary answers zgodnie z retention.',
+              'SMS reminder podaje business i appointment, używa company domain i tested opt-out; retry nie może stworzyć duplicate.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Safe messaging automation jest transparent, limited i escapable; speed i brevity nie uzasadniają deception, pressure ani braku human support.',
+            keyPrinciples: ['Ujawnij bota i jego limits', 'Eskaluj uncertainty i sensitive cases', 'Zarządzaj SMS permission i suppression osobno'],
+          },
+          actionTask: {
+            instruction: 'Zbuduj i przetestuj bounded messaging flow:',
+            checklistItems: ['Zdefiniowano use case, exclusions, bot disclosure i human handover', 'Zminimalizowano data fields, knowledge sources, permissions i retention', 'Przetestowano correction, exit, accessibility i failure paths', 'Zweryfikowano SMS identity, consent, terms, domain i opt-out', 'Przypisano duplicate prevention, monitoring, stop thresholds i retirement owner'],
+            toolboxCategory: 'crm',
           },
         },
       },
