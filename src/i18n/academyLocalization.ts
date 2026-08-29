@@ -4672,6 +4672,147 @@ Scaling is successful only when additional spend continues to create suitable cu
         }
       }
     },
+    50: {
+      "title": "50. Responsible holding and corporate-structure planning",
+      "subtitle": "Suitability, tax modelling, governance, liability and transaction readiness",
+      "description": "Learn how to evaluate a multi-company structure with qualified legal and tax advisers—without universal tax rates, billionaire promises or claims of complete asset protection.",
+      "lessons": {
+        "50.1": {
+          "stageTitle": "50. Holding suitability and governance",
+          "title": "Evaluate a parent–subsidiary structure using current law and individual facts",
+          "description": "Understand possible participation relief, trade-tax interactions, distributions, exits, compliance costs and liability limits before deciding whether a holding is suitable.",
+          "learnContent": {
+            "videoTitle": "Masterclass: evidence-led holding assessment for digital businesses",
+            "summaryText": "A holding can support reinvestment, governance or a future transaction, but it is not mandatory for every successful business. A quoted effective rate such as 1.5% applies only to particular assumptions and can change with participation, income type, trade tax, costs, jurisdiction and later private distributions.",
+            "bulletPoints": [
+              "Map the owners, entities, activities, jurisdictions, cash flows and business purpose before choosing a structure",
+              "Model dividends and share disposals separately under current corporation- and trade-tax rules, including thresholds and exceptions",
+              "Compare tax timing with formation, accounting, banking, legal, audit and administration costs",
+              "Document governance, capital maintenance, related-party contracts, solvency, guarantees and residual liability"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "shield",
+                "title": "LIMITED—NOT ABSOLUTE—SEPARATION",
+                "description": "Separate entities may ring-fence some risk, but guarantees, misconduct, undercapitalisation, avoidance rules and insolvency claims can cross the boundary.",
+                "highlight": true
+              },
+              {
+                "iconName": "dollar-sign",
+                "title": "SCENARIO-BASED TAX MODEL",
+                "description": "Show assumptions, tax layers, timing, exceptions and private extraction instead of advertising one universal rate."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Holding suitability and adviser brief",
+                "subtitle": "Facts, objectives, scenarios, costs, risks and open legal questions",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM multi-company billing",
+                "subtitle": "Keep approved entities, invoices and access roles operationally separate",
+                "type": "tool",
+                "iconName": "settings",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Assess the structure before implementing it\n\nThis lesson is educational and is not legal or tax advice. Entity, tax and insolvency rules depend on jurisdiction and current facts. Obtain written advice from qualified professionals before formation, transfer, distribution or sale.\n\n#### A responsible assessment\n\n1. **Define the business purpose**: Record whether the goal is governance, reinvestment, investor readiness, succession or a potential exit—not tax reduction alone.\n2. **Map all relevant jurisdictions**: Residence, management location, permanent establishments, owners and assets can change the analysis.\n3. **Model the status quo**: Calculate current taxes, cash available, risks and compliance cost before comparing alternatives.\n4. **Separate income types**: Operating profit, dividends, capital gains, interest, rent and licence income can receive different treatment.\n5. **Verify participation rules**: Check current thresholds, holding dates, exclusions, trade-tax treatment and anti-abuse provisions. Do not multiply a five-percent add-back by one headline rate and call it universal.\n6. **Include private extraction**: Funds retained by a company are not the same as funds available privately; model later salary, dividend or liquidation taxation.\n7. **Quantify recurring cost**: Include formation, notary, accounts, returns, banking, payroll, contracts, valuations and professional review.\n8. **Design governance**: Document directors, approvals, conflicts, capital maintenance, related-party dealings and record retention.\n9. **Test liability boundaries**: Review guarantees, torts, director duties, tax liability, group financing and insolvency avoidance. No asset pool is untouchable.\n10. **Review financing and distributions**: Confirm solvency, distributable reserves, withholding, documentation and creditor protection before moving cash.\n11. **Plan transactions early—but proportionately**: A pre-existing structure may help some exits, while late transfers can create tax, valuation or consent issues. It is not an automatic deadline for every founder.\n12. **Obtain independent sign-off**: A tax adviser and corporate lawyer should confirm assumptions, documents, registrations and implementation sequence.\n13. **Reassess annually and before major events**: Ownership, law, profits and plans change.\n\nThe correct result may be no holding, a later holding or another structure entirely.",
+            "practicalExamples": [
+              "A profitable company models the tax timing benefit against two sets of annual accounts and decides to wait until retained earnings and an exit plan justify the cost.",
+              "A parent has received dividends, but a bank guarantee and an avoidable transfer create exposure; the structure did not make the assets immune."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "A holding is a fact-specific governance and investment choice, not a universal tax or asset-protection product.",
+            "keyPrinciples": [
+              "Use current law and written assumptions",
+              "Model the full lifecycle, including private extraction and costs",
+              "Treat liability separation as limited and maintain real governance"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a professional holding-suitability review:",
+            "checklistItems": [
+              "Mapped owners, jurisdictions, entities, activities, risks and objectives",
+              "Modelled income types, participation conditions, trade tax, extraction and costs",
+              "Reviewed governance, guarantees, solvency, creditor protection and exit scenarios",
+              "Obtained written tax and legal advice before implementation"
+            ],
+            "toolboxCategory": "settings"
+          }
+        },
+        "50.2": {
+          "stageTitle": "50. IP ownership, licensing and asset governance",
+          "title": "Structure IP ownership and licences without artificial profit shifting",
+          "description": "Identify, value, transfer and license intellectual property only where ownership, business substance, rights, pricing and creditor considerations support the arrangement.",
+          "learnContent": {
+            "videoTitle": "Masterclass: responsible IP governance and related-party licensing",
+            "summaryText": "A separate IP company may support central governance or licensing, but a transfer does not make assets unreachable and a royalty is not automatically deductible. Ownership, development functions, valuation, tax, insolvency, competition, privacy and contractual rights must be reviewed.",
+            "bulletPoints": [
+              "Create an IP inventory covering registrations, code, content, domains, data, licences, contributors and territorial rights",
+              "Confirm chain of title and third-party consents before assigning or licensing anything",
+              "Price related-party licences using documented functions, assets, risks and comparable evidence—not a desired tax result",
+              "Assess transfer taxes, hidden reserves, withholding, VAT, trade tax, anti-abuse, insolvency and cross-border rules"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "lock",
+                "title": "GOVERNED IP PORTFOLIO",
+                "description": "Rights, owners, licences, renewal dates, access and evidence are documented; separation is not described as absolute protection.",
+                "highlight": true
+              },
+              {
+                "iconName": "award",
+                "title": "SUBSTANCE AND SUCCESSION",
+                "description": "Foundations or family structures require a genuine purpose, governance, beneficiary, tax and control analysis; transfers are not automatically tax-free."
+              }
+            ],
+            "resources": [
+              {
+                "title": "IP inventory and related-party licence brief",
+                "subtitle": "Ownership, valuation, functions, rights, pricing, tax and approval evidence",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Corporate Asset Manager",
+                "subtitle": "Archive approved rights, contracts, evidence and renewal responsibilities",
+                "type": "tool",
+                "iconName": "shield",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Govern intellectual property before moving it\n\nThis lesson is educational and not legal, tax or valuation advice. Trademark registration does not cover every right, and changing the registered proprietor is only one part of a valid transfer.\n\n#### A controlled IP process\n\n1. **Inventory the assets**: List trademarks, applications, copyrights, software, databases, designs, patents, domains, trade secrets and inbound licences.\n2. **Verify chain of title**: Check employee, contractor, agency, open-source, stock-media and platform terms. Do not transfer rights the company does not own.\n3. **Define the business reason**: Central licensing, investment, sale readiness or brand governance must be more than a device to move taxable profit.\n4. **Choose the owner by function and control**: Consider who develops, enhances, maintains, protects and exploits the IP and who controls related risks.\n5. **Obtain a defensible valuation**: Document methods, forecasts, useful life, territory, comparables and uncertainty with specialist input where material.\n6. **Model transfer consequences**: A transfer may realise taxable value and trigger VAT, withholding, registration, financing or consent issues.\n7. **Draft the licence precisely**: Define rights, territory, exclusivity, term, quality control, improvements, data, sublicensing, termination and insolvency treatment.\n8. **Support arm's-length pricing**: Analyse functions, assets and risks; update evidence as the business changes. Domestic and cross-border rules may differ.\n9. **Maintain substance**: The legal owner must actually perform or control relevant functions and decisions; funding alone may not justify all returns.\n10. **Respect creditor and insolvency rules**: Transfers can be challenged, and security interests, guarantees or group conduct can affect separation.\n11. **Record registry changes correctly**: Follow the relevant office's evidence and signature requirements and keep the underlying assignment.\n12. **Protect data and secrets**: Control access, security, retention and lawful use separately from IP ownership.\n13. **Evaluate foundations independently**: Review control, beneficiaries, reserved powers, gift and inheritance tax, reporting and permanence. Never promise a tax-free generational transfer.\n14. **Approve and monitor**: Obtain board, tax, legal and valuation approvals; track renewals, royalties, breaches and annual pricing reviews.\n\nSometimes direct ownership by the operating company is simpler and safer.",
+            "practicalExamples": [
+              "A company discovers that contractor code was never assigned; it cures title before discussing an IP-company transfer.",
+              "A royalty benchmark no longer fits after development moves to the operating company, so the parties update functions, pricing and contracts."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "IP separation works only with real ownership, substance, defensible pricing, contracts and ongoing governance; it is not an invulnerable vault.",
+            "keyPrinciples": [
+              "Verify title and consents before transfer",
+              "Support related-party pricing with current evidence",
+              "Review tax, insolvency, data and registry consequences together"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare one IP-governance review:",
+            "checklistItems": [
+              "Completed inventory, chain-of-title and third-party-consent review",
+              "Documented business purpose, functions, control, valuation and tax scenarios",
+              "Drafted rights, pricing, quality, data, termination and insolvency terms",
+              "Obtained legal, tax and valuation approval before transfer or registration"
+            ],
+            "toolboxCategory": "settings"
+          }
+        }
+      }
+    },
   },
   pl: {
     1: {
@@ -9327,6 +9468,148 @@ Skalowanie ma sens tylko wtedy, gdy dodatkowy wydatek nadal tworzy wartość bez
               "Sprawdzono zgodę analityki, minimalizację, retencję i wyniki jakościowe"
             ],
             "toolboxCategory": "landingpage"
+          }
+        }
+      }
+    },
+
+    50: {
+      "title": "50. Odpowiedzialne planowanie holdingu i struktury spółek",
+      "subtitle": "Przydatność, model podatkowy, ład, odpowiedzialność i gotowość transakcyjna",
+      "description": "Dowiedz się, jak ocenić strukturę wielu spółek z wykwalifikowanym prawnikiem i doradcą podatkowym—bez uniwersalnych stawek, obietnic miliarderskiego bezpieczeństwa i pełnej ochrony majątku.",
+      "lessons": {
+        "50.1": {
+          "stageTitle": "50. Przydatność holdingu i ład",
+          "title": "Oceń strukturę matka–córka według aktualnego prawa i faktów",
+          "description": "Poznaj możliwe zwolnienia udziałowe, podatek handlowy, dywidendy, exit, koszty zgodności i granice odpowiedzialności przed decyzją.",
+          "learnContent": {
+            "videoTitle": "Masterclass: ocena holdingu oparta na dowodach",
+            "summaryText": "Holding może wspierać reinwestycję, ład lub transakcję, lecz nie jest obowiązkowy dla każdej firmy. Stawka typu 1,5% wynika z określonych założeń i zmienia się zależnie od udziału, rodzaju dochodu, podatku handlowego, kosztów, jurysdykcji i późniejszej wypłaty prywatnej.",
+            "bulletPoints": [
+              "Zmapuj właścicieli, spółki, działania, jurysdykcje, przepływy i cel gospodarczy",
+              "Osobno modeluj dywidendy i sprzedaż udziałów według aktualnych reguł oraz wyjątków",
+              "Porównaj odroczenie podatku z kosztami założenia, księgowości, banków, prawa i administracji",
+              "Dokumentuj ład, ochronę kapitału, umowy powiązane, wypłacalność, gwarancje i pozostałą odpowiedzialność"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "shield",
+                "title": "OGRANICZONA SEPARACJA",
+                "description": "Spółki mogą oddzielić część ryzyka, lecz gwarancje, naruszenia, niedokapitalizowanie, antypodatkowe i upadłościowe roszczenia mogą przekraczać granice.",
+                "highlight": true
+              },
+              {
+                "iconName": "dollar-sign",
+                "title": "MODEL PODATKOWY SCENARIUSZY",
+                "description": "Pokazuj założenia, warstwy, czas, wyjątki i wypłatę prywatną zamiast jednej uniwersalnej stawki."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Brief oceny przydatności holdingu",
+                "subtitle": "Fakty, cele, scenariusze, koszty, ryzyka i pytania prawne",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM multi-company billing",
+                "subtitle": "Oddzielaj zatwierdzone podmioty, faktury i role dostępu",
+                "type": "tool",
+                "iconName": "settings",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Oceń strukturę przed wdrożeniem\n\nLekcja ma charakter edukacyjny i nie stanowi porady prawnej ani podatkowej. Reguły zależą od jurysdykcji i aktualnych faktów. Przed założeniem, transferem, dywidendą lub sprzedażą uzyskaj pisemną poradę.\n\n#### Odpowiedzialna ocena\n\n1. **Określ cel gospodarczy**: Ład, reinwestycja, inwestorzy, sukcesja lub exit—nie sama redukcja podatku.\n2. **Zmapuj jurysdykcje**: Rezydencja, miejsce zarządu, zakłady, właściciele i aktywa zmieniają analizę.\n3. **Modeluj stan obecny**: Oblicz podatki, gotówkę, ryzyka i koszty zgodności.\n4. **Oddziel rodzaje dochodu**: Zysk operacyjny, dywidendy, zysk kapitałowy, odsetki, najem i licencje mogą być traktowane różnie.\n5. **Sprawdź reguły udziałowe**: Zweryfikuj progi, okresy, wyjątki, podatek handlowy i przepisy przeciw nadużyciom. Nie nazywaj jednego działania uniwersalną stawką.\n6. **Uwzględnij wypłatę prywatną**: Środki w spółce nie są prywatną gotówką; modeluj pensję, dywidendę i likwidację.\n7. **Policz koszty stałe**: Założenie, notariusz, księgi, deklaracje, banki, kadry, umowy, wyceny i doradztwo.\n8. **Zaprojektuj ład**: Dyrektorzy, zgody, konflikty, kapitał, transakcje powiązane i dokumenty.\n9. **Sprawdź granice odpowiedzialności**: Gwarancje, czyny niedozwolone, obowiązki zarządu, podatki, finansowanie i zaskarżanie czynności. Żaden majątek nie jest nietykalny.\n10. **Kontroluj finansowanie i wypłaty**: Potwierdź wypłacalność, rezerwy, podatek u źródła, dokumenty i ochronę wierzycieli.\n11. **Planuj transakcje proporcjonalnie**: Wcześniejsza struktura może pomóc, ale późny transfer może powodować podatki, wycenę i zgody. Nie ma automatycznego terminu dla każdego.\n12. **Uzyskaj niezależne zatwierdzenie**: Doradca podatkowy i prawnik potwierdzają założenia, dokumenty i kolejność.\n13. **Oceniaj co roku i przed ważnym zdarzeniem**.\n\nPrawidłowym wynikiem może być brak holdingu, holding później lub inna struktura.",
+            "practicalExamples": [
+              "Firma porównuje korzyść odroczenia z dwoma kompletami ksiąg i czeka, aż zyski zatrzymane oraz plan sprzedaży uzasadnią koszt.",
+              "Holding otrzymał dywidendę, lecz gwarancja bankowa i zaskarżalny transfer tworzą ekspozycję; aktywa nie stały się odporne."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Holding to indywidualna decyzja o ładzie i inwestycjach, nie uniwersalny produkt podatkowy lub ochronny.",
+            "keyPrinciples": [
+              "Używaj aktualnego prawa i pisemnych założeń",
+              "Modeluj cały cykl wraz z wypłatą i kosztami",
+              "Traktuj separację odpowiedzialności jako ograniczoną i utrzymuj realny ład"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj profesjonalną ocenę holdingu:",
+            "checklistItems": [
+              "Zmapowano właścicieli, jurysdykcje, podmioty, działania, ryzyka i cele",
+              "Zamodelowano dochody, warunki udziałowe, podatek handlowy, wypłatę i koszty",
+              "Sprawdzono ład, gwarancje, wypłacalność, wierzycieli i scenariusze exit",
+              "Uzyskano pisemną poradę podatkową i prawną przed wdrożeniem"
+            ],
+            "toolboxCategory": "settings"
+          }
+        },
+        "50.2": {
+          "stageTitle": "50. Własność IP, licencje i zarządzanie aktywami",
+          "title": "Strukturyzuj IP bez sztucznego przesuwania zysku",
+          "description": "Identyfikuj, wyceniaj, przenoś i licencjonuj IP tylko wtedy, gdy własność, cel gospodarczy, prawa, ceny i wierzyciele wspierają układ.",
+          "learnContent": {
+            "videoTitle": "Masterclass: odpowiedzialne zarządzanie IP i licencje powiązane",
+            "summaryText": "Osobna spółka IP może wspierać zarządzanie, lecz transfer nie czyni aktywów niedostępnymi, a opłata nie jest automatycznie kosztem. Trzeba sprawdzić własność, funkcje, wycenę, podatki, upadłość, konkurencję, prywatność i umowy.",
+            "bulletPoints": [
+              "Utwórz rejestr znaków, kodu, treści, domen, danych, licencji, twórców i praw terytorialnych",
+              "Potwierdź ciąg własności i zgody przed cesją lub licencją",
+              "Wyceniaj licencje powiązane przez funkcje, aktywa, ryzyka i porównania—nie oczekiwany podatek",
+              "Oceń opodatkowanie transferu, ukryte rezerwy, podatek u źródła, VAT, podatek handlowy, nadużycia i upadłość"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "lock",
+                "title": "ZARZĄDZANY PORTFEL IP",
+                "description": "Prawa, właściciele, licencje, odnowienia, dostęp i dowody są udokumentowane; separacja nie jest absolutną ochroną.",
+                "highlight": true
+              },
+              {
+                "iconName": "award",
+                "title": "SUBSTANCJA I SUKCESJA",
+                "description": "Fundacja wymaga realnego celu, ładu, beneficjentów, analizy podatku i kontroli; transfer nie jest automatycznie wolny od podatku."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Rejestr IP i brief licencji powiązanej",
+                "subtitle": "Własność, wycena, funkcje, prawa, ceny, podatki i dowody zgód",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Corporate Asset Manager",
+                "subtitle": "Archiwizuj zatwierdzone prawa, umowy, dowody i odnowienia",
+                "type": "tool",
+                "iconName": "shield",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Zarządzaj IP przed przeniesieniem\n\nLekcja jest edukacyjna, nie stanowi porady prawnej, podatkowej ani wyceny. Rejestracja znaku nie obejmuje każdego prawa, a zmiana właściciela w rejestrze to tylko część ważnego transferu.\n\n#### Kontrolowany proces IP\n\n1. **Zrób inwentaryzację**: Znaki, zgłoszenia, prawa autorskie, software, bazy, wzory, patenty, domeny, tajemnice i licencje wejściowe.\n2. **Sprawdź ciąg praw**: Umowy pracowników, wykonawców, agencji, open source, stock i platform. Nie przenoś praw, których spółka nie posiada.\n3. **Określ cel gospodarczy**: Centralne licencjonowanie, inwestycja, sprzedaż lub marka muszą być czymś więcej niż przesuwaniem zysku.\n4. **Wybierz właściciela według funkcji**: Rozważ, kto rozwija, ulepsza, utrzymuje, chroni i wykorzystuje IP oraz kontroluje ryzyko.\n5. **Uzyskaj obronną wycenę**: Udokumentuj metodę, prognozy, okres, terytorium, porównania i niepewność.\n6. **Modeluj transfer**: Może ujawnić wartość podatkową i wywołać VAT, podatek u źródła, rejestrację, finansowanie lub zgody.\n7. **Precyzyjnie napisz licencję**: Prawa, terytorium, wyłączność, czas, jakość, ulepszenia, dane, sublicencje, rozwiązanie i upadłość.\n8. **Uzasadnij cenę rynkową**: Analizuj funkcje, aktywa i ryzyka; aktualizuj dowody. Reguły krajowe i zagraniczne mogą się różnić.\n9. **Utrzymuj substancję**: Właściciel prawny rzeczywiście wykonuje lub kontroluje funkcje i decyzje; samo finansowanie może nie uzasadniać zwrotu.\n10. **Szanuj wierzycieli i upadłość**: Transfer może być zaskarżony, a zabezpieczenia, gwarancje i zachowanie grupy wpływają na separację.\n11. **Prawidłowo zmieniaj rejestry**: Spełnij wymogi dowodów i podpisów właściwego urzędu i zachowaj cesję.\n12. **Chroń dane i tajemnice**: Kontroluj dostęp, bezpieczeństwo, retencję i legalne użycie osobno od własności IP.\n13. **Niezależnie oceń fundację**: Kontrola, beneficjenci, zastrzeżone prawa, podatki od darowizn i spadków, raportowanie i trwałość. Nie obiecuj transferu bez podatku.\n14. **Zatwierdzaj i monitoruj**: Zarząd, podatki, prawo i wycena; śledź odnowienia, opłaty, naruszenia i coroczny przegląd cen.\n\nCzasem bezpośrednia własność w spółce operacyjnej jest prostsza i bezpieczniejsza.",
+            "practicalExamples": [
+              "Firma odkrywa, że kod wykonawcy nie został przeniesiony; naprawia tytuł przed transferem do spółki IP.",
+              "Benchmark opłaty nie pasuje po przeniesieniu rozwoju do spółki operacyjnej, więc aktualizowane są funkcje, ceny i umowy."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Separacja IP działa tylko z prawdziwą własnością, substancją, ceną, umowami i ładem; nie jest niezniszczalnym sejfem.",
+            "keyPrinciples": [
+              "Sprawdź tytuł i zgody przed transferem",
+              "Uzasadnij ceny powiązane aktualnymi dowodami",
+              "Łącznie oceń podatki, upadłość, dane i rejestry"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj przegląd zarządzania IP:",
+            "checklistItems": [
+              "Ukończono rejestr, ciąg praw i zgody stron trzecich",
+              "Udokumentowano cel, funkcje, kontrolę, wycenę i scenariusze podatkowe",
+              "Opracowano prawa, ceny, jakość, dane, rozwiązanie i upadłość",
+              "Uzyskano zgodę prawną, podatkową i wycenę przed transferem lub rejestracją"
+            ],
+            "toolboxCategory": "settings"
           }
         }
       }
