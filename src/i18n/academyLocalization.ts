@@ -8466,7 +8466,7 @@ Niższa cena kliknięcia nie zawsze jest lepsza. Liczy się właściwy, mierzaln
               'Dobieraj cele stawek na podstawie ekonomiki i jakości konwersji, a nie samego przychodu',
               'Dostarczaj prawdziwe teksty, obrazy i filmy z prawami do użycia, czytelne i odpowiednie dla różnych miejsc emisji',
               'Traktuj sygnały odbiorców jako wskazówki, nie deterministyczne targetowanie ani zgodę na wrażliwe profilowanie',
-              'Oddzielaj dane markowe od ni入emarkowych, gdy to możliwe, i badaj przyrost zamiast przypisywać każdą konwersję kampanii',
+              'Oddzielaj dane markowe od niemarkenowych, gdy to możliwe, i badaj przyrost zamiast przypisywać każdą konwersję kampanii',
             ],
             coreConcepts: [
               { iconName: 'cpu', title: 'NADZOROWANA AUTOMATYZACJA', description: 'System otrzymuje udokumentowane cele, czyste zdarzenia, ograniczony budżet i ludzki przegląd; zmiany są odwracalne.', highlight: true },
