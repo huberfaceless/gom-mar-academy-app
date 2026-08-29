@@ -6026,6 +6026,116 @@ A costly package does not create a large customer.`,
       },
     },
 
+    "66": {
+      "title": "66. M&A, Due Diligence & Buy-and-Build Strategies",
+      "subtitle": "Acquisitions, financial reviews, roll-up models and post-merger integration",
+      "description": "Explore inorganic growth through carefully selected acquisitions: assess targets, test synergy assumptions and combine businesses without treating valuation uplift as guaranteed.",
+      "lessons": {
+        "66.1": {
+          "stageTitle": "66. Deal Sourcing & Financial Reviews",
+          "title": "M&A Architecture: Deal Sourcing, Letters of Intent and Financial Due Diligence",
+          "description": "How to identify acquisition targets beyond public marketplaces, normalize earnings and structure an LOI with qualified legal, tax and financial support.",
+          "learnContent": {
+            "videoTitle": "Masterclass: M&A Deal Sourcing and Financial Due Diligence",
+            "summaryText": "Acquisitions can accelerate growth, but they also introduce material financial, legal and operational risk. Learn to approach sellers respectfully, validate quality of earnings and base decisions on evidence rather than headline numbers.",
+            "bulletPoints": [
+              "Off-market sourcing: build a relevant target list and contact owners transparently, without exploiting succession or growth pressures",
+              "EBITDA normalization: document owner compensation, related-party expenses, one-off items and recurring reinvestment needs",
+              "LOI design: clarify price mechanics, exclusivity, conditions, earn-outs and escrow with qualified advisers",
+              "Due-diligence matrix: coordinate commercial, financial, legal, tax, technology, privacy and cybersecurity reviews"
+            ],
+            "coreConcepts": [
+              {
+                "title": "OFF-MARKET TARGETS",
+                "description": "Direct outreach may broaden the pipeline, but price and process quality still depend on competition, fit and seller expectations."
+              },
+              {
+                "title": "QUALITY OF EARNINGS",
+                "description": "Reconcile reported profit to sustainable cash generation and support every adjustment with evidence."
+              }
+            ],
+            "resources": [
+              {
+                "title": "M&A Due Diligence Master Checklist",
+                "subtitle": "150 review prompts for acquisition analysis"
+              },
+              {
+                "title": "Mara CRM Deal Pipeline",
+                "subtitle": "Track acquisition candidates, permissions and conversations in the CRM"
+              }
+            ],
+            "fullArticleGuide": "### A disciplined acquisition process\n\nInorganic growth can complement organic growth, but speed alone does not make a transaction attractive. Test strategic fit, downside exposure, financing capacity and integration readiness before committing.\n\n#### A four-stage acquisition cycle\n\n1. **Target profile:** Define strategic fit, acceptable economics, disqualifying risks and the evidence required to proceed.\n2. **Initial contact:** Explain who you are, why the business may fit and that the conversation is exploratory and confidential.\n3. **Due diligence:** Use controlled access and data minimization to review financial, tax, legal, customer, people, technology and privacy matters. Do not request or export personal data without a valid purpose, safeguards and professional guidance.\n4. **Signing and closing:** Align the purchase agreement, financing, approvals, conditions and transition plan. Price structure, earn-outs and escrow should reflect the specific deal and be reviewed by qualified legal and tax professionals."
+          },
+          "understandContent": {
+            "coreTakeaway": "Value is created through disciplined selection, evidence-based pricing and executable integration—not through a universal EBITDA multiple.",
+            "keyPrinciples": [
+              "Size and structure earn-outs according to measurable outcomes, controllability, accounting definitions and applicable law; no fixed percentage suits every deal",
+              "Assess customer concentration by contract quality, churn, margins and resilience; use thresholds appropriate to the business rather than a universal limit"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create your acquisition profile:",
+            "checklistItems": [
+              "Documented strategic, financial and risk criteria for acquisition candidates",
+              "Researched an initial list of ten potential targets using lawful sources",
+              "Prepared an adviser-reviewed NDA and a secure process for sharing confidential information"
+            ]
+          }
+        },
+        "66.2": {
+          "stageTitle": "66. Roll-Ups & Post-Merger Synergies",
+          "title": "The Roll-Up Model: Valuation Effects and Centralized Shared Services",
+          "description": "How to evaluate a multi-acquisition strategy, quantify synergies and integration costs, and build a group without assuming a future sale multiple.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Roll-Up Strategies and Post-Merger Value Creation",
+            "summaryText": "Larger, more diversified companies may sometimes attract different valuations, but size does not automatically create value. Model acquisition economics, governance, integration capacity and downside scenarios before combining businesses.",
+            "bulletPoints": [
+              "Valuation effects: test whether scale, diversification and governance justify a different multiple after debt, dilution and integration costs",
+              "Shared-services hub: evaluate which finance, people, IT, legal and procurement functions genuinely benefit from centralization",
+              "Cross-selling: validate customer relevance, permissions, brand fit and delivery capacity before launching group-wide offers",
+              "Cultural integration: involve leaders and employees early, retain critical knowledge and monitor unwanted attrition"
+            ],
+            "coreConcepts": [
+              {
+                "title": "VALUATION EFFECTS",
+                "description": "Any uplift depends on durable earnings quality, growth, risk, governance and market conditions; aggregation alone is insufficient."
+              },
+              {
+                "title": "SHARED SERVICES",
+                "description": "Centralization can reduce duplication, but savings must be measured net of migration, controls and service-quality costs."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Roll-Up Synergy Calculator & Multiple Matrix",
+                "subtitle": "Scenario model for portfolio groups"
+              },
+              {
+                "title": "Mara CRM Multi-Brand Suite",
+                "subtitle": "Coordinate multiple brands from a central workspace"
+              }
+            ],
+            "fullArticleGuide": "### Designing a resilient roll-up\n\nA roll-up succeeds only when the combined operating model produces better customer outcomes and sustainable cash flow after acquisition, financing and integration costs.\n\n#### A risk-adjusted 100-day framework\n\n- **Days 1–30:** Stabilize operations, confirm governance and reporting, protect access and data, and validate the integration thesis.\n- **Days 31–60:** Pilot only system changes with clear owners, controls, migration plans and measurable benefits.\n- **Days 61–100:** Test cross-selling with appropriate customer permissions and brand safeguards before scaling.\n\nSequence and timing should reflect transaction complexity, employee consultation duties, contracts, regulation and operational risk."
+          },
+          "understandContent": {
+            "coreTakeaway": "A roll-up creates value only when acquisition discipline, governance and integration improve sustainable performance; no timeline or eight-figure outcome is assured.",
+            "keyPrinciples": [
+              "Centralize functions where controls and service levels improve, while preserving customer-facing brand strengths",
+              "Use fair, transparent retention plans for genuinely critical roles and align them with local employment and tax rules"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Plan the shared-services architecture for your portfolio:",
+            "checklistItems": [
+              "Defined a secure CRM, identity-access and billing concept for multiple brands",
+              "Drafted a permission-aware cross-selling catalog with owners and capacity checks",
+              "Created a risk-adjusted 100-day integration plan with metrics, decision gates and accountable owners"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -12039,6 +12149,116 @@ Droga paczka nie tworzy dużego klienta.`,
           },
         },
       },
+    },
+
+    "66": {
+      "title": "66. M&A, due diligence i strategie buy-and-build",
+      "subtitle": "Przejęcia, audyty finansowe, modele roll-up i integracja po transakcji",
+      "description": "Poznaj wzrost nieorganiczny poprzez starannie wybrane przejęcia: oceniaj cele, weryfikuj założenia dotyczące synergii i łącz firmy bez traktowania wzrostu wyceny jako gwarancji.",
+      "lessons": {
+        "66.1": {
+          "stageTitle": "66. Pozyskiwanie transakcji i audyty finansowe",
+          "title": "Architektura M&A: sourcing, list intencyjny i finansowe due diligence",
+          "description": "Jak identyfikować cele przejęcia poza publicznymi platformami, normalizować wyniki oraz przygotować LOI przy wsparciu wykwalifikowanych doradców prawnych, podatkowych i finansowych.",
+          "learnContent": {
+            "videoTitle": "Masterclass: sourcing transakcji M&A i finansowe due diligence",
+            "summaryText": "Przejęcia mogą przyspieszyć rozwój, lecz niosą istotne ryzyko finansowe, prawne i operacyjne. Naucz się kontaktować ze sprzedającymi z szacunkiem, oceniać jakość zysków i opierać decyzje na dowodach.",
+            "bulletPoints": [
+              "Sourcing off-market: zbuduj trafną listę celów i kontaktuj się z właścicielami przejrzyście, bez wykorzystywania presji sukcesyjnej lub rozwojowej",
+              "Normalizacja EBITDA: udokumentuj wynagrodzenie właścicieli, wydatki podmiotów powiązanych, zdarzenia jednorazowe i potrzeby inwestycyjne",
+              "Konstrukcja LOI: ustal mechanizm ceny, wyłączność, warunki, earn-out i escrow z pomocą wykwalifikowanych doradców",
+              "Macierz due diligence: skoordynuj analizę komercyjną, finansową, prawną, podatkową, technologiczną, prywatności i cyberbezpieczeństwa"
+            ],
+            "coreConcepts": [
+              {
+                "title": "CELE OFF-MARKET",
+                "description": "Bezpośredni kontakt może poszerzyć pipeline, ale cena i jakość procesu nadal zależą od konkurencji, dopasowania i oczekiwań sprzedającego."
+              },
+              {
+                "title": "JAKOŚĆ ZYSKÓW",
+                "description": "Uzgodnij raportowany wynik z trwałym przepływem gotówki i poprzyj każdą korektę dokumentacją."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Główna checklista due diligence M&A",
+                "subtitle": "150 punktów kontrolnych do analizy przejęcia"
+              },
+              {
+                "title": "Pipeline transakcji w Mara CRM",
+                "subtitle": "Śledź kandydatów, uprawnienia i rozmowy akwizycyjne w CRM"
+              }
+            ],
+            "fullArticleGuide": "### Zdyscyplinowany proces przejęcia\n\nWzrost nieorganiczny może uzupełniać rozwój organiczny, ale sama szybkość nie czyni transakcji atrakcyjną. Przed zobowiązaniem zbadaj dopasowanie strategiczne, ryzyka, zdolność finansowania i gotowość integracyjną.\n\n#### Cztery etapy procesu akwizycyjnego\n\n1. **Profil celu:** Określ dopasowanie, akceptowalną ekonomię, ryzyka wykluczające i wymagane dowody.\n2. **Pierwszy kontakt:** Wyjaśnij, kim jesteś, dlaczego firma może pasować i że rozmowa jest wstępna oraz poufna.\n3. **Due diligence:** Stosuj kontrolowany dostęp i minimalizację danych. Nie żądaj ani nie eksportuj danych osobowych bez uzasadnionego celu, zabezpieczeń i profesjonalnej konsultacji.\n4. **Podpisanie i zamknięcie:** Uzgodnij umowę, finansowanie, zgody, warunki i plan przejścia. Cenę, earn-out i escrow powinni zweryfikować wykwalifikowani doradcy prawni i podatkowi."
+          },
+          "understandContent": {
+            "coreTakeaway": "Wartość powstaje dzięki zdyscyplinowanej selekcji, wycenie opartej na dowodach i wykonalnej integracji, a nie dzięki uniwersalnemu mnożnikowi EBITDA.",
+            "keyPrinciples": [
+              "Dopasuj earn-out do mierzalnych wyników, kontroli stron, definicji księgowych i prawa; jeden stały procent nie pasuje do każdej transakcji",
+              "Oceniaj koncentrację klientów przez jakość umów, churn, marże i odporność; stosuj progi właściwe dla danej firmy"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz swój profil akwizycyjny:",
+            "checklistItems": [
+              "Udokumentowano strategiczne, finansowe i ryzykowe kryteria celów przejęcia",
+              "Zbadano wstępną listę dziesięciu potencjalnych celów z legalnych źródeł",
+              "Przygotowano NDA zweryfikowane przez doradcę oraz bezpieczny proces udostępniania informacji poufnych"
+            ]
+          }
+        },
+        "66.2": {
+          "stageTitle": "66. Roll-up i synergie po połączeniu",
+          "title": "Model roll-up: efekty wyceny i scentralizowane usługi wspólne",
+          "description": "Jak ocenić strategię wielu przejęć, policzyć synergie i koszty integracji oraz budować grupę bez zakładania przyszłego mnożnika sprzedaży.",
+          "learnContent": {
+            "videoTitle": "Masterclass: strategie roll-up i tworzenie wartości po transakcji",
+            "summaryText": "Większe i bardziej zdywersyfikowane firmy mogą czasem uzyskiwać inne wyceny, ale skala nie tworzy wartości automatycznie. Modeluj ekonomikę przejęć, ład, zdolność integracji i scenariusze spadkowe.",
+            "bulletPoints": [
+              "Efekty wyceny: sprawdź, czy skala, dywersyfikacja i ład uzasadniają inny mnożnik po uwzględnieniu długu, rozwodnienia i kosztów integracji",
+              "Centrum usług wspólnych: oceń, które funkcje finansowe, HR, IT, prawne i zakupowe rzeczywiście zyskują na centralizacji",
+              "Cross-selling: przed wdrożeniem ofert zweryfikuj potrzeby klientów, zgody, dopasowanie marki i zdolność realizacji",
+              "Integracja kulturowa: wcześnie angażuj liderów i pracowników, chroń kluczową wiedzę i monitoruj niepożądaną rotację"
+            ],
+            "coreConcepts": [
+              {
+                "title": "EFEKTY WYCENY",
+                "description": "Ewentualny wzrost zależy od trwałej jakości zysków, wzrostu, ryzyka, ładu i warunków rynkowych; samo połączenie nie wystarczy."
+              },
+              {
+                "title": "USŁUGI WSPÓLNE",
+                "description": "Centralizacja może ograniczyć duplikację, lecz oszczędności trzeba liczyć po kosztach migracji, kontroli i jakości usług."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Kalkulator synergii roll-up i macierz mnożników",
+                "subtitle": "Model scenariuszowy dla grup portfelowych"
+              },
+              {
+                "title": "Mara CRM Multi-Brand Suite",
+                "subtitle": "Koordynuj wiele marek z centralnej przestrzeni roboczej"
+              }
+            ],
+            "fullArticleGuide": "### Projektowanie odpornego roll-upu\n\nRoll-up odnosi sukces tylko wtedy, gdy połączony model operacyjny zapewnia lepsze wyniki klientów i trwałe przepływy pieniężne po kosztach przejęć, finansowania i integracji.\n\n#### Plan pierwszych 100 dni skorygowany o ryzyko\n\n- **Dni 1–30:** Ustabilizuj działalność, potwierdź ład i raportowanie, zabezpiecz dostęp oraz dane i zweryfikuj tezę integracyjną.\n- **Dni 31–60:** Pilotażowo wdrażaj tylko zmiany z właścicielami, kontrolami, planem migracji i mierzalnymi korzyściami.\n- **Dni 61–100:** Przetestuj cross-selling z odpowiednimi zgodami klientów i ochroną marek, zanim zwiększysz skalę.\n\nKolejność i terminy powinny uwzględniać złożoność transakcji, konsultacje pracownicze, umowy, regulacje i ryzyko operacyjne."
+          },
+          "understandContent": {
+            "coreTakeaway": "Roll-up tworzy wartość tylko wtedy, gdy dyscyplina akwizycyjna, ład i integracja poprawiają trwałe wyniki; żaden termin ani ośmiocyfrowy rezultat nie jest gwarantowany.",
+            "keyPrinciples": [
+              "Centralizuj funkcje tam, gdzie poprawiają się kontrole i poziom usług, zachowując mocne strony marek w kontakcie z klientem",
+              "Stosuj uczciwe i przejrzyste plany retencyjne dla kluczowych ról, zgodne z lokalnym prawem pracy i podatkowym"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zaplanuj architekturę usług wspólnych dla swojego portfela:",
+            "checklistItems": [
+              "Zdefiniowano bezpieczną koncepcję CRM, zarządzania tożsamością i dostępem oraz rozliczeń dla wielu marek",
+              "Przygotowano katalog cross-sellingu uwzględniający zgody, właścicieli i możliwości realizacji",
+              "Utworzono plan integracji na 100 dni z metrykami, bramkami decyzyjnymi i odpowiedzialnymi osobami"
+            ]
+          }
+        }
+      }
     },
 
   },
