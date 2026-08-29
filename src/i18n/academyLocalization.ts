@@ -5206,6 +5206,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    56: {
+      title: '56. Responsible international expansion and multi-currency commerce',
+      subtitle: 'Market validation, inclusive localisation, cross-border payments, tax and operational readiness',
+      description: 'Enter new countries through evidence-led research, accurate localisation and compliant payment design—without cultural stereotypes, cloned voices without consent, fabricated testimonials or assumptions that a provider removes every tax duty.',
+      lessons: {
+        '56.1': {
+          stageTitle: '56. Market validation and localisation',
+          title: 'Localise products and funnels without stereotypes or deceptive adaptation',
+          description: 'Research language, regulation, accessibility, customer needs and operating capacity before launching in a new market.',
+          learnContent: {
+            videoTitle: 'Masterclass: responsible market entry and localisation',
+            summaryText: 'Translation is only one part of localisation. A market launch also requires product fit, legal review, support capacity and direct user research. Country-level generalisations do not reliably predict individual behaviour, and a larger addressable population does not guarantee demand or revenue.',
+            bulletPoints: [
+              'Validate demand, competition, acquisition cost, support capacity and regulatory feasibility with a limited pilot',
+              'Use local researchers and representative users instead of national stereotypes',
+              'Obtain explicit rights for testimonials, translations, dubbing, likeness and voice use',
+              'Display language, price, currency, taxes and material conditions clearly before purchase'
+            ],
+            coreConcepts: [
+              { iconName: 'globe', title: 'EVIDENCE-LED LOCALISATION', description: 'Language, examples, accessibility and trust information come from research and testing.', highlight: true },
+              { iconName: 'dollar-sign', title: 'FAIR LOCAL PRICING', description: 'Prices are lawful, transparent and reviewed for customer impact rather than hidden discrimination.' }
+            ],
+            resources: [
+              { title: 'International market-entry workbook', subtitle: 'Demand, law, language, accessibility, operations and stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM locale selector', subtitle: 'Approved language, currency and consent variants', type: 'tool', iconName: 'globe', actionUrl: 'landingpage' }
+            ],
+            fullArticleGuide: '### A controlled international rollout\n\n1. **Define the hypothesis**: audience, problem, offer, channel, price, service model and evidence required to continue.\n2. **Screen feasibility**: product restrictions, consumer law, privacy, advertising, accessibility, sanctions, export controls, employment, entity and licensing needs.\n3. **Research with people, not stereotypes**: interviews, usability tests, search behaviour and local experts should cover diverse users within the market.\n4. **Localise the full journey**: product, landing page, checkout, transactional email, support, cancellation, refunds, policies and error messages.\n5. **Use qualified language review**: combine translators, subject experts and in-context QA; machine output is a draft, not proof of accuracy.\n6. **Protect identity rights**: use a real person’s voice, image or testimonial only with specific permission covering purpose, territory, duration and synthetic use. Label synthetic media where required or useful.\n7. **Keep evidence authentic**: never replace a local testimonial with a fabricated international one. Translate genuine claims accurately and disclose material relationships.\n8. **Design accessible experiences**: reading level, captions, keyboard use, contrast, formats, local scripts and support alternatives.\n9. **Price transparently**: purchasing-power or regional pricing may have tax, consumer, competition and fairness implications. State the charged currency, taxes, renewal and conversion basis before payment.\n10. **Plan operations**: support language, time zone, incidents, refunds, fulfilment, vendors and escalation must work before scale.\n11. **Pilot with stop rules**: cap spend and volume; track conversion with uncertainty alongside refunds, complaints, accessibility and service quality.\n12. **Review data transfers**: lawful basis, notices, processor terms, transfer mechanism, retention and rights handling.\n13. **Scale only validated markets**: the best first country depends on fit and capability, not a universal tier list.',
+            practicalExamples: [
+              'A team tests one country with twenty moderated usability sessions and revises cancellation copy before advertising.',
+              'A dubbed video uses documented speaker consent, clear synthetic-media disclosure and a native-language accuracy review.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Responsible localisation is a product, legal and operational process grounded in local evidence—not a translation shortcut.',
+            keyPrinciples: ['Avoid cultural and national stereotypes', 'Never fabricate or repurpose identity without permission', 'Test demand and harm before scaling'],
+          },
+          actionTask: {
+            instruction: 'Prepare a market-entry pilot:',
+            checklistItems: ['Demand, competition, regulation and support capacity assessed', 'Language, accessibility and local-user QA planned', 'Pricing, testimonial and synthetic-media rights documented', 'Pilot metrics, budget limits and stop rules approved'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '56.2': {
+          stageTitle: '56. Cross-border payments and tax operations',
+          title: 'Design a global checkout with accountable tax and payment controls',
+          description: 'Compare payment service providers and merchant-of-record models while retaining professional oversight of contracts, tax, consumer duties and reconciliation.',
+          learnContent: {
+            videoTitle: 'Masterclass: cross-border checkout, tax and merchant-of-record review',
+            summaryText: 'A merchant of record may contract with the customer and handle specified indirect-tax, billing, refund and chargeback tasks, but scope varies. The seller can retain income-tax, accounting, product, privacy, consumer, sanctions and contractual obligations, so written advice and contract review remain necessary.',
+            bulletPoints: [
+              'Map who is seller of record, merchant of record, processor, controller, processor and refund owner',
+              'Validate VAT, GST and sales-tax treatment by product, customer status, location and evidence',
+              'Offer relevant payment methods after testing cost, failure, fraud, accessibility, refunds and support',
+              'Reconcile orders, tax, fees, FX, payouts, refunds and disputes to the ledger'
+            ],
+            coreConcepts: [
+              { iconName: 'credit-card', title: 'DEFINED RESPONSIBILITY', description: 'Contracts and process maps show what the provider handles and what remains with the business.', highlight: true },
+              { iconName: 'repeat', title: 'LOCAL PAYMENT CONTROLS', description: 'Each method has eligibility, disclosure, authentication, refund and reconciliation rules.' }
+            ],
+            resources: [
+              { title: 'Payment provider and MoR assessment workbook', subtitle: 'Scope, countries, tax, fees, data, reserves and exit plan', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM multi-currency checkout controls', subtitle: 'Approved gateways, currencies, tax evidence and reconciliation', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Build a controlled cross-border checkout\n\n1. **Map the commercial chain**: customer contract, invoice issuer, seller, MoR, processor, acquirer, platform and payout recipient.\n2. **Obtain tax advice**: analyse product classification, place-of-supply, registrations, permanent establishment, income tax, withholding, customs and reporting.\n3. **Review the MoR contract**: countries, products, prohibited activities, tax scope, reserves, refunds, chargebacks, data roles, suspension, indemnities and termination migration.\n4. **Determine customer location**: use lawful, reliable evidence and handle conflicts; Geo-IP alone may be inaccurate and should not silently determine tax or price.\n5. **Validate B2B status carefully**: a VAT number check is evidence, not complete proof of reverse-charge eligibility. Retain validation and other required facts.\n6. **Display total price clearly**: currency, tax inclusion, FX, recurring schedule, trial, renewal, cancellation and refund terms before confirmation.\n7. **Select payment methods by evidence**: acceptance, cost, settlement, failure, fraud, accessibility and customer support differ by country and provider.\n8. **Apply proportionate authentication**: use applicable strong-customer-authentication and fraud controls without claiming that 3-D Secure prevents every chargeback.\n9. **Protect payment data**: minimise PCI scope, tokenize data, restrict access, secure webhooks and never log credentials or full payment details.\n10. **Design refunds and disputes**: ownership, deadlines, evidence, customer contact, chargeback monitoring and fair treatment.\n11. **Manage FX and treasury risk**: disclose conversion, compare spreads and fees, approve accounts, set access controls and assess provider and counterparty risk.\n12. **Reconcile daily**: order, invoice, tax, processor fee, FX, payout, refund and dispute must connect to accounting records.\n13. **Test failures**: duplicate webhooks, declined payments, delayed confirmation, tax-service outage, provider suspension and migration.\n14. **Review continuously**: laws, provider scope and payment-method rules change; revalidate material assumptions.',
+            practicalExamples: [
+              'A VAT number validates, but customer and transaction facts do not support the intended treatment; the order enters tax review.',
+              'A local payment method improves completion in a measured pilot but creates refund delays, so support and settlement controls are adjusted.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Global checkout simplicity depends on clearly allocated responsibility, accurate disclosure, tax review and reliable reconciliation.',
+            keyPrinciples: ['A provider does not eliminate every seller obligation', 'Geo-IP and VAT validation are inputs, not automatic legal conclusions', 'Measure payment outcomes without guaranteed conversion lifts'],
+          },
+          actionTask: {
+            instruction: 'Prepare a controlled cross-border checkout:',
+            checklistItems: ['Commercial roles, contracts and remaining obligations mapped', 'Tax, location and B2B evidence rules reviewed', 'Price, renewal, refund and payment disclosures tested', 'Security, webhooks, reconciliation, disputes and provider-exit plan approved'],
+            toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -10396,6 +10478,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj odpowiedzialny plan wkładu:',
             checklistItems: ['Udokumentowano cel, społeczności i dowody', 'Przejrzano opcje, ryzyka, safeguarding i konflikty', 'Opisano ład, ocenę, finansowanie i sukcesję', 'Sprawdzono twierdzenia o certyfikacie i członkostwie'],
             toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+
+    56: {
+      title: '56. Odpowiedzialna ekspansja międzynarodowa i sprzedaż wielowalutowa',
+      subtitle: 'Walidacja rynku, dostępna lokalizacja, płatności transgraniczne, podatki i operacje',
+      description: 'Wchodź do nowych krajów przez badania, dokładną lokalizację i zgodny checkout—bez stereotypów, klonowania głosu bez zgody, fałszywych opinii i założenia, że dostawca usuwa wszystkie obowiązki podatkowe.',
+      lessons: {
+        '56.1': {
+          stageTitle: '56. Walidacja rynku i lokalizacja',
+          title: 'Lokalizuj produkt bez stereotypów i zwodniczych adaptacji',
+          description: 'Zbadaj język, prawo, dostępność, potrzeby i zdolność operacyjną przed wejściem na rynek.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialne wejście na rynek i lokalizacja',
+            summaryText: 'Tłumaczenie jest tylko częścią lokalizacji. Launch wymaga product-market fit, prawa, wsparcia i badań użytkowników. Uogólnienia krajowe nie przewidują osoby, a większa populacja nie gwarantuje popytu ani przychodu.',
+            bulletPoints: [
+              'Waliduj popyt, konkurencję, CAC, wsparcie i wykonalność prawną ograniczonym pilotażem',
+              'Używaj lokalnych badaczy i reprezentatywnych użytkowników zamiast stereotypów',
+              'Uzyskaj prawa do opinii, tłumaczeń, dubbingu, wizerunku i głosu',
+              'Przed zakupem jasno pokazuj język, cenę, walutę, podatki i istotne warunki'
+            ],
+            coreConcepts: [
+              { iconName: 'globe', title: 'LOKALIZACJA OPARTA NA DOWODACH', description: 'Język, przykłady, dostępność i zaufanie wynikają z badań i testów.', highlight: true },
+              { iconName: 'dollar-sign', title: 'UCZCIWA CENA LOKALNA', description: 'Ceny są legalne, przejrzyste i oceniane pod kątem wpływu na klienta.' }
+            ],
+            resources: [
+              { title: 'Zeszyt wejścia na rynek międzynarodowy', subtitle: 'Popyt, prawo, język, dostępność, operacje i stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Selektor lokalizacji Mara CRM', subtitle: 'Zatwierdzone języki, waluty i warianty zgody', type: 'tool', iconName: 'globe', actionUrl: 'landingpage' }
+            ],
+            fullArticleGuide: '### Kontrolowany rollout międzynarodowy\n\n1. **Określ hipotezę**: odbiorca, problem, oferta, kanał, cena, obsługa i dowody kontynuacji.\n2. **Sprawdź wykonalność**: ograniczenia produktu, konsument, prywatność, reklama, dostępność, sankcje, eksport, zatrudnienie, podmiot i licencje.\n3. **Badaj ludzi, nie stereotypy**: wywiady, usability, wyszukiwanie i lokalni eksperci obejmują różnorodnych użytkowników.\n4. **Lokalizuj całą drogę**: produkt, landing page, checkout, e-mail transakcyjny, wsparcie, anulowanie, zwroty, polityki i błędy.\n5. **Stosuj kwalifikowany przegląd**: tłumacz, ekspert i QA w kontekście; wynik maszyny jest szkicem.\n6. **Chroń prawa osobiste**: głos, wizerunek lub opinię używaj za szczegółową zgodą obejmującą syntetyczne zastosowanie. Oznaczaj syntetyczne media.\n7. **Zachowaj autentyczność**: nie zastępuj lokalnej opinii fikcyjną zagraniczną. Dokładnie tłumacz prawdziwe twierdzenia i ujawniaj relacje.\n8. **Projektuj dostępnie**: poziom języka, napisy, klawiatura, kontrast, formaty, skrypty i alternatywy wsparcia.\n9. **Przejrzyście ustalaj ceny**: regionalne ceny mogą mieć skutki prawne i fairness. Pokaż walutę, podatki, odnowienie i kurs przed płatnością.\n10. **Planuj operacje**: język wsparcia, strefa, incydenty, zwroty, realizacja, dostawcy i eskalacja.\n11. **Pilotuj ze stop rules**: ogranicz budżet i wolumen; mierz konwersję z niepewnością oraz zwroty, skargi, dostępność i jakość.\n12. **Przejrzyj transfer danych**: podstawa, informacje, procesorzy, mechanizm, retencja i prawa.\n13. **Skaluj tylko walidację**: pierwszy kraj wynika z dopasowania i zdolności, nie uniwersalnego tieru.',
+            practicalExamples: [
+              'Zespół testuje jeden kraj w moderowanych sesjach i poprawia anulowanie przed reklamą.',
+              'Dubbing ma zgodę mówcy, informację o syntetycznym medium i QA native speakera.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Odpowiedzialna lokalizacja to proces produktu, prawa i operacji oparty na lokalnych dowodach.',
+            keyPrinciples: ['Unikaj stereotypów kulturowych i narodowych', 'Nie fabrykuj ani nie używaj tożsamości bez zgody', 'Testuj popyt i szkody przed skalą'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj pilotaż wejścia na rynek:',
+            checklistItems: ['Oceniono popyt, konkurencję, prawo i wsparcie', 'Zaplanowano język, dostępność i lokalny QA', 'Udokumentowano ceny, opinie i prawa do mediów syntetycznych', 'Zatwierdzono metryki, limity budżetu i stop rules'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '56.2': {
+          stageTitle: '56. Płatności transgraniczne i podatki',
+          title: 'Projektuj globalny checkout z kontrolą podatków i płatności',
+          description: 'Porównuj procesorów i merchant of record, zachowując profesjonalny nadzór nad umowami, podatkami, konsumentem i uzgodnieniem.',
+          learnContent: {
+            videoTitle: 'Masterclass: checkout transgraniczny, podatki i MoR',
+            summaryText: 'Merchant of record może zawierać umowę z klientem i wykonywać określone zadania podatku pośredniego, billing, zwroty i chargebacki, lecz zakres jest różny. Sprzedawca może zachować obowiązki podatku dochodowego, księgowości, produktu, prywatności, konsumenta, sankcji i umów.',
+            bulletPoints: [
+              'Zmapuj sprzedawcę, MoR, procesora, administratora danych, procesora danych i właściciela zwrotu',
+              'Waliduj VAT, GST i sales tax według produktu, klienta, miejsca i dowodów',
+              'Oferuj metody po testach kosztu, awarii, fraudu, dostępności, zwrotów i wsparcia',
+              'Uzgadniaj zamówienia, podatek, opłaty, FX, wypłaty, zwroty i spory z księgą'
+            ],
+            coreConcepts: [
+              { iconName: 'credit-card', title: 'OKREŚLONA ODPOWIEDZIALNOŚĆ', description: 'Umowy pokazują, co wykonuje dostawca, a co pozostaje z firmą.', highlight: true },
+              { iconName: 'repeat', title: 'KONTROLE PŁATNOŚCI LOKALNYCH', description: 'Każda metoda ma reguły kwalifikacji, informacji, uwierzytelnienia, zwrotu i uzgodnienia.' }
+            ],
+            resources: [
+              { title: 'Zeszyt oceny dostawcy płatności i MoR', subtitle: 'Zakres, kraje, podatki, opłaty, dane, rezerwy i exit plan', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole multi-currency Mara CRM', subtitle: 'Zatwierdzone gatewaye, waluty, dowody podatkowe i uzgodnienie', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Kontrolowany checkout transgraniczny\n\n1. **Zmapuj łańcuch**: umowa z klientem, faktura, sprzedawca, MoR, procesor, acquirer, platforma i odbiorca wypłaty.\n2. **Uzyskaj poradę podatkową**: klasyfikacja produktu, miejsce świadczenia, rejestracje, permanent establishment, dochód, withholding, cło i raportowanie.\n3. **Przejrzyj umowę MoR**: kraje, produkty, zakazy, podatki, rezerwy, zwroty, chargebacki, dane, zawieszenie, indemnity i migracja.\n4. **Ustal miejsce klienta**: legalne i wiarygodne dowody; Geo-IP bywa błędne i nie powinno samo ustalać podatku lub ceny.\n5. **Ostrożnie waliduj B2B**: sprawdzenie VAT ID jest dowodem, nie pełnym potwierdzeniem reverse charge. Zachowaj inne wymagane fakty.\n6. **Jasno pokaż cenę całkowitą**: waluta, podatek, FX, cykl, trial, odnowienie, anulowanie i zwrot przed potwierdzeniem.\n7. **Wybierz metody dowodami**: akceptacja, koszt, settlement, awarie, fraud, dostępność i wsparcie różnią się.\n8. **Stosuj proporcjonalne uwierzytelnienie**: właściwe SCA i fraud controls bez twierdzenia, że 3DS zatrzyma każdy chargeback.\n9. **Chroń dane płatnicze**: minimalizuj PCI, tokenizuj, ograniczaj dostęp, zabezpieczaj webhooki i nie loguj sekretów.\n10. **Projektuj zwroty i spory**: odpowiedzialność, terminy, dowody, kontakt i uczciwe traktowanie.\n11. **Zarządzaj FX**: ujawniaj przeliczenie, porównuj spread i opłaty, zatwierdzaj konta i ryzyko dostawcy.\n12. **Codziennie uzgadniaj**: zamówienie, faktura, podatek, opłata, FX, payout, zwrot i spór łączą się z księgą.\n13. **Testuj awarie**: duplikat webhooka, decline, opóźnienie, awaria podatku, zawieszenie i migracja.\n14. **Stale przeglądaj**: prawo i zakres dostawcy się zmieniają.',
+            practicalExamples: [
+              'VAT ID jest ważny, lecz fakty nie wspierają zamierzonego traktowania, więc zamówienie trafia do przeglądu.',
+              'Metoda lokalna poprawia ukończenia w pilotażu, ale wydłuża zwroty, więc zespół zmienia kontrole.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Prosty checkout globalny wymaga jasnej odpowiedzialności, informacji, przeglądu podatkowego i uzgodnienia.',
+            keyPrinciples: ['Dostawca nie usuwa wszystkich obowiązków sprzedawcy', 'Geo-IP i VAT ID nie są automatycznym wnioskiem prawnym', 'Mierz płatności bez gwarantowanego wzrostu konwersji'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj kontrolowany checkout transgraniczny:',
+            checklistItems: ['Zmapowano role, umowy i pozostałe obowiązki', 'Przejrzano podatek, miejsce i dowody B2B', 'Przetestowano cenę, odnowienie, zwroty i informacje', 'Zatwierdzono bezpieczeństwo, webhooki, uzgodnienie, spory i exit plan dostawcy'],
+            toolboxCategory: 'settings',
           },
         },
       },
