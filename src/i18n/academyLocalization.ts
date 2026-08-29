@@ -5452,6 +5452,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    59: {
+      title: '59. Responsible newsletter publishing and subscriptions',
+      subtitle: 'Editorial value, permission-based growth, transparent sponsorship and fair paid membership',
+      description: 'Build a newsletter around useful, accurate publishing and a permissioned audience—without guaranteed subscriber counts, deceptive native advertising, undisclosed co-registration, intrusive tracking or revenue promises.',
+      lessons: {
+        '59.1': {
+          stageTitle: '59. Newsletter architecture and audience growth',
+          title: 'Develop a sustainable newsletter with explicit subscriber choice',
+          description: 'Define editorial value, sourcing, consent, accessibility, delivery and measurement before scaling acquisition.',
+          learnContent: {
+            videoTitle: 'Masterclass: responsible newsletter publishing and acquisition',
+            summaryText: 'A newsletter can create a valuable direct relationship, but the list still depends on permission, deliverability, providers, security and reader trust. No format, subject-line style, lead magnet or referral network guarantees ten thousand readers in ninety days.',
+            bulletPoints: [
+              'Choose a format and cadence that the editorial team can verify and sustain',
+              'Use clear signup language, confirmed consent where appropriate, source records and easy unsubscribe',
+              'Review co-registration and recommendation partners for disclosure, data roles, quality and fraud',
+              'Measure delivery, engagement and retention with privacy-aware methods and known metric limitations'
+            ],
+            coreConcepts: [
+              { iconName: 'mail', title: 'PERMISSIONED AUDIENCE', description: 'Subscribers understand the sender, content, frequency and data use and can leave easily.', highlight: true },
+              { iconName: 'repeat', title: 'ACCOUNTABLE ACQUISITION', description: 'Every source is traceable, disclosed, quality-checked and separated from unrelated consent.' }
+            ],
+            resources: [
+              { title: 'Newsletter editorial and growth workbook', subtitle: 'Promise, sources, consent, cadence, accessibility and measurement', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM newsletter controls', subtitle: 'Consent records, segmentation, suppression, frequency and delivery events', type: 'tool', iconName: 'send', actionUrl: 'email' }
+            ],
+            fullArticleGuide: '### Build a newsletter readers knowingly choose\n\n1. **Define the editorial promise**: audience, problem, perspective, coverage, exclusions and how each issue helps.\n2. **Choose a sustainable format**: curated links, original analysis, brief news or a combination; distinguish reporting, opinion, promotion and sponsored material.\n3. **Create a sourcing standard**: verify claims, link primary sources, correct errors and respect copyright, quotation limits, licences and attribution.\n4. **Design clear signup**: sender identity, expected topics, frequency, commercial content, privacy notice and whether subscription is free or paid.\n5. **Record valid permission**: source, timestamp, wording and status; do not bundle newsletter consent with unrelated downloads or partners.\n6. **Review lead magnets**: deliver the promised resource, minimise data and avoid gated material you lack rights to share.\n7. **Control co-registration**: name each publication, avoid pre-ticked boxes, prevent silent list sharing and reconcile consent and suppression records.\n8. **Protect deliverability**: authenticate domains, warm responsibly, remove invalid addresses, monitor complaints and honour unsubscribe promptly.\n9. **Design accessibility**: semantic headings, readable type, contrast, alt text, descriptive links, plain-text version and mobile testing.\n10. **Test subject lines honestly**: no misleading reply prefixes, false urgency or promises unsupported by the issue. Results vary by audience and mailbox.\n11. **Measure carefully**: opens can be distorted by privacy proxies and image blocking; use delivered, clicked, replied, retained and unsubscribed metrics with denominators.\n12. **Limit tracking**: explain pixels and link tracking, minimise data, set retention and provide choices where required.\n13. **Protect the list**: least privilege, MFA, export controls, vendor review, backups and incident response.\n14. **Review acquisition quality**: retention, complaints, engagement and cost by source matter more than headline subscriber count.',
+            practicalExamples: [
+              'A partner recommendation uses a separate unchecked choice naming the second newsletter; declining does not block the original signup.',
+              'An issue corrects a factual error in the next send and updates the web archive with a timestamp.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A durable newsletter is built on editorial usefulness, explicit permission and trustworthy operations—not ownership rhetoric or growth hacks.',
+            keyPrinciples: ['Consent is specific to the named publication', 'Source and correct editorial claims', 'Treat open rates as incomplete estimates'],
+          },
+          actionTask: {
+            instruction: 'Prepare a newsletter pilot:',
+            checklistItems: ['Editorial promise, format, sourcing and correction policy written', 'Signup, consent, privacy, frequency and unsubscribe tested', 'Domain authentication, suppression and access controls configured', 'Accessibility and source-quality metrics included in launch review'],
+            toolboxCategory: 'email',
+          },
+        },
+        '59.2': {
+          stageTitle: '59. Sponsorship and paid subscriptions',
+          title: 'Monetise transparently without inflated metrics or dark-pattern paywalls',
+          description: 'Price sponsorship and subscriptions from evidence, disclose commercial relationships and make billing, cancellation and editorial boundaries clear.',
+          learnContent: {
+            videoTitle: 'Masterclass: ethical sponsorship and paid newsletter tiers',
+            summaryText: 'Sponsorship and subscriptions can support publishing, but CPMs, conversion and monthly revenue vary by audience, measurement, sector and market. Media kits must use accurate definitions and periods, while sponsored content and recurring billing must be unambiguous.',
+            bulletPoints: [
+              'Define delivered, estimated opens, unique clicks, audience attributes and attribution before quoting prices',
+              'Label sponsorship clearly and keep advertiser review separate from editorial judgement',
+              'Verify audience demographics through proportionate, privacy-respecting evidence instead of inferred personal profiles',
+              'State paid-tier content, price, tax, trial, renewal, cancellation, refunds and material changes before purchase'
+            ],
+            coreConcepts: [
+              { iconName: 'dollar-sign', title: 'EVIDENCE-BASED PRICING', description: 'Rates follow verified reach, placement, rights, workload and comparable outcomes without guarantees.', highlight: true },
+              { iconName: 'lock', title: 'FAIR PAID ACCESS', description: 'Readers know what remains free, what is paid and how to cancel before subscribing.' }
+            ],
+            resources: [
+              { title: 'Newsletter media-kit and sponsorship workbook', subtitle: 'Metric definitions, inventory, disclosure, brand safety and contracts', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM sponsorship reporting', subtitle: 'Aggregated delivery and link events with permissions and retention', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'email' }
+            ],
+            fullArticleGuide: '### Monetise while protecting reader trust\n\n1. **Choose the revenue mix**: sponsorship, paid access, membership, events, services or affiliate links each affect incentives and editorial risk.\n2. **Define inventory**: placement, format, word count, asset rights, targeting limits, send date, make-good terms and category exclusions.\n3. **Create an accurate media kit**: reporting period, list size, delivery, estimated opens, unique clicks, geography method, sample size and metric limitations.\n4. **Do not sell sensitive targeting**: avoid health, financial hardship, politics or other sensitive inferences unless a lawful, ethical and explicitly permitted use exists.\n5. **Vet sponsors**: product evidence, claims, complaints, safety, legal restrictions, landing page, data practices and fit; document approval and rejection.\n6. **Disclose ads prominently**: label sponsor, advertisement or paid partnership in language readers understand. Native style must not disguise commercial intent.\n7. **Maintain editorial independence**: advertisers may review their factual brand details, not suppress criticism or purchase favourable coverage.\n8. **Contract clearly**: payment, cancellation, indemnities, substantiation, intellectual-property rights, data, tracking, reporting and remedy.\n9. **Price without promises**: compare CPM, flat fee, CPC or performance models using verified denominators, workload and risk; do not guarantee clicks or sales.\n10. **Design paid tiers fairly**: explain archive, frequency, community, downloads, support and what happens after cancellation.\n11. **Use compliant recurring billing**: clear affirmative consent, total price, renewal reminders where required, easy cancellation and records of terms accepted.\n12. **Avoid manipulative paywalls**: no false countdowns, bait-and-switch excerpts or hiding information needed for safety, cancellation or informed purchase.\n13. **Protect subscriber data**: share only contracted aggregated reporting unless the reader has validly agreed to a defined disclosure.\n14. **Reconcile revenue**: invoices, tax, platform fees, refunds, chargebacks, deferred revenue and sponsor deliverables.\n15. **Report outcomes honestly**: distinguish delivered, observed and attributed events and explain privacy-related measurement gaps.',
+            practicalExamples: [
+              'A sponsor block is labelled before the copy and the media kit calls opens an estimate affected by mailbox privacy features.',
+              'A paid subscriber cancels through the same account area used to subscribe and retains access until the stated end date.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Newsletter revenue is sustainable when measurement, advertising, billing and editorial boundaries are transparent.',
+            keyPrinciples: ['Disclose every commercial placement', 'Never inflate or overstate audience metrics', 'Make recurring terms and cancellation simple'],
+          },
+          actionTask: {
+            instruction: 'Prepare a trustworthy media kit and paid tier:',
+            checklistItems: ['Metric definitions, periods, limitations and inventory documented', 'Sponsor vetting, disclosure and editorial-independence rules approved', 'Paid-tier value, price, tax, renewal, cancellation and refunds tested', 'Data sharing, tracking, contracts and revenue reconciliation reviewed'],
+            toolboxCategory: 'email',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -10888,6 +10970,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przetestuj workflow audio i promptingu:',
             checklistItems: ['Przetestowano pokój, pozycję, gain i backup', 'Porównano processing z oryginałem przy równym poziomie', 'Sprawdzono skrypt pod kątem faktów, tempa i dostępności', 'Eksport, napisy i transkrypt oceniono na wielu urządzeniach'],
             toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+
+    59: {
+      title: '59. Odpowiedzialne newslettery i płatne subskrypcje',
+      subtitle: 'Wartość redakcyjna, wzrost za zgodą, jawny sponsoring i uczciwe członkostwo',
+      description: 'Buduj newsletter na użytecznych publikacjach i zgodzie odbiorców—bez gwarancji liczby subskrybentów, ukrytej reklamy natywnej, niejawnej co-registration, inwazyjnego trackingu i obietnic przychodu.',
+      lessons: {
+        '59.1': {
+          stageTitle: '59. Architektura newslettera i wzrost',
+          title: 'Rozwijaj trwały newsletter z wyraźnym wyborem odbiorcy',
+          description: 'Określ wartość redakcyjną, źródła, zgodę, dostępność, dostarczalność i pomiar przed skalą.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialne wydawanie i pozyskanie odbiorców',
+            summaryText: 'Newsletter tworzy relację bezpośrednią, lecz lista nadal zależy od zgody, dostarczalności, dostawców, bezpieczeństwa i zaufania. Format, subject, lead magnet i sieć poleceń nie gwarantują dziesięciu tysięcy czytelników w dziewięćdziesiąt dni.',
+            bulletPoints: [
+              'Wybierz format i rytm, który redakcja może weryfikować i utrzymać',
+              'Stosuj jasny signup, potwierdzenie zgody gdy właściwe, źródło i łatwe wypisanie',
+              'Przeglądaj partnerów co-registration pod kątem disclosure, danych, jakości i fraudu',
+              'Mierz dostarczenie, engagement i retencję metodami uwzględniającymi prywatność oraz ograniczenia'
+            ],
+            coreConcepts: [
+              { iconName: 'mail', title: 'ODBIORCY ZA ZGODĄ', description: 'Subskrybent rozumie nadawcę, treść, częstotliwość i dane oraz może łatwo odejść.', highlight: true },
+              { iconName: 'repeat', title: 'ROZLICZALNE POZYSKANIE', description: 'Każde źródło jest identyfikowalne, jawne, kontrolowane i oddzielone od innych zgód.' }
+            ],
+            resources: [
+              { title: 'Zeszyt redakcji i wzrostu newslettera', subtitle: 'Obietnica, źródła, zgoda, rytm, dostępność i pomiar', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole newslettera Mara CRM', subtitle: 'Zgody, segmenty, suppression, częstotliwość i delivery events', type: 'tool', iconName: 'send', actionUrl: 'email' }
+            ],
+            fullArticleGuide: '### Newsletter świadomie wybrany przez czytelnika\n\n1. **Określ obietnicę redakcyjną**: odbiorca, problem, perspektywa, zakres, wyłączenia i korzyść.\n2. **Wybierz trwały format**: linki, analiza, news lub kombinacja; oddziel reporting, opinię, promocję i sponsoring.\n3. **Ustal standard źródeł**: weryfikuj, linkuj primary sources, poprawiaj błędy i szanuj copyright, cytaty, licencje i autorstwo.\n4. **Projektuj jasny signup**: nadawca, tematy, częstotliwość, reklamy, prywatność oraz free lub paid.\n5. **Zapisuj zgodę**: źródło, czas, wording i status; nie łącz newslettera z niepowiązanym downloadem lub partnerem.\n6. **Przeglądaj lead magnet**: dostarcz obiecany materiał, minimalizuj dane i nie udostępniaj treści bez praw.\n7. **Kontroluj co-registration**: nazwij publikację, bez pre-ticked boxes i ukrytego sharingu; uzgadniaj zgody i suppression.\n8. **Chroń deliverability**: uwierzytelnij domenę, rozsądnie rozgrzewaj, usuwaj invalid, monitoruj skargi i szybko wypisuj.\n9. **Projektuj dostępność**: semantyczne nagłówki, czytelny font, kontrast, alt, opisowe linki, plain text i mobile.\n10. **Uczciwie testuj subject**: bez mylących reply, fałszywej pilności i obietnic bez pokrycia.\n11. **Ostrożnie mierz**: opens zakłócają privacy proxy i image blocking; używaj delivered, clicked, replied, retained i unsubscribed z mianownikami.\n12. **Ogranicz tracking**: wyjaśnij piksele i linki, minimalizuj dane, ustal retencję i wybór.\n13. **Chroń listę**: minimalny dostęp, MFA, kontrola eksportu, dostawcy, backup i incydenty.\n14. **Oceniaj jakość źródeł**: retencja, skargi, engagement i koszt są ważniejsze niż licznik.',
+            practicalExamples: [
+              'Polecenie partnera ma osobne niezaznaczone pole z nazwą newslettera; odmowa nie blokuje pierwszego zapisu.',
+              'Wydanie poprawia błąd w następnym mailu i aktualizuje archiwum z datą.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Trwały newsletter opiera się na użyteczności, zgodzie i dobrych operacjach—nie na growth hackach.',
+            keyPrinciples: ['Zgoda dotyczy nazwanej publikacji', 'Źródłuj i poprawiaj twierdzenia', 'Open rate jest niepełnym szacunkiem'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj pilotaż newslettera:',
+            checklistItems: ['Spisano obietnicę, format, źródła i korekty', 'Przetestowano signup, zgodę, prywatność, częstotliwość i wypisanie', 'Skonfigurowano domenę, suppression i dostęp', 'Dodano dostępność i jakość źródeł do przeglądu launchu'],
+            toolboxCategory: 'email',
+          },
+        },
+        '59.2': {
+          stageTitle: '59. Sponsoring i płatne subskrypcje',
+          title: 'Monetyzuj jawnie bez zawyżonych metryk i dark patterns',
+          description: 'Wyceniaj sponsoring i abonament z dowodów, ujawniaj relacje handlowe oraz jasno podawaj billing i anulowanie.',
+          learnContent: {
+            videoTitle: 'Masterclass: etyczny sponsoring i płatne tiery',
+            summaryText: 'Sponsoring i abonament mogą finansować publikację, lecz CPM, konwersja i przychód zależą od odbiorców, pomiaru, sektora i rynku. Media kit używa dokładnych definicji, a reklama oraz recurring billing są jednoznaczne.',
+            bulletPoints: [
+              'Przed wyceną zdefiniuj delivered, estimated opens, unique clicks, profil odbiorców i atrybucję',
+              'Wyraźnie oznacz sponsoring i oddziel kontrolę reklamodawcy od decyzji redakcyjnej',
+              'Weryfikuj demografię proporcjonalnie i prywatnie zamiast tworzyć profile osobiste',
+              'Przed zakupem podaj treść tieru, cenę, podatek, trial, odnowienie, anulowanie, zwroty i zmiany'
+            ],
+            coreConcepts: [
+              { iconName: 'dollar-sign', title: 'WYCENA OPARTA NA DOWODACH', description: 'Stawka wynika z reach, placement, praw, pracy i porównań bez gwarancji.', highlight: true },
+              { iconName: 'lock', title: 'UCZCIWY PŁATNY DOSTĘP', description: 'Czytelnik wie, co jest free, paid i jak anulować przed zakupem.' }
+            ],
+            resources: [
+              { title: 'Zeszyt media kit i sponsoringu', subtitle: 'Definicje, inventory, disclosure, brand safety i umowy', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Raport sponsoringu Mara CRM', subtitle: 'Zagregowane delivery i link events z dostępem oraz retencją', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'email' }
+            ],
+            fullArticleGuide: '### Monetyzuj, chroniąc zaufanie\n\n1. **Wybierz miks przychodu**: sponsoring, paid, membership, wydarzenia, usługi i affiliate zmieniają bodźce oraz ryzyko.\n2. **Zdefiniuj inventory**: pozycja, format, długość, prawa, targeting, data, make-good i wyłączenia.\n3. **Twórz dokładny media kit**: okres, lista, delivery, estimated opens, unique clicks, geografia, próba i ograniczenia.\n4. **Nie sprzedawaj wrażliwego targetingu**: zdrowie, trudność finansowa, polityka i podobne wnioski wymagają szczególnej legalnej i etycznej podstawy.\n5. **Sprawdzaj sponsora**: produkt, twierdzenia, skargi, bezpieczeństwo, prawo, landing page, dane i dopasowanie.\n6. **Wyraźnie oznacz reklamę**: sponsor, reklama lub paid partnership w języku odbiorcy. Styl native nie ukrywa celu.\n7. **Zachowaj niezależność**: reklamodawca sprawdza fakty marki, nie kupuje pozytywnego coverage ani nie tłumi krytyki.\n8. **Jasno kontraktuj**: płatność, anulowanie, indemnity, substantiation, IP, dane, tracking, raport i naprawa.\n9. **Wyceniaj bez obietnic**: CPM, flat, CPC lub performance z potwierdzonym mianownikiem, pracą i ryzykiem; bez gwarancji klików i sprzedaży.\n10. **Uczciwie projektuj tiery**: archiwum, częstotliwość, community, download, wsparcie i skutek anulowania.\n11. **Zgodny recurring billing**: jasna zgoda, cena całkowita, przypomnienia gdy wymagane, łatwe anulowanie i zapis warunków.\n12. **Unikaj manipulacji paywall**: bez fałszywego countdownu, bait-and-switch i ukrywania informacji potrzebnej do bezpieczeństwa lub zakupu.\n13. **Chroń dane**: sponsor otrzymuje tylko uzgodniony raport zagregowany bez indywidualnych danych bez ważnej zgody.\n14. **Uzgadniaj przychód**: faktury, podatek, opłaty, zwroty, chargeback, deferred revenue i deliverables.\n15. **Uczciwie raportuj**: oddziel delivered, observed i attributed oraz luki prywatności.',
+            practicalExamples: [
+              'Blok ma etykietę przed copy, a media kit określa opens jako estimate zakłócony przez privacy features.',
+              'Subskrybent anuluje w tym samym panelu i zachowuje dostęp do podanej daty.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Przychód newslettera jest trwały, gdy pomiar, reklama, billing i granice redakcji są przejrzyste.',
+            keyPrinciples: ['Ujawniaj każdą reklamę', 'Nie zawyżaj metryk odbiorców', 'Ułatw warunki recurring i anulowanie'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj wiarygodny media kit i paid tier:',
+            checklistItems: ['Udokumentowano definicje, okresy, ograniczenia i inventory', 'Zatwierdzono vetting, disclosure i niezależność redakcji', 'Przetestowano wartość, cenę, podatek, renewal, cancel i refunds', 'Przejrzano dane, tracking, umowy i uzgodnienie przychodu'],
+            toolboxCategory: 'email',
           },
         },
       },
