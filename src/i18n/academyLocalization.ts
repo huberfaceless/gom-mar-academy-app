@@ -5944,6 +5944,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    65: {
+      title: '65. Responsible succession and owner governance',
+      subtitle: 'Leadership transition, board oversight, continuity and long-term stewardship',
+      description: 'Reduce founder dependency through tested systems, capable leadership and lawful governance—without promising a six-month exit, complete operational freedom, perpetual growth or protected generational wealth.',
+      lessons: {
+        '65.1': {
+          stageTitle: '65. Executive succession and transition',
+          title: 'Transfer authority through evidence, governance and staged readiness',
+          description: 'Plan succession around business needs, legal duties, leadership capability, internal controls and stakeholder continuity.',
+          learnContent: {
+            videoTitle: 'Masterclass: governed executive succession',
+            summaryText: 'A business can become less founder-dependent, but no checklist, profitable history or hired executive guarantees autonomy or performance. Timing depends on scale, jurisdiction, risk, systems, leadership bench and the owner’s continuing legal and governance duties.',
+            bulletPoints: [
+              'Define the future operating model, executive mandate, board role and reserved owner decisions before recruitment',
+              'Assess candidates through lawful, evidence-based selection, references, conflicts and integrity review',
+              'Transfer authority in tested stages with clear decision rights, controls, support and rollback triggers',
+              'Design compensation and equity-like incentives with legal, tax, accounting, dilution and conduct safeguards'
+            ],
+            coreConcepts: [
+              { iconName: 'user-check', title: 'READINESS-BASED SUCCESSION', description: 'Authority expands after demonstrated capability, control effectiveness and stakeholder continuity.', highlight: true },
+              { iconName: 'activity', title: 'ACCOUNTABLE GOVERNANCE', description: 'Oversight covers strategy, finance, people, risk, compliance, customers and resilience—not only a few headline KPIs.' }
+            ],
+            resources: [
+              { title: 'Executive succession and authority workbook', subtitle: 'Mandate, selection, reserved matters, controls, transition and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara executive governance dashboard', subtitle: 'Defined metrics, decisions, risks, actions and source evidence', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Design a transition the organisation can sustain\n\n1. **Clarify the objective**: founder resilience, professional management, sale readiness, retirement, health, family succession or growth require different plans.\n2. **Map legal roles**: shareholder, director, managing officer, supervisory board and adviser carry different authority and duties by entity and jurisdiction. Obtain written legal advice.\n3. **Assess founder dependency**: customer relationships, approvals, credentials, knowledge, financing, guarantees, product decisions and public identity.\n4. **Define the operating model**: organisation, executive accountabilities, board composition, committees, information flow and escalation.\n5. **Write reserved matters proportionately**: budgets, debt, acquisitions, dividends, litigation, related parties, senior appointments, security incidents and material contracts. A universal monetary threshold is unsafe.\n6. **Recruit fairly and independently**: role analysis, structured evidence, conflicts, references, regulatory checks and board participation.\n7. **Plan compensation carefully**: salary, bonus, profit share, options or phantom equity need performance definitions, vesting, leaver terms, clawback where lawful, valuation, tax and accounting review.\n8. **Build control capacity**: finance, cash, payroll, tax, contracts, security, privacy, compliance, quality, people and incident response with separation of duties.\n9. **Document critical work**: ownership, purpose, controls, exceptions and updates; SOP volume alone does not prove operational readiness.\n10. **Transfer in stages**: observe, co-decide, delegate with review, then independent authority. Each stage has evidence, feedback and reversal conditions—not fixed months.\n11. **Communicate with stakeholders**: employees, customers, lenders, insurers, regulators, suppliers and partners receive accurate, need-based information.\n12. **Test continuity**: founder absence, executive absence, cyberincident, liquidity shock, key customer loss and failed control with tabletop exercises.\n13. **Govern through balanced information**: cash, financial statements, forecasts, customers, people, operations, security, compliance and leading risk indicators with definitions and source quality.\n14. **Preserve challenge and whistleblowing**: board independence, conflicts, minutes, protected reporting and no retaliation.\n15. **Review executive performance fairly**: strategy, conduct, controls, stakeholder outcomes and sustainable results, not short-term profit alone.\n16. **Maintain owner duties and boundaries**: delegation does not remove shareholder, director, guarantee, tax or regulatory responsibilities. Avoid both shadow management and negligent disengagement.',
+            practicalExamples: [
+              'Authority to sign contracts expands only after controls and reporting work through a full cycle; material exceptions remain reserved.',
+              'A transition pauses when the finance close fails, and the team fixes controls instead of following a six-month calendar.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Succession is a governed transfer of responsibility and evidence—not a guaranteed escape from operations or legal duties.',
+            keyPrinciples: ['Delegate authority with controls and information', 'Use readiness gates rather than fixed timelines', 'Oversight includes conduct, risk and people as well as finance'],
+          },
+          actionTask: {
+            instruction: 'Prepare an executive-succession assessment:',
+            checklistItems: ['Objective, legal roles, founder dependencies and future model mapped', 'Mandate, reserved matters, conflicts and compensation reviewed', 'Control owners, reporting, continuity and staged readiness gates defined', 'Stakeholder communication, board review and rollback plan tested'],
+            toolboxCategory: 'settings',
+          },
+        },
+        '65.2': {
+          stageTitle: '65. Long-term stewardship and succession planning',
+          title: 'Plan ownership, family and contribution without permanence claims',
+          description: 'Evaluate reinvestment, diversification, family governance and philanthropy with qualified advice, independent oversight and respect for future generations.',
+          learnContent: {
+            videoTitle: 'Masterclass: long-term ownership and stewardship options',
+            summaryText: 'A family office, holding company, foundation or trust is not a universal milestone and does not guarantee preservation, tax savings or social benefit. Appropriate structure depends on assets, complexity, family needs, jurisdiction, cost and regulated professional advice.',
+            bulletPoints: [
+              'Begin with purpose, beneficiaries, risk capacity, liquidity needs and family or stakeholder voice',
+              'Compare direct ownership, external advisers, multi-family services and a dedicated office by full cost and governance',
+              'Model investment, tax, concentration, fees, inflation, currency, liability and succession scenarios',
+              'Design family and philanthropic governance with conflicts, safeguarding, accountability and the right to change or end structures'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'PROPORTIONATE STEWARDSHIP', description: 'Structure and professional support match real complexity, assets, goals and cost.', highlight: true },
+              { iconName: 'infinity', title: 'ADAPTIVE CONTINUITY', description: 'Plans include review, succession, failure, liquidity and sunset rather than promising perpetual growth.' }
+            ],
+            resources: [
+              { title: 'Ownership and stewardship planning workbook', subtitle: 'Purpose, assets, family, governance, tax, risk and succession', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR completion and next-step record', subtitle: 'Document verified learning progress without wealth or status claims', type: 'tool', iconName: 'award', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Build stewardship that can adapt\n\n1. **Define purpose and people**: owner wellbeing, business continuity, dependants, family autonomy, philanthropy and community impact may conflict and require discussion.\n2. **Inventory the position**: entities, ownership, debt, guarantees, tax residence, assets, liquidity, insurance, pensions, digital assets, IP and cross-border exposure.\n3. **Protect immediate resilience**: emergency authority, wills, powers of attorney, key-person plans, secure records and access procedures before complex structures.\n4. **Obtain coordinated advice**: qualified legal, tax, accounting, investment, insurance and estate professionals in each relevant jurisdiction. Resolve conflicting advice in writing.\n5. **Compare service models**: existing providers, outsourced administration, multi-family office and single-family office by independence, regulation, cost, competence, cybersecurity and continuity.\n6. **Set investment governance**: objectives, liquidity, time horizon, diversification, concentration limits, prohibited assets, custody, benchmarks, fees and delegated authority.\n7. **Avoid “crisis-proof” claims**: businesses, property, venture and currencies can all lose value. Use scenarios, reserves, insurance and diversification without promising preservation.\n8. **Control related-party transactions**: valuation, conflicts, independent approval, documentation and minority or creditor rights.\n9. **Design family governance inclusively**: information rights, education, decision roles, privacy, conflict resolution and protection from coercion; descendants are not obligated to join the enterprise.\n10. **Plan ownership transfer lawfully**: inheritance, gifts, trusts, foundations, marital property, forced-heirship, beneficial ownership, tax and creditor rules differ widely.\n11. **Govern philanthropy with communities**: due diligence, safeguarding, conflicts, consent, outcome and harm evaluation, reporting and complaints.\n12. **Prepare leadership and adviser succession**: key-person risk applies to trustees, directors, investment managers and family representatives.\n13. **Secure information**: least privilege, MFA, dual control, vendor review, incident response and recovery for financial and family data.\n14. **Review costs and performance**: taxes, fees, manager results, service quality, conflicts and risk against written objectives.\n15. **Include amendment and sunset**: perpetual structures can outlive their usefulness. Define review, protector or oversight powers and lawful paths to change or terminate.\n16. **Represent milestones honestly**: completing Academy material does not prove an eight-figure business, admission to an exclusive network, accredited competence or future wealth unless separately verified and formally offered.',
+            practicalExamples: [
+              'A family chooses an independent multi-family service because a dedicated office would add cost and key-person risk without sufficient complexity.',
+              'A succession plan gives adult children choice and information rather than assuming they must operate the company.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Long-term stewardship depends on proportionate structure, diversified risk, good governance and the freedom to adapt—not eternal wealth.',
+            keyPrinciples: ['No structure guarantees wealth preservation or impact', 'Future generations retain autonomy', 'Use qualified cross-border advice and independent oversight'],
+          },
+          actionTask: {
+            instruction: 'Prepare a stewardship brief:',
+            checklistItems: ['Purpose, people, assets, jurisdictions, liquidity and risks inventoried', 'Advisers, service models, costs and conflicts compared', 'Investment, family, philanthropy, data and succession governance outlined', 'Review, amendment, sunset and honest milestone language approved'],
+            toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -11872,6 +11954,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj bounded agent workflow:',
             checklistItems: ['Zdefiniowano task contract, schema, zakazy i budgets', 'Przetestowano tools, credentials, sandbox i injection defence', 'Skonfigurowano human gates i exact-action preview', 'Ukończono idempotency, logi, rollback, kill switch i adversarial tests'],
             toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+
+    65: {
+      title: '65. Odpowiedzialna sukcesja i ład właścicielski',
+      subtitle: 'Zmiana przywództwa, nadzór, ciągłość i długoterminowe stewardship',
+      description: 'Ograniczaj zależność od założyciela przez systemy, przywództwo i legalny ład—bez obietnicy sześciomiesięcznego wyjścia, pełnej wolności, wiecznego wzrostu i zabezpieczonego bogactwa pokoleń.',
+      lessons: {
+        '65.1': {
+          stageTitle: '65. Sukcesja executive i przekazanie',
+          title: 'Przekazuj władzę przez dowody, ład i etapy gotowości',
+          description: 'Planuj sukcesję według potrzeb firmy, obowiązków prawnych, capability, kontroli i ciągłości stakeholderów.',
+          learnContent: {
+            videoTitle: 'Masterclass: zarządzana sukcesja executive',
+            summaryText: 'Firma może mniej zależeć od założyciela, ale checklista, historia zysków i zatrudniony executive nie gwarantują autonomii. Timing zależy od skali, kraju, ryzyka, systemów, leadership bench i dalszych obowiązków właściciela.',
+            bulletPoints: [
+              'Zdefiniuj przyszły model, mandat executive, rolę board i reserved matters przed rekrutacją',
+              'Oceniaj kandydatów legalnie przez dowody, referencje, konflikty i integralność',
+              'Przekazuj authority etapami z decision rights, controls, support i rollback triggers',
+              'Projektuj compensation i equity-like incentives z prawem, podatkiem, accounting i conduct safeguards'
+            ],
+            coreConcepts: [
+              { iconName: 'user-check', title: 'SUKCESJA WEDŁUG GOTOWOŚCI', description: 'Authority rośnie po dowodzie capability, skutecznych kontrolach i ciągłości.', highlight: true },
+              { iconName: 'activity', title: 'ROZLICZALNY ŁAD', description: 'Nadzór obejmuje strategię, finanse, ludzi, ryzyko, compliance, klientów i resilience.' }
+            ],
+            resources: [
+              { title: 'Zeszyt sukcesji i authority', subtitle: 'Mandat, selection, reserved matters, controls, transition i review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Dashboard executive governance Mara', subtitle: 'Metryki, decyzje, ryzyka, działania i źródła', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Trwałe przekazanie\n\n1. **Wyjaśnij cel**: founder resilience, professional management, sale readiness, retirement, health, family succession lub growth wymagają innych planów.\n2. **Zmapuj role prawne**: shareholder, director, managing officer, supervisory board i adviser mają różne duties. Uzyskaj pisemną poradę.\n3. **Oceń founder dependency**: klienci, approvals, credentials, wiedza, finansowanie, guarantees, produkt i public identity.\n4. **Zdefiniuj operating model**: organizacja, accountabilities, board, committees, information flow i escalation.\n5. **Proporcjonalne reserved matters**: budget, debt, acquisitions, dividends, litigation, related parties, senior appointments, security i material contracts. Brak uniwersalnego limitu.\n6. **Rekrutuj uczciwie**: role analysis, structured evidence, conflicts, references, regulatory checks i board.\n7. **Ostrożne compensation**: salary, bonus, profit share, options lub phantom equity z definitions, vesting, leaver, clawback, valuation, tax i accounting.\n8. **Buduj controls**: finance, cash, payroll, tax, contracts, security, privacy, compliance, quality, people i incidents z separation of duties.\n9. **Dokumentuj krytyczną pracę**: ownership, purpose, controls, exceptions i updates; liczba SOP nie dowodzi readiness.\n10. **Przekazuj etapami**: observe, co-decide, delegate with review, independent authority; każdy etap ma evidence i reversal, nie fixed months.\n11. **Komunikuj stakeholderom**: employees, customers, lenders, insurers, regulators, suppliers i partners według potrzeby.\n12. **Testuj continuity**: nieobecność founder i executive, cyberincident, liquidity shock, key customer loss i failed control.\n13. **Govern przez balanced information**: cash, statements, forecast, customers, people, operations, security, compliance i leading risks.\n14. **Zachowaj challenge i whistleblowing**: board independence, conflicts, minutes, protected reporting i brak retaliation.\n15. **Oceniaj executive fair**: strategy, conduct, controls, stakeholders i sustainable results, nie tylko short-term profit.\n16. **Zachowaj duties i boundaries**: delegation nie usuwa shareholder, director, guarantee, tax lub regulatory duties. Unikaj shadow management i negligent disengagement.',
+            practicalExamples: [
+              'Authority do umów rośnie po pełnym cyklu kontroli; istotne exceptions pozostają reserved.',
+              'Transition zatrzymuje się po błędzie finance close, a controls są naprawiane zamiast trzymania sześciu miesięcy.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Sukcesja to zarządzane przekazanie odpowiedzialności i dowodów—nie gwarantowane wyjście z operacji.',
+            keyPrinciples: ['Deleguj z controls i informacją', 'Używaj readiness gates, nie fixed timeline', 'Nadzór obejmuje conduct, risk i people'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj ocenę sukcesji executive:',
+            checklistItems: ['Zmapowano cel, role prawne, dependencies i future model', 'Przejrzano mandat, reserved matters, conflicts i compensation', 'Zdefiniowano control owners, reporting, continuity i readiness gates', 'Przetestowano communication, board review i rollback'],
+            toolboxCategory: 'settings',
+          },
+        },
+        '65.2': {
+          stageTitle: '65. Długoterminowe stewardship i sukcesja',
+          title: 'Planuj własność, rodzinę i wkład bez obietnic trwałości',
+          description: 'Oceniaj reinvestment, diversification, family governance i philanthropy z doradcami, nadzorem i szacunkiem dla przyszłych pokoleń.',
+          learnContent: {
+            videoTitle: 'Masterclass: opcje długoterminowej własności i stewardship',
+            summaryText: 'Family office, holding, fundacja lub trust nie są uniwersalnym milestone i nie gwarantują zachowania, podatków ani impact. Struktura zależy od aktywów, złożoności, rodziny, kraju, kosztu i regulowanej porady.',
+            bulletPoints: [
+              'Zacznij od celu, beneficjentów, risk capacity, liquidity i głosu rodziny lub stakeholderów',
+              'Porównaj direct ownership, external advisers, multi-family i dedicated office przez pełny koszt oraz governance',
+              'Modeluj investment, tax, concentration, fees, inflation, currency, liability i succession scenarios',
+              'Projektuj family i philanthropy governance z conflicts, safeguarding, accountability i prawem zmiany lub zakończenia'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'PROPORCJONALNE STEWARDSHIP', description: 'Struktura i wsparcie odpowiadają realnej złożoności, aktywom, celom i kosztom.', highlight: true },
+              { iconName: 'infinity', title: 'ADAPTACYJNA CIĄGŁOŚĆ', description: 'Plan ma review, succession, failure, liquidity i sunset zamiast wiecznego wzrostu.' }
+            ],
+            resources: [
+              { title: 'Zeszyt własności i stewardship', subtitle: 'Cel, aktywa, rodzina, governance, tax, risk i succession', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Rekord ukończenia GOM-MAR', subtitle: 'Dokumentuj zweryfikowany postęp bez wealth lub status claims', type: 'tool', iconName: 'award', actionUrl: 'progress' }
+            ],
+            fullArticleGuide: '### Stewardship, które się adaptuje\n\n1. **Określ cel i ludzi**: wellbeing właściciela, continuity, dependants, family autonomy, philanthropy i community impact mogą się konfliktować.\n2. **Inwentaryzuj pozycję**: entities, ownership, debt, guarantees, tax residence, assets, liquidity, insurance, pensions, digital assets, IP i cross-border.\n3. **Chroń resilience**: emergency authority, wills, powers of attorney, key-person plans, secure records i access przed złożonymi strukturami.\n4. **Koordynuj advice**: qualified legal, tax, accounting, investment, insurance i estate professionals w każdym kraju; rozwiąż sprzeczności pisemnie.\n5. **Porównaj service models**: obecni providers, outsourcing, multi-family i single-family przez independence, regulation, cost, competence, cyber i continuity.\n6. **Investment governance**: objectives, liquidity, horizon, diversification, concentration limits, prohibited assets, custody, benchmarks, fees i authority.\n7. **Bez crisis-proof claims**: business, property, venture i currency tracą wartość. Scenarios, reserves, insurance i diversification bez gwarancji.\n8. **Kontroluj related parties**: valuation, conflicts, independent approval, documentation i minority/creditor rights.\n9. **Inkluzywne family governance**: information rights, education, roles, privacy, conflict resolution i protection from coercion; descendants nie muszą dołączać.\n10. **Legalny transfer ownership**: inheritance, gifts, trusts, foundations, marital property, forced heirship, beneficial ownership, tax i creditors różnią się.\n11. **Govern philanthropy z communities**: due diligence, safeguarding, conflicts, consent, outcome/harm evaluation, reporting i complaints.\n12. **Plan succession ludzi**: key-person risk dotyczy trustees, directors, managers i family representatives.\n13. **Chroń informacje**: least privilege, MFA, dual control, vendor review, incident response i recovery.\n14. **Przeglądaj costs i performance**: taxes, fees, manager results, service quality, conflicts i risk wobec objectives.\n15. **Uwzględnij amendment i sunset**: perpetual structures tracą sens; ustal review, oversight i legal paths zmiany lub końca.\n16. **Uczciwe milestones**: ukończenie Academy nie dowodzi 8-figure business, exclusive network, accreditation ani future wealth bez osobnej weryfikacji i formalnej oferty.',
+            practicalExamples: [
+              'Rodzina wybiera niezależny multi-family service, bo dedicated office dodałby koszt i key-person risk.',
+              'Plan daje dorosłym dzieciom wybór i informację zamiast obowiązku prowadzenia firmy.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Długoterminowe stewardship zależy od proporcjonalnej struktury, dywersyfikacji, ładu i zdolności zmiany—nie wiecznego bogactwa.',
+            keyPrinciples: ['Żadna struktura nie gwarantuje zachowania majątku ani impact', 'Przyszłe pokolenia mają autonomię', 'Stosuj qualified cross-border advice i independent oversight'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj brief stewardship:',
+            checklistItems: ['Zinwentaryzowano cel, ludzi, assets, jurisdictions, liquidity i risks', 'Porównano advisers, service models, costs i conflicts', 'Opisano investment, family, philanthropy, data i succession governance', 'Zatwierdzono review, amendment, sunset i honest milestone language'],
+            toolboxCategory: 'settings',
           },
         },
       },
