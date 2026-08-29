@@ -5288,6 +5288,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    57: {
+      title: '57. Responsible referral loops and measurable network effects',
+      subtitle: 'Referral economics, transparent incentives, consent, fraud controls and fair waitlists',
+      description: 'Design referral programmes that create genuine customer value and measure incremental growth—without spam, contact scraping, fake scarcity, misleading counters or promises of exponential acquisition at no cost.',
+      lessons: {
+        '57.1': {
+          stageTitle: '57. Referral measurement and programme design',
+          title: 'Use the K-factor as a model, not a growth guarantee',
+          description: 'Estimate invitation and conversion behaviour with cohorts, cycle time, cost and uncertainty while protecting recipients and participants.',
+          learnContent: {
+            videoTitle: 'Masterclass: responsible referral-loop design',
+            summaryText: 'A simple referral coefficient can be estimated as invitations per eligible participant multiplied by conversion per valid invitation. The result depends on definitions, attribution window, repeat invitations, fraud, retention and cohort behaviour; K above one in a sample does not guarantee sustained exponential growth or zero acquisition cost.',
+            bulletPoints: [
+              'Define eligible users, delivered invitations, unique recipients, valid conversions, attribution and observation period',
+              'Measure incremental lift against a control or credible baseline, including reward and operating cost',
+              'Require user-initiated sharing and never upload, scrape or message contacts without appropriate permission',
+              'Publish reward eligibility, value, expiry, limits, disclosure, tax and anti-fraud rules before participation'
+            ],
+            coreConcepts: [
+              { iconName: 'activity', title: 'COHORT REFERRAL MODEL', description: 'K, cycle time, retention and uncertainty are reported by cohort and period.', highlight: true },
+              { iconName: 'gift', title: 'FAIR INCENTIVES', description: 'Both parties understand the reward, commercial relationship, conditions and privacy treatment.' }
+            ],
+            resources: [
+              { title: 'Referral measurement and governance workbook', subtitle: 'Definitions, cohorts, cost, disclosures, fraud and stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM referral controls', subtitle: 'Links, consent evidence, rewards, reversals and audit trail', type: 'tool', iconName: 'users', actionUrl: 'affiliate' }
+            ],
+            fullArticleGuide: '### Build a referral programme people can trust\n\n1. **Confirm product value first**: referrals should follow a genuine use case, not compensate for poor retention or service.\n2. **Define the model**: eligible participant, invitation, recipient, conversion, cycle, attribution window and retained customer.\n3. **Separate gross from incremental**: account for people who would have joined anyway, other channels, duplicate links and self-referrals.\n4. **Include full cost**: rewards, discounts, support, tax, fraud, payment fees, cannibalisation and programme operations.\n5. **Design voluntary sharing**: the participant chooses the recipient and channel. Do not access address books, preselect contacts or send messages in the user’s name without clear action and permission.\n6. **Provide editable messages**: identify the sender and commercial incentive; avoid misleading urgency and claims the participant cannot verify.\n7. **Protect recipients**: use minimal referral data, explain source and purpose, honour objections and channel rules, and avoid shadow profiles.\n8. **Write clear terms**: eligibility, reward trigger, timing, expiry, limits, reversals, prohibited conduct, appeals and programme changes.\n9. **Check legal and policy requirements**: advertising disclosure, consumer promotions, tax, anti-bribery, sector rules and platform terms vary by market.\n10. **Prevent abuse proportionately**: duplicate identities, bots, collusion, refund cycling and stolen accounts; allow review before withholding legitimate rewards.\n11. **Measure quality**: invitation delivery, unique conversion, retention, complaints, opt-outs, reward cost and fraud with denominators and confidence.\n12. **Use stop rules**: pause when complaints, abuse, unprofitable cohorts or service strain exceed thresholds.\n13. **Do not force virality**: a useful sharing feature may be valuable even when K remains below one.',
+            practicalExamples: [
+              'A member clicks Share, edits a clearly disclosed message and chooses one recipient; the platform never imports the address book.',
+              'A high headline K falls after duplicate accounts and short-term users are removed, so the team revises the incentive.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Referral growth is a measured, consent-based channel with real costs and uncertainty—not a self-running exponential machine.',
+            keyPrinciples: ['User-initiated sharing only', 'Disclose incentives and conditions', 'Measure incrementality, retention, cost and harm'],
+          },
+          actionTask: {
+            instruction: 'Prepare a controlled referral pilot:',
+            checklistItems: ['Definitions, cohort window and incrementality method documented', 'Sharing flow, disclosure, privacy and channel rules reviewed', 'Reward terms, accounting, tax and reversal rules approved', 'Fraud, complaint, cost and service-capacity stop rules configured'],
+            toolboxCategory: 'affiliate',
+          },
+        },
+        '57.2': {
+          stageTitle: '57. Honest waitlists and milestone programmes',
+          title: 'Build a useful pre-launch waitlist without artificial scarcity',
+          description: 'Communicate product readiness and access rules honestly while testing optional referral milestones without pressure or fabricated social proof.',
+          learnContent: {
+            videoTitle: 'Masterclass: transparent waitlists and pre-launch referrals',
+            summaryText: 'A famous launch result does not predict another product’s outcome. Waitlist position, signup counters, access dates and rewards must be accurate, meaningful and updated fairly; artificial scarcity and anxiety-triggering notifications can undermine consent and trust.',
+            bulletPoints: [
+              'State what joining means, expected timing, selection method, eligibility and whether position affects access',
+              'Show only verified counts and positions with a timestamp and an explanation of possible changes',
+              'Make referrals optional; essential service or fair access should not depend on popularity',
+              'Limit notifications and provide preference, unsubscribe, deletion and support controls'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'FAIR ACCESS RULES', description: 'Queue movement and milestones follow published, auditable criteria with an appeal path.', highlight: true },
+              { iconName: 'trending_up', title: 'VERIFIED MILESTONES', description: 'Rewards are deliverable, accurately described and not conditioned on spam or manipulation.' }
+            ],
+            resources: [
+              { title: 'Transparent waitlist and launch workbook', subtitle: 'Access rules, capacity, referrals, communications and fairness review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM waitlist controls', subtitle: 'Consent, queue events, referrals, preferences and audit history', type: 'tool', iconName: 'layout', actionUrl: 'landingpage' }
+            ],
+            fullArticleGuide: '### Design a fair pre-launch waitlist\n\n1. **Define the purpose**: capacity planning, beta recruitment, regulatory staging or launch communication—not manufacturing demand.\n2. **Explain the offer**: product status, price assumptions, geography, eligibility, expected timing and what a signup does and does not guarantee.\n3. **Choose fair access rules**: chronological, lottery, needs-based or staged eligibility. Document why referral ranking is appropriate and who may be disadvantaged.\n4. **Avoid essential-access pressure**: do not make healthcare, finance, employment or other consequential access depend on recruiting friends.\n5. **Collect minimum data**: email or necessary eligibility fields; provide notice, lawful basis, retention, security and deletion.\n6. **Verify the queue**: deduplicate, handle bots and explain recalculation. Never fabricate position, signups, viewers or activity.\n7. **Make sharing optional**: no contact import, pre-ticked consent or repeated prompts. Provide a non-referral path.\n8. **Describe milestones precisely**: eligibility, stock, delivery date, limits, substitution, tax and expiry; do not promise unavailable VIP access.\n9. **Control communications**: confirmation, material updates and reasonable milestone notices with frequency settings and unsubscribe.\n10. **Secure referral links**: prevent enumeration, leakage of personal data, account takeover and reward theft.\n11. **Monitor fairness and quality**: duplicate rate, activation, retention, complaints, accessibility, demographic impact and support load.\n12. **Honour the launch**: communicate delays, rule changes and capacity honestly; provide remedies where commitments cannot be met.\n13. **Archive evidence**: consent, terms version, queue event, reward decision and communications support audit and appeals.',
+            practicalExamples: [
+              'A beta uses a published lottery among eligible applicants because referral rank would bias access toward large networks.',
+              'A queue counter is marked as verified at a specific time and excludes duplicate or unconfirmed records.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A trustworthy waitlist manages capacity and expectations; it does not manufacture fear or misrepresent demand.',
+            keyPrinciples: ['Never fabricate scarcity, counters or rank', 'Offer a meaningful non-referral path', 'Publish access, reward and communication rules'],
+          },
+          actionTask: {
+            instruction: 'Prepare a transparent waitlist:',
+            checklistItems: ['Purpose, eligibility, access and timing disclosures written', 'Queue integrity, privacy, security and deletion controls tested', 'Optional referral milestones and deliverability verified', 'Notification limits, fairness metrics, appeals and delay plan approved'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -10560,6 +10642,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj kontrolowany checkout transgraniczny:',
             checklistItems: ['Zmapowano role, umowy i pozostałe obowiązki', 'Przejrzano podatek, miejsce i dowody B2B', 'Przetestowano cenę, odnowienie, zwroty i informacje', 'Zatwierdzono bezpieczeństwo, webhooki, uzgodnienie, spory i exit plan dostawcy'],
             toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
+    57: {
+      title: '57. Odpowiedzialne pętle poleceń i mierzalne efekty sieciowe',
+      subtitle: 'Ekonomia poleceń, jawne zachęty, zgoda, kontrola fraudu i uczciwe listy oczekujących',
+      description: 'Projektuj programy poleceń tworzące wartość i mierz wzrost inkrementalny—bez spamu, scrapingu kontaktów, sztucznej rzadkości, fałszywych liczników i obietnic bezkosztowego wzrostu wykładniczego.',
+      lessons: {
+        '57.1': {
+          stageTitle: '57. Pomiar i projekt programu poleceń',
+          title: 'Traktuj K-factor jako model, nie gwarancję wzrostu',
+          description: 'Szacuj zaproszenia i konwersję z kohortami, czasem cyklu, kosztem i niepewnością, chroniąc odbiorców.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialny projekt pętli poleceń',
+            summaryText: 'Współczynnik można szacować jako zaproszenia na uczestnika razy konwersja ważnego zaproszenia. Wynik zależy od definicji, atrybucji, powtórzeń, fraudu, retencji i kohort; K powyżej jeden w próbce nie gwarantuje trwałego wzrostu ani zerowego CAC.',
+            bulletPoints: [
+              'Zdefiniuj kwalifikację, dostarczone zaproszenie, unikalnego odbiorcę, konwersję, atrybucję i okres',
+              'Mierz przyrost względem kontroli lub baseline wraz z kosztem nagród i operacji',
+              'Wymagaj działania użytkownika; nie wgrywaj, scrapuj ani kontaktuj osób bez uprawnienia',
+              'Przed udziałem publikuj wartość, termin, limity, disclosure, podatki i reguły fraudu'
+            ],
+            coreConcepts: [
+              { iconName: 'activity', title: 'MODEL KOHORTOWY', description: 'K, czas cyklu, retencja i niepewność są raportowane według okresu.', highlight: true },
+              { iconName: 'gift', title: 'UCZCIWE ZACHĘTY', description: 'Obie strony rozumieją nagrodę, relację handlową, warunki i dane.' }
+            ],
+            resources: [
+              { title: 'Zeszyt pomiaru i ładu poleceń', subtitle: 'Definicje, kohorty, koszt, disclosure, fraud i stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole poleceń Mara CRM', subtitle: 'Linki, zgoda, nagrody, cofnięcia i audyt', type: 'tool', iconName: 'users', actionUrl: 'affiliate' }
+            ],
+            fullArticleGuide: '### Zaufany program poleceń\n\n1. **Potwierdź wartość produktu**: polecenia nie naprawiają słabej retencji lub obsługi.\n2. **Zdefiniuj model**: uczestnik, zaproszenie, odbiorca, konwersja, cykl, atrybucja i zatrzymany klient.\n3. **Oddziel gross od incremental**: uwzględnij osoby, które przyszłyby same, inne kanały, duplikaty i self-referral.\n4. **Uwzględnij pełny koszt**: nagrody, rabaty, wsparcie, podatki, fraud, opłaty i kanibalizację.\n5. **Projektuj dobrowolne udostępnianie**: uczestnik wybiera odbiorcę i kanał; bez dostępu do książki adresowej i wysyłki w jego imieniu bez działania.\n6. **Daj edytowalną wiadomość**: wskaż nadawcę i zachętę; bez fałszywej pilności.\n7. **Chroń odbiorcę**: minimalne dane, źródło, cel, sprzeciw i reguły kanału; bez shadow profiles.\n8. **Napisz jasne warunki**: kwalifikacja, trigger, czas, wygaśnięcie, limity, cofnięcia, zakazy, odwołanie i zmiany.\n9. **Sprawdź prawo i platformy**: disclosure reklamy, promocje, podatki, antykorupcja, sektor i regulamin.\n10. **Proporcjonalnie blokuj nadużycia**: duplikaty, boty, zmowa, refund cycling i kradzież kont; z przeglądem przed odmową.\n11. **Mierz jakość**: dostarczenie, unikalną konwersję, retencję, skargi, rezygnacje, koszt i fraud z mianownikami.\n12. **Stosuj stop rules**: wstrzymaj przy skargach, fraudzie, nierentowności lub przeciążeniu.\n13. **Nie wymuszaj viralności**: użyteczne udostępnianie ma wartość także przy K poniżej jeden.',
+            practicalExamples: [
+              'Członek klika Udostępnij, edytuje jawną wiadomość i wybiera odbiorcę; platforma nie importuje kontaktów.',
+              'Wysoki K spada po usunięciu duplikatów i krótkiej retencji, więc nagroda jest zmieniana.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Polecenia są mierzonym kanałem za zgodą, z kosztami i niepewnością—nie samonapędzającą maszyną.',
+            keyPrinciples: ['Tylko udostępnianie z inicjatywy użytkownika', 'Ujawniaj zachęty i warunki', 'Mierz przyrost, retencję, koszt i szkody'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj kontrolowany pilotaż poleceń:',
+            checklistItems: ['Udokumentowano definicje, kohortę i inkrementalność', 'Przejrzano udostępnianie, disclosure, prywatność i kanał', 'Zatwierdzono warunki, księgowanie, podatki i cofnięcia', 'Skonfigurowano stop rules fraudu, skarg, kosztu i zdolności'],
+            toolboxCategory: 'affiliate',
+          },
+        },
+        '57.2': {
+          stageTitle: '57. Uczciwe listy oczekujących i milestones',
+          title: 'Buduj pre-launch bez sztucznej rzadkości',
+          description: 'Uczciwie komunikuj gotowość i dostęp, testując opcjonalne milestones bez presji i fałszywego social proof.',
+          learnContent: {
+            videoTitle: 'Masterclass: przejrzyste listy i polecenia pre-launch',
+            summaryText: 'Znany wynik innej firmy nie przewiduje własnego launchu. Pozycja, licznik, data dostępu i nagrody muszą być dokładne, znaczące i uczciwie aktualizowane; sztuczna rzadkość i lękowe powiadomienia podważają zgodę.',
+            bulletPoints: [
+              'Podaj znaczenie wpisu, timing, metodę wyboru, kwalifikację i wpływ pozycji na dostęp',
+              'Pokazuj tylko zweryfikowane liczniki i pozycje z czasem oraz informacją o zmianach',
+              'Polecenia są opcjonalne; ważna usługa lub uczciwy dostęp nie zależy od popularności',
+              'Ogranicz komunikaty i zapewnij preferencje, wypisanie, usunięcie i wsparcie'
+            ],
+            coreConcepts: [
+              { iconName: 'award', title: 'UCZCIWE REGUŁY DOSTĘPU', description: 'Kolejka i milestones stosują opublikowane kryteria z odwołaniem.', highlight: true },
+              { iconName: 'trending_up', title: 'ZWERYFIKOWANE MILESTONES', description: 'Nagrody są dostępne, dokładnie opisane i nie wymagają spamu.' }
+            ],
+            resources: [
+              { title: 'Zeszyt przejrzystej listy i launchu', subtitle: 'Dostęp, zdolność, polecenia, komunikacja i fairness', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole listy Mara CRM', subtitle: 'Zgoda, kolejka, polecenia, preferencje i audyt', type: 'tool', iconName: 'layout', actionUrl: 'landingpage' }
+            ],
+            fullArticleGuide: '### Uczciwa lista pre-launch\n\n1. **Określ cel**: planowanie zdolności, beta, regulacje lub komunikacja—nie produkowanie popytu.\n2. **Wyjaśnij ofertę**: status, cena, kraj, kwalifikacja, timing i brak gwarancji wpisu.\n3. **Wybierz uczciwy dostęp**: chronologia, losowanie, potrzeba lub etapy. Uzasadnij ranking poleceń i wpływ na osoby z małą siecią.\n4. **Nie naciskaj w ważnym dostępie**: zdrowie, finanse, praca i inne ważne usługi nie zależą od rekrutacji znajomych.\n5. **Zbieraj minimum**: e-mail lub niezbędne pola z informacją, podstawą, retencją, bezpieczeństwem i usuwaniem.\n6. **Weryfikuj kolejkę**: deduplikuj, obsługuj boty i wyjaśniaj przeliczenie; nie fabrykuj pozycji ani aktywności.\n7. **Uczyń sharing opcjonalnym**: bez importu kontaktów, pre-ticked consent i powtarzanej presji; zapewnij drogę bez polecenia.\n8. **Dokładnie opisz milestones**: kwalifikacja, stan, dostawa, limit, zamiana, podatek i termin.\n9. **Kontroluj komunikację**: potwierdzenie, istotne zmiany i rozsądne powiadomienia z częstotliwością i wypisaniem.\n10. **Zabezpiecz linki**: zapobiegaj enumeracji, wyciekom, przejęciu kont i kradzieży nagród.\n11. **Mierz fairness i jakość**: duplikaty, aktywacja, retencja, skargi, dostępność, wpływ i wsparcie.\n12. **Dotrzymaj launchu**: uczciwie komunikuj opóźnienia, zmiany reguł i zdolność; zapewnij naprawę.\n13. **Archiwizuj dowody**: zgoda, wersja warunków, event kolejki, decyzja nagrody i komunikacja.',
+            practicalExamples: [
+              'Beta stosuje losowanie wśród kwalifikujących się, ponieważ ranking faworyzowałby duże sieci.',
+              'Licznik kolejki ma czas weryfikacji i wyklucza duplikaty oraz niepotwierdzone rekordy.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Zaufana lista zarządza zdolnością i oczekiwaniami; nie produkuje strachu ani fałszywego popytu.',
+            keyPrinciples: ['Nie fabrykuj rzadkości, liczników ani pozycji', 'Zapewnij drogę bez polecenia', 'Publikuj reguły dostępu, nagród i komunikacji'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj przejrzystą listę oczekujących:',
+            checklistItems: ['Spisano cel, kwalifikację, dostęp i timing', 'Przetestowano integralność kolejki, prywatność, bezpieczeństwo i usuwanie', 'Zweryfikowano opcjonalne milestones i dostarczalność', 'Zatwierdzono limity komunikacji, fairness, odwołania i plan opóźnień'],
+            toolboxCategory: 'landingpage',
           },
         },
       },
