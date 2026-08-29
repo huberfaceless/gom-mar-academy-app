@@ -4265,6 +4265,131 @@ Automation can improve allocation, but accountability for claims, data, spend an
         },
       },
     },
+    47: {
+      title: '47. Responsible Meta Ads scaling & creative testing',
+      subtitle: 'Creative experiments, Advantage+ controls, diagnostic metrics and fatigue management',
+      description: 'Build a repeatable Meta advertising programme that tests creative ideas and changes budgets according to evidence, capacity and risk—without guaranteed winners, fixed testing windows or revenue claims.',
+      lessons: {
+        '47.1': {
+          stageTitle: '47. Controlled creative experimentation',
+          title: 'Test creative combinations without treating a 3:2:2 format as a universal formula',
+          description: 'Design bounded experiments for hooks, formats, copy and offers, then interpret delivery, attention and qualified business outcomes without false statistical certainty.',
+          learnContent: {
+            videoTitle: 'Masterclass: Evidence-led creative testing on Meta',
+            summaryText: 'Creative strongly influences delivery and response, but it is not the only form of targeting and no fixed number of assets, hours or budget guarantees a valid winner. Meta may distribute combinations unevenly, platform metrics can be modelled and a post with early engagement may still produce poor customer outcomes.',
+            bulletPoints: [
+              'Turn a customer insight into one documented hypothesis before combining visual, copy and headline variants',
+              'Use 3:2:2 or another matrix only when budget, expected volume and platform features make it suitable',
+              'Read hook rate, hold rate and outbound CTR as diagnostic signals—not universal pass/fail thresholds',
+              'Promote a creative only after checking qualified conversions, margin, complaints, accessibility and sufficient observation',
+            ],
+            coreConcepts: [
+              { iconName: 'layers', title: 'CONTROLLED CREATIVE TEST', description: 'A test states its audience, hypothesis, variants, allocation limits, primary metric, harm metrics, duration and decision rule before launch.', highlight: true },
+              { iconName: 'zap', title: 'RESPONSIBLE SOCIAL PROOF', description: 'Post IDs may preserve genuine engagement, but comments are moderated, privacy is respected and misleading or incentivised proof is never manufactured.' },
+            ],
+            resources: [
+              { title: 'Creative Experiment Workbook', subtitle: 'Hypotheses, asset rights, allocation, metrics and decision log', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Meta Outcome Analytics', subtitle: 'Qualified events, cost, margin and complaint monitoring', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build a creative learning system, not a winner factory
+
+Meta advertising combines creative, delivery optimisation, audience settings, placement, bid strategy, market conditions and measurement. A useful experiment reduces uncertainty; it cannot promise a winner in 48 hours or five-figure daily revenue.
+
+#### Responsible creative-testing workflow
+
+1. **Start with customer research**: Document the problem, context, language and evidence. Do not exploit inferred health, financial distress or other sensitive traits.
+2. **Define one hypothesis**: State what change may improve which qualified outcome and why. Avoid changing the hook, offer and landing page simultaneously.
+3. **Select eligible users and placements**: Check market, age, language, exclusions, accessibility and policy. Broad delivery is an option, not a universal optimum.
+4. **Choose a feasible design**: A 3:2:2 matrix can generate combinations but may not isolate each asset effect. Use split tests when causal comparison matters.
+5. **Set allocation and duration**: Base them on expected event rate, variance, sales delay and affordable risk. Do not use a fixed budget or 48-hour rule for every account.
+6. **Create truthful variants**: Keep claims, prices, testimonials, disclosure and visual context accurate in every combination. Secure music, image and talent rights.
+7. **Design for accessibility**: Add captions, readable contrast, safe pacing and meaning that does not depend only on audio or colour.
+8. **Validate tracking before launch**: Test browser and server events, deduplication, consent, attribution windows, currency and downstream CRM status.
+9. **Protect the experiment**: Log launches and edits, avoid premature changes, set spend and complaint alerts, and define pause conditions.
+10. **Use attention metrics diagnostically**: Define exactly how hook and hold rates are calculated. Compare like-for-like formats and placements.
+11. **Evaluate qualified outcomes**: Review valid leads or sales, margin, refunds, support burden, complaints and repeat quality—not only CTR or platform ROAS.
+12. **Account for uncertainty**: Check sample size, unequal delivery, novelty and multiple comparisons. Call an inconclusive test inconclusive.
+13. **Preserve engagement honestly**: Reuse a post ID only when the ad remains materially the same and comments are authentic and appropriately moderated.
+14. **Record the decision**: Scale, iterate, pause or retest with the evidence and limitations noted.
+15. **Maintain a learning library**: Save hypotheses, assets, rights, results and expiry dates so lessons remain usable and outdated claims are retired.
+
+The objective is a steady flow of reliable learning and suitable customers, not endless content volume or a predetermined winner quota.`,
+            practicalExamples: [
+              'A three-second hook raises video retention but not qualified leads; the team revises the offer-message match instead of declaring the creative a winner.',
+              'A 3:2:2 unit allocates most spend to one combination, so the advertiser runs a separate split test before making a causal claim.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A creative system creates documented learning; formats and attention metrics support decisions but do not guarantee winners or profitability.',
+            keyPrinciples: ['Test a clear hypothesis at affordable risk', 'Compare qualified outcomes beside attention metrics', 'Treat unequal delivery and inconclusive evidence honestly'],
+          },
+          actionTask: {
+            instruction: 'Prepare one controlled creative experiment:',
+            checklistItems: ['Customer insight, hypothesis, eligible audience and exclusions documented', 'Variants, rights, claims, accessibility and landing-page consistency reviewed', 'Test design, allocation, duration, budget and stop rules approved', 'Tracking, deduplication, CRM quality and attribution tested', 'Primary outcome, harm metrics, uncertainty and decision log scheduled'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '47.2': {
+          stageTitle: '47. Advantage+ and evidence-led budget changes',
+          title: 'Scale automated Meta campaigns without fixed percentage or daily-spend promises',
+          description: 'Use Advantage+ features and budget adjustments only where they fit the objective, data and market, with safeguards for tracking, capacity, volatility and customer treatment.',
+          learnContent: {
+            videoTitle: 'Masterclass: Governed Advantage+ campaigns and budget management',
+            summaryText: 'Increasing spend can change delivery, cost and lead quality; there is no universal 20% rule, safe 48-hour interval or guaranteed path from €100 to €1,000 per day. Advantage+ product names and capabilities evolve, so advertisers must verify current settings, document changes and retain a controlled way to pause.',
+            bulletPoints: [
+              'Choose the current Advantage+ campaign setup only after confirming objective, eligibility, controls and reporting limitations',
+              'Increase, decrease or reallocate budgets according to marginal outcome quality, lag, capacity and volatility—not a fixed percentage',
+              'Distinguish vertical budget changes from additional campaign tests without duplicating audiences merely to force spend',
+              'Use automated rules as alerts or bounded controls with tested data, time zones, attribution and human ownership',
+            ],
+            coreConcepts: [
+              { iconName: 'trending_up', title: 'CAPACITY-AWARE SCALING', description: 'Budget changes follow verified marginal results, fulfilment and support capacity, with small diagnosable steps and explicit rollback criteria.', highlight: true },
+              { iconName: 'dollar-sign', title: 'BOUNDED AUTOMATION', description: 'Rules have accurate inputs, caps, cool-down periods, logs and an accountable owner; temporary budget changes never become hidden uncontrolled spend.' },
+            ],
+            resources: [
+              { title: 'Meta Budget Change & Automation Playbook', subtitle: 'Evidence thresholds, caps, alerts, rollback and review log', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Meta Measurement Controls', subtitle: 'Browser and server events, deduplication and qualified outcomes', type: 'tool', iconName: 'settings', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Scale only what remains valuable at the margin
+
+A profitable historical average does not prove that the next euro of spend will perform equally. Meta delivery changes with budget, auction pressure, creative freshness, seasonality and available demand.
+
+#### Responsible scaling workflow
+
+1. **Verify the current platform options**: Meta changes campaign names, Advantage+ features and controls. Use current official documentation and account availability.
+2. **Define the qualified outcome**: Include valid sales or leads, margin, refunds, fraud, service cost and conversion delay.
+3. **Confirm measurement integrity**: Test Pixel and Conversions API events, consent, event matching, deduplication, value, currency and CRM reconciliation.
+4. **Protect customer data**: Minimise identifiers, restrict tokens and access, document retention and use a valid basis for browser and server-side measurement.
+5. **Establish a stable baseline**: Record budget, delivery, creatives, audience settings, placements, attribution and market conditions over a meaningful period.
+6. **Check operational capacity**: Confirm inventory, fulfilment, sales response, support, cash flow and refund handling before increasing demand.
+7. **Choose one scaling hypothesis**: Test a budget change, new creative, new market or new campaign structure separately where practical.
+8. **Size changes to risk and signal**: There is no universal 20% interval. Use account volatility, conversion volume, lag and affordable downside.
+9. **Avoid uncontrolled duplication**: Additional campaigns can compete, fragment learning and obscure incrementality. Create them for a documented test, not as a ritual.
+10. **Govern temporary budget shifts**: Define start, end, maximum spend, time zone and rollback before responding to a peak day. Do not infer future demand from a few early sales.
+11. **Use automated rules cautiously**: Validate the source metric and delay, add caps and cool-downs, log actions and alert a human. Test in a low-risk setting.
+12. **Monitor marginal quality**: Compare the additional spend with additional qualified outcomes, margin, complaints and fulfilment—not only blended ROAS.
+13. **Watch creative and audience effects**: Diagnose frequency, reach, placement, fatigue, negative feedback and market saturation without assuming one threshold fits all.
+14. **Pause on integrity failures**: Stop increases when tracking breaks, lead quality deteriorates, claims expire, stock fails or complaints breach the approved limit.
+15. **Document and review**: Record what changed, evidence, uncertainty and rollback. Reassess after the full conversion and refund window.
+
+Scaling is successful only when additional spend continues to create suitable customer value without overwhelming operations or weakening measurement.`,
+            practicalExamples: [
+              'An increase preserves platform ROAS but produces more invalid leads and slower follow-up, so the business restores the prior budget.',
+              'A weekend rule doubles spend after a few morning sales; a controlled test later shows no incremental margin, so the rule is retired.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Scaling is an evidence-led operational decision, not a fixed percentage ritual; marginal quality and capacity matter more than headline spend.',
+            keyPrinciples: ['Verify current Advantage+ features and controls', 'Change budgets according to lag, volatility and marginal value', 'Govern server-side tracking and automated rules with privacy and rollback'],
+          },
+          actionTask: {
+            instruction: 'Design one controlled budget-change pilot:',
+            checklistItems: ['Current campaign options, baseline and qualified economics documented', 'Pixel and CAPI consent, security, deduplication, values and CRM reconciliation tested', 'Capacity, cash flow, inventory, support and refund limits confirmed', 'Change size, duration, spend cap, cool-down, alerts and rollback approved', 'Marginal outcomes, lead quality, complaints and full lag review scheduled'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -8512,6 +8637,131 @@ Automatyzacja może poprawić alokację, ale odpowiedzialność za twierdzenia, 
             instruction: 'Zaprojektuj jeden nadzorowany pilotaż kampanii automatycznej:',
             checklistItems: ['Udokumentowano przydatność, ekonomikę, możliwości, budżet i okres uczenia', 'Sprawdzono zdarzenia, wartości, opóźnienie, zwroty i deduplikację', 'Zweryfikowano prawa do materiałów, twierdzenia, adresy, języki i dostępność', 'Zatwierdzono sygnały, dane klientów, kontrolę marki i podstawę prywatności', 'Skonfigurowano metodę przyrostu, ocenę jakości leadów, alerty i reguły pauzy'],
             toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+    47: {
+      title: '47. Odpowiedzialne skalowanie Meta Ads i testowanie kreacji',
+      subtitle: 'Eksperymenty kreacji, kontrola Advantage+, metryki diagnostyczne i zmęczenie reklamą',
+      description: 'Buduj powtarzalny program reklam Meta, który testuje pomysły i zmienia budżety na podstawie danych, możliwości oraz ryzyka—bez gwarancji zwycięzców, stałych okien testu i obietnic przychodu.',
+      lessons: {
+        '47.1': {
+          stageTitle: '47. Kontrolowane eksperymenty kreacji',
+          title: 'Testuj kombinacje bez traktowania układu 3:2:2 jako uniwersalnej formuły',
+          description: 'Projektuj ograniczone testy hooków, formatów, tekstów i ofert, a następnie oceniaj dystrybucję, uwagę oraz jakościowe wyniki bez fałszywej pewności statystycznej.',
+          learnContent: {
+            videoTitle: 'Masterclass: testowanie kreacji Meta na podstawie danych',
+            summaryText: 'Kreacja silnie wpływa na emisję i reakcję, ale nie jest jedynym targetowaniem, a żadna liczba materiałów, godzin czy budżet nie gwarantują trafnego zwycięzcy. Meta może nierówno rozdzielać kombinacje, a wczesne zaangażowanie może prowadzić do słabych wyników klienta.',
+            bulletPoints: [
+              'Przekształć insight klienta w jedną udokumentowaną hipotezę przed połączeniem obrazu, tekstu i nagłówka',
+              'Stosuj 3:2:2 lub inną macierz tylko wtedy, gdy pasuje do budżetu, spodziewanego wolumenu i funkcji platformy',
+              'Traktuj hook rate, hold rate i outbound CTR jako sygnały diagnostyczne, a nie uniwersalne progi',
+              'Promuj kreację dopiero po sprawdzeniu jakości konwersji, marży, skarg, dostępności i odpowiedniego okresu',
+            ],
+            coreConcepts: [
+              { iconName: 'layers', title: 'KONTROLOWANY TEST KREACJI', description: 'Test z góry określa odbiorców, hipotezę, warianty, limity alokacji, główny miernik, ryzyko, czas i regułę decyzji.', highlight: true },
+              { iconName: 'zap', title: 'UCZCIWY DOWÓD SPOŁECZNY', description: 'Identyfikator posta może zachować autentyczne reakcje, lecz komentarze są moderowane, a fałszywego dowodu nigdy się nie tworzy.' },
+            ],
+            resources: [
+              { title: 'Zeszyt eksperymentów kreacji', subtitle: 'Hipotezy, prawa do materiałów, alokacja, mierniki i rejestr decyzji', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Analityka wyników Meta w GOM-MAR', subtitle: 'Jakościowe zdarzenia, koszt, marża i monitoring skarg', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj system nauki, a nie fabrykę zwycięzców
+
+Reklama Meta łączy kreację, optymalizację emisji, odbiorców, miejsca, stawki, rynek i pomiar. Dobry eksperyment ogranicza niepewność; nie może obiecać zwycięzcy w 48 godzin ani pięciocyfrowego dziennego przychodu.
+
+#### Odpowiedzialny proces testowania
+
+1. **Zacznij od badania klientów**: Udokumentuj problem, kontekst, język i dowody. Nie wykorzystuj domniemanych problemów zdrowotnych, finansowych ani innych cech wrażliwych.
+2. **Zdefiniuj jedną hipotezę**: Określ, jaka zmiana może poprawić który jakościowy wynik i dlaczego.
+3. **Wybierz odbiorców i miejsca emisji**: Sprawdź rynek, wiek, język, wykluczenia, dostępność i zasady. Szeroka emisja jest opcją, nie uniwersalnym optimum.
+4. **Dobierz wykonalny projekt**: Macierz 3:2:2 tworzy kombinacje, ale może nie izolować wpływu zasobów. Gdy liczy się przyczynowość, użyj testu A/B.
+5. **Ustal alokację i czas**: Oprzyj je na częstości zdarzeń, zmienności, opóźnieniu sprzedaży i akceptowalnym ryzyku, nie stałym budżecie lub 48 godzinach.
+6. **Twórz prawdziwe warianty**: W każdej kombinacji utrzymaj prawdziwe twierdzenia, ceny, opinie, ujawnienia i kontekst. Zabezpiecz prawa do muzyki i obrazu.
+7. **Zapewnij dostępność**: Dodaj napisy, czytelny kontrast, bezpieczne tempo i znaczenie niezależne wyłącznie od dźwięku lub koloru.
+8. **Sprawdź pomiar przed startem**: Przetestuj zdarzenia przeglądarki i serwera, deduplikację, zgodę, okna atrybucji, walutę i status CRM.
+9. **Chroń eksperyment**: Rejestruj starty i zmiany, unikaj przedwczesnych edycji oraz ustaw alerty wydatków i skarg.
+10. **Używaj metryk uwagi diagnostycznie**: Dokładnie określ obliczenia i porównuj podobne formaty oraz miejsca.
+11. **Oceniaj jakościowe wyniki**: Sprawdzaj prawidłowe leady lub sprzedaż, marżę, zwroty, obsługę, skargi i powtarzalną jakość.
+12. **Uwzględniaj niepewność**: Oceniaj próbę, nierówną emisję, efekt nowości i wielokrotne porównania. Niejednoznaczny test nazwij niejednoznacznym.
+13. **Uczciwie zachowuj reakcje**: Używaj tego samego ID tylko przy istotnie tej samej reklamie i autentycznych, odpowiednio moderowanych komentarzach.
+14. **Zapisz decyzję**: Skaluj, poprawiaj, zatrzymaj lub powtórz test, notując dowody i ograniczenia.
+15. **Utrzymuj bibliotekę nauki**: Zapisuj hipotezy, materiały, prawa, wyniki i terminy wygaśnięcia, usuwając nieaktualne twierdzenia.
+
+Celem jest stały dopływ wiarygodnej wiedzy i odpowiednich klientów, a nie z góry ustalona liczba zwycięzców.`,
+            practicalExamples: [
+              'Trzysekundowy hook poprawia retencję filmu, lecz nie jakościowe leady; zespół koryguje zgodność komunikatu z ofertą.',
+              'Jednostka 3:2:2 kieruje większość budżetu do jednej kombinacji, więc reklamodawca uruchamia osobny test przed stwierdzeniem przyczyny.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'System kreacji tworzy udokumentowaną wiedzę; formaty i metryki uwagi wspierają decyzje, ale nie gwarantują zwycięzców ani rentowności.',
+            keyPrinciples: ['Testuj jasną hipotezę przy akceptowalnym ryzyku', 'Porównuj jakościowe wyniki z metrykami uwagi', 'Uczciwie traktuj nierówną emisję i niejednoznaczne dane'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj jeden kontrolowany eksperyment kreacji:',
+            checklistItems: ['Udokumentowano insight, hipotezę, odbiorców i wykluczenia', 'Sprawdzono warianty, prawa, twierdzenia, dostępność i zgodność strony', 'Zatwierdzono projekt, alokację, czas, budżet i reguły zatrzymania', 'Przetestowano pomiar, deduplikację, jakość CRM i atrybucję', 'Zaplanowano wynik główny, mierniki ryzyka, niepewność i rejestr decyzji'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '47.2': {
+          stageTitle: '47. Advantage+ i zmiany budżetu oparte na danych',
+          title: 'Skaluj automatyczne kampanie Meta bez stałych procentów i obietnic wydatków',
+          description: 'Używaj funkcji Advantage+ i zmian budżetu tylko wtedy, gdy pasują do celu, danych i rynku, z ochroną pomiaru, możliwości obsługi, zmienności i klientów.',
+          learnContent: {
+            videoTitle: 'Masterclass: nadzorowane Advantage+ i zarządzanie budżetem',
+            summaryText: 'Zwiększenie wydatków może zmienić emisję, koszt i jakość leadów; nie istnieje uniwersalna reguła 20%, bezpieczny odstęp 48 godzin ani gwarantowana droga ze 100 € do 1000 € dziennie. Nazwy i możliwości Advantage+ ewoluują, dlatego trzeba sprawdzać aktualne ustawienia, dokumentować zmiany i zachować kontrolowaną pauzę.',
+            bulletPoints: [
+              'Wybierz aktualny wariant kampanii Advantage+ dopiero po sprawdzeniu celu, dostępności, kontroli i ograniczeń raportowania',
+              'Zmieniaj budżety według krańcowej jakości, opóźnienia, możliwości obsługi i zmienności, a nie stałego procentu',
+              'Rozróżniaj pionową zmianę budżetu od dodatkowego testu kampanii i nie duplikuj odbiorców wyłącznie dla zwiększenia wydatku',
+              'Stosuj reguły automatyczne jako alerty lub ograniczoną kontrolę z prawidłowymi danymi, strefą czasu i ludzkim właścicielem',
+            ],
+            coreConcepts: [
+              { iconName: 'trending_up', title: 'SKALOWANIE WEDŁUG MOŻLIWOŚCI', description: 'Zmiany budżetu podążają za zweryfikowanym wynikiem krańcowym oraz możliwościami realizacji, z kryteriami wycofania.', highlight: true },
+              { iconName: 'dollar-sign', title: 'OGRANICZONA AUTOMATYZACJA', description: 'Reguły mają poprawne dane, limity, okresy wyciszenia, dzienniki i odpowiedzialnego właściciela.' },
+            ],
+            resources: [
+              { title: 'Playbook zmian budżetu i automatyzacji Meta', subtitle: 'Progi danych, limity, alerty, wycofanie i rejestr przeglądów', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrola pomiaru Meta w Mara CRM', subtitle: 'Zdarzenia przeglądarki i serwera, deduplikacja i jakościowe wyniki', type: 'tool', iconName: 'settings', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Skaluj tylko to, co zachowuje wartość na marginesie
+
+Rentowna średnia historyczna nie dowodzi, że następne euro wydatku zadziała tak samo. Emisja Meta zmienia się wraz z budżetem, presją aukcji, świeżością kreacji, sezonowością i popytem.
+
+#### Odpowiedzialny proces skalowania
+
+1. **Sprawdź aktualne opcje platformy**: Meta zmienia nazwy, funkcje Advantage+ i kontrolę. Korzystaj z bieżącej dokumentacji oraz ustawień dostępnych na koncie.
+2. **Zdefiniuj jakościowy wynik**: Uwzględnij prawidłową sprzedaż lub leady, marżę, zwroty, oszustwa, koszt obsługi i opóźnienie.
+3. **Potwierdź spójność pomiaru**: Testuj Pixel i Conversions API, zgodę, dopasowanie zdarzeń, deduplikację, wartość, walutę i uzgodnienie z CRM.
+4. **Chroń dane klientów**: Minimalizuj identyfikatory, ograniczaj tokeny i dostęp, dokumentuj retencję oraz właściwą podstawę pomiaru.
+5. **Ustal stabilną bazę**: Zapisz budżet, emisję, kreacje, odbiorców, miejsca, atrybucję i rynek w znaczącym okresie.
+6. **Sprawdź możliwości operacyjne**: Potwierdź zapasy, realizację, reakcję sprzedaży, wsparcie, płynność i obsługę zwrotów.
+7. **Wybierz jedną hipotezę skalowania**: Gdy to możliwe, osobno testuj budżet, nową kreację, rynek lub strukturę kampanii.
+8. **Dostosuj zmianę do ryzyka i sygnału**: Nie ma uniwersalnego odstępu 20%. Uwzględnij zmienność, wolumen, opóźnienie i możliwą stratę.
+9. **Unikaj niekontrolowanej duplikacji**: Dodatkowe kampanie mogą konkurować, rozbijać uczenie i zaciemniać przyrost.
+10. **Nadzoruj tymczasowe przesunięcia**: Przed dniem szczytowym określ początek, koniec, maksymalny wydatek, strefę czasu i wycofanie.
+11. **Ostrożnie stosuj reguły**: Zweryfikuj źródło i opóźnienie miernika, dodaj limity i okres wyciszenia, zapisuj działania oraz alarmuj człowieka.
+12. **Monitoruj jakość krańcową**: Porównuj dodatkowy wydatek z dodatkowymi jakościowymi wynikami, marżą, skargami i realizacją.
+13. **Obserwuj kreację i odbiorców**: Diagnozuj częstotliwość, zasięg, miejsca, zmęczenie, negatywne reakcje i nasycenie bez uniwersalnych progów.
+14. **Pauzuj przy awarii integralności**: Zatrzymaj wzrost, gdy pomiar się psuje, jakość spada, twierdzenia wygasają, brakuje zapasu lub rosną skargi.
+15. **Dokumentuj i oceniaj**: Zapisz zmianę, dowody, niepewność i wycofanie; wróć do oceny po pełnym oknie konwersji i zwrotów.
+
+Skalowanie ma sens tylko wtedy, gdy dodatkowy wydatek nadal tworzy wartość bez przeciążania operacji i osłabiania pomiaru.`,
+            practicalExamples: [
+              'Po zwiększeniu budżetu ROAS platformy pozostaje stabilny, lecz przybywa nieważnych leadów, więc firma wraca do poprzedniego poziomu.',
+              'Reguła weekendowa podwaja wydatek po kilku porannych sprzedażach; późniejszy kontrolowany test nie wykazuje dodatkowej marży, więc reguła zostaje usunięta.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Skalowanie to decyzja operacyjna oparta na danych, nie rytuał stałego procentu; jakość krańcowa i możliwości są ważniejsze niż wysokość wydatku.',
+            keyPrinciples: ['Sprawdzaj aktualne funkcje i kontrolę Advantage+', 'Zmieniaj budżet według opóźnienia, zmienności i wartości krańcowej', 'Nadzoruj CAPI i reguły automatyczne z prywatnością oraz wycofaniem'],
+          },
+          actionTask: {
+            instruction: 'Zaprojektuj jeden kontrolowany pilotaż zmiany budżetu:',
+            checklistItems: ['Udokumentowano aktualne opcje, bazę i jakościową ekonomikę', 'Przetestowano zgodę Pixel/CAPI, bezpieczeństwo, deduplikację, wartości i CRM', 'Potwierdzono możliwości, płynność, zapasy, wsparcie i limity zwrotów', 'Zatwierdzono zmianę, czas, limit wydatku, wyciszenie, alerty i wycofanie', 'Zaplanowano ocenę krańcowych wyników, jakości leadów, skarg i pełnego opóźnienia'],
+            toolboxCategory: 'crm',
           },
         },
       },
