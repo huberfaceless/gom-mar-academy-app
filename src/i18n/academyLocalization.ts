@@ -3049,6 +3049,128 @@ Ethical framing helps customers compare; it does not predetermine the answer thr
         },
       },
     },
+    37: {
+      title: '37. Fair application funnels & responsible qualification',
+      subtitle: 'Proportionate forms, transparent suitability criteria, human review and privacy-aware routing',
+      description: 'Design application and discovery journeys that protect everyone’s time, identify mutual fit and offer useful alternatives—without wealth-based exclusion, coercive power dynamics or opaque profiling.',
+      lessons: {
+        '37.1': {
+          stageTitle: '37. Application-funnel architecture',
+          title: 'A four-phase suitability journey for complex services',
+          description: 'Move from clear service information through a proportionate questionnaire and human review to an optional meeting, with accessible routes for questions and alternatives.',
+          learnContent: {
+            videoTitle: 'Masterclass: Fair application and discovery journey',
+            summaryText: 'An application form should support an informed, two-way decision. It does not prove willingness to pay, reverse a power relationship or justify collecting excessive personal data. The provider must explain the offer, criteria, data use and next steps before asking for information.',
+            bulletPoints: [
+              'Explain the service, evidence, limits, total price range, eligibility and expected work before requesting an application',
+              'Ask only questions necessary to assess delivery fit, capacity and safety; offer “prefer not to say” where appropriate',
+              'Use budget as a transparent feasibility topic, not a proxy for worth, seriousness or vulnerability',
+              'Provide accessible human review, correction and appeal plus a useful route for people who are not currently a fit',
+            ],
+            coreConcepts: [
+              { iconName: 'filter', title: 'MUTUAL-FIT REVIEW', description: 'Published criteria assess whether needs, scope, timing, resources and provider capability align. A rejection is reasoned, respectful and not solely automated.', highlight: true },
+              { iconName: 'video', title: 'INFORMED CASE STUDY', description: 'A concise, captioned case study states context, methods, conditions, limitations and typicality instead of claiming to remove every objection.' },
+            ],
+            resources: [
+              { title: 'Application Form & Suitability Review Pack', subtitle: 'Purpose, questions, accessibility, privacy, criteria and alternatives', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Application Builder', subtitle: 'Create minimised forms, review queues and retention controls', type: 'tool', iconName: 'edit', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### A fair application journey is a two-way fit check
+
+Complex or capacity-limited services can benefit from qualification, but the process must not imply that applicants are inferior, pressure them to disclose unnecessary information or automatically exclude them through hidden rules.
+
+#### Four phases
+
+1. **Inform before collecting**: Explain provider identity, service scope, evidence, material risks, exclusions, representative outcomes, price range, expected customer work, availability and how questions can be asked without applying.
+2. **Collect a proportionate application**: State the purpose of each section and request only information needed for fit and delivery. Avoid sensitive data unless necessary and lawfully handled. Save progress, support keyboard and screen readers and provide another channel.
+3. **Review and offer a meeting**: Apply documented criteria consistently. Validate important answers, allow correction and route uncertain or consequential cases to a trained human. A calendar invitation is optional and must not silently subscribe the person to marketing.
+4. **Confirm, decline or redirect respectfully**: Explain the outcome in useful terms, provide a contact or review route where appropriate, apply retention and deletion rules and offer genuinely relevant public resources—not an automatic paid downsell.
+
+#### Operating controls
+
+- Separate service-enquiry processing from consent for email, SMS, WhatsApp or other marketing.
+- Identify every processor, integration and recipient; secure form data and restrict CRM access.
+- Do not ask applicants to expose passwords, health details, protected traits or financial hardship without a necessary, lawful and safeguarded purpose.
+- Never infer seriousness from questionnaire length. Test completion, comprehension, accessibility, abandonment and downstream fit.
+- Case studies must be authorised and accurately state context, selection, conditions and limitations.
+- Preparation material should help the applicant evaluate the service; do not make unpaid “homework” a hidden condition or sunk-cost pressure.
+- Set response-time expectations and a recovery route for failed forms, missed messages and unavailable calendars.
+- Review acceptance patterns for unjustified disparity and update criteria when they exclude suitable people.
+
+The goal is not a “perfect funnel”. It is a documented, understandable service journey that produces informed mutual decisions.`,
+            practicalExamples: [
+              'A consultancy publishes its scope and price range, asks six necessary questions, manually reviews borderline cases and explains a non-fit without adding the person to a campaign.',
+              'A captioned case study states the client context and limits; applicants can read the same information as text and book an accessibility-supported call.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Submitting an application signals interest, not ability to pay or consent to persuasion; suitability is a fair, two-way and reviewable judgment.',
+            keyPrinciples: ['Explain criteria and data use before collection', 'Minimise questions and provide accessible alternatives', 'Keep material decisions reviewable by a trained person'],
+          },
+          actionTask: {
+            instruction: 'Design a fair application and review pilot:',
+            checklistItems: ['Service scope, price range, evidence, exclusions and criteria published', 'Each form field has a necessary purpose, retention rule and accessibility check', 'Marketing consent is separate, specific and unbundled', 'Human review, correction and respectful non-fit route documented', 'Completion, comprehension, disparity, complaints and downstream fit will be monitored'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '37.2': {
+          stageTitle: '37. Responsible lead scoring & routing',
+          title: 'Build explainable prioritisation with privacy and human oversight',
+          description: 'Use CRM rules to manage response queues and service fit while avoiding hidden wealth scoring, sensitive inference, intrusive messaging and fully automated consequential decisions.',
+          learnContent: {
+            videoTitle: 'Masterclass: Explainable CRM scoring and routing',
+            summaryText: 'A score is a fallible operational signal, not a measurement of a person’s value or guaranteed purchase probability. Define a lawful purpose, use necessary data, test validity and bias, keep meaningful human oversight and honour communication preferences.',
+            bulletPoints: [
+              'Score observable service-fit factors with documented rationale; do not use protected traits, vulnerability or opaque behavioural proxies',
+              'Separate response priority from acceptance, price, creditworthiness and entitlement to service',
+              'Send alerts only to assigned staff through approved channels and never expose application details in insecure notifications',
+              'Give every segment an appropriate response, correction route and communication choice instead of automatic pressure or paid downsells',
+            ],
+            coreConcepts: [
+              { iconName: 'bar-chart-2', title: 'EXPLAINABLE SIGNAL', description: 'Every factor has a purpose, source, weight, validation record, owner and expiry. Staff can see why a score changed and override it with a reason.', highlight: true },
+              { iconName: 'send', title: 'CONSENT-AWARE ROUTING', description: 'Route the enquiry to the right queue without treating it as permission for calls, SMS, messaging apps or nurture campaigns.' },
+            ],
+            resources: [
+              { title: 'Lead-Scoring Governance & Validation Matrix', subtitle: 'Purpose, factors, fairness, overrides, retention and monitoring', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Review Queue', subtitle: 'Explain scores, record overrides and enforce contact preferences', type: 'tool', iconName: 'settings', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Responsible scoring supports work; it does not rank human worth
+
+CRM scoring can help allocate limited response capacity. It can also reproduce discrimination, hide weak assumptions and turn a service enquiry into unwanted surveillance. Treat the system as governed decision support.
+
+#### Governance workflow
+
+1. **Define the purpose and boundary**: State the operational problem, affected people, decisions the score may support and decisions it must never make.
+2. **Map data and legal responsibilities**: Record source, purpose, legal basis where required, recipients, retention, rights, processors and transfers. Marketing objections must be honoured promptly.
+3. **Choose necessary factors**: Prefer direct, current indicators of service scope, timing, language, provider capacity and stated preference. Exclude sensitive traits and proxies unless a qualified review establishes necessity and safeguards.
+4. **Do not equate budget with merit**: A declared range may identify commercial feasibility, but it must not determine respect, eligibility for public information or willingness to engage. Offer transparent service tiers or alternatives.
+5. **Create understandable rules**: Document weights, thresholds, missing-value treatment, confidence and examples. Avoid invented precision such as “purchase probability in milliseconds”.
+6. **Validate before use**: Test against a representative historical or controlled sample for accuracy, false positives, false negatives, calibration and unjustified group disparity. Do not train on biased past sales without review.
+7. **Keep meaningful human involvement**: Reviewers need authority, time and information to challenge the output—not merely click approve. Record overrides and use them to improve the system.
+8. **Design communications separately**: Determine channel permission, frequency, quiet hours and opt-out before calls, SMS, WhatsApp, Telegram or email. An internal urgency flag is not consent.
+9. **Secure alerts and access**: Notifications should contain the minimum data, use approved systems, avoid shared credentials and be logged. Revoke access when roles change.
+10. **Provide information and routes to act**: Explain relevant profiling and consequences where required, enable access and correction and provide human contact and contest routes for significant outcomes.
+11. **Monitor customer outcomes**: Track response quality, wait time, fit, no-shows, complaints, opt-outs, acceptance disparities, refunds and overrides. A faster call is not automatically a better outcome.
+12. **Revalidate and retire**: Review factors after product, market, data or legal changes. Pause the model when drift, harm or poor explainability exceeds the defined threshold.
+
+Requirements for profiling and automated decision-making depend on context and jurisdiction. Obtain current privacy, consumer, employment or financial-services advice where relevant.`,
+            practicalExamples: [
+              'A score prioritises enquiries by requested start date and available specialist capacity; acceptance still receives human review and the applicant can correct an outdated answer.',
+              'An SMS alert contains only a record ID, while the CRM enforces role-based access and checks the person’s channel preference before any message is sent.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Lead scoring is accountable decision support: limited in purpose, explainable, validated, privacy-aware and subject to meaningful human judgment.',
+            keyPrinciples: ['Never rank people by wealth or sensitive proxies', 'An enquiry is not universal marketing consent', 'Validate outcomes and disparities, not only sales'],
+          },
+          actionTask: {
+            instruction: 'Prepare a governed scoring and routing pilot:',
+            checklistItems: ['Purpose, prohibited uses, factors, sources, weights and expiry documented', 'Privacy, retention, rights, processor and security review completed', 'Validation covers errors, calibration and unjustified disparity', 'Human review, override, correction and contest process configured', 'Channel permission, opt-out, monitoring and model stop rule implemented'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -6080,6 +6202,128 @@ Etyczny framing pomaga porównywać; nie narzuca odpowiedzi przez deception lub 
             instruction: 'Przeprowadź odpowiedzialny audit i test jednej tabeli cen:',
             checklistItems: ['Określono odbiorcę i właściwy use case dla każdego tier', 'Zweryfikowano ceny odniesienia, porównania i oszczędności', 'Pełny koszt, renewal, limity, anulowanie i zwroty są widoczne', 'Usunięto false scarcity, preselection, utrudnioną odmowę i sztuczny decoy', 'Przygotowano hipotezę, guardrails jakości, stop rule i archiwum dowodów'],
             toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+    37: {
+      title: '37. Uczciwe application funnels i odpowiedzialna kwalifikacja',
+      subtitle: 'Proporcjonalne formularze, jawne kryteria dopasowania, human review i routing z ochroną privacy',
+      description: 'Projektuj ścieżki zgłoszenia i discovery, które chronią czas obu stron, rozpoznają wzajemne dopasowanie i oferują użyteczne alternatywy — bez wykluczania według majątku, presji władzy ani opaque profiling.',
+      lessons: {
+        '37.1': {
+          stageTitle: '37. Architektura application funnel',
+          title: 'Czterofazowa ścieżka dopasowania dla złożonych usług',
+          description: 'Przejdź od jasnych informacji o usłudze przez proporcjonalny kwestionariusz i human review do opcjonalnego spotkania, zachowując dostępne drogi pytań i alternatywy.',
+          learnContent: {
+            videoTitle: 'Masterclass: Uczciwa ścieżka zgłoszenia i discovery',
+            summaryText: 'Formularz powinien wspierać świadomą, dwustronną decyzję. Nie dowodzi gotowości do zapłaty, nie odwraca relacji władzy ani nie uzasadnia nadmiernego zbierania danych. Przed pytaniami provider wyjaśnia ofertę, kryteria, dane i następne kroki.',
+            bulletPoints: [
+              'Przed zgłoszeniem wyjaśnij usługę, dowody, granice, pełny zakres ceny, eligibility i oczekiwaną pracę',
+              'Pytaj tylko o dane konieczne do oceny delivery fit, capacity i safety; tam gdzie właściwe daj „wolę nie odpowiadać”',
+              'Traktuj budżet jako jawny temat wykonalności, nie proxy wartości, powagi lub vulnerability człowieka',
+              'Zapewnij dostępny human review, korektę i odwołanie oraz użyteczną drogę dla osób obecnie niedopasowanych',
+            ],
+            coreConcepts: [
+              { iconName: 'filter', title: 'REVIEW WZAJEMNEGO DOPASOWANIA', description: 'Jawne kryteria oceniają potrzeby, zakres, czas, zasoby i capability providera. Odmowa ma powód, szacunek i nie jest wyłącznie automatyczna.', highlight: true },
+              { iconName: 'video', title: 'ŚWIADOME CASE STUDY', description: 'Krótkie, opisane napisami case study podaje kontekst, metodę, warunki, granice i typowość zamiast obiecywać usunięcie każdej obiekcji.' },
+            ],
+            resources: [
+              { title: 'Pakiet formularza i review dopasowania', subtitle: 'Cel, pytania, dostępność, privacy, kryteria i alternatywy', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Builder zgłoszeń Mara CRM', subtitle: 'Minimalne formularze, kolejki review i kontrola retencji', type: 'tool', iconName: 'edit', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Uczciwa ścieżka zgłoszenia jest dwustronnym sprawdzeniem dopasowania
+
+Złożone lub ograniczone capacity usługi mogą wymagać kwalifikacji, lecz proces nie może sugerować niższej wartości aplikanta, wymuszać zbędnych danych ani automatycznie wykluczać przez ukryte reguły.
+
+#### Cztery fazy
+
+1. **Informuj przed zbieraniem**: Podaj providera, scope, dowody, istotne ryzyka, wykluczenia, reprezentatywne wyniki, zakres ceny, oczekiwaną pracę, dostępność i drogę pytań bez aplikowania.
+2. **Zbieraj proporcjonalne zgłoszenie**: Wyjaśnij cel sekcji i pytaj tylko o dane potrzebne do fit i realizacji. Unikaj sensitive data bez konieczności i właściwej podstawy. Zapisuj postęp, wspieraj keyboard i screen readers oraz inny kanał.
+3. **Przejrzyj i zaproponuj spotkanie**: Stosuj kryteria spójnie. Weryfikuj ważne odpowiedzi, umożliwiaj korektę, a niepewne lub consequential cases kieruj do przeszkolonego człowieka. Kalendarz jest opcjonalny i nie zapisuje do marketingu.
+4. **Potwierdź, odmów lub przekieruj z szacunkiem**: Użytecznie wyjaśnij wynik, zapewnij kontakt lub review, stosuj retencję i deletion oraz oferuj trafne publiczne zasoby, nie automatyczny płatny downsell.
+
+#### Kontrole operacyjne
+
+- Oddziel przetwarzanie zapytania od zgody na email, SMS, WhatsApp lub inny marketing.
+- Zidentyfikuj processors, integracje i odbiorców; zabezpiecz dane i ogranicz dostęp CRM.
+- Nie pytaj o hasła, zdrowie, protected traits ani trudności finansowe bez koniecznego, legalnego i chronionego celu.
+- Nie wnioskuj o powadze z długości formularza. Testuj completion, zrozumienie, dostępność, abandonment i downstream fit.
+- Case studies muszą mieć zgodę i dokładnie podawać kontekst, selekcję, warunki i granice.
+- Materiał przygotowawczy pomaga ocenić usługę; nie jest ukrytą unpaid homework ani presją sunk-cost.
+- Określ response time i recovery dla błędów formularza, wiadomości i kalendarza.
+- Przeglądaj acceptance patterns pod kątem nieuzasadnionych różnic i poprawiaj kryteria wykluczające właściwe osoby.
+
+Celem nie jest „perfekcyjny funnel”, lecz udokumentowana, zrozumiała ścieżka do świadomej decyzji obu stron.`,
+            practicalExamples: [
+              'Konsultant publikuje scope i zakres ceny, zadaje sześć koniecznych pytań, ręcznie sprawdza borderline cases i wyjaśnia non-fit bez dodawania do kampanii.',
+              'Case study z napisami podaje kontekst i granice; ta sama treść jest dostępna jako tekst, a rozmowa może otrzymać accessibility support.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Zgłoszenie oznacza zainteresowanie, nie zdolność płatniczą ani zgodę na perswazję; suitability jest uczciwym, dwustronnym i reviewable osądem.',
+            keyPrinciples: ['Wyjaśnij kryteria i dane przed zebraniem', 'Minimalizuj pytania i zapewnij dostępne alternatywy', 'Istotne decyzje podlegają human review'],
+          },
+          actionTask: {
+            instruction: 'Zaprojektuj pilot uczciwego zgłoszenia i review:',
+            checklistItems: ['Opublikowano scope, cenę, dowody, wykluczenia i kryteria', 'Każde pole ma konieczny cel, retencję i accessibility check', 'Zgoda marketingowa jest osobna, konkretna i unbundled', 'Udokumentowano human review, korektę i respectful non-fit', 'Monitorowane będą completion, zrozumienie, disparity, skargi i fit'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '37.2': {
+          stageTitle: '37. Odpowiedzialny lead scoring i routing',
+          title: 'Buduj wyjaśnialną priorytetyzację z privacy i human oversight',
+          description: 'Stosuj reguły CRM do kolejek odpowiedzi i service fit, unikając ukrytego wealth scoring, sensitive inference, intrusive messaging i consequential decisions bez człowieka.',
+          learnContent: {
+            videoTitle: 'Masterclass: Wyjaśnialny CRM scoring i routing',
+            summaryText: 'Score jest omylnym sygnałem operacyjnym, nie miarą wartości osoby ani gwarancją zakupu. Określ legalny cel, używaj potrzebnych danych, testuj validity i bias, zachowaj human oversight i respektuj preferencje kontaktu.',
+            bulletPoints: [
+              'Punktuj obserwowalne czynniki service fit z uzasadnieniem; bez protected traits, vulnerability i opaque behavioural proxies',
+              'Oddziel priorytet odpowiedzi od akceptacji, ceny, creditworthiness i prawa do usługi',
+              'Alerty wysyłaj tylko przypisanym pracownikom przez zatwierdzone kanały, bez danych zgłoszenia w niezabezpieczonym notification',
+              'Każdemu segmentowi daj właściwą odpowiedź, korektę i wybór komunikacji zamiast automatycznej presji lub paid downsell',
+            ],
+            coreConcepts: [
+              { iconName: 'bar-chart-2', title: 'WYJAŚNIALNY SYGNAŁ', description: 'Każdy factor ma cel, źródło, wagę, validation, ownera i expiry. Pracownik widzi przyczynę zmiany i może override z uzasadnieniem.', highlight: true },
+              { iconName: 'send', title: 'ROUTING ŚWIADOMY ZGODY', description: 'Kieruj zapytanie do kolejki bez uznania go za zgodę na telefon, SMS, komunikator lub nurture campaign.' },
+            ],
+            resources: [
+              { title: 'Macierz governance i validation lead scoring', subtitle: 'Cel, factors, fairness, overrides, retencja i monitoring', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kolejka review Mara CRM', subtitle: 'Wyjaśniaj scores, zapisuj overrides i egzekwuj contact preferences', type: 'tool', iconName: 'settings', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Odpowiedzialny scoring wspiera pracę, nie szereguje wartości ludzi
+
+CRM scoring pomaga alokować ograniczony czas. Może też reprodukować dyskryminację, ukrywać słabe assumptions i zamienić zapytanie w unwanted surveillance. Traktuj go jako governed decision support.
+
+#### Workflow governance
+
+1. **Określ cel i granicę**: Zapisz problem operacyjny, osoby, decyzje wspierane przez score i decyzje zakazane.
+2. **Mapuj dane i odpowiedzialność**: Zapisz źródło, cel, podstawę gdzie wymagana, odbiorców, retencję, rights, processors i transfery. Sprzeciw marketingowy kończy marketing promptly.
+3. **Wybierz konieczne factors**: Preferuj bezpośrednie, aktualne wskaźniki scope, czasu, języka, capacity providera i deklarowanej preferencji. Wyklucz sensitive traits i proxies bez kwalifikowanego review.
+4. **Nie utożsamiaj budżetu z wartością**: Zakres może wskazać wykonalność, lecz nie determinuje szacunku, dostępu do informacji ani chęci pomocy. Oferuj jawne tiers lub alternatywy.
+5. **Twórz zrozumiałe reguły**: Dokumentuj wagi, thresholds, missing values, confidence i przykłady. Bez fikcyjnej precyzji typu „purchase probability w milisekundach”.
+6. **Waliduj przed użyciem**: Na reprezentatywnej próbce testuj accuracy, false positives, false negatives, calibration i nieuzasadnione group disparity. Nie ucz bez review na biased past sales.
+7. **Zachowaj meaningful human involvement**: Reviewer ma authority, czas i informacje, by zakwestionować output, nie tylko kliknąć approve. Zapisuj overrides i ulepszaj system.
+8. **Osobno projektuj komunikację**: Przed telefonem, SMS, WhatsApp, Telegram lub email określ permission, frequency, quiet hours i opt-out. Wewnętrzny urgency flag nie jest zgodą.
+9. **Chroń alerty i dostęp**: Notification zawiera minimum danych, używa zatwierdzonego systemu, bez shared credentials i z logiem. Odbieraj dostęp po zmianie roli.
+10. **Informuj i daj drogę działania**: Gdzie wymagane wyjaśnij profiling i konsekwencje, umożliw access, correction, human contact i contest dla istotnych wyników.
+11. **Monitoruj wyniki klienta**: Śledź jakość odpowiedzi, wait time, fit, no-shows, skargi, opt-outs, disparity akceptacji, refunds i overrides. Szybszy telefon nie zawsze oznacza lepszy wynik.
+12. **Rewaliduj i wycofuj**: Sprawdzaj factors po zmianie produktu, rynku, danych lub prawa. Wstrzymaj model przy drift, szkodzie lub słabej explainability ponad próg.
+
+Wymagania profiling i automated decision-making zależą od kontekstu oraz jurysdykcji. W razie potrzeby uzyskaj aktualną poradę privacy, consumer, employment lub financial services.`,
+            practicalExamples: [
+              'Score priorytetyzuje zapytania według daty startu i capacity specjalisty; akceptacja ma human review, a aplikant poprawia nieaktualną odpowiedź.',
+              'SMS alert zawiera tylko record ID, CRM egzekwuje role-based access i sprawdza channel preference przed wiadomością.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Lead scoring jest accountable decision support: ograniczony celem, wyjaśnialny, zwalidowany, privacy-aware i pod human judgment.',
+            keyPrinciples: ['Nie szereguj ludzi według majątku ani sensitive proxies', 'Zapytanie nie jest uniwersalną zgodą marketingową', 'Waliduj wyniki i disparities, nie samą sprzedaż'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj governed pilot scoringu i routingu:',
+            checklistItems: ['Udokumentowano cel, zakazane użycia, factors, sources, weights i expiry', 'Zakończono review privacy, retencji, rights, processors i security', 'Validation obejmuje błędy, calibration i unjustified disparity', 'Skonfigurowano human review, override, correction i contest', 'Wdrożono channel permission, opt-out, monitoring i model stop rule'],
+            toolboxCategory: 'crm',
           },
         },
       },
