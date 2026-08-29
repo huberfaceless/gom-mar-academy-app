@@ -3529,6 +3529,126 @@ Native style can improve relevance, but advertising must remain recognisable and
         },
       },
     },
+    41: {
+      title: '41. Responsible gamification & learner motivation',
+      subtitle: 'Voluntary progress support, meaningful feedback, inclusive challenges and private achievement',
+      description: 'Use game-inspired elements only where they support learning, autonomy and wellbeing, with accessible alternatives, privacy and evidence—never addictive loops, loss pressure or guaranteed completion rates.',
+      lessons: {
+        '41.1': {
+          stageTitle: '41. Learner-centred gamification architecture',
+          title: 'Design progress, feedback and optional streaks without compulsion',
+          description: 'Connect feedback, milestones and practice to real learning outcomes while letting people pause, opt out and recover without shame or penalty.',
+          learnContent: {
+            videoTitle: 'Masterclass: Ethical gamification in digital learning',
+            summaryText: 'Course completion varies by learner, goal, difficulty, support and measurement. XP, badges and streaks may help some people and distract or pressure others; “dopamine loops” do not justify addictive design or a promise to multiply completion.',
+            bulletPoints: [
+              'Begin with a measurable learning outcome and use game elements only when they provide useful feedback, choice or practice',
+              'Offer streaks as optional routines with pause, grace and recovery instead of threats about losing progress',
+              'Keep progress and achievement private by default and obtain clear permission before any social sharing',
+              'Provide reduced-motion, sound-off, non-competitive and assistive-technology alternatives to celebrations and points',
+            ],
+            coreConcepts: [
+              { iconName: 'zap', title: 'MEANINGFUL FEEDBACK', description: 'Feedback explains what was completed, what was learned and the next useful option; it does not exploit variable rewards or obscure the learner’s goal.', highlight: true },
+              { iconName: 'award', title: 'RECOVERABLE ROUTINE', description: 'Optional streaks can be paused and restored without losing earned learning, access, status or paid value.' },
+            ],
+            resources: [
+              { title: 'Ethical Gamification & Accessibility Workbook', subtitle: 'Outcomes, choice, privacy, safeguards, tests and retirement', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Private Progress Tracker', subtitle: 'Learner-controlled milestones, reminders and accessibility settings', type: 'tool', iconName: 'award', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Use game elements to support learning, not dependency
+
+Learning requires effort, rest, context and meaningful practice. Animations, points or streaks do not automatically create mastery, and simplified claims about “dopamine kicks” should not substitute for evidence or learner consent.
+
+#### Responsible design workflow
+
+1. **Define the learning outcome**: State what the learner should understand or demonstrate, the evidence of mastery and what completion does and does not prove.
+2. **Understand learner contexts**: Research goals, time, disability, language, device, caregiving, work patterns and reasons for pausing. Do not assume daily use is desirable.
+3. **Choose the minimum useful mechanic**: Add a progress indicator, milestone, practice prompt or feedback only when it helps orientation, recall or skill. Record the hypothesis and a no-gamification alternative.
+4. **Represent progress honestly**: Base progress on meaningful completion, not screen time, clicks or unnecessary activity. Explain calculation and let learners correct errors.
+5. **Make streaks optional and forgiving**: Allow opt-in, quiet days, time-zone control, pause and recovery. Never erase completed work, restrict paid access or use shame because someone rested.
+6. **Design notifications respectfully**: Default to proportionate frequency, show a preview, respect quiet hours and provide granular pause and unsubscribe controls. Avoid urgency or loss language.
+7. **Keep achievements private by default**: The learner chooses whether a badge, certificate, streak or score appears to peers or social networks. Sharing must not expose sensitive learning, purchase or performance data.
+8. **Build accessible feedback**: Support keyboard, screen readers, contrast, zoom and reduced motion. Confetti, colour, sound and haptics require equivalent non-sensory feedback and user controls.
+9. **Avoid deceptive reward systems**: Do not use random rewards, artificial scarcity, purchased status, hidden odds or reward withdrawal to increase time spent. Virtual points need clear meaning and no misleading monetary implication.
+10. **Protect children and vulnerable learners**: Apply stronger safeguards, age-appropriate design and qualified review. Avoid profiling distress, financial vulnerability or compulsive behaviour for engagement.
+11. **Test learning and wellbeing**: Compare knowledge retention, task success, accessibility, pressure, interruptions, opt-outs and support requests—not daily opens alone. Segment results carefully and allow negative findings.
+12. **Maintain and retire**: Monitor complaints, compulsive-use signals, inequity and feature drift. Pause or remove mechanics that increase activity while harming learning, autonomy or wellbeing.
+
+The best indicator of success is useful learning that fits the person’s life, not an unbroken streak.`,
+            practicalExamples: [
+              'A learner pauses reminders during shift work and resumes later with all completed lessons intact; progress remains private unless they choose to share a certificate.',
+              'A celebration uses text confirmation by default, with optional sound and motion; the same milestone is fully understandable to a screen-reader user.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Ethical gamification makes learning clearer and more manageable while preserving rest, privacy, accessibility and the right to opt out.',
+            keyPrinciples: ['Tie mechanics to learning outcomes, not time spent', 'Make streaks and reminders voluntary and recoverable', 'Keep progress private and accessible by default'],
+          },
+          actionTask: {
+            instruction: 'Design one learner-centred gamification pilot:',
+            checklistItems: ['Learning outcome, mastery evidence and non-gamified path defined', 'Progress logic is accurate, understandable and correctable', 'Streak, reminders, pause, recovery and opt-out controls specified', 'Privacy, sharing, reduced-motion, sound-off and assistive alternatives tested', 'Learning, wellbeing, complaint and retirement guardrails scheduled'],
+            toolboxCategory: 'content',
+          },
+        },
+        '41.2': {
+          stageTitle: '41. Inclusive community challenges',
+          title: 'Run collaborative quests without public pressure or unfair rankings',
+          description: 'Create time-bounded, voluntary community activities that encourage practice and peer support while protecting consent, privacy, accessibility and participants with different resources.',
+          learnContent: {
+            videoTitle: 'Masterclass: Inclusive community challenges and peer support',
+            summaryText: 'Community can support learning, but public leaderboards and prizes can also expose personal data, reward spam, intensify comparison and disadvantage people with less time or access. Challenges should be voluntary, cooperative and evaluated by learning—not loyalty.',
+            bulletPoints: [
+              'Define a realistic skill or contribution goal with flexible participation windows and an individual route',
+              'Use private or team progress and opt-in recognition rather than publishing performance or revenue by default',
+              'Match learning partners only with informed agreement, compatible preferences, boundaries and an easy rematch or exit',
+              'Reward evidence of learning, helpfulness and reflection through transparent criteria—not raw activity, sales or constant presence',
+            ],
+            coreConcepts: [
+              { iconName: 'users', title: 'CONSENTED PEER SUPPORT', description: 'Participants choose whether to join, what to share and whether to be matched. Expectations, reporting, safeguarding and exit are clear.', highlight: true },
+              { iconName: 'trophy', title: 'COOPERATIVE MILESTONE', description: 'The group works toward an accessible shared outcome; recognition is optional and does not rank personal worth or commercial success.' },
+            ],
+            resources: [
+              { title: 'Inclusive Challenge & Community Safety Guide', subtitle: 'Consent, accessibility, moderation, criteria and evaluation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Challenge Participation Controls', subtitle: 'Opt-in, preferences, private progress and safeguarding records', type: 'tool', iconName: 'award', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build community practice without turning learners into a leaderboard
+
+A shared challenge can create structure and encouragement, but duration, competition and prizes do not guarantee participation, completion or loyalty. Design for different schedules, abilities and motivations.
+
+#### Inclusive challenge lifecycle
+
+1. **Define the learning purpose**: Choose one skill, habit or contribution that can be practised safely. State prerequisites, non-goals, evidence and why community adds value.
+2. **Make participation voluntary**: Explain workload, dates, data use, communications, visibility, prizes and alternatives before opt-in. Access to paid learning must not depend on joining.
+3. **Offer flexible pacing**: Provide a suggested path plus catch-up, pause and asynchronous options. Avoid a rigid daily schedule where it is not educationally necessary.
+4. **Set accessible tasks**: Use plain language, multiple formats, sufficient time and reasonable alternatives. Do not require public video, income disclosure, purchases or social posting.
+5. **Establish community safeguards**: Publish conduct, moderation, reporting, escalation, privacy and emergency boundaries. Train moderators and clarify that peers are not therapists or professional advisers.
+6. **Match buddies with consent**: Collect only necessary preferences, avoid sensitive inference and let participants decline, block, rematch or leave. Do not share contact details until both sides agree.
+7. **Prefer cooperation to ranking**: Use shared milestones, personal baselines or private reflection. If a leaderboard is genuinely useful, make it opt-in, explain the score, limit visibility and provide a non-ranked mode.
+8. **Use fair criteria**: Do not reward message volume, revenue or uninterrupted attendance. Validate helpfulness and learning evidence, prevent gaming and provide correction and appeal.
+9. **Handle rewards transparently**: State eligibility, selection, value, tax implications where relevant, fulfilment and conflicts. Rewards must not pressure overspending or excessive activity.
+10. **Protect data and identity**: Keep participation, performance, purchases and revenue private by default. Apply retention, access, deletion and image-consent controls.
+11. **Support live and asynchronous access**: Caption sessions, provide summaries and avoid making attendance the only path to essential content. Record only with informed notice and manage replay access.
+12. **Evaluate balanced outcomes**: Measure learning, belonging, accessibility, workload, drop-out, conflict, pressure, reports and support needs. Do not claim that a buddy system doubles completion without valid evidence.
+13. **Close responsibly**: Celebrate privately or publicly according to each person’s choice, deliver promised rewards, revoke temporary access, retain only necessary records and publish what will improve next time.
+
+People may value content, community, quiet independent study or a mixture. Status should never be the price of belonging.`,
+            practicalExamples: [
+              'A 14-day planning challenge offers three tasks per week, asynchronous alternatives and private progress; participants opt separately into buddy matching and public recognition.',
+              'Instead of ranking revenue, a group unlocks a shared resource after completing peer-reviewed practice, while individuals who prefer not to compete receive the same core learning.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A healthy community challenge strengthens practice and support through choice, safety and inclusion—not public comparison, pressure or promised loyalty.',
+            keyPrinciples: ['Community participation and visibility require informed choice', 'Use cooperative or private progress before public rankings', 'Reward learning and helpfulness without disadvantaging limited time or resources'],
+          },
+          actionTask: {
+            instruction: 'Prepare one inclusive community challenge:',
+            checklistItems: ['Learning purpose, workload, flexible path and independent alternative published', 'Opt-in, visibility, communications, data and reward terms are clear', 'Accessibility, moderation, reporting and safeguarding controls assigned', 'Buddy consent, preferences, rematch and exit process configured', 'Learning, belonging, pressure, inequity and closure review scheduled'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -7039,6 +7159,126 @@ Native style może poprawić relevance, lecz advertising pozostaje recognisable 
           actionTask: {
             instruction: 'Przygotuj i przetestuj responsible creator brief:',
             checklistItems: ['Udokumentowano audience, product facts, evidence, limits i prohibited claims', 'Compensation, gift i affiliate disclosure są jasne w content', 'Creator zachowuje truthful voice i safe demonstration', 'Sprawdzono captions, readable text, listing match i fair CTA', 'Zatwierdzono usage rights, ad authorisation, budget, metrics i stop rule'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+    41: {
+      title: '41. Odpowiedzialna gamification i motywacja uczących się',
+      subtitle: 'Dobrowolny progress support, meaningful feedback, inclusive challenges i prywatne osiągnięcia',
+      description: 'Używaj game-inspired elements tylko dla wsparcia learning, autonomii i wellbeing, z accessible alternatives, privacy i evidence — nigdy addictive loops, loss pressure ani guaranteed completion.',
+      lessons: {
+        '41.1': {
+          stageTitle: '41. Learner-centred gamification architecture',
+          title: 'Projektuj progress, feedback i optional streaks bez przymusu',
+          description: 'Łącz feedback, milestones i practice z realnymi learning outcomes, pozwalając pause, opt-out i recovery bez wstydu lub kary.',
+          learnContent: {
+            videoTitle: 'Masterclass: Etyczna gamification w digital learning',
+            summaryText: 'Course completion zależy od learnera, celu, trudności, supportu i measurement. XP, badges i streaks mogą pomóc jednym, a innych rozpraszać lub naciskać; „dopamine loops” nie uzasadniają addictive design ani obietnicy wielokrotnego completion.',
+            bulletPoints: [
+              'Zacznij od measurable learning outcome i dodawaj game elements tylko dla useful feedback, choice lub practice',
+              'Oferuj streaks jako optional routines z pause, grace i recovery zamiast groźby utraty progress',
+              'Progress i achievement są private by default, a social sharing wymaga clear permission',
+              'Zapewnij reduced-motion, sound-off, non-competitive i assistive-technology alternatives dla celebrations i points',
+            ],
+            coreConcepts: [
+              { iconName: 'zap', title: 'MEANINGFUL FEEDBACK', description: 'Feedback wyjaśnia wykonanie, naukę i next useful option; nie wykorzystuje variable rewards ani nie ukrywa goal learnera.', highlight: true },
+              { iconName: 'award', title: 'RECOVERABLE ROUTINE', description: 'Optional streak można pause i restore bez utraty ukończonej nauki, dostępu, statusu lub paid value.' },
+            ],
+            resources: [
+              { title: 'Workbook etycznej gamification i dostępności', subtitle: 'Outcomes, choice, privacy, safeguards, tests i retirement', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Prywatny progress tracker GOM-MAR', subtitle: 'Learner-controlled milestones, reminders i accessibility settings', type: 'tool', iconName: 'award', actionUrl: 'progress' },
+            ],
+            fullArticleGuide: `### Używaj game elements do wspierania nauki, nie zależności
+
+Learning wymaga wysiłku, odpoczynku, kontekstu i meaningful practice. Animations, points lub streaks nie tworzą automatycznie mastery, a uproszczone „dopamine kicks” nie zastępują evidence ani consent.
+
+#### Odpowiedzialny workflow design
+
+1. **Zdefiniuj learning outcome**: Określ, co learner rozumie lub demonstruje, evidence mastery i czego completion nie dowodzi.
+2. **Zrozum kontekst learnera**: Badaj cele, czas, disability, language, device, caregiving, work patterns i powody pause. Nie zakładaj, że daily use jest pożądany.
+3. **Wybierz minimum useful mechanic**: Dodaj progress, milestone, practice prompt lub feedback tylko dla orientation, recall lub skill. Zapisz hypothesis i non-gamified alternative.
+4. **Przedstawiaj progress prawdziwie**: Opieraj go na meaningful completion, nie screen time, clicks lub unnecessary activity. Wyjaśnij calculation i pozwól poprawić errors.
+5. **Uczyń streaks optional i forgiving**: Zapewnij opt-in, quiet days, timezone, pause i recovery. Nie usuwaj completed work, paid access ani nie shame za odpoczynek.
+6. **Projektuj notifications z szacunkiem**: Proportionate frequency, preview, quiet hours i granular pause/unsubscribe. Bez urgency lub loss language.
+7. **Achievements private by default**: Learner wybiera, czy badge, certificate, streak lub score pojawia się przy peers lub social networks. Sharing nie ujawnia sensitive learning, purchase ani performance.
+8. **Buduj accessible feedback**: Keyboard, screen readers, contrast, zoom i reduced motion. Confetti, colour, sound i haptics mają equivalent feedback i controls.
+9. **Unikaj deceptive rewards**: Bez random rewards, artificial scarcity, purchased status, hidden odds lub reward withdrawal dla time spent. Virtual points mają jasne meaning i bez monetary implication.
+10. **Chroń dzieci i vulnerable learners**: Stosuj stronger safeguards, age-appropriate design i qualified review. Nie profiluj distress, financial vulnerability ani compulsive behaviour dla engagement.
+11. **Testuj learning i wellbeing**: Porównuj retention wiedzy, task success, accessibility, pressure, interruptions, opt-outs i support requests, nie daily opens. Segmentuj ostrożnie.
+12. **Utrzymuj i wycofuj**: Monitoruj complaints, compulsive-use signals, inequity i feature drift. Usuwaj mechanics zwiększające activity kosztem learning, autonomy lub wellbeing.
+
+Najlepszym success indicator jest użyteczna nauka pasująca do życia, nie unbroken streak.`,
+            practicalExamples: [
+              'Learner pauzuje reminders podczas shift work i wraca z intact lessons; progress pozostaje private, chyba że wybierze sharing certificate.',
+              'Celebration używa text confirmation, optional sound i motion; milestone jest w pełni zrozumiały dla screen-reader user.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Etyczna gamification czyni learning jaśniejszym i manageable, zachowując rest, privacy, accessibility i right to opt out.',
+            keyPrinciples: ['Łącz mechanics z learning outcomes, nie time spent', 'Streaks i reminders mają być voluntary i recoverable', 'Progress jest private i accessible by default'],
+          },
+          actionTask: {
+            instruction: 'Zaprojektuj learner-centred gamification pilot:',
+            checklistItems: ['Określono learning outcome, mastery evidence i non-gamified path', 'Progress logic jest accurate, understandable i correctable', 'Określono streak, reminders, pause, recovery i opt-out', 'Przetestowano privacy, sharing, reduced-motion, sound-off i assistive alternatives', 'Zaplanowano learning, wellbeing, complaints i retirement guardrails'],
+            toolboxCategory: 'content',
+          },
+        },
+        '41.2': {
+          stageTitle: '41. Inclusive community challenges',
+          title: 'Prowadź collaborative quests bez public pressure i unfair rankings',
+          description: 'Twórz time-bounded, voluntary community activities wspierające practice i peer support z ochroną consent, privacy, accessibility i osób o różnych zasobach.',
+          learnContent: {
+            videoTitle: 'Masterclass: Inclusive community challenges i peer support',
+            summaryText: 'Community może wspierać naukę, ale public leaderboards i prizes mogą ujawniać dane, nagradzać spam, wzmacniać comparison i szkodzić osobom z mniejszą ilością czasu. Challenges mają być voluntary, cooperative i oceniane przez learning, nie loyalty.',
+            bulletPoints: [
+              'Określ realistyczny skill lub contribution goal z flexible participation windows i individual route',
+              'Używaj private lub team progress i opt-in recognition zamiast public performance lub revenue',
+              'Matchuj learning partners tylko z informed agreement, compatible preferences, boundaries i easy rematch/exit',
+              'Nagradzaj evidence of learning, helpfulness i reflection przez transparent criteria, nie raw activity, sales lub constant presence',
+            ],
+            coreConcepts: [
+              { iconName: 'users', title: 'CONSENTED PEER SUPPORT', description: 'Participants wybierają join, sharing i matching. Expectations, reporting, safeguarding i exit są jasne.', highlight: true },
+              { iconName: 'trophy', title: 'COOPERATIVE MILESTONE', description: 'Grupa pracuje nad accessible shared outcome; recognition jest optional i nie rankuje personal worth lub commercial success.' },
+            ],
+            resources: [
+              { title: 'Guide inclusive challenge i community safety', subtitle: 'Consent, accessibility, moderation, criteria i evaluation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Controls participation Mara CRM', subtitle: 'Opt-in, preferences, private progress i safeguarding records', type: 'tool', iconName: 'award', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj community practice bez zamieniania learners w leaderboard
+
+Shared challenge może dać strukturę i encouragement, lecz duration, competition i prizes nie gwarantują participation, completion ani loyalty. Projektuj dla różnych schedules, abilities i motivations.
+
+#### Inclusive challenge lifecycle
+
+1. **Zdefiniuj learning purpose**: Wybierz skill, habit lub contribution do safe practice. Podaj prerequisites, non-goals, evidence i wartość community.
+2. **Participation voluntary**: Przed opt-in wyjaśnij workload, dates, data use, communications, visibility, prizes i alternatives. Paid learning nie zależy od join.
+3. **Oferuj flexible pacing**: Suggested path plus catch-up, pause i asynchronous options. Bez rigid daily schedule bez educational necessity.
+4. **Ustal accessible tasks**: Plain language, multiple formats, sufficient time i reasonable alternatives. Nie wymagaj public video, income disclosure, purchases lub social posting.
+5. **Ustanów community safeguards**: Opublikuj conduct, moderation, reporting, escalation, privacy i emergency boundaries. Trenuj moderators; peers nie są therapists ani professional advisers.
+6. **Matchuj buddies za zgodą**: Zbieraj necessary preferences, bez sensitive inference, pozwól decline, block, rematch i leave. Nie udostępniaj contact details przed obustronną zgodą.
+7. **Preferuj cooperation**: Shared milestones, personal baselines lub private reflection. Jeśli leaderboard jest użyteczny, ma opt-in, explained score, limited visibility i non-ranked mode.
+8. **Używaj fair criteria**: Nie nagradzaj message volume, revenue lub uninterrupted attendance. Waliduj helpfulness i learning evidence, zapobiegaj gaming i daj correction/appeal.
+9. **Transparent rewards**: Podaj eligibility, selection, value, tax gdzie właściwe, fulfilment i conflicts. Rewards nie naciskają na overspending lub excessive activity.
+10. **Chroń data i identity**: Participation, performance, purchases i revenue są private by default. Stosuj retention, access, deletion i image-consent.
+11. **Wspieraj live i asynchronous access**: Caption sessions, summaries i essential content poza attendance. Record tylko z informed notice i managed replay.
+12. **Oceniaj balanced outcomes**: Mierz learning, belonging, accessibility, workload, drop-out, conflict, pressure, reports i support. Bez claim, że buddy podwaja completion bez evidence.
+13. **Zamknij odpowiedzialnie**: Celebruj według choice, dostarcz rewards, revoke temporary access, zachowaj necessary records i opublikuj improvements.
+
+Ludzie mogą cenić content, community, quiet independent study lub mix. Status nie może być ceną belonging.`,
+            practicalExamples: [
+              '14-day planning challenge oferuje trzy tasks tygodniowo, asynchronous alternatives i private progress; buddy matching i public recognition mają osobne opt-in.',
+              'Zamiast rankingu revenue grupa unlockuje shared resource po peer-reviewed practice, a non-competitive learners otrzymują ten sam core learning.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Zdrowy community challenge wzmacnia practice i support przez choice, safety i inclusion, nie public comparison, pressure lub promised loyalty.',
+            keyPrinciples: ['Community participation i visibility wymagają informed choice', 'Używaj cooperative lub private progress przed public rankings', 'Nagradzaj learning i helpfulness bez krzywdzenia osób z limited time/resources'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj inclusive community challenge:',
+            checklistItems: ['Opublikowano learning purpose, workload, flexible path i independent alternative', 'Opt-in, visibility, communications, data i reward terms są jasne', 'Przypisano accessibility, moderation, reporting i safeguarding', 'Skonfigurowano buddy consent, preferences, rematch i exit', 'Zaplanowano review learning, belonging, pressure, inequity i closure'],
             toolboxCategory: 'content',
           },
         },
