@@ -4960,6 +4960,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    53: {
+      title: '53. Responsible micro-acquisitions of digital businesses',
+      subtitle: 'Deal sourcing, due diligence, integration and evidence-based value creation',
+      description: 'Assess websites, SaaS products and e-commerce assets with professional legal, tax, financial, technical and privacy review—without assuming a cheap multiple, guaranteed growth or a profitable resale.',
+      lessons: {
+        '53.1': {
+          stageTitle: '53. Deal sourcing and due diligence',
+          title: 'Evaluate digital acquisitions without shortcuts',
+          description: 'Verify ownership, earnings, traffic, customers, technology, contracts and liabilities before signing or transferring funds.',
+          learnContent: {
+            videoTitle: 'Masterclass: evidence-based digital-business due diligence',
+            summaryText: 'Buying an existing business may save some build time, but it can also transfer hidden operational, legal and technical risk. Valuation multiples are context-dependent, seller-adjusted earnings require verification, and no transaction structure eliminates every legacy liability.',
+            bulletPoints: [
+              'Define acquisition criteria, budget, risk capacity and walk-away rules before browsing listings',
+              'Reconcile bank, payment-processor, accounting, tax and cohort data instead of trusting screenshots',
+              'Audit traffic quality, churn, concentration, code, security, licences, IP ownership and platform dependencies',
+              'Use qualified legal, tax and financial advisers to choose and document the transaction structure'
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'VERIFIED DEAL THESIS', description: 'Price and growth assumptions are tied to source evidence, scenarios and downside cases.', highlight: true },
+              { iconName: 'shield-check', title: 'MULTI-DISCIPLINARY REVIEW', description: 'Commercial, financial, legal, tax, privacy, security and technical findings are reconciled before closing.' }
+            ],
+            resources: [
+              { title: 'Digital-acquisition due-diligence workbook', subtitle: 'Evidence requests, risks, valuation scenarios and approvals', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM migration assessment', subtitle: 'Lawful customer-data transfer, provenance and access review', type: 'tool', iconName: 'database', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### A controlled acquisition process\n\n1. **Write the thesis**: target customer, business model, capabilities, budget, expected return and conditions that end the review.\n2. **Identify the seller and ownership**: verify the entity, authority to sell, beneficial owners, liens, disputes and every asset included.\n3. **Normalise financials**: reconcile revenue, refunds, taxes, payroll, contractor costs, hosting, advertising, working capital and seller adjustments over meaningful periods.\n4. **Analyse customers**: cohort retention, churn definitions, concentration, contracts, complaints, chargebacks and acquisition economics.\n5. **Verify traffic**: use read-only source access, channel history and independent analytics; assess bot, paid, branded and dependency risk.\n6. **Audit technology and security**: architecture, code ownership, open-source obligations, credentials, incidents, backups, scalability and key-person dependency.\n7. **Review IP and contracts**: assignments, trademarks, domains, licences, employees, contractors, vendors, change-of-control and termination rights.\n8. **Review privacy and data transfer**: purposes, notices, consent, processor terms, retention, international transfers and whether customer data may lawfully move.\n9. **Model valuation as scenarios**: use relevant cash-flow and market methods with adjustments, sensitivity and financing costs. A marketplace multiple is not a universal formula.\n10. **Choose structure with advisers**: asset and share transactions allocate risks differently; neither automatically removes tax, employment, privacy, successor or fraudulent-transfer exposure.\n11. **Protect signing and closing**: conditions, escrow or holdback, representations, indemnities, caps, insurance, transition support and verified transfer steps.\n12. **Keep a decision log**: findings, unresolved issues, owner, remedy, price impact and approval.\n\nWalking away is a successful due-diligence outcome when evidence does not support the price or risk.',
+            practicalExamples: [
+              'Processor revenue matches the headline, but cohort data reveals high churn; the buyer revises the forecast and price instead of assuming rapid growth.',
+              'A code audit finds contractor IP gaps and vulnerable dependencies, so closing is conditional on remediation and documented assignments.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Acquisition speed never replaces verification; value depends on evidence, price, integration capacity and risks that remain after closing.',
+            keyPrinciples: ['Verify source records and definitions', 'Model downside and concentration', 'Use independent professional advice for structure and documents'],
+          },
+          actionTask: {
+            instruction: 'Prepare a first-pass acquisition assessment:',
+            checklistItems: ['Investment thesis, budget and walk-away rules documented', 'Financial, customer, traffic and technical evidence requested', 'IP, contracts, privacy, tax and security review scoped', 'Valuation scenarios and unresolved-risk register prepared'],
+            toolboxCategory: 'settings',
+          },
+        },
+        '53.2': {
+          stageTitle: '53. Responsible integration and exit readiness',
+          title: 'Improve an acquired business without promising a 90-day flip',
+          description: 'Stabilise operations, protect customers and test improvements through controlled experiments before considering a future exit.',
+          learnContent: {
+            videoTitle: 'Masterclass: post-acquisition integration and evidence-based growth',
+            summaryText: 'The first priority after closing is continuity and control. Price changes, win-back emails, checkout changes and paid acquisition can improve or damage the business; every initiative needs a lawful basis, customer impact review, baseline and stop rule.',
+            bulletPoints: [
+              'Secure access, cash controls, backups, vendors, payroll, support and incident ownership first',
+              'Preserve customer trust and honour contracts, consent, refunds, subscriptions and service commitments',
+              'Test pricing and growth changes in measured cohorts rather than claiming automatic revenue lifts',
+              'Maintain accurate books, KPI definitions and a transaction-ready evidence room without assuming an exit'
+            ],
+            coreConcepts: [
+              { iconName: 'trending_up', title: 'CONTROLLED VALUE CREATION', description: 'Changes are prioritised by evidence, capacity, customer impact and measurable risk.', highlight: true },
+              { iconName: 'dollar-sign', title: 'EXIT READINESS, NOT EXIT CERTAINTY', description: 'Clean records and resilient operations improve options but do not guarantee a buyer or multiple.' }
+            ],
+            resources: [
+              { title: 'Post-acquisition integration workbook', subtitle: 'Day-one controls, experiments, customer protection and risk owners', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM KPI evidence room', subtitle: 'Defined metrics, provenance, permissions and audit history', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Stabilise before optimising\n\n1. **Execute day-one controls**: banking, payment accounts, admin access, domains, repositories, backups, vendors, payroll, support and incident escalation.\n2. **Confirm the transfer**: inventory delivered assets, credentials, contracts, licences, data and unresolved seller obligations.\n3. **Protect customers and staff**: communicate material changes accurately, maintain service, honour employment and contract duties and provide support routes.\n4. **Establish trustworthy baselines**: revenue, gross margin, retention, churn, refunds, support demand, uptime and acquisition cost with written definitions.\n5. **Prioritise risks**: security, compliance, cash, concentration and service continuity come before cosmetic funnel work.\n6. **Review pricing fairly**: analyse value, segments, contracts, notice, consumer rules, accessibility and churn risk; test where lawful and avoid dark patterns.\n7. **Use customer data lawfully**: inherited email addresses are not unlimited marketing permission. Preserve provenance, objections, suppression and purpose limitations.\n8. **Test growth channels**: small budgets, attribution limits, incrementality, fraud checks and stop-loss rules precede scaling.\n9. **Integrate carefully**: migrate systems with reconciliation, backups, least privilege and rollback plans.\n10. **Track decisions and outcomes**: hypothesis, owner, cost, cohort, period, result and unintended harm.\n11. **Build resilience**: reduce key-person, vendor, channel and customer concentration instead of optimising only the headline metric.\n12. **Prepare options**: accurate accounts, contracts, cap table, IP, security evidence and operating procedures support financing or sale, but market conditions determine whether an exit is available.\n13. **Obtain approvals**: legal, tax, finance, privacy and security specialists review material changes and any sale process.',
+            practicalExamples: [
+              'A proposed price increase is piloted with clear notice and support; churn and complaints exceed the stop rule, so the rollout is revised.',
+              'A buyer builds twelve months of reconciled metrics and documentation, improving credibility while continuing to operate without relying on a sale.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Durable value comes from controlled integration, customer trust and verified economics—not a guaranteed flip timetable.',
+            keyPrinciples: ['Stabilise operations before growth experiments', 'Respect inherited contracts and data rights', 'Treat valuation and exit outcomes as uncertain scenarios'],
+          },
+          actionTask: {
+            instruction: 'Create a responsible integration plan:',
+            checklistItems: ['Day-one access, cash, service and incident controls assigned', 'Customer, staff, contract and privacy obligations mapped', 'KPI baselines and experiment stop rules approved', 'Evidence room and ongoing risk register established'],
+            toolboxCategory: 'settings',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -9904,6 +9986,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Skonfiguruj zgodny pilotaż przypomnień i inbound:',
             checklistItems: ['Oddzielono zastosowania, zgodę i wykluczenia', 'Przetestowano ujawnienie, uwierzytelnienie, rezygnację i transfer', 'Zminimalizowano pola CRM i retencję transkrypcji', 'Zatwierdzono stop rules dla błędów, skarg i dostępności'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
+    53: {
+      title: '53. Odpowiedzialne mikroprzejęcia firm cyfrowych',
+      subtitle: 'Pozyskanie transakcji, due diligence, integracja i tworzenie wartości oparte na dowodach',
+      description: 'Oceniaj strony, SaaS i e-commerce z profesjonalnym przeglądem prawnym, podatkowym, finansowym, technicznym i prywatności—bez zakładania taniego mnożnika, gwarantowanego wzrostu lub zyskownej odsprzedaży.',
+      lessons: {
+        '53.1': {
+          stageTitle: '53. Pozyskanie transakcji i due diligence',
+          title: 'Oceniaj cyfrowe przejęcia bez skrótów',
+          description: 'Zweryfikuj własność, zyski, ruch, klientów, technologię, umowy i zobowiązania przed podpisem lub płatnością.',
+          learnContent: {
+            videoTitle: 'Masterclass: due diligence firmy cyfrowej oparte na dowodach',
+            summaryText: 'Zakup istniejącej firmy może skrócić część budowy, ale również przenieść ukryte ryzyka. Mnożniki zależą od kontekstu, skorygowane zyski sprzedawcy trzeba potwierdzić, a żadna struktura transakcji nie usuwa automatycznie wszystkich dawnych zobowiązań.',
+            bulletPoints: [
+              'Przed przeglądaniem ofert określ kryteria, budżet, zdolność ryzyka i warunki rezygnacji',
+              'Uzgodnij bank, procesor płatniczy, księgi, podatki i kohorty zamiast ufać zrzutom ekranu',
+              'Zbadaj ruch, churn, koncentrację, kod, bezpieczeństwo, licencje, IP i zależności platformowe',
+              'Dobierz strukturę i dokumenty z wykwalifikowanym prawnikiem, doradcą podatkowym i finansowym'
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'ZWERYFIKOWANA TEZA', description: 'Cena i wzrost wynikają ze źródeł, scenariuszy i wariantów spadkowych.', highlight: true },
+              { iconName: 'shield-check', title: 'PRZEGLĄD WIELOBRANŻOWY', description: 'Ustalenia handlowe, finansowe, prawne, podatkowe, prywatności, bezpieczeństwa i techniczne są uzgodnione przed closingiem.' }
+            ],
+            resources: [
+              { title: 'Zeszyt due diligence przejęcia cyfrowego', subtitle: 'Żądania dowodów, ryzyka, wycena i zatwierdzenia', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Ocena migracji Mara CRM', subtitle: 'Legalny transfer danych klientów, pochodzenie i dostęp', type: 'tool', iconName: 'database', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Kontrolowany proces przejęcia\n\n1. **Napisz tezę**: klient, model, możliwości, budżet, oczekiwany zwrot i warunki zakończenia przeglądu.\n2. **Ustal sprzedawcę i własność**: podmiot, uprawnienie, beneficjenci, zastawy, spory i każdy składnik.\n3. **Normalizuj finanse**: uzgodnij przychód, zwroty, podatki, płace, wykonawców, hosting, reklamy, kapitał obrotowy i korekty w istotnych okresach.\n4. **Analizuj klientów**: retencję kohort, definicję churn, koncentrację, umowy, skargi, chargebacki i ekonomię pozyskania.\n5. **Zweryfikuj ruch**: dostęp read-only, historię kanałów i niezależne analityki; oceń boty, płatny i brandowy ruch oraz zależności.\n6. **Audytuj technologię**: architekturę, własność kodu, open source, dane dostępowe, incydenty, kopie, skalę i zależność od osób.\n7. **Przejrzyj IP i umowy**: cesje, znaki, domeny, licencje, pracowników, dostawców oraz zmianę kontroli.\n8. **Sprawdź prywatność i transfer danych**: cele, informacje, zgody, procesorów, retencję, transfery i prawo przeniesienia danych klientów.\n9. **Modeluj wycenę scenariuszowo**: stosuj właściwe metody, korekty, wrażliwość i koszty finansowania. Mnożnik z marketplace nie jest uniwersalną formułą.\n10. **Wybierz strukturę z doradcami**: asset i share deal inaczej dzielą ryzyko; żaden nie usuwa automatycznie podatków, zatrudnienia, prywatności ani odpowiedzialności następcy.\n11. **Chroń signing i closing**: warunki, escrow, holdback, oświadczenia, odszkodowania, limity, ubezpieczenie, wsparcie i potwierdzony transfer.\n12. **Prowadź rejestr decyzji**: ustalenie, luka, właściciel, środek, wpływ na cenę i zgoda.\n\nOdejście od transakcji jest prawidłowym wynikiem, gdy dowody nie uzasadniają ceny lub ryzyka.',
+            practicalExamples: [
+              'Przychód procesora zgadza się z ofertą, lecz kohorty ujawniają wysoki churn; kupujący aktualizuje prognozę i cenę.',
+              'Audyt kodu znajduje braki w cesji IP i podatne zależności, więc closing zależy od naprawy.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Szybkość przejęcia nie zastępuje weryfikacji; wartość zależy od dowodów, ceny, integracji i pozostałego ryzyka.',
+            keyPrinciples: ['Weryfikuj źródła i definicje', 'Modeluj spadki i koncentrację', 'Korzystaj z niezależnych doradców przy strukturze i dokumentach'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj wstępną ocenę przejęcia:',
+            checklistItems: ['Udokumentowano tezę, budżet i warunki rezygnacji', 'Zażądano dowodów finansowych, klientów, ruchu i technologii', 'Ustalono zakres IP, umów, prywatności, podatków i bezpieczeństwa', 'Przygotowano scenariusze wyceny i rejestr nierozwiązanych ryzyk'],
+            toolboxCategory: 'settings',
+          },
+        },
+        '53.2': {
+          stageTitle: '53. Odpowiedzialna integracja i gotowość do exitu',
+          title: 'Ulepszaj firmę bez obiecywania 90-dniowego flipu',
+          description: 'Stabilizuj operacje, chroń klientów i testuj ulepszenia przed rozważeniem przyszłego exitu.',
+          learnContent: {
+            videoTitle: 'Masterclass: integracja i wzrost oparty na dowodach',
+            summaryText: 'Po closingu priorytetem jest ciągłość i kontrola. Ceny, win-back, checkout i reklamy mogą pomóc lub zaszkodzić; każda inicjatywa potrzebuje podstawy prawnej, oceny klienta, baseline i stop rule.',
+            bulletPoints: [
+              'Najpierw zabezpiecz dostęp, gotówkę, kopie, dostawców, płace, wsparcie i odpowiedzialność za incydenty',
+              'Chroń zaufanie oraz respektuj umowy, zgody, zwroty, subskrypcje i zobowiązania',
+              'Testuj ceny i wzrost na mierzonych kohortach zamiast obiecywać automatyczny wzrost',
+              'Prowadź dokładne księgi, definicje KPI i evidence room bez zakładania sprzedaży'
+            ],
+            coreConcepts: [
+              { iconName: 'trending_up', title: 'KONTROLOWANA WARTOŚĆ', description: 'Zmiany wynikają z dowodów, zdolności, wpływu na klienta i mierzalnego ryzyka.', highlight: true },
+              { iconName: 'dollar-sign', title: 'GOTOWOŚĆ, NIE PEWNOŚĆ EXITU', description: 'Czyste dane i odporne operacje poprawiają opcje, lecz nie gwarantują kupca ani mnożnika.' }
+            ],
+            resources: [
+              { title: 'Zeszyt integracji po przejęciu', subtitle: 'Kontrole dnia pierwszego, eksperymenty, ochrona klientów i ryzyka', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Evidence room KPI Mara CRM', subtitle: 'Definicje, pochodzenie, uprawnienia i historia audytu', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Stabilizuj przed optymalizacją\n\n1. **Wykonaj kontrole dnia pierwszego**: bank, płatności, admin, domeny, repozytoria, kopie, dostawcy, płace, wsparcie i incydenty.\n2. **Potwierdź transfer**: zinwentaryzuj aktywa, dane dostępowe, umowy, licencje, dane i zobowiązania sprzedawcy.\n3. **Chroń klientów i personel**: dokładnie komunikuj zmiany, utrzymuj usługę, respektuj obowiązki i wsparcie.\n4. **Ustal baseline**: przychód, marża, retencja, churn, zwroty, wsparcie, uptime i CAC z definicjami.\n5. **Priorytetyzuj ryzyka**: bezpieczeństwo, zgodność, gotówka, koncentracja i ciągłość przed kosmetyką funnelu.\n6. **Uczciwie oceniaj ceny**: wartość, segmenty, umowy, informacja, prawo konsumenckie, dostępność i churn; testuj legalnie bez dark patterns.\n7. **Legalnie używaj danych**: odziedziczone adresy nie są nieograniczoną zgodą marketingową. Zachowaj pochodzenie, sprzeciwy i cele.\n8. **Testuj kanały**: małe budżety, granice atrybucji, inkrementalność, fraud i stop-loss poprzedzają skalowanie.\n9. **Ostrożnie integruj**: migracje z uzgodnieniem, kopiami, minimalnym dostępem i rollbackiem.\n10. **Śledź decyzje**: hipoteza, właściciel, koszt, kohorta, okres, wynik i szkoda.\n11. **Buduj odporność**: ogranicz zależność od osób, dostawców, kanałów i klientów.\n12. **Przygotuj opcje**: księgi, umowy, cap table, IP, bezpieczeństwo i SOP wspierają finansowanie lub sprzedaż, ale rynek decyduje o exicie.\n13. **Uzyskaj zatwierdzenia**: prawo, podatki, finanse, prywatność i bezpieczeństwo przeglądają istotne zmiany.',
+            practicalExamples: [
+              'Pilotaż podwyżki z jasną informacją przekracza stop rule dla churn i skarg, więc rollout zostaje zmieniony.',
+              'Kupujący buduje dwanaście miesięcy uzgodnionych KPI, nadal prowadząc firmę bez polegania na sprzedaży.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Trwała wartość wynika z kontrolowanej integracji, zaufania klientów i potwierdzonej ekonomii—nie z gwarantowanego terminu flipu.',
+            keyPrinciples: ['Stabilizuj przed eksperymentami', 'Respektuj odziedziczone umowy i prawa danych', 'Traktuj wycenę i exit jako niepewne scenariusze'],
+          },
+          actionTask: {
+            instruction: 'Utwórz odpowiedzialny plan integracji:',
+            checklistItems: ['Przypisano dostęp, gotówkę, usługę i incydenty dnia pierwszego', 'Zmapowano obowiązki wobec klientów, personelu, umów i prywatności', 'Zatwierdzono baseline KPI i stop rules eksperymentów', 'Utworzono evidence room i rejestr ryzyk'],
+            toolboxCategory: 'settings',
           },
         },
       },
