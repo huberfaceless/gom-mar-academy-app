@@ -3771,6 +3771,128 @@ A respectful “no” is a useful outcome: it protects both parties and improves
         },
       },
     },
+    43: {
+      title: '43. Email authentication, sender reputation & responsible deliverability',
+      subtitle: 'SPF, DKIM, DMARC, optional BIMI, consent-based lists and evidence-led monitoring',
+      description: 'Improve the conditions for legitimate email delivery through correct authentication, secure sending operations and healthy recipient relationships—without inbox-placement guarantees or artificial warm-up traffic.',
+      lessons: {
+        '43.1': {
+          stageTitle: '43. Domain authentication & sender trust',
+          title: 'Deploy SPF, DKIM and DMARC safely; assess BIMI separately',
+          description: 'Inventory every authorised sender, configure authentication with staged enforcement and verify alignment, reporting and operational ownership.',
+          learnContent: {
+            videoTitle: 'Masterclass: Email authentication and domain protection',
+            summaryText: 'Authentication helps receiving systems verify who may send for a domain, but it cannot guarantee inbox placement. Provider requirements and supported features change, so teams should consult current official documentation, test every sender and monitor results before tightening policy.',
+            bulletPoints: [
+              'SPF authorises sending infrastructure but must remain within DNS lookup limits and should not be duplicated',
+              'DKIM signs messages; use supported key lengths, protect private keys and plan selector rotation',
+              'DMARC evaluates aligned SPF or DKIM and supplies aggregate reporting; move toward enforcement only after review',
+              'BIMI has separate trademark, logo, certificate and mailbox-provider requirements and is not a deliverability shortcut',
+            ],
+            coreConcepts: [
+              { iconName: 'shield-check', title: 'ALIGNED AUTHENTICATION', description: 'SPF and DKIM are configured for each real sender and at least one aligns with the visible From domain under DMARC.', highlight: true },
+              { iconName: 'check-circle-2', title: 'OBSERVED ENFORCEMENT', description: 'DMARC policy is tightened from monitored evidence, with owners for legitimate failures, abuse reports and rollback.' },
+            ],
+            resources: [
+              { title: 'Email Authentication Deployment Workbook', subtitle: 'Inventory, DNS records, alignment, reports, tests and rollback', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Sending-Domain Settings', subtitle: 'Verify sender configuration and operational ownership', type: 'tool', iconName: 'settings', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Authenticate email without promising the inbox
+
+SPF, DKIM and DMARC reduce impersonation risk and help receivers evaluate identity. Placement still depends on consent, reputation, content, complaint signals, infrastructure and each provider’s systems.
+
+#### Safe authentication rollout
+
+1. **Inventory every sender**: List marketing, transactional, support, CRM, ticketing, billing and third-party services, including return-path and subdomain ownership.
+2. **Minimise and secure access**: Remove unknown senders, use scoped credentials, multi-factor authentication, change control and a named incident owner.
+3. **Publish one valid SPF record**: Include only authorised sources, stay within the lookup limit and test DNS resolution. SPF alone does not protect the visible From address.
+4. **Enable DKIM per service**: Prefer supported strong keys, keep private keys with the sender, document selectors and rotate them without breaking in-flight mail.
+5. **Check identifier alignment**: Confirm that authenticated SPF or DKIM domains align with the visible From domain as required by DMARC.
+6. **Begin DMARC with observation**: Publish a valid reporting address, protect report data and review aggregate results. A monitoring policy is a phase, not proof of protection.
+7. **Resolve legitimate failures**: Correct forwarded, vendor and subdomain flows; do not weaken policy merely to hide errors.
+8. **Increase enforcement gradually**: Move toward quarantine or reject only when legitimate sources authenticate reliably, reports are reviewed and rollback is ready.
+9. **Separate streams where useful**: Use managed subdomains for distinct sending purposes to isolate operations, while preserving truthful brand identity.
+10. **Assess BIMI independently**: Verify current provider support, enforced DMARC, logo specifications, trademark and certificate requirements. Logo display and engagement are never guaranteed.
+11. **Test end to end**: Inspect headers, alignment, TLS, links, unsubscribe behaviour, replies and bounce handling across representative providers and devices.
+12. **Monitor continuously**: Track authentication failures, unknown sources, complaints, delivery errors and DNS changes; alert owners and preserve an audit trail.
+
+Do not paste provider-specific DNS examples without adapting and validating them for the actual domain.`,
+            practicalExamples: [
+              'A team discovers that its support platform is missing DKIM during DMARC monitoring, fixes alignment and verifies reports before moving from observation to enforcement.',
+              'A brand meets BIMI prerequisites but treats logo display as optional provider behaviour, not a promised opening-rate uplift.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Authentication establishes verifiable sending identity and supports abuse protection, but no DNS record guarantees delivery or placement.',
+            keyPrinciples: ['Inventory and test every legitimate sender', 'Tighten DMARC from monitored evidence with rollback', 'Treat BIMI as optional branding with separate prerequisites'],
+          },
+          actionTask: {
+            instruction: 'Prepare a controlled email-authentication deployment:',
+            checklistItems: ['All sending services, domains, subdomains and owners inventoried', 'Single SPF record and DKIM selectors validated', 'DMARC alignment, reporting mailbox and privacy controls tested', 'Legitimate failures, enforcement stages and rollback documented', 'Monitoring, key rotation, incident response and review dates assigned'],
+            toolboxCategory: 'email',
+          },
+        },
+        '43.2': {
+          stageTitle: '43. Consent-based list health & reputation monitoring',
+          title: 'Build a healthy sending programme without fake warm-up or engagement myths',
+          description: 'Send wanted mail at supportable volumes, remove invalid addresses promptly and manage inactive subscribers according to context, consent and retention rules.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible list hygiene and sending ramp-up',
+            summaryText: 'There is no universal 30-day schedule, sender score or forbidden-word list that guarantees deliverability. Sustainable reputation comes from valid acquisition, expected messages, stable operations, low complaints, accurate bounce handling and provider-specific monitoring.',
+            bulletPoints: [
+              'Increase legitimate volume gradually according to real demand, historical signals and provider feedback—not synthetic exchanges',
+              'Use confirmed signup where appropriate and preserve source, notice, consent and suppression evidence',
+              'Suppress hard bounces and complaints promptly; investigate temporary failures before applying bounded retries',
+              'Define inactivity by message purpose and audience, and offer preference controls before proportionate suppression or deletion',
+            ],
+            coreConcepts: [
+              { iconName: 'trash-2', title: 'PURPOSE-BASED RETENTION', description: 'Retention and inactivity rules reflect consent, message type, customer relationship and legal duties—not an automatic 90-day deletion rule.', highlight: true },
+              { iconName: 'trending_up', title: 'BALANCED SIGNALS', description: 'Delivery errors, complaints, unsubscribes, valid engagement and customer outcomes are assessed together; opens are privacy-limited and imperfect.' },
+            ],
+            resources: [
+              { title: 'List Health & Sending-Ramp Playbook', subtitle: 'Consent, bounces, complaints, preferences, retention and incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM List-Governance Automation', subtitle: 'Suppression, consent records, preference states and review queues', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Grow sending volume from genuine permission, not simulated activity
+
+Warm-up services that manufacture opens, replies or inbox moves can create misleading signals, expose content and credentials and conflict with provider rules. Build reputation through real, expected communication.
+
+#### Responsible list-health workflow
+
+1. **Map message purposes**: Separate transactional, service, lifecycle and marketing streams, with appropriate basis, expectations and unsubscribe behaviour.
+2. **Validate acquisition**: Record signup source, timestamp, notice and preferences. Never buy, scrape or append addresses without a valid, transparent basis.
+3. **Confirm addresses where appropriate**: Confirmation can reduce typo and abuse risk; keep accessibility, failed confirmation and customer support routes in mind.
+4. **Set expectations**: State sender, subject area and approximate frequency at signup. Honour preferences and do not silently broaden purpose.
+5. **Ramp from real demand**: Begin with recipients most likely to expect the mail and increase volume only when infrastructure, support and feedback remain healthy. Avoid fixed universal targets.
+6. **Keep operations consistent**: Use stable authenticated domains, predictable From identity, working reply handling and controlled deployment changes.
+7. **Process bounces correctly**: Immediately suppress valid permanent failures. Retry temporary failures only within documented limits and investigate sudden patterns.
+8. **Handle complaints and unsubscribes fast**: Apply suppression across relevant systems and never re-add someone without a valid new request.
+9. **Interpret engagement cautiously**: Privacy protection and image blocking distort opens. Combine clicks, replies, conversions, preferences, complaints and service context without invasive tracking.
+10. **Define inactivity contextually**: A monthly newsletter and annual service notice need different windows. Explain options, offer lower frequency or pause and avoid threatening subject lines.
+11. **Run a fair reconfirmation test**: Send a limited, clearly identified message with one simple preference action and no manufactured urgency. Suppress marketing when permission cannot be supported.
+12. **Protect data lifecycle**: Distinguish deletion from suppression records needed to honour opt-outs, minimise stored data and apply access, retention and audit controls.
+13. **Monitor by provider and stream**: Review delivery codes, authentication, complaints, block events and representative inbox tests. Provider dashboards cover only available data.
+14. **Use stop rules**: Pause campaigns after unusual complaint, bounce or abuse signals, investigate root cause and resume gradually after validation.
+15. **Document results honestly**: Removing inactive recipients may change rates because the denominator changes; it does not guarantee more revenue or inbox placement.
+
+The objective is wanted, secure and useful email—not the largest possible list or a cosmetic open rate.`,
+            practicalExamples: [
+              'A newsletter offers monthly, quarterly or pause preferences before suppressing recipients whose marketing permission and interest can no longer be supported.',
+              'A bounce spike triggers an automatic campaign pause and investigation of acquisition source and domain configuration instead of repeated delivery attempts.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Healthy email programmes earn attention through permission, relevance and reliable operations; synthetic warm-up and simplistic scores cannot replace them.',
+            keyPrinciples: ['Use genuine expected traffic only', 'Suppress invalid and opted-out addresses promptly', 'Interpret metrics in context and maintain stop rules'],
+          },
+          actionTask: {
+            instruction: 'Run one responsible list-health review:',
+            checklistItems: ['Message purposes, acquisition sources, notices and consent evidence reviewed', 'Hard-bounce, complaint, unsubscribe and retry controls tested', 'Inactivity windows and preference options defined by stream', 'Provider feedback, privacy limits and representative tests documented', 'Ramp limits, alert thresholds, stop rule and next review assigned'],
+            toolboxCategory: 'email',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -7524,6 +7646,128 @@ Szanujące „nie” jest użytecznym wynikiem: chroni obie strony i poprawia ta
             instruction: 'Uruchom controlled, respectful B2B outreach pilot:',
             checklistItems: ['Zatwierdzono audience, exclusions, data sources i governance', 'Ręcznie zweryfikowano dziesięć records pod kątem role, relevance i source', 'Message zawiera identity, relevance, optional value i easy decline', 'Przetestowano frequency, suppression, retention i human approval', 'Zaplanowano review quality, complaints, opt-outs, call fit i stop rule'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+    43: {
+      title: '43. Uwierzytelnianie e-mail, reputacja nadawcy i odpowiedzialna dostarczalność',
+      subtitle: 'SPF, DKIM, DMARC, opcjonalne BIMI, consent-based lists i evidence-led monitoring',
+      description: 'Poprawiaj warunki legalnej dostawy e-mail przez poprawne authentication, secure sending operations i zdrowe relacje z odbiorcami — bez gwarancji inbox placement lub sztucznego warm-up traffic.',
+      lessons: {
+        '43.1': {
+          stageTitle: '43. Uwierzytelnianie domeny i sender trust',
+          title: 'Bezpiecznie wdrażaj SPF, DKIM i DMARC; BIMI oceniaj osobno',
+          description: 'Zidentyfikuj każdego authorised sendera, skonfiguruj authentication etapowo i weryfikuj alignment, reporting oraz operational ownership.',
+          learnContent: {
+            videoTitle: 'Masterclass: Uwierzytelnianie e-mail i ochrona domeny',
+            summaryText: 'Authentication pomaga receiving systems potwierdzić, kto może wysyłać z domeny, ale nie gwarantuje inbox placement. Provider requirements i features zmieniają się, dlatego sprawdzaj current official documentation, testuj każdego sendera i monitoruj wyniki przed zaostrzeniem policy.',
+            bulletPoints: [
+              'SPF autoryzuje sending infrastructure, ale musi respektować DNS lookup limits i nie powinien być duplikowany',
+              'DKIM podpisuje wiadomości; używaj supported key lengths, chroń private keys i planuj rotation selectorów',
+              'DMARC ocenia aligned SPF lub DKIM i udostępnia aggregate reporting; enforcement zwiększaj dopiero po review',
+              'BIMI ma osobne trademark, logo, certificate i mailbox-provider requirements i nie jest skrótem do deliverability',
+            ],
+            coreConcepts: [
+              { iconName: 'shield-check', title: 'ALIGNED AUTHENTICATION', description: 'SPF i DKIM są skonfigurowane dla każdego real sendera, a co najmniej jeden alignuje się z visible From domain w DMARC.', highlight: true },
+              { iconName: 'check-circle-2', title: 'OBSERVED ENFORCEMENT', description: 'DMARC policy jest zaostrzana na podstawie evidence, z ownerami legitimate failures, abuse reports i rollback.' },
+            ],
+            resources: [
+              { title: 'Workbook wdrożenia email authentication', subtitle: 'Inventory, DNS records, alignment, reports, tests i rollback', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Ustawienia sending domain Mara CRM', subtitle: 'Weryfikacja sender configuration i operational ownership', type: 'tool', iconName: 'settings', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Uwierzytelniaj e-mail bez obiecywania inboxu
+
+SPF, DKIM i DMARC ograniczają impersonation risk i pomagają receivers ocenić identity. Placement nadal zależy od consent, reputation, content, complaints, infrastructure i systemów każdego providera.
+
+#### Bezpieczny rollout authentication
+
+1. **Inventory każdego sendera**: Wymień marketing, transactional, support, CRM, ticketing, billing i third-party services wraz z return-path i ownership subdomen.
+2. **Minimalizuj i zabezpieczaj access**: Usuń unknown senders, stosuj scoped credentials, MFA, change control i named incident owner.
+3. **Opublikuj jeden valid SPF record**: Uwzględnij tylko authorised sources, respektuj lookup limit i testuj DNS resolution. SPF sam nie chroni visible From.
+4. **Włącz DKIM per service**: Preferuj supported strong keys, trzymaj private keys u sendera, dokumentuj selectors i rotuj bez przerywania maili.
+5. **Sprawdź identifier alignment**: Potwierdź, że authenticated SPF lub DKIM domain alignuje się z visible From zgodnie z DMARC.
+6. **Zacznij DMARC od observation**: Ustaw valid reporting address, chroń report data i analizuj aggregate results. Monitoring policy to etap, nie dowód pełnej ochrony.
+7. **Napraw legitimate failures**: Koryguj forwarded, vendor i subdomain flows; nie osłabiaj policy, by ukryć błędy.
+8. **Stopniowo zwiększaj enforcement**: Przechodź do quarantine lub reject tylko po reliable authentication, review reports i przygotowaniu rollback.
+9. **Rozdziel streams, gdy warto**: Stosuj managed subdomains dla różnych purposes, zachowując truthful brand identity.
+10. **Oceń BIMI niezależnie**: Zweryfikuj provider support, enforced DMARC, logo specs, trademark i certificate requirements. Logo display i engagement nie są gwarantowane.
+11. **Testuj end to end**: Sprawdź headers, alignment, TLS, links, unsubscribe, replies i bounce handling u representative providers i devices.
+12. **Monitoruj ciągle**: Śledź authentication failures, unknown sources, complaints, delivery errors i DNS changes; alarmuj owners i zachowuj audit trail.
+
+Nie kopiuj provider-specific DNS examples bez adaptacji i walidacji dla realnej domeny.`,
+            practicalExamples: [
+              'Team odkrywa brak DKIM w support platform podczas DMARC monitoring, naprawia alignment i weryfikuje reports przed enforcement.',
+              'Brand spełnia BIMI prerequisites, ale traktuje logo display jako optional provider behaviour, nie obiecaną poprawę open rate.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Authentication ustanawia weryfikowalną sending identity i wspiera abuse protection, ale żaden DNS record nie gwarantuje delivery lub placement.',
+            keyPrinciples: ['Zidentyfikuj i testuj każdego legitimate sendera', 'Zaostrzaj DMARC z monitored evidence i rollback', 'Traktuj BIMI jako optional branding z osobnymi prerequisites'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj controlled email-authentication deployment:',
+            checklistItems: ['Zidentyfikowano sending services, domains, subdomains i owners', 'Zweryfikowano jeden SPF record i DKIM selectors', 'Przetestowano DMARC alignment, reporting mailbox i privacy controls', 'Udokumentowano legitimate failures, enforcement stages i rollback', 'Przypisano monitoring, key rotation, incident response i review dates'],
+            toolboxCategory: 'email',
+          },
+        },
+        '43.2': {
+          stageTitle: '43. Consent-based list health i reputation monitoring',
+          title: 'Buduj zdrowy sending programme bez fake warm-up i engagement myths',
+          description: 'Wysyłaj oczekiwane maile w supportable volume, szybko usuwaj invalid addresses i zarządzaj inactive subscribers według context, consent i retention rules.',
+          learnContent: {
+            videoTitle: 'Masterclass: Odpowiedzialna list hygiene i sending ramp-up',
+            summaryText: 'Nie istnieje uniwersalny 30-day plan, sender score lub forbidden-word list gwarantujące deliverability. Sustainable reputation wynika z valid acquisition, expected messages, stable operations, low complaints, accurate bounce handling i provider-specific monitoring.',
+            bulletPoints: [
+              'Zwiększaj legitimate volume stopniowo według real demand, historycznych signals i provider feedback, nie synthetic exchanges',
+              'Używaj confirmed signup tam, gdzie właściwe, i zachowuj source, notice, consent oraz suppression evidence',
+              'Szybko suppress hard bounces i complaints; temporary failures badaj przed bounded retries',
+              'Definiuj inactivity według purpose i audience oraz oferuj preference controls przed suppression lub deletion',
+            ],
+            coreConcepts: [
+              { iconName: 'trash-2', title: 'PURPOSE-BASED RETENTION', description: 'Retention i inactivity rules uwzględniają consent, message type, customer relationship i legal duties, nie automatyczne 90-day deletion.', highlight: true },
+              { iconName: 'trending_up', title: 'BALANCED SIGNALS', description: 'Delivery errors, complaints, unsubscribes, valid engagement i customer outcomes są oceniane razem; opens są privacy-limited i niedoskonałe.' },
+            ],
+            resources: [
+              { title: 'List Health & Sending-Ramp Playbook', subtitle: 'Consent, bounces, complaints, preferences, retention i incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM List-Governance Automation', subtitle: 'Suppression, consent records, preference states i review queues', type: 'tool', iconName: 'mail', actionUrl: 'email' },
+            ],
+            fullArticleGuide: `### Zwiększaj sending volume z realnej permission, nie simulated activity
+
+Warm-up services tworzące sztuczne opens, replies lub inbox moves mogą generować misleading signals, ujawniać content i credentials oraz naruszać provider rules. Buduj reputation przez prawdziwą, oczekiwaną komunikację.
+
+#### Odpowiedzialny list-health workflow
+
+1. **Mapuj message purposes**: Rozdziel transactional, service, lifecycle i marketing streams z właściwą podstawą, expectations i unsubscribe behaviour.
+2. **Waliduj acquisition**: Zapisuj signup source, timestamp, notice i preferences. Nie kupuj, nie scrape i nie append addresses bez valid transparent basis.
+3. **Potwierdzaj addresses, gdy właściwe**: Confirmation ogranicza typo i abuse risk; uwzględnij accessibility, failed confirmation i customer support.
+4. **Ustal expectations**: Przy signup podaj sendera, subject area i approximate frequency. Respektuj preferences i nie rozszerzaj purpose po cichu.
+5. **Rampuj z real demand**: Zacznij od odbiorców oczekujących maila i zwiększaj volume tylko przy zdrowych infrastructure, support i feedback. Bez fixed universal targets.
+6. **Utrzymuj spójne operations**: Stosuj stable authenticated domains, predictable From identity, working reply handling i controlled changes.
+7. **Poprawnie obsługuj bounces**: Natychmiast suppress valid permanent failures. Retry temporary failures tylko w documented limits i badaj nagłe patterns.
+8. **Szybko obsługuj complaints i unsubscribes**: Zastosuj suppression we wszystkich relevant systems i nie dodawaj ponownie bez valid new request.
+9. **Ostrożnie interpretuj engagement**: Privacy protection i image blocking zniekształcają opens. Łącz clicks, replies, conversions, preferences, complaints i context bez invasive tracking.
+10. **Definiuj inactivity kontekstowo**: Monthly newsletter i annual service notice potrzebują innych windows. Oferuj lower frequency lub pause bez threatening subject lines.
+11. **Prowadź fair reconfirmation test**: Wyślij limited, jasno oznaczony message z prostą preference action i bez urgency. Suppress marketing, gdy permission nie da się potwierdzić.
+12. **Chroń data lifecycle**: Rozróżniaj deletion od suppression records potrzebnych do opt-out, minimalizuj data i stosuj access, retention oraz audit controls.
+13. **Monitoruj per provider i stream**: Analizuj delivery codes, authentication, complaints, block events i representative inbox tests. Provider dashboards pokazują tylko available data.
+14. **Stosuj stop rules**: Pauzuj campaigns po nietypowych complaint, bounce lub abuse signals, znajdź root cause i wróć stopniowo po validation.
+15. **Uczciwie dokumentuj results**: Usunięcie inactive recipients może zmienić rates przez denominator; nie gwarantuje revenue ani inbox placement.
+
+Celem jest oczekiwany, bezpieczny i użyteczny e-mail, nie największa lista lub cosmetic open rate.`,
+            practicalExamples: [
+              'Newsletter oferuje monthly, quarterly lub pause preferences przed suppression osób, których marketing permission i interest nie da się już potwierdzić.',
+              'Bounce spike automatycznie pauzuje campaign i uruchamia investigation acquisition source i domain configuration zamiast repeated attempts.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Zdrowe email programmes zdobywają uwagę przez permission, relevance i reliable operations; synthetic warm-up i simplistic scores ich nie zastąpią.',
+            keyPrinciples: ['Używaj wyłącznie genuine expected traffic', 'Szybko suppress invalid i opted-out addresses', 'Interpretuj metrics w kontekście i utrzymuj stop rules'],
+          },
+          actionTask: {
+            instruction: 'Przeprowadź responsible list-health review:',
+            checklistItems: ['Sprawdzono message purposes, acquisition sources, notices i consent evidence', 'Przetestowano hard-bounce, complaint, unsubscribe i retry controls', 'Zdefiniowano inactivity windows i preference options per stream', 'Udokumentowano provider feedback, privacy limits i representative tests', 'Przypisano ramp limits, alerts, stop rule i next review'],
+            toolboxCategory: 'email',
           },
         },
       },
