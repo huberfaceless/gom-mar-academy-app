@@ -3290,6 +3290,125 @@ An evergreen video is maintained content, not a free salesperson working unchang
         },
       },
     },
+    39: {
+      title: '39. Sustainable Pinterest visual discovery',
+      subtitle: 'Audience-led visual search, useful Pins, compliant links and governed publishing',
+      description: 'Build a maintainable Pinterest presence through relevant visual content, honest metadata, accessible destinations and measured experiments—without passive-traffic guarantees, repetitive automation or fabricated purchase intent.',
+      lessons: {
+        '39.1': {
+          stageTitle: '39. Pinterest discovery & Pin architecture',
+          title: 'Research topics and create useful, discoverable Pins',
+          description: 'Connect audience planning needs with accurate titles, descriptions, imagery and destination pages while treating format and ranking advice as hypotheses to test.',
+          learnContent: {
+            videoTitle: 'Masterclass: Evidence-led Pinterest visual discovery',
+            summaryText: 'Pinterest supports discovery, planning and inspiration, but user intent varies and no Pin format, keyword placement or verified domain guarantees ranking, clicks or longevity. Useful content and trustworthy destinations are the foundation.',
+            bulletPoints: [
+              'Research audience language with Pinterest search and Trends where available, then validate it against your own queries, content and destination evidence',
+              'Use descriptive Pin titles, board context and image meaning naturally; avoid keyword stuffing and unsupported claims',
+              'Design legible vertical creative as one testable option—not a universal “high-CTR” formula—and check mobile cropping and accessibility',
+              'Claim the correct website and configure supported metadata only when it accurately matches a stable, policy-compliant destination',
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'TOPIC RELEVANCE', description: 'Align audience need, visual, title, description, board and landing page around one genuine topic without repetitive or misleading variants.', highlight: true },
+              { iconName: 'image', title: 'ACCESSIBLE VISUAL', description: 'Use readable text, strong contrast, meaningful imagery and destination context; essential information must not exist only inside an image.' },
+            ],
+            resources: [
+              { title: 'Pinterest Topic & Pin Quality Workbook', subtitle: 'Research, claims, rights, accessibility, destination and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Pinterest Template Review Kit', subtitle: 'Adaptable layouts with clarity and accessibility checks', type: 'tool', iconName: 'layout', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Design for useful visual discovery
+
+Pinterest combines visual browsing, search and recommendations. Some Pins may continue receiving impressions, while others may not. Longevity, traffic and purchase intent are outcomes to observe, not promises.
+
+#### Responsible visual-search workflow
+
+1. **Define one audience task**: State who the Pin helps, what they are planning or solving and what useful outcome the destination provides.
+2. **Research language and context**: Review Pinterest suggestions and Trends where available, audience questions, your analytics and credible sources. Record region, language, season and date.
+3. **Verify claims and rights**: Substantiate benefits, prices and comparisons. Clear photos, illustrations, fonts, logos, testimonials and AI assets, and disclose material commercial relationships.
+4. **Create a coherent content cluster**: Organise boards and Pins around real themes people can understand. Board names and descriptions should clarify scope rather than repeat keyword lists.
+5. **Design accessible creative**: Test vertical formats appropriate to the placement, readable typography, contrast, safe margins and mobile cropping. Add meaningful text alternatives and ensure the landing page repeats essential information as accessible text.
+6. **Write accurate metadata**: Use a concise title and natural description that match both image and destination. Do not promise a checklist, recipe, result or price that the landing page does not provide.
+7. **Use website and metadata features correctly**: Claim only domains you control, protect account access and implement supported rich metadata from the current source page. Test that updates and removals propagate.
+8. **Publish a small baseline**: Start with a manageable set of genuinely different Pins. Avoid near-duplicate images, irrelevant boards and arbitrary daily-volume rules.
+9. **Measure in context**: Review impressions, saves, outbound clicks and destination quality by topic, format, device and period. Metrics and feature availability change; small samples do not establish a ranking law.
+10. **Improve one variable at a time**: Test a meaningful difference in image, title or proposition while keeping claims truthful. Document hypothesis, dates and decision.
+11. **Maintain destinations**: Monitor speed, mobile use, accessibility, redirects, consent, disclosures, availability and link health. Remove stale prices and expired offers.
+12. **Review account and user impact**: Track complaints, hides, policy warnings, misleading-click signals and conversion quality. Retire content that produces traffic through confusion.
+
+Consistency means maintaining a useful publishing and review process—not posting three to five Pins every day regardless of value.`,
+            practicalExamples: [
+              'A Vital50 recipe Pin uses a readable vertical image, accurately names the recipe and links to the complete accessible instructions rather than a gated unrelated offer.',
+              'A high-impression Pin produces many immediate exits because the headline overstates the destination; it is corrected instead of cloned into more variants.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Pinterest can support long-term discovery, but durable traffic comes from relevant, accurate and maintained content—not a fixed format or posting quota.',
+            keyPrinciples: ['Match visual, metadata and destination', 'Test formats and keywords instead of treating them as ranking rules', 'Measure user value and destination quality alongside reach'],
+          },
+          actionTask: {
+            instruction: 'Prepare a responsible Pinterest discovery pilot:',
+            checklistItems: ['Audience task, topic evidence, region, language and season documented', 'Business account, domain ownership and account security checked', 'Five distinct Pins use substantiated claims, cleared assets and accessible design', 'Boards, titles, descriptions and destinations align naturally', 'Analytics baseline, review date, complaints, link health and update owner defined'],
+            toolboxCategory: 'content',
+          },
+        },
+        '39.2': {
+          stageTitle: '39. Governed Pinterest publishing & journey',
+          title: 'Schedule useful Pins without creating automated spam',
+          description: 'Use approved publishing methods, human review and resilient landing pages to reduce repetitive work while retaining accuracy, consent, security and editorial control.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible Pinterest publishing pipelines',
+            summaryText: 'Automation can schedule approved content, but it does not make a channel passive. Pinterest’s guidelines prohibit unapproved automation and repetitive, misleading or irrelevant content. Every generated variation needs a purpose, review and maintained destination.',
+            bulletPoints: [
+              'Use Pinterest-supported scheduling, approved partner tools or authorised APIs and respect current account, rate and feature limits',
+              'Generate variants only when image, audience angle or destination value is meaningfully different—not to evade spam detection',
+              'Compare direct landing pages and useful editorial pages by audience task, disclosure, accessibility and downstream quality',
+              'Promote organic content only after policy, rights, tracking and customer-outcome review; a small daily budget does not guarantee scalable results',
+            ],
+            coreConcepts: [
+              { iconName: 'repeat', title: 'APPROVED SCHEDULING', description: 'A human-approved queue publishes through supported methods with rate controls, logs, pause, retries and a safe failure state.', highlight: true },
+              { iconName: 'zap', title: 'PURPOSEFUL VARIATION', description: 'Each variant tests a documented hypothesis and adds distinct value. Repetition for volume is not a content strategy.' },
+            ],
+            resources: [
+              { title: 'Pinterest Publishing Governance Blueprint', subtitle: 'Approvals, API boundaries, rights, logs, incidents and rollback', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Pinterest Destination Monitor', subtitle: 'Mobile pages, UTMs, consent, errors and link health', type: 'tool', iconName: 'layout', actionUrl: 'landingpage' },
+            ],
+            fullArticleGuide: `### Automate the queue, not editorial responsibility
+
+A publishing pipeline can reduce manual uploading, but content quality, policy compliance, rights, destination reliability and measurement still require human ownership. Monthly traffic and working time vary by niche, assets, tools and review needs.
+
+#### Governed monthly cycle
+
+1. **Set scope and capacity**: Define approved account, markets, topics, destinations, frequency range, budget, owners and excluded content. Capacity comes before a volume target.
+2. **Choose an authorised route**: Confirm that the scheduler, partner tool or API use is currently approved and follows Pinterest terms. Do not automate browser actions with unapproved services.
+3. **Build from verified source content**: Select maintained articles, products or resources with evidence, rights, availability and a clear audience benefit. AI output is a draft requiring fact and rights review.
+4. **Create purposeful variants**: Record what changes and why—such as audience angle, genuine image, format or proposition. Avoid superficial duplicates pointing repeatedly to the same page.
+5. **Run editorial checks**: Review claim accuracy, language, spelling, brand, accessibility, commercial disclosure, sensitive topics and alignment between Pin and destination.
+6. **Protect the integration**: Use scoped credentials, secure secret storage, separate environments where practical, minimal permissions, logs, rate limits and prompt revocation. Never paste tokens into templates or screenshots.
+7. **Schedule conservatively**: Spread content according to relevance and observed audience patterns, not fabricated “active times”. Detect duplicate payloads and provide manual pause and approval.
+8. **Handle failures safely**: Use idempotency, bounded retries and alerts for rejected Pins, expired tokens, invalid media and broken links. Do not retry indefinitely or publish partial records.
+9. **Prepare the destination**: Test mobile speed, accessibility, clear ownership, material terms, affiliate disclosure, consent, form delivery and useful content before traffic arrives. A universal 1.5-second threshold is not a guarantee.
+10. **Measure contribution**: Standardise UTMs without personal data and analyse valid outbound sessions, engagement, sign-ups, opt-outs, sales quality, refunds and complaints. Respect consent and attribution limits.
+11. **Approve paid amplification separately**: Check ad eligibility, claim evidence, audience settings, budget cap, billing and landing-page compliance. Run a bounded experiment with a stop rule rather than “scaling the top 5%”.
+12. **Review and maintain**: Pause weak or harmful content, refresh sources, rotate only meaningful creative and audit permissions, disclosures and logs. Publishing is never “set and forget”.
+
+The safest pipeline makes it easy to inspect, pause, correct and retire every Pin.`,
+            practicalExamples: [
+              'Four maintained articles produce eight genuinely different Pins after a human rights and claim review; an approved scheduler publishes them with duplicate detection and a pause control.',
+              'A destination starts returning errors, so monitoring pauses queued Pins and alerts the owner rather than continuing to send users to a broken funnel.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Responsible automation reduces repetitive operations while human owners remain accountable for every Pin, destination and outcome.',
+            keyPrinciples: ['Use only approved automation and scoped access', 'Every variant needs distinct value and human review', 'Build pause, monitoring, correction and retirement into the pipeline'],
+          },
+          actionTask: {
+            instruction: 'Configure a controlled Pinterest publishing pilot:',
+            checklistItems: ['Approved publishing method, scope, permissions and policy owner confirmed', 'Source content, rights, claims, disclosures and accessibility reviewed', 'Purposeful variants, schedule, approvals and duplicate controls configured', 'Landing-page health, consent, UTM rules and failure alerts tested', 'Budget cap, quality metrics, stop rule, audit and maintenance dates assigned'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -6561,6 +6680,125 @@ Evergreen video jest utrzymywaną treścią, nie bezpłatnym sprzedawcą pracuj�
           actionTask: {
             instruction: 'Zbuduj i przejrzyj viewer-controlled conversion path:',
             checklistItems: ['Companion resource rozszerza video i działa dostępnie', 'CTA, commercial relationship, destination i data exchange są jasne', 'Landing page jest szybki, mobile, accessible i data-minimised', 'Udokumentowano UTM taxonomy, consent, retention i attribution limits', 'Zaplanowano link tests, opt-outs, complaints, activation i update ownership'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+    39: {
+      title: '39. Zrównoważone visual discovery na Pinterest',
+      subtitle: 'Visual search oparty na odbiorcy, użyteczne Piny, zgodne linki i governed publishing',
+      description: 'Buduj utrzymywalną obecność na Pinterest przez trafne treści wizualne, prawdziwe metadata, dostępne destinations i mierzone eksperymenty — bez gwarancji passive traffic, repetitive automation lub zmyślonego purchase intent.',
+      lessons: {
+        '39.1': {
+          stageTitle: '39. Pinterest discovery i architektura Pina',
+          title: 'Badaj tematy i twórz użyteczne, odkrywalne Piny',
+          description: 'Łącz potrzeby planowania odbiorców z dokładnymi tytułami, opisami, obrazami i landing pages, traktując format oraz ranking advice jako hipotezy.',
+          learnContent: {
+            videoTitle: 'Masterclass: Pinterest visual discovery oparte na dowodach',
+            summaryText: 'Pinterest wspiera discovery, planowanie i inspirację, lecz intent użytkownika się różni, a format, keyword placement czy claimed domain nie gwarantuje rankingu, klików lub longevity. Podstawą są użyteczne treści i godne zaufania destinations.',
+            bulletPoints: [
+              'Badaj język odbiorców przez Pinterest search i Trends gdzie dostępne, następnie waliduj własnymi zapytaniami, contentem i destination evidence',
+              'Naturalnie używaj opisowych Pin titles, board context i znaczenia obrazu; unikaj keyword stuffing i unsupported claims',
+              'Projektuj czytelne vertical creative jako opcję do testu, nie uniwersalną formułę high-CTR, i sprawdzaj mobile cropping oraz dostępność',
+              'Claimuj właściwą stronę i konfiguruj wspierane metadata tylko wtedy, gdy dokładnie odpowiadają stabilnemu, zgodnemu destination',
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'TRAFNOŚĆ TEMATU', description: 'Połącz potrzebę, visual, title, description, board i landing page wokół jednego realnego tematu bez repetitive lub misleading variants.', highlight: true },
+              { iconName: 'image', title: 'DOSTĘPNY VISUAL', description: 'Używaj czytelnego tekstu, kontrastu, meaningful imagery i destination context; istotna informacja nie może być wyłącznie na obrazie.' },
+            ],
+            resources: [
+              { title: 'Workbook tematów i jakości Pina', subtitle: 'Research, claims, rights, dostępność, destination i review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kit review szablonów Pinterest GOM-MAR', subtitle: 'Adaptowalne layouts z kontrolą jasności i dostępności', type: 'tool', iconName: 'layout', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Projektuj dla użytecznego visual discovery
+
+Pinterest łączy visual browsing, search i recommendations. Niektóre Piny mogą długo otrzymywać impressions, inne nie. Longevity, traffic i purchase intent są wynikami do obserwacji, nie obietnicami.
+
+#### Odpowiedzialny workflow visual search
+
+1. **Zdefiniuj jedno zadanie odbiorcy**: Określ osobę, plan lub problem oraz użyteczny wynik na destination.
+2. **Badaj język i kontekst**: Sprawdź suggestions, Trends gdzie dostępne, pytania, własne analytics i credible sources. Zapisz region, język, sezon i datę.
+3. **Weryfikuj claims i rights**: Uzasadnij korzyści, ceny i porównania. Oczyść photos, illustrations, fonts, logos, testimonials i AI assets oraz ujawnij material relationships.
+4. **Twórz spójny content cluster**: Organizuj boards i Piny wokół zrozumiałych tematów. Nazwy i opisy wyjaśniają scope, nie powtarzają list keywords.
+5. **Projektuj dostępne creative**: Testuj vertical formats właściwe dla placement, czytelną typography, contrast, margins i mobile crop. Dodaj meaningful text alternatives, a istotne dane powtórz jako accessible text.
+6. **Pisz dokładne metadata**: Zwięzły title i naturalny description odpowiadają obrazowi i destination. Nie obiecuj checklist, recipe, result lub price, których strona nie daje.
+7. **Poprawnie używaj website i metadata features**: Claimuj tylko własne domains, chroń account i wdrażaj supported rich metadata z aktualnej source page. Testuj update i removal.
+8. **Publikuj mały baseline**: Zacznij od manageable zestawu rzeczywiście różnych Pins. Bez near-duplicates, irrelevant boards i arbitralnej daily volume.
+9. **Mierz w kontekście**: Oceniaj impressions, saves, outbound clicks i destination quality według topic, format, device i period. Features się zmieniają, mała próba nie jest ranking law.
+10. **Poprawiaj jedną zmienną**: Testuj meaningful difference w image, title lub proposition z prawdziwymi claims. Dokumentuj hypothesis, dates i decision.
+11. **Utrzymuj destinations**: Monitoruj speed, mobile, accessibility, redirects, consent, disclosures, availability i link health. Usuwaj stare ceny i expired offers.
+12. **Przeglądaj wpływ**: Śledź complaints, hides, policy warnings, misleading-click signals i conversion quality. Wycofuj content dający traffic przez confusion.
+
+Consistency oznacza utrzymywanie użytecznego procesu publikacji i review, nie trzy do pięciu Pins dziennie bez względu na wartość.`,
+            practicalExamples: [
+              'Pin przepisu Vital50 używa czytelnego vertical image, dokładnie nazywa recipe i linkuje pełną accessible instrukcję zamiast gated unrelated offer.',
+              'Pin z wysokimi impressions daje immediate exits przez overstatement; zostaje poprawiony, a nie sklonowany.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Pinterest może wspierać long-term discovery, ale trwały traffic wynika z relevant, accurate i maintained content, nie stałego formatu lub quota.',
+            keyPrinciples: ['Dopasuj visual, metadata i destination', 'Testuj formats i keywords zamiast traktować je jako ranking rules', 'Mierz user value i destination quality obok reach'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj odpowiedzialny pilot Pinterest discovery:',
+            checklistItems: ['Udokumentowano audience task, topic evidence, region, language i season', 'Sprawdzono business account, domain ownership i security', 'Pięć różnych Pins ma uzasadnione claims, cleared assets i accessible design', 'Boards, titles, descriptions i destinations są zgodne', 'Określono analytics baseline, review, complaints, link health i update owner'],
+            toolboxCategory: 'content',
+          },
+        },
+        '39.2': {
+          stageTitle: '39. Governed Pinterest publishing i journey',
+          title: 'Planuj użyteczne Piny bez tworzenia automated spam',
+          description: 'Używaj approved publishing, human review i resilient landing pages, ograniczając manual work z zachowaniem accuracy, consent, security i editorial control.',
+          learnContent: {
+            videoTitle: 'Masterclass: Odpowiedzialne Pinterest publishing pipelines',
+            summaryText: 'Automation może planować approved content, ale nie czyni kanału pasywnym. Guidelines Pinterest zakazują unapproved automation oraz repetitive, misleading lub irrelevant content. Każdy generated variant potrzebuje celu, review i maintained destination.',
+            bulletPoints: [
+              'Używaj scheduling wspieranego przez Pinterest, approved partner tools lub authorised APIs i respektuj aktualne account, rate oraz feature limits',
+              'Generuj variants tylko przy meaningful difference w image, audience angle lub destination value, nie by omijać spam detection',
+              'Porównuj direct landing pages i użyteczne editorial pages według audience task, disclosure, dostępności i downstream quality',
+              'Promuj organic content dopiero po policy, rights, tracking i customer-outcome review; mały daily budget nie gwarantuje scale',
+            ],
+            coreConcepts: [
+              { iconName: 'repeat', title: 'APPROVED SCHEDULING', description: 'Human-approved queue publikuje przez supported methods z rate controls, logs, pause, retries i safe failure.', highlight: true },
+              { iconName: 'zap', title: 'CELOWA WARIACJA', description: 'Każdy variant testuje udokumentowaną hipotezę i dodaje wartość. Repetition dla volume nie jest content strategy.' },
+            ],
+            resources: [
+              { title: 'Blueprint Pinterest publishing governance', subtitle: 'Approvals, API boundaries, rights, logs, incidents i rollback', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Monitor destination Pinterest Mara CRM', subtitle: 'Mobile pages, UTM, consent, errors i link health', type: 'tool', iconName: 'layout', actionUrl: 'landingpage' },
+            ],
+            fullArticleGuide: `### Automatyzuj kolejkę, nie odpowiedzialność redakcyjną
+
+Publishing pipeline ogranicza ręczne uploady, ale quality, policy, rights, destination reliability i measurement nadal mają human ownera. Monthly traffic i czas pracy zależą od niszy, assets, tools oraz review.
+
+#### Governed monthly cycle
+
+1. **Ustal scope i capacity**: Określ account, markets, topics, destinations, frequency range, budget, ownerów i excluded content. Capacity jest przed volume target.
+2. **Wybierz authorised route**: Potwierdź, że scheduler, partner tool lub API jest obecnie approved i zgodny z Pinterest terms. Nie automatyzuj browser actions przez unapproved services.
+3. **Buduj ze zweryfikowanego source content**: Wybierz maintained articles, products lub resources z dowodami, rights, availability i audience benefit. AI output jest draftem do fact i rights review.
+4. **Twórz purposeful variants**: Zapisz, co i dlaczego się zmienia: audience angle, genuine image, format lub proposition. Unikaj superficial duplicates do tej samej page.
+5. **Wykonaj editorial checks**: Sprawdź accuracy, language, spelling, brand, accessibility, commercial disclosure, sensitive topics i zgodność Pin-destination.
+6. **Chroń integrację**: Stosuj scoped credentials, secure secret storage, osobne environments gdzie praktyczne, minimal permissions, logs, rate limits i prompt revocation. Bez tokens w templates lub screenshots.
+7. **Planuj konserwatywnie**: Rozkładaj content według relevance i observed patterns, nie zmyślonych active times. Wykrywaj duplicate payload i zapewnij manual pause oraz approval.
+8. **Bezpiecznie obsługuj failures**: Używaj idempotency, bounded retries i alerts dla rejected Pins, expired tokens, invalid media oraz broken links. Bez endless retries lub partial records.
+9. **Przygotuj destination**: Testuj mobile speed, accessibility, ownership, terms, affiliate disclosure, consent, form delivery i useful content. Uniwersalne 1.5 sekundy nie gwarantuje wyniku.
+10. **Mierz contribution**: Standaryzuj UTM bez personal data i analizuj valid sessions, engagement, sign-ups, opt-outs, sales quality, refunds i complaints. Respektuj consent i attribution limits.
+11. **Osobno zatwierdzaj paid amplification**: Sprawdź ad eligibility, claims, audience settings, budget cap, billing i landing compliance. Prowadź bounded experiment ze stop rule zamiast „scale top 5%”.
+12. **Przeglądaj i utrzymuj**: Pauzuj słaby lub harmful content, odświeżaj sources, rotuj meaningful creative i audituj permissions, disclosure oraz logs. Publishing nie jest set-and-forget.
+
+Najbezpieczniejszy pipeline pozwala inspect, pause, correct i retire każdy Pin.`,
+            practicalExamples: [
+              'Cztery maintained articles dają osiem rzeczywiście różnych Pins po human review claims i rights; approved scheduler publikuje z duplicate detection i pause.',
+              'Destination zwraca errors, więc monitoring pauzuje queued Pins i alarmuje ownera zamiast wysyłać users do broken funnel.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Odpowiedzialna automation ogranicza repetitive operations, a human owners odpowiadają za każdy Pin, destination i outcome.',
+            keyPrinciples: ['Używaj tylko approved automation i scoped access', 'Każdy variant wymaga distinct value i human review', 'Wbuduj pause, monitoring, correction i retirement'],
+          },
+          actionTask: {
+            instruction: 'Skonfiguruj controlled Pinterest publishing pilot:',
+            checklistItems: ['Potwierdzono approved method, scope, permissions i policy owner', 'Sprawdzono source content, rights, claims, disclosures i accessibility', 'Skonfigurowano purposeful variants, schedule, approvals i duplicate controls', 'Przetestowano landing health, consent, UTM i failure alerts', 'Przypisano budget cap, quality metrics, stop rule, audit i maintenance dates'],
             toolboxCategory: 'landingpage',
           },
         },
