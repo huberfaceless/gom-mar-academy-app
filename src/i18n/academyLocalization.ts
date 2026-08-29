@@ -4813,6 +4813,71 @@ Scaling is successful only when additional spend continues to create suitable cu
         }
       }
     },
+    51: {
+      title: '51. Responsible B2B account-based marketing',
+      subtitle: 'Account fit, privacy and compliant outreach',
+      description: 'Focus enterprise marketing on verified fit and useful content—without guarantees, covert profiling or process bypasses.',
+      lessons: {
+        '51.1': {
+          stageTitle: '51. ABM strategy and account selection',
+          title: 'Prioritise accounts without invasive profiling',
+          description: 'Use permitted evidence and confirmed business needs without assuming private fears or purchase intent.',
+          learnContent: {
+            videoTitle: 'Masterclass: evidence-led ABM',
+            summaryText: 'Account count, deal value, sales-cycle length and intent signals are assumptions, not guarantees.',
+            bulletPoints: ['Score fit transparently with human review', 'Map verified roles without stereotypes', 'Audit intent-data sources and lawful basis', 'Create content from confirmed business needs'],
+            coreConcepts: [{ iconName: 'target', title: 'DECISION MAP', description: 'Record evidence, confidence, permissions and open questions.', highlight: true }, { iconName: 'activity', title: 'VALIDATED SIGNALS', description: 'Estimates are not certain individual intent.' }],
+            resources: [{ title: 'ABM account workbook', subtitle: 'Fit, evidence, privacy and reviews', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM account management', subtitle: 'Contacts with source and objection records', type: 'tool', iconName: 'users', actionUrl: 'crm' }],
+            fullArticleGuide: `### Responsible ABM
+
+1. Define the offer, capacity and an evidence-led ICP.
+2. Record scoring sources, confidence, exclusions and human review.
+3. Separate verified facts, estimates and hypotheses.
+4. Map public roles without unnecessary scraping or private-fear inference.
+5. Document purpose, lawful basis, minimisation, source, retention, security and required GDPR Article 14 information.
+6. Audit intent suppliers and treat signals as probabilistic.
+7. Apply local rules to email, telephone, social and post.
+8. Explain objection rights and stop direct marketing when required.
+9. Respect assistants, procurement, security and works councils.
+10. Measure quality, objections and complaints; delete unsupported profiles.
+
+ABM cannot guarantee a contract.`,
+            practicalExamples: ['Validate a low-confidence intent signal before lawful contact.', 'Use the organisation’s accepted buying process.'],
+          },
+          understandContent: { coreTakeaway: 'Responsible ABM respects personal data, objections and buying processes.', keyPrinciples: ['Separate facts from intent estimates', 'Minimise personal data', 'Avoid stereotypes and surveillance'] },
+          actionTask: { instruction: 'Prepare a compliant ABM pilot:', checklistItems: ['Defined ICP and transparent scoring', 'Recorded sources and confidence', 'Documented lawful basis, notice, retention and objections', 'Planned permitted channels, metrics and reviews'], toolboxCategory: 'crm' },
+        },
+        '51.2': {
+          stageTitle: '51. Compliant direct mail and executive outreach',
+          title: 'Use physical outreach without gifts or bypass tactics',
+          description: 'Test proportionate business mail with transparent identity, gift controls and lawful follow-up.',
+          learnContent: {
+            videoTitle: 'Masterclass: compliant physical outreach',
+            summaryText: 'No package is guaranteed to reach an executive; expensive items may breach policy, procurement or anti-bribery law.',
+            bulletPoints: ['Check gift, procurement and anti-bribery rules', 'Identify the sender and commercial purpose', 'Limit tracking and retention', 'Follow up lawfully and respect assistants'],
+            coreConcepts: [{ iconName: 'mail', title: 'PROPORTIONATE MAIL', description: 'Useful information follows an accepted route.', highlight: true }, { iconName: 'video', title: 'COMPLIANT FORMAT', description: 'Accessible, secure, modest and permitted.' }],
+            resources: [{ title: 'Direct-mail compliance workbook', subtitle: 'Purpose, value, privacy and metrics', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM delivery follow-up', subtitle: 'Human-reviewed reminders without automatic pressure', type: 'tool', iconName: 'send', actionUrl: 'crm' }],
+            fullArticleGuide: `### Respectful direct mail
+
+1. Use an informational purpose, not buying influence.
+2. Check employer, sector, gift, procurement and anti-bribery rules.
+3. Prefer useful information or a requested sample over electronics or luxury items.
+4. Use business addresses and minimise personal data.
+5. Identify the sender and purpose; never disguise advertising.
+6. Avoid unsafe or inaccessible formats.
+7. Control vendors and retention; delivery does not prove opening.
+8. Confirm applicable B2B telephone-consent rules before follow-up.
+9. Respect assistants, objections and procurement.
+10. Measure replies, cost, returns and complaints without open- or appointment-rate guarantees.
+
+A costly package does not create a large customer.`,
+            practicalExamples: ['When gifts are prohibited, send a clear analysis through the vendor process.', 'Ask assistants for the correct route instead of claiming executive delivery.'],
+          },
+          understandContent: { coreTakeaway: 'Physical outreach works only when proportionate, transparent, lawful and respectful.', keyPrinciples: ['Never exchange gifts for access', 'Tracking does not prove executive attention', 'Respect objections and procurement'] },
+          actionTask: { instruction: 'Design a compliant direct-mail pilot:', checklistItems: ['Checked gift and anti-bribery rules', 'Approved format, value and accessibility', 'Documented data, vendors and retention', 'Planned lawful follow-up, metrics and stop rules'], toolboxCategory: 'crm' },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -9613,6 +9678,71 @@ Skalowanie ma sens tylko wtedy, gdy dodatkowy wydatek nadal tworzy wartość bez
           }
         }
       }
+    },
+    51: {
+      title: '51. Odpowiedzialny account-based marketing B2B',
+      subtitle: 'Dopasowanie kont, prywatność i zgodny outreach',
+      description: 'Skup marketing enterprise na potwierdzonym dopasowaniu i użytecznych treściach—bez gwarancji, ukrytego profilowania i omijania procesów.',
+      lessons: {
+        '51.1': {
+          stageTitle: '51. Strategia ABM i wybór kont',
+          title: 'Priorytetyzuj konta bez inwazyjnego profilowania',
+          description: 'Używaj dozwolonych dowodów i potwierdzonych potrzeb bez zakładania prywatnych lęków lub intencji.',
+          learnContent: {
+            videoTitle: 'Masterclass: ABM oparte na dowodach',
+            summaryText: 'Liczba kont, wartość umowy, długość cyklu i sygnały intent to założenia, nie gwarancje.',
+            bulletPoints: ['Oceniaj dopasowanie przejrzyście z kontrolą człowieka', 'Mapuj role bez stereotypów', 'Kontroluj dane intent i podstawę prawną', 'Twórz treści z potwierdzonych potrzeb'],
+            coreConcepts: [{ iconName: 'target', title: 'MAPA DECYZJI', description: 'Zapisuj dowody, pewność, uprawnienia i pytania.', highlight: true }, { iconName: 'activity', title: 'ZWERYFIKOWANE SYGNAŁY', description: 'Szacunki nie są pewną intencją osoby.' }],
+            resources: [{ title: 'Zeszyt kont ABM', subtitle: 'Dopasowanie, dowody, prywatność i przeglądy', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM account management', subtitle: 'Kontakty ze źródłem i sprzeciwem', type: 'tool', iconName: 'users', actionUrl: 'crm' }],
+            fullArticleGuide: `### Odpowiedzialny ABM
+
+1. Określ ofertę, możliwości i ICP oparte na dowodach.
+2. Zapisz źródła punktacji, pewność, wykluczenia i kontrolę człowieka.
+3. Oddziel fakty, szacunki i hipotezy.
+4. Mapuj publiczne role bez zbędnego scrapingu i prywatnych lęków.
+5. Udokumentuj cel, podstawę, minimalizację, źródło, retencję, bezpieczeństwo i informację z art. 14 RODO.
+6. Kontroluj dostawców intent i traktuj sygnały probabilistycznie.
+7. Stosuj lokalne reguły e-maila, telefonu, social i poczty.
+8. Informuj o sprzeciwie i zatrzymaj marketing bezpośredni.
+9. Szanuj asystentów, zakupy, bezpieczeństwo i rady pracownicze.
+10. Mierz jakość, sprzeciwy i skargi; usuwaj nieuzasadnione profile.
+
+ABM nie gwarantuje kontraktu.`,
+            practicalExamples: ['Sprawdź niepewny sygnał przed legalnym kontaktem.', 'Używaj zaakceptowanego procesu zakupowego organizacji.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialny ABM szanuje dane osobowe, sprzeciwy i procesy zakupowe.', keyPrinciples: ['Oddziel fakty od szacunków intencji', 'Minimalizuj dane osobowe', 'Unikaj stereotypów i nadzoru'] },
+          actionTask: { instruction: 'Przygotuj zgodny pilotaż ABM:', checklistItems: ['Określono ICP i przejrzystą punktację', 'Zapisano źródła i pewność', 'Udokumentowano podstawę, informację, retencję i sprzeciwy', 'Zaplanowano kanały, mierniki i przeglądy'], toolboxCategory: 'crm' },
+        },
+        '51.2': {
+          stageTitle: '51. Zgodna poczta i outreach do kadry',
+          title: 'Przesyłki bez prezentów i omijania procesów',
+          description: 'Testuj proporcjonalną pocztę z jawnym nadawcą, kontrolą prezentów i legalnym follow-up.',
+          learnContent: {
+            videoTitle: 'Masterclass: zgodna poczta fizyczna',
+            summaryText: 'Paczka nie ma gwarancji dotarcia do dyrektora; drogi przedmiot może naruszyć politykę, zakupy lub prawo antykorupcyjne.',
+            bulletPoints: ['Sprawdź reguły prezentów, zakupów i antykorupcji', 'Podaj nadawcę i cel handlowy', 'Ogranicz tracking i retencję', 'Kontynuuj legalnie i szanuj asystentów'],
+            coreConcepts: [{ iconName: 'mail', title: 'PROPORCJONALNA POCZTA', description: 'Użyteczna informacja idzie zaakceptowaną drogą.', highlight: true }, { iconName: 'video', title: 'ZGODNY FORMAT', description: 'Dostępny, bezpieczny, skromny i dozwolony.' }],
+            resources: [{ title: 'Zeszyt zgodności poczty', subtitle: 'Cel, wartość, prywatność i mierniki', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM delivery follow-up', subtitle: 'Przypomnienia sprawdzane przez człowieka bez presji', type: 'tool', iconName: 'send', actionUrl: 'crm' }],
+            fullArticleGuide: `### Poczta z szacunkiem
+
+1. Używaj celu informacyjnego, nie kupowania wpływu.
+2. Sprawdź reguły pracodawcy, sektora, prezentów, zakupów i antykorupcji.
+3. Preferuj informację lub zamówioną próbkę zamiast elektroniki i luksusu.
+4. Używaj adresu firmy i minimalizuj dane osobowe.
+5. Podaj nadawcę i cel; nie ukrywaj reklamy.
+6. Unikaj niebezpiecznych lub niedostępnych formatów.
+7. Kontroluj dostawców i retencję; dostawa nie dowodzi otwarcia.
+8. Potwierdź reguły zgody na telefon B2B przed follow-up.
+9. Szanuj asystentów, sprzeciwy i zakupy.
+10. Mierz odpowiedzi, koszt, zwroty i skargi bez gwarancji otwarć lub spotkań.
+
+Droga paczka nie tworzy dużego klienta.`,
+            practicalExamples: ['Gdy prezenty są zakazane, wyślij jawną analizę przez proces dostawców.', 'Zapytaj asystenta o właściwą drogę zamiast twierdzić, że dyrektor odebrał paczkę.'],
+          },
+          understandContent: { coreTakeaway: 'Poczta działa tylko, gdy jest proporcjonalna, jawna, legalna i pełna szacunku.', keyPrinciples: ['Nie wymieniaj prezentów na dostęp', 'Tracking nie dowodzi uwagi dyrektora', 'Szanuj sprzeciwy i zakupy'] },
+          actionTask: { instruction: 'Zaprojektuj zgodny pilotaż poczty:', checklistItems: ['Sprawdzono prezenty i antykorupcję', 'Zatwierdzono format, wartość i dostępność', 'Udokumentowano dane, dostawców i retencję', 'Zaplanowano legalny follow-up, mierniki i stop rules'], toolboxCategory: 'crm' },
+        },
+      },
     },
 
   },
