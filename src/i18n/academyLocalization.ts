@@ -4140,6 +4140,131 @@ The strongest win-back is a product change that genuinely resolves the reason so
         },
       },
     },
+    46: {
+      title: '46. Google Search Ads & responsible high-intent acquisition',
+      subtitle: 'Search intent, match types, ad relevance, exclusions and accountable automation',
+      description: 'Build measurable Google Ads campaigns around genuine search intent, relevant ads and useful landing pages—without guaranteed rankings, fixed cost reductions or unsupported performance claims.',
+      lessons: {
+        '46.1': {
+          stageTitle: '46. Google Search setup & ad quality',
+          title: 'Structure high-intent search campaigns with controlled keyword matching',
+          description: 'Identify commercially relevant queries, organise coherent ad groups and use search-term evidence to reduce irrelevant traffic while preserving truthful, accessible advertising.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible Google Search campaign design',
+            summaryText: 'Search can reveal strong intent, but a query does not guarantee a purchase and advertisers cannot guarantee position one. Auction results, cost and ad quality depend on competition, bids, assets, landing-page experience, policy and context. A sound campaign uses measured hypotheses, transparent copy and continuous search-term review.',
+            bulletPoints: [
+              'Map informational, comparative, navigational and transactional intent before selecting keywords and landing pages',
+              'Use exact, phrase or broad matching according to evidence, conversion quality, budget and bidding controls—not as universal rules',
+              'Review search terms and maintain contextual exclusions without blocking legitimate or accessibility-related queries',
+              'Write varied responsive-search-ad assets that remain accurate in every combination and meet current platform policies',
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'MEASURED AD RELEVANCE', description: 'Ad quality indicators support diagnosis but do not guarantee rank, click price or business results; validate them against qualified outcomes.', highlight: true },
+              { iconName: 'filter', title: 'CONTROLLED EXCLUSIONS', description: 'Negative keywords are reviewed by match type and context so irrelevant spend falls without silently excluding suitable customers.' },
+            ],
+            resources: [
+              { title: 'Search Campaign Governance Workbook', subtitle: 'Intent map, keywords, exclusions, claims, experiments and review log', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Google Ads Attribution', subtitle: 'Permission-aware GCLID handling and qualified offline outcomes', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build useful search advertising around evidence
+
+Google Ads is an auction and relevance system, not a guaranteed route to first position or lower prices. The objective is to connect a suitable query with an accurate offer and then learn from qualified outcomes.
+
+#### Responsible search-campaign workflow
+
+1. **Define the business outcome**: Specify a qualified lead or sale, margin, service capacity, exclusions and the observation window before selecting a bidding metric.
+2. **Map search intent**: Separate research, comparison, brand, local and purchase-oriented queries. Do not treat every search as immediate buying intent.
+3. **Research language carefully**: Use first-party research, search tools and customer vocabulary without exploiting sensitive circumstances or protected traits.
+4. **Choose match types deliberately**: Begin with the control appropriate to budget and evidence. Broader matching requires reliable measurement, exclusions and close review.
+5. **Create coherent ad groups**: Group terms only when the same promise, evidence and landing page genuinely answer them. Avoid needless one-keyword complexity.
+6. **Write combinable assets**: Every headline and description combination must be truthful, understandable and supported. Pin only where meaning or legal text requires it.
+7. **Avoid unsafe insertion**: Dynamic keyword insertion can create misleading, offensive or non-compliant copy. Use it only with reviewed keyword sets and fallbacks.
+8. **Design a useful landing page**: Match intent and offer, not necessarily wording character for character. Show identity, total terms, evidence, privacy, accessibility and a clear next step.
+9. **Use assets accurately**: Keep sitelinks, call assets, locations, prices and promotions current. Route calls and forms to staffed, secure processes.
+10. **Build contextual exclusions**: Review search terms by meaning and match behaviour. Do not blindly copy universal lists such as “free”, “jobs” or “PDF” when those queries may be relevant.
+11. **Measure qualified outcomes**: Distinguish clicks, form starts, valid leads, sales, refunds and margin. Deduplicate events and test attribution assumptions.
+12. **Protect tracking data**: Disclose relevant measurement, minimise identifiers, restrict access and retention, and use consent or another valid basis where required.
+13. **Run bounded experiments**: Predefine hypothesis, budget, primary and harm metrics, duration and stop rules. Change one material variable when feasible.
+14. **Review platform diagnostics in context**: Quality indicators and recommendations are inputs, not targets or guarantees. Reject recommendations that conflict with customer value.
+15. **Maintain and pause safely**: Check policy notices, broken pages, inventory, search terms, complaints and conversion integrity; pause when evidence or operations fail.
+
+A lower click price is not automatically better. The useful result is an accurately measured, suitable customer outcome at sustainable total cost.`,
+            practicalExamples: [
+              'A local adviser separates research queries from appointment queries and compares qualified bookings, not just click-through rate.',
+              'A negative-keyword review finds that “free consultation” is a genuine offer, so the team excludes irrelevant meanings instead of blocking the word globally.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Strong search advertising aligns real intent, accurate claims, useful landing pages and qualified measurement; no setup guarantees rank or cost.',
+            keyPrinciples: ['Treat intent as a hypothesis to validate', 'Review search terms and exclusions in context', 'Optimise for qualified outcomes rather than platform scores alone'],
+          },
+          actionTask: {
+            instruction: 'Prepare one controlled Search campaign:',
+            checklistItems: ['Qualified outcome, capacity, budget and stop rule documented', 'Intent map, keyword match types and contextual exclusions reviewed', 'All responsive-ad combinations checked for truth and policy', 'Landing-page terms, accessibility, privacy and tracking tested', 'Search-term, lead-quality, complaint and attribution review scheduled'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '46.2': {
+          stageTitle: '46. Performance Max & accountable automated bidding',
+          title: 'Use Performance Max and Smart Bidding with evidence and safeguards',
+          description: 'Provide automation with reliable goals, representative creative and governed data while retaining human oversight of placement quality, brand traffic, spend and customer outcomes.',
+          learnContent: {
+            videoTitle: 'Masterclass: Governed Performance Max and Smart Bidding',
+            summaryText: 'Performance Max can distribute ads across eligible Google inventory, but automation does not guarantee incremental sales. Results depend on goals, data quality, budget, creative, market conditions and platform behaviour. First-party data, customer matching and offline conversion imports require permission, security and careful value design.',
+            bulletPoints: [
+              'Select bidding goals from economics and conversion quality; do not choose target CPA or ROAS from revenue alone',
+              'Supply accurate text, images and video with usage rights, accessibility considerations and claims that work across placements',
+              'Use audience signals as optional guidance, not deterministic targeting or a licence for sensitive profiling',
+              'Separate brand and non-brand evidence where possible and test incrementality rather than crediting every reported conversion',
+            ],
+            coreConcepts: [
+              { iconName: 'cpu', title: 'GOVERNED AUTOMATION', description: 'Automation receives documented goals, clean events, bounded budgets and human review; changes are reversible and incidents trigger a pause.', highlight: true },
+              { iconName: 'shield', title: 'INCREMENTALITY CHECK', description: 'Brand controls, holdouts and channel comparisons help distinguish additional outcomes from demand that already existed.' },
+            ],
+            resources: [
+              { title: 'Performance Max Governance Checklist', subtitle: 'Goals, assets, signals, exclusions, rights and stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Offline Conversion Governance', subtitle: 'Validated outcomes, consent, deduplication and value corrections', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Give automated campaigns reliable goals and boundaries
+
+Performance Max can use multiple Google surfaces and automated bidding, but reported performance can include existing brand demand, low-quality actions or modelled conversions. Govern the system as an experiment.
+
+#### Accountable automation workflow
+
+1. **Confirm suitability**: Check available budget, conversion delay, sales cycle, service capacity, creative supply and measurement reliability. There is no universal minimum conversion count.
+2. **Define valuable events**: Import only meaningful, validated stages. Avoid optimising to page views or unqualified form submissions merely to increase volume.
+3. **Assign defensible values**: Base values on expected margin and verified quality, not inflated revenue. Correct refunds, cancellations and duplicate leads where supported.
+4. **Choose bidding carefully**: Start from evidence and allow for learning variability. Set CPA or ROAS targets only when volume, economics and lag make them credible.
+5. **Create coherent asset groups**: Align each group with one genuine theme and landing experience. Check every asset for rights, accuracy, legibility and placement suitability.
+6. **Upload your own video when useful**: Review any automatically created assets and remove or replace material that misrepresents the brand or offer.
+7. **Use audience signals proportionately**: Use lawful, relevant and representative inputs. Never upload purchased lists or infer sensitive characteristics.
+8. **Govern customer matching**: Verify notice, permission or other valid basis, hashing workflow, access, retention and deletion. Provide a route to exercise privacy rights.
+9. **Control brand interpretation**: Apply available brand settings and report branded and non-branded demand separately. Document limitations rather than claiming perfect separation.
+10. **Check destination expansion**: Ensure every eligible URL is current, safe and suitable for the advertised promise; exclude support, legal or irrelevant pages where appropriate.
+11. **Protect location and language settings**: Validate presence versus interest options and user-language experience so spend does not drift into unsupported markets.
+12. **Test incrementality**: Use experiments, holdouts, geo comparisons or other proportionate methods when feasible. Platform attribution alone cannot prove causation.
+13. **Monitor placement and lead quality**: Review available reports, spam, unsuitable leads, complaints, refunds and downstream sales—not only ROAS.
+14. **Change budgets with evidence**: Avoid fixed “20% every 48 hours” rules. Use documented thresholds, capacity and volatility, and make changes small enough to diagnose.
+15. **Prepare incident controls**: Set spend alerts, account roles, change logs and pause conditions for broken tracking, disapproved assets, unsafe destinations or abnormal volume.
+
+Automation can improve allocation, but accountability for claims, data, spend and customer treatment remains with the advertiser.`,
+            practicalExamples: [
+              'A course provider imports only verified paid enrolments and corrects refunds instead of treating every form submission as equal value.',
+              'A campaign reports strong ROAS mostly from brand searches; a holdout and segmented report show less incremental value, so the budget decision changes.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Automated bidding is useful only when goals, data and creative are trustworthy and humans retain oversight of spend, quality and harm.',
+            keyPrinciples: ['No universal conversion threshold or scaling rule fits every account', 'Use first-party data only with appropriate rights and controls', 'Test incrementality and qualified value beside platform ROAS'],
+          },
+          actionTask: {
+            instruction: 'Design one governed automated-campaign pilot:',
+            checklistItems: ['Suitability, economics, capacity, budget and learning period documented', 'Validated conversion events, values, lag, refunds and deduplication checked', 'Asset rights, claims, landing URLs, languages and accessibility reviewed', 'Audience signals, customer data, brand controls and privacy basis approved', 'Incrementality method, lead-quality review, alerts and pause rules configured'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -8262,6 +8387,131 @@ Najlepszy win-back to real product change rozwiązujący reason odejścia, zakom
             instruction: 'Przygotuj permission-aware win-back pilot:',
             checklistItems: ['Zweryfikowano purpose, eligibility, permission, suppression i retention', 'Udokumentowano cancellation context i material product change', 'Zatwierdzono sequence, timing, accessibility i contact cap', 'Sprawdzono total price, renewal, cancellation, refund i plan comparison', 'Skonfigurowano holdout, margin, complaints, re-cancellation i stop rule'],
             toolboxCategory: 'email',
+          },
+        },
+      },
+    },
+    46: {
+      title: '46. Google Search Ads i odpowiedzialne pozyskiwanie ruchu o wysokiej intencji',
+      subtitle: 'Intencja wyszukiwania, typy dopasowania, trafność reklam, wykluczenia i nadzorowana automatyzacja',
+      description: 'Buduj mierzalne kampanie Google Ads wokół rzeczywistej intencji, trafnych reklam i użytecznych stron docelowych—bez gwarancji pozycji, stałej obniżki kosztów ani niepopartych obietnic wyników.',
+      lessons: {
+        '46.1': {
+          stageTitle: '46. Konfiguracja Google Search i jakość reklamy',
+          title: 'Twórz kampanie o wysokiej intencji z kontrolowanym dopasowaniem słów kluczowych',
+          description: 'Rozpoznawaj komercyjnie istotne zapytania, buduj spójne grupy reklam i wykorzystuj dane z wyszukiwanych haseł do ograniczania nietrafnego ruchu.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialne projektowanie kampanii Google Search',
+            summaryText: 'Wyszukiwanie może wskazywać silną intencję, lecz zapytanie nie gwarantuje zakupu, a reklamodawca nie może zagwarantować pierwszej pozycji. Wyniki aukcji, koszt i jakość zależą od konkurencji, stawek, zasobów, strony docelowej, zasad oraz kontekstu.',
+            bulletPoints: [
+              'Rozróżnij intencję informacyjną, porównawczą, nawigacyjną i transakcyjną przed wyborem słów oraz strony',
+              'Dobieraj dopasowanie ścisłe, do wyrażenia lub przybliżone według danych, jakości konwersji, budżetu i kontroli stawek',
+              'Analizuj wyszukiwane hasła i utrzymuj kontekstowe wykluczenia bez blokowania właściwych zapytań',
+              'Twórz różnorodne zasoby elastycznych reklam, które są prawdziwe w każdej kombinacji i zgodne z aktualnymi zasadami',
+            ],
+            coreConcepts: [
+              { iconName: 'search', title: 'MIERZONA TRAFNOŚĆ REKLAMY', description: 'Wskaźniki jakości pomagają diagnozować, ale nie gwarantują pozycji, ceny kliknięcia ani wyniku biznesowego.', highlight: true },
+              { iconName: 'filter', title: 'KONTROLOWANE WYKLUCZENIA', description: 'Wykluczające słowa są oceniane według typu dopasowania i kontekstu, aby nie odcinać odpowiednich klientów.' },
+            ],
+            resources: [
+              { title: 'Zeszyt nadzoru kampanii Search', subtitle: 'Mapa intencji, słowa, wykluczenia, twierdzenia, testy i rejestr przeglądów', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Atrybucja Google Ads w Mara CRM', subtitle: 'Odpowiedzialna obsługa GCLID i zweryfikowanych wyników offline', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj użyteczne reklamy w wyszukiwarce na podstawie danych
+
+Google Ads to system aukcji i trafności, a nie gwarantowana droga do pierwszej pozycji lub niższych cen. Celem jest połączenie właściwego zapytania z uczciwą ofertą i uczenie się na podstawie jakościowych wyników.
+
+#### Odpowiedzialny proces kampanii Search
+
+1. **Zdefiniuj wynik biznesowy**: Określ wartościowy lead lub sprzedaż, marżę, możliwości obsługi, wykluczenia i okres obserwacji.
+2. **Zmapuj intencję**: Oddziel zapytania badawcze, porównawcze, markowe, lokalne i zakupowe. Nie traktuj każdego wyszukania jak gotowości do zakupu.
+3. **Badaj język ostrożnie**: Korzystaj z badań własnych, narzędzi i języka klientów bez wykorzystywania wrażliwych okoliczności.
+4. **Świadomie wybierz dopasowanie**: Zacznij od kontroli odpowiedniej do budżetu i danych. Szersze dopasowanie wymaga wiarygodnego pomiaru i nadzoru.
+5. **Twórz spójne grupy reklam**: Łącz hasła tylko wtedy, gdy ta sama obietnica, dowód i strona rzeczywiście na nie odpowiadają.
+6. **Pisz zasoby działające w kombinacjach**: Każde zestawienie nagłówków i opisów musi być prawdziwe, jasne i poparte dowodami.
+7. **Bezpiecznie używaj wstawiania słów**: Dynamiczne wstawianie może tworzyć mylący lub niedozwolony tekst; stosuj je tylko z zatwierdzonymi listami i tekstem awaryjnym.
+8. **Projektuj użyteczną stronę**: Dopasuj intencję i ofertę, niekoniecznie każde słowo. Pokaż tożsamość, pełne warunki, dowody, prywatność i następny krok.
+9. **Utrzymuj dokładne komponenty**: Aktualizuj linki, połączenia, lokalizacje, ceny i promocje oraz kieruj kontakty do bezpiecznych procesów.
+10. **Buduj wykluczenia w kontekście**: Nie kopiuj bezmyślnie uniwersalnych list takich jak „bezpłatne”, „praca” czy „PDF”, jeśli mogą być istotne.
+11. **Mierz wartościowe wyniki**: Rozróżniaj kliknięcia, rozpoczęte formularze, prawidłowe leady, sprzedaż, zwroty i marżę; usuwaj duplikaty.
+12. **Chroń dane pomiarowe**: Informuj o pomiarze, minimalizuj identyfikatory, ograniczaj dostęp i retencję oraz stosuj właściwą podstawę prawną.
+13. **Prowadź ograniczone eksperymenty**: Z góry określ hipotezę, budżet, mierniki, czas i regułę zatrzymania.
+14. **Oceniaj diagnostykę platformy w kontekście**: Wskaźniki i rekomendacje są podpowiedzią, nie celem ani gwarancją.
+15. **Bezpiecznie utrzymuj i wstrzymuj**: Kontroluj zasady, strony, ofertę, hasła, skargi oraz spójność konwersji; wstrzymaj kampanię przy awarii.
+
+Niższa cena kliknięcia nie zawsze jest lepsza. Liczy się właściwy, mierzalny wynik klienta przy zrównoważonym koszcie.`,
+            practicalExamples: [
+              'Lokalny doradca oddziela zapytania badawcze od rezerwacji i porównuje kwalifikowane spotkania, a nie sam CTR.',
+              'Przegląd wykluczeń pokazuje, że „bezpłatna konsultacja” jest realną ofertą, więc zespół nie blokuje globalnie słowa „bezpłatna”.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Skuteczna reklama Search łączy realną intencję, prawdziwe twierdzenia, użyteczną stronę i jakościowy pomiar; żadna konfiguracja nie gwarantuje pozycji ani kosztu.',
+            keyPrinciples: ['Traktuj intencję jako hipotezę do sprawdzenia', 'Analizuj wyszukiwane hasła i wykluczenia w kontekście', 'Optymalizuj pod wartościowe wyniki, nie wyłącznie wynik jakości'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj jedną kontrolowaną kampanię Search:',
+            checklistItems: ['Udokumentowano jakościowy wynik, możliwości obsługi, budżet i regułę zatrzymania', 'Sprawdzono mapę intencji, typy dopasowania i kontekstowe wykluczenia', 'Zweryfikowano prawdziwość i zgodność wszystkich kombinacji reklamy', 'Przetestowano warunki strony, dostępność, prywatność i pomiar', 'Zaplanowano analizę haseł, jakości leadów, skarg i atrybucji'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+        '46.2': {
+          stageTitle: '46. Performance Max i nadzorowane automatyczne ustalanie stawek',
+          title: 'Korzystaj z Performance Max i Smart Bidding z dowodami oraz zabezpieczeniami',
+          description: 'Dostarczaj automatyzacji wiarygodne cele, reprezentatywne materiały i kontrolowane dane, zachowując ludzki nadzór nad jakością, ruchem markowym, wydatkami i wynikami.',
+          learnContent: {
+            videoTitle: 'Masterclass: nadzorowane Performance Max i Smart Bidding',
+            summaryText: 'Performance Max może rozdzielać reklamy w dostępnych zasobach Google, ale automatyzacja nie gwarantuje dodatkowej sprzedaży. Wyniki zależą od celów, jakości danych, budżetu, materiałów, rynku i działania platformy. Dane własne oraz import konwersji wymagają uprawnień, bezpieczeństwa i przemyślanej wyceny.',
+            bulletPoints: [
+              'Dobieraj cele stawek na podstawie ekonomiki i jakości konwersji, a nie samego przychodu',
+              'Dostarczaj prawdziwe teksty, obrazy i filmy z prawami do użycia, czytelne i odpowiednie dla różnych miejsc emisji',
+              'Traktuj sygnały odbiorców jako wskazówki, nie deterministyczne targetowanie ani zgodę na wrażliwe profilowanie',
+              'Oddzielaj dane markowe od niemarkenowych, gdy to możliwe, i badaj przyrost zamiast przypisywać każdą konwersję kampanii',
+            ],
+            coreConcepts: [
+              { iconName: 'cpu', title: 'NADZOROWANA AUTOMATYZACJA', description: 'System otrzymuje udokumentowane cele, czyste zdarzenia, ograniczony budżet i ludzki przegląd; zmiany są odwracalne.', highlight: true },
+              { iconName: 'shield', title: 'TEST PRZYROSTU', description: 'Kontrole marki, grupy porównawcze i analiza kanałów pomagają odróżnić nowe wyniki od istniejącego popytu.' },
+            ],
+            resources: [
+              { title: 'Lista nadzoru Performance Max', subtitle: 'Cele, materiały, sygnały, wykluczenia, prawa i reguły zatrzymania', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Nadzór konwersji offline w Mara CRM', subtitle: 'Walidacja wyników, zgoda, deduplikacja i korekta wartości', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Zapewnij automatycznym kampaniom wiarygodne cele i granice
+
+Performance Max może korzystać z wielu powierzchni Google i automatycznych stawek, lecz raport może obejmować istniejący popyt markowy, słabe działania lub modelowane konwersje. Zarządzaj systemem jak eksperymentem.
+
+#### Proces odpowiedzialnej automatyzacji
+
+1. **Potwierdź przydatność**: Sprawdź budżet, opóźnienie konwersji, cykl sprzedaży, możliwości obsługi, materiały i wiarygodność pomiaru. Nie istnieje uniwersalna minimalna liczba konwersji.
+2. **Zdefiniuj wartościowe zdarzenia**: Importuj tylko zweryfikowane etapy. Nie optymalizuj pod odsłony lub niekwalifikowane formularze tylko po to, by zwiększyć wolumen.
+3. **Nadaj uzasadnione wartości**: Opieraj je na oczekiwanej marży i jakości, nie zawyżonym przychodzie. Uwzględniaj zwroty, rezygnacje i duplikaty.
+4. **Ostrożnie wybierz strategię stawek**: Zacznij od danych i uwzględnij zmienność uczenia. Cele CPA lub ROAS ustawiaj tylko przy wiarygodnym wolumenie i ekonomice.
+5. **Twórz spójne grupy komponentów**: Dopasuj każdą do jednego tematu i strony. Sprawdź prawa, prawdziwość, czytelność i przydatność materiałów.
+6. **Dodaj własny film, gdy pomaga**: Kontroluj automatycznie utworzone materiały i zastępuj te, które zniekształcają markę lub ofertę.
+7. **Proporcjonalnie używaj sygnałów**: Korzystaj z legalnych, istotnych i reprezentatywnych danych. Nie przesyłaj kupionych list ani wrażliwych profili.
+8. **Nadzoruj Customer Match**: Sprawdź informację, zgodę lub inną podstawę, haszowanie, dostęp, retencję i usuwanie oraz obsługę praw prywatności.
+9. **Kontroluj interpretację marki**: Stosuj dostępne ustawienia i raportuj ruch markowy osobno, dokumentując ograniczenia.
+10. **Sprawdź rozszerzenie adresów URL**: Każda strona docelowa musi być aktualna i właściwa; wyklucz strony pomocy, prawne lub nieistotne.
+11. **Chroń ustawienia lokalizacji i języka**: Sprawdź obecność wobec zainteresowania i jakość obsługi językowej w danym rynku.
+12. **Badaj przyrost**: Użyj eksperymentów, grup kontrolnych lub porównań geograficznych, gdy to proporcjonalne. Sama atrybucja nie dowodzi przyczynowości.
+13. **Monitoruj jakość emisji i leadów**: Analizuj spam, niewłaściwe leady, skargi, zwroty i sprzedaż, a nie tylko ROAS.
+14. **Zmieniaj budżet na podstawie danych**: Unikaj stałej reguły „20% co 48 godzin”. Używaj progów, możliwości obsługi i zmian możliwych do zdiagnozowania.
+15. **Przygotuj kontrolę incydentów**: Ustaw alerty wydatków, role, dziennik zmian i warunki pauzy przy awarii pomiaru lub nieprawidłowym ruchu.
+
+Automatyzacja może poprawić alokację, ale odpowiedzialność za twierdzenia, dane, wydatki i traktowanie klientów pozostaje po stronie reklamodawcy.`,
+            practicalExamples: [
+              'Dostawca kursu importuje tylko opłacone zapisy i koryguje zwroty zamiast nadawać tę samą wartość każdemu formularzowi.',
+              'Kampania pokazuje wysoki ROAS głównie z zapytań markowych; test i podzielony raport wykazują mniejszy przyrost, więc zespół zmienia budżet.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Automatyczne stawki są użyteczne tylko przy wiarygodnych celach, danych i materiałach oraz ludzkim nadzorze nad wydatkami, jakością i ryzykiem.',
+            keyPrinciples: ['Nie ma uniwersalnego progu konwersji ani reguły skalowania', 'Korzystaj z danych własnych tylko z odpowiednimi prawami i kontrolą', 'Badaj przyrost i jakościową wartość obok ROAS platformy'],
+          },
+          actionTask: {
+            instruction: 'Zaprojektuj jeden nadzorowany pilotaż kampanii automatycznej:',
+            checklistItems: ['Udokumentowano przydatność, ekonomikę, możliwości, budżet i okres uczenia', 'Sprawdzono zdarzenia, wartości, opóźnienie, zwroty i deduplikację', 'Zweryfikowano prawa do materiałów, twierdzenia, adresy, języki i dostępność', 'Zatwierdzono sygnały, dane klientów, kontrolę marki i podstawę prywatności', 'Skonfigurowano metodę przyrostu, ocenę jakości leadów, alerty i reguły pauzy'],
+            toolboxCategory: 'landingpage',
           },
         },
       },
