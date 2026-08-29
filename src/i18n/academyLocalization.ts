@@ -3649,6 +3649,128 @@ People may value content, community, quiet independent study or a mixture. Statu
         },
       },
     },
+    42: {
+      title: '42. Responsible LinkedIn thought leadership & B2B relationship building',
+      subtitle: 'Evidence-led expertise, accessible content, respectful outreach and accountable lead management',
+      description: 'Build a credible LinkedIn presence and develop relevant B2B conversations without reach guarantees, manipulative engagement tactics, invasive profiling or automated spam.',
+      lessons: {
+        '42.1': {
+          stageTitle: '42. Credible LinkedIn content & profile design',
+          title: 'Publish useful expertise and create an accurate, accessible profile',
+          description: 'Turn verified experience into useful posts and documents while making your role, evidence, offer and next step easy to understand.',
+          learnContent: {
+            videoTitle: 'Masterclass: Evidence-led LinkedIn content for B2B audiences',
+            summaryText: 'LinkedIn distribution changes over time and no format, posting time or engagement window guarantees reach. A sustainable strategy starts with audience needs, reliable evidence, clear authorship and accessible presentation, then tests formats against meaningful business outcomes.',
+            bulletPoints: [
+              'Treat algorithm advice as a testable hypothesis and use current first-party analytics rather than fixed reach formulas',
+              'Choose text, image, video or document posts according to the audience task, available evidence and accessibility needs',
+              'Separate informed professional opinion from fact and link claims, examples and case studies to appropriate evidence',
+              'Design the profile as an accurate professional introduction with a clear offer, disclosures and a low-pressure next step',
+            ],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'EVIDENCE-LED CONTENT', description: 'Every post has a defined audience question, trustworthy source, useful explanation and proportionate claim instead of a promise of virality.', highlight: true },
+              { iconName: 'user-check', title: 'TRUSTWORTHY PROFILE', description: 'Identity, role, experience, services, affiliations and contact route are current, specific and not misleading.' },
+            ],
+            resources: [
+              { title: 'LinkedIn Editorial & Evidence Matrix', subtitle: 'Audience questions, sources, formats, accessibility and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR LinkedIn Draft Assistant', subtitle: 'Create reviewable drafts without fabricated expertise or results', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Build authority by being useful, accurate and accountable
+
+Thought leadership is not a claim of superiority. It is a repeated practice of explaining relevant issues, showing evidence, acknowledging limits and helping a defined professional audience make better decisions.
+
+#### Responsible LinkedIn publishing workflow
+
+1. **Define the audience task**: Identify the role, context and decision the content should support. Avoid targeting people through sensitive inferred traits.
+2. **Select a defensible topic**: Use questions you can address through direct experience, reliable research or clearly attributed expert sources.
+3. **Build an evidence sheet**: Record sources, dates, assumptions, limitations, permissions and review owner. Remove invented statistics, clients and outcomes.
+4. **Choose the appropriate format**: Match text, image, video or document to the explanation. A document post is not inherently superior and reach varies by account, audience and time.
+5. **Write an accurate opening**: State the problem and value without fear, outrage bait, fake controversy or a claim that one view destroys an entire industry myth.
+6. **Explain, do not merely assert**: Show method, context and trade-offs. Label opinion, estimates, simulations and sponsored relationships clearly.
+7. **Protect confidential information**: Obtain permission for names, logos, screenshots, quotes and case studies. Aggregate or anonymise only where re-identification risk is controlled.
+8. **Make content accessible**: Use descriptive headings, plain language, alt text, edited captions, sufficient contrast, readable documents and meaningful link labels.
+9. **Review professional and regulated claims**: Legal, financial, health, employment and safety content may require qualified review and jurisdiction-specific caveats.
+10. **Prepare a fair next step**: Offer a relevant resource, newsletter or conversation with clear terms. Do not disguise lead capture, scarcity or paid promotion.
+11. **Publish and moderate responsibly**: Correct material errors visibly, address good-faith questions and manage harassment without manufacturing early engagement.
+12. **Measure useful outcomes**: Track qualified profile visits, saves, meaningful replies, consented enquiries, accessibility feedback and downstream fit—not impressions alone.
+13. **Maintain the profile**: Keep role, offer, proof, affiliations, featured links, privacy notice and contact preferences current.
+
+Credibility compounds when readers can understand where a claim came from, what it means and where its limits are.`,
+            practicalExamples: [
+              'A consultant publishes a documented process improvement with client permission, explains the baseline and limitations, and links to the methodology instead of promising identical savings.',
+              'A document post includes readable type, a text summary and descriptive link; analytics are reviewed after a defined test period without claiming the format always triples reach.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Durable B2B credibility comes from useful evidence, accurate identity, accessible communication and visible corrections—not algorithm myths or dominance claims.',
+            keyPrinciples: ['Test formats instead of promising reach', 'Distinguish evidence, experience and opinion', 'Protect confidentiality and design for accessibility'],
+          },
+          actionTask: {
+            instruction: 'Prepare one evidence-led LinkedIn profile and content pilot:',
+            checklistItems: ['Audience question, useful outcome and non-goals defined', 'Profile identity, role, offer, proof and disclosures verified', 'Sources, permissions, claims and limitations reviewed', 'Post and destination tested for accessibility and mobile use', 'Metrics, review date, correction route and stop rule documented'],
+            toolboxCategory: 'content',
+          },
+        },
+        '42.2': {
+          stageTitle: '42. Respectful social selling & executive outreach',
+          title: 'Develop relevant B2B conversations without spam or pressure',
+          description: 'Research accounts proportionately, interact genuinely and invite a conversation only when relevance, lawful data use and the recipient’s choices are clear.',
+          learnContent: {
+            videoTitle: 'Masterclass: Permission-aware B2B outreach and discovery',
+            summaryText: 'A profile view, comment sequence or “value-first” message does not guarantee a meeting. Responsible outreach uses minimal relevant data, human review, honest intent, reasonable frequency and an easy way to decline while measuring fit and harm as well as replies.',
+            bulletPoints: [
+              'Define legitimate audience criteria without scraping prohibited data or inferring sensitive personal characteristics',
+              'Use public professional context only where relevant and verify it before personalising a message',
+              'Make identity and commercial intent clear; do not simulate friendship or hide a pitch behind an unsolicited audit',
+              'Use CRM retention, suppression, access and deletion controls and stop promptly after refusal or repeated non-response',
+            ],
+            coreConcepts: [
+              { iconName: 'send', title: 'RESPECTFUL RELEVANCE', description: 'The message explains why this person, why now and what optional value is offered, without surveillance language, pressure or fabricated familiarity.', highlight: true },
+              { iconName: 'calendar', title: 'CONSENTED DISCOVERY', description: 'A call has a clear purpose, duration, participants and cancellation route; discovery is not a disguised commitment.' },
+            ],
+            resources: [
+              { title: 'Responsible B2B Outreach Playbook', subtitle: 'Research boundaries, message patterns, objections and suppression', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM B2B Governance Pipeline', subtitle: 'Source, lawful basis, consent, retention, opt-out and deal fit', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build B2B relationships without turning LinkedIn into a surveillance funnel
+
+Social selling should improve relevance and trust, not automate unwanted contact. Platform rules, privacy and direct-marketing requirements vary by location and context, so obtain qualified advice where needed.
+
+#### Account-based outreach workflow
+
+1. **Define a narrow business problem**: State the organisations and roles that can reasonably benefit, plus exclusions and disqualifiers.
+2. **Set governance before prospecting**: Document data sources, access, retention, lawful basis, suppression, security, owners and escalation. Do not import scraped or purchased lists without verification.
+3. **Research proportionately**: Use relevant public professional information and company signals. Avoid sensitive inferences, personal surveillance or mentioning details that would feel intrusive.
+4. **Verify the record**: Confirm role, organisation, market and source date. Mark uncertainty rather than inventing personalisation.
+5. **Engage only when genuine**: Comment when you can add useful substance. Never deploy generic bot comments to manufacture familiarity or engagement.
+6. **Write a transparent invitation**: Identify yourself, explain the specific relevance and keep the request optional. Do not pretend a sales message is neutral networking.
+7. **Offer value without coercion**: A checklist or observation must be genuinely useful, safe and accessible without requiring a meeting. Do not manufacture flaws in an unsolicited “audit”.
+8. **Control frequency**: Use a small, documented contact sequence with human approval, quiet periods and immediate suppression after opt-out. No endless follow-ups or account rotation.
+9. **Respect platform and channel rules**: Use supported features and current limits. Do not evade restrictions, automate prohibited actions or move contact to email or phone without a valid basis.
+10. **Run a fair discovery call**: Share agenda, duration and participants; ask permission for notes or recording. Explore need, stakeholders, constraints, alternatives and no-fit conditions before presenting an offer.
+11. **Substantiate commercial claims**: Use comparable case evidence with context and permission. Never imply guaranteed ROI, access to executives, meeting volume or five- or six-figure contracts.
+12. **Record responsibly**: Store source, status, objections, commitments and next step in the CRM with role-based access and a retention schedule. Keep sensitive speculation out.
+13. **Measure quality and harm**: Review relevant replies, accepted calls, no-fit decisions, complaints, opt-outs, conversion quality, sales cycle and customer outcomes.
+14. **Pause and improve**: Stop a segment or message when complaints, low relevance or poor downstream fit exceed the agreed threshold.
+
+A respectful “no” is a useful outcome: it protects both parties and improves targeting.`,
+            practicalExamples: [
+              'After reading a public company report, a specialist sends a short note connecting one disclosed operational priority to a relevant checklist and explicitly says no reply is required.',
+              'A prospect declines. The CRM records suppression and retention date, and automation blocks further messages across the campaign.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Good social selling earns permission through relevance, transparency and restraint; it never depends on hidden intent, mass automation or guaranteed meetings.',
+            keyPrinciples: ['Use minimal verified professional data', 'Make identity, intent and opt-out clear', 'Measure complaints and fit alongside meetings and revenue'],
+          },
+          actionTask: {
+            instruction: 'Run a controlled, respectful B2B outreach pilot:',
+            checklistItems: ['Audience, exclusions, data sources and governance approved', 'Ten records manually verified for role, relevance and source', 'Message states identity, relevance, optional value and easy decline', 'Frequency, suppression, retention and human approval controls tested', 'Quality, complaints, opt-outs, call fit and stop rule scheduled for review'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -7280,6 +7402,128 @@ Ludzie mogą cenić content, community, quiet independent study lub mix. Status 
             instruction: 'Przygotuj inclusive community challenge:',
             checklistItems: ['Opublikowano learning purpose, workload, flexible path i independent alternative', 'Opt-in, visibility, communications, data i reward terms są jasne', 'Przypisano accessibility, moderation, reporting i safeguarding', 'Skonfigurowano buddy consent, preferences, rematch i exit', 'Zaplanowano review learning, belonging, pressure, inequity i closure'],
             toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+    42: {
+      title: '42. Odpowiedzialny thought leadership na LinkedIn i relacje B2B',
+      subtitle: 'Ekspertyza oparta na dowodach, dostępny content, szanujący outreach i accountable lead management',
+      description: 'Buduj wiarygodną obecność na LinkedIn i rozwijaj trafne rozmowy B2B bez gwarancji zasięgu, manipulacyjnych engagement tactics, invasive profiling lub automated spamu.',
+      lessons: {
+        '42.1': {
+          stageTitle: '42. Wiarygodny content i profil LinkedIn',
+          title: 'Publikuj użyteczną wiedzę i twórz dokładny, dostępny profil',
+          description: 'Przekształcaj zweryfikowane doświadczenie w użyteczne posts i documents, jasno pokazując rolę, evidence, ofertę i next step.',
+          learnContent: {
+            videoTitle: 'Masterclass: LinkedIn content oparty na dowodach dla B2B',
+            summaryText: 'Dystrybucja na LinkedIn zmienia się i żaden format, czas publikacji ani engagement window nie gwarantuje zasięgu. Sustainable strategy zaczyna się od potrzeb audience, reliable evidence, jasnego autorstwa i accessibility, a następnie testuje formaty względem meaningful business outcomes.',
+            bulletPoints: [
+              'Traktuj porady o algorytmie jako testable hypotheses i korzystaj z current first-party analytics zamiast fixed reach formulas',
+              'Wybieraj text, image, video lub document według zadania audience, dostępnych dowodów i accessibility needs',
+              'Oddzielaj professional opinion od faktu i opieraj claims, examples oraz case studies na właściwych dowodach',
+              'Projektuj profil jako dokładne professional introduction z jasną ofertą, disclosures i low-pressure next step',
+            ],
+            coreConcepts: [
+              { iconName: 'file-text', title: 'CONTENT OPARTY NA DOWODACH', description: 'Każdy post ma określone audience question, wiarygodne źródło, useful explanation i proportionate claim zamiast obietnicy viral.', highlight: true },
+              { iconName: 'user-check', title: 'WIARYGODNY PROFIL', description: 'Identity, role, experience, services, affiliations i contact route są aktualne, konkretne i niemylące.' },
+            ],
+            resources: [
+              { title: 'LinkedIn Editorial & Evidence Matrix', subtitle: 'Audience questions, sources, formats, accessibility i review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Asystent draftów LinkedIn GOM-MAR', subtitle: 'Reviewable drafts bez fabricated expertise lub results', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Buduj autorytet przez użyteczność, dokładność i odpowiedzialność
+
+Thought leadership nie jest deklaracją wyższości. To powtarzalna praktyka wyjaśniania istotnych tematów, pokazywania dowodów, przyznawania ograniczeń i wspierania określonej professional audience w lepszych decyzjach.
+
+#### Odpowiedzialny workflow publikacji
+
+1. **Zdefiniuj zadanie audience**: Określ rolę, kontekst i decyzję, którą content ma wspierać. Nie targetuj przez inferred sensitive traits.
+2. **Wybierz defensible topic**: Używaj pytań, na które możesz odpowiedzieć przez direct experience, reliable research lub attributed expert sources.
+3. **Zbuduj evidence sheet**: Zapisz sources, dates, assumptions, limitations, permissions i review owner. Usuń wymyślone statystyki, clients i outcomes.
+4. **Wybierz właściwy format**: Dopasuj text, image, video lub document do wyjaśnienia. Document post nie jest automatycznie lepszy, a reach zależy od account, audience i czasu.
+5. **Napisz dokładne otwarcie**: Pokaż problem i wartość bez fear, outrage bait, fake controversy lub twierdzenia, że jedna opinia niszczy branżowy mit.
+6. **Wyjaśniaj zamiast deklarować**: Pokazuj method, context i trade-offs. Wyraźnie oznacz opinion, estimates, simulations i sponsored relationships.
+7. **Chroń poufność**: Uzyskaj permission na names, logos, screenshots, quotes i case studies. Aggregate lub anonymise tylko przy kontrolowanym re-identification risk.
+8. **Zapewnij accessibility**: Używaj descriptive headings, plain language, alt text, edited captions, contrast, readable documents i meaningful link labels.
+9. **Review regulated claims**: Legal, financial, health, employment i safety content może wymagać qualified review i jurisdiction caveats.
+10. **Przygotuj fair next step**: Oferuj relevant resource, newsletter lub rozmowę z jasnymi terms. Nie ukrywaj lead capture, scarcity lub paid promotion.
+11. **Publikuj i moderuj odpowiedzialnie**: Widocznie poprawiaj material errors, odpowiadaj na good-faith questions i zarządzaj harassment bez manufactured engagement.
+12. **Mierz useful outcomes**: Analizuj qualified profile visits, saves, meaningful replies, consented enquiries, accessibility feedback i downstream fit, nie same impressions.
+13. **Utrzymuj profil**: Aktualizuj role, offer, proof, affiliations, featured links, privacy notice i contact preferences.
+
+Credibility rośnie, gdy reader rozumie źródło claimu, jego znaczenie i ograniczenia.`,
+            practicalExamples: [
+              'Consultant publikuje process improvement za zgodą clienta, wyjaśnia baseline i limits oraz linkuje methodology bez obietnicy takich samych savings.',
+              'Document post ma readable type, text summary i descriptive link; analytics są oceniane po ustalonym okresie bez twierdzenia, że format zawsze potraja reach.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Trwała wiarygodność B2B wynika z useful evidence, dokładnej identity, accessible communication i visible corrections, nie algorithm myths lub dominance claims.',
+            keyPrinciples: ['Testuj formaty zamiast obiecywać reach', 'Rozróżniaj evidence, experience i opinion', 'Chroń confidentiality i projektuj accessibility'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj evidence-led LinkedIn profile i content pilot:',
+            checklistItems: ['Określono audience question, useful outcome i non-goals', 'Zweryfikowano identity, role, offer, proof i disclosures profilu', 'Sprawdzono sources, permissions, claims i limitations', 'Przetestowano post i destination pod kątem accessibility i mobile', 'Udokumentowano metrics, review date, correction route i stop rule'],
+            toolboxCategory: 'content',
+          },
+        },
+        '42.2': {
+          stageTitle: '42. Szanujący social selling i executive outreach',
+          title: 'Rozwijaj trafne rozmowy B2B bez spamu i presji',
+          description: 'Badaj accounts proporcjonalnie, angażuj się autentycznie i zapraszaj do rozmowy tylko przy jasnej relevance, legalnym data use i wyborze odbiorcy.',
+          learnContent: {
+            videoTitle: 'Masterclass: Permission-aware B2B outreach i discovery',
+            summaryText: 'Profile view, sekwencja komentarzy lub value-first message nie gwarantuje meetingu. Odpowiedzialny outreach używa minimalnych relevant data, human review, uczciwego intent, rozsądnej frequency i łatwego decline, mierząc fit i harm obok replies.',
+            bulletPoints: [
+              'Definiuj legitimate audience criteria bez scrapingu prohibited data lub inferred sensitive characteristics',
+              'Używaj public professional context tylko przy relevance i weryfikuj go przed personalisation',
+              'Jasno pokazuj identity i commercial intent; nie symuluj friendship ani nie ukrywaj pitchu w unsolicited audit',
+              'Stosuj w CRM retention, suppression, access i deletion controls oraz kończ kontakt po odmowie lub repeated non-response',
+            ],
+            coreConcepts: [
+              { iconName: 'send', title: 'SZANUJĄCA RELEVANCE', description: 'Message wyjaśnia dlaczego ta osoba, dlaczego teraz i jaką optional value oferuje, bez surveillance language, pressure lub fabricated familiarity.', highlight: true },
+              { iconName: 'calendar', title: 'CONSENTED DISCOVERY', description: 'Call ma jasny purpose, duration, participants i cancellation route; discovery nie jest disguised commitment.' },
+            ],
+            resources: [
+              { title: 'Responsible B2B Outreach Playbook', subtitle: 'Research boundaries, message patterns, objections i suppression', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM B2B Governance Pipeline', subtitle: 'Source, lawful basis, consent, retention, opt-out i deal fit', type: 'tool', iconName: 'users', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj relacje B2B bez zmiany LinkedIn w surveillance funnel
+
+Social selling ma poprawiać relevance i trust, nie automatyzować unwanted contact. Platform rules, privacy i direct-marketing requirements różnią się według kraju i kontekstu; w razie potrzeby uzyskaj qualified advice.
+
+#### Account-based outreach workflow
+
+1. **Zdefiniuj narrow business problem**: Określ organisations i roles, które mogą realnie skorzystać, wraz z exclusions i disqualifiers.
+2. **Ustal governance przed prospectingiem**: Dokumentuj data sources, access, retention, lawful basis, suppression, security, owners i escalation. Nie importuj scraped lub purchased lists bez weryfikacji.
+3. **Badaj proporcjonalnie**: Używaj relevant public professional information i company signals. Unikaj sensitive inferences, personal surveillance i intrusive details.
+4. **Zweryfikuj record**: Potwierdź role, organisation, market i source date. Oznacz uncertainty zamiast wymyślać personalisation.
+5. **Angażuj się tylko autentycznie**: Komentuj, gdy dodajesz substance. Nie używaj generic bot comments do tworzenia sztucznej familiarity.
+6. **Napisz transparent invitation**: Przedstaw się, wyjaśnij relevance i pozostaw request optional. Nie udawaj neutral networking dla sales message.
+7. **Oferuj wartość bez coercion**: Checklist lub observation ma być użyteczny bez obowiązku meetingu. Nie twórz fikcyjnych wad w unsolicited audit.
+8. **Kontroluj frequency**: Ustal małą, udokumentowaną sequence z human approval, quiet periods i immediate suppression po opt-out. Bez endless follow-ups.
+9. **Respektuj rules platformy i kanału**: Używaj supported features i current limits. Nie obchodź restrictions, nie automatyzuj prohibited actions i nie przenoś kontaktu bez valid basis.
+10. **Prowadź fair discovery call**: Udostępnij agenda, duration i participants; zapytaj o zgodę na notes lub recording. Zbadaj need, stakeholders, constraints, alternatives i no-fit conditions.
+11. **Substantiated commercial claims**: Używaj comparable case evidence z context i permission. Nie gwarantuj ROI, access do executives, meeting volume ani wartości contracts.
+12. **Zapisuj odpowiedzialnie**: Przechowuj source, status, objections, commitments i next step w CRM z role-based access i retention schedule. Bez sensitive speculation.
+13. **Mierz quality i harm**: Analizuj relevant replies, accepted calls, no-fit decisions, complaints, opt-outs, conversion quality, sales cycle i customer outcomes.
+14. **Pauzuj i poprawiaj**: Zatrzymaj segment lub message, gdy complaints, low relevance lub poor downstream fit przekroczą agreed threshold.
+
+Szanujące „nie” jest użytecznym wynikiem: chroni obie strony i poprawia targeting.`,
+            practicalExamples: [
+              'Po przeczytaniu public company report specjalista łączy jeden disclosed operational priority z relevant checklist i jasno pisze, że odpowiedź nie jest wymagana.',
+              'Prospect odmawia. CRM zapisuje suppression i retention date, a automation blokuje kolejne messages w całej campaign.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Dobry social selling zdobywa permission przez relevance, transparency i restraint; nie zależy od hidden intent, mass automation lub guaranteed meetings.',
+            keyPrinciples: ['Używaj minimalnych verified professional data', 'Wyjaśnij identity, intent i opt-out', 'Mierz complaints i fit obok meetings i revenue'],
+          },
+          actionTask: {
+            instruction: 'Uruchom controlled, respectful B2B outreach pilot:',
+            checklistItems: ['Zatwierdzono audience, exclusions, data sources i governance', 'Ręcznie zweryfikowano dziesięć records pod kątem role, relevance i source', 'Message zawiera identity, relevance, optional value i easy decline', 'Przetestowano frequency, suppression, retention i human approval', 'Zaplanowano review quality, complaints, opt-outs, call fit i stop rule'],
+            toolboxCategory: 'crm',
           },
         },
       },
