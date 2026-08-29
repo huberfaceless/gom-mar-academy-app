@@ -4878,6 +4878,88 @@ A costly package does not create a large customer.`,
         },
       },
     },
+    52: {
+      title: '52. Responsible AI voice bots and telephone automation',
+      subtitle: 'Transparent conversational AI, lawful inbound handling and consent-based appointment support',
+      description: 'Design AI voice assistants that answer permitted calls, disclose their automated nature, protect callers and hand complex or sensitive cases to a person—without deceptive human impersonation, unlawful cold calling or guaranteed results.',
+      lessons: {
+        '52.1': {
+          stageTitle: '52. Voice-AI architecture and governance',
+          title: 'Build transparent, low-latency voice assistants with human handoff',
+          description: 'Understand real-time speech processing while designing disclosure, consent, security, accessibility and escalation into the system.',
+          learnContent: {
+            videoTitle: 'Masterclass: responsible setup of AI voice assistants',
+            summaryText: 'Voice systems combine speech recognition, a language model and speech synthesis. Quality and latency vary by language, network, provider and use case; a natural voice must never be used to mislead callers into believing they are speaking with a person.',
+            bulletPoints: [
+              'Map the flow: audio capture, speech-to-text, model response, text-to-speech, logging and human handoff',
+              'Disclose the AI at the start and provide an easy route to a person',
+              'Use only lawful, expected calls and document consent or another applicable legal basis',
+              'Minimise recordings and transcripts, define retention and secure every provider and webhook'
+            ],
+            coreConcepts: [
+              { iconName: 'phone', title: 'TRANSPARENT VOICE AI', description: 'The assistant identifies itself, states the purpose and respects the caller’s choices.', highlight: true },
+              { iconName: 'cpu', title: 'SAFE ESCALATION', description: 'Uncertainty, distress, complaints and sensitive decisions trigger a human handoff.' }
+            ],
+            resources: [
+              { title: 'Voice-AI governance and prompt workbook', subtitle: 'Disclosure, scope, consent, escalation and testing', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM voice integration', subtitle: 'Approved webhooks, access controls and audit events', type: 'tool', iconName: 'settings', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Responsible voice-assistant workflow\n\n1. **Define the permitted purpose**: inbound information, requested callback or appointment support; do not turn an inbound request into unrelated marketing.\n2. **Check channel rules**: telephone marketing rules differ by country and between consumers and businesses. Record the applicable basis and suppression lists before any call.\n3. **Disclose automation immediately**: identify the organisation, the AI assistant and the purpose in clear language.\n4. **Offer meaningful choice**: allow the caller to reach a person, end the call, refuse recording or use another accessible channel where required.\n5. **Limit the agent**: approved knowledge, prohibited claims, authentication boundaries and actions requiring human approval belong in the system design—not only in the prompt.\n6. **Protect data**: minimise audio, transcripts and extracted fields; encrypt them, restrict access and set documented retention and deletion periods.\n7. **Control vendors**: review subprocessors, transfer locations, model-training terms, incident handling and deletion capability.\n8. **Secure integrations**: authenticate webhooks, prevent replay, validate calendar and CRM actions and avoid exposing secrets in prompts or logs.\n9. **Test real conditions**: accents, background noise, interruptions, silence, accessibility needs, prompt injection and incorrect customer records.\n10. **Escalate safely**: uncertainty, complaints, vulnerability, regulated advice, payments and consequential decisions go to a trained person.\n11. **Measure honestly**: report latency, completion, transfer, opt-out, error and complaint rates with sample size and period; never promise a fixed sales uplift.\n12. **Review continuously**: sample calls lawfully, correct the knowledge base and suspend workflows when harm or non-compliance appears.',
+            practicalExamples: [
+              'A prospect requests a callback and receives a disclosed AI call limited to qualification and scheduling, with immediate human transfer available.',
+              'A caller refuses transcription; the assistant follows the configured alternative instead of silently creating a transcript.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Useful voice AI is transparent, permission-aware and designed around human control—not around pretending to be human.',
+            keyPrinciples: ['Disclose the AI and purpose at the beginning', 'Apply local calling, privacy and recording rules', 'Escalate uncertainty and sensitive cases to a person'],
+          },
+          actionTask: {
+            instruction: 'Prepare a governed voice-assistant pilot:',
+            checklistItems: ['Approved purpose, audience and legal basis documented', 'Disclosure, opt-out and human handoff tested', 'Vendors, security, retention and deletion reviewed', 'Accuracy, accessibility and failure scenarios tested'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '52.2': {
+          stageTitle: '52. Inbound service and permission-based follow-up',
+          title: 'Reduce missed appointments without surveillance or unlawful outreach',
+          description: 'Use proportionate reminders and service automation with clear consent, careful authentication and reliable human support.',
+          learnContent: {
+            videoTitle: 'Masterclass: compliant reminders and inbound automation',
+            summaryText: 'Reminder and support calls can help when people expect them, but results vary. Do not contact old leads without a valid basis, claim universal show-up rates or store every call by default.',
+            bulletPoints: [
+              'Configure reminders from the person’s selected channel, time and consent preferences',
+              'Rebooking is assistance, not pressure; make refusal and opt-out easy',
+              'Authenticate callers before revealing account, invoice or appointment information',
+              'Store only necessary outcomes in the CRM and separate notes from audio or full transcripts'
+            ],
+            coreConcepts: [
+              { iconName: 'calendar', title: 'EXPECTED REMINDERS', description: 'Timing, frequency and channel follow the person’s choice; outcomes are measured without guarantees.', highlight: true },
+              { iconName: 'file-text', title: 'MINIMISED CALL RECORD', description: 'The CRM receives necessary, accurate outcomes with source, access controls and retention.' }
+            ],
+            resources: [
+              { title: 'Reminder and inbound-call compliance workbook', subtitle: 'Consent, scripts, authentication, retention and stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM call outcomes', subtitle: 'Approved notes, opt-outs and human-review queues', type: 'tool', iconName: 'phone', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Proportionate telephone automation\n\n1. **Separate use cases**: requested reminders, inbound service, support and marketing have different expectations and rules.\n2. **Respect preferences**: record the selected channel, time window, language, accessibility need and opt-out.\n3. **Avoid excessive frequency**: use a small, documented sequence and stop after refusal, withdrawal, complaint or the configured limit.\n4. **Authenticate proportionately**: do not expose invoices, health details, addresses or appointment information before verification.\n5. **Keep scripts factual**: state the appointment or service purpose; do not use false urgency, impersonation or invented scarcity.\n6. **Make rebooking easy**: offer available options and human support without penalising a person who declines.\n7. **Treat old leads carefully**: age in a CRM is not permission to call. Re-check source, scope, consent, objections and applicable law before reactivation.\n8. **Minimise records**: prefer structured outcomes such as confirmed, rescheduled, transferred or opted out. Store audio or transcripts only when necessary and lawful.\n9. **Protect special-category and payment data**: prevent the model from collecting or repeating sensitive information beyond the approved flow.\n10. **Monitor quality**: use representative testing and lawful review to track errors, transfers, complaints, opt-outs and accessibility failures.\n11. **Provide correction and deletion routes**: inaccurate summaries must be reviewable, and retention must end automatically.\n12. **Pause on risk**: recurring errors, unexpected contact, vendor incidents or rising complaints require human investigation before further calls.',
+            practicalExamples: [
+              'A customer who opted into a reminder receives one disclosed call and can reschedule or opt out without sales pressure.',
+              'An old CRM record is excluded because the original permission cannot be verified.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Telephone automation supports people only when contact is expected, data is minimised and a human remains accountable.',
+            keyPrinciples: ['Consent and local channel rules come before automation', 'Do not equate a transcript with complete or correct truth', 'Measure outcomes with periods and denominators instead of guarantees'],
+          },
+          actionTask: {
+            instruction: 'Configure a compliant reminder and inbound pilot:',
+            checklistItems: ['Use cases, consent and suppression rules separated', 'Disclosure, authentication, opt-out and handoff tested', 'CRM fields and transcript retention minimised', 'Error, complaint and accessibility stop rules approved'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -9741,6 +9823,88 @@ Droga paczka nie tworzy dużego klienta.`,
           },
           understandContent: { coreTakeaway: 'Poczta działa tylko, gdy jest proporcjonalna, jawna, legalna i pełna szacunku.', keyPrinciples: ['Nie wymieniaj prezentów na dostęp', 'Tracking nie dowodzi uwagi dyrektora', 'Szanuj sprzeciwy i zakupy'] },
           actionTask: { instruction: 'Zaprojektuj zgodny pilotaż poczty:', checklistItems: ['Sprawdzono prezenty i antykorupcję', 'Zatwierdzono format, wartość i dostępność', 'Udokumentowano dane, dostawców i retencję', 'Zaplanowano legalny follow-up, mierniki i stop rules'], toolboxCategory: 'crm' },
+        },
+      },
+    },
+
+    52: {
+      title: '52. Odpowiedzialne boty głosowe AI i automatyzacja telefonii',
+      subtitle: 'Jawna konwersacyjna AI, zgodna obsługa inbound i umawianie za zgodą',
+      description: 'Projektuj asystentów głosowych AI, którzy obsługują dozwolone połączenia, ujawniają automatyczny charakter, chronią rozmówców i przekazują trudne lub wrażliwe sprawy człowiekowi—bez udawania człowieka, bezprawnych zimnych telefonów i gwarancji wyników.',
+      lessons: {
+        '52.1': {
+          stageTitle: '52. Architektura i ład Voice AI',
+          title: 'Buduj jawnych asystentów głosowych z bezpiecznym przekazaniem człowiekowi',
+          description: 'Poznaj przetwarzanie mowy w czasie rzeczywistym i zaprojektuj ujawnienie, zgodę, bezpieczeństwo, dostępność oraz eskalację.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialne wdrożenie asystenta głosowego AI',
+            summaryText: 'System głosowy łączy rozpoznawanie mowy, model językowy i syntezę głosu. Jakość i opóźnienie zależą od języka, sieci, dostawcy i zastosowania; naturalny głos nie może wprowadzać rozmówcy w błąd, że rozmawia z człowiekiem.',
+            bulletPoints: [
+              'Zmapuj przepływ: dźwięk, speech-to-text, odpowiedź modelu, synteza, logi i przekazanie człowiekowi',
+              'Ujawnij AI na początku i zapewnij prostą drogę do człowieka',
+              'Wykonuj tylko legalne, oczekiwane połączenia i dokumentuj zgodę lub inną właściwą podstawę',
+              'Minimalizuj nagrania i transkrypcje, ustal retencję oraz zabezpiecz dostawców i webhooki'
+            ],
+            coreConcepts: [
+              { iconName: 'phone', title: 'JAWNA VOICE AI', description: 'Asystent przedstawia się, podaje cel i respektuje wybory rozmówcy.', highlight: true },
+              { iconName: 'cpu', title: 'BEZPIECZNA ESKALACJA', description: 'Niepewność, skarga, stres i wrażliwa decyzja uruchamiają przekazanie człowiekowi.' }
+            ],
+            resources: [
+              { title: 'Zeszyt ładu i promptów Voice AI', subtitle: 'Ujawnienie, zakres, zgoda, eskalacja i testy', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Integracja głosowa Mara CRM', subtitle: 'Zatwierdzone webhooki, kontrola dostępu i audyt', type: 'tool', iconName: 'settings', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Odpowiedzialny przepływ asystenta głosowego\n\n1. **Określ dozwolony cel**: informacja inbound, zamówiony oddzwon lub pomoc w terminie; nie zamieniaj zapytania w niepowiązany marketing.\n2. **Sprawdź reguły kanału**: przepisy telefoniczne różnią się między krajami oraz B2C i B2B. Przed połączeniem zapisz podstawę i listy wykluczeń.\n3. **Natychmiast ujawnij automatyzację**: jasno podaj organizację, asystenta AI i cel.\n4. **Zapewnij realny wybór**: umożliw kontakt z człowiekiem, zakończenie rozmowy, odmowę nagrania lub inny dostępny kanał, gdy jest wymagany.\n5. **Ogranicz agenta**: zatwierdzona wiedza, zakazane twierdzenia, granice uwierzytelniania i działania wymagające zgody człowieka należą do projektu systemu.\n6. **Chroń dane**: minimalizuj audio, transkrypcje i pola; szyfruj, ograniczaj dostęp oraz ustal retencję i usuwanie.\n7. **Kontroluj dostawców**: sprawdź podwykonawców, transfery, warunki trenowania modeli, incydenty i możliwość usunięcia.\n8. **Zabezpiecz integracje**: uwierzytelniaj webhooki, zapobiegaj replay, waliduj działania kalendarza i CRM, nie ujawniaj sekretów w promptach.\n9. **Testuj realne warunki**: akcenty, hałas, przerwania, ciszę, dostępność, prompt injection i błędne rekordy.\n10. **Bezpiecznie eskaluj**: niepewność, skargi, podatność, regulowane porady, płatności i ważne decyzje przekazuj osobie.\n11. **Mierz uczciwie**: raportuj opóźnienia, ukończenia, transfery, rezygnacje, błędy i skargi z próbą oraz okresem; nie obiecuj stałego wzrostu sprzedaży.\n12. **Stale przeglądaj**: legalnie próbkuj rozmowy, poprawiaj bazę wiedzy i wstrzymuj przepływ przy ryzyku.',
+            practicalExamples: [
+              'Prospekt prosi o oddzwon i otrzymuje jawne połączenie AI ograniczone do kwalifikacji i terminu, z możliwością natychmiastowego transferu.',
+              'Rozmówca odmawia transkrypcji; asystent stosuje zatwierdzoną alternatywę zamiast ukrytego zapisu.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Użyteczna Voice AI jest jawna, respektuje uprawnienia i zachowuje kontrolę człowieka—nie udaje człowieka.',
+            keyPrinciples: ['Ujawnij AI i cel na początku', 'Stosuj lokalne reguły połączeń, prywatności i nagrywania', 'Przekazuj niepewne i wrażliwe sprawy człowiekowi'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj kontrolowany pilotaż asystenta głosowego:',
+            checklistItems: ['Udokumentowano cel, odbiorców i podstawę prawną', 'Przetestowano ujawnienie, rezygnację i transfer', 'Sprawdzono dostawców, bezpieczeństwo, retencję i usuwanie', 'Przetestowano dokładność, dostępność i awarie'],
+            toolboxCategory: 'crm',
+          },
+        },
+        '52.2': {
+          stageTitle: '52. Obsługa inbound i follow-up za zgodą',
+          title: 'Ograniczaj nieobecności bez nadzoru i bezprawnego outreachu',
+          description: 'Stosuj proporcjonalne przypomnienia i automatyzację obsługi z jasną zgodą, uwierzytelnianiem oraz wsparciem człowieka.',
+          learnContent: {
+            videoTitle: 'Masterclass: zgodne przypomnienia i automatyzacja inbound',
+            summaryText: 'Przypomnienia i obsługa mogą pomagać, gdy są oczekiwane, lecz wyniki są zmienne. Nie dzwoń do starych leadów bez ważnej podstawy, nie obiecuj uniwersalnej frekwencji i nie zapisuj każdej rozmowy domyślnie.',
+            bulletPoints: [
+              'Konfiguruj przypomnienia według wybranego kanału, czasu i preferencji zgody',
+              'Ponowne umówienie to pomoc, nie presja; odmowa i rezygnacja muszą być łatwe',
+              'Uwierzytelnij rozmówcę przed ujawnieniem konta, faktury lub terminu',
+              'Zapisuj w CRM tylko potrzebny wynik i oddzielaj notatkę od audio lub pełnej transkrypcji'
+            ],
+            coreConcepts: [
+              { iconName: 'calendar', title: 'OCZEKIWANE PRZYPOMNIENIA', description: 'Czas, częstotliwość i kanał wynikają z wyboru osoby; rezultaty nie są gwarantowane.', highlight: true },
+              { iconName: 'file-text', title: 'MINIMALNY REKORD', description: 'CRM otrzymuje potrzebne i dokładne wyniki ze źródłem, dostępem i retencją.' }
+            ],
+            resources: [
+              { title: 'Zeszyt zgodności przypomnień i inbound', subtitle: 'Zgoda, skrypty, uwierzytelnienie, retencja i stop rules', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Wyniki rozmów Mara CRM', subtitle: 'Zatwierdzone notatki, sprzeciwy i kolejki przeglądu', type: 'tool', iconName: 'phone', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Proporcjonalna automatyzacja telefonii\n\n1. **Oddziel zastosowania**: zamówione przypomnienie, inbound, obsługa i marketing mają inne zasady.\n2. **Respektuj preferencje**: zapisuj kanał, okno czasu, język, dostępność i rezygnację.\n3. **Ogranicz częstotliwość**: stosuj krótki udokumentowany ciąg i zatrzymaj go po odmowie, wycofaniu, skardze lub limicie.\n4. **Uwierzytelniaj proporcjonalnie**: nie ujawniaj faktur, zdrowia, adresu ani terminu przed weryfikacją.\n5. **Używaj faktów**: podaj termin lub cel obsługi; unikaj fałszywej pilności, podszywania i wymyślonego niedoboru.\n6. **Ułatw zmianę terminu**: oferuj opcje i wsparcie bez karania za odmowę.\n7. **Ostrożnie traktuj stare leady**: wpis w CRM nie jest zgodą na telefon. Sprawdź źródło, zakres, zgodę, sprzeciw i prawo przed reaktywacją.\n8. **Minimalizuj zapis**: preferuj wyniki strukturalne—potwierdzono, przełożono, przekazano, rezygnacja. Audio lub transkrypcję zachowuj tylko, gdy to konieczne i legalne.\n9. **Chroń dane wrażliwe i płatnicze**: nie pozwalaj modelowi zbierać ani powtarzać danych poza zatwierdzonym przepływem.\n10. **Monitoruj jakość**: reprezentatywne testy i legalny przegląd obejmują błędy, transfery, skargi, rezygnacje i dostępność.\n11. **Zapewnij korektę i usuwanie**: błędne podsumowania muszą podlegać kontroli, a retencja kończyć się automatycznie.\n12. **Wstrzymuj przy ryzyku**: powtarzalne błędy, nieoczekiwany kontakt, incydent dostawcy lub skargi wymagają dochodzenia.',
+            practicalExamples: [
+              'Klient, który wybrał przypomnienie, otrzymuje jedno jawne połączenie i może zmienić termin lub zrezygnować bez presji.',
+              'Stary rekord CRM jest wykluczony, ponieważ pierwotnego uprawnienia nie można potwierdzić.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Automatyzacja telefonu wspiera ludzi tylko przy oczekiwanym kontakcie, minimalnych danych i odpowiedzialności człowieka.',
+            keyPrinciples: ['Zgoda i lokalne reguły poprzedzają automatyzację', 'Transkrypcja nie jest pełną ani nieomylną prawdą', 'Mierz wyniki z okresem i mianownikiem zamiast gwarancji'],
+          },
+          actionTask: {
+            instruction: 'Skonfiguruj zgodny pilotaż przypomnień i inbound:',
+            checklistItems: ['Oddzielono zastosowania, zgodę i wykluczenia', 'Przetestowano ujawnienie, uwierzytelnienie, rezygnację i transfer', 'Zminimalizowano pola CRM i retencję transkrypcji', 'Zatwierdzono stop rules dla błędów, skarg i dostępności'],
+            toolboxCategory: 'crm',
+          },
         },
       },
     },
