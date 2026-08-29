@@ -4531,6 +4531,147 @@ Scaling is successful only when additional spend continues to create suitable cu
         }
       }
     },
+    49: {
+      "title": "49. Ethical VSL strategy and production",
+      "subtitle": "Clear scripts, substantiated claims, accessible video and measured improvement",
+      "description": "Create video sales letters that explain a relevant problem, evidence and offer clearly—without psychological manipulation, fabricated urgency, hidden controls or conversion guarantees.",
+      "lessons": {
+        "49.1": {
+          "stageTitle": "49. Transparent VSL scripting",
+          "title": "Structure a persuasive VSL without shock tactics or a fixed formula",
+          "description": "Build a clear narrative around audience context, a truthful mechanism, suitable evidence, limitations and a voluntary call to action.",
+          "learnContent": {
+            "videoTitle": "Masterclass: evidence-led VSL script architecture",
+            "summaryText": "A useful VSL earns attention through relevance and clarity. No duration, twelve-step sequence or 'new mechanism' guarantees sales, and the offer should never be framed as the only logical choice.",
+            "bulletPoints": [
+              "Open with the audience's real situation and a specific, supportable promise about what the video covers",
+              "Explain the proposed mechanism in plain language and distinguish evidence, hypothesis and opinion",
+              "Use genuine case studies with permission, typicality context and relevant limitations",
+              "Present price, material terms, refund conditions and availability clearly before a voluntary call to action"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "video",
+                "title": "TRUTHFUL MECHANISM",
+                "description": "Explain how and for whom the offer may work, the evidence available and where uncertainty remains.",
+                "highlight": true
+              },
+              {
+                "iconName": "zap",
+                "title": "RELEVANT OPENING",
+                "description": "Create attention through a recognisable problem and useful preview, not fear, shock or invented enemies."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Evidence-led VSL script workbook",
+                "subtitle": "Audience, claims, proof, objections, disclosures and call-to-action review",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR AI VSL Writer",
+                "subtitle": "Draft scripts for factual, legal and editorial human review",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "tools"
+              }
+            ],
+            "fullArticleGuide": "### Structure a VSL that respects the viewer\n\nA VSL can explain an offer effectively, but it cannot remove every objection or guarantee a conversion rate. Its job is to help an appropriate viewer make an informed decision.\n\n#### A responsible script workflow\n\n1. **Define audience and purpose**: State who the video is for, what it explains and who may not benefit.\n2. **Research real language**: Use interviews, support questions and approved feedback without inferring sensitive traits.\n3. **Write a relevant opening**: Preview the useful outcome honestly; avoid fear, shame, shock and false curiosity gaps.\n4. **Describe the current problem accurately**: Do not exaggerate consequences or invent a common enemy.\n5. **Explain the mechanism**: Separate established evidence, provider data, personal experience and hypothesis.\n6. **Tell a truthful story**: Compress only for clarity and never manufacture hardship, discovery or success.\n7. **Support material claims**: Keep evidence files, dates, scope and approvals. Use stronger review for health and financial claims.\n8. **Use testimonials carefully**: Obtain permission, avoid editing that changes meaning and disclose atypical outcomes where required.\n9. **Address objections fairly**: Include cost, effort, prerequisites, alternatives, limitations and cancellation or refund terms.\n10. **Present the offer clearly**: Show deliverables, total price, recurring charges, deadlines and eligibility in readable form.\n11. **Use genuine urgency only**: State a deadline or capacity limit only when real, documented and consistently enforced.\n12. **Offer a voluntary next step**: Keep purchase and exit controls visible; do not obstruct access to material terms.\n13. **Review accessibility**: Add captions, transcript, clear language, readable contrast and non-audio cues.\n14. **Approve before launch**: Have accountable owners check claims, rights, privacy, platform rules and local law.\n15. **Test responsibly**: Measure comprehension, qualified conversions, refunds and complaints—not persuasion metrics alone.\n\nTreat any framework as a drafting aid, not a mathematical sales formula.",
+            "practicalExamples": [
+              "A strong opening says what the viewer will learn and names the evidence used instead of claiming that everything they know is wrong.",
+              "A customer story includes permission and context about effort and variation rather than presenting an exceptional result as typical."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "A trustworthy VSL makes the offer and its evidence easier to understand; it does not manipulate belief or guarantee a sale.",
+            "keyPrinciples": [
+              "Use relevance and clarity instead of shock or fear",
+              "Substantiate material claims and explain limitations",
+              "Keep terms and the call to action visible and voluntary"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Draft one responsible VSL script:",
+            "checklistItems": [
+              "Documented audience, purpose, exclusions and evidence",
+              "Reviewed mechanism, claims, stories, testimonials and permissions",
+              "Included price, terms, limitations, alternatives and genuine deadlines",
+              "Checked captions, transcript, readability, rights and approval"
+            ],
+            "toolboxCategory": "content"
+          }
+        },
+        "49.2": {
+          "stageTitle": "49. Accessible VSL production and delivery",
+          "title": "Deliver video reliably without deceptive player behaviour",
+          "description": "Produce an accessible video, choose hosting based on measured needs and implement playback, analytics and calls to action with consent and transparent controls.",
+          "learnContent": {
+            "videoTitle": "Masterclass: accessible VSL production, hosting and measurement",
+            "summaryText": "Performance matters, but no provider, autoplay treatment or sub-200-ms claim guarantees zero abandonment. Test real devices and networks, respect browser rules and user choice, and collect only necessary analytics.",
+            "bulletPoints": [
+              "Design mobile-first slides with readable type, sufficient contrast, captions and a transcript",
+              "Use voice, pauses and music to support comprehension without overwhelming or covertly steering viewers",
+              "Avoid surprise autoplay with sound; provide obvious play, pause, volume, speed and caption controls",
+              "Use resume playback only with appropriate notice, consent and retention controls"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "play",
+                "title": "USER-CONTROLLED PLAYBACK",
+                "description": "Playback starts and continues in ways viewers can understand and control.",
+                "highlight": true
+              },
+              {
+                "iconName": "zap",
+                "title": "MEASURED DELIVERY",
+                "description": "Hosting choices follow real start time, buffering, reliability, accessibility, privacy and cost data."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Accessible VSL production checklist",
+                "subtitle": "Script, captions, contrast, audio, rights, devices and quality assurance",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara Landing Page VSL Player",
+                "subtitle": "Configure transparent calls to action and privacy-aware video analytics",
+                "type": "tool",
+                "iconName": "layout",
+                "actionUrl": "landingpage"
+              }
+            ],
+            "fullArticleGuide": "### Optimise delivery without taking control from viewers\n\nA VSL must remain understandable and usable across devices and network conditions. Technology should support the decision, not hide information or manufacture attention.\n\n#### Production and delivery controls\n\n1. **Create an accessible master**: Record clean speech, provide accurate captions and transcript, describe essential visuals and avoid flashing content.\n2. **Design for small screens**: Use large type, strong contrast, safe margins and a pace that allows reading.\n3. **Confirm media rights**: Document licences for music, footage, fonts, voices and testimonials.\n4. **Choose hosting by requirements**: Compare reliability, adaptive streaming, privacy, accessibility, analytics, geography, support and cost. No platform is universally correct.\n5. **Encode adaptively**: Offer appropriate resolutions and test poster image, first frame, captions and fallback content.\n6. **Respect playback choice**: Do not autoplay sound. Provide visible controls and never disguise an advertisement as a system prompt.\n7. **Keep key terms accessible**: Do not force viewers to reach a timestamp before they can see price, conditions, privacy or a legitimate way to buy.\n8. **Use resume carefully**: Explain stored progress, minimise retention and provide deletion or opt-out where required.\n9. **Minimise analytics**: Collect only useful events with the appropriate notice, consent and access controls; never record sensitive fields in event labels.\n10. **Test representative conditions**: Check common phones, browsers, assistive technology and slow networks. Measure start time, buffering and completion distributions.\n11. **Prepare failure states**: Provide transcript, retry and support paths when playback or tracking fails.\n12. **Evaluate quality**: Review qualified sales, comprehension, refunds, support demand and complaints alongside viewing data.\n\nDo not promise a universal start rate, latency or bounce rate. Report the environment, sample and measurement method.",
+            "practicalExamples": [
+              "A muted preview is tested against a static poster; the team keeps the option that improves qualified outcomes without confusing users.",
+              "A delayed call-to-action increases watch time but hides the price, so the team restores visible offer details and tests clearer messaging."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Reliable VSL delivery combines accessibility, user control, measured performance and privacy-aware analytics.",
+            "keyPrinciples": [
+              "Clear audio and accurate captions matter more than unnecessary resolution",
+              "Test mobile readability and representative networks",
+              "Never hide material terms or manipulate playback controls"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Produce and validate one VSL:",
+            "checklistItems": [
+              "Approved audio, captions, transcript, visuals and media rights",
+              "Tested player controls, mobile readability, representative devices and networks",
+              "Published visible offer terms, call to action and playback fallback",
+              "Reviewed analytics consent, data minimisation, retention and quality outcomes"
+            ],
+            "toolboxCategory": "landingpage"
+          }
+        }
+      }
+    },
   },
   pl: {
     1: {
@@ -9044,6 +9185,148 @@ Skalowanie ma sens tylko wtedy, gdy dodatkowy wydatek nadal tworzy wartość bez
               "Ustalono akceptację, mierniki sukcesu, drogę korekty i termin przeglądu"
             ],
             "toolboxCategory": "content"
+          }
+        }
+      }
+    },
+
+    49: {
+      "title": "49. Etyczna strategia i produkcja VSL",
+      "subtitle": "Jasne skrypty, uzasadnione twierdzenia, dostępne wideo i mierzone ulepszenia",
+      "description": "Twórz video sales letters, które jasno wyjaśniają istotny problem, dowody i ofertę—bez manipulacji psychologicznej, sztucznej presji, ukrytych kontrolek i gwarancji konwersji.",
+      "lessons": {
+        "49.1": {
+          "stageTitle": "49. Przejrzysty skrypt VSL",
+          "title": "Zbuduj przekonujący VSL bez szoku i sztywnej formuły",
+          "description": "Twórz jasną narrację wokół kontekstu odbiorcy, prawdziwego mechanizmu, odpowiednich dowodów, ograniczeń i dobrowolnego wezwania.",
+          "learnContent": {
+            "videoTitle": "Masterclass: architektura skryptu VSL oparta na dowodach",
+            "summaryText": "Użyteczny VSL zdobywa uwagę trafnością i jasnością. Żaden czas, schemat dwunastu kroków ani „nowy mechanizm” nie gwarantuje sprzedaży, a oferta nie powinna być przedstawiana jako jedyny logiczny wybór.",
+            "bulletPoints": [
+              "Zacznij od realnej sytuacji odbiorcy i konkretnej, możliwej do poparcia zapowiedzi treści filmu",
+              "Wyjaśnij mechanizm prostym językiem i rozróżnij dowody, hipotezę oraz opinię",
+              "Używaj prawdziwych studiów przypadku za zgodą, z kontekstem typowości i ograniczeniami",
+              "Jasno pokaż cenę, ważne warunki, zasady zwrotu i dostępność przed dobrowolnym wezwaniem"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "video",
+                "title": "PRAWDZIWY MECHANIZM",
+                "description": "Wyjaśnij, jak i dla kogo oferta może działać, jakie są dowody oraz gdzie pozostaje niepewność.",
+                "highlight": true
+              },
+              {
+                "iconName": "zap",
+                "title": "TRAFNE OTWARCIE",
+                "description": "Buduj uwagę rozpoznawalnym problemem i użyteczną zapowiedzią, nie lękiem, szokiem ani wymyślonym wrogiem."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Zeszyt skryptu VSL opartego na dowodach",
+                "subtitle": "Odbiorcy, twierdzenia, dowody, obiekcje, ujawnienia i CTA",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR AI VSL Writer",
+                "subtitle": "Twórz szkice do kontroli faktów, prawa i redakcji przez człowieka",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "tools"
+              }
+            ],
+            "fullArticleGuide": "### Zbuduj VSL szanujący odbiorcę\n\nVSL może skutecznie wyjaśniać ofertę, ale nie usuwa każdej obiekcji ani nie gwarantuje współczynnika konwersji. Ma pomóc odpowiedniej osobie podjąć świadomą decyzję.\n\n#### Odpowiedzialny proces skryptu\n\n1. **Określ odbiorcę i cel**: Powiedz, dla kogo jest film, co wyjaśnia i komu może nie pomóc.\n2. **Badaj prawdziwy język**: Korzystaj z rozmów, pytań do wsparcia i zatwierdzonych opinii bez wnioskowania o cechach wrażliwych.\n3. **Napisz trafne otwarcie**: Uczciwie zapowiedz użyteczny wynik; unikaj lęku, wstydu, szoku i fałszywej ciekawości.\n4. **Dokładnie opisz problem**: Nie wyolbrzymiaj skutków ani nie twórz wspólnego wroga.\n5. **Wyjaśnij mechanizm**: Oddziel dowody, dane dostawcy, doświadczenie i hipotezę.\n6. **Opowiedz prawdziwą historię**: Skracaj tylko dla jasności i nie fabrykuj trudności, odkrycia ani sukcesu.\n7. **Popieraj ważne twierdzenia**: Przechowuj dowody, daty, zakres i zgody; silniej kontroluj zdrowie i finanse.\n8. **Ostrożnie używaj opinii**: Uzyskaj zgodę, nie zmieniaj sensu montażem i ujawniaj nietypowe wyniki, gdy trzeba.\n9. **Uczciwie omawiaj obiekcje**: Uwzględnij koszt, wysiłek, wymagania, alternatywy, ograniczenia i warunki zwrotu.\n10. **Jasno pokaż ofertę**: Podaj elementy, pełną cenę, opłaty cykliczne, terminy i kwalifikację.\n11. **Używaj tylko prawdziwej pilności**: Termin lub limit musi być realny, udokumentowany i konsekwentny.\n12. **Daj dobrowolny następny krok**: Zachowaj widoczne opcje zakupu i wyjścia; nie ukrywaj ważnych warunków.\n13. **Sprawdź dostępność**: Dodaj napisy, transkrypcję, jasny język, czytelny kontrast i sygnały inne niż dźwięk.\n14. **Zatwierdź przed startem**: Odpowiedzialne osoby sprawdzają twierdzenia, prawa, prywatność, zasady platformy i prawo lokalne.\n15. **Testuj odpowiedzialnie**: Mierz zrozumienie, jakościowe konwersje, zwroty i skargi, nie tylko perswazję.\n\nTraktuj framework jako pomoc w pisaniu, nie matematyczną formułę sprzedaży.",
+            "practicalExamples": [
+              "Dobre otwarcie mówi, czego widz się dowie i jakie dowody wykorzystano, zamiast twierdzić, że cała jego wiedza jest błędna.",
+              "Historia klienta zawiera zgodę oraz kontekst wysiłku i zmienności, zamiast przedstawiać wyjątkowy wynik jako typowy."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Wiarygodny VSL ułatwia zrozumienie oferty i dowodów; nie manipuluje przekonaniami ani nie gwarantuje sprzedaży.",
+            "keyPrinciples": [
+              "Stosuj trafność i jasność zamiast szoku lub lęku",
+              "Popieraj ważne twierdzenia i wyjaśniaj ograniczenia",
+              "Zachowaj widoczne warunki i dobrowolne wezwanie"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Napisz jeden odpowiedzialny skrypt VSL:",
+            "checklistItems": [
+              "Udokumentowano odbiorcę, cel, wykluczenia i dowody",
+              "Sprawdzono mechanizm, twierdzenia, historie, opinie i zgody",
+              "Dodano cenę, warunki, ograniczenia, alternatywy i prawdziwe terminy",
+              "Sprawdzono napisy, transkrypcję, czytelność, prawa i akceptację"
+            ],
+            "toolboxCategory": "content"
+          }
+        },
+        "49.2": {
+          "stageTitle": "49. Dostępna produkcja i emisja VSL",
+          "title": "Dostarczaj wideo niezawodnie bez zwodniczego odtwarzacza",
+          "description": "Produkuj dostępne wideo, wybieraj hosting według pomiarów i wdrażaj odtwarzanie, analitykę oraz CTA z poszanowaniem zgody i przejrzystych kontrolek.",
+          "learnContent": {
+            "videoTitle": "Masterclass: dostępna produkcja VSL, hosting i pomiar",
+            "summaryText": "Wydajność ma znaczenie, lecz żaden dostawca, autoplay ani obietnica poniżej 200 ms nie gwarantują zerowych rezygnacji. Testuj urządzenia i sieci, respektuj zasady przeglądarek oraz wybór użytkownika i zbieraj tylko potrzebne dane.",
+            "bulletPoints": [
+              "Projektuj slajdy mobile-first z czytelnym tekstem, odpowiednim kontrastem, napisami i transkrypcją",
+              "Używaj głosu, pauz i muzyki dla zrozumienia bez przytłaczania lub ukrytego sterowania",
+              "Unikaj niespodziewanego autoplay z dźwiękiem; zapewnij widoczne play, pauzę, głośność, tempo i napisy",
+              "Wznawiaj odtwarzanie tylko z odpowiednią informacją, zgodą i kontrolą retencji"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "play",
+                "title": "ODTWARZANIE POD KONTROLĄ",
+                "description": "Film zaczyna się i trwa w sposób zrozumiały oraz kontrolowany przez widza.",
+                "highlight": true
+              },
+              {
+                "iconName": "zap",
+                "title": "MIERZONA EMISJA",
+                "description": "Hosting wybierasz na podstawie czasu startu, buforowania, niezawodności, dostępności, prywatności i kosztu."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Lista dostępnej produkcji VSL",
+                "subtitle": "Skrypt, napisy, kontrast, audio, prawa, urządzenia i kontrola jakości",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara Landing Page VSL Player",
+                "subtitle": "Konfiguruj przejrzyste CTA i analitykę z ochroną prywatności",
+                "type": "tool",
+                "iconName": "layout",
+                "actionUrl": "landingpage"
+              }
+            ],
+            "fullArticleGuide": "### Optymalizuj emisję bez odbierania kontroli\n\nVSL musi pozostać zrozumiały i użyteczny na różnych urządzeniach oraz łączach. Technologia ma wspierać decyzję, nie ukrywać informacji ani fabrykować uwagi.\n\n#### Kontrole produkcji i emisji\n\n1. **Stwórz dostępny materiał**: Nagraj czystą mowę, dodaj dokładne napisy i transkrypcję, opisz ważne obrazy i unikaj migania.\n2. **Projektuj dla małych ekranów**: Użyj dużego tekstu, kontrastu, bezpiecznych marginesów i tempa pozwalającego czytać.\n3. **Potwierdź prawa**: Udokumentuj licencje muzyki, materiałów, fontów, głosów i opinii.\n4. **Wybierz hosting według wymagań**: Porównaj niezawodność, streaming adaptacyjny, prywatność, dostępność, analitykę, region, wsparcie i koszt. Żadna platforma nie jest zawsze najlepsza.\n5. **Koduj adaptacyjnie**: Zapewnij odpowiednie rozdzielczości i sprawdź plakat, pierwszą klatkę, napisy oraz fallback.\n6. **Szanuj wybór odtwarzania**: Nie uruchamiaj dźwięku automatycznie. Zapewnij widoczne kontrolki i nie udawaj komunikatu systemowego.\n7. **Udostępnij ważne warunki**: Nie zmuszaj do oglądania do konkretnej minuty, by zobaczyć cenę, warunki, prywatność lub drogę zakupu.\n8. **Ostrożnie wznawiaj**: Wyjaśnij zapisywanie postępu, ogranicz retencję i zapewnij usunięcie lub rezygnację, gdy trzeba.\n9. **Minimalizuj analitykę**: Zbieraj potrzebne zdarzenia z odpowiednią informacją, zgodą i kontrolą dostępu; nie zapisuj pól wrażliwych w etykietach.\n10. **Testuj realne warunki**: Sprawdź popularne telefony, przeglądarki, technologie asystujące i wolne sieci. Mierz start, buforowanie i rozkład ukończeń.\n11. **Przygotuj awarie**: Zapewnij transkrypcję, ponowienie i wsparcie przy błędzie odtwarzania lub śledzenia.\n12. **Oceniaj jakość**: Analizuj wartościową sprzedaż, zrozumienie, zwroty, wsparcie i skargi obok oglądalności.\n\nNie obiecuj uniwersalnego start rate, opóźnienia ani bounce rate. Podawaj środowisko, próbę i metodę pomiaru.",
+            "practicalExamples": [
+              "Wyciszony podgląd jest testowany przeciw statycznemu plakatowi; zespół wybiera opcję poprawiającą jakościowe wyniki bez dezorientacji.",
+              "Opóźnione CTA zwiększa oglądalność, lecz ukrywa cenę, więc zespół przywraca widoczne warunki i testuje jasny komunikat."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "Niezawodny VSL łączy dostępność, kontrolę użytkownika, mierzoną wydajność i analitykę chroniącą prywatność.",
+            "keyPrinciples": [
+              "Czyste audio i dokładne napisy są ważniejsze od zbędnej rozdzielczości",
+              "Testuj czytelność mobilną i reprezentatywne sieci",
+              "Nie ukrywaj ważnych warunków ani nie manipuluj kontrolkami"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Wyprodukuj i sprawdź jeden VSL:",
+            "checklistItems": [
+              "Zatwierdzono audio, napisy, transkrypcję, obrazy i prawa",
+              "Przetestowano kontrolki, czytelność mobilną, urządzenia i sieci",
+              "Opublikowano widoczne warunki, CTA i rozwiązanie awaryjne",
+              "Sprawdzono zgodę analityki, minimalizację, retencję i wyniki jakościowe"
+            ],
+            "toolboxCategory": "landingpage"
           }
         }
       }
