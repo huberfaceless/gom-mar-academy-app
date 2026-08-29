@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 136700)
+Total output lines: 5000
+
 import { Lesson, Stage } from '../types';
 import { LanguageCode } from './translations';
 
@@ -2071,1013 +2074,7 @@ Do not impose rules such as “90% means contact within four hours” unless a s
 2. **Education and evaluation**: Provide tutorials, comparisons and authorised case studies. Include limitations and do not hide commercial relationships.
 3. **Decision support**: Present a clear offer, price, terms and genuine availability. Never use fabricated scarcity, countdowns that reset or targeting based on vulnerability.
 
-Before activating a pixel, audience upload or CRM synchronisation, confirm the legal basis, consent requirements, platform terms, retention, deletion, suppression and cross-border arrangements. Hashing an identifier does not make personal data anonymous.
-
-Set frequency caps by channel and campaign, exclude converted or objecting users where appropriate and provide a way to change preferences. Validate UTM governance and event definitions, but expect attribution gaps across devices and privacy controls. Monitor reach, incremental outcomes, complaints, fatigue, accessibility and marginal cost—not revenue alone.`,
-            practicalExamples: ['Run a small, consent-compatible campaign on one primary and one supporting channel, with a documented frequency cap, exclusion rules and an incrementality check.', 'Turn one verified guide into a short video, email and platform post only after adapting the format and rechecking claims, rights and captions.'],
-          },
-          understandContent: { coreTakeaway: 'Coordinated marketing is effective when it is relevant, limited, measurable and respectful—not when a brand follows people everywhere.', keyPrinciples: ['Establish privacy and audience controls before retargeting', 'Optimise incremental value and customer experience, not raw frequency', 'Adapt repurposed content to each channel'] },
-          actionTask: { instruction: 'Create a responsible channel and retargeting plan:', checklistItems: ['Purpose, audience eligibility and channel capacity documented', 'Consent, pixel, retention and suppression controls verified', 'Journey content contains no artificial scarcity or unsupported case studies', 'Frequency caps and converted-user exclusions configured', 'A four-week contextual content-reuse workflow defined'], toolboxCategory: 'landingpage' },
-        },
-        '25.2': {
-          stageTitle: '25. Coordinated Channels & Responsible Scaling', title: 'Controlled funnel scaling & high-consideration sales',
-          description: 'Scale a high-consideration sales process only when qualification is fair, follow-up is permitted and unit economics, delivery and customer outcomes support growth.',
-          learnContent: {
-            videoTitle: 'High-consideration funnel design and scaling controls',
-            summaryText: 'Automation can organise applications, reminders and drafts, but it cannot guarantee five-figure customers, 40% close rates or 85% attendance. Scale follows validated economics and service capacity.',
-            bulletPoints: ['Use a short application only for information necessary to assess mutual fit', 'Offer accessible reminders through permitted channels with clear rescheduling and cancellation', 'Prepare prospects with accurate material rather than persuasive sequences designed to remove every objection', 'Track CAC, contribution margin, payback, retention, refunds, complaints and delivery capacity by cohort', 'Route records with explainable rules and human review; generate proposals and contracts from approved data only'],
-            coreConcepts: [
-              { iconName: 'target', title: 'FAIR MUTUAL QUALIFICATION', description: 'Assess whether the offer and customer needs fit each other. Do not screen people through unnecessary sensitive or financial questions.', highlight: true },
-              { iconName: 'zap', title: 'RESPECTFUL ATTENDANCE SUPPORT', description: 'Improve attendance with confirmations, calendar details and easy rescheduling—not pressure or unsupported “booster” claims.' },
-            ],
-            resources: [
-              { title: 'High-Consideration Qualification Questionnaire', subtitle: 'Accessible template for a reviewed application flow', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Prioritisation', subtitle: 'Review explainable routing suggestions', type: 'tool', iconName: 'users', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Scale a sales process only after proving it works safely
-
-Higher-priced or complex offers often require more context, but automation should reduce administrative friction rather than manipulate decisions.
-
-#### A controlled process
-
-1. **Mutual-fit form**: Ask only relevant questions about goals, needs, timing and service fit. Explain why data is needed, make optional fields clear and avoid sensitive data unless strictly necessary and lawful.
-2. **Booking and preparation**: Confirm time zone, accessibility needs, agenda, cancellation and rescheduling. Use genuine examples with permission and representative limitations.
-3. **Reviewed routing**: Apply documented, testable rules. A human checks unusual cases, capacity and fairness before assignment.
-4. **Conversation and decision**: Give the prospect time, accurate terms and a contact route. Do not exploit urgency, financial distress or other vulnerabilities.
-5. **Post-call workflow**: Generate drafts from approved facts, require review for price and contractual terms, record consent and stop inappropriate follow-up.
-6. **Scaling gate**: Increase spend or volume only if data quality, contribution margin, refund and complaint rates, service capacity, response time and customer outcomes remain acceptable.
-
-CAC and LTV are estimates shaped by attribution, cohort and time horizon. Define them consistently, include relevant costs and run sensitivity scenarios. Keep budget caps, staged rollouts and rollback criteria.`,
-            practicalExamples: ['Pilot the flow with a small cohort and a weekly human review. Increase volume only if economics, fairness, delivery quality and customer outcomes remain within predefined limits.'],
-          },
-          understandContent: { coreTakeaway: 'Responsible scaling grows a validated and supportable process; it does not automate pressure or promise fixed close and attendance rates.', keyPrinciples: ['Qualify for mutual fit with necessary data only', 'Require review for routing, proposals and contracts', 'Scale through staged evidence and rollback thresholds'] },
-          actionTask: { instruction: 'Prepare a controlled high-consideration sales flow:', checklistItems: ['Qualification questions are necessary, explained and accessible', 'Reminder consent, time zone, rescheduling and cancellation are configured', 'Routing rules are explainable and tested for unfair exclusions', 'Pricing, proposal and contract drafts require human approval', 'CAC, margin, delivery capacity, complaints and rollback thresholds are documented'], toolboxCategory: 'email' },
-        },
-      },
-    },
-    26: {
-      title: '26. Community Care, Retention & Sustainable Customer Value',
-      subtitle: 'Supportive participation, fair recognition and value-led customer relationships',
-      description: 'Build a safe, useful community and improve retention through genuine member outcomes, transparent membership terms and relevant offers—not status pressure or compulsive engagement.',
-      lessons: {
-        '26.1': {
-          stageTitle: '26. Community Care & Retention', title: 'Healthy engagement, onboarding & moderation',
-          description: 'Design a community where participation is voluntary, accessible and safe, with clear governance and evidence-based retention work.',
-          learnContent: {
-            videoTitle: 'Community architecture: belonging without manipulation',
-            summaryText: 'A community can support learning and connection, but it does not automatically retain customers for years or moderate itself. Safety, value and accountable human stewardship come first.',
-            bulletPoints: ['Define purpose, membership expectations, moderation rules, reporting and appeal before pursuing engagement', 'Offer optional onboarding paths without requiring members to disclose personal goals publicly', 'Recognise helpful contributions with consent and avoid public rankings that shame, exclude or encourage unhealthy activity', 'Support moderators and volunteer ambassadors with training, boundaries, escalation and fair recognition', 'Measure member outcomes, safety, accessibility and voluntary retention—not posts and time spent alone'],
-            coreConcepts: [
-              { iconName: 'users', title: 'USEFUL PARTICIPATION', description: 'Run a maintainable rhythm of optional questions, peer support and live sessions based on member needs—not permanent activity.', highlight: true },
-              { iconName: 'award', title: 'FAIR RECOGNITION', description: 'Recognise meaningful contributions with permission. Provide non-competitive alternatives and prevent points from rewarding spam or dominance.' },
-              { iconName: 'heart', title: 'MEMBER CARE', description: 'Treat inactivity as an ambiguous signal. Offer one respectful preference-based check-in rather than automated pressure.' },
-            ],
-            resources: [
-              { title: 'Community Care Roadmap', subtitle: 'Moderation, accessibility and programme-planning templates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Member Preference Email Templates', subtitle: 'Consent-aware check-in and exit messages', type: 'tool', iconName: 'mail', actionUrl: 'email' },
-            ],
-            fullArticleGuide: `### Build a community people can use safely
-
-Retention is not a reason to maximise attention or make departure difficult. A healthy community helps members achieve relevant goals while preserving choice and wellbeing.
-
-#### Community lifecycle controls
-
-1. **Entry and orientation**: Explain purpose, price, renewal, privacy, conduct, moderation and support. Let members introduce themselves at their own comfort level.
-2. **Participation options**: Provide asynchronous, live, low-bandwidth and accessible routes. Do not make public posting a condition of receiving paid value.
-3. **Recognition**: Celebrate work only with consent and accurate context. Avoid leaderboards where they amplify inequality, spam or unhealthy comparison.
-4. **Safety and moderation**: Train named moderators; publish reporting, response, appeal and emergency boundaries. Bots may assist triage but must not make high-impact moderation decisions alone.
-5. **Ambassadors**: Define duties, time, compensation or benefits, conflicts, confidentiality and a route to step down. Volunteers are not a substitute for adequate staffing.
-6. **Inactivity and exit**: Respect preferences, send limited check-ins, offer easy cancellation and export or deletion where applicable. Never hide cancellation or repeatedly reactivate opted-out members.
-
-Test onboarding and programmes with member feedback. Segment carefully and monitor participation gaps, safety incidents, response time, accessibility barriers, support load and member-reported outcomes.`,
-            practicalExamples: ['Offer a seven-day optional orientation with a quiet-learning track, clear help route and no public disclosure requirement.', 'Replace a “top poster” leaderboard with member-nominated helpful contributions and private progress milestones.'],
-          },
-          understandContent: { coreTakeaway: 'Sustainable community retention grows from safety, relevant value, genuine belonging and freedom to participate or leave.', keyPrinciples: ['Moderation and governance require accountable people', 'Recognition must be voluntary and fair', 'Treat inactivity with respect, not pressure'] },
-          actionTask: { instruction: 'Prepare a responsible community-retention plan:', checklistItems: ['Purpose, rules, reporting, appeals and moderator ownership documented', 'Accessible and low-pressure onboarding options defined', 'Recognition mechanics reviewed for consent, fairness and abuse', 'One preference-based inactivity check-in and easy exit configured', 'Member outcomes, safety and support capacity included in measurement'], toolboxCategory: 'email' },
-        },
-        '26.2': {
-          stageTitle: '26. Sustainable Customer Value', title: 'Customer value, relevant next offers & fair referrals',
-          description: 'Develop optional next-step offers that fit verified customer needs and measure sustainable value after costs, refunds and customer outcomes.',
-          learnContent: {
-            videoTitle: 'Value paths and responsible expansion offers',
-            summaryText: 'An existing customer is not automatically the most profitable prospect. Additional offers should improve fit and outcomes, not exploit sunk cost, loyalty or behavioural scores.',
-            bulletPoints: ['Map flexible next steps from customer needs rather than forcing everyone up a four-tier price ladder', 'Offer upgrades after relevant evidence or an explicit request—not at a supposedly perfect psychological moment', 'Use NPS only as one aggregate feedback signal, never as proof that an individual wants an upsell', 'Calculate observed cohort value with revenue, variable costs, refunds, support and retention horizon', 'Make referral and affiliate terms, eligibility, incentives and disclosures clear to customers'],
-            coreConcepts: [
-              { iconName: 'trending_up', title: 'SUSTAINABLE CONTRIBUTION', description: 'Measure the contribution of each offer and cohort. Do not assume that 80% of net profit must come from later stages.', highlight: true },
-              { iconName: 'gift', title: 'FRICTION-SMART UPGRADES', description: 'Make legitimate upgrades convenient while retaining price confirmation, cancellation rights, authentication and protection against accidental purchases.' },
-            ],
-            resources: [
-              { title: 'Customer Value Path Blueprint', subtitle: 'Needs, pricing and cohort-economics worksheet', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Customer Segmentation', subtitle: 'Review authorised purchase and service context', type: 'tool', iconName: 'users', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Create customer value without manufacturing the next problem
-
-Customer value grows when a business reliably solves relevant needs at a sustainable cost. It is not maximised simply by increasing price or number of purchases.
-
-#### A flexible value-path model
-
-1. **Free or introductory support**: Helps a person evaluate fit without deceptive bait or hidden recurring charges.
-2. **Core offer**: Delivers the primary promised outcome with complete terms and adequate support.
-3. **Optional continuity**: Provides ongoing value only where a recurring need exists. Make renewal, cancellation and changes clear.
-4. **Specialist implementation**: Offers higher-touch help to suitable customers without implying exclusivity equals superiority.
-5. **Pause, exit or referral elsewhere**: Sometimes the responsible next step is no purchase, a lower-cost option or another provider.
-
-Define LTV by cohort, horizon and contribution basis. Separate observed results from forecasts and run sensitivity checks. Review retention, refunds, complaints, support effort and customer-reported outcomes alongside revenue.
-
-One-click upgrades still need explicit confirmation, accessible terms and appropriate authentication. Referral programmes require clear incentive disclosure, fraud controls, tax or contractual review where relevant and no pressure on members to recruit.`,
-            practicalExamples: ['After a customer completes the core programme, ask what help is still needed and present relevant options—including no upgrade—with price and cancellation terms.', 'Pilot a referral programme with transparent commission disclosure, quality checks and an easy way for customers to decline promotional participation.'],
-          },
-          understandContent: { coreTakeaway: 'Long-term customer value is sustainable when optional offers improve verified fit and outcomes while economics and rights remain transparent.', keyPrinciples: ['Do not treat satisfaction scores as individual purchase intent', 'Measure contribution and customer outcomes by cohort', 'Keep upgrades, subscriptions and referrals explicit and optional'] },
-          actionTask: { instruction: 'Design a fair customer-value system:', checklistItems: ['Flexible value paths include upgrade, pause, exit and referral elsewhere', 'Every offer states price, renewal, cancellation, fit and limitations', 'Observed LTV uses a defined cohort, horizon, costs and refunds', 'Upgrade confirmation and accidental-purchase safeguards are tested', 'Referral incentives, disclosures and quality controls are documented'], toolboxCategory: 'affiliate' },
-        },
-      },
-    },
-    27: {
-      title: '27. AI Assistants, Automation Workflows & Operational Reliability',
-      subtitle: 'Bounded assistance, secure integrations and recoverable processes',
-      description: 'Use AI and no-code tools for suitable routine work while preserving informed user choice, least-privilege access, human escalation and reliable recovery.',
-      lessons: {
-        '27.1': {
-          stageTitle: '27. AI-Assisted Workflows', title: 'Bounded chat assistants, intake & booking',
-          description: 'Configure assistants that answer within a defined scope, collect only necessary information and hand uncertain or consequential cases to people.',
-          learnContent: {
-            videoTitle: 'AI assistants in customer intake: useful, transparent and supervised',
-            summaryText: 'Fast responses can help, but no universal 60-second rule guarantees conversion. An assistant should disclose automation, avoid autonomous sales qualification and provide an easy human route.',
-            bulletPoints: ['State that the user is interacting with automation and explain its purpose and data use', 'Answer from approved sources and decline or escalate when evidence, authority or confidence is insufficient', 'Collect only necessary intake details; avoid sensitive, financial or vulnerability data unless strictly justified', 'Check calendar availability safely and ask for explicit confirmation before creating or changing a booking', 'Log essential actions and decisions without retaining complete conversations by default'],
-            coreConcepts: [
-              { iconName: 'bot', title: 'APPROPRIATE RESPONSE', description: 'Set service-level targets from user need and staffing. Prioritise accurate help over unsupported speed-to-lead claims.', highlight: true },
-              { iconName: 'cpu', title: 'EXPLAINABLE ROUTING', description: 'Route by observable request type, language, urgency and service fit—not opaque A/B/C labels or inferred personal worth.' },
-              { iconName: 'calendar', title: 'CONFIRMED BOOKING', description: 'Offer available slots with time zone, accessibility and cancellation details, then require confirmation before writing to the calendar.' },
-            ],
-            resources: [
-              { title: 'AI Assistant Safety Prompt Library', subtitle: 'Scope, refusal, escalation and testing templates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'GOM-MAR AI Assistant', subtitle: 'Test drafting and routing with synthetic data', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Design an assistant with clear limits
-
-An AI assistant may reduce waiting and administrative work, but it can misunderstand users, invent information or act on the wrong record. Begin with a narrow, reversible scope.
-
-#### Safe intake flow
-
-1. **Disclosure and choice**: Identify the assistant, explain what it can do and provide a visible route to a person.
-2. **Minimal intake**: Ask only for information needed to answer or route the request. Mark optional fields and avoid collecting secrets in chat.
-3. **Grounded response**: Retrieve from approved, versioned sources; show uncertainty and never invent prices, policy, availability or prior contact.
-4. **Routing**: Use documented criteria and permit manual correction. Do not make eligibility, credit, employment or other consequential decisions autonomously.
-5. **Booking**: Read only the availability needed, prevent duplicates and race conditions, display time zone and terms, and request final confirmation.
-6. **Escalation**: Transfer safety, legal, payment, complaint, accessibility and low-confidence cases with context but without unnecessary personal data.
-7. **Evaluation**: Test adversarial prompts, prompt injection, data leakage, tool misuse, multilingual quality, accessibility and failure recovery before launch.
-
-Rate-limit tools, restrict permissions and require approval for sending messages, changing records or booking on behalf of a user. Monitor helpful resolution, corrections, escalations, complaints and harmful errors—not conversion alone.`,
-            practicalExamples: ['The assistant offers three available times and creates nothing until the user confirms one slot and the relevant terms.', 'When asked for a guaranteed income result, it refuses the claim, provides approved factual information and offers human support.'],
-          },
-          understandContent: { coreTakeaway: 'A trustworthy assistant is transparent, narrowly authorised, grounded in approved information and designed to escalate safely.', keyPrinciples: ['Accuracy and user choice take priority over response speed', 'Consequential actions require confirmation or human review', 'Minimise data and tool permissions'] },
-          actionTask: { instruction: 'Prepare a supervised assistant workflow with synthetic data:', checklistItems: ['Disclosure, scope, data purpose and human route are visible', 'Approved knowledge sources and refusal rules are tested', 'Calendar access uses least privilege and requires booking confirmation', 'Sensitive and consequential cases escalate to a named owner', 'Prompt injection, leakage, duplicate booking and failure recovery are tested'], toolboxCategory: 'landingpage' },
-        },
-        '27.2': {
-          stageTitle: '27. Operational Reliability', title: 'Secure webhooks, no-code pipelines & recovery',
-          description: 'Connect systems with authenticated events, idempotent processing, least privilege, monitoring and manual recovery instead of assuming error-free end-to-end automation.',
-          learnContent: {
-            videoTitle: 'Reliable no-code automation from event to reconciliation',
-            summaryText: 'Automation can reduce repetitive work but creates new failure modes. Webhooks may be delayed, duplicated, reordered or forged, so every critical flow needs verification and reconciliation.',
-            bulletPoints: ['Verify webhook signatures, timestamps and source before processing data', 'Use idempotency keys, durable state and event IDs to prevent duplicate fulfilment or charges', 'Separate payment, access, invoicing and messaging steps with explicit success and failure states', 'Retry transient failures with backoff and route permanent failures to a dead-letter or human queue', 'Monitor outcomes, permissions, latency and reconciliation—not only daily performance dashboards'],
-            coreConcepts: [
-              { iconName: 'zap', title: 'CONTROLLED DATA MOVEMENT', description: 'Map necessary fields and validate them at each boundary. Real-time synchronisation is neither universal nor automatically correct.', highlight: true },
-              { iconName: 'git-branch', title: 'RECOVERABLE PIPELINES', description: 'Design branches with explicit conditions, retries, compensating actions and a documented manual process.' },
-            ],
-            resources: [
-              { title: 'No-Code Reliability Blueprint Pack', subtitle: 'Security, testing and recovery patterns for Make or Zapier', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Webhook Configuration', subtitle: 'Manage authenticated test integrations', type: 'tool', iconName: 'link', actionUrl: 'email' },
-            ],
-            fullArticleGuide: `### Build automation that fails safely
-
-Do not automate a process merely because it occurred twice. Automate when the task is stable, understood, authorised and worth the operational risk.
-
-#### Purchase and onboarding example
-
-1. **Receive**: Accept an authenticated event over TLS, preserve its event ID and timestamp, and reject invalid signatures or stale replays.
-2. **Record**: Store the event and current state before side effects. Minimise payloads and redact secrets from logs.
-3. **Process idempotently**: A repeated event must not create a second invoice, membership or message.
-4. **Separate steps**: Payment confirmation, CRM update, access provisioning, invoice creation and email delivery each have their own status and owner.
-5. **Handle failure**: Retry temporary errors with exponential backoff and jitter; quarantine permanent errors for review. Never retry unsafe operations blindly.
-6. **Reconcile**: Compare payment-provider, CRM, access and accounting records on a schedule. Alert on mismatches and document correction.
-7. **Recover**: Maintain rollback or compensating actions, a manual fulfilment route, backups, credential rotation and incident records.
-
-Use separate test and production environments, synthetic data, scoped service accounts, secret management and change review. Test timeout, duplication, reordering, partial completion, provider outage and rate limits. Notifications must be actionable and avoid exposing customer data in Slack or Telegram.`,
-            practicalExamples: ['A duplicated paid-order webhook returns the previously recorded result rather than issuing a second invoice or welcome email.', 'If access provisioning fails after payment, the system records “paid—access pending”, alerts the responsible queue and supports safe manual fulfilment.'],
-          },
-          understandContent: { coreTakeaway: 'Reliable automation assumes failure and protects each boundary with authentication, idempotency, observable state and recoverable human procedures.', keyPrinciples: ['Verify every external event and minimise permissions', 'Make critical side effects idempotent', 'Reconcile systems and practise recovery'] },
-          actionTask: { instruction: 'Build and test a recoverable purchase and onboarding pipeline:', checklistItems: ['Webhook signature, replay protection and secret storage configured', 'Event IDs and idempotency prevent duplicate side effects', 'Each step exposes success, pending and failure states', 'Retries, dead-letter handling, alerts and responsible owners are defined', 'Duplicate, delayed, reordered, partial and outage scenarios are tested'], toolboxCategory: 'email' },
-        },
-      },
-    },
-    28: {
-      title: '28. Team Design, Delegation & Sustainable Operations',
-      subtitle: 'Useful SOPs, fair employment and secure role-based collaboration',
-      description: 'Document critical work, delegate with appropriate training and build teams through lawful, inclusive hiring, fair compensation, safe access and measurable service quality.',
-      lessons: {
-        '28.1': {
-          stageTitle: '28. Team Design & Delegation', title: 'Living SOPs, training & safe handover',
-          description: 'Turn stable processes into accessible, versioned instructions and transfer responsibility gradually without assuming zero quality loss or error-free execution.',
-          learnContent: {
-            videoTitle: 'SOP and delegation design for reliable work',
-            summaryText: 'An SOP supports judgement; it does not replace context, training or accountability. The appropriate documentation and onboarding time depend on task risk and worker experience.',
-            bulletPoints: ['Prioritise delegation by risk, repetition, customer impact and skill fit—not revenue contribution alone', 'Document purpose, prerequisites, steps, decision points, examples, controls, owner and review date', 'Use accessible text and visuals; recordings are optional aids and must not expose customer data or credentials', 'Progress from observation to supervised practice and independent work only after demonstrated competence', 'Grant least-privilege access, separate duties and remove permissions promptly when roles change'],
-            coreConcepts: [
-              { iconName: 'file-text', title: 'LIVING SOP SYSTEM', description: 'Keep a searchable, versioned source with owner, approval criteria, exceptions and change history. A quick recording is not automatically a complete SOP.', highlight: true },
-              { iconName: 'user-check', title: 'ROLE-BASED ONBOARDING', description: 'Set training time from complexity and risk rather than promising readiness within 48 hours. Pay people for required training and trial work.' },
-              { iconName: 'shield-check', title: 'QUALITY & ESCALATION', description: 'Define acceptance checks, sampling, error severity, escalation and correction. No checklist can guarantee error-free work.' },
-            ],
-            resources: [
-              { title: 'SOP Template & Delegation Matrix', subtitle: 'Versioning, risk and acceptance templates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Roles & Permissions', subtitle: 'Create scoped team access and review logs', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Delegate outcomes without delegating accountability
-
-Operational overload can constrain a business, but delegation is not automatically the right answer. First remove unnecessary work, simplify the process and assess whether automation or a specialist is appropriate.
-
-#### Safe handover workflow
-
-1. **Select**: Map frequency, impact, reversibility, data sensitivity, required judgement and dependencies. Keep high-risk approvals with an accountable owner.
-2. **Document**: State the purpose, inputs, outputs, steps, decision points, prohibited actions, examples, acceptance criteria and escalation route.
-3. **Protect information**: Redact recordings, use password and secret managers, create individual accounts and prohibit credential sharing.
-4. **Train**: Explain context, demonstrate, practise with synthetic data, supervise real work and record competence. Adapt for language and accessibility needs.
-5. **Transfer gradually**: Start with low-risk cases, sample outcomes and expand scope only when quality and confidence are stable.
-6. **Maintain**: Assign an owner and version; review after incidents, system changes and scheduled intervals. Archive obsolete instructions.
-7. **Offboard safely**: Revoke access, transfer ownership, recover devices or files and preserve required records according to policy.
-
-Do not use unpaid speculative work disguised as a “trial”. Classify workers correctly, follow applicable employment, contractor, tax and data rules, agree working hours and provide a safe way to report concerns.`,
-            practicalExamples: ['A refund SOP defines eligible cases, approval limits and escalation; trainees practise on synthetic orders before receiving restricted production access.', 'Replace a customer-data screen recording with a redacted demonstration and a written checklist that remains usable without video.'],
-          },
-          understandContent: { coreTakeaway: 'Reliable delegation combines maintained instructions, paid role-appropriate training, least privilege, clear escalation and accountable quality review.', keyPrinciples: ['Simplify before documenting or delegating', 'Match autonomy to demonstrated competence and risk', 'Maintain access and SOPs throughout the role lifecycle'] },
-          actionTask: { instruction: 'Create one safe operational SOP and handover plan:', checklistItems: ['Task risk, required judgement and accountable owner documented', 'SOP includes version, decision points, exceptions, acceptance and escalation', 'Training uses synthetic or redacted data and is appropriately compensated', 'Individual least-privilege CRM access and audit logging configured', 'Review, incident update and offboarding steps defined'], toolboxCategory: 'content' },
-        },
-        '28.2': {
-          stageTitle: '28. Fair Sales-Team Operations', title: 'Sales roles, compensation & quality assurance',
-          description: 'Build sales capacity with clear responsibilities, lawful recording, fair pay and customer-centred quality measures instead of pressure scripts and arbitrary growth formulas.',
-          learnContent: {
-            videoTitle: 'Designing and leading a responsible sales team',
-            summaryText: 'Dividing intake and consultation roles may help some teams, but it does not automatically double capacity or revenue. Team design should follow demand, customer needs, economics and legal obligations.',
-            bulletPoints: ['Define responsibilities, authority, handoffs and conflicts between intake, consultation, support and approval roles', 'Use structured conversation guides as support—not word-for-word pressure or scripts designed to defeat objections', 'Combine stable pay with carefully designed incentives that do not reward mis-selling, discrimination or unwanted contact', 'Review a sampled set of interactions for accuracy, consent, customer outcome, accessibility and respectful conduct', 'Use CRM metrics as operational evidence with context, not public rankings or surveillance of individual workers'],
-            coreConcepts: [
-              { iconName: 'phone-call', title: 'INTAKE & SCHEDULING', description: 'Confirm the request, permission, service fit and next step without manipulating urgency or using unnecessary personal data.', highlight: true },
-              { iconName: 'target', title: 'CONSULTATIVE GUIDES', description: 'Support discovery, accurate explanation and informed choice. An objection may mean the correct outcome is no sale.' },
-            ],
-            resources: [
-              { title: 'Consultative Sales Guide', subtitle: 'Needs, disclosure, consent and escalation template', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Deal Pipeline', subtitle: 'Monitor reviewed process and customer outcomes', type: 'tool', iconName: 'trending_up', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Build sales capacity around customer fit
-
-There is no universal limit of 15–20 founder calls or mandatory sequence of thirty founder-led conversations. Choose a structure from actual demand, complexity, service capacity, skills and economics.
-
-#### Responsible team design
-
-1. **Role definition**: Document the purpose, decision authority, data access, handoff, workload and escalation of every role. Avoid misleading titles and false scarcity.
-2. **Fair recruitment**: Use job-related criteria, accessible applications, structured interviews and paid work samples. Check local employment, contractor, equal-treatment and commission rules.
-3. **Compensation**: Provide predictable terms in writing. Balance revenue incentives with cancellations, refunds, complaint quality, compliance and customer outcomes; prevent clawbacks or quotas from encouraging harm.
-4. **Training**: Teach the offer, limitations, privacy, consent, accessibility, vulnerable-customer safeguards and when to stop or escalate—not only objection handling.
-5. **Interaction review**: Record only with a valid basis and required notice or consent. Limit access and retention, provide alternatives where necessary and never use recordings for covert monitoring.
-6. **Metrics**: Define stage conversion, response time and forecast uncertainty consistently. Review by cohort and context and do not expose individual league tables.
-7. **Improvement**: Coach from representative samples, investigate systemic causes and document corrections. Respect worker voice and appeal.
-
-The sales process must allow a clear “no”, sufficient decision time and accurate price and contract terms. A respectful non-sale can be the correct result.`,
-            practicalExamples: ['A compensation plan combines stable pay with a modest quality-adjusted variable component and excludes sales later cancelled for misrepresentation.', 'A reviewed call sample uses explicit recording notice, restricted storage and a rubric covering accuracy, consent, respect and customer fit.'],
-          },
-          understandContent: { coreTakeaway: 'A sustainable sales team aligns fair work, informed customer choice, documented roles and contextual quality evidence.', keyPrinciples: ['Design incentives against mis-selling and pressure', 'Record interactions only lawfully and proportionately', 'Treat no-sale and escalation as valid outcomes'] },
-          actionTask: { instruction: 'Prepare a responsible sales-team operating model:', checklistItems: ['Role authority, handoffs, workloads and access documented', 'Recruitment criteria and paid work samples are job-related and accessible', 'Compensation includes quality, cancellation and complaint safeguards', 'Guides support informed choice and permit no-sale outcomes', 'Recording, retention, CRM metrics, coaching and appeal processes reviewed'], toolboxCategory: 'landingpage' },
-        },
-      },
-    },
-    29: {
-      title: '29. Financial Resilience, Cashflow & Context-Specific Compliance',
-      subtitle: 'Scenario-based liquidity planning, accurate records and qualified legal review',
-      description: 'Build financial and legal controls without relying on universal tax percentages, fixed reserve formulas or promises of complete legal protection.',
-      lessons: {
-        '29.1': {
-          stageTitle: '29. Financial Resilience', title: 'Cashflow planning, reserves & contribution economics',
-          description: 'Use forecasts, reconciled records and context-specific reserve policies instead of treating a four-account system or fixed percentage split as a universal rule.',
-          learnContent: {
-            videoTitle: 'Design a cash-control system for uncertainty',
-            summaryText: 'Separate accounts or subaccounts can support discipline, but they are an optional operating method—not a legal requirement, tax strategy or guarantee of liquidity.',
-            bulletPoints: ['Map opening cash, receivables, payables, payroll, taxes, debt, refunds and subscriptions in a rolling forecast', 'Set tax reserves with a qualified adviser for the jurisdiction, legal form, profit and VAT position', 'Choose a reserve target from volatility, fixed commitments, seasonality, recovery time and available finance', 'Calculate contribution margin by product, cohort and channel before allocating overhead or profit', 'Reconcile bank, payment-provider and accounting records and investigate every unexplained difference'],
-            coreConcepts: [
-              { iconName: 'wallet', title: 'CONTROLLED CASH BUCKETS', description: 'Use accounts or ledger categories only where fees, deposit protection, access controls and reconciliation make them suitable. Do not automate transfers into an overdraft.', highlight: true },
-              { iconName: 'line-chart', title: 'SCENARIO FORECAST', description: 'Maintain a rolling 13-week view and a 12-month base, downside and upside scenario. A forecast is a decision aid, not a promise.' },
-              { iconName: 'calculator', title: 'CONTRIBUTION ECONOMICS', description: 'Subtract discounts, refunds, payment fees, affiliates, fulfilment, support and attributable acquisition cost before interpreting margin.' },
-            ],
-            resources: [
-              { title: 'Cashflow & Scenario Workbook', subtitle: 'Forecast, reserve and reconciliation template', type: 'tool', iconName: 'calculator', actionUrl: 'tools' },
-              { title: 'Finance-Control Review', subtitle: 'Checklist to discuss with accounting and tax advisers', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Build liquidity controls around your actual business
-
-No single account structure, transfer date or percentage split fits every business. Tax, VAT, payroll and safeguarding obligations vary by country, entity and activity. Confirm them with qualified advisers and keep regulated or client money separate where required.
-
-#### A practical control cycle
-
-1. **Establish the records**: Reconcile bank, payment-provider, invoicing and accounting data. Define the owner, cut-off time and correction process.
-2. **Forecast 13 weeks**: Record opening cash and dated inflows and outflows, including tax, payroll, refunds, debt, subscriptions and capital expenditure. Mark uncertain amounts rather than hiding them.
-3. **Model scenarios**: Maintain base, downside and upside assumptions for conversion, collection time, refund rate, acquisition cost and supplier changes. State the trigger and response for each scenario.
-4. **Set reserves deliberately**: Document the target and rationale from cash volatility, fixed commitments, seasonality, recovery time and access to finance. Three months may be suitable in one case and unsafe or excessive in another.
-5. **Confirm tax treatment**: Ask an appropriately qualified adviser to determine filing obligations, payment dates and reserve logic. A fixed 40% reserve is not universal, and reserved tax money remains subject to the applicable legal and accounting treatment.
-6. **Measure contribution**: For each offer and channel, start with collected revenue and subtract discounts, refunds, payment fees, affiliate costs, fulfilment, support and attributable advertising. Reconcile the result to overhead and accounting profit.
-7. **Govern transfers**: Schedule transfers only after checking forecast headroom and bank balances. Require approval for exceptions and never use automation that can create an overdraft or missed statutory payment.
-
-This material is educational and does not replace accounting, tax, treasury or legal advice for your circumstances.`,
-            practicalExamples: ['A downside scenario assumes slower collections and higher refunds, identifies the date cash becomes tight and defines which discretionary spend pauses first.', 'A monthly close compares bank, payment-provider and ledger balances; the owner records the cause and correction of each difference.'],
-          },
-          understandContent: { coreTakeaway: 'Financial resilience comes from reconciled evidence, scenario planning and adviser-confirmed obligations—not a universal bank-account or percentage formula.', keyPrinciples: ['Forecast cash timing, not revenue alone', 'Set reserves from risk and jurisdiction', 'Measure contribution before allocating profit'] },
-          actionTask: { instruction: 'Create a reviewable cash-control plan for your business:', checklistItems: ['Bank, payment and accounting records have an owner and reconciliation schedule', 'A 13-week forecast includes taxes, payroll, refunds, debt and uncertainty', 'Base, downside and upside scenarios have documented triggers and responses', 'Tax reserve and filing assumptions are marked for qualified-adviser confirmation', 'Reserve target and contribution margin are documented by product or channel'], toolboxCategory: 'settings' },
-        },
-        '29.2': {
-          stageTitle: '29. Context-Specific Compliance', title: 'Contracts, consumer rights, privacy & compliant operations',
-          description: 'Create a jurisdiction-aware compliance system and seek qualified review instead of relying on blanket B2B exclusions, mandatory-checkbox myths or “watertight” templates.',
-          learnContent: {
-            videoTitle: 'Build a maintainable legal and privacy control system',
-            summaryText: 'Customer type, country, offer and data flow determine the applicable rules. Labels and templates do not override the real circumstances, and this lesson is not legal advice.',
-            bulletPoints: ['Classify B2C and B2B relationships from the customer’s actual status and purpose, not the wording of a form', 'Give required pre-contract information and durable confirmation; review withdrawal rules and exceptions for each offer', 'Use fair, accessible terms with appropriate evidence of acceptance rather than assuming one checkbox solves every case', 'Request consent before non-essential cookies and document the legal basis and retention for each data purpose', 'Review vendors, processor terms, international transfers, access, incidents and deletion on a recurring schedule'],
-            coreConcepts: [
-              { iconName: 'scale', title: 'CUSTOMER & JURISDICTION MATRIX', description: 'Map where the business and customer are located, whether the buyer acts as a consumer, the contract channel and the product type before choosing documents.', highlight: true },
-              { iconName: 'shield-check', title: 'PRIVACY BY DESIGN', description: 'Collect only necessary data, state the purpose, restrict access and retention, and remember that hashed or pseudonymised identifiers can remain personal data.' },
-              { iconName: 'refresh-cw', title: 'ONGOING REVIEW', description: 'Track document versions, legal changes, complaints, incidents, vendors and scheduled review. A template is a starting point, not guaranteed protection.' },
-            ],
-            resources: [
-              { title: 'Contract & Consumer-Rights Review Template', subtitle: 'Requires qualified local legal review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Privacy, Cookie & Vendor Register', subtitle: 'Purpose, basis, retention, access and transfer review', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Turn legal obligations into maintained operations
-
-This material is general education, not legal advice. Rules differ by country, customer type, product, sales channel and data use. Ask qualified local counsel and, where appropriate, a tax adviser or data-protection specialist to review the implementation.
-
-#### Contract and consumer controls
-
-1. **Classify the relationship**: Determine whether the buyer is genuinely acting as a consumer or in business. A “B2B” label cannot remove consumer rights when the facts indicate a consumer transaction.
-2. **Map the sales journey**: Record advertising claims, pre-contract information, price, renewal, delivery, cancellation, complaints and durable confirmation. For EU consumer distance and off-premises contracts, a 14-day withdrawal right commonly applies, subject to defined exceptions and conditions for services and digital content.
-3. **Use fair documents**: Keep terms accessible before purchase, explain important clauses and preserve proportionate evidence of the version and acceptance method. A checkbox may be useful, but it is not the sole universal test of a valid contract.
-4. **Review delivery and refunds**: Align fulfilment with withdrawal, cancellation and refund obligations. Do not promise that a template is “watertight” or eliminates warnings, disputes or liability.
-
-#### Privacy, cookies and marketing
-
-1. **Inventory data**: Record purpose, categories, people affected, recipients, location, retention, security and legal basis. Apply purpose limitation and data minimisation.
-2. **Manage cookies**: Do not set non-essential cookies before valid consent where consent is required. Necessary-storage exceptions are narrow and must be assessed by function, not label.
-3. **Document email rules**: Check the legal basis plus local electronic-marketing rules. Double opt-in can provide useful evidence but is not a universal legal mandate for every situation. Retain the source, notice and consent version, timestamp and confirmation or suppression event; avoid retaining IP addresses unless necessary and lawful.
-4. **Control vendors**: Identify controller and processor roles, sign required processing terms, restrict access and assess international transfers and safeguards case by case.
-5. **Protect confidential work**: Use role-appropriate confidentiality and data clauses, access controls and offboarding. An NDA is not automatically necessary for every freelancer and never replaces security controls.
-6. **Review intellectual property**: Search relevant registers and market use, document licences and obtain professional clearance for important names or assets.
-
-Maintain a named owner, review date, change log and escalation route. Respond to rights requests, complaints and incidents through tested procedures rather than a static folder of templates.`,
-            practicalExamples: ['A digital-course checkout shows price, delivery, cancellation and applicable withdrawal information before purchase, then sends a durable confirmation containing the accepted version.', 'A consent record stores the form wording and version, source, time and confirmation event while the privacy review decides whether any network identifier is actually necessary.'],
-          },
-          understandContent: { coreTakeaway: 'Compliance is a maintained, jurisdiction-aware operating system supported by qualified review—not a one-time template or blanket exclusion.', keyPrinciples: ['Classify customers and offers from facts', 'Minimise data and document purpose and basis', 'Version, review and test every compliance control'] },
-          actionTask: { instruction: 'Prepare a qualified-review pack for one real customer journey:', checklistItems: ['Customer type, countries, channel and product classification documented', 'Pre-contract, withdrawal, delivery, cancellation and refund information mapped', 'Contract and terms versions plus acceptance evidence identified for legal review', 'Privacy, cookies, email, vendors, transfers, retention and rights processes recorded', 'Named owner, review date, incident escalation and adviser questions assigned'], toolboxCategory: 'settings' },
-        },
-      },
-    },
-    30: {
-      title: '30. Durable Enterprise Value, Optionality & Sustainable Leadership',
-      subtitle: 'From owner-dependence to transferable systems, informed valuation and long-term choice',
-      description: 'Build a resilient company that can operate beyond one person and preserve strategic options—without promising a seven-figure exit, a fixed multiple or effortless freedom.',
-      lessons: {
-        '30.1': {
-          stageTitle: '30. Enterprise Value & Transferability', title: 'Valuation architecture: evidence, uncertainty & exit readiness',
-          description: 'Understand how purpose, cash flows, risk, market evidence and transferability shape a valuation range, and prepare reliable due-diligence records without treating EBIT multiples as guarantees.',
-          learnContent: {
-            videoTitle: 'Business valuation and responsible exit preparation',
-            summaryText: 'A business valuation is a purpose- and date-specific professional judgement. Reasonable methods and assumptions can produce different results, so a 3x–8x EBIT range is not a universal price promise.',
-            bulletPoints: ['Define the valuation purpose, date, standard of value, ownership interest and relevant jurisdiction before selecting a method', 'Reconcile reported results and document normalisation adjustments rather than presenting EBITDA or EBIT as self-explanatory', 'Assess concentration, churn, retention quality, contracts, channel dependence, security, compliance and working-capital needs', 'Reduce key-person risk through tested roles, delegated authority, documentation and continuity plans—not the title of a newly appointed manager', 'Build a permission-controlled data room whose contents are accurate, current, proportionate and traceable'],
-            coreConcepts: [
-              { iconName: 'bar-chart-2', title: 'VALUATION RANGE', description: 'Compare income, market and, where relevant, asset approaches. Show sensitivity to forecasts, discount rates, multiples and adjustments instead of one precise headline number.', highlight: true },
-              { iconName: 'users', title: 'TRANSFERABLE OPERATIONS', description: 'Evidence that customers, knowledge, approvals and relationships can continue through trained people and tested systems. Founder dependence is reduced gradually, not switched to zero.' },
-              { iconName: 'file-check', title: 'VERIFIABLE DATA ROOM', description: 'Maintain financial, tax, legal, customer, employment, IP, security and operational evidence with owners, access controls and review dates.' },
-            ],
-            resources: [
-              { title: 'Valuation Assumptions & Readiness Workbook', subtitle: 'Methods, sensitivities, evidence and adviser questions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Cohort & Revenue Analysis', subtitle: 'Inspect retention, concentration and revenue quality', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Build transferability before discussing a transaction
-
-An exit is one possible outcome, not the final measure of entrepreneurship. A company may also be retained, transferred internally, sold partly, merged or closed. Each path has different financial, legal, tax and personal consequences.
-
-#### A defensible readiness process
-
-1. **Define the assignment**: Record why the valuation is needed, its date, currency, ownership interest, standard and premise of value, information available and relevant jurisdiction. Engage an appropriately qualified independent valuer for material decisions.
-2. **Reconcile performance**: Tie management reports to accounting records and cash. Document recurring and non-recurring items, owner compensation, capital expenditure, working capital, debt and tax assumptions. Do not relabel expenses solely to inflate adjusted earnings.
-3. **Use more than one lens**: Consider income, market and relevant asset approaches. Explain why each method and comparable is suitable, then show a range and sensitivity rather than multiplying one year's EBIT by a fixed number.
-4. **Test revenue quality**: Separate contracted from merely expected revenue. Analyse retention, churn definitions, cohort behaviour, refunds, concentration, acquisition economics, renewal terms and the cost of serving customers. Subscription revenue does not automatically double a multiple.
-5. **Test transferability**: Map founder-owned decisions, relationships, credentials and knowledge. Train deputies, set approval limits and rehearse absence and incident scenarios. Hiring a COO alone cannot make a company 100% founder-independent.
-6. **Prepare evidence**: Index contracts, corporate records, accounts, tax filings, employment matters, IP ownership, privacy, security, suppliers and disputes. Grant least-privilege access, log disclosure and remove unnecessary personal data.
-7. **Plan the transaction**: Model price structure, working-capital adjustment, debt, tax, warranties, indemnities, escrow, earn-out risk and post-closing obligations with legal, tax and financial advisers.
-
-Valuation contains inherent uncertainty. Keep assumptions transparent, update them when facts change and never present an internal scorecard as a guaranteed sale price or investment recommendation.`,
-            practicalExamples: ['A valuation memo shows base and downside cash-flow cases, explains every earnings adjustment and compares the result with genuinely relevant transactions.', 'A continuity test reveals that only the founder can approve refunds and access a key account; the team creates individual access, documented limits and an emergency delegate.'],
-          },
-          understandContent: { coreTakeaway: 'Transferable enterprise value is supported by reconciled evidence, defensible assumptions and resilient operations; it is not created by applying a universal multiple.', keyPrinciples: ['Define purpose and assumptions before calculating value', 'Communicate a range and its uncertainty', 'Prove continuity through tested systems and people'] },
-          actionTask: { instruction: 'Prepare an evidence-based valuation and transferability review:', checklistItems: ['Valuation purpose, date, interest, jurisdiction and adviser needs documented', 'Accounts, cash and proposed earnings adjustments reconciled with evidence', 'Income, market and relevant asset approaches plus sensitivities considered', 'Revenue quality, concentration, churn and key-person dependencies assessed', 'Secure data-room index, access rules, owners and review dates defined'], toolboxCategory: 'content' },
-        },
-        '30.2': {
-          stageTitle: '30. Sustainable Leadership', title: 'Long-term direction, time autonomy & responsible transition',
-          description: 'Turn the programme into a revisable strategy for customers, team, health and personal choice rather than an “empire”, permanent hustle or a compulsory exit.',
-          learnContent: {
-            videoTitle: 'Closing review: a sustainable ten-year direction',
-            summaryText: 'Completion is a checkpoint, not proof of mastery or guaranteed business success. Long-term leadership combines learning, customer outcomes, financial resilience, ethical operations and realistic personal capacity.',
-            bulletPoints: ['Review evidence and assumptions regularly instead of treating a ten-year vision as a fixed prediction', 'Define enough across money, time, health, relationships, responsibility and impact—not only scale', 'Use leading indicators, downside triggers and decision rules alongside ambitious outcomes', 'Create governance, succession and emergency plans before reducing founder involvement', 'Treat certificates and communities as optional records of participation, subject to actual eligibility and availability'],
-            coreConcepts: [
-              { iconName: 'compass', title: 'STRATEGIC OPTIONALITY', description: 'Preserve the ability to retain, delegate, pause, transfer or sell. Time autonomy depends on resources, responsibilities and tested continuity—not a slogan.', highlight: true },
-              { iconName: 'heart', title: 'SUSTAINABLE CAPACITY', description: 'Set workload, recovery and support boundaries. Mental resilience does not mean ignoring distress or solving health concerns through willpower alone.' },
-              { iconName: 'refresh-cw', title: 'REVIEWABLE DIRECTION', description: 'Translate long horizons into a 12-month thesis, 90-day experiments and scheduled reviews. Change direction when evidence or life circumstances change.' },
-            ],
-            resources: [
-              { title: 'Ten-Year Direction & Optionality Workbook', subtitle: 'Values, scenarios, boundaries and review cadence', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Completion & Evidence Review', subtitle: 'Check completed work and available recognition', type: 'link', iconName: 'award', actionUrl: 'progress' },
-            ],
-            fullArticleGuide: `### Finish the curriculum and begin a review cycle
-
-Working through thirty stages can organise learning, but it does not certify competence in every discipline or guarantee income, valuation, freedom or wellbeing. Verify what you can demonstrate and seek qualified support where decisions exceed your expertise.
-
-#### Build a durable direction
-
-1. **Review the evidence**: List what changed in customer outcomes, finances, controls, skills and workload. Separate completed activities from validated results and unresolved risks.
-2. **Define values and boundaries**: State what you will not trade for growth, including health, relationships, customer welfare, legal duties and financial solvency.
-3. **Write scenarios, not prophecy**: Describe plausible retain, delegate, partial-sale, full-sale and downside paths. For each, record assumptions, early signals and reversible next steps.
-4. **Set layered horizons**: Keep a directional ten-year narrative, a measurable 12-month thesis and a small set of 90-day experiments with owners and stop criteria.
-5. **Plan continuity**: Document authority, succession, emergency access, communication and recovery. Test absences before claiming time autonomy.
-6. **Use support appropriately**: Build peer and professional networks, but evaluate confidentiality, conflicts, cost and evidence. Seek medical or mental-health support when needed; perseverance is not a substitute for care.
-7. **Record completion honestly**: Generate or share a certificate only if the product actually supports it and the eligibility criteria are met. Protect personal information and do not imply regulated accreditation unless it exists.
-8. **Schedule the next review**: Revisit the plan quarterly and after major changes. Celebrate progress without turning constant hunger or overwork into a duty.
-
-The aim is not maximum scale at any price. It is a business and life design that remains lawful, financially resilient, useful to customers and consciously chosen.`,
-            practicalExamples: ['A founder replaces a single ten-year revenue target with retain, partial-sale and downside scenarios, each with a twelve-month test and a clear review date.', 'Before taking a month away, the team runs a shorter absence exercise and corrects missing authority, customer escalation and emergency-access procedures.'],
-          },
-          understandContent: { coreTakeaway: 'Sustainable leadership preserves informed choice through evidence, boundaries, continuity and recurring review rather than equating mastery with endless growth.', keyPrinciples: ['Measure outcomes, not curriculum completion alone', 'Protect health, duties and customer welfare', 'Keep long-term plans revisable and scenario-based'] },
-          actionTask: { instruction: 'Create a responsible completion and long-term review:', checklistItems: ['Evidence, unresolved risks and adviser needs from all stages summarised', 'Values, workload boundaries and definitions of enough documented', 'Retain, delegate, transfer and downside scenarios compared', 'Twelve-month thesis and 90-day experiments have owners and stop criteria', 'Continuity test, quarterly review and truthful certificate rules scheduled'], toolboxCategory: 'content' },
-        },
-      },
-    },
-    31: {
-      title: '31. Internationalisation, Cross-Border Commerce & Responsible Expansion',
-      subtitle: 'Evidence-led market entry, genuine localisation, tax review and measurable acquisition',
-      description: 'Enter new markets through staged research, accessible local experiences, compliant tax and data operations, and controlled experiments—not promised market multipliers or country stereotypes.',
-      lessons: {
-        '31.1': {
-          stageTitle: '31. Market Entry & Localisation', title: 'International market validation: demand, feasibility & local fit',
-          description: 'Evaluate a market with customer evidence, unit economics, operational capability and jurisdiction-specific review before translating a funnel or committing substantial spend.',
-          learnContent: {
-            videoTitle: 'Responsible cross-border market selection and validation',
-            summaryText: 'Success in one country does not establish product-market fit elsewhere. Language, regulation, payment behaviour, competition, accessibility, support and fulfilment can require material changes.',
-            bulletPoints: ['Score demand quality, reachable audience, competition, contribution economics, regulation, operations and downside risk with documented evidence', 'Validate messages with local users and qualified reviewers rather than relying on literal or unreviewed AI translation', 'Show currency, taxes, fees and conversion terms clearly and let users override language or region detection', 'Determine VAT, sales-tax, invoicing, consumer, product and establishment obligations for each customer journey', 'Pilot fulfilment, refunds, support, accessibility and incident handling before scaling acquisition'],
-            coreConcepts: [
-              { iconName: 'globe', title: 'LOCALISATION SYSTEM', description: 'Localise meaning, examples, formats, accessibility, claims and support. Geo-IP may suggest a locale but must not silently determine legal status or block user choice.', highlight: true },
-              { iconName: 'credit-card', title: 'PAYMENT & PRICE CLARITY', description: 'Offer suitable lawful payment methods only after checking fees, settlement, refunds, disputes and accessibility. No method guarantees a conversion uplift.' },
-              { iconName: 'file-text', title: 'TAX & DUTY MATRIX', description: 'Map supply type, customer status and location evidence. OSS can simplify eligible EU B2C VAT reporting but does not make every sale or registration automatically compliant.' },
-            ],
-            resources: [
-              { title: 'Market Evidence & Entry Scorecard', subtitle: 'Demand, economics, compliance and operational gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Locale & Currency Setup', subtitle: 'Configure explicit preferences and reporting dimensions', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Treat each new market as a new hypothesis
-
-International expansion can increase the reachable audience, but it can also increase cost, complexity and liability. There is no reliable 5x–10x market multiplier or universal daily test budget.
-
-#### Stage-gated market entry
-
-1. **Define the hypothesis**: Specify customer, problem, offer, channel, geography, success metric, maximum loss and review date. Separate market size from the audience you can lawfully and economically reach.
-2. **Collect local evidence**: Interview representative users, review search and competitor evidence, test comprehension and involve native subject-matter reviewers. Do not publish machine-translated legal, medical, financial or safety claims without qualified review.
-3. **Model unit economics**: Include local price, tax, payment and foreign-exchange fees, refunds, chargebacks, support, fulfilment, localisation and acquisition. PPP may inform research but does not determine a fair or profitable price by itself.
-4. **Map obligations**: Classify B2C/B2B, goods/services/digital content, customer location, establishment, invoicing, consumer rights, licences, sanctions and data transfers with qualified advisers. In the EU, OSS may simplify eligible cross-border B2C VAT declarations; different schemes, destination rates and record duties can apply.
-5. **Design the experience**: Provide explicit language and currency controls, transparent totals, local formats, accessible content and clear delivery, cancellation and support information. Do not infer citizenship or legal status from IP.
-6. **Test the whole journey**: Use a limited cohort to test payment, tax evidence, confirmation, delivery, refund, dispute, support and incident recovery—not clicks alone.
-7. **Decide from gates**: Scale, revise, pause or stop against pre-agreed thresholds for customer outcome, contribution margin, complaints, compliance and operational load.
-
-Document the evidence and uncertainty. Tax and legal implementation requires current professional advice for the relevant countries and transaction facts.`,
-            practicalExamples: ['A pilot offers a visible locale selector and shows price, VAT treatment and refund terms before payment; the team tests the journey with local users and support staff.', 'A market with cheap leads is paused because refund, support and payment-failure costs make contribution margin negative.'],
-          },
-          understandContent: { coreTakeaway: 'A credible market entry combines local customer evidence, complete economics, operational readiness and jurisdiction-specific review before scale.', keyPrinciples: ['Validate the full customer journey, not ad clicks', 'Give users control over locale and clear pricing', 'Treat OSS and payment tools as mechanisms, not compliance guarantees'] },
-          actionTask: { instruction: 'Prepare a stage-gated plan for one target market:', checklistItems: ['Customer hypothesis, evidence sources, maximum loss and decision date documented', 'Local-language, cultural and accessibility review has named owners', 'Price model includes tax, FX, payments, refunds, support and acquisition', 'Customer, supply, VAT/sales-tax, consumer and data obligations marked for expert review', 'End-to-end pilot and scale, revise, pause or stop gates defined'], toolboxCategory: 'landingpage' },
-        },
-        '31.2': {
-          stageTitle: '31. International Acquisition', title: 'Global paid media: controlled experiments, localisation & measurement',
-          description: 'Run country-aware campaigns with lawful targeting, human-reviewed creative, comparable reporting and incrementality tests instead of ranking populations by “tier” or optimising for cheap traffic.',
-          learnContent: {
-            videoTitle: 'Design measurable and responsible international campaigns',
-            summaryText: 'Lower CPM does not mean better customers or profitable growth. Compare contribution, customer outcome and incremental lift while respecting local advertising, privacy and platform rules.',
-            bulletPoints: ['Separate or combine countries from language, offer, legal, budget and learning needs—not a rigid global tier list', 'Have local reviewers verify meaning, pronunciation, claims, rights and accessibility of AI-assisted creative', 'Set budgets, schedules and alerts in a documented reporting timezone while preserving local customer context', 'Obtain required consent and minimise data before advertising or analytics tags; test event quality and deduplication', 'Evaluate contribution margin, refunds, complaints, retention and incrementality alongside attribution and ROAS'],
-            coreConcepts: [
-              { iconName: 'target', title: 'EVIDENCE-BASED SEGMENTATION', description: 'Group markets only when offer, language, economics, legal conditions and performance are sufficiently comparable. Reassess the grouping as evidence changes.', highlight: true },
-              { iconName: 'video', title: 'REVIEWED LOCAL CREATIVE', description: 'AI can draft variants but cannot guarantee cultural accuracy, consent, voice rights or compliant claims. A responsible local reviewer approves production use.' },
-              { iconName: 'activity', title: 'INCREMENTAL MEASUREMENT', description: 'Normalise currency, timezone and definitions; monitor data loss and compare platform attribution with experiments, backend outcomes and uncertainty.' },
-            ],
-            resources: [
-              { title: 'International Campaign Experiment Plan', subtitle: 'Segmentation, budget, compliance and decision gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Multilingual Creative Review Workspace', subtitle: 'Draft, rights, accessibility and native-review checklist', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Scale evidence, not stereotypes
-
-Country labels such as “Tier 1”, “Tier 2” and “emerging high volume” can hide large differences within populations and encourage low-quality or discriminatory decisions. Build segments from the actual offer, language, legal context and observed economics.
-
-#### Controlled international campaign workflow
-
-1. **Set a test contract**: Define hypothesis, audience, exclusions, offer, countries, budget cap, duration, primary metric, guardrails and stop rule before launch.
-2. **Review eligibility and targeting**: Check local advertising law, platform policy, age limits, restricted products, political or sensitive categories and anti-discrimination requirements. Avoid inferred sensitive traits and exploitative targeting.
-3. **Localise responsibly**: Translate the intended meaning, not just words. Verify claims, prices, disclosures, humour, pronunciation, captions, contrast, licences, likeness and synthetic voice permission with a local reviewer.
-4. **Configure measurement**: Use a documented canonical timezone and currency while retaining source values. Validate consent signals, event names, deduplication, server/browser overlap, refunds and CRM matching with minimised data.
-5. **Protect budgets**: Start with an amount the business can lose, use account and campaign caps, role-based approvals and anomaly alerts. Automated rules must handle timezone and reporting delay safely.
-6. **Read complete outcomes**: Compare incremental qualified demand, contribution margin, retention, refund and complaint rates, support burden and customer outcome. Cheap CPM or attributed ROAS alone cannot establish success.
-7. **Scale gradually**: Increase spend only after sufficient stable evidence, capacity and compliance review. Hold back a comparison group where feasible and record changes that break comparability.
-
-Platform reports are estimates affected by attribution windows, consent, modelling and currency conversion. State uncertainty and never claim that one campaign structure is always fastest or correct.`,
-            practicalExamples: ['Two countries remain separate because refund policy, language and payment mix differ, even though their CPMs look similar.', 'An AI voice-over is withheld until the voice licence, pronunciation, subtitles, claims and local disclosure are reviewed.'],
-          },
-          understandContent: { coreTakeaway: 'Responsible international advertising scales only after local review, lawful measurement and complete economic evidence show incremental value.', keyPrinciples: ['Segment from evidence, not country stereotypes', 'Human-review AI-assisted creative and rights', 'Optimise for incremental contribution and customer outcome'] },
-          actionTask: { instruction: 'Design one controlled international campaign experiment:', checklistItems: ['Hypothesis, countries, audience, exclusions, cap, metric and stop rule documented', 'Local law, platform policy and sensitive-targeting risks reviewed', 'Creative has native-language, claim, accessibility and rights approval', 'Consent, events, deduplication, timezone, currency and backend reconciliation tested', 'Decision view includes incrementality, margin, refunds, complaints and capacity'], toolboxCategory: 'landingpage' },
-        },
-      },
-    },
-    32: {
-      title: '32. Podcasts, Earned Media & Credible Brand Authority',
-      subtitle: 'Relevant outreach, editorial independence, source quality and rights-cleared reuse',
-      description: 'Earn appropriate media opportunities through accurate expertise and useful evidence—without guaranteed replies, “free” coverage, viral promises or misleading publication badges.',
-      lessons: {
-        '32.1': {
-          stageTitle: '32. Podcast Outreach & Media Participation', title: 'Relevant podcast pitching, guest preparation & consented reuse',
-          description: 'Research audience fit, offer a truthful editorial contribution and measure outcomes while respecting inboxes, recording consent, intellectual-property rights and the host’s independence.',
-          learnContent: {
-            videoTitle: 'Plan a respectful, evidence-led podcast outreach programme',
-            summaryText: 'A long-form appearance may build understanding, but it cannot be assumed to outperform advertising or produce qualified leads. The host controls editorial selection and the audience chooses whether to engage.',
-            bulletPoints: ['Prioritise programmes by topic, audience, format, recent episodes and credible public contact routes—not an arbitrary “top 30” list', 'Pitch one evidence-backed contribution tailored to the programme and avoid manufactured controversy or guaranteed-result claims', 'Agree recording, editing, disclosure, publication, clip, transcript, likeness and music rights before reuse', 'Make any guest page accessible, privacy-respecting and consistent with what was actually discussed', 'Evaluate audience feedback, qualified visits, consented leads and downstream outcomes with uncertainty—not vanity reach alone'],
-            coreConcepts: [
-              { iconName: 'mic', title: 'EDITORIAL FIT', description: 'Offer a relevant perspective, verifiable experience and useful takeaways. A pitch template cannot guarantee an open, response or booking.', highlight: true },
-              { iconName: 'shield-check', title: 'RECORDING & REUSE RIGHTS', description: 'Confirm who owns the episode and what each party may edit, caption, quote, promote or monetise. Obtain separate permissions where necessary.' },
-              { iconName: 'bar-chart-2', title: 'PROPORTIONATE MEASUREMENT', description: 'Use a memorable or tagged URL only when useful, explain tracking and minimise data. Attribution is incomplete and not every appearance needs a dedicated funnel.' },
-            ],
-            resources: [
-              { title: 'Podcast Research, Pitch & Rights Checklist', subtitle: 'Editorial fit, evidence, disclosure and reuse permissions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Media-Source Review', subtitle: 'Track consented referrals without overstating attribution', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Contribute to a programme instead of demanding exposure
-
-Podcast outreach is a professional request, not a shortcut to “media dominance”. Audience size may be private or estimated, and a small specialist programme can be more relevant than a large general one.
-
-#### Responsible outreach and production
-
-1. **Research fit**: Review recent episodes, audience, format, guest policy, host interests, accessibility and public contact instructions. Keep only the business contact data needed for the pitch and honour opt-outs.
-2. **Develop an evidence-backed angle**: State why the topic matters now, what you can substantiate and what listeners will learn. Disclose conflicts, commercial interests and limits. Never invent a “controversial” claim for attention.
-3. **Write a concise personal pitch**: Reference a specific episode, propose two or three adaptable talking points and include credible samples. Do not falsely imply a referral, urgency or previous relationship.
-4. **Follow up proportionately**: Use a limited cadence, stop after a clear refusal or opt-out and do not move the person across channels to evade consent or platform rules.
-5. **Agree production terms**: Clarify recording consent, editorial control, corrections, sponsorship or affiliate disclosure, accessibility, release timing, confidentiality and cancellation.
-6. **Clear reuse rights**: Obtain written permission before publishing clips, transcripts, images, music or logos. Preserve context, caption accurately and avoid edits that change meaning.
-7. **Offer a truthful next step**: A landing page or resource should match the episode, identify the business, explain data use and avoid fake exclusivity. The host must be free to accept, change or reject a call to action.
-8. **Measure carefully**: Record publication, referral and outcome data with consistent definitions, but acknowledge dark traffic, delayed action and other channels. Do not claim causation from a tracking URL alone.
-
-Respect editorial independence. Payment, free products, affiliate relationships and other material connections may require clear disclosure under the rules that apply to the audience.`,
-            practicalExamples: ['A pitch cites a recent episode, offers new primary data with methodology and makes clear which claims are the guest’s interpretation.', 'Before posting a 45-second clip, the guest obtains the producer’s written permission, retains the full context, adds accurate captions and discloses the commercial relationship.'],
-          },
-          understandContent: { coreTakeaway: 'Credible podcast outreach combines editorial relevance, substantiated expertise, respectful contact, clear disclosure and permission-based reuse.', keyPrinciples: ['The host retains editorial choice', 'Clear recording and reuse rights before publishing', 'Measure outcomes without pretending complete attribution'] },
-          actionTask: { instruction: 'Prepare one responsible podcast outreach pilot:', checklistItems: ['Five relevant programmes researched using public contact guidance', 'Pitch claims, evidence, conflicts and audience value verified', 'Follow-up limit and opt-out handling documented', 'Recording, disclosure, clip, transcript, logo and likeness permissions listed', 'Accessible next step and proportionate measurement plan prepared'], toolboxCategory: 'landingpage' },
-        },
-        '32.2': {
-          stageTitle: '32. Earned Media & Digital PR', title: 'Accurate press materials, journalist relations & truthful media references',
-          description: 'Support journalists with verifiable information and use coverage accurately, without disguising ads as news, guaranteeing backlinks or implying endorsement through unauthorised logos.',
-          learnContent: {
-            videoTitle: 'Build an evidence-led digital PR practice',
-            summaryText: 'Coverage is earned through editorial judgement and is never guaranteed or truly cost-free. A mention may help awareness, but it does not automatically lift conversion or double other channels.',
-            bulletPoints: ['Offer genuine news value supported by named sources, methods, dates, sample limits and accessible evidence', 'Separate press material, sponsored content, affiliate promotion and independent editorial coverage with clear disclosure', 'Respond to relevant journalist requests accurately and never misrepresent credentials, clients, results or availability', 'Request permission before using publisher names, trademarks, screenshots, quotes or logos and describe the coverage precisely', 'Track publication quality, referral, corrections, sentiment and business outcomes without assuming a dofollow link or endorsement'],
-            coreConcepts: [
-              { iconName: 'newspaper', title: 'VERIFIABLE PRESS MATERIAL', description: 'A release labels claims, sources, methodology, date, spokesperson and contact. AI-assisted drafts require human fact-checking and source verification.', highlight: true },
-              { iconName: 'scale', title: 'EDITORIAL INDEPENDENCE', description: 'Journalists decide whether and how to report. Do not condition access, gifts or payment on favourable independent coverage.' },
-              { iconName: 'award', title: 'ACCURATE MEDIA REFERENCE', description: '“Featured in” wording must reflect the real appearance and date without implying approval. Logos and excerpts require applicable permission and licence review.' },
-            ],
-            resources: [
-              { title: 'Press Evidence & Outreach Template', subtitle: 'Sources, methodology, contacts, corrections and disclosures', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'AI-Assisted PR Draft Review', subtitle: 'Human verification for facts, rights and confidential data', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Make it easy to verify, not hard to resist
-
-PR should give an editor reliable material and the freedom to reject it. A press release is a source document from an interested party, not an independent news article.
-
-#### Evidence-led media workflow
-
-1. **Confirm news value**: Identify what is new, affected, independently relevant and timely. Routine promotion is not converted into news by adding a trend headline.
-2. **Build an evidence pack**: Preserve source links, raw or aggregated data, methodology, sample and field dates, limitations, consent, conflicts and a reachable spokesperson. Do not fabricate surveys, quotes or customers.
-3. **Draft transparently**: Use a factual headline and lead, distinguish fact from forecast and opinion, and label the organisation and commercial interest. AI may assist wording but a named human verifies every fact, citation and quotation.
-4. **Protect people and information**: Obtain appropriate permission for case studies, images and quotes; minimise personal data; respect embargoes and confidentiality; provide accessible formats when possible.
-5. **Target relevant contacts**: Follow published submission rules, use professional public contact information and personalise only from relevant sources. Limit follow-up and maintain suppression records.
-6. **Preserve independence**: Disclose payment, sponsorship, affiliate or supplied-product relationships. Sponsored placement must not be presented as independent editorial coverage.
-7. **Handle publication accurately**: Check facts, request corrections respectfully and archive the final URL, title, publisher and date. Do not demand editorial wording, a dofollow backlink or favourable sentiment.
-8. **Reference coverage truthfully**: Quote only within permission and context. Review trademark and copyright rights before using a media logo or screenshot, and never imply that a mere mention is endorsement, certification or partnership.
-9. **Measure and learn**: Track relevant coverage, qualified referral, branded search, enquiries, corrections and negative outcomes. Avoid attributing a conversion change to one article without a credible comparison.
-
-Advertising and endorsement rules vary by jurisdiction. Claims must remain truthful, non-misleading and supported, with material commercial relationships clearly disclosed where required.`,
-            practicalExamples: ['A release about survey results links the questionnaire and methodology, gives sample and field dates, states limitations and provides an independent expert contact.', 'A company writes “Founder quoted in [article title], 12 May 2026” with permission instead of placing a publisher logo above checkout as an implied endorsement.'],
-          },
-          understandContent: { coreTakeaway: 'Credible PR is transparent source work governed by evidence, editorial independence, rights and accurate description of any resulting coverage.', keyPrinciples: ['Never disguise promotion as independent news', 'Verify AI-assisted facts, quotes and sources', 'A mention is not automatically an endorsement or licensed badge'] },
-          actionTask: { instruction: 'Prepare one verifiable media package and publication policy:', checklistItems: ['News value, claims, sources, methods, dates and limitations documented', 'Quotes, cases, images and personal data have appropriate permissions', 'Relevant contact list, follow-up limit and suppression process defined', 'Sponsored, affiliate and other material connections have disclosure rules', 'Policy covers corrections, backlinks, excerpts, screenshots, trademarks and logos'], toolboxCategory: 'landingpage' },
-        },
-      },
-    },
-    33: {
-      title: '33. Safe, Accessible Live Events, Workshops & Retreats',
-      subtitle: 'Scenario budgets, transparent ticketing, responsible sponsorship and participant-centred delivery',
-      description: 'Design useful in-person experiences with realistic economics, genuine availability, clear sponsor relationships, inclusive access and safe operations—not guaranteed profit or pressure-led upgrades.',
-      lessons: {
-        '33.1': {
-          stageTitle: '33. Event Architecture & Ticketing', title: 'Event feasibility, transparent ticketing & responsible sponsorship',
-          description: 'Test demand and operational readiness, model downside scenarios and sell clearly differentiated tickets without fake countdowns, hidden fees or assuming sponsors will cover fixed costs.',
-          learnContent: {
-            videoTitle: 'Build a viable, safe and accessible live-event plan',
-            summaryText: 'An event can strengthen a community, but it can also lose money or cause harm. Venue, staffing, safety, accessibility, cancellation and participant outcomes must be planned before a sales funnel.',
-            bulletPoints: ['Define participant outcomes, scope, capacity, exclusions and success evidence before choosing a venue or ticket model', 'Model break-even, base and downside scenarios with every material cost, tax, refund, contingency and cash-timing assumption', 'Show the full payable price and honest availability; countdowns and “last seats” must reflect real, documented conditions', 'Give every ticket a clearly described service level and provide reasonable accessibility adjustments without turning dignity into an upsell', 'Contract sponsor deliverables, data access, safety duties, disclosures and conflicts without guaranteeing funding or editorial influence'],
-            coreConcepts: [
-              { iconName: 'calculator', title: 'SCENARIO EVENT BUDGET', description: 'Include venue, production, staff, speakers, travel, catering, accessibility, security, insurance, licences, tax, payment fees, refunds and contingency. Fifty-percent sell-through is not a universal break-even rule.', highlight: true },
-              { iconName: 'ticket', title: 'FAIR TICKET DESIGN', description: 'Different tiers may offer real additional services, but must not hide essential access, mandatory fees or fabricated scarcity. Publish transfer, cancellation and refund terms before purchase.' },
-              { iconName: 'shield-check', title: 'SAFE PARTICIPANT JOURNEY', description: 'Plan risk assessment, emergency response, safeguarding, accessibility, dietary needs, privacy, complaints and incident ownership from registration through departure.' },
-            ],
-            resources: [
-              { title: 'Event Feasibility, Safety & Budget Workbook', subtitle: 'Scenarios, accessibility, contingency and decision gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Participant Preferences', subtitle: 'Collect only necessary consented logistics data', type: 'tool', iconName: 'users', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Approve feasibility before launching tickets
-
-Live events are not inherently profitable or stronger than digital delivery. Start from the participant outcome and the risks the organisation can safely carry.
-
-#### Event approval workflow
-
-1. **Define the event**: State audience, learning or community outcomes, format, capacity, age limits, prerequisites, speakers, included services and what the event is not. Validate interest without presenting non-binding interest as sales.
-2. **Model scenarios and cash**: Build break-even, base and downside cases with ticket mix, tax, payment timing, refunds and sponsor uncertainty. Include venue, production, staffing, travel, accommodation, catering, accessibility, security, medical provision, insurance, licences, marketing and contingency.
-3. **Review venue and safety**: Confirm lawful capacity, step-free access, accessible toilets and seating, evacuation, weather, transport, food safety, allergens, safeguarding, emergency contacts and responsibilities with competent local providers and authorities.
-4. **Design fair tickets**: Explain exactly what each tier includes, all mandatory costs, availability and material restrictions. Accessibility adjustments should be available through a respectful process and not be packaged as prestige benefits.
-5. **Use honest pricing**: A real early-booking price may use a documented date or allocation. Do not reset countdowns, invent scarcity or reveal unavoidable service fees late. Check local price-reduction and consumer-contract rules.
-6. **Contract sponsors carefully**: Assess fit, reputation and conflicts; define deliverables, payment, cancellation, brand use, attendee contact, booth rules, stage content and disclosures. Sponsored sessions must be recognisable, and participant data is not transferred without a valid basis and notice.
-7. **Communicate by choice**: Offer an event portal, email and accessible alternatives. Do not force attendees into a messaging group that reveals phone numbers. Obtain consent before optional groups or postal gifts and provide a way to leave.
-8. **Set go/no-go gates**: Use cash received, supplier deadlines, accessibility readiness, safety sign-off and minimum service quality—not hoped-for upgrades—to decide whether to proceed, resize, postpone or cancel.
-9. **Prepare recovery**: Publish cancellation, transfer and refund processes; maintain attendee support, incident logging, backup suppliers and a communications plan.
-
-Engage qualified local event, insurance, tax, accessibility, safety and legal professionals for the actual location and format.`,
-            practicalExamples: ['A downside budget assumes lower ticket sales and no sponsor income; the organiser can cancel before a non-refundable venue milestone and process refunds from reserved cash.', 'An optional attendee community uses an opt-in channel that does not expose personal phone numbers and offers equivalent updates by accessible email.'],
-          },
-          understandContent: { coreTakeaway: 'A viable event is approved through complete economics, honest ticketing, documented safety and inclusive participant operations—not projected on-site sales.', keyPrinciples: ['Budget for downside and sponsor uncertainty', 'Use genuine prices, availability and benefits', 'Treat accessibility, safety and privacy as core delivery'] },
-          actionTask: { instruction: 'Prepare a go/no-go event plan before selling tickets:', checklistItems: ['Participant outcomes, scope, capacity and service levels documented', 'Break-even, base and downside cash scenarios include full costs and contingency', 'Venue, safety, accessibility, insurance and emergency owners identified', 'Ticket price, fees, availability, cancellation, transfer and refund terms reviewed', 'Sponsor contracts, disclosures, participant-data limits and go/no-go gates defined'], toolboxCategory: 'landingpage' },
-        },
-        '33.2': {
-          stageTitle: '33. Ethical Event Offers & Fulfilment', title: 'Transparent stage offers, informed choice & secure on-site fulfilment',
-          description: 'Present optional next steps without exploiting group emotion, fear, fatigue or artificial urgency, and give attendees accurate terms, privacy and sufficient decision space.',
-          learnContent: {
-            videoTitle: 'Design an ethical event offer and fulfilment process',
-            summaryText: 'A 30–50% room-close target can push staff toward manipulation and unsuitable sales. Judge an offer by informed customer fit, delivery capacity and durable outcomes—not immediate conversion.',
-            bulletPoints: ['Separate promised educational value from the optional sales segment and disclose timing, commercial purpose and speaker interests', 'Describe scope, price, taxes, recurring charges, financing, cancellation, eligibility, capacity and realistic outcomes before asking for a decision', 'Use genuine availability and deadlines; do not manufacture event-only bonuses or imply failure without the paid programme', 'Provide a quiet, accessible consultation route and allow attendees to decline or leave without embarrassment or loss of purchased benefits', 'Process orders through secure systems with written confirmation, consented follow-up and a tested cancellation and refund workflow'],
-            coreConcepts: [
-              { iconName: 'presentation', title: 'DISCLOSED OPTIONAL OFFER', description: 'Tell attendees when education ends and a commercial presentation begins. The event must deliver its advertised value even when nobody buys more.', highlight: true },
-              { iconName: 'user-check', title: 'INFORMED CUSTOMER FIT', description: 'Check needs, eligibility, affordability and conflicts without diagnosing, shaming or defeating objections. “No sale” can be the correct outcome.' },
-              { iconName: 'credit-card', title: 'SECURE FULFILMENT', description: 'Use approved payment systems, individual staff accounts and private screens. Never write card data on paper or expose contracts at a crowded table.' },
-            ],
-            resources: [
-              { title: 'Ethical Event Offer & Review Template', subtitle: 'Disclosure, fit, terms, accessibility and safeguards', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Secure On-Site Orders', subtitle: 'Role-based records, consent and fulfilment states', type: 'tool', iconName: 'dollar-sign', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Make the next step optional in practice, not only in wording
-
-Event energy, social proof, fatigue and authority can materially affect decisions. Saying “no pressure” does not remove pressure if the design uses public commitment, fear, hidden terms or expiring fiction.
-
-#### Participant-centred offer process
-
-1. **Protect the core event**: Deliver the advertised programme independently of additional purchases. Publish the agenda and identify commercial sessions in advance where appropriate.
-2. **Disclose the transition**: Clearly state that an offer is beginning, who benefits financially and how long it will take. Let attendees take a break or leave without losing access to purchased content.
-3. **Explain the complete offer**: Present provider, scope, delivery, prerequisites, support, limitations, total and recurring price, taxes, payment schedule, financing cost, cancellation, refund and applicable withdrawal information in plain language.
-4. **Substantiate value**: Avoid inflated “value stacks”, unrepresentative testimonials and outcome guarantees. Bonuses and capacity limits must be real, documented and available on the stated terms.
-5. **Preserve decision quality**: Do not frighten attendees about implementing alone, shame hesitation, use peer pressure or set a room conversion target. Offer a written summary and reasonable review time proportionate to price and complexity.
-6. **Check fit privately**: Train staff to clarify needs and exclusions, recognise vulnerability and financial distress, and escalate rather than sell. Compensation must not reward unsuitable contracts or conceal complaints and cancellations.
-7. **Follow consumer and credit rules**: Venue contracts, digital content, services and financing can have different information, withdrawal and regulatory duties. Obtain qualified review for the jurisdiction and transaction.
-8. **Process securely**: Use PCI-compliant payment providers, protected connectivity, role-based CRM access, receipts and double-checks for price and instalments. Never collect full card details in forms, notes or chat.
-9. **Confirm and fulfil**: Send the signed terms, payment status, cancellation route, delivery schedule and support contact. Reconcile payments and access and resolve duplicates or failed provisioning.
-10. **Follow up by permission**: Contact non-buyers only under the applicable consent or legitimate-contact rules, respect opt-outs and do not convert a genuine deadline into rolling pressure.
-
-Measure informed fit, cancellations, refunds, complaints, affordability issues, fulfilment quality and customer outcomes alongside sales.`,
-            practicalExamples: ['A high-priced programme is introduced in a labelled 20-minute commercial session; attendees receive full written terms and can book a later private suitability call.', 'An on-site payment uses a provider terminal and immediately emails the selected instalment plan, contract version, receipt and cancellation contact.'],
-          },
-          understandContent: { coreTakeaway: 'An ethical event offer protects informed choice, makes every commercial condition visible and treats secure, suitable fulfilment as more important than room conversion.', keyPrinciples: ['The paid event stands on its own', 'No fear, shame or fabricated urgency', 'Private, secure and reviewable contracting'] },
-          actionTask: { instruction: 'Design an optional offer and fulfilment process with safeguards:', checklistItems: ['Commercial segment and financial interests are clearly disclosed', 'Complete written offer, price, recurring terms, financing and cancellation information prepared', 'Claims, testimonials, bonuses, capacity and deadlines have evidence', 'Private fit review, vulnerability escalation and no-sale criteria defined', 'Secure payment, confirmation, reconciliation, refund and consented follow-up tested'], toolboxCategory: 'content' },
-        },
-      },
-    },
-    34: {
-      title: '34. Responsible Licensing, Franchise & White-Label Growth',
-      subtitle: 'Rights clearance, viable partner economics, quality governance and accountable expansion',
-      description: 'Turn documented systems into carefully governed licensing or white-label offers with clear rights, realistic economics, qualified partners and jurisdiction-specific review—not guaranteed royalties or growth without fulfilment.',
-      lessons: {
-        '34.1': {
-          stageTitle: '34. Licensing Architecture & White Label', title: 'Design a licensable system with clear rights, controls and economics',
-          description: 'Assess whether the system is transferable, verify ownership and permissions, choose an appropriate model and document commercial, operational, data and quality obligations before offering a licence.',
-          learnContent: {
-            videoTitle: 'Build a responsible licensing and white-label operating model',
-            summaryText: 'Licensing can reduce some central delivery work, but it does not eliminate support, governance, legal or reputational duties. Revenue depends on partner fit, adoption, customer demand, delivery quality and contract performance.',
-            bulletPoints: ['Inventory trademarks, copyright, software, data, content, know-how and third-party assets before promising any usage rights', 'Compare a limited licence, white-label arrangement, distribution relationship and franchise-like model according to control, support, fees and local classification', 'Define territory, channels, field of use, term, exclusivity, sublicensing, reserved rights, updates, support and exit in writing', 'Model setup, recurring, usage or revenue-share fees from evidenced partner economics, including tax, currency, refunds, support and enforcement costs', 'Protect confidential know-how through proportionate access, security and confidentiality measures while preserving lawful reporting, worker rights and required disclosures'],
-            coreConcepts: [
-              { iconName: 'layers', title: 'RIGHTS & MODEL MAP', description: 'A licence grants specified permissions; it does not transfer every asset or guarantee business results. Map ownership, third-party restrictions, jurisdictions and the operational control each model requires.', highlight: true },
-              { iconName: 'shield-check', title: 'QUALITY & BRAND GOVERNANCE', description: 'Set objective standards, training, review, remediation and brand-use rules. Trademark quality control and recording requirements vary, so obtain qualified local advice.' },
-              { iconName: 'repeat', title: 'TESTED UNIT ECONOMICS', description: 'Forecast fees, partner margin, central support, payment timing, churn, bad debt and downside. A quoted setup fee or royalty is a hypothesis until the market and contract support it.' },
-            ],
-            resources: [
-              { title: 'Licensing Readiness & Contract-Issues Workbook', subtitle: 'Rights, economics, controls, data, competition and exit questions', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Partner Access Register', subtitle: 'Role-based accounts, approvals, training and audit evidence', type: 'tool', iconName: 'users', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Make the system licensable before selling the licence
-
-A successful internal workflow is not automatically transferable intellectual property. Licensing creates continuing obligations around rights, training, quality, security, partner support and enforcement.
-
-#### Licensing readiness workflow
-
-1. **Define the customer outcome and evidence**: Document the problem, intended users, prerequisites, process, exclusions, delivery capacity, observed outcomes and limitations. Do not state that the system guarantees results.
-2. **Create a rights register**: Identify owners and licences for names, logos, text, video, templates, code, databases, images, fonts, music, AI-generated material and customer examples. Remove or replace assets that cannot be sublicensed or rebranded.
-3. **Protect know-how lawfully**: Classify information, restrict access, log versions, use proportionate confidentiality terms and establish incident handling. Trade-secret protection generally depends on information remaining secret, having commercial value and being subject to reasonable protective steps; it is not created by labelling everything confidential.
-4. **Choose the real relationship**: Compare a non-exclusive or exclusive licence, white label, reseller, agency, services arrangement and franchise-like system. The label in the document may not determine its legal classification, disclosure duties, employment or agency risk, tax treatment or registration.
-5. **Specify the grant and boundaries**: State products, territory, channels, customers, language, field of use, term, renewal, exclusivity, sublicensing, modification, ownership of improvements, domain and social-account control, reserved rights and post-termination use.
-6. **Design quality governance**: Publish measurable standards, approved claims and brand materials, accessibility requirements, complaints, security, audit scope, correction periods and proportionate sanctions. Apply reviews consistently and allow a documented appeal or remediation route.
-7. **Model complete economics**: Include onboarding, support, hosting, tools, localisation, payment fees, tax, currency, refunds, insurance, monitoring, disputes, updates and exit. Test base and downside cases for both licensor and partner before setting fees.
-8. **Review competition and commercial restrictions**: Pricing controls, online-sales restrictions, territory or customer allocation, non-competes and exclusivity can raise competition issues. Do not instruct independent partners to fix resale prices or divide markets without specialist review.
-9. **Allocate data and security duties**: Identify controller, processor or independent roles for each data flow; minimise access, define purpose, retention, deletion, breach response, subprocessors and cross-border transfers. Give every user an individual account and least-privilege access.
-10. **Write the operating and exit plan**: Address invoices, reporting, royalty calculation, audit, underpayment, support levels, changes, continuity, insurance, liability, complaints, suspension, termination, customer handover, data return and deletion.
-
-Use qualified intellectual-property, franchise, competition, tax, employment, data-protection and commercial advisers for each intended jurisdiction. A template is an issue list, not legal approval.`,
-            practicalExamples: ['A white-label pilot excludes a stock-image library that prohibits sublicensing, limits the partner to one market and defines support, approved claims, data roles and a 90-day review.', 'A proposed exclusive territory is paused until demand, partner capacity and competition-law implications are reviewed; no partner is promised protected revenue.'],
-          },
-          understandContent: { coreTakeaway: 'A responsible licence is a precisely bounded, economically tested and actively governed relationship—not passive income or a transfer of every business risk.', keyPrinciples: ['Clear every asset before granting rights', 'Document quality, data, economics and exit', 'Review classification and restrictions by jurisdiction'] },
-          actionTask: { instruction: 'Prepare a licensing-readiness file for one system:', checklistItems: ['Outcome evidence, process, prerequisites and limitations documented', 'Ownership and sublicensing rights checked for every material asset', 'Proposed model, grant, territory, term, exclusivity and reserved rights mapped', 'Base and downside economics calculated for licensor and partner', 'Quality, data, security, support, audit, termination and legal-review issues assigned'], toolboxCategory: 'affiliate' },
-        },
-        '34.2': {
-          stageTitle: '34. Partner Network & Accountable Expansion', title: 'Recruit, onboard and govern suitable B2B licensing partners',
-          description: 'Build a measured partner programme based on due diligence, truthful commercial information, competency, customer protection and sustainable support rather than promised quick revenue or market domination.',
-          learnContent: {
-            videoTitle: 'Responsible B2B partner recruitment, onboarding and oversight',
-            summaryText: 'A partner network can extend reach, but every additional operator creates quality, security, customer and reputation risk. Partner count is not success unless customers receive the agreed standard and both sides have viable economics.',
-            bulletPoints: ['Define an ideal partner profile from capability, customer fit, financial resilience, integrity, conflicts and regulatory readiness—not simply an existing contact list', 'Present verified unit economics, costs, responsibilities, risks and representative results without promising doubled customer value or 14-day revenue', 'Run proportionate due diligence, reference and conflict checks and give both parties enough information and review time before contracting', 'Onboard to measured competence in product, claims, privacy, security, accessibility, complaints and customer support before independent launch', 'Monitor customer outcomes, refunds, complaints, security, support load and partner health with remediation and fair exit—not a sales-only leaderboard'],
-            coreConcepts: [
-              { iconName: 'users', title: 'PARTNER SUITABILITY', description: 'Assess capabilities, customer base, resources, reputation, conflicts, legal readiness and willingness to follow controls. Record the reason for approval, conditions or rejection.', highlight: true },
-              { iconName: 'user-check', title: 'COMPETENCY GATE', description: 'Training attendance is not competence. Require scenario-based assessment, supervised delivery and sign-off before access or customer-facing use expands.' },
-              { iconName: 'activity', title: 'BALANCED NETWORK HEALTH', description: 'Track customer outcome, quality, complaints, refunds, security, compliance, partner margin and support capacity alongside revenue. Avoid incentives that reward unsuitable sales.' },
-            ],
-            resources: [
-              { title: 'Partner Due-Diligence & Onboarding Pack', subtitle: 'Fit, evidence, conflicts, competence, launch and remediation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Partner Governance Dashboard', subtitle: 'Approvals, access, customer quality and corrective actions', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Scale partner capability, not partner promises
-
-Established providers may have customers and sales capacity, but that does not prove fit, safe delivery or incremental value. Recruitment is a two-way diligence process.
-
-#### Accountable partner lifecycle
-
-1. **Set programme boundaries**: Define markets, customer profiles, permitted and excluded uses, capacity, support, lead handling and the customer standards the network must protect.
-2. **Publish a fair partner proposition**: Explain rights, duties, all fees, typical workload, assumptions, risks, training, support, reporting, termination and what is not provided. Financial illustrations must be clearly labelled, evidenced and representative; avoid earnings guarantees.
-3. **Source proportionately**: Contact relevant businesses through lawful professional channels, respect platform rules and opt-outs, and avoid scraped sensitive data or misleading referral claims. Twenty prospects is a planning choice, not a success formula.
-4. **Perform due diligence**: Verify business identity, authority, references, experience, financial and operational capacity, conflicts, sanctions where applicable, insurance, complaints, security and regulatory permissions. Collect only necessary information and protect it.
-5. **Allow informed review**: Provide the agreement and required disclosures in time for independent legal, tax and financial advice. Record questions and do not create false deadlines or claim that a territory is scarce when it is not.
-6. **Contract before access**: Sign approved terms, complete invoicing and identity checks, establish data and security roles, and provision individual least-privilege accounts. Do not share master credentials or unrestricted customer exports.
-7. **Train and assess**: Cover customer discovery, correct claims, disclosures, pricing boundaries, brand use, privacy, accessibility, security, complaints and escalation. Use knowledge checks, practice cases and supervised delivery before certification.
-8. **Run a controlled pilot**: Agree one limited implementation with the end customer's informed agreement, acceptance criteria, responsibilities, support, measurement and recovery plan. A pilot does not guarantee a sale or broader authorisation.
-9. **Monitor and support**: Review service evidence, customer outcomes, refunds, complaints, incident logs, system access, partner economics and support load. Separate coaching from formal audit and document remediation deadlines.
-10. **Manage conflict and exit**: Maintain routes for complaints, whistleblowing, conflicts, suspension and appeal. On exit, protect customers, revoke access, stop brand use, reconcile fees, return or delete data and preserve required records.
-
-If recognition, awards or leaderboards are used, apply transparent criteria, protect personal and commercial information and never reward volume at the expense of suitability or customer welfare.`,
-            practicalExamples: ['A prospective agency receives a written economics model with assumptions and downside, completes conflicts and security checks, and pilots with one consenting customer before wider access.', 'A partner with rising complaints enters a documented remediation plan; new sales access is paused while affected customers receive support rather than hiding the issue to protect rankings.'],
-          },
-          understandContent: { coreTakeaway: 'A durable partner network grows through suitability, truthful expectations, demonstrated competence, customer safeguards and accountable oversight.', keyPrinciples: ['Never guarantee partner revenue or customer impact', 'Gate access by competence and risk', 'Reward quality and customer outcomes, not volume alone'] },
-          actionTask: { instruction: 'Design a controlled recruitment and onboarding pilot:', checklistItems: ['Ideal partner profile, exclusions, capacity and approval evidence defined', 'Partner proposition states verified assumptions, full costs, duties, risks and no guarantees', 'Due diligence, privacy, conflicts and independent-review process documented', 'Training, assessment, supervised pilot and access gates prepared', 'Customer outcomes, complaints, security, remediation and exit controls assigned'], toolboxCategory: 'affiliate' },
-        },
-      },
-    },
-    35: {
-      title: '35. Responsible Micro-SaaS & Platform Integration',
-      subtitle: 'Validated products, secure delivery, transparent subscriptions and user-controlled ecosystems',
-      description: 'Extend services with focused software only where evidence supports it, using secure development, accessible design, reliable operations, fair billing and practical portability instead of engineered lock-in or guaranteed valuation.',
-      lessons: {
-        '35.1': {
-          stageTitle: '35. Software & Micro-SaaS', title: 'From service workflow to a safe, useful Micro-SaaS product',
-          description: 'Validate a recurring user problem, define the smallest responsible product and operate it with security, privacy, accessibility, support and measurable reliability from the start.',
-          learnContent: {
-            videoTitle: 'Evidence-led service-to-software transformation',
-            summaryText: 'Software can reduce repeated manual work, but a web app is an ongoing service—not a one-time build. Delivery time, daily use, valuation and churn are outcomes to measure, never promises.',
-            bulletPoints: ['Observe and quantify a repeated user job before replacing a spreadsheet or service workflow with software', 'Define an MVP around one valuable end-to-end outcome plus the safety, accessibility, support and recovery needed to deliver it responsibly', 'Use no-code or AI assistance only with human review, rights clearance, threat modelling, testing, dependency controls and maintainable ownership', 'Compare free, flat-rate and usage-based pricing with full cost, customer predictability, metering accuracy, cancellation and refund implications', 'Earn retention through continuing utility, trustworthy data handling and easy export—not by trapping customer records or making switching painful'],
-            coreConcepts: [
-              { iconName: 'cpu', title: 'VALIDATED PRODUCT SLICE', description: 'The MVP is the smallest safe solution to one evidenced workflow, not merely the fewest screens. Define user, context, acceptance criteria, exclusions and a stop condition.', highlight: true },
-              { iconName: 'shield-check', title: 'SECURE & ACCESSIBLE BY DESIGN', description: 'Include identity, least privilege, encryption, logging, dependency review, backups, accessibility and incident response in the design rather than postponing them until scale.' },
-              { iconName: 'database', title: 'USER-CONTROLLED DATA', description: 'Collect only necessary data, explain retention and purposes, support correction, deletion and useful export, and test restoration. Retention is not a lock-in strategy.' },
-            ],
-            resources: [
-              { title: 'Micro-SaaS Discovery, Risk & MVP Workbook', subtitle: 'Evidence, scope, accessibility, security, economics and launch gates', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM API Sandbox & Access Register', subtitle: 'Test data, scoped credentials, webhooks and audit evidence', type: 'tool', iconName: 'code', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Build a service that can be trusted, changed and retired
-
-Turning a manual workflow into software changes the risk model. The provider becomes responsible for updates, availability, security, billing, data handling and recovery for as long as customers rely on the service.
-
-#### Responsible Micro-SaaS lifecycle
-
-1. **Research the real job**: Interview and observe representative users with permission. Document frequency, severity, current workaround, errors, willingness to change and who is excluded. Do not treat one enthusiastic customer as market validation.
-2. **Define an outcome hypothesis**: State the user, situation, expected improvement, evidence threshold, time box, maximum investment and reasons to stop. Separate customer value from engagement or daily-open metrics.
-3. **Map the complete service**: Include onboarding, authentication, accessibility, customer support, billing, cancellation, data export, deletion, outage handling and offboarding—not only the core feature.
-4. **Set the minimum responsible scope**: Prioritise one end-to-end job, then add controls necessary to avoid foreseeable harm. Record non-goals and manual fallbacks. A functional app in 30 days is possible in some contexts but never a universal plan.
-5. **Choose architecture proportionately**: Evaluate build, buy, no-code and AI-assisted options for data sensitivity, vendor terms, portability, performance, accessibility, security, maintainability and total cost. Keep source, configuration and ownership documented.
-6. **Develop securely**: Maintain a threat model, reviewed changes, protected branches, dependency and secret scanning, separate environments, test data, least-privilege service accounts and reproducible releases. Review AI-generated code and licences rather than accepting output blindly.
-7. **Design privacy and accessibility**: Minimise fields, define purpose, legal basis where required, retention, processors and transfers. Test keyboard use, focus, labels, contrast, errors, zoom and assistive technology with people who use them.
-8. **Protect integrations**: Use scoped credentials, authenticated and signed webhooks, replay protection, idempotency, rate limits, validation, timeouts, retries with backoff and safe failure states. Never place production secrets in client code or screenshots.
-9. **Test with a controlled beta**: Obtain informed participation, define what is experimental, isolate beta data, provide support and rollback, collect structured feedback and avoid exposing one customer's information to another.
-10. **Price transparently**: Explain the billable unit, included usage, taxes, overage, renewal, price-change notice, trial conversion, cancellation, refunds and data access after exit. Metering must reconcile and disputes need a human route.
-11. **Prove operations before scale**: Monitor availability, latency, errors, security events, accessibility barriers, support load, restore tests, unit economics and customer outcomes. Set incident owners, status communication, escalation and recovery objectives.
-12. **Review continuation honestly**: Improve, reposition, pause or retire based on evidence. Give adequate notice, export, deletion and migration support and preserve records required for tax, security or legal obligations.
-
-Secure-development frameworks provide adaptable practices, not automatic certification. Select controls according to the product's risks and obtain qualified legal, security, tax and accessibility review where needed.`,
-            practicalExamples: ['A CRM add-on first automates one approved handoff, uses synthetic test records, scoped API access, signed webhooks and a manual fallback; it expands only after restore and permission tests pass.', 'A usage-based plan shows the unit and current consumption before purchase, sends threshold alerts and lets the customer export data and cancel without contacting sales.'],
-          },
-          understandContent: { coreTakeaway: 'A Micro-SaaS is a continuing operational commitment whose value comes from a safely delivered user outcome—not daily engagement, data captivity or a promised churn rate.', keyPrinciples: ['Validate the job and downside before building', 'Treat security, accessibility and support as MVP work', 'Make billing, data use and exit understandable and testable'] },
-          actionTask: { instruction: 'Prepare one Micro-SaaS discovery and launch brief:', checklistItems: ['User job, evidence, exclusions, acceptance metric, budget and stop rule documented', 'MVP includes core outcome, accessibility, security, support, billing and offboarding', 'Architecture, dependencies, rights, data flows and API risks reviewed', 'Controlled beta, rollback, incident and restore tests assigned', 'Pricing, metering, renewal, cancellation, export and retirement terms drafted'], toolboxCategory: 'content' },
-        },
-        '35.2': {
-          stageTitle: '35. Platform Ecosystems & Integration', title: 'Connect software, learning, services and community without trapping users',
-          description: 'Create coherent journeys through modular services, shared identity and clear entitlements while preserving security boundaries, accessibility, informed choice, portability and graceful recovery.',
-          learnContent: {
-            videoTitle: 'Architecture for a resilient, user-centred platform ecosystem',
-            summaryText: 'Integration can reduce friction, but it also concentrates outages, permissions, billing and privacy risk. No ecosystem is indestructible or impossible to copy; trust comes from useful coordination and dependable exits.',
-            bulletPoints: ['Map each component, owner, dependency, data flow, service promise and fallback before calling the offer an all-in-one platform', 'Use SSO with strong account recovery, modern authentication, least privilege, session controls and separate authorisation for sensitive actions', 'Connect learning and tools through optional, accessible next steps instead of engagement pressure, public rankings or forced community participation', 'Explain bundle components, individual availability, entitlements, recurring price, upgrades, downgrades, renewal, cancellation and consequences before confirmation', 'Provide documented exports, deletion, account closure and migration routes and test recovery from identity, vendor, integration and billing failures'],
-            coreConcepts: [
-              { iconName: 'layers', title: 'MODULAR SERVICE MAP', description: 'Each component has an owner, contract, data boundary, health signal, fallback and exit route. Integration should not turn one fault into a platform-wide failure.', highlight: true },
-              { iconName: 'shield', title: 'IDENTITY & ENTITLEMENT CONTROL', description: 'Authentication proves identity; authorisation controls access. Central login needs secure recovery, role review, revocation, audit logs and step-up protection for sensitive operations.' },
-              { iconName: 'refresh-cw', title: 'PORTABLE VALUE', description: 'Customers should understand and retrieve their data and content where applicable. Durable loyalty is earned through usefulness, not technical or contractual obstruction.' },
-            ],
-            resources: [
-              { title: 'Platform Dependency & Recovery Blueprint', subtitle: 'Identity, data, billing, accessibility, fallback and exit map', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'GOM-MAR Service Health & Access Dashboard', subtitle: 'Entitlements, incidents, integrations and recovery evidence', type: 'tool', iconName: 'layout', actionUrl: 'progress' },
-            ],
-            fullArticleGuide: `### Integrate the journey without concentrating unmanageable risk
-
-Courses, tools, CRM and community may complement one another, but a bundle is not automatically better than focused products. Every connection creates dependencies that need owners, permissions, monitoring and an exit.
-
-#### Resilient platform workflow
-
-1. **Define the shared outcome**: State which customer problem the combined experience solves better, for whom, under what conditions and how improvement will be measured. Preserve a usable core path for people who do not want every component.
-2. **Create a service and dependency map**: Record internal services, vendors, APIs, identity, billing, messaging, analytics, community and support; assign owners, contracts, data classes, failure effects and alternatives.
-3. **Design identity separately from access**: Use a maintained identity provider, multi-factor options, secure reset, session expiry, suspicious-login controls and tested account recovery. Keep entitlement decisions server-side, review roles and revoke access promptly.
-4. **Minimise connected data**: Share only fields required for a defined purpose. Document sources, recipients, retention, permissions and deletion propagation. Do not silently reuse learning or community behaviour for sales scoring or sensitive inference.
-5. **Build accessible navigation and progress**: Keep language, focus, labels, status and errors consistent across components. Progress indicators must reflect real completion, remain private by default and never penalise a user for declining community or gamification.
-6. **Make community participation voluntary and safe**: Publish conduct and moderation rules, reporting, appeals, privacy choices and safeguarding where relevant. Do not expose membership, progress, phone numbers or purchases without an appropriate basis and clear control.
-7. **Explain the commercial model**: Itemise what a bundle includes, optional components, total and recurring price, usage limits, trial conversion, renewal, upgrades, downgrades, cancellation, refunds and access after cancellation. Avoid preselected additions and obstructive cancellation.
-8. **Engineer isolation and recovery**: Use timeouts, circuit breakers where suitable, queues, idempotency, graceful degradation, backups and tested restore. A community or analytics outage should not block a paid core tool unless strictly necessary.
-9. **Operate transparent changes**: Version APIs, test migrations, publish material changes, maintain release and incident notes and give reasonable notice when functionality, price, data use or compatibility changes.
-10. **Support switching and closure**: Provide useful machine-readable export where applicable, documented account closure, deletion status and migration guidance. Cloud and data-switching obligations depend on service and jurisdiction and require current review.
-11. **Measure balanced outcomes**: Monitor task success, reliability, accessibility, support, complaints, refunds, security, privacy, portability and customer-reported value. A flywheel diagram or low churn does not prove causation.
-12. **Exercise systemic failure**: Rehearse identity loss, vendor outage, compromised integration, incorrect entitlement, billing duplication, failed deletion and community incident. Record recovery time, customer communication and corrective action.
-
-The strongest ecosystem is understandable, modular and recoverable. Customers remain because the coordinated service helps them—not because their data or workflow is held hostage.`,
-            practicalExamples: ['If the community provider fails, users can still access paid lessons and core tools while a status page explains the isolated incident and recovery path.', 'A customer downgrades a bundle, sees the exact access changes before confirmation, exports relevant data and retains account records required for invoices without hidden reactivation.'],
-          },
-          understandContent: { coreTakeaway: 'A trustworthy platform coordinates useful services while preserving boundaries, transparent choice, secure access, portability and recovery from inevitable failures.', keyPrinciples: ['Integration requires explicit owners and failure boundaries', 'SSO never replaces authorisation and recovery controls', 'Earn retention through value and reversible choice'] },
-          actionTask: { instruction: 'Design a resilient platform-integration plan:', checklistItems: ['Shared customer outcome, optional paths and component scope documented', 'Dependencies, owners, contracts, data flows, fallbacks and exits mapped', 'Identity, authorisation, recovery, accessibility and community safeguards specified', 'Bundle price, entitlements, changes, cancellation and data portability explained', 'Failure exercises, monitoring, incident communication and switching process scheduled'], toolboxCategory: 'content' },
-        },
-      },
-    },
-    36: {
-      title: '36. Ethical behavioural copywriting & decision design',
-      subtitle: 'Audience motives, cognitive shortcuts, transparent framing and evidence-led experiments',
-      description: 'Write clearer, more relevant offers by researching customer motives and testing decision-support patterns—without unsupported neuroscience, covert manipulation, false urgency or guaranteed conversion claims.',
-      lessons: {
-        '36.1': {
-          stageTitle: '36. Motive-led copywriting',
-          title: 'Map audience motives without reducing people to fixed brain types',
-          description: 'Use qualitative evidence and behavioural tests to adapt messages around safety, exploration and achievement while preserving customer autonomy.',
-          learnContent: {
-            videoTitle: 'Masterclass: Evidence-led motive mapping for modern copywriting',
-            summaryText: 'Emotions and reasoning can both influence decisions, but there is no universal “95% emotional” rule and no word that bypasses conscious resistance. Responsible copy starts with observed customer needs, makes verifiable claims and tests whether clearer framing helps people choose.',
-            bulletPoints: [
-              'Treat safety, exploration and achievement as research hypotheses—not biological diagnoses or permanent customer types',
-              'Translate interviews, search behaviour, support questions and objections into specific, verifiable message themes',
-              'Use attention cues that improve comprehension and relevance rather than shock, deception or interface obstruction',
-              'Connect a documented problem to a proportionate benefit, evidence, limits and a realistic next step',
-            ],
-            coreConcepts: [
-              { iconName: 'zap', title: 'MOTIVE HYPOTHESIS', description: 'Record the audience, context, observed need, message variation and evidence that would support or reject the hypothesis.', highlight: true },
-              { iconName: 'eye', title: 'ATTENTION WITH AUTONOMY', description: 'Earn attention through relevance, hierarchy and clarity; never disguise advertising, hide material terms or manufacture pressure.' },
-            ],
-            resources: [
-              { title: 'Motive Research & Copy Experiment Workbook', subtitle: 'Interview evidence, claims, variants, safeguards and results', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'GOM-MAR Copy Review Assistant', subtitle: 'Review clarity, evidence, accessibility and manipulation risks', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Motive-led copy that respects the reader
-
-People make decisions through interacting emotion, attention, memory, context and deliberation. Popular neuromarketing percentages and fixed “brain types” are not a licence to claim certainty about an individual.
-
-#### Responsible workflow
-
-1. **Define the decision**: State who is deciding, in which context, what they need to understand and what a good customer outcome looks like.
-2. **Collect proportionate evidence**: With appropriate permission, use interviews, support records, search terms, surveys and behaviour. Separate direct evidence from interpretation and avoid inferring sensitive traits.
-3. **Group motives cautiously**: Safety, novelty and achievement can be useful themes, but people may hold several motives and change by context. Label segments as hypotheses and allow users to self-identify.
-4. **Build a claim register**: For every material benefit, record the evidence, conditions, typicality, exclusions and owner. Remove claims that cannot be substantiated.
-5. **Draft useful variants**: Pair one motive theme with a concrete benefit, proof, limitations, total commitment and clear next step. Keep essential information prominent and readable.
-6. **Protect autonomy**: Avoid disguised ads, fear amplification, false scarcity, guilt, shame, forced continuity, confirm-shaming and interfaces that make refusal harder than acceptance.
-7. **Test ethically**: Predefine the hypothesis, primary customer-centred metric, guardrails, sample and stop rule. Measure comprehension, suitable completion, cancellation, complaints and regret—not clicks alone.
-8. **Review accessibility and inclusion**: Check plain language, headings, links, focus order, contrast, zoom and screen-reader meaning. Test across relevant languages and devices.
-9. **Learn without overclaiming**: A result applies to the tested population, offer, channel and period. Document uncertainty, unexpected effects and segments harmed or confused.
-10. **Maintain and retire**: Recheck claims when the product, evidence, audience or law changes. Remove patterns that create short-term conversion but worse customer outcomes.
-
-The purpose of behavioural insight is to improve relevance and understanding, not to override a person's judgment.`,
-            practicalExamples: [
-              'A security-focused variant explains backup scope, recovery limits and support evidence instead of promising a risk-free result.',
-              'A novelty-focused variant demonstrates one genuinely new workflow and its learning curve instead of using unexplained “revolutionary” claims.',
-            ],
-          },
-          understandContent: {
-            coreTakeaway: 'Useful emotional relevance comes from evidence and clarity; it does not require fixed brain labels or covert psychological control.',
-            keyPrinciples: ['Treat segments and motives as testable hypotheses', 'Substantiate material claims and disclose limits', 'Optimise comprehension and suitable outcomes, not pressure'],
-          },
-          actionTask: {
-            instruction: 'Prepare an ethical motive-led headline experiment:',
-            checklistItems: ['Audience, context, observed motive and evidence documented', 'Three headline variants use specific, supportable benefits', 'Material limits and total commitment remain visible', 'Comprehension, suitability, complaints and cancellation guardrails defined', 'Test duration, sample, stop rule and review owner assigned'],
-            toolboxCategory: 'landingpage',
-          },
-        },
-        '36.2': {
-          stageTitle: '36. Cognitive heuristics & transparent framing',
-          title: 'Use decision patterns to clarify choices—not steer people deceptively',
-          description: 'Apply anchoring, comparison, immediacy, participation and social evidence with truthful reference points, fair choices and measured customer outcomes.',
-          learnContent: {
-            videoTitle: 'Masterclass: Ethical decision design in offers and checkout',
-            summaryText: 'Cognitive shortcuts can influence judgments, but effects vary by audience and context. A third price is not guaranteed to move a fixed percentage of buyers, and a crossed-out price is lawful or useful only when genuine, relevant and clearly explained.',
-            bulletPoints: [
-              'Anchoring: disclose a genuine and relevant reference point instead of inventing a list price or savings claim',
-              'Choice architecture: make packages meaningfully different and independently useful; never create a deliberately bad decoy',
-              'Immediacy: explain present and future value with realistic timing rather than inflating bonuses or hiding recurring cost',
-              'Participation and social evidence: use consented, representative proof and let setup effort create utility—not artificial commitment',
-            ],
-            coreConcepts: [
-              { iconName: 'tag', title: 'VERIFIABLE REFERENCE', description: 'A comparison price needs a truthful basis, applicable period and clear like-for-like context. Keep the evidence with the campaign.', highlight: true },
-              { iconName: 'check-circle-2', title: 'FAIR CHOICE SET', description: 'Each option states audience, features, limits, total price and renewal. The recommended option must be justified by customer fit rather than margin alone.' },
-            ],
-            resources: [
-              { title: 'Decision Design & Pricing Review Matrix', subtitle: 'References, package fairness, disclosure and experiment guardrails', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Pricing Experiment Register', subtitle: 'Variants, approvals, metrics, incidents and decisions', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Transparent choice architecture
-
-Prices and packages are interpreted in context. That makes comparison design powerful—and creates a duty not to manipulate, misstate value or obstruct a free choice.
-
-#### Review and experiment process
-
-1. **Define customer fit**: Describe the legitimate use case and exclusion for each package. Do not optimise an unsuitable customer into a higher tier.
-2. **Verify every reference**: Record the source, dates, market, conditions and like-for-like basis for previous prices, competitor comparisons, savings and value estimates.
-3. **Design independently useful options**: Each tier should offer coherent value. Do not add a knowingly inferior “decoy” solely to distort comparison.
-4. **Present total commitment**: Show taxes where applicable, billing unit, usage, renewal, minimum term, add-ons, cancellation, refund and post-cancellation access before confirmation.
-5. **Use loss language carefully**: Explain real consequences symmetrically; do not threaten, shame, exaggerate loss or create countdowns and scarcity that are not factual.
-6. **Handle social evidence responsibly**: Obtain permission, verify testimonials and material results, disclose incentives and relevant conditions, and avoid presenting exceptional outcomes as typical.
-7. **Keep refusal easy**: Acceptance and rejection should have comparable visibility and effort. Avoid preselected extras, hidden subscriptions and repeated interruption.
-8. **Pre-register tests**: State the hypothesis, variants, allocation, duration, minimum evidence, primary metric and guardrails before launch. Avoid repeatedly checking and stopping on a favourable fluctuation.
-9. **Measure downstream quality**: Include comprehension, activation, appropriate plan fit, refunds, chargebacks, complaints, cancellation and support—not conversion alone.
-10. **Review protected and vulnerable audiences**: Exclude or add safeguards where age, distress, financial vulnerability or sensitive inference makes behavioural targeting inappropriate.
-11. **Document the decision**: Preserve approvals, screenshots, claim evidence, results and limitations. Roll back when harm or confusion exceeds the agreed threshold.
-12. **Revalidate regularly**: Reference prices, package contents, testimonials and customer expectations change. Expired evidence must not remain live.
-
-Ethical framing helps customers compare; it does not predetermine the answer through deception or friction.`,
-            practicalExamples: [
-              'A three-tier table explains who each plan suits, uses actual current prices and reports plan-fit and refund rates alongside conversion.',
-              'An expiring discount shows the real end date and what happens afterwards; the same checkout offers an equally visible decline path and no preselected add-on.',
-            ],
-          },
-          understandContent: {
-            coreTakeaway: 'Good framing makes value and trade-offs easier to evaluate while leaving the customer free to choose or decline.',
-            keyPrinciples: ['Use truthful, documented reference points', 'Every option must be coherent and fairly presented', 'Evaluate downstream welfare as well as conversion'],
-          },
-          actionTask: {
-            instruction: 'Audit and test one pricing table responsibly:',
-            checklistItems: ['Audience and legitimate use case defined for every tier', 'Reference prices, comparisons and savings claims verified', 'Total cost, renewal, limits, cancellation and refund terms prominent', 'No false scarcity, preselection, obstructive refusal or artificial decoy remains', 'Experiment hypothesis, quality guardrails, stop rule and evidence archive prepared'],
-            toolboxCategory: 'landingpage',
-          },
-        },
-      },
-    },
-    37: {
-      title: '37. Fair application funnels & responsible qualification',
-      subtitle: 'Proportionate forms, transparent suitability criteria, human review and privacy-aware routing',
-      description: 'Design application and discovery journeys that protect everyone’s time, identify mutual fit and offer useful alternatives—without wealth-based exclusion, coercive power dynamics or opaque profiling.',
-      lessons: {
-        '37.1': {
-          stageTitle: '37. Application-funnel architecture',
-          title: 'A four-phase suitability journey for complex services',
-          description: 'Move from clear service information through a proportionate questionnaire and human review to an optional meeting, with accessible routes for questions and alternatives.',
-          learnContent: {
-            videoTitle: 'Masterclass: Fair application and discovery journey',
-            summaryText: 'An application form should support an informed, two-way decision. It does not prove willingness to pay, reverse a power relationship or justify collecting excessive personal data. The provider must explain the offer, criteria, data use and next steps before asking for information.',
-            bulletPoints: [
-              'Explain the service, evidence, limits, total price range, eligibility and expected work before requesting an application',
-              'Ask only questions necessary to assess delivery fit, capacity and safety; offer “prefer not to say” where appropriate',
-              'Use budget as a transparent feasibility topic, not a proxy for worth, seriousness or vulnerability',
-              'Provide accessible human review, correction and appeal plus a useful route for people who are not currently a fit',
-            ],
-            coreConcepts: [
-              { iconName: 'filter', title: 'MUTUAL-FIT REVIEW', description: 'Published criteria assess whether needs, scope, timing, resources and provider capability align. A rejection is reasoned, respectful and not solely automated.', highlight: true },
-              { iconName: 'video', title: 'INFORMED CASE STUDY', description: 'A concise, captioned case study states context, methods, conditions, limitations and typicality instead of claiming to remove every objection.' },
-            ],
-            resources: [
-              { title: 'Application Form & Suitability Review Pack', subtitle: 'Purpose, questions, accessibility, privacy, criteria and alternatives', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Mara CRM Application Builder', subtitle: 'Create minimised forms, review queues and retention controls', type: 'tool', iconName: 'edit', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### A fair application journey is a two-way fit check
-
-Complex or capacity-limited services can benefit from qualification, but the process must not imply that applicants are inferior, pressure them to disclose unnecessary information or automatically exclude them through hidden rules.
+Before activating a pixel, audience upload or CRM synchronisation, confirm the legal basis, consent requirements, platform terms, retent…36700 tokens truncated… must not imply that applicants are inferior, pressure them to disclose unnecessary information or automatically exclude them through hidden rules.
 
 #### Four phases
 
@@ -4738,9 +3735,312 @@ Scaling is successful only when additional spend continues to create suitable cu
             "checklistItems": [
               "Mapped owners, jurisdictions, entities, activities, risks and objectives",
               "Modelled income types, participation conditions, trade tax, extraction and costs",
-              "Reviewed governance, guarantees, solvency, creditor protection and exit scenar
-... 25528 bytes omitted ...
-k', title: 'Znajdź niszę',
+              "Reviewed governance, guarantees, solvency, creditor protection and exit scenarios",
+              "Obtained written tax and legal advice before implementation"
+            ],
+            "toolboxCategory": "settings"
+          }
+        },
+        "50.2": {
+          "stageTitle": "50. IP ownership, licensing and asset governance",
+          "title": "Structure IP ownership and licences without artificial profit shifting",
+          "description": "Identify, value, transfer and license intellectual property only where ownership, business substance, rights, pricing and creditor considerations support the arrangement.",
+          "learnContent": {
+            "videoTitle": "Masterclass: responsible IP governance and related-party licensing",
+            "summaryText": "A separate IP company may support central governance or licensing, but a transfer does not make assets unreachable and a royalty is not automatically deductible. Ownership, development functions, valuation, tax, insolvency, competition, privacy and contractual rights must be reviewed.",
+            "bulletPoints": [
+              "Create an IP inventory covering registrations, code, content, domains, data, licences, contributors and territorial rights",
+              "Confirm chain of title and third-party consents before assigning or licensing anything",
+              "Price related-party licences using documented functions, assets, risks and comparable evidence—not a desired tax result",
+              "Assess transfer taxes, hidden reserves, withholding, VAT, trade tax, anti-abuse, insolvency and cross-border rules"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "lock",
+                "title": "GOVERNED IP PORTFOLIO",
+                "description": "Rights, owners, licences, renewal dates, access and evidence are documented; separation is not described as absolute protection.",
+                "highlight": true
+              },
+              {
+                "iconName": "award",
+                "title": "SUBSTANCE AND SUCCESSION",
+                "description": "Foundations or family structures require a genuine purpose, governance, beneficiary, tax and control analysis; transfers are not automatically tax-free."
+              }
+            ],
+            "resources": [
+              {
+                "title": "IP inventory and related-party licence brief",
+                "subtitle": "Ownership, valuation, functions, rights, pricing, tax and approval evidence",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Corporate Asset Manager",
+                "subtitle": "Archive approved rights, contracts, evidence and renewal responsibilities",
+                "type": "tool",
+                "iconName": "shield",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Govern intellectual property before moving it\n\nThis lesson is educational and not legal, tax or valuation advice. Trademark registration does not cover every right, and changing the registered proprietor is only one part of a valid transfer.\n\n#### A controlled IP process\n\n1. **Inventory the assets**: List trademarks, applications, copyrights, software, databases, designs, patents, domains, trade secrets and inbound licences.\n2. **Verify chain of title**: Check employee, contractor, agency, open-source, stock-media and platform terms. Do not transfer rights the company does not own.\n3. **Define the business reason**: Central licensing, investment, sale readiness or brand governance must be more than a device to move taxable profit.\n4. **Choose the owner by function and control**: Consider who develops, enhances, maintains, protects and exploits the IP and who controls related risks.\n5. **Obtain a defensible valuation**: Document methods, forecasts, useful life, territory, comparables and uncertainty with specialist input where material.\n6. **Model transfer consequences**: A transfer may realise taxable value and trigger VAT, withholding, registration, financing or consent issues.\n7. **Draft the licence precisely**: Define rights, territory, exclusivity, term, quality control, improvements, data, sublicensing, termination and insolvency treatment.\n8. **Support arm's-length pricing**: Analyse functions, assets and risks; update evidence as the business changes. Domestic and cross-border rules may differ.\n9. **Maintain substance**: The legal owner must actually perform or control relevant functions and decisions; funding alone may not justify all returns.\n10. **Respect creditor and insolvency rules**: Transfers can be challenged, and security interests, guarantees or group conduct can affect separation.\n11. **Record registry changes correctly**: Follow the relevant office's evidence and signature requirements and keep the underlying assignment.\n12. **Protect data and secrets**: Control access, security, retention and lawful use separately from IP ownership.\n13. **Evaluate foundations independently**: Review control, beneficiaries, reserved powers, gift and inheritance tax, reporting and permanence. Never promise a tax-free generational transfer.\n14. **Approve and monitor**: Obtain board, tax, legal and valuation approvals; track renewals, royalties, breaches and annual pricing reviews.\n\nSometimes direct ownership by the operating company is simpler and safer.",
+            "practicalExamples": [
+              "A company discovers that contractor code was never assigned; it cures title before discussing an IP-company transfer.",
+              "A royalty benchmark no longer fits after development moves to the operating company, so the parties update functions, pricing and contracts."
+            ]
+          },
+          "understandContent": {
+            "coreTakeaway": "IP separation works only with real ownership, substance, defensible pricing, contracts and ongoing governance; it is not an invulnerable vault.",
+            "keyPrinciples": [
+              "Verify title and consents before transfer",
+              "Support related-party pricing with current evidence",
+              "Review tax, insolvency, data and registry consequences together"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare one IP-governance review:",
+            "checklistItems": [
+              "Completed inventory, chain-of-title and third-party-consent review",
+              "Documented business purpose, functions, control, valuation and tax scenarios",
+              "Drafted rights, pricing, quality, data, termination and insolvency terms",
+              "Obtained legal, tax and valuation approval before transfer or registration"
+            ],
+            "toolboxCategory": "settings"
+          }
+        }
+      }
+    },
+    51: {
+      title: '51. Responsible B2B account-based marketing',
+      subtitle: 'Account fit, privacy and compliant outreach',
+      description: 'Focus enterprise marketing on verified fit and useful content—without guarantees, covert profiling or process bypasses.',
+      lessons: {
+        '51.1': {
+          stageTitle: '51. ABM strategy and account selection',
+          title: 'Prioritise accounts without invasive profiling',
+          description: 'Use permitted evidence and confirmed business needs without assuming private fears or purchase intent.',
+          learnContent: {
+            videoTitle: 'Masterclass: evidence-led ABM',
+            summaryText: 'Account count, deal value, sales-cycle length and intent signals are assumptions, not guarantees.',
+            bulletPoints: ['Score fit transparently with human review', 'Map verified roles without stereotypes', 'Audit intent-data sources and lawful basis', 'Create content from confirmed business needs'],
+            coreConcepts: [{ iconName: 'target', title: 'DECISION MAP', description: 'Record evidence, confidence, permissions and open questions.', highlight: true }, { iconName: 'activity', title: 'VALIDATED SIGNALS', description: 'Estimates are not certain individual intent.' }],
+            resources: [{ title: 'ABM account workbook', subtitle: 'Fit, evidence, privacy and reviews', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM account management', subtitle: 'Contacts with source and objection records', type: 'tool', iconName: 'users', actionUrl: 'crm' }],
+            fullArticleGuide: `### Responsible ABM
+
+1. Define the offer, capacity and an evidence-led ICP.
+2. Record scoring sources, confidence, exclusions and human review.
+3. Separate verified facts, estimates and hypotheses.
+4. Map public roles without unnecessary scraping or private-fear inference.
+5. Document purpose, lawful basis, minimisation, source, retention, security and required GDPR Article 14 information.
+6. Audit intent suppliers and treat signals as probabilistic.
+7. Apply local rules to email, telephone, social and post.
+8. Explain objection rights and stop direct marketing when required.
+9. Respect assistants, procurement, security and works councils.
+10. Measure quality, objections and complaints; delete unsupported profiles.
+
+ABM cannot guarantee a contract.`,
+            practicalExamples: ['Validate a low-confidence intent signal before lawful contact.', 'Use the organisation’s accepted buying process.'],
+          },
+          understandContent: { coreTakeaway: 'Responsible ABM respects personal data, objections and buying processes.', keyPrinciples: ['Separate facts from intent estimates', 'Minimise personal data', 'Avoid stereotypes and surveillance'] },
+          actionTask: { instruction: 'Prepare a compliant ABM pilot:', checklistItems: ['Defined ICP and transparent scoring', 'Recorded sources and confidence', 'Documented lawful basis, notice, retention and objections', 'Planned permitted channels, metrics and reviews'], toolboxCategory: 'crm' },
+        },
+        '51.2': {
+          stageTitle: '51. Compliant direct mail and executive outreach',
+          title: 'Use physical outreach without gifts or bypass tactics',
+          description: 'Test proportionate business mail with transparent identity, gift controls and lawful follow-up.',
+          learnContent: {
+            videoTitle: 'Masterclass: compliant physical outreach',
+            summaryText: 'No package is guaranteed to reach an executive; expensive items may breach policy, procurement or anti-bribery law.',
+            bulletPoints: ['Check gift, procurement and anti-bribery rules', 'Identify the sender and commercial purpose', 'Limit tracking and retention', 'Follow up lawfully and respect assistants'],
+            coreConcepts: [{ iconName: 'mail', title: 'PROPORTIONATE MAIL', description: 'Useful information follows an accepted route.', highlight: true }, { iconName: 'video', title: 'COMPLIANT FORMAT', description: 'Accessible, secure, modest and permitted.' }],
+            resources: [{ title: 'Direct-mail compliance workbook', subtitle: 'Purpose, value, privacy and metrics', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM delivery follow-up', subtitle: 'Human-reviewed reminders without automatic pressure', type: 'tool', iconName: 'send', actionUrl: 'crm' }],
+            fullArticleGuide: `### Respectful direct mail
+
+1. Use an informational purpose, not buying influence.
+2. Check employer, sector, gift, procurement and anti-bribery rules.
+3. Prefer useful information or a requested sample over electronics or luxury items.
+4. Use business addresses and minimise personal data.
+5. Identify the sender and purpose; never disguise advertising.
+6. Avoid unsafe or inaccessible formats.
+7. Control vendors and retention; delivery does not prove opening.
+8. Confirm applicable B2B telephone-consent rules before follow-up.
+9. Respect assistants, objections and procurement.
+10. Measure replies, cost, returns and complaints without open- or appointment-rate guarantees.
+
+A costly package does not create a large customer.`,
+            practicalExamples: ['When gifts are prohibited, send a clear analysis through the vendor process.', 'Ask assistants for the correct route instead of claiming executive delivery.'],
+          },
+          understandContent: { coreTakeaway: 'Physical outreach works only when proportionate, transparent, lawful and respectful.', keyPrinciples: ['Never exchange gifts for access', 'Tracking does not prove executive attention', 'Respect objections and procurement'] },
+          actionTask: { instruction: 'Design a compliant direct-mail pilot:', checklistItems: ['Checked gift and anti-bribery rules', 'Approved format, value and accessibility', 'Documented data, vendors and retention', 'Planned lawful follow-up, metrics and stop rules'], toolboxCategory: 'crm' },
+        },
+      },
+    },
+  },
+  pl: {
+    1: {
+      title: '1. Twój start',
+      subtitle: '🟢 START',
+      description: 'Jak działa dochód online? Jakie są możliwości i czego naprawdę potrzebujesz?',
+      lessons: {
+        '1.1': {
+          stageTitle: 'Twój start',
+          title: 'Jak działa dochód online?',
+          description: 'Poznaj podstawy cyfrowej wartości, automatyzacji tworzenia wartości i skalowalności.',
+          learnContent: {
+            videoTitle: 'Wprowadzenie: fundament dochodu online',
+            summaryText: 'Dochód online nie jest kwestią szczęścia ani magii. Powstaje, gdy rozwiązujesz istniejące problemy i łączysz osobę z potrzebą z odpowiednim rozwiązaniem.',
+            bulletPoints: [
+              'Podaż i popyt: ktoś szuka rozwiązania, a Ty polecasz odpowiedni produkt.',
+              'Automatyzacja: Twój system może pracować przez całą dobę, także gdy śpisz.',
+              'Niezależność od miejsca: laptop jest Twoim centrum działania.',
+            ],
+            fullArticleGuide: `### Podstawowe prawo dochodu online
+
+Zarabianie w internecie nie jest tajemniczą sztuczką i nie wymaga wrodzonego talentu. Opiera się na uniwersalnej zasadzie: **tworzeniu wartości poprzez rozwiązywanie problemów**.
+
+Gdy ktoś mierzy się z pilnym problemem—chce dodatkowego dochodu, lepszej kondycji, spokojniejszego snu albo sukcesu zawodowego—aktywnie szuka prostszej drogi. Jeśli dostarczysz lub polecisz odpowiednie rozwiązanie, możesz otrzymać wynagrodzenie za stworzoną wartość.
+
+#### Trzy filary cyfrowej skalowalności
+
+1. **Niskie koszty krańcowe**: Produkt cyfrowy lub strona rekomendacyjna wymaga jednorazowej pracy, a później może obsłużyć 10, 100 albo 10 000 osób jednocześnie.
+2. **Zautomatyzowane procesy**: Nowoczesne systemy e-mail i sprzedaży cyfrowej komunikują się i dostarczają treści przez całą dobę, niezależnie od Twojego czasu pracy.
+3. **Niezależność od miejsca**: Cała firma może działać z laptopa lub smartfona. Nie potrzebujesz lokalu, magazynu ani pracowników.
+
+#### Twoja rola jako partnera afiliacyjnego
+
+Nie musisz tworzyć własnego produktu. Jako partner afiliacyjny łączysz podaż z popytem. Polecasz sprawdzone produkty uznanych dostawców i otrzymujesz prowizję za każdą skuteczną sprzedaż—często od 30% do 70%.`,
+            practicalExamples: ['Przykład dodatkowego dochodu: pracownik chce zarabiać dodatkowe 500 € miesięcznie. Polecasz mu sprawdzony program krok po kroku i otrzymujesz 50% prowizji.', 'Przykład automatyzacji: zainteresowana osoba zapisuje się na stronie o 23:00. System natychmiast wysyła poradnik i przedstawia ofertę partnerską. Sprzedaż może nastąpić, gdy śpisz.'],
+            videoChapters: [
+              { time: '0:00', title: 'Witamy w GOM-MAR Academy' },
+              { time: '2:15', title: 'Zasada tworzenia wartości' },
+              { time: '4:30', title: 'Dlaczego afiliacja jest dobra na start' },
+              { time: '6:50', title: 'Podsumowanie i pierwsze zadanie' },
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Nie musisz tworzyć własnego produktu—możesz polecać istniejące, sprawdzone rozwiązania w marketingu afiliacyjnym.',
+            keyPrinciples: ['Skup się na rozwiązaniu problemu, nie na presji sprzedażowej', 'Prosty system jest lepszy niż skomplikowany chaos', 'Konsekwencja przez pierwsze 30 dni decyduje o postępie'],
+          },
+          actionTask: {
+            instruction: 'Podejmij zobowiązanie: jaki cel chcesz osiągnąć w ciągu 90 dni?',
+            placeholder: 'Wybierz swój główny cel…',
+          },
+        },
+        '1.2': {
+          stageTitle: 'Twój start',
+          title: 'Jakie są możliwości?',
+          description: 'Przegląd marketingu afiliacyjnego, produktów cyfrowych i automatycznych systemów rekomendacji.',
+          learnContent: {
+            videoTitle: 'Porównanie modeli: która droga pasuje do Ciebie?',
+            summaryText: 'Istnieje wiele sposobów zarabiania online. Dla początkujących afiliacja jest najmniej ryzykowna: bez obsługi klienta, tworzenia produktu i logistyki.',
+            bulletPoints: ['Marketing afiliacyjny: 30–70% prowizji od sprzedaży.', 'Własne produkty cyfrowe: wysoka marża, ale dużo przygotowań.', 'Usługi i coaching: szybszy przychód, ale zależny od Twojego czasu.'],
+            fullArticleGuide: `### Najpopularniejsze modele biznesu online—porównanie
+
+Początkujący często czują się przytłoczeni liczbą możliwości. Nie każdy model nadaje się jednak na start bez specjalistycznej wiedzy lub dużego kapitału.
+
+#### 1. Marketing afiliacyjny—rekomendacja GOM-MAR
+* **Jak działa**: Polecasz produkty innych dostawców przez osobisty link partnerski.
+* **Zalety**: Bez tworzenia produktu, obsługi klienta i realizacji zamówień; możesz zacząć od razu, a produkty cyfrowe często oferują prowizje 30–70%.
+* **Wada**: Nie budujesz przede wszystkim własnej marki produktowej—co na początku często jest zaletą.
+
+#### 2. Własne produkty cyfrowe—e-booki i kursy wideo
+* **Jak działa**: Tworzysz i sprzedajesz własne kursy lub poradniki.
+* **Zalety**: Pełna kontrola nad cenami, ofertą i lejkiem oraz bardzo wysoka marża.
+* **Wady**: Dużo czasu na tworzenie, aktualizacje i obsługę klienta.
+
+#### 3. E-commerce i dropshipping
+* **Jak działa**: Sprzedajesz fizyczne produkty w sklepie internetowym.
+* **Zaleta**: Duży popyt na produkty fizyczne.
+* **Wady**: Zwroty, opóźnienia, odprawa celna i marże wynoszące czasem tylko 10–20% zwiększają ryzyko.
+
+#### Najlepszy punkt startowy
+
+GOM-MAR Academy koncentruje się na **marketingu afiliacyjnym wspieranym przez automatyczną komunikację e-mail**. Łączy on niskie ryzyko z szybką drogą do pierwszego rzeczywistego przychodu online.`,
+            practicalExamples: ['Afiliacja kontra sklep: w dropshippingu wymieniasz wadliwe produkty i odpowiadasz na reklamacje. W afiliacji te zadania przejmuje dostawca produktu.'],
+            videoChapters: [{ time: '0:00', title: 'Przegląd cyfrowych modeli biznesowych' }, { time: '3:20', title: 'Marketing afiliacyjny w praktyce' }, { time: '6:45', title: 'Porównanie czasu i wyniku' }],
+          },
+          understandContent: { coreTakeaway: 'Marketing afiliacyjny to najszybsza i najbezpieczniejsza droga do pierwszego dodatkowego dochodu online.', keyPrinciples: ['Mniejsze ryzyko dzięki sprawdzonym procesom dostawcy', 'Natychmiastowy start bez rozbudowanej infrastruktury firmy', 'Skalowanie dzięki automatycznemu pozyskiwaniu kontaktów'] },
+          actionTask: { instruction: 'Wybierz model, na którym skupimy się w GOM-MAR Academy.', checklistItems: ['Zaczynam od marketingu afiliacyjnego', 'Będę korzystać z automatycznej sprzedaży e-mail', 'Zbuduję prosty system krok po kroku'] },
+        },
+        '1.3': {
+          stageTitle: 'Twój start',
+          title: 'Czego naprawdę potrzebujesz?',
+          description: 'Minimalny zestaw potrzebny do udanego startu bez zbędnego balastu.',
+          learnContent: {
+            videoTitle: 'Startowy system z trzech elementów',
+            summaryText: 'Nie pozwól, by dziesiątki narzędzi marketingowych Cię rozpraszały. Na start potrzebujesz trzech rzeczy: landing page, autorespondera e-mail i oferty partnerskiej.',
+            bulletPoints: ['1. Domena i landing page—Twoja cyfrowa wizytówka', '2. Autoresponder—automatyczny system sprzedaży e-mail', '3. Oferta partnerska—sprawdzony produkt z prowizją'],
+            fullArticleGuide: `### Prosty system GOM-MAR z trzech elementów
+
+Wielu początkujących gubi się w porównywaniu oprogramowania, programach graficznych i szczegółach technicznych. Tygodniami zmieniają ustawienia, nie kontaktując się z ani jedną zainteresowaną osobą.
+
+Ograniczamy system do **absolutnego minimum**, które jest potrzebne do uzyskania mierzalnych wyników.
+
+#### Element 1: Prosty landing page
+
+Jedna strona, na której odwiedzający podaje adres e-mail, aby otrzymać przydatny bezpłatny poradnik. Bez zbędnych dodatków i dziesięciu podstron.
+
+#### Element 2: Automatyczny autoresponder e-mail
+
+Gdy ktoś się zapisze, automatyzacja przejmuje dalszą komunikację. Dostarcza poradnik, a w następnych dniach wysyła przygotowane wiadomości budujące zaufanie i zawierające linki rekomendacyjne.
+
+#### Element 3: Sprawdzona oferta afiliacyjna
+
+Przetestowany produkt z platformy takiej jak Digistore24 lub Copecart, który rozwiązuje realny problem grupy docelowej i zapewnia 30–70% prowizji od sprzedaży.
+
+Wszystko ponadto—logo, wizytówki i skomplikowane lejki—jest na początku rozpraszaczem.`,
+            practicalExamples: ['Minimalny system w praktyce: odwiedzający wpisuje e-mail na stronie → system automatycznie wysyła wiadomość powitalną i link rekomendacyjny → zainteresowany kupuje → otrzymujesz powiadomienie o prowizji.'],
+          },
+          understandContent: { coreTakeaway: 'Mniej znaczy więcej. Im prostszy jest Twój pierwszy system, tym szybciej możesz zarobić pierwsze euro.', keyPrinciples: ['Trzy podstawowe elementy wystarczą do budowy dodatkowego dochodu', 'GOM-MAR udostępnia automatyzację e-mail i narzędzia', 'Perfekcja jest wrogiem postępu'] },
+          actionTask: { instruction: 'Potwierdź minimalną listę potrzebną do uruchomienia systemu.', checklistItems: ['Rozumiem: potrzebuję tylko trzech elementów', 'Jestem gotowy korzystać z automatyzacji e-mail GOM-MAR', 'Skupiam się na natychmiastowym wdrożeniu'] },
+        },
+        '1.4': {
+Warning: truncated output (original token count: 131826)
+Total output lines: 4775
+
+          stageTitle: 'Twój start',
+          title: 'Czego NIE potrzebujesz?',
+          description: 'Uniknij pięciu najdroższych błędów i pożeraczy czasu początkujących.',
+          learnContent: {
+            videoTitle: 'Unikaj typowych pożeraczy czasu i pułapek',
+            summaryText: 'Większość początkujących ponosi porażkę, ponieważ tygodniami projektuje logo, zajmuje się zbędną biurokracją albo szuka „idealnego” oprogramowania.',
+            bulletPoints: ['❌ Na początku nie potrzebujesz drogiej infrastruktury firmy', '❌ Nie trać tygodni na idealne logo i kolory', '❌ Nie nagrywaj 100 filmów przed startem', '❌ Unikaj drogich narzędzi za 200 € miesięcznie'],
+            fullArticleGuide: `### Pięć najdroższych pożeraczy czasu początkujących
+
+Dlaczego niektórzy osiągają pierwszy przychód w ciągu 14 dni, a inni po sześciu miesiącach nadal stoją w miejscu? Różnicę często tworzą rzeczy, z których **świadomie rezygnujesz**.
+
+#### 1. Perfekcjonizm przy logo i grafice
+
+Nikt nie kupuje produktu dlatego, że logo jest zielone lub niebieskie. Na początku wystarczy czytelny tekst oraz prosty, profesjonalny wygląd.
+
+#### 2. Skomplikowane abonamenty na oprogramowanie
+
+Nie kupuj drogich platform „wszystko w jednym” za setki euro miesięcznie. Korzystaj ze zintegrowanych narzędzi GOM-MAR Academy, aby utrzymać koszty stałe blisko zera.
+
+#### 3. Tworzenie 50 kont w mediach społecznościowych
+
+Skup się na dokładnie **jednym** głównym źródle ruchu—na przykład grupach na Facebooku lub Instagram Reels—zamiast rozpraszać uwagę na dziesięć platform.
+
+#### 4. Niekończące się poszukiwania bez działania—pułapka poradników
+
+Wiedza bez działania nie przynosi dochodu. Poznaj tylko następny krok, od razu go wykonaj, a dopiero potem przejdź do kolejnej lekcji.`,
+            practicalExamples: ['Przykład sukcesu: Marek nie ma logo ani wizytówek i używa prostego zdjęcia profilowego. Zdobywa 15 kontaktów tygodniowo i realizuje pierwsze sprzedaże. Inna osoba przez trzy tygodnie projektuje logo i nie zarabia nic.'],
+          },
+          understandContent: { coreTakeaway: 'Unikaj nadmiernego analizowania. Twoim głównym zadaniem jest kierowanie zainteresowanych osób na landing page.', keyPrinciples: ['Widoczność wygrywa z perfekcjonizmem', 'Najpierw zdobywaj kontakty, później ulepszaj', 'Korzystaj ze sprawdzonych inspiracji zamiast wymyślać wszystko od nowa'] },
+          actionTask: {
+            instruction: 'Usuń rozpraszacze: której pułapki będziesz od dziś świadomie unikać?',
+            placeholder: 'Np. wielogodzinnego poprawiania logo lub kolorów…',
+          },
+        },
+      },
+    },
+    2: {
+      title: '2. Twój kierunek',
+      subtitle: '🔵 FUNDAMENT',
+      description: 'Znajdź niszę, określ grupę docelową, poznaj jej główny problem i wybierz odpowiednią ofertę.',
+      lessons: {
+        '2.1': {
+          stageTitle: '2. Twój kierunek', title: 'Znajdź niszę',
           description: 'Znajdź dochodową niszę w jednym z trzech najsilniejszych rynków: zdrowie, finanse lub relacje.',
           learnContent: {
             videoTitle: 'Formuła rentowności Twojej niszy',
@@ -6637,853 +5937,7 @@ Nie narzucaj reguł typu „90% oznacza kontakt w cztery godziny”, jeśli nie 
 
 Przed aktywacją piksela, przesłaniem grupy lub synchronizacją CRM potwierdź podstawę prawną, wymagania zgody, zasady platformy, retencję, usuwanie, wykluczenia i transfery międzynarodowe. Haszowanie identyfikatora nie czyni danych osobowych anonimowymi.
 
-Ustaw limity częstotliwości według kanału i kampanii, wyklucz osoby po konwersji lub sprzeciwie, gdy właściwe, i umożliw zmianę preferencji. Waliduj parametry UTM oraz definicje zdarzeń, ale licz się z lukami atrybucji między urządzeniami i przez ochronę prywatności. Monitoruj zasięg, wynik przyrostowy, skargi, zmęczenie, dostępność i koszt krańcowy, nie tylko przychód.`,
-            practicalExamples: ['Uruchom małą kampanię zgodną ze zgodą w jednym głównym i jednym wspierającym kanale, z opisanym limitem częstotliwości, regułami wykluczenia i kontrolą przyrostowości.', 'Przekształć jeden zweryfikowany poradnik w krótki film, e-mail i post dopiero po dopasowaniu formatu i ponownym sprawdzeniu twierdzeń, praw oraz napisów.'],
-          },
-          understandContent: { coreTakeaway: 'Skoordynowany marketing działa, gdy jest trafny, ograniczony, mierzalny i pełen szacunku, a nie gdy marka śledzi ludzi wszędzie.', keyPrinciples: ['Przed retargetingiem ustaw ochronę prywatności i kontrolę grup', 'Optymalizuj wartość przyrostową i doświadczenie klienta, nie surową częstotliwość', 'Dopasuj ponownie używaną treść do każdego kanału'] },
-          actionTask: { instruction: 'Utwórz odpowiedzialny plan kanałów i retargetingu:', checklistItems: ['Udokumentowano cel, uprawnienie odbiorców i możliwości kanałów', 'Zweryfikowano zgodę, piksele, retencję i wykluczenia', 'Treści ścieżki nie zawierają sztucznego niedoboru ani niepopartych case studies', 'Ustawiono limity częstotliwości i wykluczenia po konwersji', 'Zdefiniowano czterotygodniowy workflow adaptacji treści'], toolboxCategory: 'landingpage' },
-        },
-        '25.2': {
-          stageTitle: '25. Skoordynowane kanały i odpowiedzialne skalowanie', title: 'Kontrolowane skalowanie lejka i sprzedaż wymagająca namysłu',
-          description: 'Skaluj proces sprzedaży ofert wymagających namysłu tylko wtedy, gdy kwalifikacja jest uczciwa, follow-up dozwolony, a ekonomia, realizacja i wyniki klientów wspierają wzrost.',
-          learnContent: {
-            videoTitle: 'Projekt lejka ofert wymagających namysłu i kontrola skalowania',
-            summaryText: 'Automatyzacja może porządkować zgłoszenia, przypomnienia i szkice, ale nie gwarantuje pięciocyfrowych klientów, 40% zamknięć ani 85% obecności. Skalowanie następuje po walidacji ekonomii i możliwości obsługi.',
-            bulletPoints: ['Używaj krótkiego formularza zgłoszeniowego tylko do informacji potrzebnych do oceny wzajemnego dopasowania', 'Oferuj dostępne przypomnienia w dozwolonych kanałach z łatwą zmianą lub anulowaniem terminu', 'Przygotuj odbiorców rzetelnymi materiałami zamiast sekwencji perswazji usuwających każdy sprzeciw', 'Mierz CAC, marżę pokrycia, czas zwrotu, retencję, zwroty, skargi i możliwości realizacji według kohorty', 'Kieruj rekordy wyjaśnialnymi regułami i kontrolą człowieka; generuj oferty oraz umowy wyłącznie z zatwierdzonych danych'],
-            coreConcepts: [
-              { iconName: 'target', title: 'UCZCIWA WZAJEMNA KWALIFIKACJA', description: 'Oceń, czy oferta i potrzeby klienta pasują do siebie. Nie filtruj ludzi przez zbędne pytania wrażliwe lub finansowe.', highlight: true },
-              { iconName: 'zap', title: 'WSPARCIE OBECNOŚCI Z SZACUNKIEM', description: 'Wspieraj obecność potwierdzeniami, danymi kalendarza i łatwą zmianą terminu, nie presją ani niepopartymi obietnicami „boostera”.' },
-            ],
-            resources: [
-              { title: 'Kwestionariusz kwalifikacji oferty wymagającej namysłu', subtitle: 'Dostępny szablon do kontrolowanego flow', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Priorytetyzacja Mara CRM', subtitle: 'Sprawdź wyjaśnialne sugestie routingu', type: 'tool', iconName: 'users', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Skaluj proces sprzedaży dopiero po potwierdzeniu, że działa bezpiecznie
-
-Droższe lub złożone oferty często wymagają więcej kontekstu, lecz automatyzacja powinna zmniejszać tarcie administracyjne, a nie manipulować decyzjami.
-
-#### Kontrolowany proces
-
-1. **Formularz wzajemnego dopasowania**: Pytaj tylko o istotne cele, potrzeby, czas i zakres usługi. Wyjaśnij cel danych, oznacz pola opcjonalne i unikaj danych wrażliwych, jeśli nie są bezwzględnie konieczne i legalne.
-2. **Rezerwacja i przygotowanie**: Potwierdź strefę czasową, potrzeby dostępności, agendę, anulowanie i zmianę terminu. Używaj prawdziwych przykładów za zgodą i z reprezentatywnymi ograniczeniami.
-3. **Kontrolowany routing**: Stosuj opisane, testowalne reguły. Człowiek sprawdza nietypowe przypadki, możliwości i uczciwość przed przypisaniem.
-4. **Rozmowa i decyzja**: Daj odbiorcy czas, dokładne warunki i drogę kontaktu. Nie wykorzystuj pilności, trudności finansowych ani innych podatności.
-5. **Workflow po rozmowie**: Twórz szkice z zatwierdzonych faktów, wymagaj kontroli ceny i warunków umowy, zapisuj zgodę i zatrzymuj niewłaściwy follow-up.
-6. **Brama skalowania**: Zwiększaj budżet lub wolumen tylko, gdy jakość danych, marża, zwroty, skargi, możliwości obsługi, czas odpowiedzi i wyniki klientów pozostają akceptowalne.
-
-CAC i LTV są szacunkami zależnymi od atrybucji, kohorty i horyzontu. Definiuj je spójnie, uwzględniaj istotne koszty i analizuj scenariusze. Zachowaj limity budżetu, etapowe wdrożenie i kryteria rollbacku.`,
-            practicalExamples: ['Przetestuj flow na małej kohorcie z cotygodniowym przeglądem człowieka. Zwiększaj wolumen tylko wtedy, gdy ekonomia, uczciwość, jakość realizacji i wyniki klientów mieszczą się w określonych granicach.'],
-          },
-          understandContent: { coreTakeaway: 'Odpowiedzialne skalowanie rozwija zwalidowany i możliwy do obsługi proces; nie automatyzuje presji ani nie obiecuje stałych wskaźników zamknięcia i obecności.', keyPrinciples: ['Kwalifikuj wzajemne dopasowanie tylko potrzebnymi danymi', 'Wymagaj kontroli routingu, ofert i umów', 'Skaluj etapowo na podstawie dowodów i progów rollbacku'] },
-          actionTask: { instruction: 'Przygotuj kontrolowany proces sprzedaży wymagającej namysłu:', checklistItems: ['Pytania kwalifikacyjne są potrzebne, wyjaśnione i dostępne', 'Skonfigurowano zgodę na przypomnienia, strefę czasową, zmianę i anulowanie', 'Reguły routingu są wyjaśnialne i sprawdzone pod kątem niesprawiedliwych wykluczeń', 'Cena, oferta i szkice umów wymagają akceptacji człowieka', 'Udokumentowano CAC, marżę, możliwości realizacji, skargi i progi rollbacku'], toolboxCategory: 'email' },
-        },
-      },
-    },
-    26: {
-      title: '26. Troska o społeczność, retencja i trwała wartość klienta',
-      subtitle: 'Wspierające uczestnictwo, uczciwe uznanie i wartościowe relacje z klientami',
-      description: 'Buduj bezpieczną i użyteczną społeczność oraz poprawiaj retencję przez realne wyniki członków, przejrzyste warunki członkostwa i trafne oferty, a nie presję statusu lub kompulsywne zaangażowanie.',
-      lessons: {
-        '26.1': {
-          stageTitle: '26. Troska o społeczność i retencja', title: 'Zdrowe zaangażowanie, onboarding i moderacja',
-          description: 'Zaprojektuj społeczność, w której udział jest dobrowolny, dostępny i bezpieczny, z jasnym zarządzaniem oraz retencją opartą na dowodach.',
-          learnContent: {
-            videoTitle: 'Architektura społeczności: przynależność bez manipulacji',
-            summaryText: 'Społeczność może wspierać naukę i relacje, ale nie zatrzymuje automatycznie klientów na lata ani nie moderuje się sama. Najważniejsze są bezpieczeństwo, wartość i odpowiedzialna opieka człowieka.',
-            bulletPoints: ['Przed zwiększaniem aktywności określ cel, oczekiwania, zasady moderacji, zgłoszenia i odwołania', 'Oferuj opcjonalne ścieżki onboardingu bez wymuszania publicznego ujawniania osobistych celów', 'Doceniaj pomocne wkłady za zgodą i unikaj publicznych rankingów, które zawstydzają, wykluczają lub promują niezdrową aktywność', 'Wspieraj moderatorów i ambasadorów szkoleniem, granicami, eskalacją i uczciwym uznaniem', 'Mierz wyniki członków, bezpieczeństwo, dostępność i dobrowolną retencję, nie tylko posty oraz czas spędzony'],
-            coreConcepts: [
-              { iconName: 'users', title: 'UŻYTECZNE UCZESTNICTWO', description: 'Prowadź możliwy do utrzymania rytm opcjonalnych pytań, wsparcia rówieśniczego i spotkań według potrzeb członków, nie dla stałej aktywności.', highlight: true },
-              { iconName: 'award', title: 'UCZCIWE UZNANIE', description: 'Doceniaj znaczące wkłady za zgodą. Zapewnij alternatywy bez rywalizacji i nie pozwól, by punkty nagradzały spam lub dominację.' },
-              { iconName: 'heart', title: 'TROSKA O CZŁONKA', description: 'Traktuj brak aktywności jako niejednoznaczny sygnał. Zaoferuj jedną pełną szacunku wiadomość zgodną z preferencjami zamiast automatycznej presji.' },
-            ],
-            resources: [
-              { title: 'Plan troski o społeczność', subtitle: 'Szablony moderacji, dostępności i planowania programu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Szablony e-maili o preferencjach członka', subtitle: 'Wiadomości kontrolne i wyjścia zgodne ze zgodą', type: 'tool', iconName: 'mail', actionUrl: 'email' },
-            ],
-            fullArticleGuide: `### Buduj społeczność, z której można bezpiecznie korzystać
-
-Retencja nie uzasadnia maksymalizacji uwagi ani utrudniania odejścia. Zdrowa społeczność pomaga członkom osiągać istotne cele, zachowując wybór i dobrostan.
-
-#### Kontrole cyklu życia społeczności
-
-1. **Wejście i orientacja**: Wyjaśnij cel, cenę, odnowienie, prywatność, zasady zachowania, moderację i pomoc. Pozwól członkom przedstawiać się według własnego komfortu.
-2. **Opcje uczestnictwa**: Zapewnij ścieżki asynchroniczne, na żywo, oszczędne transferowo i dostępne. Publiczne postowanie nie może być warunkiem otrzymania opłaconej wartości.
-3. **Uznanie**: Świętuj pracę tylko za zgodą i z dokładnym kontekstem. Unikaj rankingów, jeśli nasilają nierówność, spam lub niezdrowe porównania.
-4. **Bezpieczeństwo i moderacja**: Szkol nazwanych moderatorów; opublikuj zasady zgłoszeń, reakcji, odwołań i granic sytuacji nagłych. Boty mogą wspierać triage, ale nie powinny samodzielnie podejmować istotnych decyzji moderacyjnych.
-5. **Ambasadorzy**: Określ obowiązki, czas, wynagrodzenie lub korzyści, konflikty, poufność i możliwość rezygnacji. Wolontariusze nie zastępują właściwej obsady.
-6. **Brak aktywności i wyjście**: Respektuj preferencje, wysyłaj ograniczone przypomnienia, umożliw łatwe anulowanie oraz eksport lub usunięcie, gdy właściwe. Nie ukrywaj rezygnacji i nie reaktywuj osób po opt-out.
-
-Testuj onboarding i program z opiniami członków. Segmentuj ostrożnie i monitoruj różnice uczestnictwa, incydenty, czas reakcji, bariery dostępności, obciążenie supportu i deklarowane wyniki członków.`,
-            practicalExamples: ['Zaoferuj opcjonalną siedmiodniową orientację ze ścieżką cichej nauki, jasną pomocą i bez obowiązku publicznego ujawniania.', 'Zastąp ranking „najwięcej postów” nominowanymi przez członków pomocnymi wkładami i prywatnymi kamieniami milowymi.'],
-          },
-          understandContent: { coreTakeaway: 'Trwała retencja społeczności wynika z bezpieczeństwa, trafnej wartości, prawdziwej przynależności i wolności uczestnictwa lub odejścia.', keyPrinciples: ['Moderacja i zarządzanie wymagają odpowiedzialnych ludzi', 'Uznanie musi być dobrowolne i uczciwe', 'Brak aktywności traktuj z szacunkiem, nie presją'] },
-          actionTask: { instruction: 'Przygotuj odpowiedzialny plan retencji społeczności:', checklistItems: ['Udokumentowano cel, zasady, zgłoszenia, odwołania i właściciela moderacji', 'Określono dostępny onboarding bez presji', 'Mechanizmy uznania sprawdzono pod kątem zgody, uczciwości i nadużyć', 'Skonfigurowano jedną wiadomość zgodną z preferencjami oraz łatwe wyjście', 'Pomiar obejmuje wyniki członków, bezpieczeństwo i możliwości supportu'], toolboxCategory: 'email' },
-        },
-        '26.2': {
-          stageTitle: '26. Trwała wartość klienta', title: 'Wartość klienta, trafne kolejne oferty i uczciwe polecenia',
-          description: 'Twórz opcjonalne kolejne oferty dopasowane do zweryfikowanych potrzeb i mierz trwałą wartość po kosztach, zwrotach oraz wynikach klientów.',
-          learnContent: {
-            videoTitle: 'Ścieżki wartości i odpowiedzialne oferty rozszerzające',
-            summaryText: 'Obecny klient nie jest automatycznie najbardziej dochodowym odbiorcą. Dodatkowe oferty powinny poprawiać dopasowanie i wynik, a nie wykorzystywać poniesione koszty, lojalność czy scoring zachowań.',
-            bulletPoints: ['Mapuj elastyczne kolejne kroki z potrzeb klientów zamiast zmuszać wszystkich do czteropoziomowej drabiny cen', 'Proponuj rozszerzenie po istotnym dowodzie lub wyraźnej prośbie, nie w rzekomo idealnym momencie psychologicznym', 'Używaj NPS tylko jako jednego zbiorczego sygnału opinii, nigdy jako dowodu chęci upsellu konkretnej osoby', 'Obliczaj obserwowaną wartość kohorty z przychodem, kosztami zmiennymi, zwrotami, supportem i horyzontem retencji', 'Jasno przedstawiaj klientom warunki, kwalifikację, zachęty i ujawnienia programu poleceń lub afiliacji'],
-            coreConcepts: [
-              { iconName: 'trending_up', title: 'TRWAŁA MARŻA POKRYCIA', description: 'Mierz wkład każdej oferty i kohorty. Nie zakładaj, że 80% zysku netto musi pochodzić z późniejszych etapów.', highlight: true },
-              { iconName: 'gift', title: 'WYGODNE, BEZPIECZNE ROZSZERZENIA', description: 'Ułatwiaj legalne rozszerzenia, zachowując potwierdzenie ceny, prawa anulowania, uwierzytelnienie i ochronę przed przypadkowym zakupem.' },
-            ],
-            resources: [
-              { title: 'Plan ścieżek wartości klienta', subtitle: 'Arkusz potrzeb, cen i ekonomii kohorty', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Segmentacja klientów Mara CRM', subtitle: 'Sprawdź autoryzowany kontekst zakupów i obsługi', type: 'tool', iconName: 'users', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Twórz wartość klienta bez produkowania kolejnego problemu
-
-Wartość klienta rośnie, gdy firma niezawodnie rozwiązuje istotne potrzeby przy trwałych kosztach. Nie maksymalizuje się jej samym zwiększaniem ceny lub liczby zakupów.
-
-#### Elastyczny model ścieżki wartości
-
-1. **Wsparcie bezpłatne lub wprowadzające**: Pomaga ocenić dopasowanie bez mylącej przynęty i ukrytych opłat cyklicznych.
-2. **Oferta podstawowa**: Dostarcza główny obiecany wynik z pełnymi warunkami i właściwym wsparciem.
-3. **Opcjonalna ciągłość**: Zapewnia stałą wartość tylko przy realnej potrzebie cyklicznej. Jasno pokaż odnowienie, rezygnację i zmiany.
-4. **Wdrożenie specjalistyczne**: Oferuje bardziej intensywną pomoc odpowiednim klientom bez sugerowania, że ekskluzywność oznacza wyższą wartość człowieka.
-5. **Pauza, wyjście lub polecenie gdzie indziej**: Czasem odpowiednim krokiem jest brak zakupu, tańsza opcja albo inny dostawca.
-
-Definiuj LTV według kohorty, horyzontu i podstawy marży. Oddzielaj obserwowane wyniki od prognoz i analizuj wrażliwość. Oceniaj retencję, zwroty, skargi, nakład supportu i deklarowane wyniki klientów obok przychodu.
-
-Rozszerzenie jednym kliknięciem nadal wymaga wyraźnego potwierdzenia, dostępnych warunków i właściwego uwierzytelnienia. Programy poleceń wymagają jasnego ujawnienia zachęty, ochrony przed oszustwami, odpowiedniego przeglądu podatkowego lub umownego i braku presji na rekrutowanie.`,
-            practicalExamples: ['Po ukończeniu programu podstawowego zapytaj klienta, jakiej pomocy nadal potrzebuje, i przedstaw trafne opcje, w tym brak rozszerzenia, wraz z ceną i warunkami anulowania.', 'Przetestuj program poleceń z przejrzystym ujawnieniem prowizji, kontrolą jakości i łatwą odmową udziału promocyjnego.'],
-          },
-          understandContent: { coreTakeaway: 'Długoterminowa wartość klienta jest trwała, gdy opcjonalne oferty poprawiają zweryfikowane dopasowanie i wynik, a ekonomia oraz prawa pozostają przejrzyste.', keyPrinciples: ['Nie traktuj oceny satysfakcji jako intencji zakupu osoby', 'Mierz marżę i wyniki klientów według kohorty', 'Rozszerzenia, subskrypcje i polecenia muszą być jawne i opcjonalne'] },
-          actionTask: { instruction: 'Zaprojektuj uczciwy system wartości klienta:', checklistItems: ['Elastyczne ścieżki obejmują rozszerzenie, pauzę, wyjście i polecenie gdzie indziej', 'Każda oferta podaje cenę, odnowienie, anulowanie, dopasowanie i ograniczenia', 'Obserwowany LTV używa określonej kohorty, horyzontu, kosztów i zwrotów', 'Przetestowano potwierdzenie rozszerzenia i ochronę przed przypadkowym zakupem', 'Udokumentowano zachęty, ujawnienia i kontrolę jakości poleceń'], toolboxCategory: 'affiliate' },
-        },
-      },
-    },
-    27: {
-      title: '27. Asystenci AI, workflow automatyzacji i niezawodność operacyjna',
-      subtitle: 'Ograniczone wsparcie, bezpieczne integracje i procesy możliwe do odzyskania',
-      description: 'Używaj AI i narzędzi no-code do odpowiednich rutynowych zadań, zachowując świadomy wybór użytkownika, minimalne uprawnienia, eskalację do człowieka i niezawodne odzyskiwanie.',
-      lessons: {
-        '27.1': {
-          stageTitle: '27. Workflow wspierane przez AI', title: 'Ograniczeni asystenci czatu, intake i rezerwacja',
-          description: 'Konfiguruj asystentów odpowiadających w określonym zakresie, zbierających tylko konieczne informacje i przekazujących niepewne lub istotne sprawy ludziom.',
-          learnContent: {
-            videoTitle: 'Asystenci AI w obsłudze zapytań: użyteczni, przejrzyści i nadzorowani',
-            summaryText: 'Szybka odpowiedź może pomóc, lecz uniwersalna reguła 60 sekund nie gwarantuje konwersji. Asystent powinien ujawniać automatyzację, unikać autonomicznej kwalifikacji sprzedażowej i zapewniać łatwy kontakt z człowiekiem.',
-            bulletPoints: ['Poinformuj o interakcji z automatyzacją oraz wyjaśnij jej cel i użycie danych', 'Odpowiadaj z zatwierdzonych źródeł, a przy braku dowodów, uprawnień lub pewności odmawiaj albo eskaluj', 'Zbieraj tylko konieczne dane; unikaj informacji wrażliwych, finansowych i o podatności, jeśli nie są ściśle uzasadnione', 'Bezpiecznie sprawdzaj dostępność kalendarza i wymagaj wyraźnego potwierdzenia przed utworzeniem lub zmianą terminu', 'Loguj istotne działania i decyzje bez domyślnego przechowywania pełnych rozmów'],
-            coreConcepts: [
-              { iconName: 'bot', title: 'ODPOWIEDNIA REAKCJA', description: 'Ustal cele czasu obsługi według potrzeb użytkowników i możliwości zespołu. Stawiaj dokładną pomoc ponad niepoparte twierdzenia speed-to-lead.', highlight: true },
-              { iconName: 'cpu', title: 'WYJAŚNIALNY ROUTING', description: 'Kieruj według obserwowalnego typu prośby, języka, pilności i dopasowania usługi, nie przez nieprzejrzyste etykiety A/B/C ani ocenę wartości osoby.' },
-              { iconName: 'calendar', title: 'POTWIERDZONA REZERWACJA', description: 'Pokaż dostępne terminy ze strefą czasową, dostępnością i zasadami anulowania, a przed zapisem do kalendarza wymagaj potwierdzenia.' },
-            ],
-            resources: [
-              { title: 'Biblioteka bezpiecznych promptów asystenta AI', subtitle: 'Szablony zakresu, odmowy, eskalacji i testów', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Asystent AI GOM-MAR', subtitle: 'Testuj szkice i routing na danych syntetycznych', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Projektuj asystenta z jasnymi granicami
-
-Asystent AI może zmniejszyć oczekiwanie i pracę administracyjną, ale może też źle zrozumieć użytkownika, wymyślić informację lub działać na złym rekordzie. Zacznij od wąskiego, odwracalnego zakresu.
-
-#### Bezpieczny flow intake
-
-1. **Ujawnienie i wybór**: Przedstaw asystenta, wyjaśnij jego możliwości i pokaż widoczną drogę do człowieka.
-2. **Minimalny intake**: Pytaj tylko o dane potrzebne do odpowiedzi lub routingu. Oznacz pola opcjonalne i nie zbieraj sekretów na czacie.
-3. **Odpowiedź oparta na źródłach**: Korzystaj z zatwierdzonych, wersjonowanych materiałów; pokazuj niepewność i nie wymyślaj cen, zasad, dostępności ani poprzedniego kontaktu.
-4. **Routing**: Używaj opisanych kryteriów i umożliw ręczną korektę. Nie podejmuj autonomicznie decyzji o kwalifikacji, kredycie, zatrudnieniu ani innych istotnych sprawach.
-5. **Rezerwacja**: Odczytuj tylko potrzebną dostępność, zapobiegaj duplikatom i konfliktom, pokaż strefę oraz zasady i poproś o końcowe potwierdzenie.
-6. **Eskalacja**: Przekazuj sprawy bezpieczeństwa, prawne, płatnicze, skargi, dostępność i niską pewność wraz z kontekstem, ale bez zbędnych danych osobowych.
-7. **Ewaluacja**: Przed startem testuj wrogie prompty, prompt injection, wycieki, nadużycie narzędzi, jakość wielojęzyczną, dostępność i odzyskiwanie po błędzie.
-
-Ograniczaj częstotliwość wywołań, uprawnienia i wymagaj akceptacji przy wysyłaniu wiadomości, zmianie rekordów lub rezerwacji w imieniu użytkownika. Monitoruj skuteczną pomoc, korekty, eskalacje, skargi i szkodliwe błędy, nie tylko konwersję.`,
-            practicalExamples: ['Asystent proponuje trzy dostępne terminy i niczego nie tworzy, dopóki użytkownik nie potwierdzi jednego slotu oraz zasad.', 'Na prośbę o gwarantowany wynik dochodu odmawia twierdzenia, podaje zatwierdzone fakty i oferuje pomoc człowieka.'],
-          },
-          understandContent: { coreTakeaway: 'Godny zaufania asystent jest przejrzysty, wąsko uprawniony, oparty na zatwierdzonych informacjach i zaprojektowany do bezpiecznej eskalacji.', keyPrinciples: ['Dokładność i wybór użytkownika są ważniejsze niż szybkość', 'Istotne działania wymagają potwierdzenia lub kontroli człowieka', 'Minimalizuj dane i uprawnienia narzędzi'] },
-          actionTask: { instruction: 'Przygotuj nadzorowany workflow asystenta na danych syntetycznych:', checklistItems: ['Widoczne są ujawnienie, zakres, cel danych i droga do człowieka', 'Przetestowano zatwierdzone źródła wiedzy i reguły odmowy', 'Dostęp do kalendarza ma minimalne uprawnienia i wymaga potwierdzenia', 'Sprawy wrażliwe i istotne eskalują do wskazanego właściciela', 'Przetestowano prompt injection, wyciek, duplikaty rezerwacji i odzyskiwanie'], toolboxCategory: 'landingpage' },
-        },
-        '27.2': {
-          stageTitle: '27. Niezawodność operacyjna', title: 'Bezpieczne webhooki, pipeline no-code i odzyskiwanie',
-          description: 'Łącz systemy przez uwierzytelnione zdarzenia, idempotentne przetwarzanie, minimalne uprawnienia, monitoring i ręczne odzyskiwanie zamiast zakładać bezbłędną automatyzację end-to-end.',
-          learnContent: {
-            videoTitle: 'Niezawodna automatyzacja no-code od zdarzenia do uzgodnienia',
-            summaryText: 'Automatyzacja może zmniejszyć pracę powtarzalną, ale tworzy nowe tryby awarii. Webhooki mogą być opóźnione, zduplikowane, w złej kolejności lub sfałszowane, więc krytyczny flow wymaga weryfikacji i uzgodnienia.',
-            bulletPoints: ['Przed przetworzeniem sprawdzaj podpis webhooka, czas i źródło', 'Używaj kluczy idempotencji, trwałego stanu i identyfikatorów zdarzeń, by zapobiec podwójnej realizacji lub obciążeniu', 'Oddziel kroki płatności, dostępu, faktury i wiadomości z jawnymi stanami sukcesu oraz błędu', 'Błędy przejściowe ponawiaj z backoffem, a trwałe kieruj do dead-letter lub kolejki człowieka', 'Monitoruj wyniki, uprawnienia, opóźnienie i uzgodnienie, nie tylko codzienny dashboard'],
-            coreConcepts: [
-              { iconName: 'zap', title: 'KONTROLOWANY PRZEPŁYW DANYCH', description: 'Mapuj potrzebne pola i waliduj je na każdej granicy. Synchronizacja w czasie rzeczywistym nie jest uniwersalna ani automatycznie poprawna.', highlight: true },
-              { iconName: 'git-branch', title: 'PIPELINE MOŻLIWE DO ODZYSKANIA', description: 'Projektuj gałęzie z jawnymi warunkami, retry, działaniami kompensującymi i opisanym procesem ręcznym.' },
-            ],
-            resources: [
-              { title: 'Pakiet planów niezawodności no-code', subtitle: 'Wzorce bezpieczeństwa, testów i odzyskiwania dla Make lub Zapier', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Konfiguracja webhooków Mara CRM', subtitle: 'Zarządzaj uwierzytelnionymi integracjami testowymi', type: 'tool', iconName: 'link', actionUrl: 'email' },
-            ],
-            fullArticleGuide: `### Buduj automatyzację, która bezpiecznie ulega awarii
-
-Nie automatyzuj procesu tylko dlatego, że wystąpił dwa razy. Automatyzuj, gdy zadanie jest stabilne, zrozumiane, dozwolone i warte ryzyka operacyjnego.
-
-#### Przykład zakupu i onboardingu
-
-1. **Odbierz**: Przyjmij uwierzytelnione zdarzenie przez TLS, zachowaj jego ID i czas oraz odrzuć nieprawidłowy podpis lub stare powtórzenie.
-2. **Zapisz**: Utrwal zdarzenie i obecny stan przed skutkami ubocznymi. Minimalizuj payload i usuwaj sekrety z logów.
-3. **Przetwarzaj idempotentnie**: Powtórzone zdarzenie nie może tworzyć drugiej faktury, subskrypcji ani wiadomości.
-4. **Oddziel kroki**: Potwierdzenie płatności, aktualizacja CRM, nadanie dostępu, faktura i e-mail mają własny status oraz właściciela.
-5. **Obsłuż awarię**: Błędy tymczasowe ponawiaj z wykładniczym backoffem i jitterem; trwałe izoluj do przeglądu. Nie ponawiaj w ciemno niebezpiecznych operacji.
-6. **Uzgadniaj**: Regularnie porównuj rekordy płatności, CRM, dostępu i księgowości. Alarmuj o różnicach i opisuj korektę.
-7. **Odzyskuj**: Utrzymuj rollback lub działania kompensujące, ręczną realizację, kopie, rotację poświadczeń i rejestr incydentów.
-
-Używaj osobnych środowisk testowych i produkcyjnych, danych syntetycznych, kont o ograniczonym zakresie, menedżera sekretów i przeglądu zmian. Testuj timeout, duplikację, zmianę kolejności, częściowe wykonanie, awarię dostawcy i limity. Powiadomienia muszą prowadzić do działania i nie ujawniać danych klienta w Slacku lub Telegramie.`,
-            practicalExamples: ['Zduplikowany webhook opłaconego zamówienia zwraca wcześniej zapisany wynik zamiast wystawiać drugą fakturę lub e-mail powitalny.', 'Jeśli nadanie dostępu nie powiedzie się po płatności, system zapisuje „opłacone — dostęp oczekuje”, alarmuje właściwą kolejkę i wspiera bezpieczną ręczną realizację.'],
-          },
-          understandContent: { coreTakeaway: 'Niezawodna automatyzacja zakłada awarie i chroni każdą granicę uwierzytelnieniem, idempotencją, widocznym stanem oraz możliwą do odzyskania procedurą człowieka.', keyPrinciples: ['Weryfikuj każde zewnętrzne zdarzenie i minimalizuj uprawnienia', 'Krytyczne skutki uboczne muszą być idempotentne', 'Uzgadniaj systemy i ćwicz odzyskiwanie'] },
-          actionTask: { instruction: 'Zbuduj i przetestuj możliwy do odzyskania pipeline zakupu i onboardingu:', checklistItems: ['Skonfigurowano podpis webhooka, ochronę przed replay i przechowywanie sekretów', 'ID zdarzeń i idempotencja zapobiegają duplikatom skutków', 'Każdy krok pokazuje stan sukcesu, oczekiwania i błędu', 'Zdefiniowano retry, dead-letter, alerty i odpowiedzialnych właścicieli', 'Przetestowano duplikaty, opóźnienia, zmianę kolejności, częściowe wykonanie i awarie'], toolboxCategory: 'email' },
-        },
-      },
-    },
-    28: {
-      title: '28. Projektowanie zespołu, delegowanie i trwałe operacje',
-      subtitle: 'Użyteczne SOP, uczciwe zatrudnienie i bezpieczna współpraca oparta na rolach',
-      description: 'Dokumentuj krytyczną pracę, deleguj z odpowiednim szkoleniem i buduj zespoły przez legalną, inkluzywną rekrutację, uczciwe wynagrodzenie, bezpieczny dostęp i mierzalną jakość obsługi.',
-      lessons: {
-        '28.1': {
-          stageTitle: '28. Projektowanie zespołu i delegowanie', title: 'Żywe SOP, szkolenie i bezpieczne przekazanie',
-          description: 'Przekształć stabilne procesy w dostępne, wersjonowane instrukcje i stopniowo przekazuj odpowiedzialność bez zakładania zerowej utraty jakości lub bezbłędnego wykonania.',
-          learnContent: {
-            videoTitle: 'Projektowanie SOP i delegowania dla niezawodnej pracy',
-            summaryText: 'SOP wspiera ocenę, ale nie zastępuje kontekstu, szkolenia ani odpowiedzialności. Właściwa dokumentacja i czas onboardingu zależą od ryzyka zadania oraz doświadczenia pracownika.',
-            bulletPoints: ['Nadaj priorytet delegowaniu według ryzyka, powtarzalności, wpływu na klienta i dopasowania umiejętności, nie tylko przychodu', 'Dokumentuj cel, warunki wstępne, kroki, punkty decyzji, przykłady, kontrole, właściciela i datę przeglądu', 'Używaj dostępnego tekstu i obrazu; nagrania są opcjonalnym wsparciem i nie mogą ujawniać danych klientów ani poświadczeń', 'Przechodź od obserwacji przez praktykę nadzorowaną do samodzielnej pracy dopiero po wykazaniu kompetencji', 'Przyznawaj minimalne uprawnienia, rozdzielaj obowiązki i szybko odbieraj dostęp przy zmianie roli'],
-            coreConcepts: [
-              { iconName: 'file-text', title: 'SYSTEM ŻYWYCH SOP', description: 'Utrzymuj przeszukiwalne, wersjonowane źródło z właścicielem, kryteriami odbioru, wyjątkami i historią zmian. Szybkie nagranie nie jest automatycznie pełnym SOP.', highlight: true },
-              { iconName: 'user-check', title: 'ONBOARDING OPARTY NA ROLI', description: 'Dobierz czas szkolenia do złożoności i ryzyka zamiast obiecywać gotowość w 48 godzin. Płać za wymagane szkolenia i zadania próbne.' },
-              { iconName: 'shield-check', title: 'JAKOŚĆ I ESKALACJA', description: 'Określ kontrole odbioru, próbkowanie, wagę błędów, eskalację i korektę. Żadna checklista nie gwarantuje bezbłędnej pracy.' },
-            ],
-            resources: [
-              { title: 'Szablon SOP i macierz delegowania', subtitle: 'Szablony wersjonowania, ryzyka i kryteriów odbioru', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Role i uprawnienia Mara CRM', subtitle: 'Twórz ograniczony dostęp zespołu i sprawdzaj logi', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Deleguj wyniki bez delegowania odpowiedzialności
-
-Przeciążenie operacyjne może ograniczać firmę, ale delegowanie nie zawsze jest właściwą odpowiedzią. Najpierw usuń zbędną pracę, uprość proces i oceń, czy odpowiednia jest automatyzacja lub specjalista.
-
-#### Bezpieczny workflow przekazania
-
-1. **Wybierz**: Określ częstotliwość, wpływ, odwracalność, wrażliwość danych, wymagany osąd i zależności. Akceptację wysokiego ryzyka pozostaw odpowiedzialnemu właścicielowi.
-2. **Udokumentuj**: Podaj cel, wejścia, wyjścia, kroki, punkty decyzji, działania zabronione, przykłady, kryteria odbioru i drogę eskalacji.
-3. **Chroń informacje**: Redaguj nagrania, używaj menedżerów haseł i sekretów, twórz indywidualne konta i zabroń współdzielenia poświadczeń.
-4. **Szkol**: Wyjaśnij kontekst, pokaż, ćwicz na danych syntetycznych, nadzoruj realną pracę i zapisuj kompetencje. Dostosuj szkolenie do języka i dostępności.
-5. **Przekazuj stopniowo**: Zacznij od przypadków niskiego ryzyka, próbkuj wyniki i rozszerzaj zakres tylko przy stabilnej jakości oraz pewności.
-6. **Utrzymuj**: Przypisz właściciela i wersję; przeglądaj po incydentach, zmianach systemu i cyklicznie. Archiwizuj stare instrukcje.
-7. **Bezpiecznie kończ współpracę**: Odbierz dostęp, przekaż własność, odzyskaj urządzenia lub pliki i zachowaj wymagane rekordy zgodnie z polityką.
-
-Nie stosuj bezpłatnej pracy spekulacyjnej jako „próby”. Prawidłowo klasyfikuj pracowników, przestrzegaj zasad zatrudnienia, kontraktorów, podatków i danych, ustal godziny oraz zapewnij bezpieczne zgłaszanie problemów.`,
-            practicalExamples: ['SOP zwrotów określa kwalifikację, limity akceptacji i eskalację; osoby szkolone ćwiczą na syntetycznych zamówieniach przed ograniczonym dostępem produkcyjnym.', 'Zastąp nagranie z danymi klienta zredagowaną demonstracją i pisemną checklistą użyteczną także bez filmu.'],
-          },
-          understandContent: { coreTakeaway: 'Niezawodne delegowanie łączy utrzymywane instrukcje, płatne szkolenie właściwe dla roli, minimalne uprawnienia, jasną eskalację i odpowiedzialną kontrolę jakości.', keyPrinciples: ['Uprość przed dokumentowaniem lub delegowaniem', 'Dopasuj autonomię do wykazanej kompetencji i ryzyka', 'Utrzymuj dostęp i SOP przez cały cykl roli'] },
-          actionTask: { instruction: 'Utwórz jeden bezpieczny SOP operacyjny i plan przekazania:', checklistItems: ['Udokumentowano ryzyko zadania, wymagany osąd i odpowiedzialnego właściciela', 'SOP zawiera wersję, punkty decyzji, wyjątki, odbiór i eskalację', 'Szkolenie używa danych syntetycznych lub zredagowanych i jest właściwie opłacone', 'Skonfigurowano indywidualny minimalny dostęp CRM i logi audytowe', 'Określono przegląd, aktualizację po incydencie i offboarding'], toolboxCategory: 'content' },
-        },
-        '28.2': {
-          stageTitle: '28. Uczciwe działania zespołu sprzedaży', title: 'Role sprzedażowe, wynagrodzenie i kontrola jakości',
-          description: 'Buduj możliwości sprzedaży przez jasne obowiązki, legalne nagrywanie, uczciwą płacę i mierniki jakości skupione na kliencie zamiast skryptów presji oraz arbitralnych formuł wzrostu.',
-          learnContent: {
-            videoTitle: 'Projektowanie i prowadzenie odpowiedzialnego zespołu sprzedaży',
-            summaryText: 'Podział intake i konsultacji może pomóc niektórym zespołom, ale nie podwaja automatycznie możliwości ani przychodu. Projekt zespołu powinien wynikać z popytu, potrzeb klienta, ekonomii i obowiązków prawnych.',
-            bulletPoints: ['Określ odpowiedzialność, uprawnienia, przekazania i konflikty między intake, konsultacją, supportem i akceptacją', 'Używaj uporządkowanych przewodników rozmowy jako wsparcia, nie słowo-w-słowo presji lub skryptów pokonywania sprzeciwu', 'Łącz stabilne wynagrodzenie z ostrożnie zaprojektowanymi premiami, które nie nagradzają missellingu, dyskryminacji ani niechcianego kontaktu', 'Sprawdzaj próbkę interakcji pod kątem dokładności, zgody, wyniku klienta, dostępności i szacunku', 'Traktuj metryki CRM jako dowody operacyjne z kontekstem, nie publiczne rankingi ani nadzór pracownika'],
-            coreConcepts: [
-              { iconName: 'phone-call', title: 'INTAKE I TERMINY', description: 'Potwierdź prośbę, pozwolenie, dopasowanie usługi i kolejny krok bez manipulowania pilnością lub zbędnych danych osobowych.', highlight: true },
-              { iconName: 'target', title: 'PRZEWODNIKI KONSULTACYJNE', description: 'Wspieraj odkrycie potrzeb, dokładne wyjaśnienie i świadomy wybór. Sprzeciw może oznaczać, że właściwym wynikiem jest brak sprzedaży.' },
-            ],
-            resources: [
-              { title: 'Przewodnik sprzedaży konsultacyjnej', subtitle: 'Szablon potrzeb, ujawnień, zgody i eskalacji', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Pipeline transakcji Mara CRM', subtitle: 'Monitoruj kontrolowany proces i wyniki klienta', type: 'tool', iconName: 'trending_up', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Buduj możliwości sprzedaży wokół dopasowania klienta
-
-Nie istnieje uniwersalny limit 15–20 rozmów założyciela ani obowiązek przeprowadzenia trzydziestu pierwszych rozmów samodzielnie. Wybierz strukturę według popytu, złożoności, możliwości obsługi, umiejętności i ekonomii.
-
-#### Odpowiedzialny projekt zespołu
-
-1. **Definicja roli**: Opisz cel, uprawnienia decyzyjne, dostęp do danych, przekazanie, obciążenie i eskalację każdej roli. Unikaj mylących tytułów i sztucznego niedoboru.
-2. **Uczciwa rekrutacja**: Stosuj kryteria związane z pracą, dostępne aplikacje, uporządkowane rozmowy i płatne próbki pracy. Sprawdź lokalne zasady pracy, kontraktorów, równego traktowania i prowizji.
-3. **Wynagrodzenie**: Podaj przewidywalne warunki na piśmie. Równoważ premię od przychodu anulowaniami, zwrotami, jakością skarg, compliance i wynikami klienta; zapobiegaj szkodliwym skutkom clawbacków i targetów.
-4. **Szkolenie**: Ucz oferty, ograniczeń, prywatności, zgody, dostępności, ochrony podatnych klientów oraz zatrzymania lub eskalacji, nie tylko obiekcji.
-5. **Przegląd interakcji**: Nagrywaj wyłącznie z ważną podstawą oraz wymaganym powiadomieniem lub zgodą. Ogranicz dostęp i retencję, oferuj alternatywę i nie stosuj nagrań do ukrytego nadzoru.
-6. **Metryki**: Spójnie definiuj konwersję etapów, czas reakcji i niepewność prognozy. Analizuj według kohorty oraz kontekstu i nie publikuj rankingów osób.
-7. **Ulepszanie**: Coachuj z reprezentatywnych próbek, badaj przyczyny systemowe i dokumentuj korekty. Respektuj głos pracownika i odwołanie.
-
-Proces sprzedaży musi pozwalać na jasne „nie”, wystarczający czas decyzji oraz dokładną cenę i warunki umowy. Pełen szacunku brak sprzedaży może być właściwym wynikiem.`,
-            practicalExamples: ['Plan płac łączy stabilną pensję z umiarkowaną premią skorygowaną o jakość i wyklucza sprzedaże anulowane później z powodu wprowadzenia w błąd.', 'Próbka rozmów używa jasnej informacji o nagrywaniu, ograniczonego przechowywania i rubryki dokładności, zgody, szacunku i dopasowania.'],
-          },
-          understandContent: { coreTakeaway: 'Trwały zespół sprzedaży łączy uczciwą pracę, świadomy wybór klienta, opisane role i kontekstowe dowody jakości.', keyPrinciples: ['Projektuj premie przeciw missellingowi i presji', 'Nagrywaj tylko legalnie i proporcjonalnie', 'Traktuj brak sprzedaży i eskalację jako prawidłowe wyniki'] },
-          actionTask: { instruction: 'Przygotuj odpowiedzialny model pracy zespołu sprzedaży:', checklistItems: ['Udokumentowano uprawnienia roli, przekazania, obciążenia i dostęp', 'Kryteria rekrutacji oraz płatne próbki są związane z pracą i dostępne', 'Wynagrodzenie zawiera zabezpieczenia jakości, anulowania i skarg', 'Przewodniki wspierają świadomy wybór i dopuszczają brak sprzedaży', 'Sprawdzono nagrywanie, retencję, metryki CRM, coaching i odwołanie'], toolboxCategory: 'landingpage' },
-        },
-      },
-    },
-    29: {
-      title: '29. Odporność finansowa, cashflow i zgodność zależna od kontekstu',
-      subtitle: 'Scenariuszowe planowanie płynności, rzetelne rekordy i przegląd specjalistyczny',
-      description: 'Buduj kontrole finansowe i prawne bez uniwersalnych procentów podatkowych, sztywnych formuł rezerwy ani obietnic pełnej ochrony prawnej.',
-      lessons: {
-        '29.1': {
-          stageTitle: '29. Odporność finansowa', title: 'Planowanie cashflow, rezerwy i ekonomia marży',
-          description: 'Korzystaj z prognoz, uzgodnionych rekordów i polityk rezerw właściwych dla kontekstu zamiast traktować system czterech kont lub stały podział procentowy jako regułę uniwersalną.',
-          learnContent: {
-            videoTitle: 'Zaprojektuj system kontroli gotówki na czas niepewności',
-            summaryText: 'Oddzielne konta lub subkonta mogą wspierać dyscyplinę, ale są opcjonalną metodą operacyjną, a nie wymogiem prawnym, strategią podatkową ani gwarancją płynności.',
-            bulletPoints: ['Uwzględniaj gotówkę początkową, należności, zobowiązania, płace, podatki, dług, zwroty i subskrypcje w prognozie kroczącej', 'Ustalaj rezerwę podatkową z właściwym doradcą według jurysdykcji, formy prawnej, zysku i VAT', 'Dobierz rezerwę do zmienności, stałych zobowiązań, sezonowości, czasu odbudowy i dostępnego finansowania', 'Licz marżę kontrybucyjną według produktu, kohorty i kanału przed alokacją kosztów stałych lub zysku', 'Uzgadniaj dane banku, operatorów płatności i księgowości oraz wyjaśniaj każdą różnicę'],
-            coreConcepts: [
-              { iconName: 'wallet', title: 'KONTROLOWANE KOSZYKI GOTÓWKI', description: 'Używaj kont lub kategorii księgowych tylko wtedy, gdy opłaty, ochrona środków, kontrola dostępu i uzgodnienie są odpowiednie. Nie automatyzuj przelewów prowadzących do debetu.', highlight: true },
-              { iconName: 'line-chart', title: 'PROGNOZA SCENARIUSZOWA', description: 'Utrzymuj kroczące 13 tygodni oraz 12-miesięczny wariant bazowy, negatywny i pozytywny. Prognoza wspiera decyzję, nie jest obietnicą.' },
-              { iconName: 'calculator', title: 'EKONOMIA KONTRYBUCJI', description: 'Odejmij rabaty, zwroty, opłaty płatnicze, afiliację, realizację, wsparcie i przypisywalny koszt pozyskania przed interpretacją marży.' },
-            ],
-            resources: [
-              { title: 'Arkusz cashflow i scenariuszy', subtitle: 'Szablon prognozy, rezerwy i uzgodnienia', type: 'tool', iconName: 'calculator', actionUrl: 'tools' },
-              { title: 'Przegląd kontroli finansowych', subtitle: 'Checklista do omówienia z księgowością i doradcą podatkowym', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Buduj kontrolę płynności wokół realnego biznesu
-
-Nie istnieje jedna struktura kont, data przelewu ani podział procentowy odpowiedni dla każdej firmy. Obowiązki podatkowe, VAT, płacowe i dotyczące powierzonych środków różnią się według kraju, formy i działalności. Potwierdź je ze specjalistami i oddziel środki regulowane lub klientów, gdy jest to wymagane.
-
-#### Praktyczny cykl kontroli
-
-1. **Ustal rekordy**: Uzgadniaj bank, operatora płatności, faktury i księgowość. Określ właściciela, moment zamknięcia i proces korekty.
-2. **Prognozuj 13 tygodni**: Zapisz gotówkę początkową oraz datowane wpływy i wydatki, w tym podatki, płace, zwroty, dług, subskrypcje i inwestycje. Oznaczaj niepewność.
-3. **Modeluj scenariusze**: Utrzymuj założenia bazowe, negatywne i pozytywne dla konwersji, czasu zapłaty, zwrotów, pozyskania i dostawców. Określ trigger i reakcję.
-4. **Ustalaj rezerwy świadomie**: Udokumentuj cel i uzasadnienie z uwzględnieniem zmienności, stałych zobowiązań, sezonowości, czasu odbudowy i finansowania. Trzy miesiące mogą być właściwe w jednym przypadku, a złe w innym.
-5. **Potwierdź podatki**: Poproś właściwego doradcę o ustalenie obowiązków, terminów i logiki rezerwy. Stałe 40% nie jest zasadą uniwersalną, a środki rezerwy podlegają właściwym zasadom prawnym i księgowym.
-6. **Mierz kontrybucję**: Od przychodu otrzymanego odejmij rabaty, zwroty, opłaty, afiliację, realizację, wsparcie i reklamę przypisaną ofercie. Uzgodnij wynik z kosztami stałymi i zyskiem księgowym.
-7. **Nadzoruj przelewy**: Planuj je dopiero po sprawdzeniu prognozy i sald. Wymagaj akceptacji wyjątków i nie dopuszczaj automatyzacji powodującej debet lub pominięcie płatności ustawowej.
-
-Materiał ma charakter edukacyjny i nie zastępuje porady księgowej, podatkowej, skarbowej ani prawnej dla Twojej sytuacji.`,
-            practicalExamples: ['Scenariusz negatywny zakłada wolniejsze płatności i więcej zwrotów, wskazuje dzień napięcia gotówkowego oraz wydatki wstrzymywane jako pierwsze.', 'Miesięczne zamknięcie porównuje bank, operatorów i księgę; właściciel zapisuje przyczynę oraz korektę każdej różnicy.'],
-          },
-          understandContent: { coreTakeaway: 'Odporność finansowa wynika z uzgodnionych dowodów, scenariuszy i obowiązków potwierdzonych przez doradcę, nie z uniwersalnej formuły kont lub procentów.', keyPrinciples: ['Prognozuj terminy gotówki, nie sam przychód', 'Dobieraj rezerwę do ryzyka i jurysdykcji', 'Mierz kontrybucję przed podziałem zysku'] },
-          actionTask: { instruction: 'Utwórz możliwy do przeglądu plan kontroli gotówki:', checklistItems: ['Bank, płatności i księgowość mają właściciela oraz harmonogram uzgodnienia', 'Prognoza 13-tygodniowa obejmuje podatki, płace, zwroty, dług i niepewność', 'Scenariusze mają udokumentowane triggery i reakcje', 'Założenia podatkowe są oznaczone do potwierdzenia przez doradcę', 'Udokumentowano cel rezerwy i marżę według produktu lub kanału'], toolboxCategory: 'settings' },
-        },
-        '29.2': {
-          stageTitle: '29. Zgodność zależna od kontekstu', title: 'Umowy, prawa konsumenta, prywatność i zgodne operacje',
-          description: 'Buduj system zgodności uwzględniający jurysdykcję i szukaj właściwego przeglądu zamiast polegać na ogólnym wyłączeniu B2B, micie obowiązkowego checkboxa lub „szczelnych” szablonach.',
-          learnContent: {
-            videoTitle: 'Buduj utrzymywalny system prawny i prywatności',
-            summaryText: 'Typ klienta, kraj, oferta i przepływ danych określają zasady. Etykiety i szablony nie zmieniają faktów, a ta lekcja nie jest poradą prawną.',
-            bulletPoints: ['Klasyfikuj B2C i B2B według rzeczywistego statusu i celu klienta, nie tekstu formularza', 'Przekazuj wymagane informacje przed umową i trwałe potwierdzenie; sprawdzaj odstąpienie oraz wyjątki dla każdej oferty', 'Stosuj uczciwe, dostępne warunki i odpowiedni dowód akceptacji, nie zakładając, że jeden checkbox rozwiązuje każdy przypadek', 'Uzyskuj zgodę przed niekoniecznymi cookies i dokumentuj podstawę oraz retencję dla każdego celu danych', 'Cyklicznie sprawdzaj dostawców, umowy powierzenia, transfery, dostęp, incydenty i usuwanie'],
-            coreConcepts: [
-              { iconName: 'scale', title: 'MACIERZ KLIENTA I JURYSDYKCJI', description: 'Przed doborem dokumentów mapuj lokalizację firmy i klienta, status konsumenta, kanał umowy i rodzaj produktu.', highlight: true },
-              { iconName: 'shield-check', title: 'PRYWATNOŚĆ W PROJEKCIE', description: 'Zbieraj niezbędne dane, określ cel, ogranicz dostęp i retencję; hashowane lub pseudonimizowane identyfikatory nadal mogą być danymi osobowymi.' },
-              { iconName: 'refresh-cw', title: 'CIĄGŁY PRZEGLĄD', description: 'Śledź wersje, zmiany prawa, skargi, incydenty, dostawców i terminy przeglądu. Szablon jest punktem startu, nie gwarancją ochrony.' },
-            ],
-            resources: [
-              { title: 'Szablon przeglądu umowy i praw konsumenta', subtitle: 'Wymaga lokalnego przeglądu prawnego', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Rejestr prywatności, cookies i dostawców', subtitle: 'Cel, podstawa, retencja, dostęp i transfer', type: 'tool', iconName: 'shield', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Zamień obowiązki prawne w utrzymywane operacje
-
-Materiał jest edukacyjny, a nie poradą prawną. Zasady różnią się według kraju, klienta, produktu, kanału i użycia danych. Poproś właściwego lokalnego prawnika, a w razie potrzeby doradcę podatkowego lub specjalistę ochrony danych, o przegląd wdrożenia.
-
-#### Umowy i kontrola konsumencka
-
-1. **Klasyfikuj relację**: Ustal, czy kupujący faktycznie działa jako konsument czy przedsiębiorca. Etykieta „B2B” nie usuwa praw konsumenta, gdy fakty wskazują inaczej.
-2. **Mapuj sprzedaż**: Zapisz reklamę, informacje przedumowne, cenę, odnowienie, dostawę, rezygnację, skargi i trwałe potwierdzenie. W unijnych umowach konsumenckich na odległość i poza lokalem zwykle obowiązuje 14-dniowe prawo odstąpienia, z określonymi wyjątkami i warunkami dla usług oraz treści cyfrowych.
-3. **Stosuj uczciwe dokumenty**: Udostępnij warunki przed zakupem, wyjaśnij ważne klauzule i zachowaj proporcjonalny dowód wersji oraz akceptacji. Checkbox może pomagać, ale nie jest jedynym uniwersalnym testem ważnej umowy.
-4. **Sprawdzaj dostawę i zwroty**: Dopasuj realizację do odstąpienia, anulowania i zwrotów. Nie obiecuj, że szablon jest „szczelny” ani eliminuje spory lub odpowiedzialność.
-
-#### Prywatność, cookies i marketing
-
-1. **Inwentaryzuj dane**: Zapisz cel, kategorie, osoby, odbiorców, lokalizację, retencję, bezpieczeństwo i podstawę. Stosuj ograniczenie celu oraz minimalizację.
-2. **Zarządzaj cookies**: Nie ustawiaj niekoniecznych cookies przed ważną zgodą, gdy jest wymagana. Wyjątki dla niezbędnego przechowywania są wąskie i ocenia się je według funkcji.
-3. **Dokumentuj e-mail**: Sprawdź podstawę i lokalne reguły marketingu elektronicznego. Double opt-in może być dobrym dowodem, ale nie jest uniwersalnym wymogiem w każdej sytuacji. Zachowaj źródło, wersję informacji i zgody, czas oraz potwierdzenie lub wykluczenie; nie przechowuj IP bez potrzeby i podstawy.
-4. **Kontroluj dostawców**: Ustal role administratora i procesora, zawrzyj wymagane umowy, ogranicz dostęp i oceniaj transfery międzynarodowe indywidualnie.
-5. **Chroń poufność**: Stosuj adekwatne klauzule poufności i danych, kontrolę dostępu i offboarding. NDA nie jest automatycznie konieczne dla każdego freelancera i nie zastępuje zabezpieczeń.
-6. **Sprawdzaj własność intelektualną**: Szukaj w odpowiednich rejestrach i użyciu rynkowym, dokumentuj licencje i uzyskaj profesjonalną weryfikację ważnych nazw lub materiałów.
-
-Utrzymuj właściciela, termin przeglądu, historię zmian i eskalację. Obsługuj prawa osób, skargi i incydenty przez przetestowane procedury, nie statyczny folder szablonów.`,
-            practicalExamples: ['Checkout kursu cyfrowego pokazuje cenę, dostawę, anulowanie i właściwe informacje o odstąpieniu przed zakupem, a potem wysyła trwałe potwierdzenie zaakceptowanej wersji.', 'Rekord zgody zapisuje tekst i wersję formularza, źródło, czas i potwierdzenie, a przegląd prywatności ustala, czy identyfikator sieciowy jest potrzebny.'],
-          },
-          understandContent: { coreTakeaway: 'Compliance to utrzymywany, świadomy jurysdykcji system operacyjny wsparty kwalifikowanym przeglądem, nie jednorazowy szablon lub ogólne wyłączenie.', keyPrinciples: ['Klasyfikuj klientów i oferty według faktów', 'Minimalizuj dane i dokumentuj cel oraz podstawę', 'Wersjonuj, przeglądaj i testuj kontrole'] },
-          actionTask: { instruction: 'Przygotuj pakiet do specjalistycznego przeglądu jednej ścieżki klienta:', checklistItems: ['Udokumentowano typ klienta, kraje, kanał i klasyfikację produktu', 'Zmapowano informacje przedumowne, odstąpienie, dostawę, anulowanie i zwroty', 'Wersje umowy i warunków oraz dowód akceptacji wskazano do przeglądu prawnego', 'Zapisano prywatność, cookies, e-mail, dostawców, transfery, retencję i prawa osób', 'Przypisano właściciela, termin przeglądu, eskalację incydentu i pytania do doradcy'], toolboxCategory: 'settings' },
-        },
-      },
-    },
-    30: {
-      title: '30. Trwała wartość firmy, opcjonalność i zrównoważone przywództwo',
-      subtitle: 'Od zależności od właściciela do transferowalnych systemów, świadomej wyceny i długoterminowego wyboru',
-      description: 'Buduj odporną firmę działającą poza jedną osobą i zachowuj opcje strategiczne bez obietnicy siedmiocyfrowego exitu, stałego mnożnika lub łatwej wolności.',
-      lessons: {
-        '30.1': {
-          stageTitle: '30. Wartość i transferowalność firmy', title: 'Architektura wyceny: dowody, niepewność i gotowość do transakcji',
-          description: 'Zrozum, jak cel, przepływy, ryzyko, dane rynkowe i transferowalność kształtują przedział wartości, oraz przygotuj rzetelne due diligence bez traktowania mnożników EBIT jako gwarancji.',
-          learnContent: {
-            videoTitle: 'Wycena firmy i odpowiedzialne przygotowanie exitu',
-            summaryText: 'Wycena firmy jest profesjonalnym osądem dla konkretnego celu i dnia. Rozsądne metody oraz założenia mogą dawać różne wyniki, więc przedział 3x–8x EBIT nie jest uniwersalną obietnicą ceny.',
-            bulletPoints: ['Przed wyborem metody określ cel i datę wyceny, standard wartości, udział oraz jurysdykcję', 'Uzgodnij wyniki i udokumentuj korekty normalizacyjne zamiast traktować EBITDA lub EBIT jako oczywiste', 'Oceń koncentrację, churn, jakość retencji, umowy, kanały, bezpieczeństwo, compliance i kapitał obrotowy', 'Ograniczaj ryzyko kluczowej osoby przez przetestowane role, delegowanie, dokumentację i ciągłość, nie sam tytuł nowego menedżera', 'Buduj kontrolowany uprawnieniami data room z aktualną, proporcjonalną i możliwą do prześledzenia treścią'],
-            coreConcepts: [
-              { iconName: 'bar-chart-2', title: 'PRZEDZIAŁ WYCENY', description: 'Porównaj podejście dochodowe, rynkowe i w razie potrzeby majątkowe. Pokaż wrażliwość na prognozy, stopy, mnożniki i korekty zamiast jednej dokładnej liczby.', highlight: true },
-              { iconName: 'users', title: 'TRANSFEROWALNE OPERACJE', description: 'Udowodnij, że klienci, wiedza, akceptacje i relacje mogą trwać dzięki wyszkolonym ludziom i testowanym systemom. Zależność od założyciela zmniejsza się stopniowo.' },
-              { iconName: 'file-check', title: 'WERYFIKOWALNY DATA ROOM', description: 'Utrzymuj dowody finansowe, podatkowe, prawne, klienckie, pracownicze, IP, bezpieczeństwa i operacji z właścicielami, dostępem i terminami przeglądu.' },
-            ],
-            resources: [
-              { title: 'Arkusz założeń wyceny i gotowości', subtitle: 'Metody, wrażliwość, dowody i pytania do doradców', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Analiza kohort i przychodu Mara CRM', subtitle: 'Sprawdzaj retencję, koncentrację i jakość przychodu', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Buduj transferowalność przed rozmową o transakcji
-
-Exit jest jedną z możliwości, nie końcowym miernikiem przedsiębiorczości. Firmę można zachować, przekazać wewnętrznie, sprzedać częściowo, połączyć albo zamknąć. Każda droga ma inne skutki finansowe, prawne, podatkowe i osobiste.
-
-#### Proces gotowości oparty na dowodach
-
-1. **Zdefiniuj zadanie**: Zapisz cel, datę, walutę, udział, standard i przesłankę wartości, dostępne informacje oraz jurysdykcję. Przy istotnych decyzjach zaangażuj właściwego niezależnego rzeczoznawcę.
-2. **Uzgodnij wyniki**: Połącz raporty zarządcze z księgowością i gotówką. Udokumentuj pozycje powtarzalne i jednorazowe, wynagrodzenie właściciela, inwestycje, kapitał obrotowy, dług i podatki. Nie zmieniaj nazw kosztów tylko po to, by zwiększyć wynik skorygowany.
-3. **Użyj kilku perspektyw**: Rozważ podejście dochodowe, rynkowe i odpowiednie majątkowe. Uzasadnij metody i porównania, a następnie pokaż przedział oraz wrażliwość zamiast mnożyć jeden EBIT przez stałą liczbę.
-4. **Testuj jakość przychodu**: Oddziel przychód zakontraktowany od oczekiwanego. Analizuj retencję, definicję churnu, kohorty, zwroty, koncentrację, ekonomię pozyskania, odnowienia i koszt obsługi. Subskrypcje nie podwajają automatycznie mnożnika.
-5. **Testuj transferowalność**: Mapuj decyzje, relacje, dane dostępowe i wiedzę właściciela. Szkol zastępców, określ limity i ćwicz nieobecność oraz incydenty. Sam COO nie daje 100% niezależności.
-6. **Przygotuj dowody**: Indeksuj umowy, dokumenty spółki, rachunki, podatki, zatrudnienie, IP, prywatność, bezpieczeństwo, dostawców i spory. Ogranicz dostęp, loguj ujawnienia i usuń zbędne dane osobowe.
-7. **Planuj transakcję**: Modeluj strukturę ceny, korektę kapitału obrotowego, dług, podatki, gwarancje, odszkodowania, escrow, earn-out i obowiązki po zamknięciu ze specjalistami.
-
-Wycena zawiera niepewność. Pokazuj założenia, aktualizuj je przy zmianie faktów i nie przedstawiaj wewnętrznego scorecardu jako gwarantowanej ceny ani rekomendacji inwestycyjnej.`,
-            practicalExamples: ['Notatka wyceny pokazuje bazowy i negatywny cashflow, wyjaśnia korekty zysku i porównuje wynik z rzeczywiście podobnymi transakcjami.', 'Test ciągłości ujawnia, że tylko założyciel zatwierdza zwroty i ma dostęp do ważnego konta; zespół tworzy indywidualny dostęp, limity i zastępcę awaryjnego.'],
-          },
-          understandContent: { coreTakeaway: 'Transferowalną wartość wspierają uzgodnione dowody, obronione założenia i odporne operacje, a nie uniwersalny mnożnik.', keyPrinciples: ['Najpierw określ cel i założenia', 'Komunikuj przedział oraz niepewność', 'Udowodnij ciągłość przez systemy i ludzi'] },
-          actionTask: { instruction: 'Przygotuj oparty na dowodach przegląd wyceny i transferowalności:', checklistItems: ['Udokumentowano cel, datę, udział, jurysdykcję i potrzeby doradcze', 'Uzgodniono rachunki, gotówkę i korekty wyniku z dowodami', 'Rozważono podejścia i analizę wrażliwości', 'Oceniono jakość przychodu, koncentrację, churn i zależności od osób', 'Określono indeks data roomu, dostęp, właścicieli i terminy'], toolboxCategory: 'content' },
-        },
-        '30.2': {
-          stageTitle: '30. Zrównoważone przywództwo', title: 'Długoterminowy kierunek, autonomia czasu i odpowiedzialna sukcesja',
-          description: 'Zamień program w aktualizowaną strategię dla klientów, zespołu, zdrowia i osobistego wyboru zamiast „imperium”, stałego hustle lub obowiązkowego exitu.',
-          learnContent: {
-            videoTitle: 'Przegląd końcowy: zrównoważony kierunek na dziesięć lat',
-            summaryText: 'Ukończenie jest punktem kontrolnym, nie dowodem mistrzostwa ani gwarancją sukcesu. Przywództwo łączy naukę, wyniki klientów, odporność finansową, etyczne operacje i realną zdolność osobistą.',
-            bulletPoints: ['Regularnie przeglądaj dowody i założenia zamiast traktować wizję dziesięcioletnią jako stałą prognozę', 'Zdefiniuj „wystarczy” dla pieniędzy, czasu, zdrowia, relacji, odpowiedzialności i wpływu, nie tylko skali', 'Łącz ambitne wyniki z wskaźnikami wyprzedzającymi, triggerami scenariusza negatywnego i regułami decyzji', 'Zbuduj governance, sukcesję i plan awaryjny przed ograniczeniem udziału założyciela', 'Traktuj certyfikaty i społeczności jako opcjonalny zapis uczestnictwa zależny od rzeczywistej dostępności i kryteriów'],
-            coreConcepts: [
-              { iconName: 'compass', title: 'OPCJONALNOŚĆ STRATEGICZNA', description: 'Zachowaj możliwość utrzymania, delegowania, pauzy, przekazania lub sprzedaży. Autonomia czasu zależy od zasobów, obowiązków i testowanej ciągłości.', highlight: true },
-              { iconName: 'heart', title: 'ZRÓWNOWAŻONA ZDOLNOŚĆ', description: 'Ustal granice obciążenia, regeneracji i wsparcia. Odporność psychiczna nie oznacza ignorowania cierpienia ani zastępowania pomocy samą wolą.' },
-              { iconName: 'refresh-cw', title: 'KIERUNEK DO PRZEGLĄDU', description: 'Przełóż długi horyzont na tezę roczną, eksperymenty 90-dniowe i cykliczny przegląd. Zmieniaj kierunek, gdy zmieniają się dowody lub życie.' },
-            ],
-            resources: [
-              { title: 'Workbook kierunku i opcjonalności na 10 lat', subtitle: 'Wartości, scenariusze, granice i rytm przeglądu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Przegląd ukończenia i dowodów', subtitle: 'Sprawdź wykonaną pracę i dostępne potwierdzenia', type: 'link', iconName: 'award', actionUrl: 'progress' },
-            ],
-            fullArticleGuide: `### Zakończ program i rozpocznij cykl przeglądu
-
-Przejście trzydziestu etapów może uporządkować naukę, lecz nie certyfikuje każdej kompetencji i nie gwarantuje dochodu, wyceny, wolności ani dobrostanu. Weryfikuj dowody i korzystaj ze specjalistycznej pomocy, gdy decyzja wykracza poza Twoją wiedzę.
-
-#### Buduj trwały kierunek
-
-1. **Przejrzyj dowody**: Wypisz zmiany w wynikach klientów, finansach, kontrolach, umiejętnościach i obciążeniu. Oddziel wykonane działania od zweryfikowanych wyników i ryzyk.
-2. **Zdefiniuj wartości i granice**: Zapisz, czego nie poświęcisz dla wzrostu, w tym zdrowia, relacji, dobra klienta, obowiązków prawnych i wypłacalności.
-3. **Pisz scenariusze, nie proroctwo**: Opisz wariant utrzymania, delegowania, sprzedaży częściowej, pełnej i negatywny. Zapisz założenia, sygnały i odwracalne kroki.
-4. **Ustal warstwy horyzontów**: Zachowaj kierunkową narrację dziesięcioletnią, mierzalną tezę roczną i kilka eksperymentów 90-dniowych z właścicielami oraz kryteriami stop.
-5. **Planuj ciągłość**: Udokumentuj uprawnienia, sukcesję, dostęp awaryjny, komunikację i odzyskiwanie. Testuj nieobecność przed deklarowaniem autonomii czasu.
-6. **Używaj wsparcia właściwie**: Buduj sieć rówieśniczą i profesjonalną, oceniając poufność, konflikty, koszt i dowody. W razie potrzeby szukaj pomocy medycznej lub psychologicznej; wytrwałość jej nie zastępuje.
-7. **Uczciwie zapisuj ukończenie**: Generuj lub udostępniaj certyfikat tylko, gdy produkt go obsługuje i spełniasz kryteria. Chroń dane i nie sugeruj regulowanej akredytacji, jeśli jej nie ma.
-8. **Zaplanuj kolejny przegląd**: Wracaj kwartalnie i po ważnych zmianach. Świętuj postęp bez obowiązku stałego głodu lub przepracowania.
-
-Celem nie jest maksymalna skala za każdą cenę, lecz firma i życie pozostające legalne, odporne finansowo, użyteczne klientom i świadomie wybrane.`,
-            practicalExamples: ['Założyciel zastępuje jeden cel przychodowy scenariuszami utrzymania, sprzedaży częściowej i spadku, każdy z testem rocznym oraz datą przeglądu.', 'Przed miesięczną przerwą zespół ćwiczy krótszą nieobecność i uzupełnia brakujące uprawnienia, eskalację klientów oraz dostęp awaryjny.'],
-          },
-          understandContent: { coreTakeaway: 'Zrównoważone przywództwo zachowuje świadomy wybór przez dowody, granice, ciągłość i przegląd zamiast utożsamiać mistrzostwo z niekończącym się wzrostem.', keyPrinciples: ['Mierz wyniki, nie samo ukończenie programu', 'Chroń zdrowie, obowiązki i dobro klienta', 'Utrzymuj plany jako scenariusze do aktualizacji'] },
-          actionTask: { instruction: 'Utwórz odpowiedzialny przegląd ukończenia i długiego horyzontu:', checklistItems: ['Podsumowano dowody, nierozwiązane ryzyka i potrzeby doradcze', 'Udokumentowano wartości, granice pracy i definicję „wystarczy”', 'Porównano scenariusze utrzymania, delegowania, transferu i spadku', 'Teza roczna i eksperymenty 90-dniowe mają właścicieli i kryteria stop', 'Zaplanowano test ciągłości, przegląd kwartalny i uczciwe zasady certyfikatu'], toolboxCategory: 'content' },
-        },
-      },
-    },
-    31: {
-      title: '31. Internacjonalizacja, handel transgraniczny i odpowiedzialna ekspansja',
-      subtitle: 'Wejście oparte na dowodach, prawdziwa lokalizacja, przegląd podatkowy i mierzalne pozyskanie',
-      description: 'Wchodź na rynki przez etapowe badanie, dostępne doświadczenie lokalne, zgodne operacje podatkowe i danych oraz kontrolowane eksperymenty, nie obietnice mnożnika rynku lub stereotypy krajów.',
-      lessons: {
-        '31.1': {
-          stageTitle: '31. Wejście na rynek i lokalizacja', title: 'Walidacja rynku międzynarodowego: popyt, wykonalność i lokalne dopasowanie',
-          description: 'Oceń rynek przez dowody klientów, unit economics, zdolność operacyjną i przegląd lokalny przed tłumaczeniem lejka lub dużą inwestycją.',
-          learnContent: {
-            videoTitle: 'Odpowiedzialny wybór i walidacja rynku transgranicznego',
-            summaryText: 'Sukces w jednym kraju nie potwierdza product-market fit gdzie indziej. Język, prawo, płatności, konkurencja, dostępność, support i realizacja mogą wymagać istotnych zmian.',
-            bulletPoints: ['Oceniaj jakość popytu, osiągalną grupę, konkurencję, ekonomię kontrybucji, prawo, operacje i ryzyko na podstawie opisanych dowodów', 'Waliduj komunikaty z lokalnymi użytkownikami i specjalistami zamiast dosłownego lub niekontrolowanego tłumaczenia AI', 'Jasno pokazuj walutę, podatki, opłaty i zasady przewalutowania oraz pozwól zmienić język lub region', 'Ustal obowiązki VAT, sales tax, fakturowania, konsumenckie, produktowe i dotyczące zakładu dla każdej ścieżki', 'Przed skalowaniem testuj realizację, zwroty, support, dostępność i incydenty'],
-            coreConcepts: [
-              { iconName: 'globe', title: 'SYSTEM LOKALIZACJI', description: 'Lokalizuj znaczenie, przykłady, formaty, dostępność, claims i support. Geo-IP może sugerować locale, ale nie może po cichu określać statusu prawnego ani odbierać wyboru.', highlight: true },
-              { iconName: 'credit-card', title: 'JASNOŚĆ PŁATNOŚCI I CENY', description: 'Dodawaj odpowiednie legalne metody po sprawdzeniu opłat, rozliczenia, zwrotów, sporów i dostępności. Żadna metoda nie gwarantuje wzrostu konwersji.' },
-              { iconName: 'file-text', title: 'MACIERZ PODATKÓW I OBOWIĄZKÓW', description: 'Mapuj rodzaj świadczenia, status i dowód lokalizacji klienta. OSS może uprościć kwalifikowane rozliczenie VAT B2C w UE, ale nie gwarantuje pełnej zgodności.' },
-            ],
-            resources: [
-              { title: 'Scorecard dowodów rynku i wejścia', subtitle: 'Popyt, ekonomia, compliance i bramki operacyjne', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Konfiguracja locale i walut Mara CRM', subtitle: 'Jawne preferencje i wymiary raportowania', type: 'tool', iconName: 'dollar-sign', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Traktuj każdy nowy rynek jako nową hipotezę
-
-Ekspansja może zwiększyć osiągalną grupę, ale także koszt, złożoność i odpowiedzialność. Nie ma pewnego mnożnika 5x–10x ani uniwersalnego budżetu dziennego.
-
-#### Wejście etapowe
-
-1. **Zdefiniuj hipotezę**: Określ klienta, problem, ofertę, kanał, geografię, metrykę, maksymalną stratę i termin decyzji. Oddziel rozmiar rynku od grupy osiągalnej legalnie i ekonomicznie.
-2. **Zbierz lokalne dowody**: Rozmawiaj z reprezentatywnymi użytkownikami, sprawdzaj wyszukiwanie i konkurencję, testuj zrozumienie oraz angażuj rodzimych specjalistów. Nie publikuj tłumaczonych maszynowo claims prawnych, medycznych, finansowych lub bezpieczeństwa bez właściwego przeglądu.
-3. **Modeluj unit economics**: Uwzględnij cenę, podatek, płatność i FX, zwroty, chargebacki, support, realizację, lokalizację i pozyskanie. PPP może wspierać badanie, ale samo nie wyznacza uczciwej ani rentownej ceny.
-4. **Mapuj obowiązki**: Klasyfikuj B2C/B2B, towary/usługi/treści cyfrowe, lokalizację, zakład, faktury, prawa konsumenta, licencje, sankcje i transfery ze specjalistami. OSS może uprościć kwalifikowane deklaracje VAT B2C; obowiązują różne procedury, stawki kraju konsumenta i rekordy.
-5. **Projektuj doświadczenie**: Daj jawny wybór języka i waluty, pełną cenę, lokalne formaty, dostępność i jasne zasady dostawy, anulowania i pomocy. Nie wnioskuj obywatelstwa ani statusu prawnego z IP.
-6. **Testuj całą ścieżkę**: Na ograniczonej kohorcie sprawdź płatność, dowód podatkowy, potwierdzenie, dostawę, zwrot, spór, support i odzyskiwanie, nie same kliknięcia.
-7. **Decyduj według bramek**: Skaluj, poprawiaj, wstrzymaj lub zakończ według progów wyniku klienta, marży, skarg, compliance i obciążenia.
-
-Dokumentuj dowody i niepewność. Wdrożenie podatkowe i prawne wymaga aktualnej porady dla konkretnych krajów i faktów transakcji.`,
-            practicalExamples: ['Pilot ma widoczny wybór locale i pokazuje cenę, VAT oraz zwroty przed płatnością; zespół testuje ścieżkę z lokalnymi użytkownikami i supportem.', 'Rynek z tanimi leadami zostaje wstrzymany, bo zwroty, wsparcie i nieudane płatności tworzą ujemną marżę.'],
-          },
-          understandContent: { coreTakeaway: 'Wiarygodne wejście łączy lokalne dowody klientów, pełną ekonomię, gotowość operacyjną i przegląd jurysdykcji przed skalą.', keyPrinciples: ['Waliduj całą ścieżkę, nie kliknięcia', 'Daj kontrolę locale i jasną cenę', 'Traktuj OSS i płatności jako mechanizmy, nie gwarancję compliance'] },
-          actionTask: { instruction: 'Przygotuj etapowy plan dla jednego rynku:', checklistItems: ['Udokumentowano hipotezę, źródła, maksymalną stratę i termin decyzji', 'Przegląd języka, kultury i dostępności ma właścicieli', 'Cena obejmuje podatki, FX, płatności, zwroty, support i pozyskanie', 'Obowiązki klienta, świadczenia, podatków, konsumenta i danych wskazano do przeglądu', 'Zdefiniowano pilot end-to-end i bramki decyzji'], toolboxCategory: 'landingpage' },
-        },
-        '31.2': {
-          stageTitle: '31. Pozyskanie międzynarodowe', title: 'Global paid media: kontrolowane eksperymenty, lokalizacja i pomiar',
-          description: 'Prowadź kampanie uwzględniające kraj z legalnym targetingiem, sprawdzonym creative, porównywalnym raportowaniem i testami inkrementalności zamiast rankingów populacji i taniego ruchu.',
-          learnContent: {
-            videoTitle: 'Mierzalne i odpowiedzialne kampanie międzynarodowe',
-            summaryText: 'Niższy CPM nie oznacza lepszych klientów ani rentownego wzrostu. Porównuj kontrybucję, wynik klienta i efekt inkrementalny z poszanowaniem prawa reklamy, prywatności i platform.',
-            bulletPoints: ['Łącz lub rozdzielaj kraje według języka, oferty, prawa, budżetu i potrzeb uczenia, nie sztywnej listy tierów', 'Zleć lokalnym reviewerom sprawdzenie znaczenia, wymowy, claims, praw i dostępności creative wspieranego AI', 'Ustal budżety, harmonogram i alerty w opisanej strefie raportowej, zachowując lokalny kontekst', 'Uzyskaj wymaganą zgodę i minimalizuj dane przed tagami reklamowymi lub analitycznymi; testuj jakość i deduplikację', 'Oceniaj marżę, zwroty, skargi, retencję i inkrementalność obok atrybucji i ROAS'],
-            coreConcepts: [
-              { iconName: 'target', title: 'SEGMENTACJA OPARTA NA DOWODACH', description: 'Grupuj rynki tylko przy porównywalnej ofercie, języku, ekonomii, prawie i wynikach. Aktualizuj grupę wraz z dowodami.', highlight: true },
-              { iconName: 'video', title: 'LOKALNY CREATIVE PO PRZEGLĄDZIE', description: 'AI może tworzyć szkice, ale nie gwarantuje kultury, zgody, praw do głosu ani legalnych claims. Produkcję zatwierdza odpowiedzialny lokalny reviewer.' },
-              { iconName: 'activity', title: 'POMIAR INKREMENTALNY', description: 'Normalizuj walutę, strefę i definicje; monitoruj utratę danych i porównuj atrybucję z eksperymentami, backendem oraz niepewnością.' },
-            ],
-            resources: [
-              { title: 'Plan eksperymentu kampanii międzynarodowej', subtitle: 'Segmentacja, budżet, compliance i bramki decyzji', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Workspace przeglądu wielojęzycznego creative', subtitle: 'Szkic, prawa, dostępność i checklista native review', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Skaluj dowody, nie stereotypy
-
-Etykiety „Tier 1”, „Tier 2” i „emerging high volume” ukrywają różnice wewnątrz populacji i mogą prowadzić do złych lub dyskryminujących decyzji. Segmentuj według oferty, języka, prawa i obserwowanej ekonomii.
-
-#### Workflow kontrolowanej kampanii
-
-1. **Ustal kontrakt testu**: Przed startem określ hipotezę, audience, wykluczenia, ofertę, kraje, cap, czas, metrykę, guardrails i stop rule.
-2. **Sprawdź eligibility i targeting**: Oceń lokalne prawo reklamy, politykę platformy, wiek, produkty ograniczone, politykę i kategorie wrażliwe oraz antydyskryminację. Unikaj wnioskowanych cech wrażliwych i wykorzystywania podatności.
-3. **Lokalizuj odpowiedzialnie**: Tłumacz znaczenie. Sprawdź claims, ceny, disclosure, humor, wymowę, napisy, kontrast, licencje, wizerunek i zgodę na głos syntetyczny z lokalnym reviewerem.
-4. **Konfiguruj pomiar**: Używaj opisanej strefy i waluty kanonicznej, zachowując wartości źródłowe. Waliduj sygnały zgody, eventy, deduplikację, server/browser, zwroty i CRM z minimalnymi danymi.
-5. **Chroń budżet**: Zacznij od kwoty możliwej do utraty, ustaw limity konta i kampanii, akceptacje rolami i alerty anomalii. Reguły automatyczne muszą bezpiecznie uwzględniać strefy i opóźnienia.
-6. **Czytaj pełny wynik**: Porównuj inkrementalny popyt, marżę, retencję, zwroty, skargi, support i rezultat klienta. Tani CPM lub przypisany ROAS nie dowodzą sukcesu.
-7. **Skaluj stopniowo**: Zwiększaj wydatki po stabilnych dowodach, dostępnej obsłudze i przeglądzie compliance. Jeśli możliwe, utrzymuj grupę porównawczą i zapisuj zmiany niszczące porównywalność.
-
-Raporty platform są estymacją zależną od okien atrybucji, zgody, modelowania i FX. Pokazuj niepewność i nie twierdź, że jedna struktura jest zawsze najszybsza lub poprawna.`,
-            practicalExamples: ['Dwa kraje pozostają osobno, bo różnią się zwrotami, językiem i płatnościami mimo podobnego CPM.', 'Voice-over AI czeka na potwierdzenie licencji, wymowy, napisów, claims i lokalnego disclosure.'],
-          },
-          understandContent: { coreTakeaway: 'Odpowiedzialna reklama międzynarodowa skaluje po lokalnym przeglądzie, legalnym pomiarze i pełnych dowodach ekonomicznych inkrementalnej wartości.', keyPrinciples: ['Segmentuj według dowodów, nie stereotypów', 'Sprawdzaj creative AI i prawa przez człowieka', 'Optymalizuj inkrementalną kontrybucję i wynik klienta'] },
-          actionTask: { instruction: 'Zaprojektuj kontrolowany eksperyment kampanii:', checklistItems: ['Udokumentowano hipotezę, kraje, audience, wykluczenia, cap, metrykę i stop rule', 'Sprawdzono prawo, politykę platformy i ryzyko targetingu wrażliwego', 'Creative ma akceptację języka, claims, dostępności i praw', 'Przetestowano zgodę, eventy, deduplikację, strefę, walutę i uzgodnienie backendu', 'Widok decyzji obejmuje inkrementalność, marżę, zwroty, skargi i capacity'], toolboxCategory: 'landingpage' },
-        },
-      },
-    },
-    32: {
-      title: '32. Podcasty, earned media i wiarygodny autorytet marki',
-      subtitle: 'Trafny outreach, niezależność redakcyjna, jakość źródeł i ponowne użycie z prawami',
-      description: 'Zdobywaj odpowiednie okazje medialne przez rzetelną wiedzę i użyteczne dowody, bez gwarancji odpowiedzi, „darmowego” coverage, obietnic viralu lub mylących badge’y publikacji.',
-      lessons: {
-        '32.1': {
-          stageTitle: '32. Outreach podcastowy i udział w mediach', title: 'Trafny pitching, przygotowanie gościa i ponowne użycie za zgodą',
-          description: 'Badaj dopasowanie odbiorców, proponuj prawdziwy wkład redakcyjny i mierz wyniki z poszanowaniem skrzynek, zgody na nagranie, praw IP oraz niezależności hosta.',
-          learnContent: {
-            videoTitle: 'Odpowiedzialny program outreachu podcastowego oparty na dowodach',
-            summaryText: 'Długi wywiad może budować zrozumienie, lecz nie można zakładać, że pokona reklamę lub da kwalifikowane leady. Host wybiera redakcyjnie, a audience decyduje o reakcji.',
-            bulletPoints: ['Wybieraj programy według tematu, audience, formatu, ostatnich odcinków i publicznych kontaktów, nie arbitralnego „top 30”', 'Pitchuj jeden wkład oparty na dowodach i dopasowany do programu; unikaj sztucznej kontrowersji i gwarantowanych wyników', 'Przed reuse ustal nagranie, edycję, disclosure, publikację, klipy, transkrypcję, wizerunek i muzykę', 'Zadbaj, by strona gościa była dostępna, respektowała prywatność i odpowiadała rozmowie', 'Oceniaj feedback, jakościowe wizyty, leady za zgodą i dalsze wyniki z niepewnością, nie sam reach'],
-            coreConcepts: [
-              { iconName: 'mic', title: 'DOPASOWANIE REDAKCYJNE', description: 'Proponuj trafną perspektywę, sprawdzalne doświadczenie i użyteczne wnioski. Szablon nie gwarantuje otwarcia, odpowiedzi ani zaproszenia.', highlight: true },
-              { iconName: 'shield-check', title: 'PRAWA DO NAGRANIA I REUSE', description: 'Potwierdź właściciela odcinka i zakres edycji, napisów, cytowania, promocji oraz monetyzacji. Uzyskaj osobne zgody, gdy trzeba.' },
-              { iconName: 'bar-chart-2', title: 'PROPORCJONALNY POMIAR', description: 'Używaj łatwego lub tagowanego URL tylko, gdy pomaga, wyjaśniaj tracking i minimalizuj dane. Atrybucja jest niepełna, a osobny funnel nie zawsze potrzebny.' },
-            ],
-            resources: [
-              { title: 'Checklista researchu, pitchu i praw podcastu', subtitle: 'Dopasowanie, dowody, disclosure i zgody na reuse', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Przegląd źródeł medialnych Mara CRM', subtitle: 'Mierz polecenia za zgodą bez zawyżania atrybucji', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Wnoś wkład do programu zamiast żądać ekspozycji
-
-Outreach podcastowy jest profesjonalną prośbą, nie skrótem do „dominacji”. Wielkość audience bywa prywatna lub szacowana, a mały program specjalistyczny może być trafniejszy niż duży ogólny.
-
-#### Odpowiedzialny outreach i produkcja
-
-1. **Zbadaj dopasowanie**: Przejrzyj odcinki, audience, format, politykę gości, zainteresowania, dostępność i instrukcje kontaktu. Zachowuj tylko potrzebne dane służbowe i respektuj opt-out.
-2. **Opracuj kąt oparty na dowodach**: Wyjaśnij aktualność, możliwe do potwierdzenia fakty i wartość dla słuchacza. Ujawnij konflikty, interes komercyjny i limity. Nie wymyślaj kontrowersji.
-3. **Napisz krótki osobisty pitch**: Odnieś się do odcinka, zaproponuj 2–3 elastyczne punkty i wiarygodne próbki. Nie sugeruj fałszywego polecenia, pilności ani relacji.
-4. **Follow-up proporcjonalny**: Ogranicz liczbę prób, zatrzymaj po odmowie lub opt-out i nie zmieniaj kanału, by obejść zgodę lub zasady.
-5. **Ustal produkcję**: Wyjaśnij zgodę na nagranie, kontrolę redakcyjną, korekty, sponsor/affiliate disclosure, dostępność, termin, poufność i anulowanie.
-6. **Ustal prawa reuse**: Uzyskaj pisemną zgodę przed klipami, transkrypcją, obrazem, muzyką lub logo. Zachowaj kontekst, poprawne napisy i znaczenie.
-7. **Zaoferuj prawdziwy następny krok**: Strona lub zasób mają odpowiadać odcinkowi, wskazywać firmę, dane i nie tworzyć fałszywej ekskluzywności. Host może zmienić lub odrzucić CTA.
-8. **Mierz ostrożnie**: Stosuj spójne definicje publikacji, referral i wyniku, uznając dark traffic, opóźnienia i inne kanały. Sam URL nie dowodzi przyczyny.
-
-Respektuj niezależność redakcyjną. Płatność, produkty, afiliacja i inne istotne relacje mogą wymagać jasnego disclosure według reguł odbiorców.`,
-            practicalExamples: ['Pitch cytuje niedawny odcinek, oferuje nowe dane pierwotne z metodologią i wskazuje, które claims są interpretacją gościa.', 'Przed publikacją klipu gość uzyskuje pisemną zgodę producenta, zachowuje kontekst, dodaje napisy i ujawnia relację komercyjną.'],
-          },
-          understandContent: { coreTakeaway: 'Wiarygodny outreach łączy trafność, dowody, szacunek do kontaktu, disclosure i reuse za zgodą.', keyPrinciples: ['Host zachowuje wybór redakcyjny', 'Prawa do nagrania i reuse przed publikacją', 'Mierz bez udawania pełnej atrybucji'] },
-          actionTask: { instruction: 'Przygotuj jeden odpowiedzialny pilot outreachu:', checklistItems: ['Zbadano pięć trafnych programów według publicznych instrukcji', 'Zweryfikowano claims, dowody, konflikty i wartość', 'Udokumentowano limit follow-up i opt-out', 'Wymieniono zgody na nagranie, disclosure, klip, tekst, logo i wizerunek', 'Przygotowano dostępny następny krok i proporcjonalny pomiar'], toolboxCategory: 'landingpage' },
-        },
-        '32.2': {
-          stageTitle: '32. Earned media i cyfrowy PR', title: 'Rzetelne materiały prasowe, relacje z dziennikarzami i prawdziwe odniesienia medialne',
-          description: 'Wspieraj dziennikarzy sprawdzalną informacją i opisuj coverage zgodnie z prawdą, bez ukrywania reklamy, gwarancji backlinków lub sugerowania endorsementu przez logo.',
-          learnContent: {
-            videoTitle: 'Cyfrowy PR oparty na dowodach',
-            summaryText: 'Coverage wynika z oceny redakcyjnej i nie jest gwarantowany ani naprawdę bezkosztowy. Wzmianka może wspierać awareness, ale nie podnosi automatycznie konwersji ani nie podwaja kanałów.',
-            bulletPoints: ['Oferuj realny news value z nazwanymi źródłami, metodą, datami, ograniczeniami próby i dostępnymi dowodami', 'Oddziel materiał prasowy, sponsored content, afiliację i niezależną publikację przez jasne disclosure', 'Odpowiadaj na trafne zapytania bez fałszowania kompetencji, klientów, wyników lub dostępności', 'Proś o zgodę przed użyciem nazw, znaków, screenshotów, cytatów lub logo i precyzyjnie opisuj coverage', 'Mierz jakość publikacji, referral, korekty, sentyment i wynik bez zakładania dofollow lub endorsementu'],
-            coreConcepts: [
-              { iconName: 'newspaper', title: 'WERYFIKOWALNY MATERIAŁ', description: 'Release oznacza claims, źródła, metodologię, datę, rzecznika i kontakt. Draft AI wymaga ludzkiego fact-checku i sprawdzenia źródeł.', highlight: true },
-              { iconName: 'scale', title: 'NIEZALEŻNOŚĆ REDAKCYJNA', description: 'Dziennikarz decyduje, czy i jak opisze temat. Nie uzależniaj dostępu, prezentów lub płatności od korzystnego niezależnego coverage.' },
-              { iconName: 'award', title: 'DOKŁADNE ODNIESIENIE', description: '„Featured in” musi odpowiadać realnej publikacji i dacie bez sugerowania akceptacji. Logo i fragmenty wymagają przeglądu zgody lub licencji.' },
-            ],
-            resources: [
-              { title: 'Szablon dowodów i outreachu prasowego', subtitle: 'Źródła, metoda, kontakty, korekty i disclosure', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Przegląd draftu PR wspieranego AI', subtitle: 'Weryfikacja faktów, praw i danych poufnych', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
-            ],
-            fullArticleGuide: `### Ułatwiaj weryfikację, nie wywieraj presji
-
-PR powinien dać redakcji wiarygodny materiał i swobodę odrzucenia. Informacja prasowa jest dokumentem strony zainteresowanej, nie niezależnym artykułem.
-
-#### Workflow mediów oparty na dowodach
-
-1. **Potwierdź news value**: Wskaż, co jest nowe, istotne niezależnie i aktualne. Rutynowa promocja nie staje się newsem przez trendową headline.
-2. **Zbuduj pakiet dowodów**: Zachowaj źródła, dane, metodę, próbę i daty badania, limity, zgodę, konflikty i rzecznika. Nie twórz fałszywych ankiet, cytatów ani klientów.
-3. **Pisz transparentnie**: Użyj faktycznego nagłówka i leadu, rozdziel fakt od prognozy i opinii, wskaż organizację oraz interes. AI może pomóc, ale człowiek sprawdza każdy fakt, cytat i źródło.
-4. **Chroń ludzi i informacje**: Uzyskaj zgodę na case studies, obrazy i cytaty; minimalizuj dane; respektuj embargo i poufność; oferuj dostępny format.
-5. **Kontaktuj trafnie**: Stosuj instrukcje redakcji, publiczne kontakty zawodowe i personalizację tylko z istotnych źródeł. Ogranicz follow-up i prowadź suppression.
-6. **Zachowaj niezależność**: Ujawnij płatność, sponsoring, afiliację lub dostarczony produkt. Sponsored placement nie może udawać niezależnej publikacji.
-7. **Obsłuż publikację rzetelnie**: Sprawdź fakty, grzecznie poproś o korektę i archiwizuj URL, tytuł, wydawcę i datę. Nie żądaj treści, dofollow ani pozytywnego tonu.
-8. **Opisuj coverage prawdziwie**: Cytuj tylko za zgodą i w kontekście. Sprawdź znak i copyright przed logo lub screenshotem i nie sugeruj endorsementu, certyfikatu ani partnerstwa.
-9. **Mierz i ucz się**: Śledź trafne publikacje, referral, branded search, zapytania, korekty i skutki negatywne. Nie przypisuj zmiany konwersji jednemu artykułowi bez porównania.
-
-Reguły reklamy i endorsementu różnią się. Claims muszą być prawdziwe, niemylnące i poparte, a istotne relacje komercyjne jasno ujawnione, gdy wymagane.`,
-            practicalExamples: ['Release o ankiecie linkuje kwestionariusz i metodę, podaje próbę, daty oraz ograniczenia i oferuje kontakt niezależnego eksperta.', 'Firma pisze „Założyciel cytowany w [tytuł], 12 maja 2026” za zgodą zamiast logo wydawcy nad checkoutem jako rzekomej rekomendacji.'],
-          },
-          understandContent: { coreTakeaway: 'Wiarygodny PR jest transparentną pracą źródłową opartą na dowodach, niezależności redakcyjnej, prawach i dokładnym opisie coverage.', keyPrinciples: ['Nie ukrywaj promocji jako niezależnego newsa', 'Sprawdzaj fakty, cytaty i źródła AI', 'Wzmianka nie jest automatycznie endorsementem ani licencją na badge'] },
-          actionTask: { instruction: 'Przygotuj weryfikowalny pakiet medialny i politykę publikacji:', checklistItems: ['Udokumentowano news value, claims, źródła, metody, daty i limity', 'Cytaty, cases, obrazy i dane mają właściwe zgody', 'Określono listę kontaktów, limit follow-up i suppression', 'Relacje sponsorowane, afiliacyjne i materialne mają reguły disclosure', 'Polityka obejmuje korekty, backlinki, fragmenty, screenshoty, znaki i logo'], toolboxCategory: 'landingpage' },
-        },
-      },
-    },
-    33: {
-      title: '33. Bezpieczne i dostępne eventy, warsztaty i retreaty',
-      subtitle: 'Budżety scenariuszowe, transparentne bilety, odpowiedzialny sponsoring i uczestnik w centrum',
-      description: 'Projektuj użyteczne doświadczenia z realną ekonomią, prawdziwą dostępnością miejsc, jasnymi relacjami sponsorskimi, dostępnością i bezpieczeństwem, bez gwarancji zysku lub presji na upgrade.',
-      lessons: {
-        '33.1': {
-          stageTitle: '33. Architektura eventu i bilety', title: 'Wykonalność eventu, transparentne bilety i odpowiedzialny sponsoring',
-          description: 'Testuj popyt i gotowość, modeluj scenariusze negatywne i sprzedawaj jasno różniące się bilety bez fałszywych countdownów, ukrytych opłat lub założenia, że sponsor pokryje koszty.',
-          learnContent: {
-            videoTitle: 'Plan rentownego, bezpiecznego i dostępnego eventu',
-            summaryText: 'Event może wzmacniać społeczność, ale może też stracić pieniądze lub zaszkodzić. Miejsce, personel, bezpieczeństwo, dostępność, anulowanie i wynik uczestnika trzeba zaplanować przed funnelem.',
-            bulletPoints: ['Przed miejscem lub modelem biletu określ wyniki uczestnika, zakres, pojemność, wykluczenia i dowody sukcesu', 'Modeluj break-even, wariant bazowy i negatywny ze wszystkimi kosztami, podatkami, zwrotami, contingency i timingiem cash', 'Pokazuj pełną cenę i prawdziwą dostępność; countdown oraz „ostatnie miejsca” muszą odpowiadać realnym warunkom', 'Każdy ticket ma jasno opisany poziom usługi, a rozsądne dostosowania dostępności nie mogą być prestiżowym upsellem', 'Kontraktuj deliverables sponsora, dane, bezpieczeństwo, disclosure i konflikty bez gwarantowania finansowania lub wpływu redakcyjnego'],
-            coreConcepts: [
-              { iconName: 'calculator', title: 'BUDŻET SCENARIUSZOWY', description: 'Uwzględnij miejsce, produkcję, personel, speakerów, podróże, catering, dostępność, ochronę, ubezpieczenie, licencje, podatki, płatności, zwroty i rezerwę. Sprzedaż 50% nie jest regułą break-even.', highlight: true },
-              { iconName: 'ticket', title: 'UCZCIWY PROJEKT BILETÓW', description: 'Tiery mogą oferować realne dodatkowe usługi, ale nie ukrywają podstawowego dostępu, obowiązkowych opłat ani sztucznego braku. Warunki transferu, anulowania i zwrotu podaj przed zakupem.' },
-              { iconName: 'shield-check', title: 'BEZPIECZNA ŚCIEŻKA UCZESTNIKA', description: 'Planuj ryzyko, awarie, safeguarding, dostępność, dietę, alergeny, prywatność, skargi i właściciela incydentu od rejestracji do wyjścia.' },
-            ],
-            resources: [
-              { title: 'Workbook wykonalności, bezpieczeństwa i budżetu', subtitle: 'Scenariusze, dostępność, contingency i bramki', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Preferencje uczestników Mara CRM', subtitle: 'Zbieraj tylko konieczne dane logistyczne za zgodą', type: 'tool', iconName: 'users', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Zatwierdź wykonalność przed sprzedażą
-
-Eventy nie są z natury rentowne ani silniejsze od dostawy cyfrowej. Zacznij od wyniku uczestnika i ryzyka, które organizacja może bezpiecznie ponieść.
-
-#### Workflow zatwierdzenia
-
-1. **Zdefiniuj event**: Podaj audience, wyniki, format, capacity, wiek, prerequisites, speakerów, usługi i to, czym event nie jest. Waliduj zainteresowanie bez przedstawiania go jako sprzedaży.
-2. **Modeluj scenariusze i cash**: Buduj break-even, bazowy i negatywny z mixem ticketów, podatkiem, timingiem, zwrotami i niepewnym sponsorem. Uwzględnij miejsce, produkcję, staffing, podróże, noclegi, catering, dostępność, ochronę, medyków, ubezpieczenie, licencje, marketing i contingency.
-3. **Sprawdź miejsce i bezpieczeństwo**: Potwierdź legalną pojemność, dostęp bez stopni, toalety i miejsca, ewakuację, pogodę, transport, bezpieczeństwo żywności, alergeny, safeguarding, kontakty i obowiązki z właściwymi dostawcami oraz władzami.
-4. **Projektuj uczciwe bilety**: Wyjaśnij zawartość tierów, obowiązkowe koszty, dostępność i ograniczenia. Dostosowania dostępności oferuj godnie, nie jako benefit prestige.
-5. **Używaj prawdziwej ceny**: Realny early booking może mieć opisaną datę lub pulę. Nie resetuj timerów, nie wymyślaj scarcity ani nie dodawaj obowiązkowych opłat późno. Sprawdź lokalne prawo ceny i umowy.
-6. **Kontraktuj sponsorów**: Oceń dopasowanie, reputację i konflikty; określ świadczenia, płatność, anulowanie, markę, kontakt do attendee, booth, stage i disclosure. Sesje sponsorowane muszą być rozpoznawalne, a dane nie przechodzą bez podstawy i informacji.
-7. **Komunikuj z wyboru**: Oferuj portal, e-mail i dostępne alternatywy. Nie zmuszaj do grupy ujawniającej telefony. Uzyskaj zgodę na grupy lub paczki i umożliw wyjście.
-8. **Ustal go/no-go**: Decyduj według otrzymanego cash, terminów dostawców, dostępności, safety sign-off i jakości, nie oczekiwanych upgrade’ów.
-9. **Przygotuj recovery**: Publikuj anulowanie, transfer i zwrot; utrzymuj support, log incydentów, backup i plan komunikacji.
-
-Zaangażuj lokalnych specjalistów eventu, ubezpieczenia, podatków, dostępności, bezpieczeństwa i prawa dla rzeczywistego miejsca oraz formatu.`,
-            practicalExamples: ['Budżet negatywny zakłada słabszą sprzedaż i brak sponsora; organizator może anulować przed bezzwrotnym terminem i oddać pieniądze z rezerwy.', 'Opcjonalna społeczność attendee nie ujawnia telefonów i oferuje równoważne dostępne aktualizacje e-mailem.'],
-          },
-          understandContent: { coreTakeaway: 'Event zatwierdza się przez pełną ekonomię, uczciwe bilety, bezpieczeństwo i inkluzywne operacje, nie przyszłą sprzedaż na miejscu.', keyPrinciples: ['Budżetuj downside i niepewnego sponsora', 'Stosuj prawdziwe ceny, miejsca i benefity', 'Dostępność, safety i privacy są rdzeniem'] },
-          actionTask: { instruction: 'Przygotuj plan go/no-go przed sprzedażą:', checklistItems: ['Udokumentowano wyniki, zakres, capacity i poziomy usługi', 'Scenariusze cash obejmują wszystkie koszty i contingency', 'Wskazano właścicieli miejsca, safety, dostępności, ubezpieczenia i awarii', 'Sprawdzono cenę, opłaty, dostępność, anulowanie, transfer i zwroty', 'Określono sponsorów, disclosure, limity danych i bramki go/no-go'], toolboxCategory: 'landingpage' },
-        },
-        '33.2': {
-          stageTitle: '33. Etyczne oferty i realizacja', title: 'Transparentna oferta ze sceny, świadomy wybór i bezpieczna realizacja',
-          description: 'Prezentuj opcjonalne kroki bez wykorzystywania emocji grupy, strachu, zmęczenia lub sztucznej pilności i daj pełne warunki, prywatność oraz czas decyzji.',
-          learnContent: {
-            videoTitle: 'Etyczna oferta eventowa i proces realizacji',
-            summaryText: 'Cel zamknięcia 30–50% sali może popychać do manipulacji i złej sprzedaży. Oceniaj ofertę według świadomego dopasowania, capacity i trwałych wyników, nie natychmiastowej konwersji.',
-            bulletPoints: ['Oddziel obiecaną edukację od opcjonalnej sprzedaży i ujawnij czas, cel komercyjny oraz interes speakera', 'Przed decyzją opisz zakres, cenę, podatki, opłaty cykliczne, finansowanie, anulowanie, eligibility, capacity i realne wyniki', 'Używaj prawdziwej dostępności i terminów; nie twórz fikcyjnych event-only bonusów ani nie sugeruj porażki bez programu', 'Zapewnij cichą, dostępną konsultację i pozwól odmówić lub wyjść bez wstydu i utraty zakupionych benefitów', 'Przetwarzaj zamówienia bezpiecznie z pisemnym potwierdzeniem, follow-up za zgodą oraz testem anulowania i zwrotu'],
-            coreConcepts: [
-              { iconName: 'presentation', title: 'UJAWNIONA OPCJONALNA OFERTA', description: 'Powiedz, kiedy kończy się edukacja i zaczyna prezentacja komercyjna. Event musi dostarczyć obiecaną wartość, nawet gdy nikt nie kupi.', highlight: true },
-              { iconName: 'user-check', title: 'ŚWIADOME DOPASOWANIE', description: 'Sprawdzaj potrzeby, eligibility, affordability i konflikty bez diagnozowania, zawstydzania ani zwalczania obiekcji. Brak sprzedaży może być prawidłowy.' },
-              { iconName: 'credit-card', title: 'BEZPIECZNA REALIZACJA', description: 'Używaj zatwierdzonych płatności, indywidualnych kont i prywatnych ekranów. Nie zapisuj danych karty na papierze ani nie pokazuj umów przy zatłoczonym stole.' },
-            ],
-            resources: [
-              { title: 'Szablon etycznej oferty eventowej', subtitle: 'Disclosure, fit, warunki, dostępność i zabezpieczenia', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Bezpieczne zamówienia eventowe Mara CRM', subtitle: 'Role, zgoda i stany realizacji', type: 'tool', iconName: 'dollar-sign', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Uczyń następny krok opcjonalnym także w praktyce
-
-Energia eventu, social proof, zmęczenie i autorytet wpływają na decyzje. „Bez presji” nie usuwa presji, jeśli projekt używa publicznej deklaracji, strachu, ukrytych warunków lub fikcyjnego końca.
-
-#### Proces oferty z uczestnikiem w centrum
-
-1. **Chroń rdzeń eventu**: Dostarcz reklamowany program niezależnie od dalszych zakupów. Publikuj agendę i oznacz sesje komercyjne, gdy właściwe.
-2. **Ujawnij przejście**: Powiedz, że zaczyna się oferta, kto zarabia i ile potrwa. Pozwól wyjść lub zrobić przerwę bez utraty contentu.
-3. **Wyjaśnij pełną ofertę**: Podaj dostawcę, zakres, delivery, prerequisites, support, limity, pełną i cykliczną cenę, podatki, raty, koszt finansowania, anulowanie, zwrot i właściwe odstąpienie prostym językiem.
-4. **Poprzyj wartość**: Unikaj zawyżonego value stacku, niereprezentatywnych testimonials i gwarancji. Bonusy oraz capacity muszą być realne, opisane i dostępne na podanych zasadach.
-5. **Chroń jakość decyzji**: Nie strasz wdrożeniem bez mentoringu, nie zawstydzaj, nie używaj peer pressure ani targetu sali. Daj pisemne podsumowanie i czas proporcjonalny do ceny oraz złożoności.
-6. **Sprawdź fit prywatnie**: Szkol personel w potrzebach, wykluczeniach, podatności i problemach finansowych oraz eskalacji. Wynagrodzenie nie może premiować złych umów ani ukrywania skarg i anulowań.
-7. **Przestrzegaj praw konsumenta i kredytu**: Umowy w miejscu, digital content, usługi i finansowanie mogą mieć różne obowiązki. Uzyskaj przegląd jurysdykcji i transakcji.
-8. **Przetwarzaj bezpiecznie**: Używaj dostawców zgodnych z PCI, chronionej sieci, ról CRM, receiptów i kontroli ceny oraz rat. Nie zbieraj pełnych kart w formularzu, notatce lub czacie.
-9. **Potwierdź i realizuj**: Wyślij warunki, status płatności, drogę anulowania, plan dostawy i support. Uzgadniaj płatność z dostępem i naprawiaj duplikaty lub błędy.
-10. **Follow-up za pozwoleniem**: Kontaktuj non-buyers według zgody lub właściwych reguł, respektuj opt-out i nie zamieniaj terminu w ciągłą presję.
-
-Mierz fit, anulowania, zwroty, skargi, affordability, jakość realizacji i wynik klienta obok sprzedaży.`,
-            practicalExamples: ['Drogi program pojawia się w oznaczonej 20-minutowej sesji; attendee dostaje pełne warunki i może umówić późniejszą prywatną rozmowę o dopasowaniu.', 'Płatność używa terminala operatora i od razu wysyła raty, wersję umowy, receipt oraz kontakt anulowania.'],
-          },
-          understandContent: { coreTakeaway: 'Etyczna oferta chroni świadomy wybór, pokazuje wszystkie warunki i stawia bezpieczną, właściwą realizację ponad konwersję sali.', keyPrinciples: ['Zakupiony event działa samodzielnie', 'Bez strachu, wstydu i fikcyjnej pilności', 'Prywatne, bezpieczne i możliwe do sprawdzenia umowy'] },
-          actionTask: { instruction: 'Zaprojektuj opcjonalną ofertę i realizację z zabezpieczeniami:', checklistItems: ['Ujawniono segment komercyjny i interes finansowy', 'Przygotowano pełną ofertę, cenę, cykliczność, finansowanie i anulowanie', 'Claims, testimonials, bonusy, capacity i terminy mają dowody', 'Określono prywatny fit review, eskalację podatności i no-sale', 'Przetestowano płatność, potwierdzenie, uzgodnienie, zwrot i follow-up za zgodą'], toolboxCategory: 'content' },
-        },
-      },
-    },
-    34: {
-      title: '34. Odpowiedzialne licencjonowanie, franczyza i rozwój white label',
-      subtitle: 'Weryfikacja praw, realna ekonomia partnera, nadzór jakości i odpowiedzialna ekspansja',
-      description: 'Przekształcaj udokumentowane systemy w starannie zarządzane oferty licencyjne lub white label z jasnymi prawami, realną ekonomią, właściwymi partnerami i przeglądem jurysdykcji—bez gwarancji royalty lub wzrostu bez realizacji.',
-      lessons: {
-        '34.1': {
-          stageTitle: '34. Architektura licencji i white label', title: 'Zaprojektuj system licencyjny z jasnymi prawami, kontrolami i ekonomią',
-          description: 'Oceń transferowalność systemu, potwierdź własność i zgody, wybierz właściwy model i opisz obowiązki handlowe, operacyjne, dotyczące danych oraz jakości przed ofertą licencji.',
-          learnContent: {
-            videoTitle: 'Odpowiedzialny model operacyjny licencji i white label',
-            summaryText: 'Licencjonowanie może ograniczyć część centralnej realizacji, ale nie usuwa supportu, nadzoru, obowiązków prawnych ani ryzyka reputacji. Przychód zależy od dopasowania partnera, adopcji, popytu, jakości i wykonania umowy.',
-            bulletPoints: ['Przed obietnicą praw użytkowania zinwentaryzuj znaki, copyright, software, dane, content, know-how i zasoby stron trzecich', 'Porównaj ograniczoną licencję, white label, dystrybucję i relację podobną do franczyzy według kontroli, wsparcia, opłat oraz lokalnej klasyfikacji', 'Pisemnie określ terytorium, kanały, pole użycia, termin, wyłączność, sublicencje, prawa zastrzeżone, aktualizacje, support i exit', 'Modeluj setup, opłaty cykliczne, usage lub udział w przychodzie na podstawie ekonomii partnera, uwzględniając podatki, walutę, zwroty, support i egzekwowanie', 'Chroń poufne know-how proporcjonalnym dostępem, security i poufnością, zachowując legalne zgłoszenia, prawa pracowników oraz wymagane ujawnienia'],
-            coreConcepts: [
-              { iconName: 'layers', title: 'MAPA PRAW I MODELU', description: 'Licencja udziela konkretnych uprawnień; nie przenosi każdego zasobu ani nie gwarantuje wyniku biznesowego. Mapuj własność, ograniczenia stron trzecich, jurysdykcje i konieczny poziom kontroli.', highlight: true },
-              { iconName: 'shield-check', title: 'NADZÓR JAKOŚCI I MARKI', description: 'Ustal obiektywne standardy, szkolenia, przegląd, naprawę i reguły marki. Wymogi kontroli jakości znaku i rejestracji różnią się, dlatego potrzebna jest lokalna porada.' },
-              { iconName: 'repeat', title: 'PRZETESTOWANA EKONOMIA', description: 'Prognozuj opłaty, marżę partnera, centralny support, timing płatności, churn, złe długi i downside. Cena setupu lub royalty pozostaje hipotezą, dopóki nie potwierdzą jej rynek i umowa.' },
-            ],
-            resources: [
-              { title: 'Workbook gotowości licencyjnej i kwestii umownych', subtitle: 'Prawa, ekonomia, kontrole, dane, konkurencja i exit', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Rejestr dostępu partnerów Mara CRM', subtitle: 'Konta rolami, akceptacje, szkolenia i dowody audytu', type: 'tool', iconName: 'users', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Przygotuj system do licencji przed sprzedażą licencji
-
-Skuteczny workflow wewnętrzny nie jest automatycznie transferowalną własnością intelektualną. Licencjonowanie tworzy stałe obowiązki dotyczące praw, szkolenia, jakości, security, wsparcia i egzekwowania.
-
-#### Workflow gotowości licencyjnej
-
-1. **Określ wynik klienta i dowody**: Udokumentuj problem, użytkowników, prerequisites, proces, wykluczenia, capacity, obserwowane wyniki i limity. Nie twierdź, że system gwarantuje rezultaty.
-2. **Utwórz rejestr praw**: Wskaż właścicieli i licencje nazw, logo, tekstu, wideo, templates, kodu, baz, obrazów, fontów, muzyki, materiału AI i przykładów klientów. Usuń lub zastąp to, czego nie wolno sublicencjonować albo rebrandować.
-3. **Chroń know-how zgodnie z prawem**: Klasyfikuj informacje, ograniczaj dostęp, zapisuj wersje, stosuj proporcjonalną poufność i obsługę incydentów. Ochrona tajemnicy przedsiębiorstwa zwykle zależy od sekretności, wartości handlowej i rozsądnych środków ochrony; samo oznaczenie wszystkiego jako poufne jej nie tworzy.
-4. **Wybierz rzeczywistą relację**: Porównaj licencję wyłączną lub niewyłączną, white label, reseller, agency, usługi i system podobny do franczyzy. Nazwa dokumentu może nie decydować o klasyfikacji, ujawnieniach, ryzyku zatrudnienia lub agency, podatku czy rejestracji.
-5. **Określ grant i granice**: Wskaż produkty, terytorium, kanały, klientów, język, pole użycia, termin, odnowienie, wyłączność, sublicencje, modyfikacje, własność ulepszeń, kontrolę domen i social, prawa zastrzeżone i użycie po rozwiązaniu.
-6. **Zaprojektuj nadzór jakości**: Publikuj mierzalne standardy, zatwierdzone claims i materiały, dostępność, skargi, security, zakres audytu, czas naprawy i proporcjonalne sankcje. Stosuj zasady spójnie i daj udokumentowaną drogę naprawy lub odwołania.
-7. **Modeluj pełną ekonomię**: Uwzględnij onboarding, support, hosting, tools, lokalizację, płatności, podatki, walutę, zwroty, ubezpieczenie, monitoring, spory, aktualizacje i exit. Przetestuj wariant bazowy i negatywny dla obu stron.
-8. **Sprawdź konkurencję i ograniczenia handlowe**: Kontrola cen, ograniczenia online, przydział terytoriów lub klientów, non-compete i wyłączność mogą rodzić ryzyko prawa konkurencji. Nie nakazuj niezależnym partnerom ustalania cen odsprzedaży ani podziału rynków bez przeglądu eksperta.
-9. **Przydziel obowiązki danych i security**: Określ controller, processor lub niezależne role dla każdego przepływu; minimalizuj dostęp i opisz cel, retencję, usunięcie, breach, subprocessors oraz transfery. Każdy użytkownik otrzymuje własne konto i least privilege.
-10. **Napisz plan operacyjny i exit**: Ureguluj faktury, raporty, obliczenie royalty, audyt, niedopłatę, SLA, zmiany, ciągłość, ubezpieczenie, odpowiedzialność, skargi, zawieszenie, rozwiązanie, przejęcie klientów, zwrot i usunięcie danych.
-
-Dla każdej jurysdykcji korzystaj z właściwych doradców IP, franczyzy, konkurencji, podatków, zatrudnienia, danych i prawa handlowego. Template jest listą kwestii, a nie akceptacją prawną.`,
-            practicalExamples: ['Pilot white label wyłącza bibliotekę stock, która zakazuje sublicencji, ogranicza partnera do jednego rynku i opisuje support, zatwierdzone claims, role danych oraz przegląd po 90 dniach.', 'Planowane wyłączne terytorium zostaje wstrzymane do przeglądu popytu, capacity partnera i prawa konkurencji; partner nie dostaje obietnicy chronionego przychodu.'],
-          },
-          understandContent: { coreTakeaway: 'Odpowiedzialna licencja jest precyzyjnie ograniczoną, przetestowaną ekonomicznie i aktywnie nadzorowaną relacją—nie pasywnym dochodem ani transferem całego ryzyka.', keyPrinciples: ['Sprawdź każdy zasób przed udzieleniem praw', 'Dokumentuj jakość, dane, ekonomię i exit', 'Przeglądaj klasyfikację i ograniczenia według jurysdykcji'] },
-          actionTask: { instruction: 'Przygotuj plik gotowości licencyjnej jednego systemu:', checklistItems: ['Udokumentowano dowody wyniku, proces, prerequisites i limity', 'Sprawdzono własność i prawa sublicencji każdego istotnego zasobu', 'Zmapowano model, grant, terytorium, termin, wyłączność i prawa zastrzeżone', 'Obliczono ekonomię bazową i downside dla licencjodawcy i partnera', 'Przypisano jakość, dane, security, support, audyt, rozwiązanie i przegląd prawny'], toolboxCategory: 'affiliate' },
-        },
-        '34.2': {
-          stageTitle: '34. Sieć partnerów i odpowiedzialna ekspansja', title: 'Pozyskuj, wdrażaj i nadzoruj właściwych partnerów licencyjnych B2B',
-          description: 'Buduj mierzalny program partnerów oparty na due diligence, prawdziwej informacji handlowej, kompetencji, ochronie klienta i trwałym wsparciu, nie na obietnicy szybkiego przychodu czy dominacji rynku.',
-          learnContent: {
-            videoTitle: 'Odpowiedzialna rekrutacja, onboarding i nadzór partnerów B2B',
-            summaryText: 'Sieć może zwiększyć zasięg, ale każdy operator tworzy ryzyko jakości, security, klienta i reputacji. Sama liczba partnerów nie jest sukcesem, jeśli klienci nie otrzymują standardu, a ekonomia obu stron jest niewykonalna.',
-            bulletPoints: ['Definiuj profil partnera według capability, dopasowania klientów, odporności finansowej, integrity, konfliktów i gotowości regulacyjnej, nie samej listy kontaktów', 'Pokazuj sprawdzoną ekonomię, koszty, obowiązki, ryzyka i reprezentatywne wyniki bez obietnicy podwojenia wartości klienta lub przychodu w 14 dni', 'Prowadź proporcjonalne due diligence, referencje i konflikty oraz daj obu stronom czas i informacje przed umową', 'Przed samodzielnym startem wymagaj zmierzonej kompetencji w produkcie, claims, privacy, security, dostępności, skargach i support', 'Monitoruj wyniki klienta, zwroty, skargi, security, obciążenie supportu i zdrowie partnera z naprawą i fair exit, a nie rankingiem samej sprzedaży'],
-            coreConcepts: [
-              { iconName: 'users', title: 'DOPASOWANIE PARTNERA', description: 'Oceń umiejętności, bazę klientów, zasoby, reputację, konflikty, gotowość prawną i akceptację kontroli. Zapisz podstawę akceptacji, warunków lub odmowy.', highlight: true },
-              { iconName: 'user-check', title: 'BRAMKA KOMPETENCJI', description: 'Obecność na szkoleniu nie dowodzi kompetencji. Wymagaj scenariuszy, nadzorowanej realizacji i sign-off przed rozszerzeniem dostępu lub pracy z klientem.' },
-              { iconName: 'activity', title: 'ZRÓWNOWAŻONE ZDROWIE SIECI', description: 'Śledź wynik klienta, jakość, skargi, zwroty, security, compliance, marżę partnera i capacity supportu obok przychodu. Unikaj bodźców do niedopasowanej sprzedaży.' },
-            ],
-            resources: [
-              { title: 'Pakiet due diligence i onboardingu partnera', subtitle: 'Fit, dowody, konflikty, kompetencja, start i remediation', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Dashboard nadzoru partnerów Mara CRM', subtitle: 'Akceptacje, dostęp, jakość klienta i działania naprawcze', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
-            ],
-            fullArticleGuide: `### Skaluj kompetencje partnerów, nie obietnice partnerów
-
-Istniejący klienci i capacity sprzedaży nie dowodzą dopasowania, bezpiecznej realizacji ani dodatkowej wartości. Rekrutacja jest dwustronnym procesem diligence.
-
-#### Odpowiedzialny cykl życia partnera
-
-1. **Ustal granice programu**: Zdefiniuj rynki, profile klientów, dozwolone i zakazane użycia, capacity, support, lead handling i standard klienta chroniony przez sieć.
-2. **Opublikuj uczciwą propozycję**: Wyjaśnij prawa, obowiązki, wszystkie opłaty, typową pracę, assumptions, ryzyka, szkolenie, support, raportowanie, rozwiązanie i to, czego nie zapewniasz. Ilustracje finansowe oznaczaj, popieraj i pokazuj reprezentatywnie; bez gwarancji zarobków.
-3. **Pozyskuj proporcjonalnie**: Kontaktuj właściwe firmy legalnymi kanałami zawodowymi, respektuj zasady platform i opt-out, unikaj scraped danych wrażliwych i fałszywego polecenia. Dwadzieścia prospektów jest wyborem planistycznym, nie formułą sukcesu.
-4. **Wykonaj due diligence**: Sprawdź firmę, umocowanie, referencje, doświadczenie, capacity finansową i operacyjną, konflikty, sankcje gdzie właściwe, ubezpieczenie, skargi, security i pozwolenia. Zbieraj tylko potrzebne informacje i je chroń.
-5. **Zapewnij świadomy przegląd**: Przekaż umowę i wymagane disclosure na czas do niezależnej porady prawnej, podatkowej i finansowej. Zapisuj pytania i nie twórz fałszywych terminów ani niedoboru terytorium.
-6. **Umowa przed dostępem**: Podpisz zatwierdzone warunki, zakończ fakturowanie i identity checks, ustal role danych i security oraz nadaj indywidualny dostęp least privilege. Nie udostępniaj master loginów ani pełnych eksportów klientów.
-7. **Szkol i oceniaj**: Obejmij discovery klienta, poprawne claims, disclosure, granice cen, markę, privacy, dostępność, security, skargi i eskalację. Stosuj testy wiedzy, cases i realizację nadzorowaną przed certyfikacją.
-8. **Uruchom kontrolowany pilot**: Uzgodnij jedno ograniczone wdrożenie za świadomą zgodą klienta końcowego, z kryteriami akceptacji, rolami, wsparciem, pomiarem i recovery. Pilot nie gwarantuje sprzedaży ani szerszej autoryzacji.
-9. **Monitoruj i wspieraj**: Przeglądaj dowody usługi, wyniki klienta, zwroty, skargi, incydenty, dostęp, ekonomię partnera i support. Oddziel coaching od audytu i zapisuj terminy remediation.
-10. **Zarządzaj konfliktem i wyjściem**: Utrzymuj ścieżki skarg, whistleblowing, konfliktów, zawieszenia i odwołania. Przy exit chroń klientów, odbierz dostęp, zatrzymaj markę, rozlicz opłaty, zwróć lub usuń dane i zachowaj wymagane rekordy.
-
-Jeśli używasz wyróżnień lub leaderboardów, stosuj jawne kryteria, chroń informacje osobowe i handlowe oraz nigdy nie nagradzaj wolumenu kosztem dopasowania lub dobra klienta.`,
-            practicalExamples: ['Agencja otrzymuje pisemny model ekonomii z assumptions i downside, przechodzi kontrolę konfliktów oraz security i pilotuje z jednym świadomym klientem przed szerszym dostępem.', 'Partner z rosnącą liczbą skarg wchodzi w plan naprawy; nowa sprzedaż jest wstrzymana, a klienci dostają pomoc zamiast ukrywania problemu dla rankingu.'],
-          },
-          understandContent: { coreTakeaway: 'Trwała sieć rośnie przez dopasowanie, prawdziwe oczekiwania, wykazaną kompetencję, zabezpieczenia klienta i odpowiedzialny nadzór.', keyPrinciples: ['Nigdy nie gwarantuj przychodu partnera ani wyniku klienta', 'Dostęp zależy od kompetencji i ryzyka', 'Nagradzaj jakość i wynik klienta, nie sam wolumen'] },
-          actionTask: { instruction: 'Zaprojektuj kontrolowany pilot rekrutacji i onboardingu:', checklistItems: ['Określono profil partnera, wykluczenia, capacity i dowody akceptacji', 'Propozycja zawiera sprawdzone assumptions, pełne koszty, obowiązki, ryzyka i brak gwarancji', 'Udokumentowano due diligence, privacy, konflikty i niezależny review', 'Przygotowano szkolenie, ocenę, nadzorowany pilot i bramki dostępu', 'Przypisano wyniki klientów, skargi, security, remediation i exit'], toolboxCategory: 'affiliate' },
-        },
-      },
-    },
-    35: {
-      title: '35. Odpowiedzialny Micro-SaaS i integracja platformy',
-      subtitle: 'Walidowane produkty, bezpieczna realizacja, jasne subskrypcje i ekosystem pod kontrolą użytkownika',
-      description: 'Rozszerzaj usługi o wyspecjalizowane software tylko wtedy, gdy potwierdzają to dowody, stosując bezpieczny development, dostępny design, niezawodne operacje, fair billing i praktyczną portowalność zamiast lock-in lub gwarantowanej wyceny.',
-      lessons: {
-        '35.1': {
-          stageTitle: '35. Software i Micro-SaaS', title: 'Od workflow usługi do bezpiecznego i użytecznego Micro-SaaS',
-          description: 'Waliduj powtarzalny problem użytkownika, określ najmniejszy odpowiedzialny produkt i od początku prowadź go z security, privacy, dostępnością, supportem oraz mierzalną niezawodnością.',
-          learnContent: {
-            videoTitle: 'Transformacja service-to-software oparta na dowodach',
-            summaryText: 'Software może ograniczyć powtarzalną pracę ręczną, ale web app jest ciągłą usługą, nie jednorazowym buildem. Czas dostawy, codzienne użycie, wycena i churn są wynikami do pomiaru, a nie obietnicami.',
-            bulletPoints: ['Obserwuj i mierz powtarzalne zadanie użytkownika przed zastąpieniem arkusza lub workflow usługi przez software', 'Definiuj MVP wokół jednego wartościowego wyniku end-to-end oraz safety, dostępności, supportu i recovery potrzebnych do odpowiedzialnej realizacji', 'Stosuj no-code lub pomoc AI tylko z ludzkim review, kontrolą praw, threat modelling, testami, kontrolą dependencies i utrzymywalnym ownership', 'Porównuj free, flat-rate i usage-based według pełnego kosztu, przewidywalności klienta, dokładności meteringu, anulowania i zwrotów', 'Buduj retencję przez stałą użyteczność, godne zaufania dane i łatwy eksport, nie przez więzienie rekordów klienta lub utrudnianie zmiany'],
-            coreConcepts: [
-              { iconName: 'cpu', title: 'ZWALIDOWANY FRAGMENT PRODUKTU', description: 'MVP jest najmniejszym bezpiecznym rozwiązaniem jednego potwierdzonego workflow, nie tylko najmniejszą liczbą ekranów. Określ usera, kontekst, kryteria akceptacji, wykluczenia i stop rule.', highlight: true },
-              { iconName: 'shield-check', title: 'SECURITY I DOSTĘPNOŚĆ BY DESIGN', description: 'Uwzględnij identity, least privilege, encryption, logi, dependency review, backup, dostępność i incident response w projekcie zamiast odkładać je do skali.' },
-              { iconName: 'database', title: 'DANE POD KONTROLĄ UŻYTKOWNIKA', description: 'Zbieraj tylko potrzebne dane, wyjaśniaj retencję i cel, wspieraj korektę, usunięcie i użyteczny eksport oraz testuj restore. Retencja nie jest strategią lock-in.' },
-            ],
-            resources: [
-              { title: 'Workbook discovery, ryzyka i MVP Micro-SaaS', subtitle: 'Dowody, zakres, dostępność, security, ekonomia i bramki startu', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Sandbox API i rejestr dostępu Mara CRM', subtitle: 'Dane testowe, scoped credentials, webhooki i dowody audytu', type: 'tool', iconName: 'code', actionUrl: 'settings' },
-            ],
-            fullArticleGuide: `### Buduj usługę, której można zaufać, którą można zmienić i zakończyć
-
-Przeniesienie ręcznego workflow do software zmienia model ryzyka. Dostawca odpowiada za aktualizacje, dostępność, security, billing, dane i recovery tak długo, jak klienci polegają na usłudze.
-
-#### Odpowiedzialny cykl życia Micro-SaaS
-
-1. **Zbadaj realne zadanie**: Za zgodą rozmawiaj i obserwuj reprezentatywnych użytkowników. Zapisz częstotliwość, wagę, workaround, błędy, gotowość do zmiany i osoby wykluczone. Jeden entuzjastyczny klient nie jest walidacją rynku.
-2. **Określ hipotezę wyniku**: Podaj użytkownika, sytuację, oczekiwaną poprawę, próg dowodu, time box, maksymalną inwestycję i przyczyny stop. Oddziel wartość klienta od engagement lub daily opens.
-3. **Mapuj pełną usługę**: Uwzględnij onboarding, uwierzytelnienie, dostępność, support, billing, anulowanie, eksport, usunięcie, outage i offboarding, nie tylko funkcję.
-4. **Ustal najmniejszy odpowiedzialny zakres**: Priorytetyzuj jedno zadanie end-to-end i dodaj kontrole zapobiegające przewidywalnej szkodzie. Zapisz non-goals i fallback ręczny. Aplikacja w 30 dni jest czasem możliwa, ale nie jest uniwersalnym planem.
-5. **Wybierz proporcjonalną architekturę**: Porównaj build, buy, no-code i AI pod kątem wrażliwości danych, warunków vendora, portowalności, wydajności, dostępności, security, utrzymania i TCO. Dokumentuj source, konfigurację i ownership.
-6. **Rozwijaj bezpiecznie**: Utrzymuj threat model, reviewed changes, chronione branches, skan dependencies i secrets, osobne środowiska, test data, least-privilege service accounts i powtarzalne releases. Sprawdzaj kod AI i licencje.
-7. **Projektuj privacy i dostępność**: Minimalizuj fields, określ cel, podstawę gdzie wymagana, retencję, processors i transfery. Testuj keyboard, focus, labels, kontrast, errors, zoom i assistive technology z osobami, które ich używają.
-8. **Chroń integracje**: Stosuj scoped credentials, uwierzytelnione i podpisane webhooki, replay protection, idempotency, rate limits, validation, timeout, retries z backoff i bezpieczne failure states. Nie umieszczaj production secrets w kliencie ani screenshotach.
-9. **Testuj kontrolowaną betę**: Uzyskaj świadome uczestnictwo, wyjaśnij eksperyment, izoluj beta data, zapewnij support i rollback, zbieraj strukturalny feedback i nie ujawniaj danych między klientami.
-10. **Wyceniaj transparentnie**: Wyjaśnij billable unit, usage w cenie, podatki, overage, renewal, informację o zmianie ceny, konwersję trial, anulowanie, zwroty i dostęp po exit. Metering musi się uzgadniać, a spory mieć drogę do człowieka.
-11. **Udowodnij operacje przed skalą**: Monitoruj availability, latency, błędy, security events, bariery dostępności, support load, restore tests, unit economics i wyniki klienta. Ustal ownerów incydentu, status, eskalację i cele recovery.
-12. **Uczciwie przeglądaj dalszy los**: Poprawiaj, zmieniaj pozycjonowanie, wstrzymuj lub wycofuj na podstawie dowodów. Daj notice, eksport, usunięcie i migrację oraz zachowaj rekordy wymagane podatkowo, bezpieczeństwem lub prawem.
-
-Frameworki bezpiecznego developmentu dostarczają praktyk do adaptacji, nie automatycznej certyfikacji. Dobierz kontrole do ryzyka i zapewnij właściwy review prawny, security, podatkowy oraz dostępności.`,
-            practicalExamples: ['Dodatek CRM najpierw automatyzuje jeden zatwierdzony handoff, używa syntetycznych rekordów, scoped API, podpisanych webhooków i ręcznego fallbacku; rozszerza się dopiero po restore i permission tests.', 'Plan usage-based pokazuje jednostkę i bieżące zużycie przed zakupem, wysyła alerty progowe i pozwala eksportować dane oraz anulować bez kontaktu ze sprzedażą.'],
-          },
-          understandContent: { coreTakeaway: 'Micro-SaaS jest stałym zobowiązaniem operacyjnym, którego wartość wynika z bezpiecznie realizowanego wyniku użytkownika, nie z daily engagement, uwięzienia danych ani obiecanego churnu.', keyPrinciples: ['Waliduj zadanie i downside przed buildem', 'Security, dostępność i support należą do MVP', 'Billing, dane i exit muszą być zrozumiałe i testowalne'] },
-          actionTask: { instruction: 'Przygotuj brief discovery i startu jednego Micro-SaaS:', checklistItems: ['Udokumentowano zadanie, dowody, wykluczenia, metrykę, budżet i stop rule', 'MVP obejmuje wynik, dostępność, security, support, billing i offboarding', 'Sprawdzono architekturę, dependencies, prawa, data flows i ryzyka API', 'Przypisano betę, rollback, incident i restore tests', 'Napisano pricing, metering, renewal, anulowanie, eksport i retirement'], toolboxCategory: 'content' },
-        },
-        '35.2': {
-          stageTitle: '35. Ekosystemy platform i integracja', title: 'Połącz software, naukę, usługi i community bez więzienia użytkowników',
-          description: 'Twórz spójne ścieżki przez modułowe usługi, wspólną identity i jasne uprawnienia, zachowując granice security, dostępność, świadomy wybór, portowalność i kontrolowane recovery.',
-          learnContent: {
-            videoTitle: 'Architektura odpornego ekosystemu z użytkownikiem w centrum',
-            summaryText: 'Integracja może zmniejszać friction, ale też koncentruje awarie, uprawnienia, billing i privacy. Żaden ekosystem nie jest niezniszczalny ani niemożliwy do skopiowania; zaufanie wynika z użytecznej koordynacji i pewnych wyjść.',
-            bulletPoints: ['Mapuj komponent, ownera, dependency, data flow, service promise i fallback przed nazwaniem oferty platformą all-in-one', 'Stosuj SSO z mocnym account recovery, nowoczesnym uwierzytelnieniem, least privilege, session controls i dodatkową ochroną działań wrażliwych', 'Łącz naukę i tools przez opcjonalne, dostępne kroki zamiast presji engagement, publicznych rankingów lub wymuszonego community', 'Przed potwierdzeniem wyjaśnij bundle, dostępność elementów, entitlements, cenę cykliczną, upgrade, downgrade, renewal, anulowanie i konsekwencje', 'Zapewnij udokumentowany eksport, usunięcie, zamknięcie konta i migrację oraz testuj recovery identity, vendora, integracji i billingu'],
-            coreConcepts: [
-              { iconName: 'layers', title: 'MODUŁOWA MAPA USŁUG', description: 'Każdy komponent ma ownera, kontrakt, granicę danych, health signal, fallback i exit. Integracja nie może zmieniać jednego błędu w awarię całej platformy.', highlight: true },
-              { iconName: 'shield', title: 'KONTROLA IDENTITY I UPRAWNIEŃ', description: 'Authentication potwierdza identity, a authorisation kontroluje dostęp. Centralny login potrzebuje recovery, przeglądu ról, revocation, audit logs i step-up dla działań wrażliwych.' },
-              { iconName: 'refresh-cw', title: 'PRZENOŚNA WARTOŚĆ', description: 'Klienci powinni rozumieć i pobierać dane oraz treści tam, gdzie właściwe. Trwałą lojalność buduje użyteczność, nie blokada techniczna lub umowna.' },
-            ],
-            resources: [
-              { title: 'Blueprint zależności i recovery platformy', subtitle: 'Identity, dane, billing, dostępność, fallback i exit', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
-              { title: 'Dashboard zdrowia usług i dostępu GOM-MAR', subtitle: 'Entitlements, incydenty, integracje i dowody recovery', type: 'tool', iconName: 'layout', actionUrl: 'progress' },
-            ],
-            fullArticleGuide: `### Integruj ścieżkę bez koncentracji niezarządzalnego ryzyka
-
-Kursy, tools, CRM i community mogą się uzupełniać, ale bundle nie jest automatycznie lepszy niż produkty skupione. Każde połączenie tworzy zależność wymagającą ownera, permission, monitoringu i exit.
-
-#### Workflow odpornej platformy
-
-1. **Zdefiniuj wspólny wynik**: Określ problem, który całość rozwiązuje lepiej, dla kogo, pod jakimi warunkami i jak zmierzysz poprawę. Zachowaj użyteczną core path dla osób, które nie chcą każdego komponentu.
-2. **Utwórz mapę usług i dependencies**: Zapisz usługi, vendors, API, identity, billing, messaging, analytics, community i support; przypisz ownerów, kontrakty, klasy danych, skutki błędu i alternatywy.
-3. **Oddziel identity od dostępu**: Używaj utrzymywanego identity provider, opcji MFA, bezpiecznego resetu, wygasania sesji, wykrywania podejrzanego logowania i testowanego recovery. Entitlements ustalaj po stronie serwera, przeglądaj role i szybko odbieraj dostęp.
-4. **Minimalizuj połączone dane**: Udostępniaj tylko pola niezbędne do określonego celu. Dokumentuj źródła, odbiorców, retencję, permission i propagację usunięcia. Nie używaj po cichu zachowań w nauce lub community do sales scoringu czy wrażliwych inferencji.
-5. **Buduj dostępną nawigację i postęp**: Zachowaj spójny język, focus, labels, status i błędy. Postęp musi oznaczać realne ukończenie, pozostać prywatny domyślnie i nie karać za odmowę community lub gamification.
-6. **Uczyń community dobrowolnym i bezpiecznym**: Publikuj conduct, moderation, reporting, appeals, privacy choices i safeguarding. Nie ujawniaj członkostwa, postępu, telefonu ani zakupów bez właściwej podstawy i kontroli.
-7. **Wyjaśnij model handlowy**: Wymień elementy bundle, opcje, pełną i cykliczną cenę, limity, konwersję trial, renewal, upgrade, downgrade, anulowanie, zwroty i dostęp po anulowaniu. Unikaj zaznaczonych dodatków i utrudnionego cancellation.
-8. **Projektuj izolację i recovery**: Stosuj timeout, circuit breakers gdzie właściwe, queues, idempotency, graceful degradation, backup i test restore. Awaria community lub analytics nie powinna blokować płatnego core tool bez konieczności.
-9. **Prowadź transparentne zmiany**: Wersjonuj API, testuj migracje, publikuj material changes, release i incident notes oraz daj rozsądny notice przy zmianie funkcji, ceny, danych lub kompatybilności.
+Ustaw limity częstotliwości według kanału i kampanii, wyklucz osoby po konwersji lub sprzeciwie, gdy właściwe, i umożliw zmianę preferencji. Waliduj parametry UTM oraz definicje zdarzeń, ale licz się z lukami atrybucji między urządzeniami i przez ochronę prywatności. Monitoruj zasięg, wynik przyrostowy, skargi, zmęczenie, dostępność i koszt krańcowy, nie tylko przych…31826 tokens truncated…sądny notice przy zmianie funkcji, ceny, danych lub kompatybilności.
 10. **Wspieraj zmianę i zamknięcie**: Zapewnij użyteczny machine-readable export gdzie właściwe, udokumentowane closure, status usunięcia i migrację. Obowiązki cloud/data switching zależą od usługi i jurysdykcji i wymagają aktualnego review.
 11. **Mierz zrównoważone wyniki**: Monitoruj task success, reliability, dostępność, support, skargi, zwroty, security, privacy, portowalność i wartość deklarowaną przez klienta. Flywheel lub niski churn nie dowodzą przyczyny.
 12. **Ćwicz awarię systemową**: Przećwicz utratę identity, vendor outage, przejętą integrację, złe entitlement, podwójny billing, nieudane deletion i incident community. Zapisz recovery time, komunikację i działania naprawcze.
