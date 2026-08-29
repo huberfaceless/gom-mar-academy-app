@@ -3171,6 +3171,125 @@ Requirements for profiling and automated decision-making depend on context and j
         },
       },
     },
+    38: {
+      title: '38. Sustainable YouTube discovery & evergreen journeys',
+      subtitle: 'Audience research, honest packaging, accessible retention and privacy-aware measurement',
+      description: 'Build a useful long-form video library that can be discovered over time, using audience evidence, truthful titles and thumbnails, inclusive production and measured next steps instead of viral or lead guarantees.',
+      lessons: {
+        '38.1': {
+          stageTitle: '38. YouTube discovery & audience retention',
+          title: 'Create discoverable videos that fulfil the viewer promise',
+          description: 'Research a real audience question, package it accurately and improve comprehension and retention with YouTube Analytics rather than fixed viral formulas.',
+          learnContent: {
+            videoTitle: 'Masterclass: Evidence-led YouTube discovery and retention',
+            summaryText: 'YouTube discovery depends on many changing signals, audience contexts and competing videos. CTR, watch time and audience retention are useful diagnostics, not universal targets or guarantees of recommendations, views or daily leads.',
+            bulletPoints: [
+              'Start with a specific viewer problem and search intent, then confirm demand through several sources rather than a single keyword-volume estimate',
+              'Make the title and thumbnail accurate, legible and consistent with the opening; curiosity must not become misleading metadata',
+              'Use retention reports and comparisons with similar-length videos to diagnose moments—not arbitrary rules such as a 20% drop-off or 50% retention',
+              'Improve pacing with purposeful examples, chapters, captions, audio quality and visuals instead of forced cuts or stimulation every ten seconds',
+            ],
+            coreConcepts: [
+              { iconName: 'video', title: 'VIEWER OUTCOME', description: 'Define what the intended viewer should understand or do safely after watching, then structure, edit and measure around that outcome.', highlight: true },
+              { iconName: 'image', title: 'TRUTHFUL PACKAGING', description: 'The title and thumbnail identify the subject and value without fabricated results, impersonation, shock or a promise the video does not deliver.' },
+            ],
+            resources: [
+              { title: 'YouTube Research, Script & Accessibility Workbook', subtitle: 'Intent, evidence, structure, captions, packaging and review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Title & Thumbnail Review Assistant', subtitle: 'Generate variants and check clarity, accuracy and policy risk', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Build a useful video, not an algorithm myth
+
+YouTube Analytics reports watch time, average view duration and key moments for audience retention, but no single metric ensures recommendation or virality. A sound workflow begins with a viewer need and treats performance as uncertain evidence.
+
+#### Evidence-led production cycle
+
+1. **Choose a defined audience and job**: State who the video serves, the situation, the question and the safe, realistic outcome. Do not promise to solve a complex problem forever.
+2. **Research the topic**: Review search suggestions, audience questions, support records, comments, trends and credible sources. Check freshness, competition and whether video is an appropriate format.
+3. **Create a claim and source register**: Record support, date, conditions and limitations for factual, financial, health or performance claims. Use primary sources where possible and qualified review for high-risk topics.
+4. **Draft packaging early—but keep it revisable**: Prepare several accurate title and thumbnail concepts before production to clarify the promise. Finalise only after checking that the finished video delivers it.
+5. **Open with orientation**: Quickly confirm the subject, intended viewer and what will be covered. Avoid a manufactured crisis, fake countdown or delayed answer solely to inflate watch time.
+6. **Structure for comprehension**: Use chapters, plain language, examples, summaries and visible sources. Motion, zoom and graphics should explain something and respect viewers sensitive to flashing or excessive movement.
+7. **Make the video accessible**: Provide accurate edited captions, readable on-screen text, sufficient contrast, clear audio, meaningful verbal description and a transcript where practical. Identify language and avoid burning essential information into inaccessible visuals.
+8. **Review rights and safety**: Clear music, footage, logos, people’s likenesses and AI-generated assets. Disclose material sponsorships and synthetic or altered content where required. Protect private information visible on screens.
+9. **Publish with complete context**: Add an accurate description, sources, chapters, corrections route and relevant next step. Select audience and age settings correctly and moderate predictable comment risks.
+10. **Read analytics proportionately**: Compare CTR, watch time and retention by traffic source, device, audience and similar video length. Small samples and mixed audiences can mislead.
+11. **Run controlled improvements**: Change one meaningful element where possible, document date and hypothesis and judge both reach and viewer satisfaction. Never buy fake engagement or repeatedly bait viewers.
+12. **Maintain the library**: Correct outdated claims, links and disclosures; update or retire videos that can harm, confuse or no longer match the offer.
+
+A high-quality video earns the next minute through usefulness. It does not need to trap the viewer until the end.`,
+            practicalExamples: [
+              'A faceless tutorial uses a truthful search-led title, narrated screen actions, edited captions and a transcript; retention shows one confusing setup step that is clarified in an update.',
+              'A thumbnail variant improves impressions CTR but increases early exits because it overpromises; the creator rejects it and keeps the more accurate version.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'YouTube metrics help diagnose how a particular audience experienced a video; they are not thresholds that guarantee viral distribution.',
+            keyPrinciples: ['Fulfil the title and thumbnail promise immediately', 'Design pacing and visuals for understanding and accessibility', 'Interpret analytics by context, sample and viewer outcome'],
+          },
+          actionTask: {
+            instruction: 'Prepare one evidence-led evergreen video brief:',
+            checklistItems: ['Audience, search intent, desired outcome and non-goals documented', 'Claims, sources, rights and safety risks reviewed', 'Three accurate title and thumbnail variants created', 'Script includes orientation, chapters, examples, captions and clear next step', 'Analytics hypothesis, review date, quality guardrails and update owner assigned'],
+            toolboxCategory: 'content',
+          },
+        },
+        '38.2': {
+          stageTitle: '38. YouTube journey integration',
+          title: 'Connect viewers to useful next steps without coercive lead capture',
+          description: 'Offer relevant resources and onward viewing with clear disclosures, accessible landing pages, meaningful consent and measurement that respects privacy and attribution limits.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible YouTube conversion and measurement',
+            summaryText: 'Views without a business outcome may not support a commercial channel, but viewers are not automatically “high-intent” or ready to buy. A responsible journey provides value before asking for data and measures contribution without claiming that one video caused every later sale.',
+            bulletPoints: [
+              'Match each call to action to the viewer’s current task and offer a no-sign-up option where a gated download is unnecessary',
+              'Use descriptions, pinned comments, cards and end screens according to availability and policy; no placement has a universal click-rate advantage',
+              'Build fast, accessible mobile landing pages that state provider, value, data use, commercial intent and material terms before submission',
+              'Use UTM parameters and consented analytics as directional attribution while documenting cross-device, cookie, privacy and multi-touch limitations',
+            ],
+            coreConcepts: [
+              { iconName: 'link', title: 'CONTEXTUAL NEXT STEP', description: 'Place a clear, accurate destination where it helps the viewer. Verify links regularly and never route through deceptive, unsafe or undisclosed pages.', highlight: true },
+              { iconName: 'file-text', title: 'USEFUL COMPANION RESOURCE', description: 'A worksheet or template extends the lesson and is accessible on its own; email collection is optional unless genuinely necessary to deliver or support it.' },
+            ],
+            resources: [
+              { title: 'YouTube Journey & Consent Checklist', subtitle: 'CTA, links, landing page, disclosure, accessibility and measurement', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Campaign Link Builder', subtitle: 'Create governed UTMs and document source definitions', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Build a viewer-controlled path from video to action
+
+Time watched can indicate attention, not purchase readiness. Calls to action should help viewers continue a task and allow them to understand the exchange before leaving YouTube or sharing personal data.
+
+#### Responsible journey workflow
+
+1. **Define the next-step hypothesis**: Specify the video, viewer need, relevant resource, expected helpful action and evidence that would support or reject the link.
+2. **Deliver core value in the video**: Do not withhold the promised answer merely to force a click or email submission. A companion asset should extend, organise or personalise what was taught.
+3. **Choose placements by context**: Use a spoken CTA, on-screen cue, description, pinned comment, card or end screen only where available and useful. Platform features and visibility vary by device, account and time.
+4. **Write an accurate CTA**: Name the resource, provider, price if any, data exchange and destination. Disclose affiliate, sponsorship or other material relationships clearly and near the recommendation.
+5. **Protect external links**: Use HTTPS, maintain domain ownership, check redirects and prohibit malware, phishing, unauthorised products and deceptive pages. Keep a link register and removal owner.
+6. **Create an accessible mobile destination**: Optimise loading, keyboard and screen-reader use, labels, focus, contrast, errors and zoom. The page must match the language and promise of the video.
+7. **Minimise data**: Ask only for fields needed for the stated purpose. Explain controller, purpose, basis where required, processors, retention and rights. Separate delivery from optional marketing consent.
+8. **Confirm safely**: Use appropriate verification, prevent list abuse and provide immediate access or a clear delivery expectation. Every marketing message needs an easy, effective opt-out.
+9. **Govern measurement**: Standardise campaign, source, medium and content values; avoid putting personal data in URLs. Apply consent requirements and limit analytics access and retention.
+10. **Interpret attribution cautiously**: UTMs can identify a tagged session but may miss cross-device journeys, privacy controls and later touches. Reconcile CRM outcomes without claiming sole causation.
+11. **Measure quality**: Review landing-page comprehension, accessibility errors, valid sign-ups, activation, opt-outs, complaints, refunds and customer-reported usefulness alongside clicks.
+12. **Maintain and retire**: Test links, forms, disclosures and delivery after every material change. Correct pinned comments and descriptions on older videos when the resource expires.
+
+An evergreen video is maintained content, not a free salesperson working unchanged for five years.`,
+            practicalExamples: [
+              'A budgeting tutorial links to an ungated accessible worksheet and offers a separate optional newsletter checkbox; UTM data is treated as one contribution signal.',
+              'An affiliate tool review states the relationship in the video and near the link, compares limitations and alternatives and removes the destination when its terms change.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A strong YouTube journey gives viewers a relevant, transparent and reversible next step while measuring contribution rather than claiming guaranteed conversion.',
+            keyPrinciples: ['Deliver the promised value before asking for data', 'Separate resource delivery from optional marketing consent', 'Use attribution as bounded evidence, not proof of causation'],
+          },
+          actionTask: {
+            instruction: 'Build and review one viewer-controlled conversion path:',
+            checklistItems: ['Companion resource directly extends the video and works accessibly', 'CTA, commercial relationship, destination and data exchange are clear', 'Landing page is fast, mobile, accessible and data-minimised', 'UTM taxonomy, consent, retention and attribution limits documented', 'Link tests, opt-outs, complaints, activation and update ownership scheduled'],
+            toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -6324,6 +6443,125 @@ Wymagania profiling i automated decision-making zależą od kontekstu oraz jurys
             instruction: 'Przygotuj governed pilot scoringu i routingu:',
             checklistItems: ['Udokumentowano cel, zakazane użycia, factors, sources, weights i expiry', 'Zakończono review privacy, retencji, rights, processors i security', 'Validation obejmuje błędy, calibration i unjustified disparity', 'Skonfigurowano human review, override, correction i contest', 'Wdrożono channel permission, opt-out, monitoring i model stop rule'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+    38: {
+      title: '38. Zrównoważone odkrywanie na YouTube i evergreen journeys',
+      subtitle: 'Badanie odbiorców, uczciwe packaging, dostępna retencja i pomiar z ochroną privacy',
+      description: 'Buduj użyteczną bibliotekę long-form video odkrywaną z czasem dzięki dowodom o odbiorcach, prawdziwym tytułom i miniaturom, inkluzywnej produkcji i mierzonym krokom zamiast gwarancji viral lub leads.',
+      lessons: {
+        '38.1': {
+          stageTitle: '38. YouTube discovery i audience retention',
+          title: 'Twórz odkrywalne filmy, które spełniają obietnicę dla widza',
+          description: 'Badaj realne pytanie odbiorcy, pakuj je dokładnie i poprawiaj zrozumienie oraz retencję przez YouTube Analytics zamiast stałych viral formulas.',
+          learnContent: {
+            videoTitle: 'Masterclass: YouTube discovery i retention oparte na dowodach',
+            summaryText: 'Discovery na YouTube zależy od wielu zmiennych sygnałów, kontekstów widza i konkurencyjnych filmów. CTR, watch time i retention są diagnostyką, nie uniwersalnym targetem ani gwarancją rekomendacji, views czy codziennych leads.',
+            bulletPoints: [
+              'Zacznij od konkretnego problemu i search intent, a popyt potwierdź w kilku źródłach zamiast jednego estimate keyword volume',
+              'Tytuł i thumbnail mają być prawdziwe, czytelne i zgodne z początkiem; curiosity nie może stać się misleading metadata',
+              'Używaj retention reports i porównań filmów podobnej długości do diagnozy, nie arbitralnych progów 20% drop-off lub 50% retention',
+              'Poprawiaj pacing celowymi przykładami, chapters, captions, audio i visuals zamiast wymuszonych cięć lub bodźca co dziesięć sekund',
+            ],
+            coreConcepts: [
+              { iconName: 'video', title: 'WYNIK WIDZA', description: 'Określ, co właściwy widz ma bezpiecznie zrozumieć lub zrobić, następnie wokół tego buduj strukturę, edit i pomiar.', highlight: true },
+              { iconName: 'image', title: 'PRAWDZIWE PACKAGING', description: 'Tytuł i thumbnail wskazują temat oraz wartość bez zmyślonych wyników, impersonation, szoku lub obietnicy niespełnionej przez film.' },
+            ],
+            resources: [
+              { title: 'Workbook research, scriptu i dostępności YouTube', subtitle: 'Intent, dowody, struktura, captions, packaging i review', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Asystent review tytułu i miniatury GOM-MAR', subtitle: 'Warianty oraz kontrola jasności, prawdziwości i policy risk', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Buduj użyteczny film, nie mit algorytmu
+
+YouTube Analytics raportuje watch time, average view duration i key moments for audience retention, lecz żadna metryka nie gwarantuje rekomendacji ani viral. Dobry workflow zaczyna się od potrzeby widza i traktuje performance jako niepewny dowód.
+
+#### Cykl produkcji oparty na dowodach
+
+1. **Wybierz odbiorcę i zadanie**: Określ osobę, sytuację, pytanie i bezpieczny, realistyczny wynik. Nie obiecuj trwałego rozwiązania złożonego problemu.
+2. **Zbadaj temat**: Sprawdź search suggestions, pytania, support, komentarze, trendy i credible sources. Oceń aktualność, konkurencję i trafność formatu video.
+3. **Prowadź rejestr claims i źródeł**: Zapisz support, datę, warunki i granice twierdzeń factual, financial, health lub performance. Preferuj primary sources i qualified review dla high-risk.
+4. **Wcześnie draftuj packaging, ale je zmieniaj**: Przed produkcją przygotuj kilka prawdziwych koncepcji, by doprecyzować obietnicę. Finalizuj po sprawdzeniu gotowego filmu.
+5. **Zacznij od orientacji**: Szybko potwierdź temat, odbiorcę i zakres. Bez manufactured crisis, fake countdown lub opóźniania odpowiedzi dla watch time.
+6. **Buduj dla zrozumienia**: Użyj chapters, prostego języka, przykładów, podsumowań i widocznych źródeł. Ruch i grafika mają wyjaśniać i respektować osoby wrażliwe na flashes lub ruch.
+7. **Zapewnij dostępność**: Dodaj poprawione captions, czytelny tekst, kontrast, czyste audio, meaningful verbal description i transcript gdzie praktyczne. Oznacz język.
+8. **Sprawdź prawa i safety**: Oczyść music, footage, logos, likeness i AI assets. Ujawnij material sponsorship i synthetic content gdzie wymagane. Chroń prywatne dane na ekranie.
+9. **Publikuj z kontekstem**: Dodaj dokładny description, źródła, chapters, correction route i relevant next step. Ustaw audience oraz age prawidłowo i moderuj przewidywalne ryzyka komentarzy.
+10. **Czytaj analytics proporcjonalnie**: Porównuj CTR, watch time i retention według traffic source, device, audience i podobnej długości. Małe próbki i mixed audiences mylą.
+11. **Prowadź kontrolowane ulepszenia**: Zmieniaj jeden istotny element, zapisuj datę i hipotezę oraz oceniaj reach i satisfaction. Nie kupuj fake engagement ani nie baituj.
+12. **Utrzymuj bibliotekę**: Poprawiaj przestarzałe claims, links i disclosures; aktualizuj lub wycofuj filmy, które szkodzą, mylą lub nie pasują do oferty.
+
+Dobry film zdobywa kolejną minutę użytecznością. Nie musi więzić widza do końca.`,
+            practicalExamples: [
+              'Faceless tutorial ma prawdziwy search-led title, narrację działań, poprawione captions i transcript; retention ujawnia jeden niejasny setup poprawiony w aktualizacji.',
+              'Wariant thumbnail poprawia impressions CTR, ale zwiększa early exits przez overpromise; twórca go odrzuca i zachowuje dokładniejszy.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Metryki YouTube diagnozują doświadczenie konkretnej publiczności; nie są progami gwarantującymi viral distribution.',
+            keyPrinciples: ['Od razu spełniaj obietnicę title i thumbnail', 'Projektuj pacing i visuals dla zrozumienia i dostępności', 'Interpretuj analytics w kontekście próby i wyniku widza'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj brief jednego evidence-led evergreen video:',
+            checklistItems: ['Udokumentowano audience, search intent, wynik i non-goals', 'Sprawdzono claims, sources, rights i safety risks', 'Utworzono trzy prawdziwe warianty title i thumbnail', 'Script zawiera orientację, chapters, examples, captions i next step', 'Przypisano analytics hypothesis, review date, guardrails i update owner'],
+            toolboxCategory: 'content',
+          },
+        },
+        '38.2': {
+          stageTitle: '38. Integracja YouTube journey',
+          title: 'Łącz widzów z użytecznymi krokami bez przymusowego lead capture',
+          description: 'Oferuj trafne zasoby i dalsze oglądanie z disclosure, dostępnymi landing pages, meaningful consent i pomiarem respektującym privacy oraz granice attribution.',
+          learnContent: {
+            videoTitle: 'Masterclass: Odpowiedzialna konwersja i pomiar YouTube',
+            summaryText: 'Views bez celu biznesowego mogą nie wspierać kanału, lecz widzowie nie są automatycznie high-intent ani gotowi do zakupu. Odpowiedzialna journey daje wartość przed danymi i mierzy contribution bez przypisywania każdej sprzedaży jednemu filmowi.',
+            bulletPoints: [
+              'Dopasuj CTA do bieżącego zadania widza i oferuj no-sign-up, gdy gated download nie jest konieczny',
+              'Używaj descriptions, pinned comments, cards i end screens według dostępności oraz policy; żadne placement nie ma uniwersalnej przewagi CTR',
+              'Buduj szybkie, dostępne mobile pages podające providera, wartość, dane, commercial intent i istotne warunki przed submission',
+              'Stosuj UTM i consented analytics jako directional attribution, dokumentując cross-device, cookie, privacy i multi-touch limits',
+            ],
+            coreConcepts: [
+              { iconName: 'link', title: 'KONTEKSTOWY NASTĘPNY KROK', description: 'Umieść jasny, dokładny destination tam, gdzie pomaga. Regularnie sprawdzaj linki i nie kieruj do deceptive, unsafe lub undisclosed pages.', highlight: true },
+              { iconName: 'file-text', title: 'UŻYTECZNY COMPANION RESOURCE', description: 'Worksheet lub template rozszerza lekcję i działa samodzielnie; email jest opcjonalny, chyba że konieczny do delivery lub supportu.' },
+            ],
+            resources: [
+              { title: 'Checklist YouTube journey i consent', subtitle: 'CTA, links, landing page, disclosure, dostępność i measurement', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Builder campaign links Mara CRM', subtitle: 'Governed UTM i udokumentowane source definitions', type: 'tool', iconName: 'bar-chart-2', actionUrl: 'crm' },
+            ],
+            fullArticleGuide: `### Buduj ścieżkę od video do działania pod kontrolą widza
+
+Czas oglądania może wskazywać uwagę, nie gotowość zakupową. CTA pomaga kontynuować zadanie i pozwala zrozumieć exchange przed opuszczeniem YouTube lub podaniem danych.
+
+#### Odpowiedzialny workflow journey
+
+1. **Określ hipotezę next step**: Podaj video, potrzebę, resource, helpful action i evidence wspierające lub odrzucające link.
+2. **Dostarcz core value w filmie**: Nie ukrywaj obiecanej odpowiedzi, by wymusić klik lub email. Companion asset ma rozszerzać, organizować lub personalizować naukę.
+3. **Wybierz placement z kontekstem**: Spoken CTA, cue, description, pinned comment, card lub end screen stosuj tylko, gdy dostępne i użyteczne. Widoczność różni się według device i account.
+4. **Napisz dokładne CTA**: Nazwij resource, providera, cenę, data exchange i destination. Wyraźnie ujawnij affiliate, sponsorship lub material relationship blisko recommendation.
+5. **Chroń external links**: Używaj HTTPS, utrzymuj domain ownership, kontroluj redirects i blokuj malware, phishing, zakazane produkty oraz deceptive pages. Prowadź rejestr links.
+6. **Twórz dostępny mobile destination**: Optymalizuj loading, keyboard, screen reader, labels, focus, contrast, errors i zoom. Page odpowiada językowi i obietnicy filmu.
+7. **Minimalizuj dane**: Pytaj tylko o fields dla celu. Wyjaśnij controller, purpose, basis, processors, retention i rights. Oddziel delivery od optional marketing consent.
+8. **Bezpiecznie potwierdzaj**: Użyj właściwej verification, zapobiegaj list abuse i daj natychmiastowy dostęp lub delivery expectation. Każdy marketing ma skuteczny opt-out.
+9. **Zarządzaj measurement**: Standaryzuj campaign, source, medium i content; nie umieszczaj personal data w URL. Stosuj consent requirements i ogranicz analytics access oraz retention.
+10. **Ostrożnie interpretuj attribution**: UTM wskazuje tagged session, lecz pomija cross-device, privacy controls i późniejsze touches. Uzgadniaj CRM bez claim sole causation.
+11. **Mierz jakość**: Obok clicks przeglądaj comprehension, accessibility errors, valid sign-ups, activation, opt-outs, skargi, refunds i usefulness.
+12. **Utrzymuj i wycofuj**: Testuj links, forms, disclosure i delivery po każdej zmianie. Popraw pinned comments i descriptions starszych filmów po expiry.
+
+Evergreen video jest utrzymywaną treścią, nie bezpłatnym sprzedawcą pracującym bez zmian pięć lat.`,
+            practicalExamples: [
+              'Tutorial budżetowy linkuje ungated accessible worksheet i osobny optional newsletter checkbox; UTM jest jednym contribution signal.',
+              'Affiliate review ujawnia relationship w filmie i przy linku, porównuje limits oraz alternatives i usuwa destination po zmianie terms.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Silna YouTube journey daje relevant, transparent i reversible next step, mierząc contribution zamiast gwarantowanej konwersji.',
+            keyPrinciples: ['Dostarcz obiecaną wartość przed prośbą o dane', 'Oddziel resource delivery od optional marketing consent', 'Attribution jest bounded evidence, nie dowodem przyczyny'],
+          },
+          actionTask: {
+            instruction: 'Zbuduj i przejrzyj viewer-controlled conversion path:',
+            checklistItems: ['Companion resource rozszerza video i działa dostępnie', 'CTA, commercial relationship, destination i data exchange są jasne', 'Landing page jest szybki, mobile, accessible i data-minimised', 'Udokumentowano UTM taxonomy, consent, retention i attribution limits', 'Zaplanowano link tests, opt-outs, complaints, activation i update ownership'],
+            toolboxCategory: 'landingpage',
           },
         },
       },
