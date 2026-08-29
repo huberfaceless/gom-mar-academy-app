@@ -5862,6 +5862,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    64: {
+      title: '64. Governed RAG and agentic AI systems',
+      subtitle: 'Retrieval architecture, model evaluation, secure tools and human-controlled automation',
+      description: 'Build AI systems over approved organisational knowledge and constrained workflows—without claiming zero hallucinations, uploading unrestricted internal data or allowing autonomous agents to send, publish, purchase or change production systems without authority.',
+      lessons: {
+        '64.1': {
+          stageTitle: '64. RAG architecture and knowledge governance',
+          title: 'Ground model responses in authorised sources with measurable limits',
+          description: 'Design ingestion, retrieval, access control, citations and evaluation while protecting confidential, personal and copyrighted information.',
+          learnContent: {
+            videoTitle: 'Masterclass: secure RAG and vector retrieval',
+            summaryText: 'RAG can provide relevant context, but it does not guarantee factual answers. Retrieval may miss, rank or expose the wrong material, and the model may misread a source or produce unsupported text. Production use requires source governance, tenant-aware authorization, evaluation and safe abstention.',
+            bulletPoints: [
+              'Inventory sources, owners, rights, sensitivity, versions, retention and permitted audiences before ingestion',
+              'Apply document- and chunk-level authorization before retrieval and again before output',
+              'Evaluate chunking, keyword, vector and reranking choices against representative questions',
+              'Require citations, confidence signals and abstention while independently verifying consequential answers'
+            ],
+            coreConcepts: [
+              { iconName: 'database', title: 'AUTHORISED RETRIEVAL', description: 'Only current content the requesting user may access can enter model context.', highlight: true },
+              { iconName: 'shield-check', title: 'MEASURED GROUNDING', description: 'Retrieval and answer quality are tested separately; citations are checked against claims.' }
+            ],
+            resources: [
+              { title: 'RAG architecture and governance workbook', subtitle: 'Sources, access, ingestion, retrieval, evaluation and incidents', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM knowledge-hub controls', subtitle: 'Approved documents, permissions, versions, deletion and audit', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Build a RAG system that can fail safely\n\n1. **Define the use case and risk**: internal search, support drafting, policy lookup or regulated advice have different accuracy and review requirements.\n2. **Inventory sources**: owner, system of record, classification, jurisdiction, licence, personal data, privilege, current version and deletion duty.\n3. **Establish ingestion authority**: obtain approval, exclude unsupported files and record source, checksum, time and parser version.\n4. **Parse defensively**: scanned pages, tables, headers, footnotes and malformed files can lose meaning. Quarantine failures and retain a link to the original.\n5. **Choose chunking empirically**: structure-aware boundaries, overlap and metadata are evaluated; no universal token length determines quality.\n6. **Secure embeddings and indexes**: embeddings can leak information. Encrypt, separate tenants, restrict export, manage keys and apply deletion to source and derived data.\n7. **Enforce authorization before retrieval**: never retrieve everything and rely on the prompt to hide it. Filter by identity, role, tenant, purpose and document ACL.\n8. **Combine retrieval methods carefully**: keyword, vector, metadata and reranking can improve recall, but each adds bias, latency and failure modes.\n9. **Defend against prompt injection**: treat retrieved text as untrusted data, separate instructions, restrict tools, sanitise output and test hostile documents.\n10. **Generate with evidence boundaries**: instruct the model to quote or summarise only supported material, distinguish source fact from inference and abstain when evidence is insufficient.\n11. **Verify citations**: a citation can be irrelevant or contradict the answer. Check entailment, coverage, freshness and permission.\n12. **Create an evaluation set**: common, ambiguous, adversarial, outdated, denied-access and no-answer cases; measure retrieval recall and answer faithfulness separately.\n13. **Require human review for consequential use**: legal, medical, financial, employment, safety, access and contractual decisions need qualified verification.\n14. **Log minimally and safely**: access, source IDs, model and outcome without unnecessary query or document content; set retention and incident procedures.\n15. **Handle updates and deletion**: propagate revocation, correction and expiry through caches, indexes, backups and generated artefacts.\n16. **Monitor production drift**: source changes, model updates, latency, cost, refusal, leakage and user-reported errors with rollback and stop rules.',
+            practicalExamples: [
+              'A finance policy is retrieved only for authorised employees; a contractor receives an abstention rather than a hidden document excerpt.',
+              'A cited paragraph does not support the generated claim, so the evaluation fails even though a source link is present.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'RAG improves access to evidence but remains fallible; security, authorization, evaluation and human judgement determine safe use.',
+            keyPrinciples: ['Never promise zero hallucinations', 'Enforce access before retrieval', 'Verify citations and consequential outputs'],
+          },
+          actionTask: {
+            instruction: 'Prepare a governed RAG pilot:',
+            checklistItems: ['Use case, sources, owners, rights and data classes approved', 'Tenant ACL, ingestion, deletion and prompt-injection controls tested', 'Representative retrieval and answer evaluation set created', 'Human review, monitoring, rollback and incident process assigned'],
+            toolboxCategory: 'content',
+          },
+        },
+        '64.2': {
+          stageTitle: '64. Constrained AI agents and workflows',
+          title: 'Orchestrate tools with least privilege and explicit human authority',
+          description: 'Break work into auditable steps while limiting what models can read, decide and change.',
+          learnContent: {
+            videoTitle: 'Masterclass: controlled agentic workflows',
+            summaryText: 'Multiple agents can add decomposition and review, but they also multiply cost, latency, shared errors and attack surface. A model assigned as a critic or compliance officer is not an independent guarantee, and an automated workflow is not an employee or accountable decision-maker.',
+            bulletPoints: [
+              'Use deterministic software for rules and calculations where an LLM is unnecessary',
+              'Give each step scoped tools, data, budget, time and output schema rather than broad credentials',
+              'Require approval before external messages, publication, payment, deletion, access changes or production writes',
+              'Design idempotency, retries, audit logs, sandboxing, rollback and emergency stop from the start'
+            ],
+            coreConcepts: [
+              { iconName: 'users', title: 'BOUNDED ORCHESTRATION', description: 'Specialised model steps exchange structured evidence inside explicit authority limits.', highlight: true },
+              { iconName: 'zap', title: 'HUMAN-CONTROLLED ACTION', description: 'Consequential external effects require authenticated approval and remain attributable to a person.' }
+            ],
+            resources: [
+              { title: 'Agent workflow and threat-model workbook', subtitle: 'Steps, tools, permissions, approvals, budgets, tests and recovery', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR agent workflow studio', subtitle: 'Configure sandboxed steps, approval gates and audit events', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Build bounded agentic automation\n\n1. **Choose the smallest architecture**: a fixed workflow, retrieval plus one model, or ordinary code may be safer than multiple conversational agents.\n2. **Define the task contract**: input, allowed sources, output schema, quality threshold, deadline, cost limit and prohibited actions.\n3. **Separate planning from execution**: plans are untrusted proposals; a policy layer validates every tool call and parameter.\n4. **Use least privilege**: read-only by default, per-tool scopes, short-lived credentials, tenant boundaries and no secrets exposed in prompts.\n5. **Sandbox risky tools**: code, browser, files and external content run in isolated environments with network, CPU, memory and time limits.\n6. **Treat external content as hostile**: web pages, emails and documents can contain prompt injection. Do not let content redefine system rules or request credentials.\n7. **Validate structured output**: schema, types, allowed values, citations and business rules before passing data to another step.\n8. **Make side effects idempotent**: unique action IDs, duplicate detection and durable state prevent repeated email, order, post or deletion during retries.\n9. **Place human gates by consequence**: external communication, publication, contracts, spend, personal-data export, security changes and irreversible actions require authenticated approval.\n10. **Show approvers enough evidence**: proposed action, destination, exact content, sources, uncertainty, cost and rollback—not a vague green button.\n11. **Do not rely on model self-review alone**: use deterministic checks, independent data, specialist review and test cases. Agents can share the same blind spot.\n12. **Control budgets and loops**: step, token, tool, time and monetary limits; detect repeated plans and stop gracefully.\n13. **Log decisions and actions**: model/version, policy result, tool parameters, approver and outcome while minimising sensitive content.\n14. **Design failure handling**: timeout, partial completion, provider outage, revoked permission and inconsistent state with compensation or rollback.\n15. **Test adversarially**: malicious documents, poisoned retrieval, social engineering, exfiltration attempts, cross-tenant access and unsafe tool arguments.\n16. **Monitor and revoke**: anomaly alerts, manual kill switch, credential rotation, workflow versioning and post-incident review.\n17. **Respect people and work**: automation changes roles and can affect employment; involve affected workers, provide training and follow labour and consultation duties.',
+            practicalExamples: [
+              'A writing workflow produces a cited draft, but publication remains disabled until an authorised editor reviews the exact post.',
+              'An email asks the agent to reveal a secret; the content is treated as untrusted and the tool policy denies credential access.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Agentic systems are fallible software components whose permissions, side effects and accountability must remain bounded.',
+            keyPrinciples: ['Read-only and least privilege by default', 'Human approval for consequential side effects', 'Model reviewers do not replace independent controls'],
+          },
+          actionTask: {
+            instruction: 'Prepare a bounded agent workflow:',
+            checklistItems: ['Task contract, schemas, prohibited actions and budgets defined', 'Tools, credentials, sandbox and injection defences tested', 'Human approval gates and exact-action previews configured', 'Idempotency, logs, rollback, kill switch and adversarial tests completed'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -11708,6 +11790,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj governed proposal pack:',
             checklistItems: ['Ustalono current sources i requirement matrix', 'Zweryfikowano dowody, resources, pricing i risk claims', 'Zatwierdzono AI, confidentiality, personal data i review', 'Przetestowano authority, submission buffer i receipt'],
             toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
+    64: {
+      title: '64. Zarządzane RAG i systemy agentowe AI',
+      subtitle: 'Retrieval, ewaluacja modeli, bezpieczne narzędzia i automatyzacja pod kontrolą człowieka',
+      description: 'Buduj AI nad zatwierdzoną wiedzą i ograniczonymi workflow—bez obietnicy braku halucynacji, wgrywania nieograniczonych danych i autonomicznych agentów publikujących, płacących lub zmieniających produkcję bez uprawnień.',
+      lessons: {
+        '64.1': {
+          stageTitle: '64. Architektura RAG i ład wiedzy',
+          title: 'Ugruntuj odpowiedzi w autoryzowanych źródłach z mierzalnymi granicami',
+          description: 'Projektuj ingestion, retrieval, dostęp, cytowania i ewaluację, chroniąc informacje poufne, osobowe i objęte prawami.',
+          learnContent: {
+            videoTitle: 'Masterclass: bezpieczne RAG i vector retrieval',
+            summaryText: 'RAG może dostarczać kontekst, lecz nie gwarantuje faktów. Retrieval może pominąć, źle wybrać lub ujawnić materiał, a model błędnie go odczytać. Produkcja wymaga ładu źródeł, autoryzacji tenantów, ewaluacji i bezpiecznej odmowy.',
+            bulletPoints: [
+              'Inwentaryzuj źródła, ownerów, prawa, wrażliwość, wersje, retencję i odbiorców przed ingestion',
+              'Stosuj autoryzację dokumentu i chunku przed retrieval oraz przed output',
+              'Ewaluuj chunking, keyword, vector i reranking na reprezentatywnych pytaniach',
+              'Wymagaj citation, confidence i abstention oraz weryfikacji ważnych odpowiedzi'
+            ],
+            coreConcepts: [
+              { iconName: 'database', title: 'AUTORYZOWANY RETRIEVAL', description: 'Do kontekstu trafia tylko aktualna treść dostępna dla użytkownika.', highlight: true },
+              { iconName: 'shield-check', title: 'MIERZONE UGRUNTOWANIE', description: 'Retrieval i answer quality są testowane osobno, a citation wobec claim.' }
+            ],
+            resources: [
+              { title: 'Zeszyt architektury i ładu RAG', subtitle: 'Źródła, dostęp, ingestion, retrieval, evaluation i incydenty', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole knowledge hub Mara CRM', subtitle: 'Dokumenty, prawa, wersje, usuwanie i audyt', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### RAG, który bezpiecznie zawodzi\n\n1. **Określ use case i ryzyko**: search, support, policy lub regulowana porada mają różne wymagania.\n2. **Inwentaryzuj źródła**: owner, system of record, klasyfikacja, kraj, licence, personal data, privilege, wersja i deletion duty.\n3. **Ustal authority ingestion**: approval, wyłączenia oraz źródło, checksum, czas i parser.\n4. **Defensywnie parsuj**: scan, tabela, nagłówek, footnote i błędny plik tracą znaczenie; quarantine i link do oryginału.\n5. **Empiryczny chunking**: structure-aware boundaries, overlap i metadata; brak uniwersalnej liczby tokenów.\n6. **Chroń embeddings i index**: szyfrowanie, tenant separation, export controls, keys i deletion źródła oraz derived data.\n7. **Autoryzacja przed retrieval**: nie pobieraj wszystkiego licząc na prompt. Filtruj identity, role, tenant, purpose i ACL.\n8. **Łącz metody ostrożnie**: keyword, vector, metadata i reranking dodają recall, bias, latency i failures.\n9. **Broń prompt injection**: retrieved text jest untrusted data; oddziel instructions, ogranicz tools, sanitise output i testuj hostile docs.\n10. **Generuj w granicach dowodów**: tylko supported content, oddziel fact od inference i abstain przy braku.\n11. **Weryfikuj citations**: link może być irrelevant lub contradictory. Sprawdź entailment, coverage, freshness i permission.\n12. **Twórz eval set**: common, ambiguous, adversarial, outdated, denied i no-answer; retrieval recall i faithfulness osobno.\n13. **Human review ważnych zastosowań**: legal, medical, financial, employment, safety, access i contract wymagają specjalisty.\n14. **Loguj minimalnie**: access, source IDs, model i outcome bez zbędnej treści; retencja i incident process.\n15. **Aktualizuj i usuwaj**: revocation, correction i expiry przez cache, index, backup i artefacts.\n16. **Monitoruj drift**: sources, model, latency, cost, refusal, leakage i errors z rollback oraz stop rules.',
+            practicalExamples: [
+              'Polityka finansowa jest dostępna tylko dla uprawnionych; contractor dostaje abstention zamiast fragmentu.',
+              'Cytat nie wspiera claim, więc ewaluacja nie przechodzi mimo obecności linku.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'RAG poprawia dostęp do dowodów, lecz jest zawodny; bezpieczeństwo, autoryzacja, ewaluacja i judgement decydują.',
+            keyPrinciples: ['Nie obiecuj zero hallucinations', 'Wymuszaj dostęp przed retrieval', 'Weryfikuj citations i ważne outputs'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj governed RAG pilot:',
+            checklistItems: ['Zatwierdzono use case, źródła, ownerów, prawa i klasy', 'Przetestowano ACL, ingestion, deletion i injection', 'Utworzono eval set retrieval i answer', 'Przypisano human review, monitoring, rollback i incident'],
+            toolboxCategory: 'content',
+          },
+        },
+        '64.2': {
+          stageTitle: '64. Ograniczone agenty i workflow AI',
+          title: 'Orkiestruj narzędzia z minimalnym dostępem i wyraźną władzą człowieka',
+          description: 'Dziel pracę na audytowalne kroki, ograniczając to, co modele czytają, decydują i zmieniają.',
+          learnContent: {
+            videoTitle: 'Masterclass: kontrolowane agentic workflows',
+            summaryText: 'Wiele agentów może pomóc w dekompozycji i review, ale zwiększa koszt, latency, wspólne błędy i attack surface. Model-critic lub compliance officer nie gwarantuje niezależności, a workflow nie jest pracownikiem ani odpowiedzialnym decydentem.',
+            bulletPoints: [
+              'Używaj deterministic software do reguł i obliczeń, gdy LLM nie jest potrzebny',
+              'Każdy krok ma scoped tools, data, budget, time i output schema zamiast broad credentials',
+              'Wymagaj approval przed messaging, publikacją, płatnością, deletion, zmianą dostępu lub production write',
+              'Projektuj idempotency, retry, audit, sandbox, rollback i emergency stop od początku'
+            ],
+            coreConcepts: [
+              { iconName: 'users', title: 'OGRANICZONA ORKIESTRACJA', description: 'Model steps wymieniają structured evidence w jawnych granicach authority.', highlight: true },
+              { iconName: 'zap', title: 'DZIAŁANIE POD KONTROLĄ', description: 'Ważny efekt zewnętrzny wymaga authenticated approval i pozostaje przypisany osobie.' }
+            ],
+            resources: [
+              { title: 'Zeszyt agent workflow i threat model', subtitle: 'Kroki, tools, permissions, approvals, budgets, testy i recovery', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Studio workflow agentów GOM-MAR', subtitle: 'Sandboxed steps, approval gates i audit events', type: 'tool', iconName: 'cpu', actionUrl: 'tools' }
+            ],
+            fullArticleGuide: '### Ograniczona automatyzacja agentowa\n\n1. **Najmniejsza architektura**: fixed workflow, retrieval plus jeden model lub zwykły kod mogą być bezpieczniejsze niż multi-agent.\n2. **Task contract**: input, allowed sources, schema, quality, deadline, cost i prohibited actions.\n3. **Oddziel plan od execution**: plan jest untrusted proposal; policy layer waliduje tool call i parametry.\n4. **Least privilege**: read-only default, per-tool scope, short-lived credentials, tenant boundary i brak secrets w prompt.\n5. **Sandbox risky tools**: code, browser, files i external content z network, CPU, memory i time limits.\n6. **External content jest hostile**: web, email i docs mogą mieć prompt injection; nie zmieniają system rules ani nie żądają credentials.\n7. **Waliduj output**: schema, type, allowed values, citations i business rules przed następnym krokiem.\n8. **Idempotent side effects**: action ID, duplicate detection i durable state zapobiegają powtórnemu email, order, post lub deletion.\n9. **Human gates według skutku**: communication, publication, contracts, spend, personal-data export, security i irreversible action wymagają approval.\n10. **Pokaż dowody approverowi**: action, destination, exact content, sources, uncertainty, cost i rollback.\n11. **Nie polegaj na self-review**: deterministic checks, independent data, specialist review i tests; agenty dzielą blind spot.\n12. **Kontroluj budgets i loops**: step, token, tool, time i money; detect repeats i stop.\n13. **Loguj decyzje i akcje**: model/version, policy, tool params, approver i outcome z minimalizacją danych.\n14. **Failure handling**: timeout, partial, outage, revoked permission i inconsistent state z compensation lub rollback.\n15. **Adversarial tests**: malicious docs, poisoned retrieval, social engineering, exfiltration, cross-tenant i unsafe arguments.\n16. **Monitoruj i odwołuj**: alerts, kill switch, rotation, workflow version i post-incident review.\n17. **Szanuj ludzi i pracę**: automation wpływa na role; włącz pracowników, szkolenie oraz labour and consultation duties.',
+            practicalExamples: [
+              'Workflow tworzy draft z cytatami, lecz publikacja jest zablokowana do approval edytora.',
+              'E-mail żąda sekretu; treść jest untrusted, a policy odrzuca dostęp.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Agenty są zawodnymi komponentami software, których permissions, side effects i accountability muszą być ograniczone.',
+            keyPrinciples: ['Read-only i least privilege domyślnie', 'Human approval dla ważnych side effects', 'Model reviewer nie zastępuje niezależnych kontroli'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj bounded agent workflow:',
+            checklistItems: ['Zdefiniowano task contract, schema, zakazy i budgets', 'Przetestowano tools, credentials, sandbox i injection defence', 'Skonfigurowano human gates i exact-action preview', 'Ukończono idempotency, logi, rollback, kill switch i adversarial tests'],
+            toolboxCategory: 'content',
           },
         },
       },
