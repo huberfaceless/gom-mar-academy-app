@@ -4738,244 +4738,9 @@ Scaling is successful only when additional spend continues to create suitable cu
             "checklistItems": [
               "Mapped owners, jurisdictions, entities, activities, risks and objectives",
               "Modelled income types, participation conditions, trade tax, extraction and costs",
-              "Reviewed governance, guarantees, solvency, creditor protection and exit scenarios",
-              "Obtained written tax and legal advice before implementation"
-            ],
-            "toolboxCategory": "settings"
-          }
-        },
-        "50.2": {
-          "stageTitle": "50. IP ownership, licensing and asset governance",
-          "title": "Structure IP ownership and licences without artificial profit shifting",
-          "description": "Identify, value, transfer and license intellectual property only where ownership, business substance, rights, pricing and creditor considerations support the arrangement.",
-          "learnContent": {
-            "videoTitle": "Masterclass: responsible IP governance and related-party licensing",
-            "summaryText": "A separate IP company may support central governance or licensing, but a transfer does not make assets unreachable and a royalty is not automatically deductible. Ownership, development functions, valuation, tax, insolvency, competition, privacy and contractual rights must be reviewed.",
-            "bulletPoints": [
-              "Create an IP inventory covering registrations, code, content, domains, data, licences, contributors and territorial rights",
-              "Confirm chain of title and third-party consents before assigning or licensing anything",
-              "Price related-party licences using documented functions, assets, risks and comparable evidence—not a desired tax result",
-              "Assess transfer taxes, hidden reserves, withholding, VAT, trade tax, anti-abuse, insolvency and cross-border rules"
-            ],
-            "coreConcepts": [
-              {
-                "iconName": "lock",
-                "title": "GOVERNED IP PORTFOLIO",
-                "description": "Rights, owners, licences, renewal dates, access and evidence are documented; separation is not described as absolute protection.",
-                "highlight": true
-              },
-              {
-                "iconName": "award",
-                "title": "SUBSTANCE AND SUCCESSION",
-                "description": "Foundations or family structures require a genuine purpose, governance, beneficiary, tax and control analysis; transfers are not automatically tax-free."
-              }
-            ],
-            "resources": [
-              {
-                "title": "IP inventory and related-party licence brief",
-                "subtitle": "Ownership, valuation, functions, rights, pricing, tax and approval evidence",
-                "type": "pdf",
-                "iconName": "file-text",
-                "actionUrl": "tools"
-              },
-              {
-                "title": "GOM-MAR Corporate Asset Manager",
-                "subtitle": "Archive approved rights, contracts, evidence and renewal responsibilities",
-                "type": "tool",
-                "iconName": "shield",
-                "actionUrl": "settings"
-              }
-            ],
-            "fullArticleGuide": "### Govern intellectual property before moving it\n\nThis lesson is educational and not legal, tax or valuation advice. Trademark registration does not cover every right, and changing the registered proprietor is only one part of a valid transfer.\n\n#### A controlled IP process\n\n1. **Inventory the assets**: List trademarks, applications, copyrights, software, databases, designs, patents, domains, trade secrets and inbound licences.\n2. **Verify chain of title**: Check employee, contractor, agency, open-source, stock-media and platform terms. Do not transfer rights the company does not own.\n3. **Define the business reason**: Central licensing, investment, sale readiness or brand governance must be more than a device to move taxable profit.\n4. **Choose the owner by function and control**: Consider who develops, enhances, maintains, protects and exploits the IP and who controls related risks.\n5. **Obtain a defensible valuation**: Document methods, forecasts, useful life, territory, comparables and uncertainty with specialist input where material.\n6. **Model transfer consequences**: A transfer may realise taxable value and trigger VAT, withholding, registration, financing or consent issues.\n7. **Draft the licence precisely**: Define rights, territory, exclusivity, term, quality control, improvements, data, sublicensing, termination and insolvency treatment.\n8. **Support arm's-length pricing**: Analyse functions, assets and risks; update evidence as the business changes. Domestic and cross-border rules may differ.\n9. **Maintain substance**: The legal owner must actually perform or control relevant functions and decisions; funding alone may not justify all returns.\n10. **Respect creditor and insolvency rules**: Transfers can be challenged, and security interests, guarantees or group conduct can affect separation.\n11. **Record registry changes correctly**: Follow the relevant office's evidence and signature requirements and keep the underlying assignment.\n12. **Protect data and secrets**: Control access, security, retention and lawful use separately from IP ownership.\n13. **Evaluate foundations independently**: Review control, beneficiaries, reserved powers, gift and inheritance tax, reporting and permanence. Never promise a tax-free generational transfer.\n14. **Approve and monitor**: Obtain board, tax, legal and valuation approvals; track renewals, royalties, breaches and annual pricing reviews.\n\nSometimes direct ownership by the operating company is simpler and safer.",
-            "practicalExamples": [
-              "A company discovers that contractor code was never assigned; it cures title before discussing an IP-company transfer.",
-              "A royalty benchmark no longer fits after development moves to the operating company, so the parties update functions, pricing and contracts."
-            ]
-          },
-          "understandContent": {
-            "coreTakeaway": "IP separation works only with real ownership, substance, defensible pricing, contracts and ongoing governance; it is not an invulnerable vault.",
-            "keyPrinciples": [
-              "Verify title and consents before transfer",
-              "Support related-party pricing with current evidence",
-              "Review tax, insolvency, data and registry consequences together"
-            ]
-          },
-          "actionTask": {
-            "instruction": "Prepare one IP-governance review:",
-            "checklistItems": [
-              "Completed inventory, chain-of-title and third-party-consent review",
-              "Documented business purpose, functions, control, valuation and tax scenarios",
-              "Drafted rights, pricing, quality, data, termination and insolvency terms",
-              "Obtained legal, tax and valuation approval before transfer or registration"
-            ],
-            "toolboxCategory": "settings"
-          }
-        }
-      }
-    },
-  },
-  pl: {
-    1: {
-      title: '1. Twój start',
-      subtitle: '🟢 START',
-      description: 'Jak działa dochód online? Jakie są możliwości i czego naprawdę potrzebujesz?',
-      lessons: {
-        '1.1': {
-          stageTitle: 'Twój start',
-          title: 'Jak działa dochód online?',
-          description: 'Poznaj podstawy cyfrowej wartości, automatyzacji tworzenia wartości i skalowalności.',
-          learnContent: {
-            videoTitle: 'Wprowadzenie: fundament dochodu online',
-            summaryText: 'Dochód online nie jest kwestią szczęścia ani magii. Powstaje, gdy rozwiązujesz istniejące problemy i łączysz osobę z potrzebą z odpowiednim rozwiązaniem.',
-            bulletPoints: [
-              'Podaż i popyt: ktoś szuka rozwiązania, a Ty polecasz odpowiedni produkt.',
-              'Automatyzacja: Twój system może pracować przez całą dobę, także gdy śpisz.',
-              'Niezależność od miejsca: laptop jest Twoim centrum działania.',
-            ],
-            fullArticleGuide: `### Podstawowe prawo dochodu online
-
-Zarabianie w internecie nie jest tajemniczą sztuczką i nie wymaga wrodzonego talentu. Opiera się na uniwersalnej zasadzie: **tworzeniu wartości poprzez rozwiązywanie problemów**.
-
-Gdy ktoś mierzy się z pilnym problemem—chce dodatkowego dochodu, lepszej kondycji, spokojniejszego snu albo sukcesu zawodowego—aktywnie szuka prostszej drogi. Jeśli dostarczysz lub polecisz odpowiednie rozwiązanie, możesz otrzymać wynagrodzenie za stworzoną wartość.
-
-#### Trzy filary cyfrowej skalowalności
-
-1. **Niskie koszty krańcowe**: Produkt cyfrowy lub strona rekomendacyjna wymaga jednorazowej pracy, a później może obsłużyć 10, 100 albo 10 000 osób jednocześnie.
-2. **Zautomatyzowane procesy**: Nowoczesne systemy e-mail i sprzedaży cyfrowej komunikują się i dostarczają treści przez całą dobę, niezależnie od Twojego czasu pracy.
-3. **Niezależność od miejsca**: Cała firma może działać z laptopa lub smartfona. Nie potrzebujesz lokalu, magazynu ani pracowników.
-
-#### Twoja rola jako partnera afiliacyjnego
-
-Nie musisz tworzyć własnego produktu. Jako partner afiliacyjny łączysz podaż z popytem. Polecasz sprawdzone produkty uznanych dostawców i otrzymujesz prowizję za każdą skuteczną sprzedaż—często od 30% do 70%.`,
-            practicalExamples: ['Przykład dodatkowego dochodu: pracownik chce zarabiać dodatkowe 500 € miesięcznie. Polecasz mu sprawdzony program krok po kroku i otrzymujesz 50% prowizji.', 'Przykład automatyzacji: zainteresowana osoba zapisuje się na stronie o 23:00. System natychmiast wysyła poradnik i przedstawia ofertę partnerską. Sprzedaż może nastąpić, gdy śpisz.'],
-            videoChapters: [
-              { time: '0:00', title: 'Witamy w GOM-MAR Academy' },
-              { time: '2:15', title: 'Zasada tworzenia wartości' },
-              { time: '4:30', title: 'Dlaczego afiliacja jest dobra na start' },
-              { time: '6:50', title: 'Podsumowanie i pierwsze zadanie' },
-            ],
-          },
-          understandContent: {
-            coreTakeaway: 'Nie musisz tworzyć własnego produktu—możesz polecać istniejące, sprawdzone rozwiązania w marketingu afiliacyjnym.',
-            keyPrinciples: ['Skup się na rozwiązaniu problemu, nie na presji sprzedażowej', 'Prosty system jest lepszy niż skomplikowany chaos', 'Konsekwencja przez pierwsze 30 dni decyduje o postępie'],
-          },
-          actionTask: {
-            instruction: 'Podejmij zobowiązanie: jaki cel chcesz osiągnąć w ciągu 90 dni?',
-            placeholder: 'Wybierz swój główny cel…',
-          },
-        },
-        '1.2': {
-          stageTitle: 'Twój start',
-          title: 'Jakie są możliwości?',
-          description: 'Przegląd marketingu afiliacyjnego, produktów cyfrowych i automatycznych systemów rekomendacji.',
-          learnContent: {
-            videoTitle: 'Porównanie modeli: która droga pasuje do Ciebie?',
-            summaryText: 'Istnieje wiele sposobów zarabiania online. Dla początkujących afiliacja jest najmniej ryzykowna: bez obsługi klienta, tworzenia produktu i logistyki.',
-            bulletPoints: ['Marketing afiliacyjny: 30–70% prowizji od sprzedaży.', 'Własne produkty cyfrowe: wysoka marża, ale dużo przygotowań.', 'Usługi i coaching: szybszy przychód, ale zależny od Twojego czasu.'],
-            fullArticleGuide: `### Najpopularniejsze modele biznesu online—porównanie
-
-Początkujący często czują się przytłoczeni liczbą możliwości. Nie każdy model nadaje się jednak na start bez specjalistycznej wiedzy lub dużego kapitału.
-
-#### 1. Marketing afiliacyjny—rekomendacja GOM-MAR
-* **Jak działa**: Polecasz produkty innych dostawców przez osobisty link partnerski.
-* **Zalety**: Bez tworzenia produktu, obsługi klienta i realizacji zamówień; możesz zacząć od razu, a produkty cyfrowe często oferują prowizje 30–70%.
-* **Wada**: Nie budujesz przede wszystkim własnej marki produktowej—co na początku często jest zaletą.
-
-#### 2. Własne produkty cyfrowe—e-booki i kursy wideo
-* **Jak działa**: Tworzysz i sprzedajesz własne kursy lub poradniki.
-* **Zalety**: Pełna kontrola nad cenami, ofertą i lejkiem oraz bardzo wysoka marża.
-* **Wady**: Dużo czasu na tworzenie, aktualizacje i obsługę klienta.
-
-#### 3. E-commerce i dropshipping
-* **Jak działa**: Sprzedajesz fizyczne produkty w sklepie internetowym.
-* **Zaleta**: Duży popyt na produkty fizyczne.
-* **Wady**: Zwroty, opóźnienia, odprawa celna i marże wynoszące czasem tylko 10–20% zwiększają ryzyko.
-
-#### Najlepszy punkt startowy
-
-GOM-MAR Academy koncentruje się na **marketingu afiliacyjnym wspieranym przez automatyczną komunikację e-mail**. Łączy on niskie ryzyko z szybką drogą do pierwszego rzeczywistego przychodu online.`,
-            practicalExamples: ['Afiliacja kontra sklep: w dropshippingu wymieniasz wadliwe produkty i odpowiadasz na reklamacje. W afiliacji te zadania przejmuje dostawca produktu.'],
-            videoChapters: [{ time: '0:00', title: 'Przegląd cyfrowych modeli biznesowych' }, { time: '3:20', title: 'Marketing afiliacyjny w praktyce' }, { time: '6:45', title: 'Porównanie czasu i wyniku' }],
-          },
-          understandContent: { coreTakeaway: 'Marketing afiliacyjny to najszybsza i najbezpieczniejsza droga do pierwszego dodatkowego dochodu online.', keyPrinciples: ['Mniejsze ryzyko dzięki sprawdzonym procesom dostawcy', 'Natychmiastowy start bez rozbudowanej infrastruktury firmy', 'Skalowanie dzięki automatycznemu pozyskiwaniu kontaktów'] },
-          actionTask: { instruction: 'Wybierz model, na którym skupimy się w GOM-MAR Academy.', checklistItems: ['Zaczynam od marketingu afiliacyjnego', 'Będę korzystać z automatycznej sprzedaży e-mail', 'Zbuduję prosty system krok po kroku'] },
-        },
-        '1.3': {
-          stageTitle: 'Twój start',
-          title: 'Czego naprawdę potrzebujesz?',
-          description: 'Minimalny zestaw potrzebny do udanego startu bez zbędnego balastu.',
-          learnContent: {
-            videoTitle: 'Startowy system z trzech elementów',
-            summaryText: 'Nie pozwól, by dziesiątki narzędzi marketingowych Cię rozpraszały. Na start potrzebujesz trzech rzeczy: landing page, autorespondera e-mail i oferty partnerskiej.',
-            bulletPoints: ['1. Domena i landing page—Twoja cyfrowa wizytówka', '2. Autoresponder—automatyczny system sprzedaży e-mail', '3. Oferta partnerska—sprawdzony produkt z prowizją'],
-            fullArticleGuide: `### Prosty system GOM-MAR z trzech elementów
-
-Wielu początkujących gubi się w porównywaniu oprogramowania, programach graficznych i szczegółach technicznych. Tygodniami zmieniają ustawienia, nie kontaktując się z ani jedną zainteresowaną osobą.
-
-Ograniczamy system do **absolutnego minimum**, które jest potrzebne do uzyskania mierzalnych wyników.
-
-#### Element 1: Prosty landing page
-
-Jedna strona, na której odwiedzający podaje adres e-mail, aby otrzymać przydatny bezpłatny poradnik. Bez zbędnych dodatków i dziesięciu podstron.
-
-#### Element 2: Automatyczny autoresponder e-mail
-
-Gdy ktoś się zapisze, automatyzacja przejmuje dalszą komunikację. Dostarcza poradnik, a w następnych dniach wysyła przygotowane wiadomości budujące zaufanie i zawierające linki rekomendacyjne.
-
-#### Element 3: Sprawdzona oferta afiliacyjna
-
-Przetestowany produkt z platformy takiej jak Digistore24 lub Copecart, który rozwiązuje realny problem grupy docelowej i zapewnia 30–70% prowizji od sprzedaży.
-
-Wszystko ponadto—logo, wizytówki i skomplikowane lejki—jest na początku rozpraszaczem.`,
-            practicalExamples: ['Minimalny system w praktyce: odwiedzający wpisuje e-mail na stronie → system automatycznie wysyła wiadomość powitalną i link rekomendacyjny → zainteresowany kupuje → otrzymujesz powiadomienie o prowizji.'],
-          },
-          understandContent: { coreTakeaway: 'Mniej znaczy więcej. Im prostszy jest Twój pierwszy system, tym szybciej możesz zarobić pierwsze euro.', keyPrinciples: ['Trzy podstawowe elementy wystarczą do budowy dodatkowego dochodu', 'GOM-MAR udostępnia automatyzację e-mail i narzędzia', 'Perfekcja jest wrogiem postępu'] },
-          actionTask: { instruction: 'Potwierdź minimalną listę potrzebną do uruchomienia systemu.', checklistItems: ['Rozumiem: potrzebuję tylko trzech elementów', 'Jestem gotowy korzystać z automatyzacji e-mail GOM-MAR', 'Skupiam się na natychmiastowym wdrożeniu'] },
-        },
-        '1.4': {
-          stageTitle: 'Twój start',
-          title: 'Czego NIE potrzebujesz?',
-          description: 'Uniknij pięciu najdroższych błędów i pożeraczy czasu początkujących.',
-          learnContent: {
-            videoTitle: 'Unikaj typowych pożeraczy czasu i pułapek',
-            summaryText: 'Większość początkujących ponosi porażkę, ponieważ tygodniami projektuje logo, zajmuje się zbędną biurokracją albo szuka „idealnego” oprogramowania.',
-            bulletPoints: ['❌ Na początku nie potrzebujesz drogiej infrastruktury firmy', '❌ Nie trać tygodni na idealne logo i kolory', '❌ Nie nagrywaj 100 filmów przed startem', '❌ Unikaj drogich narzędzi za 200 € miesięcznie'],
-            fullArticleGuide: `### Pięć najdroższych pożeraczy czasu początkujących
-
-Dlaczego niektórzy osiągają pierwszy przychód w ciągu 14 dni, a inni po sześciu miesiącach nadal stoją w miejscu? Różnicę często tworzą rzeczy, z których **świadomie rezygnujesz**.
-
-#### 1. Perfekcjonizm przy logo i grafice
-
-Nikt nie kupuje produktu dlatego, że logo jest zielone lub niebieskie. Na początku wystarczy czytelny tekst oraz prosty, profesjonalny wygląd.
-
-#### 2. Skomplikowane abonamenty na oprogramowanie
-
-Nie kupuj drogich platform „wszystko w jednym” za setki euro miesięcznie. Korzystaj ze zintegrowanych narzędzi GOM-MAR Academy, aby utrzymać koszty stałe blisko zera.
-
-#### 3. Tworzenie 50 kont w mediach społecznościowych
-
-Skup się na dokładnie **jednym** głównym źródle ruchu—na przykład grupach na Facebooku lub Instagram Reels—zamiast rozpraszać uwagę na dziesięć platform.
-
-#### 4. Niekończące się poszukiwania bez działania—pułapka poradników
-
-Wiedza bez działania nie przynosi dochodu. Poznaj tylko następny krok, od razu go wykonaj, a dopiero potem przejdź do kolejnej lekcji.`,
-            practicalExamples: ['Przykład sukcesu: Marek nie ma logo ani wizytówek i używa prostego zdjęcia profilowego. Zdobywa 15 kontaktów tygodniowo i realizuje pierwsze sprzedaże. Inna osoba przez trzy tygodnie projektuje logo i nie zarabia nic.'],
-          },
-          understandContent: { coreTakeaway: 'Unikaj nadmiernego analizowania. Twoim głównym zadaniem jest kierowanie zainteresowanych osób na landing page.', keyPrinciples: ['Widoczność wygrywa z perfekcjonizmem', 'Najpierw zdobywaj kontakty, później ulepszaj', 'Korzystaj ze sprawdzonych inspiracji zamiast wymyślać wszystko od nowa'] },
-          actionTask: {
-            instruction: 'Usuń rozpraszacze: której pułapki będziesz od dziś świadomie unikać?',
-            placeholder: 'Np. wielogodzinnego poprawiania logo lub kolorów…',
-          },
-        },
-      },
-    },
-    2: {
-      title: '2. Twój kierunek',
-      subtitle: '🔵 FUNDAMENT',
-      description: 'Znajdź niszę, określ grupę docelową, poznaj jej główny problem i wybierz odpowiednią ofertę.',
-      lessons: {
-        '2.1': {
-          stageTitle: '2. Twój kierunek', title: 'Znajdź niszę',
+              "Reviewed governance, guarantees, solvency, creditor protection and exit scenar
+... 25528 bytes omitted ...
+k', title: 'Znajdź niszę',
           description: 'Znajdź dochodową niszę w jednym z trzech najsilniejszych rynków: zdrowie, finanse lub relacje.',
           learnContent: {
             videoTitle: 'Formuła rentowności Twojej niszy',
@@ -9613,6 +9378,71 @@ Skalowanie ma sens tylko wtedy, gdy dodatkowy wydatek nadal tworzy wartość bez
           }
         }
       }
+    },
+    51: {
+      title: '51. Odpowiedzialny account-based marketing B2B',
+      subtitle: 'Dopasowanie kont, prywatność i zgodny outreach',
+      description: 'Skup marketing enterprise na potwierdzonym dopasowaniu i użytecznych treściach—bez gwarancji, ukrytego profilowania i omijania procesów.',
+      lessons: {
+        '51.1': {
+          stageTitle: '51. Strategia ABM i wybór kont',
+          title: 'Priorytetyzuj konta bez inwazyjnego profilowania',
+          description: 'Używaj dozwolonych dowodów i potwierdzonych potrzeb bez zakładania prywatnych lęków lub intencji.',
+          learnContent: {
+            videoTitle: 'Masterclass: ABM oparte na dowodach',
+            summaryText: 'Liczba kont, wartość umowy, długość cyklu i sygnały intent to założenia, nie gwarancje.',
+            bulletPoints: ['Oceniaj dopasowanie przejrzyście z kontrolą człowieka', 'Mapuj role bez stereotypów', 'Kontroluj dane intent i podstawę prawną', 'Twórz treści z potwierdzonych potrzeb'],
+            coreConcepts: [{ iconName: 'target', title: 'MAPA DECYZJI', description: 'Zapisuj dowody, pewność, uprawnienia i pytania.', highlight: true }, { iconName: 'activity', title: 'ZWERYFIKOWANE SYGNAŁY', description: 'Szacunki nie są pewną intencją osoby.' }],
+            resources: [{ title: 'Zeszyt kont ABM', subtitle: 'Dopasowanie, dowody, prywatność i przeglądy', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM account management', subtitle: 'Kontakty ze źródłem i sprzeciwem', type: 'tool', iconName: 'users', actionUrl: 'crm' }],
+            fullArticleGuide: `### Odpowiedzialny ABM
+
+1. Określ ofertę, możliwości i ICP oparte na dowodach.
+2. Zapisz źródła punktacji, pewność, wykluczenia i kontrolę człowieka.
+3. Oddziel fakty, szacunki i hipotezy.
+4. Mapuj publiczne role bez zbędnego scrapingu i prywatnych lęków.
+5. Udokumentuj cel, podstawę, minimalizację, źródło, retencję, bezpieczeństwo i informację z art. 14 RODO.
+6. Kontroluj dostawców intent i traktuj sygnały probabilistycznie.
+7. Stosuj lokalne reguły e-maila, telefonu, social i poczty.
+8. Informuj o sprzeciwie i zatrzymaj marketing bezpośredni.
+9. Szanuj asystentów, zakupy, bezpieczeństwo i rady pracownicze.
+10. Mierz jakość, sprzeciwy i skargi; usuwaj nieuzasadnione profile.
+
+ABM nie gwarantuje kontraktu.`,
+            practicalExamples: ['Sprawdź niepewny sygnał przed legalnym kontaktem.', 'Używaj zaakceptowanego procesu zakupowego organizacji.'],
+          },
+          understandContent: { coreTakeaway: 'Odpowiedzialny ABM szanuje dane osobowe, sprzeciwy i procesy zakupowe.', keyPrinciples: ['Oddziel fakty od szacunków intencji', 'Minimalizuj dane osobowe', 'Unikaj stereotypów i nadzoru'] },
+          actionTask: { instruction: 'Przygotuj zgodny pilotaż ABM:', checklistItems: ['Określono ICP i przejrzystą punktację', 'Zapisano źródła i pewność', 'Udokumentowano podstawę, informację, retencję i sprzeciwy', 'Zaplanowano kanały, mierniki i przeglądy'], toolboxCategory: 'crm' },
+        },
+        '51.2': {
+          stageTitle: '51. Zgodna poczta i outreach do kadry',
+          title: 'Przesyłki bez prezentów i omijania procesów',
+          description: 'Testuj proporcjonalną pocztę z jawnym nadawcą, kontrolą prezentów i legalnym follow-up.',
+          learnContent: {
+            videoTitle: 'Masterclass: zgodna poczta fizyczna',
+            summaryText: 'Paczka nie ma gwarancji dotarcia do dyrektora; drogi przedmiot może naruszyć politykę, zakupy lub prawo antykorupcyjne.',
+            bulletPoints: ['Sprawdź reguły prezentów, zakupów i antykorupcji', 'Podaj nadawcę i cel handlowy', 'Ogranicz tracking i retencję', 'Kontynuuj legalnie i szanuj asystentów'],
+            coreConcepts: [{ iconName: 'mail', title: 'PROPORCJONALNA POCZTA', description: 'Użyteczna informacja idzie zaakceptowaną drogą.', highlight: true }, { iconName: 'video', title: 'ZGODNY FORMAT', description: 'Dostępny, bezpieczny, skromny i dozwolony.' }],
+            resources: [{ title: 'Zeszyt zgodności poczty', subtitle: 'Cel, wartość, prywatność i mierniki', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' }, { title: 'Mara CRM delivery follow-up', subtitle: 'Przypomnienia sprawdzane przez człowieka bez presji', type: 'tool', iconName: 'send', actionUrl: 'crm' }],
+            fullArticleGuide: `### Poczta z szacunkiem
+
+1. Używaj celu informacyjnego, nie kupowania wpływu.
+2. Sprawdź reguły pracodawcy, sektora, prezentów, zakupów i antykorupcji.
+3. Preferuj informację lub zamówioną próbkę zamiast elektroniki i luksusu.
+4. Używaj adresu firmy i minimalizuj dane osobowe.
+5. Podaj nadawcę i cel; nie ukrywaj reklamy.
+6. Unikaj niebezpiecznych lub niedostępnych formatów.
+7. Kontroluj dostawców i retencję; dostawa nie dowodzi otwarcia.
+8. Potwierdź reguły zgody na telefon B2B przed follow-up.
+9. Szanuj asystentów, sprzeciwy i zakupy.
+10. Mierz odpowiedzi, koszt, zwroty i skargi bez gwarancji otwarć lub spotkań.
+
+Droga paczka nie tworzy dużego klienta.`,
+            practicalExamples: ['Gdy prezenty są zakazane, wyślij jawną analizę przez proces dostawców.', 'Zapytaj asystenta o właściwą drogę zamiast twierdzić, że dyrektor odebrał paczkę.'],
+          },
+          understandContent: { coreTakeaway: 'Poczta działa tylko, gdy jest proporcjonalna, jawna, legalna i pełna szacunku.', keyPrinciples: ['Nie wymieniaj prezentów na dostęp', 'Tracking nie dowodzi uwagi dyrektora', 'Szanuj sprzeciwy i zakupy'] },
+          actionTask: { instruction: 'Zaprojektuj zgodny pilotaż poczty:', checklistItems: ['Sprawdzono prezenty i antykorupcję', 'Zatwierdzono format, wartość i dostępność', 'Udokumentowano dane, dostawców i retencję', 'Zaplanowano legalny follow-up, mierniki i stop rules'], toolboxCategory: 'crm' },
+        },
+      },
     },
 
   },
