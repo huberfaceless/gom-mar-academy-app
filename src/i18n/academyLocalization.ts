@@ -3409,6 +3409,126 @@ The safest pipeline makes it easy to inspect, pause, correct and retire every Pi
         },
       },
     },
+    40: {
+      title: '40. Responsible TikTok Shop, creator affiliate & social commerce',
+      subtitle: 'Market eligibility, truthful listings, fair creator partnerships and controlled paid amplification',
+      description: 'Evaluate and operate TikTok commerce responsibly where available, with compliant products, reliable fulfilment, transparent affiliate relationships, creator rights and evidence-led tests instead of viral-order guarantees.',
+      lessons: {
+        '40.1': {
+          stageTitle: '40. TikTok Shop & creator-partnership architecture',
+          title: 'Set up a compliant shop and a fair creator affiliate programme',
+          description: 'Verify current market and product eligibility, build dependable commerce operations and recruit suitable creators through clear terms, genuine choice and accountable oversight.',
+          learnContent: {
+            videoTitle: 'Masterclass: TikTok Shop readiness and creator partnerships',
+            summaryText: 'TikTok Shop features, supported products, fees, affiliate tools and checkout flows vary by market and change over time. In-app commerce may reduce some steps, but it does not remove customer hesitation, compliance duties or operational risk.',
+            bulletPoints: [
+              'Confirm seller, market, product-category, tax, consumer, safety and logistics requirements before creating a listing',
+              'Set commission and programme access from verified unit economics, service capacity and current platform options—not a universal percentage',
+              'Offer samples under written terms that preserve honest creator judgment and clearly disclose the gift and any commission',
+              'Use product tags and creator content only with current platform eligibility, accurate inventory and explicit content and advertising permissions',
+            ],
+            coreConcepts: [
+              { iconName: 'shopping-bag', title: 'COMMERCE READINESS', description: 'Product legality, documentation, listing accuracy, inventory, fulfilment, returns, support, privacy and incident ownership are verified before launch.', highlight: true },
+              { iconName: 'users', title: 'FAIR CREATOR PARTNERSHIP', description: 'Creators are independent partners with transparent compensation, disclosure duties, creative boundaries, usage rights, safety and a practical exit—not an “army”.' },
+            ],
+            resources: [
+              { title: 'TikTok Shop Readiness & Creator Agreement Pack', subtitle: 'Eligibility, economics, claims, samples, rights and monitoring', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM Social-Commerce Operations Register', subtitle: 'Products, creators, permissions, orders, returns and incidents', type: 'tool', iconName: 'shopping-cart', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Social commerce starts with operational and customer readiness
+
+Discovery may happen through search, recommendations, creator content or advertising. No channel removes the need for a suitable product, truthful offer, informed customer choice and reliable fulfilment.
+
+#### Responsible setup workflow
+
+1. **Check current availability**: Confirm TikTok Shop and affiliate features for the seller’s country, customer market, entity and account. Do not instruct users to bypass regional or identity controls.
+2. **Screen the product**: Verify category eligibility, safety, recalls, age restrictions, certifications, labelling, intellectual property, claims, warranty and applicable consumer rights. Physical and digital product support may differ.
+3. **Model full economics**: Include product, sample, creator, platform, payment, tax, shipping, returns, support, ad, fraud and chargeback costs. Set a loss limit and do not assume a low price or “wow effect” creates demand.
+4. **Build accurate listings**: Use owned or licensed assets and match title, images, variant, quantity, condition, ingredients or specifications, delivery and total price to what the buyer receives.
+5. **Prepare fulfilment and service**: Validate inventory, packaging, carrier, truthful tracking, delivery updates, cancellation, returns, refunds, complaints and recall handling. Never falsify logistics or expose customer data to unauthorised suppliers.
+6. **Define the creator profile**: Select by audience fit, content quality, safety, disclosure history, rights, language and reliability—not follower count or a presumed conversion band.
+7. **Publish fair programme terms**: State commission basis, attribution, payment timing, reversals, samples, required disclosures, prohibited claims, deliverables if any, content ownership, licence duration, edit rights, termination and dispute route.
+8. **Handle samples honestly**: A free or discounted product is a material relationship. Do not require a positive review. If a posting obligation exists, agree it before shipment and allow truthful experience and compliant disclosure.
+9. **Protect outreach and data**: Use authentic brand accounts, relevant welcomed contact and secure forms. Avoid bulk unsolicited messages, false flattery, upfront fees, credential requests and unnecessary identity collection.
+10. **Train and review proportionately**: Provide current product evidence, disclosure examples and prohibited claims. Review high-risk posts before publication where appropriate and monitor live content without dictating a false personal opinion.
+11. **Control permissions**: Obtain explicit, scoped permission for reposting, editing, whitelisting, Spark Ads or other paid use. Record post, territory, channels, term, compensation and revocation conditions.
+12. **Pilot and monitor**: Start with limited products and creators. Track approved content, valid orders, delivery, returns, complaints, disclosure, creator payment, customer outcome and margin. Pause on safety, policy or fulfilment failure.
+
+TikTok and local legal requirements must be reviewed at launch and periodically thereafter; platform access is not proof of legal compliance.`,
+            practicalExamples: [
+              'A merchant pilots one documented product with three suitable creators, written sample and licence terms, conspicuous disclosures and a returns capacity test before expanding.',
+              'A creator dislikes the sample and declines endorsement under the agreement; the brand does not demand praise or reuse the draft as an ad.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A durable creator-commerce programme is built on eligible products, reliable operations, truthful recommendations, clear compensation and controlled rights—not scale promises.',
+            keyPrinciples: ['Verify market and product rules before listing', 'Free products and commissions require clear disclosure', 'Creator content needs explicit, scoped usage permission'],
+          },
+          actionTask: {
+            instruction: 'Prepare a controlled TikTok Shop creator pilot:',
+            checklistItems: ['Market, seller, product, tax, safety and consumer eligibility verified', 'Listing, inventory, fulfilment, returns, support and unit economics tested', 'Creator criteria and fair programme terms documented', 'Samples, disclosures, claims, content rights and paid-use permissions controlled', 'Pilot limits, monitoring, payment, incident and stop rules assigned'],
+            toolboxCategory: 'affiliate',
+          },
+        },
+        '40.2': {
+          stageTitle: '40. Truthful short-form commerce content',
+          title: 'Brief UGC-style videos that disclose advertising and demonstrate real use',
+          description: 'Develop short-form creative that is clear, engaging and native to the format while remaining recognisable as commercial content, evidence-based and accessible.',
+          learnContent: {
+            videoTitle: 'Masterclass: Responsible creator briefs and short-form tests',
+            summaryText: 'Commercial creator content must not be designed to “never look like an ad”. Authenticity means the creator’s genuine experience, not concealed sponsorship. No hook, smartphone aesthetic or UGC format universally outperforms studio creative or guarantees revenue.',
+            bulletPoints: [
+              'Open with a truthful, relevant demonstration or question and make the commercial relationship clear from the start',
+              'Show the actual product and typical use without staged before-and-after results, fabricated discovery stories or unsupported outcomes',
+              'Brief mandatory facts, safety, claims, disclosure and deliverables while leaving room for the creator’s own honest voice',
+              'Use paid amplification only with explicit creator authorisation, a verified ad setup, budget cap and customer-outcome guardrails',
+            ],
+            coreConcepts: [
+              { iconName: 'video', title: 'DISCLOSED AUTHENTICITY', description: 'The creator speaks from real experience and clearly identifies payment, commission, free product or other material connection in the content itself.', highlight: true },
+              { iconName: 'trending-up', title: 'CONTROLLED AMPLIFICATION', description: 'Organic response is one input. Paid use requires separate rights, policy review, measurement, frequency control and a stop rule.' },
+            ],
+            resources: [
+              { title: 'Creator Brief, Disclosure & Claims Template', subtitle: 'Facts, prohibited claims, accessibility, rights and approvals', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'GOM-MAR Short-Form Draft Assistant', subtitle: 'Generate testable concepts with evidence and disclosure checks', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Create short-form commerce content people can recognise and trust
+
+The first seconds affect attention, but they do not decide virality. A responsible brief helps a creator communicate quickly without scripting a false personal story or hiding the ad relationship.
+
+#### Brief and production workflow
+
+1. **Define the audience task**: Identify who may benefit, the use situation, the material product facts, exclusions and the safe next action.
+2. **Create a substantiated claim sheet**: List permitted claims, evidence, conditions, typical results, mandatory warnings and prohibited wording. High-risk health, finance or safety content needs qualified review.
+3. **Choose a truthful concept**: Options may include demonstration, comparison, tutorial, unboxing or problem-and-response. “Before and after” requires genuine, representative, documented conditions and must not mislead through editing.
+4. **Make advertising apparent**: Disclose payment, affiliate commission, gifted samples, employment or other material connection clearly and conspicuously in the video and where required in caption or platform tools. Do not rely on vague tags.
+5. **Preserve the creator’s voice**: Specify facts, compliance boundaries and deliverables, but never require claims the creator cannot honestly make or disguise a script as spontaneous discovery.
+6. **Design an accurate opening**: Show the real product, relevant context and truthful benefit. Avoid “stop scrolling” threats, false enemies, fear, fabricated scarcity and bait unrelated to the content.
+7. **Demonstrate safely**: Use the actual variant and follow instructions, age restrictions and warnings. Do not hide setup, side effects, limits, required accessories or recurring costs.
+8. **Provide accessible media**: Use edited captions, readable on-screen text, contrast, safe audio, meaningful visuals and no unnecessary flashing. Essential disclosure should be perceivable and remain long enough to understand.
+9. **Use a fair CTA**: State destination, total price and material terms; scarcity or discounts must be real and current. Give customers time and a clear route to product details, returns and support.
+10. **Approve without falsifying**: Review disclosure, claims, rights, safety and listing match. Correct errors while protecting the creator’s independent opinion and clearly marking dramatisation or reconstruction.
+11. **Authorise paid use separately**: For Spark Ads or other amplification, document the authorised account or post, channels, territory, duration, editing, compensation, audience and revocation process.
+12. **Run a bounded experiment**: Set budget, duration, audience, creative variants, attribution limits and stop thresholds. Measure valid orders, cancellations, returns, complaints, margin, frequency and customer satisfaction—not revenue screenshots alone.
+13. **Monitor and close**: Check live disclosures and comments, remove expired claims, stop ads when rights expire, pay creators correctly and archive evidence and final assets according to retention rules.
+
+Native style can improve relevance, but advertising must remain recognisable and truthful.`,
+            practicalExamples: [
+              'A creator states that the product was gifted and links may earn commission, demonstrates one ordinary use and explains both a benefit and limitation in captions and speech.',
+              'A promising organic post is licensed for a 14-day Spark Ads test with written authorisation, a capped budget and automatic stop on excessive returns or complaints.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Effective creator content combines genuine experience, conspicuous disclosure, substantiated claims and controlled rights; it never needs to impersonate an unpaid recommendation.',
+            keyPrinciples: ['Commercial content must be recognisable as advertising', 'Never script experience or results the creator cannot verify', 'Paid amplification requires separate permission and downside controls'],
+          },
+          actionTask: {
+            instruction: 'Prepare and test one responsible creator brief:',
+            checklistItems: ['Audience, product facts, evidence, limits and prohibited claims documented', 'Compensation, gift and affiliate disclosure appears clearly in content', 'Creator retains truthful voice and safe demonstration requirements', 'Captions, readable text, listing match and fair CTA reviewed', 'Usage rights, ad authorisation, budget, metrics and stop rule signed off'],
+            toolboxCategory: 'content',
+          },
+        },
+      },
+    },
   },
   pl: {
     1: {
@@ -6800,6 +6920,126 @@ Najbezpieczniejszy pipeline pozwala inspect, pause, correct i retire każdy Pin.
             instruction: 'Skonfiguruj controlled Pinterest publishing pilot:',
             checklistItems: ['Potwierdzono approved method, scope, permissions i policy owner', 'Sprawdzono source content, rights, claims, disclosures i accessibility', 'Skonfigurowano purposeful variants, schedule, approvals i duplicate controls', 'Przetestowano landing health, consent, UTM i failure alerts', 'Przypisano budget cap, quality metrics, stop rule, audit i maintenance dates'],
             toolboxCategory: 'landingpage',
+          },
+        },
+      },
+    },
+    40: {
+      title: '40. Odpowiedzialny TikTok Shop, creator affiliate i social commerce',
+      subtitle: 'Eligibility rynku, prawdziwe listings, fair creator partnerships i controlled paid amplification',
+      description: 'Oceniaj i prowadź TikTok commerce odpowiedzialnie tam, gdzie jest dostępny, z compliant products, reliable fulfilment, transparent affiliate relationships, creator rights i testami zamiast gwarancji viral orders.',
+      lessons: {
+        '40.1': {
+          stageTitle: '40. Architektura TikTok Shop i creator partnerships',
+          title: 'Skonfiguruj zgodny shop i uczciwy creator affiliate programme',
+          description: 'Zweryfikuj aktualną eligibility rynku i produktu, zbuduj pewne operacje commerce i rekrutuj właściwych creators przez jasne warunki, realny wybór oraz accountable oversight.',
+          learnContent: {
+            videoTitle: 'Masterclass: TikTok Shop readiness i creator partnerships',
+            summaryText: 'TikTok Shop features, wspierane products, fees, affiliate tools i checkout flows różnią się według rynku i zmieniają w czasie. In-app commerce może ograniczyć kroki, ale nie usuwa wahania klienta, compliance ani operational risk.',
+            bulletPoints: [
+              'Przed listing sprawdź seller, market, product category, tax, consumer, safety i logistics requirements',
+              'Ustal commission i programme access według verified unit economics, service capacity i aktualnych platform options, nie uniwersalnego procentu',
+              'Oferuj samples na pisemnych warunkach zachowujących honest creator judgment i jasne disclosure gift oraz commission',
+              'Używaj product tags i creator content tylko z current eligibility, dokładnym inventory i explicit content oraz advertising permissions',
+            ],
+            coreConcepts: [
+              { iconName: 'shopping-bag', title: 'COMMERCE READINESS', description: 'Product legality, dokumentacja, listing accuracy, inventory, fulfilment, returns, support, privacy i incident ownership są sprawdzone przed startem.', highlight: true },
+              { iconName: 'users', title: 'FAIR CREATOR PARTNERSHIP', description: 'Creators są niezależnymi partnerami z transparent compensation, disclosures, creative boundaries, usage rights, safety i praktycznym exit, nie „armią”.' },
+            ],
+            resources: [
+              { title: 'Pakiet TikTok Shop readiness i creator agreement', subtitle: 'Eligibility, economics, claims, samples, rights i monitoring', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Rejestr social-commerce operations Mara CRM', subtitle: 'Products, creators, permissions, orders, returns i incidents', type: 'tool', iconName: 'shopping-cart', actionUrl: 'settings' },
+            ],
+            fullArticleGuide: `### Social commerce zaczyna się od gotowości operacyjnej i klienta
+
+Discovery może pochodzić z search, recommendations, creator content lub advertising. Żaden kanał nie usuwa potrzeby suitable product, truthful offer, informed choice i reliable fulfilment.
+
+#### Odpowiedzialny workflow setup
+
+1. **Sprawdź bieżącą dostępność**: Potwierdź TikTok Shop i affiliate features dla kraju sprzedawcy, rynku klienta, entity i account. Nie omijaj kontroli regionalnych lub identity.
+2. **Sprawdź produkt**: Zweryfikuj category eligibility, safety, recalls, age restrictions, certifications, labelling, IP, claims, warranty i consumer rights. Wsparcie physical i digital products może się różnić.
+3. **Modeluj pełną ekonomię**: Uwzględnij product, sample, creator, platform, payment, tax, shipping, returns, support, ad, fraud i chargeback costs. Ustal loss limit; low price lub wow effect nie tworzy automatycznie demand.
+4. **Buduj dokładne listings**: Używaj owned lub licensed assets i dopasuj title, images, variant, quantity, condition, ingredients/specifications, delivery i total price do przesyłki.
+5. **Przygotuj fulfilment i service**: Sprawdź inventory, packaging, carrier, truthful tracking, updates, cancellation, returns, refunds, complaints i recalls. Nie fałszuj logistics ani nie ujawniaj danych unauthorized suppliers.
+6. **Zdefiniuj creator profile**: Wybieraj według audience fit, content quality, safety, disclosure history, rights, language i reliability, nie follower count lub presumed conversion band.
+7. **Opublikuj fair programme terms**: Podaj commission basis, attribution, payment timing, reversals, samples, disclosures, prohibited claims, deliverables, ownership, licence, edit rights, termination i dispute route.
+8. **Uczciwie obsługuj samples**: Free lub discounted product jest material relationship. Nie wymagaj positive review. Posting obligation uzgodnij przed wysyłką i pozwól na truthful experience oraz compliant disclosure.
+9. **Chroń outreach i dane**: Używaj authentic brand accounts, relevant welcomed contact i secure forms. Bez bulk unsolicited messages, false flattery, upfront fees, credential requests i unnecessary identity collection.
+10. **Szkol i review proporcjonalnie**: Daj current product evidence, disclosure examples i prohibited claims. Review high-risk posts przed publikacją, nie dyktując false personal opinion.
+11. **Kontroluj permissions**: Uzyskaj explicit, scoped permission na repost, edit, whitelisting, Spark Ads lub paid use. Zapisz post, territory, channels, term, compensation i revocation.
+12. **Pilotuj i monitoruj**: Zacznij od limited products i creators. Śledź approved content, valid orders, delivery, returns, complaints, disclosure, creator payment, customer outcome i margin. Pauzuj przy safety, policy lub fulfilment failure.
+
+Wymagania TikTok i local law trzeba sprawdzać przy launch i okresowo; platform access nie dowodzi legal compliance.`,
+            practicalExamples: [
+              'Merchant pilotuje jeden documented product z trzema creators, written sample/licence terms, conspicuous disclosures i returns capacity test przed expansion.',
+              'Creator nie lubi sample i odmawia endorsement; brand nie żąda pochwały ani nie używa draft jako ad.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Trwały creator-commerce programme opiera się na eligible products, reliable operations, truthful recommendations, clear compensation i controlled rights, nie scale promises.',
+            keyPrinciples: ['Sprawdź market i product rules przed listing', 'Free products i commission wymagają clear disclosure', 'Creator content potrzebuje explicit, scoped usage permission'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj controlled TikTok Shop creator pilot:',
+            checklistItems: ['Zweryfikowano market, seller, product, tax, safety i consumer eligibility', 'Przetestowano listing, inventory, fulfilment, returns, support i unit economics', 'Udokumentowano creator criteria i fair programme terms', 'Kontrolowane są samples, disclosures, claims, content rights i paid permissions', 'Przypisano pilot limits, monitoring, payment, incident i stop rules'],
+            toolboxCategory: 'affiliate',
+          },
+        },
+        '40.2': {
+          stageTitle: '40. Prawdziwy short-form commerce content',
+          title: 'Briefuj UGC-style videos z disclosure reklamy i realną demonstracją',
+          description: 'Rozwijaj short-form creative, które jest jasne, engaging i native dla formatu, a jednocześnie rozpoznawalne jako commercial content, evidence-based i accessible.',
+          learnContent: {
+            videoTitle: 'Masterclass: Odpowiedzialne creator briefs i short-form tests',
+            summaryText: 'Commercial creator content nie może być projektowany tak, by „nigdy nie wyglądał jak reklama”. Authenticity oznacza genuine experience, nie concealed sponsorship. Żaden hook, smartphone aesthetic ani UGC nie gwarantuje revenue.',
+            bulletPoints: [
+              'Zacznij od truthful, relevant demonstration lub question i od początku jasno pokaż commercial relationship',
+              'Pokazuj actual product i typical use bez staged before-after, fabricated discovery story lub unsupported outcomes',
+              'Briefuj mandatory facts, safety, claims, disclosure i deliverables, zostawiając miejsce na honest creator voice',
+              'Paid amplification stosuj tylko z explicit creator authorisation, verified ad setup, budget cap i customer-outcome guardrails',
+            ],
+            coreConcepts: [
+              { iconName: 'video', title: 'DISCLOSED AUTHENTICITY', description: 'Creator mówi z realnego doświadczenia i jasno identyfikuje payment, commission, free product lub material connection w samym content.', highlight: true },
+              { iconName: 'trending-up', title: 'CONTROLLED AMPLIFICATION', description: 'Organic response jest jednym input. Paid use wymaga osobnych rights, policy review, measurement, frequency control i stop rule.' },
+            ],
+            resources: [
+              { title: 'Template creator brief, disclosure i claims', subtitle: 'Facts, prohibited claims, accessibility, rights i approvals', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Asystent short-form drafts GOM-MAR', subtitle: 'Testable concepts z kontrolą evidence i disclosure', type: 'tool', iconName: 'cpu', actionUrl: 'tools' },
+            ],
+            fullArticleGuide: `### Twórz short-form commerce content, który ludzie rozpoznają i któremu ufają
+
+Pierwsze sekundy wpływają na uwagę, lecz nie decydują o viral. Odpowiedzialny brief pomaga creatorowi komunikować szybko bez false personal story lub ukrywania ad relationship.
+
+#### Workflow briefu i produkcji
+
+1. **Zdefiniuj audience task**: Określ odbiorcę, use situation, material product facts, exclusions i safe next action.
+2. **Utwórz substantiated claim sheet**: Wymień permitted claims, evidence, conditions, typical results, mandatory warnings i prohibited wording. High-risk health, finance lub safety wymaga qualified review.
+3. **Wybierz truthful concept**: Demonstration, comparison, tutorial, unboxing lub problem-response. Before-after wymaga genuine, representative, documented conditions bez misleading edit.
+4. **Uczyń advertising oczywistym**: Ujawnij payment, affiliate commission, gifted sample, employment lub material connection jasno w video i gdzie wymagane w caption/platform tools. Bez vague tags.
+5. **Zachowaj creator voice**: Określ facts, compliance boundaries i deliverables, ale nie wymagaj claim, którego creator nie może uczciwie zrobić, ani scriptu udającego spontaneous discovery.
+6. **Projektuj dokładny opening**: Pokaż real product, context i truthful benefit. Bez stop-scroll threats, false enemies, fear, fabricated scarcity i bait.
+7. **Demonstruj bezpiecznie**: Użyj actual variant, instructions, age restrictions i warnings. Nie ukrywaj setup, side effects, limits, accessories lub recurring costs.
+8. **Zapewnij accessible media**: Edited captions, readable text, contrast, safe audio, meaningful visuals i bez flashing. Disclosure ma być perceivable i wystarczająco długo widoczne.
+9. **Użyj fair CTA**: Podaj destination, total price i material terms; scarcity i discounts muszą być realne. Daj dostęp do details, returns i support.
+10. **Approve bez falsifying**: Review disclosure, claims, rights, safety i listing match. Poprawiaj errors, chroniąc independent opinion i oznaczając dramatisation.
+11. **Osobno autoryzuj paid use**: Dla Spark Ads zapisz account/post, channels, territory, duration, editing, compensation, audience i revocation.
+12. **Uruchom bounded experiment**: Ustal budget, duration, audience, variants, attribution limits i stop thresholds. Mierz valid orders, cancellations, returns, complaints, margin, frequency i satisfaction.
+13. **Monitoruj i zamknij**: Sprawdzaj live disclosures i comments, usuwaj expired claims, stop ads po expiry rights, płać creators i archiwizuj evidence.
+
+Native style może poprawić relevance, lecz advertising pozostaje recognisable i truthful.`,
+            practicalExamples: [
+              'Creator mówi, że product był gifted i link może dać commission, pokazuje zwykłe użycie oraz benefit i limitation w captions i speech.',
+              'Organic post otrzymuje licence na 14-day Spark Ads test z written authorisation, capped budget i stop przy excessive returns lub complaints.',
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Skuteczny creator content łączy genuine experience, conspicuous disclosure, substantiated claims i controlled rights; nie udaje unpaid recommendation.',
+            keyPrinciples: ['Commercial content musi być rozpoznawalne jako advertising', 'Nie skryptuj experience lub results bez weryfikacji', 'Paid amplification wymaga osobnej zgody i downside controls'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj i przetestuj responsible creator brief:',
+            checklistItems: ['Udokumentowano audience, product facts, evidence, limits i prohibited claims', 'Compensation, gift i affiliate disclosure są jasne w content', 'Creator zachowuje truthful voice i safe demonstration', 'Sprawdzono captions, readable text, listing match i fair CTA', 'Zatwierdzono usage rights, ad authorisation, budget, metrics i stop rule'],
+            toolboxCategory: 'content',
           },
         },
       },
