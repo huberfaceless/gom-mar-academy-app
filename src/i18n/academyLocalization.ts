@@ -5534,6 +5534,88 @@ A costly package does not create a large customer.`,
       },
     },
 
+    60: {
+      title: '60. Responsible no-code applications and client portals',
+      subtitle: 'Architecture, access control, integrations, accessibility and maintainable operations',
+      description: 'Prototype and operate no-code applications with the same security, privacy, reliability and governance expected of coded software—without promising a complete app in days or treating visual workflows as error-free.',
+      lessons: {
+        '60.1': {
+          stageTitle: '60. No-code data and application logic',
+          title: 'Design secure data models and workflows before building screens',
+          description: 'Translate product requirements into entities, permissions, state transitions, integrations and tests while planning for platform limits and migration.',
+          learnContent: {
+            videoTitle: 'Masterclass: responsible no-code architecture',
+            summaryText: 'No-code can accelerate some prototypes, but delivery time and cost depend on scope, security, integrations, platform skill, review and store requirements. Visual logic can contain authorization, race-condition and data-quality defects just like handwritten code.',
+            bulletPoints: [
+              'Model entities, relationships, ownership, lifecycle, retention and deletion before importing production data',
+              'Enforce server-side authorization and tenant isolation rather than hiding UI elements',
+              'Secure authentication, payments, webhooks, secrets and APIs with documented threat models',
+              'Test responsive behaviour, accessibility, performance, failure recovery and vendor limitations'
+            ],
+            coreConcepts: [
+              { iconName: 'database', title: 'DATA OWNERSHIP AND LIFECYCLE', description: 'Each record has an owner, purpose, access rule, retention period and deletion path.', highlight: true },
+              { iconName: 'cpu', title: 'TESTED VISUAL LOGIC', description: 'Workflows use validation, idempotency, error handling, logging and human review where needed.' }
+            ],
+            resources: [
+              { title: 'No-code architecture and security workbook', subtitle: 'Data model, roles, threats, workflows, tests and exit plan', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM API integration controls', subtitle: 'Scoped credentials, signed webhooks, retries and audit events', type: 'tool', iconName: 'code', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Build a no-code MVP that can be trusted\n\n1. **Define the decision to test**: user, problem, critical task, evidence of value, budget and conditions for stopping or rebuilding.\n2. **Classify the data**: personal, payment, health, children’s, confidential and authentication data may require different controls or a different platform.\n3. **Model entities and states**: identifiers, relations, required fields, uniqueness, ownership, valid transitions and deletion dependencies.\n4. **Design tenancy explicitly**: organisation, team, role and record-level permissions. Test cross-tenant reads and writes with adversarial accounts.\n5. **Choose authentication safely**: verified email, MFA or appropriate federation, session expiry, recovery, rate limits and account deletion. Social login requires configured provider rules and consent.\n6. **Keep secrets off the client**: API keys and privileged actions belong in secured server-side connectors or functions with least privilege and rotation.\n7. **Validate every input and action**: client validation improves UX; authoritative checks, price calculation and entitlement remain server-side.\n8. **Make workflows idempotent**: duplicate clicks, webhooks, retries and offline reconnection must not duplicate orders, notifications or access.\n9. **Secure payments**: use hosted or tokenised provider flows, verify signed events and reconcile payment, refund, dispute and entitlement state.\n10. **Protect APIs**: authentication, authorization, schema validation, timeouts, rate limits, pagination, replay protection and minimal logs.\n11. **Plan observability and recovery**: errors, audit trail, backups, restore tests, incident response and support escalation.\n12. **Design accessibility and responsive use**: keyboard, labels, focus, contrast, zoom, screen readers, touch targets and varied devices.\n13. **Review platform fit**: limits, pricing, lock-in, exports, regions, subprocessors, SLA, store support and end-of-service plan.\n14. **Test before release**: unit-like workflow tests, permission matrix, integration sandbox, performance, security review and representative user acceptance.\n15. **Treat app-store publication separately**: policies, privacy labels, account deletion, billing rules and review timelines can change and are not guaranteed.',
+            practicalExamples: [
+              'A hidden admin button is not considered security; server-side role rules deny the underlying action for a normal user.',
+              'A duplicate payment webhook is retried, but an idempotency key prevents a second entitlement and invoice.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'No-code changes how software is assembled, not the need for architecture, security, testing and accountable operation.',
+            keyPrinciples: ['Authorization is enforced server-side', 'Secrets and privileged actions never live in the client', 'Plan backups, monitoring and platform exit from the beginning'],
+          },
+          actionTask: {
+            instruction: 'Prepare a secure no-code MVP design:',
+            checklistItems: ['Problem, data classes, entities and lifecycle documented', 'Tenant, role and record-level authorization matrix tested', 'Auth, API, webhook, payment and secret controls designed', 'Accessibility, recovery, monitoring and platform-exit plan reviewed'],
+            toolboxCategory: 'content',
+          },
+        },
+        '60.2': {
+          stageTitle: '60. Client portals for service businesses',
+          title: 'Build a useful portal without exposing credentials or overstating metrics',
+          description: 'Centralise projects, files, approvals, support and reporting with clear permissions, source data and operational fallbacks.',
+          learnContent: {
+            videoTitle: 'Masterclass: secure client portals and self-service dashboards',
+            summaryText: 'A portal may reduce some email and support work, but outcomes vary and it cannot prevent churn. Branding does not make a business enterprise-grade; reliable service, accurate data, security, accessibility and responsive human support do.',
+            bulletPoints: [
+              'Collect only required onboarding information and never ask clients to upload reusable passwords or secret keys as ordinary files',
+              'Show reporting with source, refresh time, definition, attribution limits and correction process',
+              'Record approvals with identity, object version, scope and timestamp without assuming every click forms a legally sufficient signature',
+              'Route tickets by severity, ownership, service commitment and escalation, with an alternative support channel'
+            ],
+            coreConcepts: [
+              { iconName: 'layout', title: 'SECURE CLIENT SELF-SERVICE', description: 'Clients access only their organisation’s current files, invoices, projects and support records.', highlight: true },
+              { iconName: 'check-circle-2', title: 'VERSIONED APPROVALS', description: 'The approved asset, reviewer, authority, conditions and history remain traceable.' }
+            ],
+            resources: [
+              { title: 'Client-portal requirements and wireframe workbook', subtitle: 'Roles, journeys, files, approvals, reports and support', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Mara CRM client access manager', subtitle: 'Tenant-scoped accounts, roles, invitations and revocation', type: 'tool', iconName: 'users', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Design the portal around client tasks\n\n1. **Research the workflow**: onboarding, status, deliverables, review, invoice, support and offboarding; retain email or another fallback where needed.\n2. **Define organisations and roles**: client owner, reviewer, finance contact, agency contributor and administrator with least privilege and separation of duties.\n3. **Invite accounts safely**: verified addresses, expiring single-use links, secure session handling, MFA where appropriate and immediate revocation.\n4. **Do not collect passwords in uploads**: use OAuth, provider invitations or a suitable secrets manager. Mask credentials and log privileged access.\n5. **Protect files**: type and size validation, malware scanning, encryption, tenant-scoped storage, signed expiring downloads, versioning and retention.\n6. **Make approvals precise**: show exact asset version, requested decision, authority, comments and timestamp. Obtain legal advice for electronic signatures and regulated records.\n7. **Explain dashboard data**: source platform, timezone, currency, refresh time, formula, exclusions, attribution window and known delays.\n8. **Avoid misleading success metrics**: ad-platform ROAS is not audited profit; reconcile spend, refunds and downstream revenue where the use requires it.\n9. **Build support routing**: category, severity, SLA target, owner, status, customer notifications, escalation and incident path.\n10. **Design accessible self-service**: keyboard, screen reader, status announcements, readable charts, downloadable data and mobile use.\n11. **Minimise notifications**: user preferences, digest options, quiet hours and no sensitive content in email or push previews.\n12. **Secure integrations**: scoped tokens, signed webhooks, idempotency, rate limits, retry queues and visible sync failures.\n13. **Provide export and offboarding**: data portability, invoice retention, account closure, credential revocation and deletion schedule.\n14. **Monitor tenant isolation and abuse**: audit access, unusual downloads, role changes and failed login patterns with a response plan.\n15. **Measure actual outcomes**: adoption, task completion, support resolution, accessibility failures, incidents and satisfaction with baselines—not a guaranteed support reduction.',
+            practicalExamples: [
+              'A client grants access through the advertising platform instead of uploading a master password to the portal.',
+              'An approval records the exact video version and reviewer authority; a later revision requires a new approval.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'A valuable client portal improves defined tasks while preserving security, data accuracy, accessibility and human support.',
+            keyPrinciples: ['Never request ordinary uploads of reusable credentials', 'Version every approval and report definition', 'Do not promise churn prevention or fixed support savings'],
+          },
+          actionTask: {
+            instruction: 'Prepare a client-portal pilot:',
+            checklistItems: ['Client journeys, organisations, roles and fallback channels defined', 'File, credential, invitation and tenant-isolation controls tested', 'Approval versions and dashboard metric definitions documented', 'Support routing, accessibility, export and offboarding reviewed'],
+            toolboxCategory: 'crm',
+          },
+        },
+      },
+    },
+
   },
   pl: {
     1: {
@@ -11052,6 +11134,88 @@ Droga paczka nie tworzy dużego klienta.`,
             instruction: 'Przygotuj wiarygodny media kit i paid tier:',
             checklistItems: ['Udokumentowano definicje, okresy, ograniczenia i inventory', 'Zatwierdzono vetting, disclosure i niezależność redakcji', 'Przetestowano wartość, cenę, podatek, renewal, cancel i refunds', 'Przejrzano dane, tracking, umowy i uzgodnienie przychodu'],
             toolboxCategory: 'email',
+          },
+        },
+      },
+    },
+
+    60: {
+      title: '60. Odpowiedzialne aplikacje no-code i portale klienta',
+      subtitle: 'Architektura, dostęp, integracje, dostępność i utrzymywalne operacje',
+      description: 'Prototypuj i prowadź aplikacje no-code z bezpieczeństwem, prywatnością, niezawodnością i ładem jak w kodzie—bez obietnicy kompletnej aplikacji w kilka dni i traktowania workflow jako bezbłędnego.',
+      lessons: {
+        '60.1': {
+          stageTitle: '60. Dane i logika no-code',
+          title: 'Projektuj bezpieczny model danych i workflow przed ekranami',
+          description: 'Przekładaj wymagania na encje, uprawnienia, stany, integracje i testy, planując limity oraz migrację.',
+          learnContent: {
+            videoTitle: 'Masterclass: odpowiedzialna architektura no-code',
+            summaryText: 'No-code może przyspieszyć część prototypów, lecz czas i koszt zależą od zakresu, bezpieczeństwa, integracji, umiejętności, review i app store. Logika wizualna może mieć błędy autoryzacji, wyścigów i danych tak samo jak kod.',
+            bulletPoints: [
+              'Modeluj encje, relacje, własność, lifecycle, retencję i usuwanie przed importem produkcyjnym',
+              'Wymuszaj autoryzację i izolację tenantów po stronie serwera, nie przez ukrywanie UI',
+              'Zabezpiecz auth, płatności, webhooki, sekrety i API przez threat model',
+              'Testuj responsive, dostępność, wydajność, recovery i limity dostawcy'
+            ],
+            coreConcepts: [
+              { iconName: 'database', title: 'WŁASNOŚĆ I CYKL DANYCH', description: 'Rekord ma właściciela, cel, dostęp, retencję i ścieżkę usunięcia.', highlight: true },
+              { iconName: 'cpu', title: 'TESTOWANA LOGIKA', description: 'Workflow ma walidację, idempotencję, błędy, logi i human review.' }
+            ],
+            resources: [
+              { title: 'Zeszyt architektury i bezpieczeństwa no-code', subtitle: 'Model, role, zagrożenia, workflow, testy i exit plan', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Kontrole integracji API Mara CRM', subtitle: 'Zakresowe dane dostępowe, podpisane webhooki, retry i audyt', type: 'tool', iconName: 'code', actionUrl: 'settings' }
+            ],
+            fullArticleGuide: '### Zaufany MVP no-code\n\n1. **Określ decyzję do testu**: użytkownik, problem, zadanie, dowód wartości, budżet i stop rules.\n2. **Klasyfikuj dane**: osobowe, płatnicze, zdrowotne, dzieci, poufne i auth mogą wymagać innych kontroli.\n3. **Modeluj encje i stany**: ID, relacje, wymagania, unikalność, własność, przejścia i usuwanie.\n4. **Projektuj tenancy**: organizacja, zespół, rola i prawa rekordu; testuj cross-tenant read/write kontami atakującymi.\n5. **Bezpieczny auth**: verified email, MFA lub federation, wygaśnięcie, recovery, rate limit i usuwanie konta.\n6. **Sekrety poza klientem**: klucze i uprzywilejowane działania w bezpiecznym backendzie z minimalnym zakresem i rotacją.\n7. **Waliduj wejścia i działania**: klient poprawia UX; właściwe ceny i entitlement sprawdza serwer.\n8. **Idempotentne workflow**: duplikaty klików, webhooków, retry i reconnect nie powielają zamówień lub dostępu.\n9. **Bezpieczne płatności**: hosted lub tokenised flow, podpisane eventy i uzgodnienie płatności, refundu, dispute oraz entitlement.\n10. **Chroń API**: auth, authorization, schema, timeout, rate limit, pagination, replay i minimalne logi.\n11. **Observability i recovery**: błędy, audyt, backup, test restore, incident response i support.\n12. **Dostępność i responsive**: klawiatura, etykiety, focus, kontrast, zoom, screen reader, touch i urządzenia.\n13. **Przejrzyj platformę**: limity, cena, lock-in, eksport, region, procesorzy, SLA, store i koniec usługi.\n14. **Testuj przed release**: workflow, permission matrix, sandbox integracji, performance, security i UAT.\n15. **App store osobno**: polityki, privacy labels, deletion, billing i review zmieniają się i nie są gwarantowane.',
+            practicalExamples: [
+              'Ukryty przycisk admina nie jest zabezpieczeniem; reguła serwera odrzuca akcję zwykłego użytkownika.',
+              'Retry webhooka płatności nie tworzy drugiego dostępu dzięki idempotency key.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'No-code zmienia sposób składania software, nie potrzebę architektury, bezpieczeństwa, testów i odpowiedzialności.',
+            keyPrinciples: ['Autoryzacja jest po stronie serwera', 'Sekrety i działania uprzywilejowane nie są w kliencie', 'Planuj backup, monitoring i exit platformy od początku'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj bezpieczny projekt MVP:',
+            checklistItems: ['Udokumentowano problem, klasy danych, encje i lifecycle', 'Przetestowano tenant, role i prawa rekordów', 'Zaprojektowano auth, API, webhook, payment i sekrety', 'Przejrzano dostępność, recovery, monitoring i exit plan'],
+            toolboxCategory: 'content',
+          },
+        },
+        '60.2': {
+          stageTitle: '60. Portale klienta dla usług',
+          title: 'Buduj użyteczny portal bez ujawniania danych dostępowych i zawyżania metryk',
+          description: 'Centralizuj projekty, pliki, akceptacje, wsparcie i raporty z jasnymi prawami, źródłem danych i fallbackiem.',
+          learnContent: {
+            videoTitle: 'Masterclass: bezpieczne portale i self-service',
+            summaryText: 'Portal może ograniczyć część e-maili i supportu, lecz wyniki są zmienne i nie zapobiega churn. Branding nie czyni firmy enterprise; liczą się usługa, dane, bezpieczeństwo, dostępność i pomoc człowieka.',
+            bulletPoints: [
+              'Zbieraj tylko potrzebne onboarding data i nie proś o reusable passwords lub secret keys jako zwykłe pliki',
+              'Pokazuj raport ze źródłem, czasem refreshu, definicją, limitami atrybucji i korektą',
+              'Zapisuj approval z tożsamością, wersją, zakresem i czasem bez założenia, że klik jest wystarczającym podpisem',
+              'Route tickets według severity, ownera, zobowiązania i eskalacji z alternatywnym kanałem'
+            ],
+            coreConcepts: [
+              { iconName: 'layout', title: 'BEZPIECZNY SELF-SERVICE', description: 'Klient widzi tylko aktualne pliki, faktury, projekty i wsparcie swojej organizacji.', highlight: true },
+              { iconName: 'check-circle-2', title: 'WERSJONOWANE AKCEPTACJE', description: 'Asset, reviewer, authority, warunki i historia pozostają identyfikowalne.' }
+            ],
+            resources: [
+              { title: 'Zeszyt wymagań i wireframe portalu', subtitle: 'Role, journeys, pliki, approvals, raporty i support', type: 'pdf', iconName: 'file-text', actionUrl: 'tools' },
+              { title: 'Menedżer dostępu Mara CRM', subtitle: 'Konta tenantów, role, zaproszenia i odwołanie', type: 'tool', iconName: 'users', actionUrl: 'crm' }
+            ],
+            fullArticleGuide: '### Portal wokół zadań klienta\n\n1. **Zbadaj workflow**: onboarding, status, deliverable, review, invoice, support i offboarding; zachowaj fallback.\n2. **Zdefiniuj organizacje i role**: owner klienta, reviewer, finance, agency contributor i admin z least privilege.\n3. **Bezpiecznie zapraszaj**: verified address, expiring single-use links, sesje, MFA i natychmiastowe revocation.\n4. **Nie zbieraj haseł w uploadzie**: używaj OAuth, zaproszeń dostawcy lub secrets manager; maskuj i audytuj dostęp.\n5. **Chroń pliki**: typ, rozmiar, malware, szyfrowanie, tenant storage, signed expiring download, wersje i retencja.\n6. **Precyzyjne approvals**: dokładna wersja, decyzja, authority, komentarz i czas. Porada prawna dla e-signature i regulowanych rekordów.\n7. **Wyjaśnij dashboard**: źródło, timezone, waluta, refresh, formuła, wyłączenia, attribution window i opóźnienie.\n8. **Unikaj mylących wyników**: platform ROAS nie jest audytowanym zyskiem; uzgadniaj spend, refunds i downstream revenue.\n9. **Buduj ticket routing**: kategoria, severity, SLA target, owner, status, notyfikacje, eskalacja i incident path.\n10. **Dostępny self-service**: klawiatura, screen reader, status announcements, czytelne wykresy, download i mobile.\n11. **Minimalizuj powiadomienia**: preferencje, digest, quiet hours i brak danych w preview.\n12. **Bezpieczne integracje**: scoped tokens, signed webhooks, idempotency, rate limit, retry i widoczne sync failures.\n13. **Eksport i offboarding**: portability, invoice retention, zamknięcie, revocation i deletion schedule.\n14. **Monitoruj izolację i abuse**: dostęp, masowe downloady, role i failed login z response plan.\n15. **Mierz fakty**: adoption, task completion, resolution, accessibility, incydenty i satysfakcję z baseline, bez gwarancji oszczędności.',
+            practicalExamples: [
+              'Klient nadaje dostęp przez platformę reklamową zamiast wgrywać hasło główne.',
+              'Approval zapisuje dokładną wersję filmu i authority; zmiana wymaga nowej akceptacji.'
+            ],
+          },
+          understandContent: {
+            coreTakeaway: 'Portal poprawia określone zadania, zachowując bezpieczeństwo, dokładność, dostępność i wsparcie.',
+            keyPrinciples: ['Nie proś o zwykły upload reusable credentials', 'Wersjonuj approval i definicję raportu', 'Nie obiecuj braku churn ani stałej redukcji supportu'],
+          },
+          actionTask: {
+            instruction: 'Przygotuj pilotaż portalu:',
+            checklistItems: ['Zdefiniowano journeys, organizacje, role i fallback', 'Przetestowano pliki, credentials, zaproszenia i tenant isolation', 'Udokumentowano wersje approval i definicje metryk', 'Przejrzano routing, dostępność, eksport i offboarding'],
+            toolboxCategory: 'crm',
           },
         },
       },
