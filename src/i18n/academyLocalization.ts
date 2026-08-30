@@ -6356,6 +6356,116 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "69": {
+      "title": "69. Executive Media Training & Crisis Communications",
+      "subtitle": "Live interviews, broadcast appearances, investigative reporting and crisis response",
+      "description": "Prepare for demanding media situations: answer difficult questions directly, bridge transparently to relevant context and communicate during crises without speculation, manipulation or unsupported legal claims.",
+      "lessons": {
+        "69.1": {
+          "stageTitle": "69. Bridging & Interview Skills",
+          "title": "Responsible Bridging: Answering Difficult Journalistic Questions",
+          "description": "How to remain composed, recognize loaded premises and communicate three evidence-based messages without evading the question.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Executive Media Training & Crisis Interviews",
+            "summaryText": "A strong interview is built on preparation, accuracy and respect for the audience. Learn to answer first, correct false premises and then bridge openly to context that genuinely helps explain the issue.",
+            "bulletPoints": [
+              "Three message pillars: formulate concise claims supported by facts, examples and clearly stated uncertainty",
+              "Answer-and-bridge: address the substance before moving to relevant context; never use a bridge to conceal or mislead",
+              "Soundbites: create clear, quotable sentences without exaggeration, attacks or promises that evidence cannot support",
+              "On-camera delivery: use natural eye contact, steady breathing, an accessible posture and a pace that supports clarity"
+            ],
+            "coreConcepts": [
+              {
+                "title": "ANSWER & BRIDGE",
+                "description": "Give a truthful answer, correct any false premise and signpost the move to relevant context."
+              },
+              {
+                "title": "QUOTABLE CLARITY",
+                "description": "Use short, accurate language while accepting that journalists control editing and headlines."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Executive Media Training Handbook",
+                "subtitle": "Responsible bridging prompts and interview preparation checklist"
+              },
+              {
+                "title": "Mara CRM Press Contacts",
+                "subtitle": "Manage journalist relationships, permissions, requests and response history"
+              }
+            ],
+            "fullArticleGuide": "### Credibility under pressure\n\nJournalists may test contradictions, evidence and accountability. Your task is not to control the interview but to provide accurate, useful answers while protecting lawful confidentiality.\n\n#### Interview principles\n\n1. **Agree the ground rules:** Clarify format, topic, recording, timing and whether any background or off-record arrangement is explicitly accepted. Never assume confidentiality.\n2. **Answer the question:** Address the central point. If the premise is wrong, correct it calmly with evidence before adding context.\n3. **Separate fact from uncertainty:** Say what is known, what remains under review and when an update is expected. Do not speculate.\n4. **Pause purposefully:** A short pause can improve accuracy; a fixed three-second delay is unnecessary and may appear artificial.\n\nDo not disclose personal data, privileged advice, security-sensitive details or information restricted by law or contract. Prepare an approved explanation of why a detail cannot be shared."
+          },
+          "understandContent": {
+            "coreTakeaway": "Bridging supports clarity only when it follows a real answer; no technique can guarantee that an interviewee will never be challenged.",
+            "keyPrinciples": [
+              "Stay calm and accountable: explain decisions and evidence without becoming defensive or attacking the journalist",
+              "If review or authorization of a verbatim interview matters, negotiate its scope before the interview; it is not an automatic right for every publication"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare three media messages:",
+            "checklistItems": [
+              "Drafted three factual messages with evidence, limitations and a relevant example",
+              "Practiced five answer-and-bridge transitions that first address the question",
+              "Recorded and reviewed a mock interview with three difficult but fair questions"
+            ]
+          }
+        },
+        "69.2": {
+          "stageTitle": "69. Press Statements & Online Backlash",
+          "title": "Crisis Statements: Fast, Accurate and Legally Reviewed Responses",
+          "description": "How to create an initial statement that acknowledges impact, protects the fact-finding process and avoids admissions, speculation or empty promises.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Crisis Statements & Rapid Communications",
+            "summaryText": "Silence has no single meaning, and speed alone does not create trust. Use a risk-based response process to acknowledge verified impact, state immediate actions and commit only to updates the organization can deliver.",
+            "bulletPoints": [
+              "Response matrix: set severity-based approval targets; publish within an hour only when facts, safety and authorized review permit",
+              "Empathy, action and transparency: recognize affected people, describe verified steps and explain what can responsibly be shared",
+              "Legal and operational review: coordinate communications with incident, privacy, security, HR and qualified legal leads",
+              "Corrections and remedies: document inaccuracies and obtain jurisdiction-specific legal advice before demanding correction or court action"
+            ],
+            "coreConcepts": [
+              {
+                "title": "HOLDING STATEMENT",
+                "description": "A short verified update can reduce uncertainty while investigation continues; it does not guarantee de-escalation."
+              },
+              {
+                "title": "LEGAL & FACT CHECK",
+                "description": "Cross-functional review reduces avoidable risk but cannot make any wording universally legally safe."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Crisis Statement Templates",
+                "subtitle": "Adaptable drafts with verification and approval prompts"
+              },
+              {
+                "title": "GOM-MAR AI Crisis Drafting Tool",
+                "subtitle": "Generate a first draft that always requires human fact, tone, privacy and legal review"
+              }
+            ],
+            "fullArticleGuide": "### Anatomy of a responsible crisis statement\n\nA useful statement prioritizes safety, affected people and verified facts. It should not claim that an investigation has begun unless it has, or promise publication that law, privacy or evidence may later prevent.\n\n#### Four practical sections\n\n- **Acknowledgement:** Describe the verified event or concern and recognize its impact without performative language.\n- **Immediate action:** State concrete safety, service or investigation steps that are actually underway.\n- **Known and unknown:** Separate confirmed facts from open questions; correct misinformation precisely without escalating conflict.\n- **Next update:** Give a realistic channel or time for the next update, while explaining any lawful limits.\n\nPreserve relevant records and coordinate with emergency, regulatory and law-enforcement obligations where applicable. Do not identify suspected individuals or retaliate against whistleblowers."
+          },
+          "understandContent": {
+            "coreTakeaway": "A crisis response can demonstrate responsible leadership, but it cannot guarantee that public criticism will stop or reputation will improve.",
+            "keyPrinciples": [
+              "Protect people and due process: do not publicly blame employees before a fair, confidential investigation",
+              "Use a clear spokesperson and backup with defined authority while giving staff a safe route to forward media inquiries"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create your crisis-communications protocol:",
+            "checklistItems": [
+              "Prepared scenario-based holding statements with placeholders that prevent accidental publication of unverified claims",
+              "Recorded current contacts for crisis communications, legal, privacy, security and operational leads",
+              "Defined press-routing, approval, accessibility, record-preservation and out-of-hours procedures"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -12695,6 +12805,116 @@ Droga paczka nie tworzy dużego klienta.`,
               "Zweryfikowano aktualny format, referencję nabywcy i kanał dla wybranego odbiorcy",
               "Utworzono standaryzowany, audytowalny raport wykonania usług",
               "Przeprowadzono ocenę gotowości do jednej właściwej samorządowej umowy ramowej przed złożeniem"
+            ]
+          }
+        }
+      }
+    },
+
+    "69": {
+      "title": "69. Szkolenie medialne kadry i komunikacja kryzysowa",
+      "subtitle": "Wywiady na żywo, występy telewizyjne, dziennikarstwo śledcze i reakcja kryzysowa",
+      "description": "Przygotuj się do trudnych sytuacji medialnych: odpowiadaj wprost, przechodź jawnie do istotnego kontekstu i komunikuj kryzysy bez spekulacji, manipulacji oraz niepopartych twierdzeń prawnych.",
+      "lessons": {
+        "69.1": {
+          "stageTitle": "69. Bridging i prowadzenie wywiadu",
+          "title": "Odpowiedzialny bridging: odpowiadanie na trudne pytania dziennikarskie",
+          "description": "Jak zachować spokój, rozpoznać obciążone założenia i przekazać trzy oparte na dowodach komunikaty bez unikania pytania.",
+          "learnContent": {
+            "videoTitle": "Masterclass: szkolenie medialne kadry i wywiady kryzysowe",
+            "summaryText": "Dobry wywiad opiera się na przygotowaniu, dokładności i szacunku dla odbiorcy. Najpierw odpowiedz, skoryguj fałszywe założenie, a następnie jawnie przejdź do kontekstu, który rzeczywiście wyjaśnia sprawę.",
+            "bulletPoints": [
+              "Trzy filary przekazu: formułuj zwięzłe twierdzenia poparte faktami, przykładami i jasno wskazaną niepewnością",
+              "Odpowiedź i przejście: odnieś się do sedna, zanim dodasz kontekst; nie używaj bridgingu do ukrywania lub wprowadzania w błąd",
+              "Soundbite: twórz jasne cytowalne zdania bez przesady, ataków i obietnic bez dowodów",
+              "Występ przed kamerą: naturalny kontakt wzrokowy, spokojny oddech, dostępna postawa i tempo wspierające zrozumienie"
+            ],
+            "coreConcepts": [
+              {
+                "title": "ODPOWIEDŹ I BRIDGE",
+                "description": "Udziel prawdziwej odpowiedzi, skoryguj fałszywe założenie i wyraźnie przejdź do właściwego kontekstu."
+              },
+              {
+                "title": "CYTOWALNA JASNOŚĆ",
+                "description": "Mów krótko i dokładnie, pamiętając, że redakcja kontroluje montaż i nagłówki."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Podręcznik szkolenia medialnego kadry",
+                "subtitle": "Odpowiedzialne przejścia i checklista przygotowania wywiadu"
+              },
+              {
+                "title": "Kontakty prasowe w Mara CRM",
+                "subtitle": "Zarządzaj relacjami, zgodami, zapytaniami i historią odpowiedzi"
+              }
+            ],
+            "fullArticleGuide": "### Wiarygodność pod presją\n\nDziennikarze mogą badać sprzeczności, dowody i odpowiedzialność. Nie kontrolujesz wywiadu; masz dostarczyć prawdziwe, użyteczne odpowiedzi, chroniąc prawnie uzasadnioną poufność.\n\n#### Zasady wywiadu\n\n1. **Ustal reguły:** Wyjaśnij format, temat, nagrywanie, czas i ewentualne warunki background lub off the record. Nigdy nie zakładaj poufności.\n2. **Odpowiedz:** Odnieś się do sedna. Błędną przesłankę skoryguj spokojnie dowodami przed dodaniem kontekstu.\n3. **Oddziel fakty od niepewności:** Powiedz, co wiadomo, co jest sprawdzane i kiedy nastąpi aktualizacja. Nie spekuluj.\n4. **Zrób celową pauzę:** Krótka pauza pomaga w dokładności; stałe trzy sekundy nie są konieczne.\n\nNie ujawniaj danych osobowych, tajemnicy prawnej, informacji o bezpieczeństwie ani danych chronionych prawem lub umową. Przygotuj zatwierdzone wyjaśnienie ograniczeń."
+          },
+          "understandContent": {
+            "coreTakeaway": "Bridging wspiera jasność tylko po rzeczywistej odpowiedzi; żadna technika nie gwarantuje, że rozmówca nie zostanie postawiony pod presją.",
+            "keyPrinciples": [
+              "Zachowaj spokój i odpowiedzialność: wyjaśniaj decyzje oraz dowody bez defensywności lub atakowania dziennikarza",
+              "Jeżeli zależy ci na autoryzacji wywiadu dosłownego, uzgodnij jej zakres przed rozmową; nie jest to automatyczne prawo przy każdej publikacji"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj trzy komunikaty medialne:",
+            "checklistItems": [
+              "Opracowano trzy komunikaty z dowodami, ograniczeniami i trafnym przykładem",
+              "Przećwiczono pięć przejść answer-and-bridge, które najpierw odpowiadają na pytanie",
+              "Nagrano i przeanalizowano próbny wywiad z trzema trudnymi, lecz uczciwymi pytaniami"
+            ]
+          }
+        },
+        "69.2": {
+          "stageTitle": "69. Oświadczenia prasowe i kryzys w sieci",
+          "title": "Oświadczenia kryzysowe: szybka, dokładna i sprawdzona prawnie reakcja",
+          "description": "Jak stworzyć pierwsze oświadczenie, które uznaje skutki, chroni ustalanie faktów i unika przyznania odpowiedzialności, spekulacji lub pustych obietnic.",
+          "learnContent": {
+            "videoTitle": "Masterclass: oświadczenia kryzysowe i szybka komunikacja",
+            "summaryText": "Milczenie nie ma jednego znaczenia, a sama szybkość nie buduje zaufania. Użyj procesu zależnego od ryzyka, uznaj zweryfikowane skutki, opisz natychmiastowe działania i obiecuj tylko realne aktualizacje.",
+            "bulletPoints": [
+              "Macierz reakcji: ustal terminy zatwierdzania według wagi; publikuj w godzinę tylko wtedy, gdy pozwalają na to fakty, bezpieczeństwo i autoryzowany przegląd",
+              "Empatia, działanie i przejrzystość: uznaj osoby dotknięte, opisz potwierdzone kroki i wyjaśnij, co można odpowiedzialnie ujawnić",
+              "Przegląd prawny i operacyjny: koordynuj komunikację z zespołami incydentu, prywatności, bezpieczeństwa, HR i prawnikami",
+              "Korekty i środki prawne: dokumentuj nieścisłości i uzyskaj lokalną poradę przed żądaniem sprostowania lub działania sądowego"
+            ],
+            "coreConcepts": [
+              {
+                "title": "HOLDING STATEMENT",
+                "description": "Krótka zweryfikowana aktualizacja może zmniejszyć niepewność podczas dochodzenia; nie gwarantuje deeskalacji."
+              },
+              {
+                "title": "KONTROLA PRAWNA I FAKTÓW",
+                "description": "Przegląd międzyfunkcyjny zmniejsza ryzyko, lecz nie czyni tekstu uniwersalnie bezpiecznym prawnie."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Szablony oświadczeń kryzysowych",
+                "subtitle": "Adaptowalne wersje z punktami weryfikacji i zatwierdzenia"
+              },
+              {
+                "title": "GOM-MAR AI Crisis Writer",
+                "subtitle": "Tworzy szkic wymagający ludzkiej kontroli faktów, tonu, prywatności i prawa"
+              }
+            ],
+            "fullArticleGuide": "### Anatomia odpowiedzialnego oświadczenia kryzysowego\n\nUżyteczny komunikat stawia na bezpieczeństwo, osoby dotknięte i zweryfikowane fakty. Nie twierdź, że dochodzenie ruszyło, jeśli tak nie jest, ani nie obiecuj publikacji, której mogą zabronić prawo, prywatność lub dowody.\n\n#### Cztery praktyczne części\n\n- **Uznanie:** Opisz potwierdzone zdarzenie lub obawę i jego wpływ bez teatralnego języka.\n- **Natychmiastowe działanie:** Wskaż działania bezpieczeństwa, obsługi lub dochodzenia, które naprawdę trwają.\n- **Wiadome i niewiadome:** Oddziel fakty od pytań; prostuj dezinformację precyzyjnie bez eskalacji.\n- **Następna aktualizacja:** Podaj realistyczny kanał lub termin, wyjaśniając zgodne z prawem ograniczenia.\n\nZabezpiecz dokumentację i koordynuj obowiązki wobec służb, regulatorów i organów ścigania. Nie identyfikuj podejrzanych osób ani nie podejmuj odwetu wobec sygnalistów."
+          },
+          "understandContent": {
+            "coreTakeaway": "Reakcja kryzysowa może pokazać odpowiedzialne przywództwo, lecz nie gwarantuje końca krytyki ani poprawy reputacji.",
+            "keyPrinciples": [
+              "Chroń ludzi i rzetelny proces: nie obwiniaj publicznie pracowników przed uczciwym, poufnym postępowaniem",
+              "Wyznacz rzecznika i zastępcę z jasnymi uprawnieniami oraz bezpieczną drogę przekazywania zapytań przez personel"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz protokół komunikacji kryzysowej:",
+            "checklistItems": [
+              "Przygotowano scenariuszowe holding statements z polami zapobiegającymi publikacji niezweryfikowanych twierdzeń",
+              "Zapisano aktualne kontakty do komunikacji, prawa, prywatności, bezpieczeństwa i operacji",
+              "Zdefiniowano routing prasy, zatwierdzanie, dostępność, ochronę dokumentacji i procedurę poza godzinami"
             ]
           }
         }
