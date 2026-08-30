@@ -6466,6 +6466,117 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "70": {
+      "title": "70. International Tax & Cross-Border Structures",
+      "subtitle": "Exit taxation, tax treaties, substance, management location and jurisdiction assessment",
+      "description": "Understand cross-border tax risks without shortcut promises: assess German exit taxation, treaty residence, controlled-foreign-company rules and the legal, operational and reporting duties of international entities with qualified advisers.",
+      "lessons": {
+        "70.1": {
+          "stageTitle": "70. Exit Tax & Substance Rules",
+          "title": "German Exit Tax and Genuine Cross-Border Substance",
+          "description": "How a change of residence can trigger a deemed disposal of qualifying shareholdings and why incorporation abroad does not by itself move tax residence or management.",
+          "learnContent": {
+            "videoTitle": "Masterclass: International Tax Risk & Substance Design",
+            "summaryText": "Moving personally or incorporating abroad can create immediate and continuing obligations in several countries. Map ownership, residence, management, permanent establishments and reporting before acting, and obtain written advice for the actual facts and date.",
+            "bulletPoints": [
+              "German exit tax: review the current personal, ownership and holding-period requirements of Section 6 AStG instead of relying on a simplified seven-year slogan",
+              "Payment relief: instalments, security, cooperation duties and acceleration events depend on current law and the taxpayer's circumstances; they are not automatic tax elimination",
+              "Residence and management: document where strategic and day-to-day decisions are genuinely made and test domestic law and applicable treaty tie-breakers",
+              "CFC, permanent-establishment and transfer-pricing rules: classify functions, assets, risks and income with contemporaneous evidence"
+            ],
+            "coreConcepts": [
+              {
+                "title": "FACT-BASED SUBSTANCE",
+                "description": "People, authority, premises and activities must match the claimed operating model; paperwork alone is insufficient."
+              },
+              {
+                "title": "PRE-MOVE REVIEW",
+                "description": "Model tax, liquidity, filing and governance consequences before changing residence or ownership."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Cross-Border Tax & Substance Review Guide",
+                "subtitle": "Evidence checklist for residence, management, treaties and reporting"
+              },
+              {
+                "title": "Mara CRM Entity & Filing Register",
+                "subtitle": "Track entities, advisers, deadlines, approvals and supporting records"
+              }
+            ],
+            "fullArticleGuide": "### Build the facts before choosing a structure\n\nInternational tax outcomes depend on current law, treaties and the real conduct of the people involved. A foreign address, nominee or occasional meeting does not establish that management and value creation occur abroad.\n\n#### Four review areas\n\n1. **Personal residence:** Record homes, days, family and economic ties, and test the rules of every relevant country and treaty.\n2. **Ownership and exit exposure:** Identify direct and indirect interests, acquisition history, valuations and liquidity needed for any tax due.\n3. **Entity residence and permanent establishments:** Map who makes decisions, signs contracts, employs people and carries business risk.\n4. **Ongoing compliance:** Maintain transfer-pricing support, beneficial-ownership records, accounts, returns and auditable board decisions.\n\nDo not backdate minutes, use sham directors or hide continued domestic management. Cross-border implementation requires coordinated legal and tax advice in each affected jurisdiction."
+          },
+          "understandContent": {
+            "coreTakeaway": "A lawful international structure follows real residence, management and value creation; it does not guarantee lower tax or prevent audits and penalties.",
+            "keyPrinciples": [
+              "Do not use mailbox or nominee arrangements to misstate where decisions and operations occur",
+              "Obtain current written advice and valuation support before moving, transferring shares or changing group financing"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a cross-border facts file for professional review:",
+            "checklistItems": [
+              "Mapped personal residence, shareholdings, acquisition dates and potential exit-tax liquidity",
+              "Documented decision-makers, employees, premises, contracts, assets and risks for every entity",
+              "Recorded relevant advisers, filings, treaty questions, transfer-pricing evidence and review dates"
+            ]
+          }
+        },
+        "70.2": {
+          "stageTitle": "70. Comparing International Jurisdictions",
+          "title": "Cyprus, UAE, United States and Liechtenstein: Evidence-Based Comparison",
+          "description": "How to compare residence, entity, banking and reporting requirements without treating headline rates or entity labels as a universal tax solution.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Jurisdiction Due Diligence & Cross-Border Compliance",
+            "summaryText": "A jurisdiction is suitable only when the owner's residence, customers, activity, substance, banking and home-country rules fit together. Compare total tax and compliance outcomes, not promotional rates, and revalidate the structure whenever facts or laws change.",
+            "bulletPoints": [
+              "Cyprus: test the current tax-residence conditions and non-domicile rules; exemptions, duration and social or defence contributions are fact-specific",
+              "UAE free zones: 0% corporate tax applies only to qualifying persons and qualifying income under specified conditions; registration, returns, substance and possible 9% taxation remain relevant",
+              "US LLCs: federal classification does not decide the full result; assess income sourcing, effectively connected income, state rules, treaties and information returns such as Form 5472 where applicable",
+              "Liechtenstein and Switzerland: foundations, companies and fiduciary arrangements require legitimate purpose, governance, beneficial-ownership transparency and home-country tax analysis"
+            ],
+            "coreConcepts": [
+              {
+                "title": "TOTAL OBLIGATION MODEL",
+                "description": "Compare tax, filings, payroll, VAT, banking, audit, substance and professional costs across all relevant countries."
+              },
+              {
+                "title": "NO UNIVERSAL JURISDICTION",
+                "description": "A popular location or entity type can create more risk when residence, customers and operations do not align."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Jurisdiction Due-Diligence Matrix",
+                "subtitle": "Compare legal, tax, substance, banking and reporting requirements"
+              },
+              {
+                "title": "Mara CRM Multi-Currency Controls",
+                "subtitle": "Track approved accounts, currencies, reconciliations and access rights"
+              }
+            ],
+            "fullArticleGuide": "### Compare systems, not headline rates\n\nA zero-percent claim may apply only to a defined person, income category or period. It does not remove registration, accounting, VAT, payroll, withholding, transfer-pricing, beneficial-ownership or home-country obligations.\n\n#### A practical comparison framework\n\n- **People and residence:** Where do owners and key decision-makers actually live and work?\n- **Business activity:** Where are services performed, contracts negotiated, intellectual property developed and customers served?\n- **Entity obligations:** Which accounts, audits, information returns, substance tests and local licences apply?\n- **Cash and banking:** Can the business document source of funds, tax residence, beneficial owners and every intercompany payment?\n- **Exit and change:** What happens if the owner moves, a treaty changes, qualifying status is lost or the entity is closed?\n\nUse licensed advisers in the relevant countries, verify official guidance and document why the selected structure has a commercial purpose beyond tax."
+          },
+          "understandContent": {
+            "coreTakeaway": "The right jurisdiction is the one whose full legal and operational requirements match the real business; no location guarantees low tax, banking access, privacy or asset protection.",
+            "keyPrinciples": [
+              "Do not open entities or accounts on the basis of promotional tax-rate tables alone",
+              "Document arm's-length intercompany pricing and reconcile contracts, invoices, tax returns and bank flows"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Build a jurisdiction comparison for adviser review:",
+            "checklistItems": [
+              "Compared personal and entity tax, treaties, substance, VAT, payroll, reporting and total annual cost",
+              "Verified banking, beneficial-ownership, source-of-funds and currency-control requirements",
+              "Recorded commercial purpose, implementation dependencies, red flags and annual revalidation triggers"
+            ]
+          }
+        }
+      }
+    },
+
+
   },
   pl: {
     1: {
@@ -12920,6 +13031,117 @@ Droga paczka nie tworzy dużego klienta.`,
         }
       }
     },
+
+    "70": {
+      "title": "70. Podatki międzynarodowe i struktury transgraniczne",
+      "subtitle": "Podatek od wyjścia, umowy podatkowe, substancja, miejsce zarządu i ocena jurysdykcji",
+      "description": "Poznaj ryzyka podatkowe bez obietnic łatwych skrótów: oceń niemiecki podatek od wyjścia, rezydencję traktatową, przepisy CFC oraz prawne, operacyjne i sprawozdawcze obowiązki podmiotów międzynarodowych z pomocą wykwalifikowanych doradców.",
+      "lessons": {
+        "70.1": {
+          "stageTitle": "70. Podatek od wyjścia i wymogi substancji",
+          "title": "Niemiecki podatek od wyjścia i rzeczywista substancja za granicą",
+          "description": "Jak zmiana rezydencji może wywołać fikcyjne zbycie kwalifikowanych udziałów i dlaczego sama spółka zagraniczna nie przenosi rezydencji ani miejsca zarządu.",
+          "learnContent": {
+            "videoTitle": "Masterclass: międzynarodowe ryzyko podatkowe i projektowanie substancji",
+            "summaryText": "Przeprowadzka lub założenie spółki za granicą może natychmiast stworzyć obowiązki w kilku państwach. Przed działaniem zmapuj własność, rezydencję, zarząd, zakłady i raportowanie oraz uzyskaj pisemną poradę dla konkretnych faktów i aktualnego prawa.",
+            "bulletPoints": [
+              "Niemiecki podatek od wyjścia: sprawdź aktualne warunki osobowe, udziałowe i czasowe z § 6 AStG zamiast polegać na uproszczonym haśle o siedmiu latach",
+              "Ulgi płatnicze: raty, zabezpieczenie, obowiązki współpracy i zdarzenia przyspieszające zależą od prawa i sytuacji podatnika; nie likwidują automatycznie podatku",
+              "Rezydencja i zarząd: dokumentuj, gdzie faktycznie zapadają decyzje strategiczne i bieżące, oraz badaj prawo krajowe i reguły kolizyjne umów",
+              "CFC, zakład i ceny transferowe: przypisz funkcje, aktywa, ryzyka i dochody na podstawie współczesnych dowodów"
+            ],
+            "coreConcepts": [
+              {
+                "title": "SUBSTANCJA OPARTA NA FAKTACH",
+                "description": "Ludzie, uprawnienia, lokal i działania muszą odpowiadać deklarowanemu modelowi; sama dokumentacja nie wystarczy."
+              },
+              {
+                "title": "KONTROLA PRZED PRZEPROWADZKĄ",
+                "description": "Przed zmianą rezydencji lub własności modeluj podatek, płynność, raportowanie i ład korporacyjny."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik kontroli podatków i substancji transgranicznej",
+                "subtitle": "Lista dowodów rezydencji, zarządu, umów i raportowania"
+              },
+              {
+                "title": "Rejestr podmiotów i zgłoszeń Mara CRM",
+                "subtitle": "Śledź spółki, doradców, terminy, zatwierdzenia i dokumenty"
+              }
+            ],
+            "fullArticleGuide": "### Najpierw fakty, potem struktura\n\nSkutki podatkowe zależą od aktualnego prawa, umów i rzeczywistego działania osób. Zagraniczny adres, nominee lub okazjonalne posiedzenie nie dowodzą, że zarząd i tworzenie wartości odbywają się za granicą.\n\n#### Cztery obszary kontroli\n\n1. **Rezydencja osobista:** Udokumentuj mieszkania, dni pobytu, więzi rodzinne i gospodarcze oraz zbadaj reguły każdego państwa i umowy.\n2. **Własność i podatek od wyjścia:** Ustal udziały bezpośrednie i pośrednie, historię nabycia, wyceny oraz płynność na podatek.\n3. **Rezydencja podmiotu i zakłady:** Zmapuj osoby decyzyjne, podpisywanie umów, zatrudnienie i ponoszenie ryzyka.\n4. **Stała zgodność:** Utrzymuj dokumentację cen transferowych, beneficjentów rzeczywistych, księgi, deklaracje i audytowalne uchwały.\n\nNie antydatuj protokołów, nie używaj fikcyjnych dyrektorów ani nie ukrywaj dalszego zarządu krajowego. Wdrożenie wymaga skoordynowanej porady prawnej i podatkowej w każdej właściwej jurysdykcji."
+          },
+          "understandContent": {
+            "coreTakeaway": "Legalna struktura międzynarodowa odzwierciedla rzeczywistą rezydencję, zarząd i tworzenie wartości; nie gwarantuje niższych podatków ani braku kontroli i kar.",
+            "keyPrinciples": [
+              "Nie używaj skrzynek pocztowych ani nominee do fałszywego przedstawiania miejsca decyzji i działalności",
+              "Przed przeprowadzką, transferem udziałów lub zmianą finansowania grupy uzyskaj aktualną pisemną poradę i wycenę"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj akta faktów transgranicznych do profesjonalnej kontroli:",
+            "checklistItems": [
+              "Zmapowano rezydencję, udziały, daty nabycia i płynność potrzebną na potencjalny podatek od wyjścia",
+              "Udokumentowano decydentów, personel, lokale, umowy, aktywa i ryzyka każdego podmiotu",
+              "Zapisano doradców, zgłoszenia, pytania traktatowe, dowody cen transferowych i terminy przeglądów"
+            ]
+          }
+        },
+        "70.2": {
+          "stageTitle": "70. Porównanie jurysdykcji międzynarodowych",
+          "title": "Cypr, ZEA, Stany Zjednoczone i Liechtenstein: porównanie oparte na dowodach",
+          "description": "Jak porównywać wymogi rezydencji, podmiotów, bankowości i raportowania bez traktowania stawek reklamowych lub formy prawnej jako uniwersalnego rozwiązania podatkowego.",
+          "learnContent": {
+            "videoTitle": "Masterclass: due diligence jurysdykcji i zgodność transgraniczna",
+            "summaryText": "Jurysdykcja jest właściwa tylko wtedy, gdy rezydencja właściciela, klienci, działalność, substancja, bankowość i reguły państwa macierzystego tworzą spójność. Porównuj pełne skutki, a nie reklamowane stawki, i ponownie weryfikuj strukturę po zmianie faktów lub prawa.",
+            "bulletPoints": [
+              "Cypr: sprawdź aktualne warunki rezydencji i non-dom; zwolnienia, okresy oraz składki obronne lub społeczne zależą od faktów",
+              "Strefy wolnocłowe ZEA: 0% CIT dotyczy wyłącznie kwalifikowanych osób i dochodów na określonych warunkach; nadal obowiązują rejestracja, deklaracje, substancja i możliwe opodatkowanie 9%",
+              "Amerykańskie LLC: klasyfikacja federalna nie rozstrzyga całości; oceń źródło dochodu, ECI, prawo stanowe, umowy i deklaracje informacyjne, w tym Form 5472, gdy ma zastosowanie",
+              "Liechtenstein i Szwajcaria: fundacje, spółki i rozwiązania powiernicze wymagają legalnego celu, ładu, jawności beneficjenta i analizy podatkowej państwa rezydencji"
+            ],
+            "coreConcepts": [
+              {
+                "title": "MODEL PEŁNYCH OBOWIĄZKÓW",
+                "description": "Porównaj podatki, deklaracje, płace, VAT, bankowość, audyt, substancję i koszty doradcze we wszystkich państwach."
+              },
+              {
+                "title": "BRAK UNIWERSALNEJ JURYSDYKCJI",
+                "description": "Popularny kraj lub forma prawna zwiększa ryzyko, gdy rezydencja, klienci i operacje nie są spójne."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Macierz due diligence jurysdykcji",
+                "subtitle": "Porównaj prawo, podatki, substancję, bankowość i raportowanie"
+              },
+              {
+                "title": "Kontrole wielowalutowe Mara CRM",
+                "subtitle": "Śledź zatwierdzone rachunki, waluty, uzgodnienia i prawa dostępu"
+              }
+            ],
+            "fullArticleGuide": "### Porównuj systemy, nie reklamowane stawki\n\nHasło 0% może dotyczyć tylko określonej osoby, kategorii dochodu lub okresu. Nie usuwa ono rejestracji, księgowości, VAT, płac, podatku u źródła, cen transferowych, beneficjentów rzeczywistych ani obowiązków w państwie rezydencji.\n\n#### Praktyczne ramy porównania\n\n- **Osoby i rezydencja:** Gdzie właściciele i kluczowi decydenci naprawdę mieszkają i pracują?\n- **Działalność:** Gdzie świadczy się usługi, negocjuje umowy, rozwija własność intelektualną i obsługuje klientów?\n- **Obowiązki podmiotu:** Jakie księgi, audyty, zgłoszenia, testy substancji i licencje są wymagane?\n- **Środki i bankowość:** Czy firma udokumentuje źródło środków, rezydencję, beneficjentów i każdą płatność wewnątrzgrupową?\n- **Wyjście i zmiana:** Co nastąpi po przeprowadzce, zmianie umowy, utracie statusu kwalifikowanego lub likwidacji?\n\nKorzystaj z licencjonowanych doradców w odpowiednich państwach, sprawdzaj oficjalne źródła i dokumentuj gospodarczy cel struktury wykraczający poza podatek."
+          },
+          "understandContent": {
+            "coreTakeaway": "Właściwa jurysdykcja to ta, której pełne wymogi odpowiadają realnej działalności; żaden kraj nie gwarantuje niskiego podatku, konta, prywatności ani ochrony majątku.",
+            "keyPrinciples": [
+              "Nie otwieraj spółek ani rachunków wyłącznie na podstawie promocyjnych tabel stawek podatkowych",
+              "Dokumentuj rynkowe ceny wewnątrzgrupowe i uzgadniaj umowy, faktury, deklaracje oraz przepływy bankowe"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zbuduj porównanie jurysdykcji do kontroli doradcy:",
+            "checklistItems": [
+              "Porównano podatki osobiste i spółki, umowy, substancję, VAT, płace, raportowanie i pełny koszt roczny",
+              "Zweryfikowano bankowość, beneficjentów rzeczywistych, źródło środków i wymogi walutowe",
+              "Zapisano cel gospodarczy, zależności wdrożenia, sygnały ostrzegawcze i przesłanki corocznej ponownej oceny"
+            ]
+          }
+        }
+      }
+    },
+
 
   },
 };
