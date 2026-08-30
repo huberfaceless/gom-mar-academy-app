@@ -6058,10 +6058,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "M&A Due Diligence Master Checklist",
                 "subtitle": "150 review prompts for acquisition analysis"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Deal Pipeline",
                 "subtitle": "Track acquisition candidates, permissions and conversations in the CRM"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### A disciplined acquisition process\n\nInorganic growth can complement organic growth, but speed alone does not make a transaction attractive. Test strategic fit, downside exposure, financing capacity and integration readiness before committing.\n\n#### A four-stage acquisition cycle\n\n1. **Target profile:** Define strategic fit, acceptable economics, disqualifying risks and the evidence required to proceed.\n2. **Initial contact:** Explain who you are, why the business may fit and that the conversation is exploratory and confidential.\n3. **Due diligence:** Use controlled access and data minimization to review financial, tax, legal, customer, people, technology and privacy matters. Do not request or export personal data without a valid purpose, safeguards and professional guidance.\n4. **Signing and closing:** Align the purchase agreement, financing, approvals, conditions and transition plan. Price structure, earn-outs and escrow should reflect the specific deal and be reviewed by qualified legal and tax professionals."
@@ -6109,10 +6111,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Roll-Up Synergy Calculator & Multiple Matrix",
                 "subtitle": "Scenario model for portfolio groups"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Brand Suite",
                 "subtitle": "Coordinate multiple brands from a central workspace"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Designing a resilient roll-up\n\nA roll-up succeeds only when the combined operating model produces better customer outcomes and sustainable cash flow after acquisition, financing and integration costs.\n\n#### A risk-adjusted 100-day framework\n\n- **Days 1–30:** Stabilize operations, confirm governance and reporting, protect access and data, and validate the integration thesis.\n- **Days 31–60:** Pilot only system changes with clear owners, controls, migration plans and measurable benefits.\n- **Days 61–100:** Test cross-selling with appropriate customer permissions and brand safeguards before scaling.\n\nSequence and timing should reflect transaction complexity, employee consultation duties, contracts, regulation and operational risk."
@@ -6168,10 +6172,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Smart-Contract Deployment & Token-Gating Guide",
                 "subtitle": "Implementation and risk checklist for non-technical founders"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Web3 Wallet Integration",
                 "subtitle": "Link wallets to customer profiles only with consent and data-minimization controls"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Designing a responsible digital membership\n\nWeb3 can make an access credential portable, but the token is not the complete membership agreement or security model.\n\n#### Implementation sequence\n\n1. **Define the product:** Specify access rights, duration, transfer rules, refunds, revocation, support and jurisdiction before selecting a token standard.\n2. **Design onboarding:** Explain wallet creation and transaction implications clearly. Provide secure recovery and avoid silently creating accounts or accepting terms for the user.\n3. **Develop and review:** Use tested libraries, least-privilege administration, multisignature controls, monitoring and an independent smart-contract security review before production.\n4. **Gate access:** Verify the relevant chain and contract server-side, prevent replay and session abuse, and prepare a fallback for network or provider outages.\n\nObtain qualified legal, tax and regulatory advice, especially where passes are transferable, marketed for appreciation or sold across borders. Never place personal or confidential data directly on a public blockchain."
@@ -6219,10 +6225,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "On-Chain Credential Architecture",
                 "subtitle": "Standards, privacy, revocation and verification guide"
+                "type": "pdf",
               },
               {
                 "title": "GOM-MAR Academy Credential Issuance",
                 "subtitle": "Configure consent-based issuance after verified completion"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Responsible digital credentials\n\nOn-chain credentials can simplify verification, but public permanence creates special obligations. A credential should not expose identity, grades, revenue or other personal information on-chain.\n\n#### A safer credential model\n\n- **Minimal on-chain record:** Store only a non-identifying reference or cryptographic proof; keep personal details in a protected, correctable system.\n- **Clear verification:** Show the issuer, award criteria, issue date, current status and revocation mechanism.\n- **Learner control:** Obtain informed consent and support non-blockchain certificates, wallet changes, key loss and reissue.\n- **Operational resilience:** Back up issuer records and verification services. A blockchain does not prevent front-end, provider, key-management or governance failures.\n\nHave privacy and legal specialists review the design for applicable data-protection, education, consumer and accessibility requirements."
@@ -6278,10 +6286,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Public Procurement Checklist & EVB-IT Guide",
                 "subtitle": "Bid-specific review prompts and contract-risk checklist"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM GovTech Tender Tracker",
                 "subtitle": "Track notices, clarification deadlines, submissions and responsibilities"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### A disciplined route to public-sector contracts\n\nPublic entities are generally structured counterparties, but delayed payment, disputes, cancellations and budget changes remain possible. Assess commercial risk and cash flow as you would with any material client.\n\n#### Bid workflow\n\n1. **Qualify the notice:** Check scope, lots, deadlines, suitability evidence, award criteria, contract terms, delivery capacity and conflicts.\n2. **Submit clarification questions:** Use the designated portal and deadline. Ask neutrally and preserve the official answer for the bid file.\n3. **Build the response:** Create a compliance matrix and answer each requirement with verifiable evidence. Never invent references or declarations.\n4. **Validate and submit early:** Confirm authorized users, file limits, required signatures or seals and successful receipt. A qualified electronic signature is not universally required; follow the current notice and platform instructions.\n\nProcurement and contract rules vary by jurisdiction, value, authority and procedure. Use current official documents and qualified legal advice for material bids."
@@ -6329,10 +6339,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "XRechnung & EVB-IT Framework Guide",
                 "subtitle": "Current-format, buyer-reference and contract review checklist"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM E-Invoice Workflow",
                 "subtitle": "Prepare and validate structured invoices for configured public recipients"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Operating a public-sector framework responsibly\n\nA framework may allow call-offs without a new full procurement, but only within its scope, term, value limits and call-off rules. Authorities must still follow the agreement and applicable law.\n\n#### Delivery practices\n\n- **Reliable milestones:** Baseline scope, dependencies, acceptance criteria and change control before delivery.\n- **Transparent records:** Maintain decisions, approvals, service evidence, security documentation and invoice support.\n- **Capacity governance:** Reserve capacity according to realistic forecasts, not the framework ceiling, unless a binding minimum exists.\n- **Invoice validation:** Use the current XRechnung specification or another accepted format, the buyer-provided reference such as a Leitweg-ID where required, and the designated channel."
@@ -6388,10 +6400,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Executive Media Training Handbook",
                 "subtitle": "Responsible bridging prompts and interview preparation checklist"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Press Contacts",
                 "subtitle": "Manage journalist relationships, permissions, requests and response history"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Credibility under pressure\n\nJournalists may test contradictions, evidence and accountability. Your task is not to control the interview but to provide accurate, useful answers while protecting lawful confidentiality.\n\n#### Interview principles\n\n1. **Agree the ground rules:** Clarify format, topic, recording, timing and whether any background or off-record arrangement is explicitly accepted. Never assume confidentiality.\n2. **Answer the question:** Address the central point. If the premise is wrong, correct it calmly with evidence before adding context.\n3. **Separate fact from uncertainty:** Say what is known, what remains under review and when an update is expected. Do not speculate.\n4. **Pause purposefully:** A short pause can improve accuracy; a fixed three-second delay is unnecessary and may appear artificial.\n\nDo not disclose personal data, privileged advice, security-sensitive details or information restricted by law or contract. Prepare an approved explanation of why a detail cannot be shared."
@@ -6439,10 +6453,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Crisis Statement Templates",
                 "subtitle": "Adaptable drafts with verification and approval prompts"
+                "type": "pdf",
               },
               {
                 "title": "GOM-MAR AI Crisis Drafting Tool",
                 "subtitle": "Generate a first draft that always requires human fact, tone, privacy and legal review"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Anatomy of a responsible crisis statement\n\nA useful statement prioritizes safety, affected people and verified facts. It should not claim that an investigation has begun unless it has, or promise publication that law, privacy or evidence may later prevent.\n\n#### Four practical sections\n\n- **Acknowledgement:** Describe the verified event or concern and recognize its impact without performative language.\n- **Immediate action:** State concrete safety, service or investigation steps that are actually underway.\n- **Known and unknown:** Separate confirmed facts from open questions; correct misinformation precisely without escalating conflict.\n- **Next update:** Give a realistic channel or time for the next update, while explaining any lawful limits.\n\nPreserve relevant records and coordinate with emergency, regulatory and law-enforcement obligations where applicable. Do not identify suspected individuals or retaliate against whistleblowers."
@@ -6498,10 +6514,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Cross-Border Tax & Substance Review Guide",
                 "subtitle": "Evidence checklist for residence, management, treaties and reporting"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Entity & Filing Register",
                 "subtitle": "Track entities, advisers, deadlines, approvals and supporting records"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Build the facts before choosing a structure\n\nInternational tax outcomes depend on current law, treaties and the real conduct of the people involved. A foreign address, nominee or occasional meeting does not establish that management and value creation occur abroad.\n\n#### Four review areas\n\n1. **Personal residence:** Record homes, days, family and economic ties, and test the rules of every relevant country and treaty.\n2. **Ownership and exit exposure:** Identify direct and indirect interests, acquisition history, valuations and liquidity needed for any tax due.\n3. **Entity residence and permanent establishments:** Map who makes decisions, signs contracts, employs people and carries business risk.\n4. **Ongoing compliance:** Maintain transfer-pricing support, beneficial-ownership records, accounts, returns and auditable board decisions.\n\nDo not backdate minutes, use sham directors or hide continued domestic management. Cross-border implementation requires coordinated legal and tax advice in each affected jurisdiction."
@@ -6549,10 +6567,12 @@ A costly package does not create a large customer.`,
               {
                 "title": "Jurisdiction Due-Diligence Matrix",
                 "subtitle": "Compare legal, tax, substance, banking and reporting requirements"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Currency Controls",
                 "subtitle": "Track approved accounts, currencies, reconciliations and access rights"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Compare systems, not headline rates\n\nA zero-percent claim may apply only to a defined person, income category or period. It does not remove registration, accounting, VAT, payroll, withholding, transfer-pricing, beneficial-ownership or home-country obligations.\n\n#### A practical comparison framework\n\n- **People and residence:** Where do owners and key decision-makers actually live and work?\n- **Business activity:** Where are services performed, contracts negotiated, intellectual property developed and customers served?\n- **Entity obligations:** Which accounts, audits, information returns, substance tests and local licences apply?\n- **Cash and banking:** Can the business document source of funds, tax residence, beneficial owners and every intercompany payment?\n- **Exit and change:** What happens if the owner moves, a treaty changes, qualifying status is lost or the entity is closed?\n\nUse licensed advisers in the relevant countries, verify official guidance and document why the selected structure has a commercial purpose beyond tax."
@@ -12624,10 +12644,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Główna checklista due diligence M&A",
                 "subtitle": "150 punktów kontrolnych do analizy przejęcia"
+                "type": "pdf",
               },
               {
                 "title": "Pipeline transakcji w Mara CRM",
                 "subtitle": "Śledź kandydatów, uprawnienia i rozmowy akwizycyjne w CRM"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Zdyscyplinowany proces przejęcia\n\nWzrost nieorganiczny może uzupełniać rozwój organiczny, ale sama szybkość nie czyni transakcji atrakcyjną. Przed zobowiązaniem zbadaj dopasowanie strategiczne, ryzyka, zdolność finansowania i gotowość integracyjną.\n\n#### Cztery etapy procesu akwizycyjnego\n\n1. **Profil celu:** Określ dopasowanie, akceptowalną ekonomię, ryzyka wykluczające i wymagane dowody.\n2. **Pierwszy kontakt:** Wyjaśnij, kim jesteś, dlaczego firma może pasować i że rozmowa jest wstępna oraz poufna.\n3. **Due diligence:** Stosuj kontrolowany dostęp i minimalizację danych. Nie żądaj ani nie eksportuj danych osobowych bez uzasadnionego celu, zabezpieczeń i profesjonalnej konsultacji.\n4. **Podpisanie i zamknięcie:** Uzgodnij umowę, finansowanie, zgody, warunki i plan przejścia. Cenę, earn-out i escrow powinni zweryfikować wykwalifikowani doradcy prawni i podatkowi."
@@ -12675,10 +12697,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Kalkulator synergii roll-up i macierz mnożników",
                 "subtitle": "Model scenariuszowy dla grup portfelowych"
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Brand Suite",
                 "subtitle": "Koordynuj wiele marek z centralnej przestrzeni roboczej"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Projektowanie odpornego roll-upu\n\nRoll-up odnosi sukces tylko wtedy, gdy połączony model operacyjny zapewnia lepsze wyniki klientów i trwałe przepływy pieniężne po kosztach przejęć, finansowania i integracji.\n\n#### Plan pierwszych 100 dni skorygowany o ryzyko\n\n- **Dni 1–30:** Ustabilizuj działalność, potwierdź ład i raportowanie, zabezpiecz dostęp oraz dane i zweryfikuj tezę integracyjną.\n- **Dni 31–60:** Pilotażowo wdrażaj tylko zmiany z właścicielami, kontrolami, planem migracji i mierzalnymi korzyściami.\n- **Dni 61–100:** Przetestuj cross-selling z odpowiednimi zgodami klientów i ochroną marek, zanim zwiększysz skalę.\n\nKolejność i terminy powinny uwzględniać złożoność transakcji, konsultacje pracownicze, umowy, regulacje i ryzyko operacyjne."
@@ -12734,10 +12758,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Przewodnik wdrożenia smart kontraktu i token gatingu",
                 "subtitle": "Checklista wdrożeniowa i ryzyka dla nietechnicznych założycieli"
+                "type": "pdf",
               },
               {
                 "title": "Integracja portfeli Web3 w Mara CRM",
                 "subtitle": "Łącz portfele z profilami klientów tylko za zgodą i przy minimalizacji danych"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Odpowiedzialne członkostwo cyfrowe\n\nWeb3 może uczynić poświadczenie dostępu przenośnym, lecz token nie jest pełną umową członkowską ani kompletnym modelem bezpieczeństwa.\n\n#### Kolejność wdrożenia\n\n1. **Zdefiniuj produkt:** Ustal prawa dostępu, czas, transfer, zwroty, odwołanie, wsparcie i jurysdykcję przed wyborem standardu.\n2. **Zaprojektuj onboarding:** Jasno wyjaśnij tworzenie portfela i skutki transakcji. Zapewnij bezpieczne odzyskiwanie i nie twórz po cichu kont ani zgód.\n3. **Opracuj i zweryfikuj:** Użyj sprawdzonych bibliotek, minimalnych uprawnień, multisig, monitoringu i niezależnego audytu bezpieczeństwa przed produkcją.\n4. **Kontroluj dostęp:** Weryfikuj sieć i kontrakt po stronie serwera, zapobiegaj nadużyciom sesji i przygotuj tryb awaryjny.\n\nUzyskaj poradę prawną, podatkową i regulacyjną, szczególnie dla zbywalnych przepustek lub sprzedaży transgranicznej. Nigdy nie zapisuj danych osobowych ani poufnych bezpośrednio w publicznym blockchainie."
@@ -12785,10 +12811,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Architektura poświadczeń on-chain",
                 "subtitle": "Standardy, prywatność, odwołanie i weryfikacja"
+                "type": "pdf",
               },
               {
                 "title": "Wydawanie poświadczeń GOM-MAR Academy",
                 "subtitle": "Skonfiguruj wydawanie za zgodą po potwierdzonym ukończeniu"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Odpowiedzialne poświadczenia cyfrowe\n\nPoświadczenia on-chain mogą uprościć weryfikację, ale publiczna trwałość tworzy szczególne obowiązki. Nie należy ujawniać w łańcuchu tożsamości, ocen, przychodów ani innych danych osobowych.\n\n#### Bezpieczniejszy model\n\n- **Minimalny zapis on-chain:** Przechowuj jedynie nieidentyfikujący odnośnik lub dowód kryptograficzny, a dane osobowe w chronionym i korygowalnym systemie.\n- **Jasna weryfikacja:** Pokaż wystawcę, kryteria, datę, aktualny status i mechanizm odwołania.\n- **Kontrola uczestnika:** Uzyskaj świadomą zgodę i obsłuż certyfikat bez blockchaina, zmianę portfela, utratę klucza i ponowne wydanie.\n- **Odporność operacyjna:** Twórz kopie dokumentacji i usług weryfikacyjnych. Blockchain nie zapobiega awariom interfejsu, dostawcy, kluczy ani zarządzania.\n\nProjekt powinien przejść przegląd prywatności i prawa pod kątem ochrony danych, edukacji, konsumentów i dostępności."
@@ -12844,10 +12872,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Checklista zamówień publicznych i przewodnik EVB-IT",
                 "subtitle": "Kontrola oferty i ryzyka umownego"
+                "type": "pdf",
               },
               {
                 "title": "Tracker przetargów GovTech w Mara CRM",
                 "subtitle": "Śledź ogłoszenia, pytania, terminy, wysyłkę i odpowiedzialności"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Zdyscyplinowana droga do kontraktu publicznego\n\nPodmioty publiczne są zwykle uporządkowanymi kontrahentami, ale opóźnienia płatności, spory, unieważnienia i zmiany budżetu są możliwe. Oceniaj ryzyko i cash flow jak przy każdym istotnym kliencie.\n\n#### Proces ofertowy\n\n1. **Kwalifikacja ogłoszenia:** Sprawdź zakres, części, terminy, dowody zdolności, kryteria, umowę, możliwości realizacji i konflikty.\n2. **Pytania:** Użyj wskazanego portalu i terminu. Pytaj neutralnie i zachowaj oficjalną odpowiedź.\n3. **Odpowiedź:** Utwórz macierz zgodności i poprzyj każdy wymóg prawdziwym dowodem. Nie wymyślaj referencji ani oświadczeń.\n4. **Walidacja i wcześniejsza wysyłka:** Sprawdź uprawnienia, limity plików, wymagane podpisy i potwierdzenie odbioru. Kwalifikowany podpis elektroniczny nie jest wymagany zawsze—stosuj aktualną instrukcję.\n\nReguły zależą od jurysdykcji, wartości, zamawiającego i trybu. Korzystaj z bieżących dokumentów urzędowych i porady prawnej przy ważnych ofertach."
@@ -12895,10 +12925,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Przewodnik XRechnung i umów ramowych EVB-IT",
                 "subtitle": "Checklista formatu, referencji nabywcy i warunków"
+                "type": "pdf",
               },
               {
                 "title": "Obieg e-faktur w Mara CRM",
                 "subtitle": "Przygotuj i zweryfikuj faktury strukturalne dla skonfigurowanych odbiorców"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Odpowiedzialna obsługa umowy ramowej\n\nUmowa ramowa może umożliwiać zlecenia bez nowego pełnego przetargu, ale tylko w jej zakresie, czasie, limitach i zasadach. Zamawiający nadal musi stosować umowę i prawo.\n\n#### Praktyki realizacyjne\n\n- **Wiarygodne kamienie milowe:** Ustal zakres, zależności, kryteria odbioru i kontrolę zmian.\n- **Przejrzysta dokumentacja:** Zachowuj decyzje, akceptacje, dowody usług, bezpieczeństwo i dokumenty faktury.\n- **Zarządzanie zdolnością:** Rezerwuj zasoby według realistycznych prognoz, nie limitu umowy, chyba że istnieje wiążące minimum.\n- **Walidacja faktury:** Użyj aktualnej XRechnung lub innego akceptowanego formatu, referencji przekazanej przez nabywcę, np. Leitweg-ID gdy wymagana, oraz wskazanego kanału."
@@ -12954,10 +12986,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Podręcznik szkolenia medialnego kadry",
                 "subtitle": "Odpowiedzialne przejścia i checklista przygotowania wywiadu"
+                "type": "pdf",
               },
               {
                 "title": "Kontakty prasowe w Mara CRM",
                 "subtitle": "Zarządzaj relacjami, zgodami, zapytaniami i historią odpowiedzi"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Wiarygodność pod presją\n\nDziennikarze mogą badać sprzeczności, dowody i odpowiedzialność. Nie kontrolujesz wywiadu; masz dostarczyć prawdziwe, użyteczne odpowiedzi, chroniąc prawnie uzasadnioną poufność.\n\n#### Zasady wywiadu\n\n1. **Ustal reguły:** Wyjaśnij format, temat, nagrywanie, czas i ewentualne warunki background lub off the record. Nigdy nie zakładaj poufności.\n2. **Odpowiedz:** Odnieś się do sedna. Błędną przesłankę skoryguj spokojnie dowodami przed dodaniem kontekstu.\n3. **Oddziel fakty od niepewności:** Powiedz, co wiadomo, co jest sprawdzane i kiedy nastąpi aktualizacja. Nie spekuluj.\n4. **Zrób celową pauzę:** Krótka pauza pomaga w dokładności; stałe trzy sekundy nie są konieczne.\n\nNie ujawniaj danych osobowych, tajemnicy prawnej, informacji o bezpieczeństwie ani danych chronionych prawem lub umową. Przygotuj zatwierdzone wyjaśnienie ograniczeń."
@@ -13005,10 +13039,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Szablony oświadczeń kryzysowych",
                 "subtitle": "Adaptowalne wersje z punktami weryfikacji i zatwierdzenia"
+                "type": "pdf",
               },
               {
                 "title": "GOM-MAR AI Crisis Writer",
                 "subtitle": "Tworzy szkic wymagający ludzkiej kontroli faktów, tonu, prywatności i prawa"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Anatomia odpowiedzialnego oświadczenia kryzysowego\n\nUżyteczny komunikat stawia na bezpieczeństwo, osoby dotknięte i zweryfikowane fakty. Nie twierdź, że dochodzenie ruszyło, jeśli tak nie jest, ani nie obiecuj publikacji, której mogą zabronić prawo, prywatność lub dowody.\n\n#### Cztery praktyczne części\n\n- **Uznanie:** Opisz potwierdzone zdarzenie lub obawę i jego wpływ bez teatralnego języka.\n- **Natychmiastowe działanie:** Wskaż działania bezpieczeństwa, obsługi lub dochodzenia, które naprawdę trwają.\n- **Wiadome i niewiadome:** Oddziel fakty od pytań; prostuj dezinformację precyzyjnie bez eskalacji.\n- **Następna aktualizacja:** Podaj realistyczny kanał lub termin, wyjaśniając zgodne z prawem ograniczenia.\n\nZabezpiecz dokumentację i koordynuj obowiązki wobec służb, regulatorów i organów ścigania. Nie identyfikuj podejrzanych osób ani nie podejmuj odwetu wobec sygnalistów."
@@ -13064,10 +13100,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Przewodnik kontroli podatków i substancji transgranicznej",
                 "subtitle": "Lista dowodów rezydencji, zarządu, umów i raportowania"
+                "type": "pdf",
               },
               {
                 "title": "Rejestr podmiotów i zgłoszeń Mara CRM",
                 "subtitle": "Śledź spółki, doradców, terminy, zatwierdzenia i dokumenty"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Najpierw fakty, potem struktura\n\nSkutki podatkowe zależą od aktualnego prawa, umów i rzeczywistego działania osób. Zagraniczny adres, nominee lub okazjonalne posiedzenie nie dowodzą, że zarząd i tworzenie wartości odbywają się za granicą.\n\n#### Cztery obszary kontroli\n\n1. **Rezydencja osobista:** Udokumentuj mieszkania, dni pobytu, więzi rodzinne i gospodarcze oraz zbadaj reguły każdego państwa i umowy.\n2. **Własność i podatek od wyjścia:** Ustal udziały bezpośrednie i pośrednie, historię nabycia, wyceny oraz płynność na podatek.\n3. **Rezydencja podmiotu i zakłady:** Zmapuj osoby decyzyjne, podpisywanie umów, zatrudnienie i ponoszenie ryzyka.\n4. **Stała zgodność:** Utrzymuj dokumentację cen transferowych, beneficjentów rzeczywistych, księgi, deklaracje i audytowalne uchwały.\n\nNie antydatuj protokołów, nie używaj fikcyjnych dyrektorów ani nie ukrywaj dalszego zarządu krajowego. Wdrożenie wymaga skoordynowanej porady prawnej i podatkowej w każdej właściwej jurysdykcji."
@@ -13115,10 +13153,12 @@ Droga paczka nie tworzy dużego klienta.`,
               {
                 "title": "Macierz due diligence jurysdykcji",
                 "subtitle": "Porównaj prawo, podatki, substancję, bankowość i raportowanie"
+                "type": "pdf",
               },
               {
                 "title": "Kontrole wielowalutowe Mara CRM",
                 "subtitle": "Śledź zatwierdzone rachunki, waluty, uzgodnienia i prawa dostępu"
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Porównuj systemy, nie reklamowane stawki\n\nHasło 0% może dotyczyć tylko określonej osoby, kategorii dochodu lub okresu. Nie usuwa ono rejestracji, księgowości, VAT, płac, podatku u źródła, cen transferowych, beneficjentów rzeczywistych ani obowiązków w państwie rezydencji.\n\n#### Praktyczne ramy porównania\n\n- **Osoby i rezydencja:** Gdzie właściciele i kluczowi decydenci naprawdę mieszkają i pracują?\n- **Działalność:** Gdzie świadczy się usługi, negocjuje umowy, rozwija własność intelektualną i obsługuje klientów?\n- **Obowiązki podmiotu:** Jakie księgi, audyty, zgłoszenia, testy substancji i licencje są wymagane?\n- **Środki i bankowość:** Czy firma udokumentuje źródło środków, rezydencję, beneficjentów i każdą płatność wewnątrzgrupową?\n- **Wyjście i zmiana:** Co nastąpi po przeprowadzce, zmianie umowy, utracie statusu kwalifikowanego lub likwidacji?\n\nKorzystaj z licencjonowanych doradców w odpowiednich państwach, sprawdzaj oficjalne źródła i dokumentuj gospodarczy cel struktury wykraczający poza podatek."
