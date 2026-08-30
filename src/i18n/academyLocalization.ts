@@ -6057,12 +6057,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "M&A Due Diligence Master Checklist",
-                "subtitle": "150 review prompts for acquisition analysis"
+                "subtitle": "150 review prompts for acquisition analysis",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Deal Pipeline",
-                "subtitle": "Track acquisition candidates, permissions and conversations in the CRM"
+                "subtitle": "Track acquisition candidates, permissions and conversations in the CRM",
                 "type": "tool",
               }
             ],
@@ -6110,12 +6110,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Roll-Up Synergy Calculator & Multiple Matrix",
-                "subtitle": "Scenario model for portfolio groups"
+                "subtitle": "Scenario model for portfolio groups",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Brand Suite",
-                "subtitle": "Coordinate multiple brands from a central workspace"
+                "subtitle": "Coordinate multiple brands from a central workspace",
                 "type": "tool",
               }
             ],
@@ -6171,12 +6171,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Smart-Contract Deployment & Token-Gating Guide",
-                "subtitle": "Implementation and risk checklist for non-technical founders"
+                "subtitle": "Implementation and risk checklist for non-technical founders",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Web3 Wallet Integration",
-                "subtitle": "Link wallets to customer profiles only with consent and data-minimization controls"
+                "subtitle": "Link wallets to customer profiles only with consent and data-minimization controls",
                 "type": "tool",
               }
             ],
@@ -6224,12 +6224,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "On-Chain Credential Architecture",
-                "subtitle": "Standards, privacy, revocation and verification guide"
+                "subtitle": "Standards, privacy, revocation and verification guide",
                 "type": "pdf",
               },
               {
                 "title": "GOM-MAR Academy Credential Issuance",
-                "subtitle": "Configure consent-based issuance after verified completion"
+                "subtitle": "Configure consent-based issuance after verified completion",
                 "type": "tool",
               }
             ],
@@ -6285,12 +6285,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Public Procurement Checklist & EVB-IT Guide",
-                "subtitle": "Bid-specific review prompts and contract-risk checklist"
+                "subtitle": "Bid-specific review prompts and contract-risk checklist",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM GovTech Tender Tracker",
-                "subtitle": "Track notices, clarification deadlines, submissions and responsibilities"
+                "subtitle": "Track notices, clarification deadlines, submissions and responsibilities",
                 "type": "tool",
               }
             ],
@@ -6338,12 +6338,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "XRechnung & EVB-IT Framework Guide",
-                "subtitle": "Current-format, buyer-reference and contract review checklist"
+                "subtitle": "Current-format, buyer-reference and contract review checklist",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM E-Invoice Workflow",
-                "subtitle": "Prepare and validate structured invoices for configured public recipients"
+                "subtitle": "Prepare and validate structured invoices for configured public recipients",
                 "type": "tool",
               }
             ],
@@ -6399,12 +6399,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Executive Media Training Handbook",
-                "subtitle": "Responsible bridging prompts and interview preparation checklist"
+                "subtitle": "Responsible bridging prompts and interview preparation checklist",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Press Contacts",
-                "subtitle": "Manage journalist relationships, permissions, requests and response history"
+                "subtitle": "Manage journalist relationships, permissions, requests and response history",
                 "type": "tool",
               }
             ],
@@ -6452,12 +6452,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Crisis Statement Templates",
-                "subtitle": "Adaptable drafts with verification and approval prompts"
+                "subtitle": "Adaptable drafts with verification and approval prompts",
                 "type": "pdf",
               },
               {
                 "title": "GOM-MAR AI Crisis Drafting Tool",
-                "subtitle": "Generate a first draft that always requires human fact, tone, privacy and legal review"
+                "subtitle": "Generate a first draft that always requires human fact, tone, privacy and legal review",
                 "type": "tool",
               }
             ],
@@ -6513,12 +6513,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Cross-Border Tax & Substance Review Guide",
-                "subtitle": "Evidence checklist for residence, management, treaties and reporting"
+                "subtitle": "Evidence checklist for residence, management, treaties and reporting",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Entity & Filing Register",
-                "subtitle": "Track entities, advisers, deadlines, approvals and supporting records"
+                "subtitle": "Track entities, advisers, deadlines, approvals and supporting records",
                 "type": "tool",
               }
             ],
@@ -6566,12 +6566,12 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Jurisdiction Due-Diligence Matrix",
-                "subtitle": "Compare legal, tax, substance, banking and reporting requirements"
+                "subtitle": "Compare legal, tax, substance, banking and reporting requirements",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Currency Controls",
-                "subtitle": "Track approved accounts, currencies, reconciliations and access rights"
+                "subtitle": "Track approved accounts, currencies, reconciliations and access rights",
                 "type": "tool",
               }
             ],
@@ -12643,12 +12643,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Główna checklista due diligence M&A",
-                "subtitle": "150 punktów kontrolnych do analizy przejęcia"
+                "subtitle": "150 punktów kontrolnych do analizy przejęcia",
                 "type": "pdf",
               },
               {
                 "title": "Pipeline transakcji w Mara CRM",
-                "subtitle": "Śledź kandydatów, uprawnienia i rozmowy akwizycyjne w CRM"
+                "subtitle": "Śledź kandydatów, uprawnienia i rozmowy akwizycyjne w CRM",
                 "type": "tool",
               }
             ],
@@ -12696,12 +12696,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Kalkulator synergii roll-up i macierz mnożników",
-                "subtitle": "Model scenariuszowy dla grup portfelowych"
+                "subtitle": "Model scenariuszowy dla grup portfelowych",
                 "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Brand Suite",
-                "subtitle": "Koordynuj wiele marek z centralnej przestrzeni roboczej"
+                "subtitle": "Koordynuj wiele marek z centralnej przestrzeni roboczej",
                 "type": "tool",
               }
             ],
@@ -12757,12 +12757,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Przewodnik wdrożenia smart kontraktu i token gatingu",
-                "subtitle": "Checklista wdrożeniowa i ryzyka dla nietechnicznych założycieli"
+                "subtitle": "Checklista wdrożeniowa i ryzyka dla nietechnicznych założycieli",
                 "type": "pdf",
               },
               {
                 "title": "Integracja portfeli Web3 w Mara CRM",
-                "subtitle": "Łącz portfele z profilami klientów tylko za zgodą i przy minimalizacji danych"
+                "subtitle": "Łącz portfele z profilami klientów tylko za zgodą i przy minimalizacji danych",
                 "type": "tool",
               }
             ],
@@ -12810,12 +12810,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Architektura poświadczeń on-chain",
-                "subtitle": "Standardy, prywatność, odwołanie i weryfikacja"
+                "subtitle": "Standardy, prywatność, odwołanie i weryfikacja",
                 "type": "pdf",
               },
               {
                 "title": "Wydawanie poświadczeń GOM-MAR Academy",
-                "subtitle": "Skonfiguruj wydawanie za zgodą po potwierdzonym ukończeniu"
+                "subtitle": "Skonfiguruj wydawanie za zgodą po potwierdzonym ukończeniu",
                 "type": "tool",
               }
             ],
@@ -12871,12 +12871,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Checklista zamówień publicznych i przewodnik EVB-IT",
-                "subtitle": "Kontrola oferty i ryzyka umownego"
+                "subtitle": "Kontrola oferty i ryzyka umownego",
                 "type": "pdf",
               },
               {
                 "title": "Tracker przetargów GovTech w Mara CRM",
-                "subtitle": "Śledź ogłoszenia, pytania, terminy, wysyłkę i odpowiedzialności"
+                "subtitle": "Śledź ogłoszenia, pytania, terminy, wysyłkę i odpowiedzialności",
                 "type": "tool",
               }
             ],
@@ -12924,12 +12924,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Przewodnik XRechnung i umów ramowych EVB-IT",
-                "subtitle": "Checklista formatu, referencji nabywcy i warunków"
+                "subtitle": "Checklista formatu, referencji nabywcy i warunków",
                 "type": "pdf",
               },
               {
                 "title": "Obieg e-faktur w Mara CRM",
-                "subtitle": "Przygotuj i zweryfikuj faktury strukturalne dla skonfigurowanych odbiorców"
+                "subtitle": "Przygotuj i zweryfikuj faktury strukturalne dla skonfigurowanych odbiorców",
                 "type": "tool",
               }
             ],
@@ -12985,12 +12985,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Podręcznik szkolenia medialnego kadry",
-                "subtitle": "Odpowiedzialne przejścia i checklista przygotowania wywiadu"
+                "subtitle": "Odpowiedzialne przejścia i checklista przygotowania wywiadu",
                 "type": "pdf",
               },
               {
                 "title": "Kontakty prasowe w Mara CRM",
-                "subtitle": "Zarządzaj relacjami, zgodami, zapytaniami i historią odpowiedzi"
+                "subtitle": "Zarządzaj relacjami, zgodami, zapytaniami i historią odpowiedzi",
                 "type": "tool",
               }
             ],
@@ -13038,12 +13038,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Szablony oświadczeń kryzysowych",
-                "subtitle": "Adaptowalne wersje z punktami weryfikacji i zatwierdzenia"
+                "subtitle": "Adaptowalne wersje z punktami weryfikacji i zatwierdzenia",
                 "type": "pdf",
               },
               {
                 "title": "GOM-MAR AI Crisis Writer",
-                "subtitle": "Tworzy szkic wymagający ludzkiej kontroli faktów, tonu, prywatności i prawa"
+                "subtitle": "Tworzy szkic wymagający ludzkiej kontroli faktów, tonu, prywatności i prawa",
                 "type": "tool",
               }
             ],
@@ -13099,12 +13099,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Przewodnik kontroli podatków i substancji transgranicznej",
-                "subtitle": "Lista dowodów rezydencji, zarządu, umów i raportowania"
+                "subtitle": "Lista dowodów rezydencji, zarządu, umów i raportowania",
                 "type": "pdf",
               },
               {
                 "title": "Rejestr podmiotów i zgłoszeń Mara CRM",
-                "subtitle": "Śledź spółki, doradców, terminy, zatwierdzenia i dokumenty"
+                "subtitle": "Śledź spółki, doradców, terminy, zatwierdzenia i dokumenty",
                 "type": "tool",
               }
             ],
@@ -13152,12 +13152,12 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Macierz due diligence jurysdykcji",
-                "subtitle": "Porównaj prawo, podatki, substancję, bankowość i raportowanie"
+                "subtitle": "Porównaj prawo, podatki, substancję, bankowość i raportowanie",
                 "type": "pdf",
               },
               {
                 "title": "Kontrole wielowalutowe Mara CRM",
-                "subtitle": "Śledź zatwierdzone rachunki, waluty, uzgodnienia i prawa dostępu"
+                "subtitle": "Śledź zatwierdzone rachunki, waluty, uzgodnienia i prawa dostępu",
                 "type": "tool",
               }
             ],
