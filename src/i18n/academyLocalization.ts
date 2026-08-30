@@ -6057,11 +6057,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "M&A Due Diligence Master Checklist",
-                "subtitle": "150 review prompts for acquisition analysis"
+                "subtitle": "150 review prompts for acquisition analysis",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Deal Pipeline",
-                "subtitle": "Track acquisition candidates, permissions and conversations in the CRM"
+                "subtitle": "Track acquisition candidates, permissions and conversations in the CRM",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### A disciplined acquisition process\n\nInorganic growth can complement organic growth, but speed alone does not make a transaction attractive. Test strategic fit, downside exposure, financing capacity and integration readiness before committing.\n\n#### A four-stage acquisition cycle\n\n1. **Target profile:** Define strategic fit, acceptable economics, disqualifying risks and the evidence required to proceed.\n2. **Initial contact:** Explain who you are, why the business may fit and that the conversation is exploratory and confidential.\n3. **Due diligence:** Use controlled access and data minimization to review financial, tax, legal, customer, people, technology and privacy matters. Do not request or export personal data without a valid purpose, safeguards and professional guidance.\n4. **Signing and closing:** Align the purchase agreement, financing, approvals, conditions and transition plan. Price structure, earn-outs and escrow should reflect the specific deal and be reviewed by qualified legal and tax professionals."
@@ -6108,11 +6110,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Roll-Up Synergy Calculator & Multiple Matrix",
-                "subtitle": "Scenario model for portfolio groups"
+                "subtitle": "Scenario model for portfolio groups",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Brand Suite",
-                "subtitle": "Coordinate multiple brands from a central workspace"
+                "subtitle": "Coordinate multiple brands from a central workspace",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Designing a resilient roll-up\n\nA roll-up succeeds only when the combined operating model produces better customer outcomes and sustainable cash flow after acquisition, financing and integration costs.\n\n#### A risk-adjusted 100-day framework\n\n- **Days 1–30:** Stabilize operations, confirm governance and reporting, protect access and data, and validate the integration thesis.\n- **Days 31–60:** Pilot only system changes with clear owners, controls, migration plans and measurable benefits.\n- **Days 61–100:** Test cross-selling with appropriate customer permissions and brand safeguards before scaling.\n\nSequence and timing should reflect transaction complexity, employee consultation duties, contracts, regulation and operational risk."
@@ -6167,11 +6171,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Smart-Contract Deployment & Token-Gating Guide",
-                "subtitle": "Implementation and risk checklist for non-technical founders"
+                "subtitle": "Implementation and risk checklist for non-technical founders",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Web3 Wallet Integration",
-                "subtitle": "Link wallets to customer profiles only with consent and data-minimization controls"
+                "subtitle": "Link wallets to customer profiles only with consent and data-minimization controls",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Designing a responsible digital membership\n\nWeb3 can make an access credential portable, but the token is not the complete membership agreement or security model.\n\n#### Implementation sequence\n\n1. **Define the product:** Specify access rights, duration, transfer rules, refunds, revocation, support and jurisdiction before selecting a token standard.\n2. **Design onboarding:** Explain wallet creation and transaction implications clearly. Provide secure recovery and avoid silently creating accounts or accepting terms for the user.\n3. **Develop and review:** Use tested libraries, least-privilege administration, multisignature controls, monitoring and an independent smart-contract security review before production.\n4. **Gate access:** Verify the relevant chain and contract server-side, prevent replay and session abuse, and prepare a fallback for network or provider outages.\n\nObtain qualified legal, tax and regulatory advice, especially where passes are transferable, marketed for appreciation or sold across borders. Never place personal or confidential data directly on a public blockchain."
@@ -6218,11 +6224,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "On-Chain Credential Architecture",
-                "subtitle": "Standards, privacy, revocation and verification guide"
+                "subtitle": "Standards, privacy, revocation and verification guide",
+                "type": "pdf",
               },
               {
                 "title": "GOM-MAR Academy Credential Issuance",
-                "subtitle": "Configure consent-based issuance after verified completion"
+                "subtitle": "Configure consent-based issuance after verified completion",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Responsible digital credentials\n\nOn-chain credentials can simplify verification, but public permanence creates special obligations. A credential should not expose identity, grades, revenue or other personal information on-chain.\n\n#### A safer credential model\n\n- **Minimal on-chain record:** Store only a non-identifying reference or cryptographic proof; keep personal details in a protected, correctable system.\n- **Clear verification:** Show the issuer, award criteria, issue date, current status and revocation mechanism.\n- **Learner control:** Obtain informed consent and support non-blockchain certificates, wallet changes, key loss and reissue.\n- **Operational resilience:** Back up issuer records and verification services. A blockchain does not prevent front-end, provider, key-management or governance failures.\n\nHave privacy and legal specialists review the design for applicable data-protection, education, consumer and accessibility requirements."
@@ -6277,11 +6285,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Public Procurement Checklist & EVB-IT Guide",
-                "subtitle": "Bid-specific review prompts and contract-risk checklist"
+                "subtitle": "Bid-specific review prompts and contract-risk checklist",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM GovTech Tender Tracker",
-                "subtitle": "Track notices, clarification deadlines, submissions and responsibilities"
+                "subtitle": "Track notices, clarification deadlines, submissions and responsibilities",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### A disciplined route to public-sector contracts\n\nPublic entities are generally structured counterparties, but delayed payment, disputes, cancellations and budget changes remain possible. Assess commercial risk and cash flow as you would with any material client.\n\n#### Bid workflow\n\n1. **Qualify the notice:** Check scope, lots, deadlines, suitability evidence, award criteria, contract terms, delivery capacity and conflicts.\n2. **Submit clarification questions:** Use the designated portal and deadline. Ask neutrally and preserve the official answer for the bid file.\n3. **Build the response:** Create a compliance matrix and answer each requirement with verifiable evidence. Never invent references or declarations.\n4. **Validate and submit early:** Confirm authorized users, file limits, required signatures or seals and successful receipt. A qualified electronic signature is not universally required; follow the current notice and platform instructions.\n\nProcurement and contract rules vary by jurisdiction, value, authority and procedure. Use current official documents and qualified legal advice for material bids."
@@ -6328,11 +6338,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "XRechnung & EVB-IT Framework Guide",
-                "subtitle": "Current-format, buyer-reference and contract review checklist"
+                "subtitle": "Current-format, buyer-reference and contract review checklist",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM E-Invoice Workflow",
-                "subtitle": "Prepare and validate structured invoices for configured public recipients"
+                "subtitle": "Prepare and validate structured invoices for configured public recipients",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Operating a public-sector framework responsibly\n\nA framework may allow call-offs without a new full procurement, but only within its scope, term, value limits and call-off rules. Authorities must still follow the agreement and applicable law.\n\n#### Delivery practices\n\n- **Reliable milestones:** Baseline scope, dependencies, acceptance criteria and change control before delivery.\n- **Transparent records:** Maintain decisions, approvals, service evidence, security documentation and invoice support.\n- **Capacity governance:** Reserve capacity according to realistic forecasts, not the framework ceiling, unless a binding minimum exists.\n- **Invoice validation:** Use the current XRechnung specification or another accepted format, the buyer-provided reference such as a Leitweg-ID where required, and the designated channel."
@@ -6387,11 +6399,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Executive Media Training Handbook",
-                "subtitle": "Responsible bridging prompts and interview preparation checklist"
+                "subtitle": "Responsible bridging prompts and interview preparation checklist",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Press Contacts",
-                "subtitle": "Manage journalist relationships, permissions, requests and response history"
+                "subtitle": "Manage journalist relationships, permissions, requests and response history",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Credibility under pressure\n\nJournalists may test contradictions, evidence and accountability. Your task is not to control the interview but to provide accurate, useful answers while protecting lawful confidentiality.\n\n#### Interview principles\n\n1. **Agree the ground rules:** Clarify format, topic, recording, timing and whether any background or off-record arrangement is explicitly accepted. Never assume confidentiality.\n2. **Answer the question:** Address the central point. If the premise is wrong, correct it calmly with evidence before adding context.\n3. **Separate fact from uncertainty:** Say what is known, what remains under review and when an update is expected. Do not speculate.\n4. **Pause purposefully:** A short pause can improve accuracy; a fixed three-second delay is unnecessary and may appear artificial.\n\nDo not disclose personal data, privileged advice, security-sensitive details or information restricted by law or contract. Prepare an approved explanation of why a detail cannot be shared."
@@ -6438,11 +6452,13 @@ A costly package does not create a large customer.`,
             "resources": [
               {
                 "title": "Crisis Statement Templates",
-                "subtitle": "Adaptable drafts with verification and approval prompts"
+                "subtitle": "Adaptable drafts with verification and approval prompts",
+                "type": "pdf",
               },
               {
                 "title": "GOM-MAR AI Crisis Drafting Tool",
-                "subtitle": "Generate a first draft that always requires human fact, tone, privacy and legal review"
+                "subtitle": "Generate a first draft that always requires human fact, tone, privacy and legal review",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Anatomy of a responsible crisis statement\n\nA useful statement prioritizes safety, affected people and verified facts. It should not claim that an investigation has begun unless it has, or promise publication that law, privacy or evidence may later prevent.\n\n#### Four practical sections\n\n- **Acknowledgement:** Describe the verified event or concern and recognize its impact without performative language.\n- **Immediate action:** State concrete safety, service or investigation steps that are actually underway.\n- **Known and unknown:** Separate confirmed facts from open questions; correct misinformation precisely without escalating conflict.\n- **Next update:** Give a realistic channel or time for the next update, while explaining any lawful limits.\n\nPreserve relevant records and coordinate with emergency, regulatory and law-enforcement obligations where applicable. Do not identify suspected individuals or retaliate against whistleblowers."
@@ -6465,6 +6481,121 @@ A costly package does not create a large customer.`,
         }
       }
     },
+
+    "70": {
+      "title": "70. International Tax & Cross-Border Structures",
+      "subtitle": "Exit taxation, tax treaties, substance, management location and jurisdiction assessment",
+      "description": "Understand cross-border tax risks without shortcut promises: assess German exit taxation, treaty residence, controlled-foreign-company rules and the legal, operational and reporting duties of international entities with qualified advisers.",
+      "lessons": {
+        "70.1": {
+          "stageTitle": "70. Exit Tax & Substance Rules",
+          "title": "German Exit Tax and Genuine Cross-Border Substance",
+          "description": "How a change of residence can trigger a deemed disposal of qualifying shareholdings and why incorporation abroad does not by itself move tax residence or management.",
+          "learnContent": {
+            "videoTitle": "Masterclass: International Tax Risk & Substance Design",
+            "summaryText": "Moving personally or incorporating abroad can create immediate and continuing obligations in several countries. Map ownership, residence, management, permanent establishments and reporting before acting, and obtain written advice for the actual facts and date.",
+            "bulletPoints": [
+              "German exit tax: review the current personal, ownership and holding-period requirements of Section 6 AStG instead of relying on a simplified seven-year slogan",
+              "Payment relief: instalments, security, cooperation duties and acceleration events depend on current law and the taxpayer's circumstances; they are not automatic tax elimination",
+              "Residence and management: document where strategic and day-to-day decisions are genuinely made and test domestic law and applicable treaty tie-breakers",
+              "CFC, permanent-establishment and transfer-pricing rules: classify functions, assets, risks and income with contemporaneous evidence"
+            ],
+            "coreConcepts": [
+              {
+                "title": "FACT-BASED SUBSTANCE",
+                "description": "People, authority, premises and activities must match the claimed operating model; paperwork alone is insufficient."
+              },
+              {
+                "title": "PRE-MOVE REVIEW",
+                "description": "Model tax, liquidity, filing and governance consequences before changing residence or ownership."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Cross-Border Tax & Substance Review Guide",
+                "subtitle": "Evidence checklist for residence, management, treaties and reporting",
+                "type": "pdf",
+              },
+              {
+                "title": "Mara CRM Entity & Filing Register",
+                "subtitle": "Track entities, advisers, deadlines, approvals and supporting records",
+                "type": "tool",
+              }
+            ],
+            "fullArticleGuide": "### Build the facts before choosing a structure\n\nInternational tax outcomes depend on current law, treaties and the real conduct of the people involved. A foreign address, nominee or occasional meeting does not establish that management and value creation occur abroad.\n\n#### Four review areas\n\n1. **Personal residence:** Record homes, days, family and economic ties, and test the rules of every relevant country and treaty.\n2. **Ownership and exit exposure:** Identify direct and indirect interests, acquisition history, valuations and liquidity needed for any tax due.\n3. **Entity residence and permanent establishments:** Map who makes decisions, signs contracts, employs people and carries business risk.\n4. **Ongoing compliance:** Maintain transfer-pricing support, beneficial-ownership records, accounts, returns and auditable board decisions.\n\nDo not backdate minutes, use sham directors or hide continued domestic management. Cross-border implementation requires coordinated legal and tax advice in each affected jurisdiction."
+          },
+          "understandContent": {
+            "coreTakeaway": "A lawful international structure follows real residence, management and value creation; it does not guarantee lower tax or prevent audits and penalties.",
+            "keyPrinciples": [
+              "Do not use mailbox or nominee arrangements to misstate where decisions and operations occur",
+              "Obtain current written advice and valuation support before moving, transferring shares or changing group financing"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a cross-border facts file for professional review:",
+            "checklistItems": [
+              "Mapped personal residence, shareholdings, acquisition dates and potential exit-tax liquidity",
+              "Documented decision-makers, employees, premises, contracts, assets and risks for every entity",
+              "Recorded relevant advisers, filings, treaty questions, transfer-pricing evidence and review dates"
+            ]
+          }
+        },
+        "70.2": {
+          "stageTitle": "70. Comparing International Jurisdictions",
+          "title": "Cyprus, UAE, United States and Liechtenstein: Evidence-Based Comparison",
+          "description": "How to compare residence, entity, banking and reporting requirements without treating headline rates or entity labels as a universal tax solution.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Jurisdiction Due Diligence & Cross-Border Compliance",
+            "summaryText": "A jurisdiction is suitable only when the owner's residence, customers, activity, substance, banking and home-country rules fit together. Compare total tax and compliance outcomes, not promotional rates, and revalidate the structure whenever facts or laws change.",
+            "bulletPoints": [
+              "Cyprus: test the current tax-residence conditions and non-domicile rules; exemptions, duration and social or defence contributions are fact-specific",
+              "UAE free zones: 0% corporate tax applies only to qualifying persons and qualifying income under specified conditions; registration, returns, substance and possible 9% taxation remain relevant",
+              "US LLCs: federal classification does not decide the full result; assess income sourcing, effectively connected income, state rules, treaties and information returns such as Form 5472 where applicable",
+              "Liechtenstein and Switzerland: foundations, companies and fiduciary arrangements require legitimate purpose, governance, beneficial-ownership transparency and home-country tax analysis"
+            ],
+            "coreConcepts": [
+              {
+                "title": "TOTAL OBLIGATION MODEL",
+                "description": "Compare tax, filings, payroll, VAT, banking, audit, substance and professional costs across all relevant countries."
+              },
+              {
+                "title": "NO UNIVERSAL JURISDICTION",
+                "description": "A popular location or entity type can create more risk when residence, customers and operations do not align."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Jurisdiction Due-Diligence Matrix",
+                "subtitle": "Compare legal, tax, substance, banking and reporting requirements",
+                "type": "pdf",
+              },
+              {
+                "title": "Mara CRM Multi-Currency Controls",
+                "subtitle": "Track approved accounts, currencies, reconciliations and access rights",
+                "type": "tool",
+              }
+            ],
+            "fullArticleGuide": "### Compare systems, not headline rates\n\nA zero-percent claim may apply only to a defined person, income category or period. It does not remove registration, accounting, VAT, payroll, withholding, transfer-pricing, beneficial-ownership or home-country obligations.\n\n#### A practical comparison framework\n\n- **People and residence:** Where do owners and key decision-makers actually live and work?\n- **Business activity:** Where are services performed, contracts negotiated, intellectual property developed and customers served?\n- **Entity obligations:** Which accounts, audits, information returns, substance tests and local licences apply?\n- **Cash and banking:** Can the business document source of funds, tax residence, beneficial owners and every intercompany payment?\n- **Exit and change:** What happens if the owner moves, a treaty changes, qualifying status is lost or the entity is closed?\n\nUse licensed advisers in the relevant countries, verify official guidance and document why the selected structure has a commercial purpose beyond tax."
+          },
+          "understandContent": {
+            "coreTakeaway": "The right jurisdiction is the one whose full legal and operational requirements match the real business; no location guarantees low tax, banking access, privacy or asset protection.",
+            "keyPrinciples": [
+              "Do not open entities or accounts on the basis of promotional tax-rate tables alone",
+              "Document arm's-length intercompany pricing and reconcile contracts, invoices, tax returns and bank flows"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Build a jurisdiction comparison for adviser review:",
+            "checklistItems": [
+              "Compared personal and entity tax, treaties, substance, VAT, payroll, reporting and total annual cost",
+              "Verified banking, beneficial-ownership, source-of-funds and currency-control requirements",
+              "Recorded commercial purpose, implementation dependencies, red flags and annual revalidation triggers"
+            ]
+          }
+        }
+      }
+    },
+
 
   },
   pl: {
@@ -12512,11 +12643,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Główna checklista due diligence M&A",
-                "subtitle": "150 punktów kontrolnych do analizy przejęcia"
+                "subtitle": "150 punktów kontrolnych do analizy przejęcia",
+                "type": "pdf",
               },
               {
                 "title": "Pipeline transakcji w Mara CRM",
-                "subtitle": "Śledź kandydatów, uprawnienia i rozmowy akwizycyjne w CRM"
+                "subtitle": "Śledź kandydatów, uprawnienia i rozmowy akwizycyjne w CRM",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Zdyscyplinowany proces przejęcia\n\nWzrost nieorganiczny może uzupełniać rozwój organiczny, ale sama szybkość nie czyni transakcji atrakcyjną. Przed zobowiązaniem zbadaj dopasowanie strategiczne, ryzyka, zdolność finansowania i gotowość integracyjną.\n\n#### Cztery etapy procesu akwizycyjnego\n\n1. **Profil celu:** Określ dopasowanie, akceptowalną ekonomię, ryzyka wykluczające i wymagane dowody.\n2. **Pierwszy kontakt:** Wyjaśnij, kim jesteś, dlaczego firma może pasować i że rozmowa jest wstępna oraz poufna.\n3. **Due diligence:** Stosuj kontrolowany dostęp i minimalizację danych. Nie żądaj ani nie eksportuj danych osobowych bez uzasadnionego celu, zabezpieczeń i profesjonalnej konsultacji.\n4. **Podpisanie i zamknięcie:** Uzgodnij umowę, finansowanie, zgody, warunki i plan przejścia. Cenę, earn-out i escrow powinni zweryfikować wykwalifikowani doradcy prawni i podatkowi."
@@ -12563,11 +12696,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Kalkulator synergii roll-up i macierz mnożników",
-                "subtitle": "Model scenariuszowy dla grup portfelowych"
+                "subtitle": "Model scenariuszowy dla grup portfelowych",
+                "type": "pdf",
               },
               {
                 "title": "Mara CRM Multi-Brand Suite",
-                "subtitle": "Koordynuj wiele marek z centralnej przestrzeni roboczej"
+                "subtitle": "Koordynuj wiele marek z centralnej przestrzeni roboczej",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Projektowanie odpornego roll-upu\n\nRoll-up odnosi sukces tylko wtedy, gdy połączony model operacyjny zapewnia lepsze wyniki klientów i trwałe przepływy pieniężne po kosztach przejęć, finansowania i integracji.\n\n#### Plan pierwszych 100 dni skorygowany o ryzyko\n\n- **Dni 1–30:** Ustabilizuj działalność, potwierdź ład i raportowanie, zabezpiecz dostęp oraz dane i zweryfikuj tezę integracyjną.\n- **Dni 31–60:** Pilotażowo wdrażaj tylko zmiany z właścicielami, kontrolami, planem migracji i mierzalnymi korzyściami.\n- **Dni 61–100:** Przetestuj cross-selling z odpowiednimi zgodami klientów i ochroną marek, zanim zwiększysz skalę.\n\nKolejność i terminy powinny uwzględniać złożoność transakcji, konsultacje pracownicze, umowy, regulacje i ryzyko operacyjne."
@@ -12622,11 +12757,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Przewodnik wdrożenia smart kontraktu i token gatingu",
-                "subtitle": "Checklista wdrożeniowa i ryzyka dla nietechnicznych założycieli"
+                "subtitle": "Checklista wdrożeniowa i ryzyka dla nietechnicznych założycieli",
+                "type": "pdf",
               },
               {
                 "title": "Integracja portfeli Web3 w Mara CRM",
-                "subtitle": "Łącz portfele z profilami klientów tylko za zgodą i przy minimalizacji danych"
+                "subtitle": "Łącz portfele z profilami klientów tylko za zgodą i przy minimalizacji danych",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Odpowiedzialne członkostwo cyfrowe\n\nWeb3 może uczynić poświadczenie dostępu przenośnym, lecz token nie jest pełną umową członkowską ani kompletnym modelem bezpieczeństwa.\n\n#### Kolejność wdrożenia\n\n1. **Zdefiniuj produkt:** Ustal prawa dostępu, czas, transfer, zwroty, odwołanie, wsparcie i jurysdykcję przed wyborem standardu.\n2. **Zaprojektuj onboarding:** Jasno wyjaśnij tworzenie portfela i skutki transakcji. Zapewnij bezpieczne odzyskiwanie i nie twórz po cichu kont ani zgód.\n3. **Opracuj i zweryfikuj:** Użyj sprawdzonych bibliotek, minimalnych uprawnień, multisig, monitoringu i niezależnego audytu bezpieczeństwa przed produkcją.\n4. **Kontroluj dostęp:** Weryfikuj sieć i kontrakt po stronie serwera, zapobiegaj nadużyciom sesji i przygotuj tryb awaryjny.\n\nUzyskaj poradę prawną, podatkową i regulacyjną, szczególnie dla zbywalnych przepustek lub sprzedaży transgranicznej. Nigdy nie zapisuj danych osobowych ani poufnych bezpośrednio w publicznym blockchainie."
@@ -12673,11 +12810,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Architektura poświadczeń on-chain",
-                "subtitle": "Standardy, prywatność, odwołanie i weryfikacja"
+                "subtitle": "Standardy, prywatność, odwołanie i weryfikacja",
+                "type": "pdf",
               },
               {
                 "title": "Wydawanie poświadczeń GOM-MAR Academy",
-                "subtitle": "Skonfiguruj wydawanie za zgodą po potwierdzonym ukończeniu"
+                "subtitle": "Skonfiguruj wydawanie za zgodą po potwierdzonym ukończeniu",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Odpowiedzialne poświadczenia cyfrowe\n\nPoświadczenia on-chain mogą uprościć weryfikację, ale publiczna trwałość tworzy szczególne obowiązki. Nie należy ujawniać w łańcuchu tożsamości, ocen, przychodów ani innych danych osobowych.\n\n#### Bezpieczniejszy model\n\n- **Minimalny zapis on-chain:** Przechowuj jedynie nieidentyfikujący odnośnik lub dowód kryptograficzny, a dane osobowe w chronionym i korygowalnym systemie.\n- **Jasna weryfikacja:** Pokaż wystawcę, kryteria, datę, aktualny status i mechanizm odwołania.\n- **Kontrola uczestnika:** Uzyskaj świadomą zgodę i obsłuż certyfikat bez blockchaina, zmianę portfela, utratę klucza i ponowne wydanie.\n- **Odporność operacyjna:** Twórz kopie dokumentacji i usług weryfikacyjnych. Blockchain nie zapobiega awariom interfejsu, dostawcy, kluczy ani zarządzania.\n\nProjekt powinien przejść przegląd prywatności i prawa pod kątem ochrony danych, edukacji, konsumentów i dostępności."
@@ -12732,11 +12871,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Checklista zamówień publicznych i przewodnik EVB-IT",
-                "subtitle": "Kontrola oferty i ryzyka umownego"
+                "subtitle": "Kontrola oferty i ryzyka umownego",
+                "type": "pdf",
               },
               {
                 "title": "Tracker przetargów GovTech w Mara CRM",
-                "subtitle": "Śledź ogłoszenia, pytania, terminy, wysyłkę i odpowiedzialności"
+                "subtitle": "Śledź ogłoszenia, pytania, terminy, wysyłkę i odpowiedzialności",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Zdyscyplinowana droga do kontraktu publicznego\n\nPodmioty publiczne są zwykle uporządkowanymi kontrahentami, ale opóźnienia płatności, spory, unieważnienia i zmiany budżetu są możliwe. Oceniaj ryzyko i cash flow jak przy każdym istotnym kliencie.\n\n#### Proces ofertowy\n\n1. **Kwalifikacja ogłoszenia:** Sprawdź zakres, części, terminy, dowody zdolności, kryteria, umowę, możliwości realizacji i konflikty.\n2. **Pytania:** Użyj wskazanego portalu i terminu. Pytaj neutralnie i zachowaj oficjalną odpowiedź.\n3. **Odpowiedź:** Utwórz macierz zgodności i poprzyj każdy wymóg prawdziwym dowodem. Nie wymyślaj referencji ani oświadczeń.\n4. **Walidacja i wcześniejsza wysyłka:** Sprawdź uprawnienia, limity plików, wymagane podpisy i potwierdzenie odbioru. Kwalifikowany podpis elektroniczny nie jest wymagany zawsze—stosuj aktualną instrukcję.\n\nReguły zależą od jurysdykcji, wartości, zamawiającego i trybu. Korzystaj z bieżących dokumentów urzędowych i porady prawnej przy ważnych ofertach."
@@ -12783,11 +12924,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Przewodnik XRechnung i umów ramowych EVB-IT",
-                "subtitle": "Checklista formatu, referencji nabywcy i warunków"
+                "subtitle": "Checklista formatu, referencji nabywcy i warunków",
+                "type": "pdf",
               },
               {
                 "title": "Obieg e-faktur w Mara CRM",
-                "subtitle": "Przygotuj i zweryfikuj faktury strukturalne dla skonfigurowanych odbiorców"
+                "subtitle": "Przygotuj i zweryfikuj faktury strukturalne dla skonfigurowanych odbiorców",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Odpowiedzialna obsługa umowy ramowej\n\nUmowa ramowa może umożliwiać zlecenia bez nowego pełnego przetargu, ale tylko w jej zakresie, czasie, limitach i zasadach. Zamawiający nadal musi stosować umowę i prawo.\n\n#### Praktyki realizacyjne\n\n- **Wiarygodne kamienie milowe:** Ustal zakres, zależności, kryteria odbioru i kontrolę zmian.\n- **Przejrzysta dokumentacja:** Zachowuj decyzje, akceptacje, dowody usług, bezpieczeństwo i dokumenty faktury.\n- **Zarządzanie zdolnością:** Rezerwuj zasoby według realistycznych prognoz, nie limitu umowy, chyba że istnieje wiążące minimum.\n- **Walidacja faktury:** Użyj aktualnej XRechnung lub innego akceptowanego formatu, referencji przekazanej przez nabywcę, np. Leitweg-ID gdy wymagana, oraz wskazanego kanału."
@@ -12842,11 +12985,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Podręcznik szkolenia medialnego kadry",
-                "subtitle": "Odpowiedzialne przejścia i checklista przygotowania wywiadu"
+                "subtitle": "Odpowiedzialne przejścia i checklista przygotowania wywiadu",
+                "type": "pdf",
               },
               {
                 "title": "Kontakty prasowe w Mara CRM",
-                "subtitle": "Zarządzaj relacjami, zgodami, zapytaniami i historią odpowiedzi"
+                "subtitle": "Zarządzaj relacjami, zgodami, zapytaniami i historią odpowiedzi",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Wiarygodność pod presją\n\nDziennikarze mogą badać sprzeczności, dowody i odpowiedzialność. Nie kontrolujesz wywiadu; masz dostarczyć prawdziwe, użyteczne odpowiedzi, chroniąc prawnie uzasadnioną poufność.\n\n#### Zasady wywiadu\n\n1. **Ustal reguły:** Wyjaśnij format, temat, nagrywanie, czas i ewentualne warunki background lub off the record. Nigdy nie zakładaj poufności.\n2. **Odpowiedz:** Odnieś się do sedna. Błędną przesłankę skoryguj spokojnie dowodami przed dodaniem kontekstu.\n3. **Oddziel fakty od niepewności:** Powiedz, co wiadomo, co jest sprawdzane i kiedy nastąpi aktualizacja. Nie spekuluj.\n4. **Zrób celową pauzę:** Krótka pauza pomaga w dokładności; stałe trzy sekundy nie są konieczne.\n\nNie ujawniaj danych osobowych, tajemnicy prawnej, informacji o bezpieczeństwie ani danych chronionych prawem lub umową. Przygotuj zatwierdzone wyjaśnienie ograniczeń."
@@ -12893,11 +13038,13 @@ Droga paczka nie tworzy dużego klienta.`,
             "resources": [
               {
                 "title": "Szablony oświadczeń kryzysowych",
-                "subtitle": "Adaptowalne wersje z punktami weryfikacji i zatwierdzenia"
+                "subtitle": "Adaptowalne wersje z punktami weryfikacji i zatwierdzenia",
+                "type": "pdf",
               },
               {
                 "title": "GOM-MAR AI Crisis Writer",
-                "subtitle": "Tworzy szkic wymagający ludzkiej kontroli faktów, tonu, prywatności i prawa"
+                "subtitle": "Tworzy szkic wymagający ludzkiej kontroli faktów, tonu, prywatności i prawa",
+                "type": "tool",
               }
             ],
             "fullArticleGuide": "### Anatomia odpowiedzialnego oświadczenia kryzysowego\n\nUżyteczny komunikat stawia na bezpieczeństwo, osoby dotknięte i zweryfikowane fakty. Nie twierdź, że dochodzenie ruszyło, jeśli tak nie jest, ani nie obiecuj publikacji, której mogą zabronić prawo, prywatność lub dowody.\n\n#### Cztery praktyczne części\n\n- **Uznanie:** Opisz potwierdzone zdarzenie lub obawę i jego wpływ bez teatralnego języka.\n- **Natychmiastowe działanie:** Wskaż działania bezpieczeństwa, obsługi lub dochodzenia, które naprawdę trwają.\n- **Wiadome i niewiadome:** Oddziel fakty od pytań; prostuj dezinformację precyzyjnie bez eskalacji.\n- **Następna aktualizacja:** Podaj realistyczny kanał lub termin, wyjaśniając zgodne z prawem ograniczenia.\n\nZabezpiecz dokumentację i koordynuj obowiązki wobec służb, regulatorów i organów ścigania. Nie identyfikuj podejrzanych osób ani nie podejmuj odwetu wobec sygnalistów."
@@ -12920,6 +13067,121 @@ Droga paczka nie tworzy dużego klienta.`,
         }
       }
     },
+
+    "70": {
+      "title": "70. Podatki międzynarodowe i struktury transgraniczne",
+      "subtitle": "Podatek od wyjścia, umowy podatkowe, substancja, miejsce zarządu i ocena jurysdykcji",
+      "description": "Poznaj ryzyka podatkowe bez obietnic łatwych skrótów: oceń niemiecki podatek od wyjścia, rezydencję traktatową, przepisy CFC oraz prawne, operacyjne i sprawozdawcze obowiązki podmiotów międzynarodowych z pomocą wykwalifikowanych doradców.",
+      "lessons": {
+        "70.1": {
+          "stageTitle": "70. Podatek od wyjścia i wymogi substancji",
+          "title": "Niemiecki podatek od wyjścia i rzeczywista substancja za granicą",
+          "description": "Jak zmiana rezydencji może wywołać fikcyjne zbycie kwalifikowanych udziałów i dlaczego sama spółka zagraniczna nie przenosi rezydencji ani miejsca zarządu.",
+          "learnContent": {
+            "videoTitle": "Masterclass: międzynarodowe ryzyko podatkowe i projektowanie substancji",
+            "summaryText": "Przeprowadzka lub założenie spółki za granicą może natychmiast stworzyć obowiązki w kilku państwach. Przed działaniem zmapuj własność, rezydencję, zarząd, zakłady i raportowanie oraz uzyskaj pisemną poradę dla konkretnych faktów i aktualnego prawa.",
+            "bulletPoints": [
+              "Niemiecki podatek od wyjścia: sprawdź aktualne warunki osobowe, udziałowe i czasowe z § 6 AStG zamiast polegać na uproszczonym haśle o siedmiu latach",
+              "Ulgi płatnicze: raty, zabezpieczenie, obowiązki współpracy i zdarzenia przyspieszające zależą od prawa i sytuacji podatnika; nie likwidują automatycznie podatku",
+              "Rezydencja i zarząd: dokumentuj, gdzie faktycznie zapadają decyzje strategiczne i bieżące, oraz badaj prawo krajowe i reguły kolizyjne umów",
+              "CFC, zakład i ceny transferowe: przypisz funkcje, aktywa, ryzyka i dochody na podstawie współczesnych dowodów"
+            ],
+            "coreConcepts": [
+              {
+                "title": "SUBSTANCJA OPARTA NA FAKTACH",
+                "description": "Ludzie, uprawnienia, lokal i działania muszą odpowiadać deklarowanemu modelowi; sama dokumentacja nie wystarczy."
+              },
+              {
+                "title": "KONTROLA PRZED PRZEPROWADZKĄ",
+                "description": "Przed zmianą rezydencji lub własności modeluj podatek, płynność, raportowanie i ład korporacyjny."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik kontroli podatków i substancji transgranicznej",
+                "subtitle": "Lista dowodów rezydencji, zarządu, umów i raportowania",
+                "type": "pdf",
+              },
+              {
+                "title": "Rejestr podmiotów i zgłoszeń Mara CRM",
+                "subtitle": "Śledź spółki, doradców, terminy, zatwierdzenia i dokumenty",
+                "type": "tool",
+              }
+            ],
+            "fullArticleGuide": "### Najpierw fakty, potem struktura\n\nSkutki podatkowe zależą od aktualnego prawa, umów i rzeczywistego działania osób. Zagraniczny adres, nominee lub okazjonalne posiedzenie nie dowodzą, że zarząd i tworzenie wartości odbywają się za granicą.\n\n#### Cztery obszary kontroli\n\n1. **Rezydencja osobista:** Udokumentuj mieszkania, dni pobytu, więzi rodzinne i gospodarcze oraz zbadaj reguły każdego państwa i umowy.\n2. **Własność i podatek od wyjścia:** Ustal udziały bezpośrednie i pośrednie, historię nabycia, wyceny oraz płynność na podatek.\n3. **Rezydencja podmiotu i zakłady:** Zmapuj osoby decyzyjne, podpisywanie umów, zatrudnienie i ponoszenie ryzyka.\n4. **Stała zgodność:** Utrzymuj dokumentację cen transferowych, beneficjentów rzeczywistych, księgi, deklaracje i audytowalne uchwały.\n\nNie antydatuj protokołów, nie używaj fikcyjnych dyrektorów ani nie ukrywaj dalszego zarządu krajowego. Wdrożenie wymaga skoordynowanej porady prawnej i podatkowej w każdej właściwej jurysdykcji."
+          },
+          "understandContent": {
+            "coreTakeaway": "Legalna struktura międzynarodowa odzwierciedla rzeczywistą rezydencję, zarząd i tworzenie wartości; nie gwarantuje niższych podatków ani braku kontroli i kar.",
+            "keyPrinciples": [
+              "Nie używaj skrzynek pocztowych ani nominee do fałszywego przedstawiania miejsca decyzji i działalności",
+              "Przed przeprowadzką, transferem udziałów lub zmianą finansowania grupy uzyskaj aktualną pisemną poradę i wycenę"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj akta faktów transgranicznych do profesjonalnej kontroli:",
+            "checklistItems": [
+              "Zmapowano rezydencję, udziały, daty nabycia i płynność potrzebną na potencjalny podatek od wyjścia",
+              "Udokumentowano decydentów, personel, lokale, umowy, aktywa i ryzyka każdego podmiotu",
+              "Zapisano doradców, zgłoszenia, pytania traktatowe, dowody cen transferowych i terminy przeglądów"
+            ]
+          }
+        },
+        "70.2": {
+          "stageTitle": "70. Porównanie jurysdykcji międzynarodowych",
+          "title": "Cypr, ZEA, Stany Zjednoczone i Liechtenstein: porównanie oparte na dowodach",
+          "description": "Jak porównywać wymogi rezydencji, podmiotów, bankowości i raportowania bez traktowania stawek reklamowych lub formy prawnej jako uniwersalnego rozwiązania podatkowego.",
+          "learnContent": {
+            "videoTitle": "Masterclass: due diligence jurysdykcji i zgodność transgraniczna",
+            "summaryText": "Jurysdykcja jest właściwa tylko wtedy, gdy rezydencja właściciela, klienci, działalność, substancja, bankowość i reguły państwa macierzystego tworzą spójność. Porównuj pełne skutki, a nie reklamowane stawki, i ponownie weryfikuj strukturę po zmianie faktów lub prawa.",
+            "bulletPoints": [
+              "Cypr: sprawdź aktualne warunki rezydencji i non-dom; zwolnienia, okresy oraz składki obronne lub społeczne zależą od faktów",
+              "Strefy wolnocłowe ZEA: 0% CIT dotyczy wyłącznie kwalifikowanych osób i dochodów na określonych warunkach; nadal obowiązują rejestracja, deklaracje, substancja i możliwe opodatkowanie 9%",
+              "Amerykańskie LLC: klasyfikacja federalna nie rozstrzyga całości; oceń źródło dochodu, ECI, prawo stanowe, umowy i deklaracje informacyjne, w tym Form 5472, gdy ma zastosowanie",
+              "Liechtenstein i Szwajcaria: fundacje, spółki i rozwiązania powiernicze wymagają legalnego celu, ładu, jawności beneficjenta i analizy podatkowej państwa rezydencji"
+            ],
+            "coreConcepts": [
+              {
+                "title": "MODEL PEŁNYCH OBOWIĄZKÓW",
+                "description": "Porównaj podatki, deklaracje, płace, VAT, bankowość, audyt, substancję i koszty doradcze we wszystkich państwach."
+              },
+              {
+                "title": "BRAK UNIWERSALNEJ JURYSDYKCJI",
+                "description": "Popularny kraj lub forma prawna zwiększa ryzyko, gdy rezydencja, klienci i operacje nie są spójne."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Macierz due diligence jurysdykcji",
+                "subtitle": "Porównaj prawo, podatki, substancję, bankowość i raportowanie",
+                "type": "pdf",
+              },
+              {
+                "title": "Kontrole wielowalutowe Mara CRM",
+                "subtitle": "Śledź zatwierdzone rachunki, waluty, uzgodnienia i prawa dostępu",
+                "type": "tool",
+              }
+            ],
+            "fullArticleGuide": "### Porównuj systemy, nie reklamowane stawki\n\nHasło 0% może dotyczyć tylko określonej osoby, kategorii dochodu lub okresu. Nie usuwa ono rejestracji, księgowości, VAT, płac, podatku u źródła, cen transferowych, beneficjentów rzeczywistych ani obowiązków w państwie rezydencji.\n\n#### Praktyczne ramy porównania\n\n- **Osoby i rezydencja:** Gdzie właściciele i kluczowi decydenci naprawdę mieszkają i pracują?\n- **Działalność:** Gdzie świadczy się usługi, negocjuje umowy, rozwija własność intelektualną i obsługuje klientów?\n- **Obowiązki podmiotu:** Jakie księgi, audyty, zgłoszenia, testy substancji i licencje są wymagane?\n- **Środki i bankowość:** Czy firma udokumentuje źródło środków, rezydencję, beneficjentów i każdą płatność wewnątrzgrupową?\n- **Wyjście i zmiana:** Co nastąpi po przeprowadzce, zmianie umowy, utracie statusu kwalifikowanego lub likwidacji?\n\nKorzystaj z licencjonowanych doradców w odpowiednich państwach, sprawdzaj oficjalne źródła i dokumentuj gospodarczy cel struktury wykraczający poza podatek."
+          },
+          "understandContent": {
+            "coreTakeaway": "Właściwa jurysdykcja to ta, której pełne wymogi odpowiadają realnej działalności; żaden kraj nie gwarantuje niskiego podatku, konta, prywatności ani ochrony majątku.",
+            "keyPrinciples": [
+              "Nie otwieraj spółek ani rachunków wyłącznie na podstawie promocyjnych tabel stawek podatkowych",
+              "Dokumentuj rynkowe ceny wewnątrzgrupowe i uzgadniaj umowy, faktury, deklaracje oraz przepływy bankowe"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zbuduj porównanie jurysdykcji do kontroli doradcy:",
+            "checklistItems": [
+              "Porównano podatki osobiste i spółki, umowy, substancję, VAT, płace, raportowanie i pełny koszt roczny",
+              "Zweryfikowano bankowość, beneficjentów rzeczywistych, źródło środków i wymogi walutowe",
+              "Zapisano cel gospodarczy, zależności wdrożenia, sygnały ostrzegawcze i przesłanki corocznej ponownej oceny"
+            ]
+          }
+        }
+      }
+    },
+
 
   },
 };
