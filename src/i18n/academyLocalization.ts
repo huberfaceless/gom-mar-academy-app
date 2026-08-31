@@ -7467,6 +7467,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "78": {
+      "title": "78. Strategic IP, Trade Marks & Know-How Governance",
+      "subtitle": "Trade mark clearance, Madrid System planning, licensing and trade-secret controls",
+      "description": "Build an evidence-based intellectual-property strategy for names, brands, content, software and confidential know-how. Learn how registration scope, earlier rights, territories, contracts and operational controls interact without assuming monopoly rights, guaranteed enforcement or passive income.",
+      "lessons": {
+        "78.1": {
+          "stageTitle": "78. Trade Marks & International Registration",
+          "title": "Trade Mark Strategy: Clearance, Classification and Territorial Protection",
+          "description": "Plan a filing around actual goods, services and markets, search earlier rights and understand the limits of national, EU and Madrid System routes.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Trade Mark Clearance & International Filing Strategy",
+            "summaryText": "A registered trade mark can protect a sign for specified goods or services in a defined territory, but it does not create an unlimited monopoly over a word. Registrability, scope, earlier rights, use requirements and enforcement depend on the jurisdiction and facts. Search and legal analysis should precede filing and launch.",
+            "bulletPoints": [
+              "Compare word, figurative and combined marks for distinctiveness, actual use and evidence—not by assuming one form is always strongest",
+              "Draft the goods and services list from the real business plan; Nice classes organise the list but class numbers alone do not define infringement or protection",
+              "Search identical and similar signs across relevant national, EU and international registers, company names, domains and market use",
+              "Use the Madrid System to request and centrally manage protection in designated members; each designated office may still examine, refuse or limit protection under local law"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "search",
+                "title": "CLEARANCE BEFORE FILING",
+                "description": "Search results require legal and commercial analysis of similarity, goods, services, territory and earlier rights.",
+                "highlight": true
+              },
+              {
+                "iconName": "map",
+                "title": "TERRITORIAL, SCOPED RIGHTS",
+                "description": "Protection follows the registered sign, goods and services, territory, valid status and applicable limitations."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Trade Mark Clearance & Filing Decision Guide",
+                "subtitle": "A PDF checklist for signs, goods, services, searches, territories and counsel review",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Brand Rights Register",
+                "subtitle": "Track applications, territories, classes, deadlines, evidence of use and disputes",
+                "type": "tool",
+                "iconName": "shield",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Registration is one part of brand risk management\n\nBefore investing in a name, identify who will own it, where it will be used and which products or services it will identify. A registry search cannot guarantee clearance: similar signs, unregistered rights, company names and other legal claims may matter. The DPMA, for example, does not automatically examine whether identical or similar earlier trade marks exist before registration.\n\n#### A controlled filing process\n1. **Inventory the sign**: Record word elements, logo, colours, languages, domains and intended variants.\n2. **Test distinctiveness**: Descriptive or customary terms may be refused or receive narrow protection, but the result depends on the exact sign, goods, services and jurisdiction.\n3. **Define goods and services**: Use current accepted terms and include only a defensible business scope. Overly broad lists add cost and can create vulnerability or use obligations.\n4. **Clear earlier rights**: Search DPMAregister, TMview/EUIPO, WIPO databases and relevant local sources. A basic database search does not replace a professional similarity opinion.\n5. **Choose territories**: Compare national, EU and Madrid routes by market priority, cost, eligibility, dependency, refusal risk and enforcement. A Madrid registration depends on the basic mark for an initial period and results in a bundle of territorial rights—not automatic worldwide protection.\n6. **File accurately**: Confirm applicant, representation, priority and list before submission; many details cannot simply be expanded later.\n7. **Monitor deadlines**: Track examination, publication, opposition, renewal, proof of use, licence recording and local representation requirements. Do not assume every opposition period is three months.\n8. **Enforce proportionately**: Investigate facts, preserve evidence and obtain counsel before sending a demand. Similarity does not automatically equal infringement, and unjustified threats can create risk.\n\nRegistration may add business value, but no reliable universal percentage increase in company value can be promised."
+          },
+          "understandContent": {
+            "coreTakeaway": "A defensible trade mark portfolio aligns distinctive signs, real commercial scope, territorial priorities, earlier-rights analysis and ongoing use and deadline management.",
+            "keyPrinciples": [
+              "Never treat a registry search or successful filing as a guarantee that no earlier right, objection or infringement issue exists",
+              "Monitor relevant filings and deadlines, but challenge only after legal assessment of rights, similarity, scope and business context"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a trade mark clearance brief for professional review:",
+            "checklistItems": [
+              "Record the exact sign, owner, countries, launch dates and current goods or services",
+              "Search identical and similar signs in relevant official registers and document results and limitations",
+              "Draft a prioritised filing and monitoring plan with costs, deadlines, use requirements and specialist review"
+            ]
+          }
+        },
+        "78.2": {
+          "stageTitle": "78. Licensing & Trade-Secret Governance",
+          "title": "Licensing Models: Turning Protected Assets and Know-How into Governed Offers",
+          "description": "Identify what can lawfully be licensed, protect confidential know-how operationally and negotiate terms suited to the asset, market and competition law.",
+          "learnContent": {
+            "videoTitle": "Masterclass: IP Licensing & Trade-Secret Controls",
+            "summaryText": "A licence creates contractual permissions; it does not make an idea proprietary or guarantee recurring revenue. First verify ownership, protectability and third-party rights. Trade-secret protection depends on information being secret, commercially valuable because it is secret and subject to reasonable confidentiality measures—not merely a label or NDA.",
+            "bulletPoints": [
+              "Define the licensed assets precisely: registered rights, copyright materials, software, data, brand use and confidential know-how may require different permissions",
+              "Choose exclusive, sole or non-exclusive scope only after analysing territory, field, channels, capacity, competition rules and retained rights",
+              "Model fixed fees, usage fees, revenue royalties or milestones from economics and auditability rather than applying a universal 3–8% rate",
+              "Build reasonable secrecy measures through classification, need-to-know access, contracts, security, training, logging, offboarding and incident response"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "file-text",
+                "title": "CHAIN OF TITLE",
+                "description": "Licensing begins with documented ownership, contributor assignments and third-party-rights review.",
+                "highlight": true
+              },
+              {
+                "iconName": "lock",
+                "title": "ACTIVE SECRECY CONTROLS",
+                "description": "Confidential know-how requires proportionate legal, technical and organisational protection in practice."
+              }
+            ],
+            "resources": [
+              {
+                "title": "IP Licence & Trade-Secret Review Guide",
+                "subtitle": "A PDF question set for ownership, scope, economics, compliance, audit and termination",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Licence & Confidentiality Register",
+                "subtitle": "Track licensees, assets, territories, reports, payments, access and deadlines",
+                "type": "tool",
+                "iconName": "dollar-sign",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Licence only what you can define and control\n\nMethods, ideas and facts are not automatically exclusive rights. A licence package may combine trade marks, copyright materials, software access, services and confidential know-how, but each element needs a documented legal basis and operational delivery plan.\n\n#### Build a reviewable licence\n1. **Verify ownership**: Collect employee and contractor assignments, registration records, source licences, open-source obligations, image and data permissions, and co-owner consents.\n2. **Define the grant**: State assets, versions, territory, field, channels, users, sublicensing, exclusivity, reservation of rights and permitted modifications. Avoid vague claims to all methods or know-how.\n3. **Model economics**: Test fixed, minimum, usage, revenue and milestone fees against support, sales, tax, currency, reporting, bad debt and enforcement costs. Licensing does not guarantee a 95% margin or passive cash flow.\n4. **Protect brand quality lawfully**: Define reasonable usage and quality controls, approval processes and cure periods. Requirements and termination must comply with contract, trade mark, franchise, agency and competition law where applicable.\n5. **Protect secrets operationally**: Classify confidential material, limit access, use secure repositories, prohibit uncontrolled copies, train recipients, log access, manage suppliers and revoke access at offboarding. A Confidential marking alone is insufficient.\n6. **Make reporting auditable**: Define royalty base, deductions, currency, taxes, records, report frequency, audit notice, scope, confidentiality, cost allocation and underpayment thresholds. Audit rights are negotiated and subject to applicable law; annual external audits are not automatic.\n7. **Plan change and exit**: Cover updates, support, security, infringement claims, breach, cure, termination, post-termination use, data return or deletion and transition.\n8. **Review restrictions**: Non-compete, territory, resale-price and exclusivity clauses can be restricted or unenforceable. A two-year post-term ban is not universally valid. Obtain specialist advice.\n\nA template cannot be described as legally approved for every transaction. Tailor the agreement with qualified counsel in the relevant jurisdictions."
+          },
+          "understandContent": {
+            "coreTakeaway": "A sustainable licensing model combines verified rights, precise permissions, realistic economics, enforceable terms and daily controls for confidential information.",
+            "keyPrinciples": [
+              "Do not promise exclusivity, minimum fees or a royalty formula until capacity, competition, tax, contract and market effects have been reviewed",
+              "Use layered secrecy measures and evidence of their operation; labels and NDAs alone do not preserve a trade secret"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a licence package for specialist review:",
+            "checklistItems": [
+              "List each asset, owner, registration or legal basis, third-party dependency and permitted use",
+              "Model scope, support, reporting, royalty definitions, audit, confidentiality, termination and total economics",
+              "Create a reasonable-measures register for access, contracts, security, training, incidents and offboarding"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -14921,6 +15049,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Zdefiniuj reprezentatywne testy i zmierz baseline deterministyczny, jednoagentowy i wieloagentowy",
               "Przypisz każdej roli wąskie uprawnienia, walidowane przejścia, budżety, circuit breakers i eskalację",
               "Udokumentuj jakość, bezpieczeństwo, korektę człowieka, latency i koszt, pozostawiając tylko role z mierzalną korzyścią"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "78": {
+      "title": "78. Strategiczne IP, znaki towarowe i zarządzanie know-how",
+      "subtitle": "Badanie znaków, System Madrycki, licencjonowanie i kontrola tajemnic przedsiębiorstwa",
+      "description": "Buduj strategię własności intelektualnej dla nazw, marek, treści, oprogramowania i poufnego know-how. Poznaj współdziałanie zakresu rejestracji, wcześniejszych praw, terytoriów, umów i kontroli operacyjnych bez zakładania monopolu, gwarancji egzekwowania lub pasywnego dochodu.",
+      "lessons": {
+        "78.1": {
+          "stageTitle": "78. Znaki towarowe i rejestracja międzynarodowa",
+          "title": "Strategia znaków: badanie, klasyfikacja i ochrona terytorialna",
+          "description": "Planuj zgłoszenie według rzeczywistych towarów, usług i rynków, badaj wcześniejsze prawa i rozumiej granice procedur krajowych, unijnych oraz madryckich.",
+          "learnContent": {
+            "videoTitle": "Masterclass: badanie znaków i strategia zgłoszeń międzynarodowych",
+            "summaryText": "Zarejestrowany znak może chronić oznaczenie dla określonych towarów lub usług na danym terytorium, ale nie daje nieograniczonego monopolu na słowo. Zdolność rejestrowa, zakres, wcześniejsze prawa, wymóg używania i egzekwowanie zależą od jurysdykcji i faktów. Badanie i analiza prawna powinny poprzedzać zgłoszenie oraz start marki.",
+            "bulletPoints": [
+              "Porównuj znaki słowne, graficzne i kombinowane według odróżnialności, faktycznego użycia i dowodów, nie zakładając zawsze najsilniejszej formy",
+              "Twórz wykaz towarów i usług z realnego planu; klasy nicejskie porządkują wykaz, ale same numery nie definiują naruszenia ani ochrony",
+              "Szukaj identycznych i podobnych oznaczeń w rejestrach krajowych, UE i międzynarodowych oraz w nazwach firm, domenach i użyciu rynkowym",
+              "Używaj Systemu Madryckiego do żądania i centralnego zarządzania ochroną; każdy wyznaczony urząd nadal może badać, odmówić lub ograniczyć ochronę"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "search",
+                "title": "BADANIE PRZED ZGŁOSZENIEM",
+                "description": "Wyniki wymagają analizy podobieństwa, towarów, usług, terytorium i wcześniejszych praw.",
+                "highlight": true
+              },
+              {
+                "iconName": "map",
+                "title": "PRAWA TERYTORIALNE I OGRANICZONE",
+                "description": "Ochrona zależy od znaku, wykazu, terytorium, ważności i właściwych ograniczeń."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik badania i decyzji o zgłoszeniu znaku",
+                "subtitle": "Lista PDF dla oznaczeń, wykazu, badań, terytoriów i przeglądu prawnika",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Rejestr praw do marki Mara CRM",
+                "subtitle": "Śledź zgłoszenia, terytoria, klasy, terminy, dowody używania i spory",
+                "type": "tool",
+                "iconName": "shield",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Rejestracja to część zarządzania ryzykiem marki\n\nPrzed inwestycją w nazwę ustal właściciela, miejsca użycia i produkty lub usługi. Badanie rejestru nie gwarantuje wolnej drogi: znaczenie mogą mieć podobne znaki, prawa niezarejestrowane, nazwy firm i inne roszczenia. DPMA nie bada automatycznie identycznych ani podobnych wcześniejszych znaków przed rejestracją.\n\n#### Kontrolowany proces zgłoszenia\n1. **Zinwentaryzuj oznaczenie**: Zapisz słowa, logo, kolory, języki, domeny i warianty.\n2. **Sprawdź odróżnialność**: Określenia opisowe lub zwyczajowe mogą zostać odrzucone albo mieć wąską ochronę, zależnie od znaku, wykazu i kraju.\n3. **Zdefiniuj wykaz**: Użyj aktualnych akceptowanych terminów i uzasadnionego zakresu. Zbyt szeroki wykaz zwiększa koszt i może tworzyć podatność lub obowiązek używania.\n4. **Zbadaj prawa**: Przeszukaj DPMAregister, TMview/EUIPO, WIPO i lokalne źródła. Podstawowe wyszukiwanie nie zastępuje profesjonalnej opinii o podobieństwie.\n5. **Wybierz terytoria**: Porównaj procedury krajowe, UE i madryckie pod kątem rynku, kosztu, uprawnienia, zależności, odmowy i egzekwowania. Rejestracja madrycka początkowo zależy od znaku bazowego i tworzy pakiet praw terytorialnych, nie automatyczną ochronę światową.\n6. **Zgłoś dokładnie**: Potwierdź zgłaszającego, znak, priorytet i wykaz; wielu elementów nie można później swobodnie rozszerzyć.\n7. **Monitoruj terminy**: Śledź badanie, publikację, sprzeciw, odnowienie, używanie, wpis licencji i reprezentację. Nie zakładaj wszędzie trzech miesięcy na sprzeciw.\n8. **Egzekwuj proporcjonalnie**: Zbadaj fakty, zabezpiecz dowody i uzyskaj poradę przed wezwaniem. Podobieństwo nie oznacza automatycznie naruszenia, a bezpodstawne groźby tworzą ryzyko.\n\nRejestracja może zwiększać wartość biznesową, lecz nie można obiecać uniwersalnego procentowego wzrostu wartości firmy."
+          },
+          "understandContent": {
+            "coreTakeaway": "Obronny portfel znaków łączy odróżniające oznaczenia, realny zakres, priorytety terytorialne, analizę wcześniejszych praw i zarządzanie używaniem oraz terminami.",
+            "keyPrinciples": [
+              "Nie traktuj badania ani rejestracji jako gwarancji braku wcześniejszego prawa, sprzeciwu lub problemu naruszenia",
+              "Monitoruj zgłoszenia i terminy, lecz podejmuj spór dopiero po analizie praw, podobieństwa, zakresu i kontekstu"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj brief badania znaku do profesjonalnego przeglądu:",
+            "checklistItems": [
+              "Zapisz dokładny znak, właściciela, kraje, daty startu i towary lub usługi",
+              "Wyszukaj identyczne i podobne oznaczenia w właściwych rejestrach oraz udokumentuj wyniki i ograniczenia",
+              "Opracuj priorytetowy plan zgłoszeń i monitoringu z kosztami, terminami, używaniem i przeglądem specjalisty"
+            ]
+          }
+        },
+        "78.2": {
+          "stageTitle": "78. Licencjonowanie i tajemnice przedsiębiorstwa",
+          "title": "Modele licencyjne: przekształcanie chronionych aktywów i know-how w zarządzaną ofertę",
+          "description": "Ustal, co można legalnie licencjonować, chroń poufne know-how operacyjnie i negocjuj warunki dopasowane do aktywa, rynku oraz prawa konkurencji.",
+          "learnContent": {
+            "videoTitle": "Masterclass: licencje IP i kontrola tajemnic przedsiębiorstwa",
+            "summaryText": "Licencja tworzy umowne uprawnienia; nie czyni pomysłu własnością wyłączną ani nie gwarantuje przychodu. Najpierw zweryfikuj własność, zdolność ochrony i prawa osób trzecich. Ochrona tajemnicy zależy od poufności, wartości z tej poufności i rozsądnych środków ochrony, a nie tylko etykiety lub NDA.",
+            "bulletPoints": [
+              "Precyzyjnie zdefiniuj aktywa: prawa rejestrowe, materiały chronione, software, dane, markę i poufne know-how mogą wymagać różnych zgód",
+              "Wybieraj zakres wyłączny, sole lub niewyłączny po analizie terytorium, pola, kanałów, zdolności, konkurencji i zachowanych praw",
+              "Modeluj opłatę stałą, za użycie, royalty od przychodu lub milestone według ekonomiki i audytowalności, nie uniwersalnej stawki 3–8%",
+              "Buduj rozsądne środki tajemnicy przez klasyfikację, need-to-know, umowy, bezpieczeństwo, szkolenia, logi, offboarding i reakcję na incydent"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "file-text",
+                "title": "ŁAŃCUCH PRAW",
+                "description": "Licencja zaczyna się od udokumentowanej własności, cesji twórców i przeglądu praw osób trzecich.",
+                "highlight": true
+              },
+              {
+                "iconName": "lock",
+                "title": "AKTYWNE ŚRODKI TAJEMNICY",
+                "description": "Poufne know-how wymaga proporcjonalnej ochrony prawnej, technicznej i organizacyjnej w praktyce."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik przeglądu licencji IP i tajemnic",
+                "subtitle": "Zestaw pytań PDF o własność, zakres, ekonomikę, zgodność, audyt i zakończenie",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Rejestr licencji i poufności Mara CRM",
+                "subtitle": "Śledź licencjobiorców, aktywa, terytoria, raporty, płatności, dostęp i terminy",
+                "type": "tool",
+                "iconName": "dollar-sign",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Licencjonuj tylko to, co możesz zdefiniować i kontrolować\n\nMetody, pomysły i fakty nie są automatycznie prawami wyłącznymi. Pakiet może łączyć znaki, materiały autorskie, dostęp do software, usługi i poufne know-how, lecz każdy element potrzebuje podstawy prawnej i planu dostawy.\n\n#### Zbuduj umowę możliwą do przeglądu\n1. **Zweryfikuj własność**: Zbierz cesje pracowników i wykonawców, rejestracje, licencje źródeł, obowiązki open source, zgody na obrazy i dane oraz współwłaścicieli.\n2. **Zdefiniuj grant**: Wskaż aktywa, wersje, terytorium, pole, kanały, użytkowników, sublicencje, wyłączność, zachowane prawa i modyfikacje. Unikaj roszczeń do wszystkich metod.\n3. **Modeluj ekonomikę**: Testuj opłaty stałe, minimalne, za użycie, przychodowe i milestone wobec wsparcia, sprzedaży, podatku, waluty, raportów, długu i egzekwowania. Licencja nie gwarantuje 95% marży ani pasywnego cash flow.\n4. **Chroń jakość marki zgodnie z prawem**: Ustal rozsądne zasady użycia, jakości, akceptacji i cure period. Wymogi oraz rozwiązanie muszą być zgodne z prawem umów, znaków, franczyzy, agencji i konkurencji.\n5. **Operacyjnie chroń tajemnice**: Klasyfikuj, ograniczaj dostęp, używaj bezpiecznych repozytoriów, kontroluj kopie, szkol, loguj, zarządzaj dostawcami i odbieraj dostęp. Sama etykieta Confidential nie wystarcza.\n6. **Zapewnij audytowalne raporty**: Zdefiniuj bazę royalty, odliczenia, walutę, podatki, rekordy, częstotliwość, zawiadomienie, zakres, poufność, koszty i progi niedopłaty. Prawa audytu są negocjowane; coroczny audyt nie jest automatyczny.\n7. **Zaplanuj zmianę i wyjście**: Obejmij aktualizacje, wsparcie, bezpieczeństwo, roszczenia, naruszenie, naprawę, zakończenie, dalsze użycie oraz zwrot lub usunięcie danych.\n8. **Sprawdź ograniczenia**: Zakaz konkurencji, terytorium, ceny odsprzedaży i wyłączność mogą być ograniczone lub nieważne. Dwuletni zakaz po umowie nie jest uniwersalny. Uzyskaj poradę.\n\nSzablon nie jest prawnie zatwierdzony dla każdej transakcji. Dostosuj umowę z prawnikiem we właściwych jurysdykcjach."
+          },
+          "understandContent": {
+            "coreTakeaway": "Trwały model licencyjny łączy zweryfikowane prawa, precyzyjne zgody, realną ekonomikę, wykonalne warunki i codzienną kontrolę poufności.",
+            "keyPrinciples": [
+              "Nie obiecuj wyłączności, minimum ani formuły royalty przed analizą zdolności, konkurencji, podatków, umów i rynku",
+              "Stosuj warstwowe środki tajemnicy i dowody ich działania; etykiety i NDA same nie zachowują tajemnicy przedsiębiorstwa"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj pakiet licencyjny do przeglądu specjalisty:",
+            "checklistItems": [
+              "Wymień każde aktywo, właściciela, rejestrację lub podstawę, zależności osób trzecich i dozwolone użycie",
+              "Modeluj zakres, wsparcie, raporty, definicje royalty, audyt, poufność, zakończenie i pełną ekonomikę",
+              "Utwórz rejestr rozsądnych środków dla dostępu, umów, bezpieczeństwa, szkoleń, incydentów i offboardingu"
             ]
           }
         }
