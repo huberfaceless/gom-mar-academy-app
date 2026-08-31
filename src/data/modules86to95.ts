@@ -941,7 +941,7 @@ Flash Loans und konzentrierte AMM-Pools sind die modernsten Instrumente des deze
     subtitle: 'Erdbeobachtung, LoRaWAN Sensor-Netzwerke, Predictive Maintenance & Supply-Chain Tracing',
     color: 'from-sky-800 via-blue-900 to-zinc-950',
     badgeIcon: '🛰️',
-    description: 'Monetarisiere die physische Welt über Satelliten- und IoT-Daten: Baue LoRaWAN-Sensornetzwerke für Industrieanlagen auf, analysiere Satellitenbilder per Computer Vision und verkaufe Predictive-Maintenance-Daten an Versicherungen und Agrarkonzerne.',
+    description: 'Entwickle Satelliten- und IoT-Datendienste mit überprüfbarer Datenqualität, klaren Nutzungsrechten und sicherem Betrieb. Prüfe Datenschutz, Geodatenlizenzen, Funkrecht, Cybersecurity, Arbeitssicherheit, Branchenregeln und die Grenzen jeder Prognose.',
     lessons: [
       {
         id: '92.1',
@@ -949,28 +949,28 @@ Flash Loans und konzentrierte AMM-Pools sind die modernsten Instrumente des deze
         stageTitle: '92. Satellitendaten & Computer Vision',
         title: 'Geodaten-Intelligence: Sentinel- & Planet-Satellitenbilder automatisiert auswerten',
         durationMinutes: 33,
-        description: 'Wie du optische Satellitenbilder (SAR / Multispektral) per KI analysierst, Parkplatz-Füllstände für Hedgefonds misst und Ernteerträge vorhersagst.',
+        description: 'Wie optische, multispektrale und SAR-Daten getrennt verarbeitet, validiert und für zulässige Agrar-, Logistik- oder Infrastruktur-Anwendungen eingesetzt werden.',
         learnContent: {
           videoTitle: 'Masterclass: Satelliten-Geodaten & KI-Bildanalyse',
           videoDuration: '33:10',
-          summaryText: 'Satelliten fotografieren jeden Quadratmeter der Erde täglich. Hedgefonds zahlen 50.000€ im Monat für Daten über die Auslastung von Fabrikparkplätzen oder Öltank-Füllständen. Lerne, wie du freie ESA/NASA-Daten und kommerzielle Feeds in profitable Datenabonnements verwandelst.',
+          summaryText: 'Abdeckung, Wiederholrate, Auflösung, Wolken, Latenz und Lizenz unterscheiden sich nach Mission, Sensor und Region. Offene und kommerzielle Daten können Entscheidungsdienste unterstützen, doch Nachfrage, Preis und Prognosequalität sind nicht garantiert. Finanzmarkt-Anwendungen erfordern zusätzlich eine Prüfung von Marktmissbrauch, Datenschutz und Datenrechten.',
           bulletPoints: [
-            'Sentinel-2 (Copernicus) & Planet Labs APIs: Kostenlose vs. hochauflösende Satelliten-Feeds (50cm Auflösung)',
+            'Datenquellen vergleichen: Lizenz, räumliche und zeitliche Auflösung, Abdeckung, Latenz, Wolkenmasken, Verfügbarkeit und Kosten',
             'Multispektrale Indexe: NDVI (Vegetationsgesundheit) und NDWI (Wasserindex) automatisiert berechnen',
-            'SAR (Synthetic Aperture Radar): Durchdringung von Wolken und Nacht zur 24/7-Schiffsortung',
-            'Alternative Data für Finanzmärkte: Wie Hedgefonds Rohstoff-Lieferketten vor den offiziellen Quartalsberichten handeln'
+            'SAR ist ein Radarsensor, kein optisches Bild: Aufnahme bei Nacht und durch Wolken ist möglich, Interpretation und Wiederholrate bleiben begrenzt',
+            'Alternative Daten: Herkunft, Rechte, Reproduzierbarkeit, Modellfehler, Marktmissbrauch, Datenschutz und faire Kundenkommunikation prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'eye',
               title: 'ALTERNATIVE DATA',
-              description: 'Handelsentscheidungen basierend auf Echtzeit-Satellitenbeobachtungen.',
+              description: 'Zusätzliche Entscheidungssignale mit Latenz, Unsicherheit, Lizenz- und Compliance-Grenzen.',
               highlight: true
             },
             {
               iconName: 'globe',
               title: 'SAR RADAR VISION',
-              description: 'Wetterunabhängige Überwachung von globalen Frachthäfen und Baustellen.'
+              description: 'Radaraufnahmen bei Nacht und durch Wolken, abhängig von Orbit, Auflösung, Geometrie und Auswertung.'
             }
           ],
           resources: [
@@ -989,29 +989,29 @@ Flash Loans und konzentrierte AMM-Pools sind die modernsten Instrumente des deze
               actionUrl: 'content'
             }
           ],
-          fullArticleGuide: `### Das Geschäft mit alternativen Satellitendaten
+          fullArticleGuide: `### Belastbare Geodatendienste
 
-Wer Veränderungen auf der Erde vor allen anderen sieht, besitzt unvergleichliche Informationsvorsprünge.
+Satellitendaten sind zeitlich und räumlich begrenzte Beobachtungen. Ein seriöser Dienst dokumentiert Quelle, Aufnahmezeit, Lizenz, Auflösung, Verarbeitung, Validierung und Unsicherheit.
 
-#### Anwendungsfelder für Geodaten-Services:
-- **Agrar-Versicherungen**: Automatische Schadensregulierung nach Dürren oder Hagel ohne Gutachter vor Ort.
-- **Supply-Chain-Tracking**: Wartezeiten von Containerschiffen vor Großhäfen in Echtzeit messen.
-- **Immobilien-Entwicklung**: Zersiedelung und Neubaugebiete per Algorithmus aufspüren.`
+#### Mögliche Anwendungsfelder:
+- **Agrar-Versicherungen**: Schadenindikatoren unterstützen eine nachvollziehbare Prüfung; keine automatische Regulierung ohne Vertrags-, Qualitäts- und Einzelfallkontrolle.
+- **Supply-Chain-Analyse**: Schätzungen von Schiffs- oder Hafenaktivität mit Aktualitäts-, Identifikations- und Modellgrenzen.
+- **Immobilien und Infrastruktur**: Veränderungserkennung unter Beachtung von Geodatenrechten, Datenschutz, Genehmigungen und menschlicher Validierung.`
         },
         understandContent: {
-          coreTakeaway: 'Satellitendaten verwandeln physische Realität in skalierbare Software-Subskriptionen.',
+          coreTakeaway: 'Ein belastbarer Geodatendienst verkauft nachvollziehbare Unsicherheit und validierte Entscheidungen, keine allwissende Echtzeit-Beobachtung.',
           keyPrinciples: [
-            'Immer offene Daten der ESA (Copernicus) als Basis nutzen und nur bei Bedarf teure kommerzielle Feeds zukaufen',
-            'Ergebnisse in intuitiven PDF-Reports oder API-Endpunkten für Analysten bereitstellen'
+            'Datenquellen nach Eignung, Lizenz, Qualität, Verfügbarkeit und Gesamtkosten auswählen',
+            'Ergebnisse mit Provenienz, Konfidenz, Validierung, Aktualität und zulässigem Verwendungszweck ausgeben'
           ]
         },
         actionTask: {
           instruction: 'Erstelle einen Prototyp für einen Satellitendaten-Report:',
           inputType: 'checklist',
           checklistItems: [
-            'Kostenlosen Zugang zur Copernicus Data Space API registriert',
-            'NDVI-Vegetationsindex für eine Testregion berechnet',
-            'Automatisierter Monatsbericht im Mara CRM hinterlegt'
+            'Datenlizenz, Datenschutz, zulässige Nutzung und Aufbewahrung dokumentiert',
+            'Index oder Klassifikation gegen unabhängige Referenzdaten validiert',
+            'Report mit Provenienz, Konfidenz, Grenzen und menschlicher Freigabe erstellt'
           ],
           toolboxCategory: 'content'
         }
@@ -1022,28 +1022,28 @@ Wer Veränderungen auf der Erde vor allen anderen sieht, besitzt unvergleichlich
         stageTitle: '92. LoRaWAN & Industrial IoT',
         title: 'Industrial IoT: LoRaWAN Netzwerke für vorausschauende Wartung (Predictive Maintenance)',
         durationMinutes: 31,
-        description: 'Wie du energieautarke Funksensoren (LoRaWAN) in Industrieanlagen installierst, Maschinenvibrationen überwachst und Stillstände verhinderst.',
+        description: 'Wie LoRaWAN-Retrofit-Projekte geplant, funktechnisch getestet, sicher integriert und als zustandsbasierte Wartung ohne Ausfallgarantie betrieben werden.',
         learnContent: {
           videoTitle: 'Masterclass: LoRaWAN IoT-Infrastruktur & Predictive Maintenance',
           videoDuration: '31:40',
-          summaryText: 'Ein ungeplanter Fabrikstillstand kostet 50.000€ pro Stunde. Mit LoRaWAN-Sensoren überwachst du Vibrationen, Temperaturen und Druckabfälle über 15 Kilometer Funkreichweite bei 10 Jahren Batterielaufzeit. Erfahre, wie du Hardware-as-a-Service (HaaS) an Industriebetriebe verkaufst.',
+          summaryText: 'Kosten eines Stillstands, Funkreichweite, Batterielaufzeit und Vorwarnzeit hängen von Anlage, Gebäude, Montage, Sendeintervall, Funkplanung und Fehlermodus ab. LoRaWAN kann Retrofit-Telemetrie unterstützen, ersetzt aber weder Maschinenschutz noch qualifizierte Instandhaltung und garantiert keine Ausfallvermeidung.',
           bulletPoints: [
-            'Das LoRaWAN-Protokoll: 868 MHz Frequenzband, extreme Reichweite und minimale Sendeleistung',
-            'Hardware-as-a-Service (HaaS): Sensoren + Gateway + Dashboard für 499€ monatlich pro Maschine vermieten',
-            'Schwingungsanalyse (FFT Fast Fourier Transform): Kugellager-Verschleiß 6 Wochen vor dem Bruch erkennen',
-            'MQTT & InfluxDB Pipeline: Tausende Sensordatenpunkte pro Sekunde zeitreihenbasiert visualisieren'
+            'LoRaWAN planen: regionales Frequenzband, Duty Cycle, Link Budget, Gebäude, Interferenzen, Gateway-Redundanz und Funkgenehmigungen',
+            'HaaS kalkulieren: Hardware, Installation, Kalibrierung, Konnektivität, Cloud, Support, Austausch, Haftung und Kündigung',
+            'Schwingungsanalyse: Sensorposition, Sampling, FFT, Baseline, Fehlalarme und Bestätigung durch Fachpersonal',
+            'Sichere Pipeline: Geräteidentität, Schlüsselverwaltung, Verschlüsselung, Updates, Segmentierung, Logging und Datenminimierung'
           ],
           coreConcepts: [
             {
               iconName: 'wifi',
               title: 'LORAWAN RANGE',
-              description: '15km Reichweite ohne SIM-Karten oder teure Verkabelung in Werkhallen.',
+              description: 'Reichweite ist standortabhängig und muss durch Funkplanung und Messungen nachgewiesen werden.',
               highlight: true
             },
             {
               iconName: 'activity',
               title: 'PREDICTIVE REPAIR',
-              description: 'Reparaturwarnung vor dem Ausfall spart Kunden Millionen an Stillstandskosten.'
+              description: 'Zustandshinweise können Wartungsentscheidungen unterstützen; Vorwarnzeit und Einsparung bleiben unsicher.'
             }
           ],
           resources: [
@@ -1062,29 +1062,29 @@ Wer Veränderungen auf der Erde vor allen anderen sieht, besitzt unvergleichlich
               actionUrl: 'settings'
             }
           ],
-          fullArticleGuide: `### Die Vernetzung der Industrie
+          fullArticleGuide: `### Kontrollierte Vernetzung der Industrie
 
-Industriebetriebe suchen nach einfachen Nachrüstlösungen (Retrofit), um alte Maschinen fit für die Industrie 4.0 zu machen.
+Retrofit kann zusätzliche Zustandsdaten liefern, muss aber sicherheitstechnisch, funktechnisch, organisatorisch und wirtschaftlich zur konkreten Anlage passen.
 
-#### Die HaaS-Geschäftsmodell-Kalkulation:
-- **Hardware-Kosten**: 150€ pro Sensorik-Knoten (einmalig).
-- **Monatliche Abogebühr**: 49€ bis 149€ pro Messpunkt für Cloud-Dashboard und SMS-Alarmierung.
-- **Marge**: Über 80% Bruttomarge ab Monat 3.`
+#### Die HaaS-Kalkulation:
+- **Einmalkosten**: Sensor, Gateway, Montage, Funkmessung, Kalibrierung, Integration, Abnahme und Schulung vollständig erfassen.
+- **Laufende Kosten**: Konnektivität, Cloud, Support, Batterien, Austausch, Updates, Security Monitoring, Versicherung und Rückbau berücksichtigen.
+- **Preis und Marge**: Aus Pilotdaten, SLA, Ausfallquote, Supportaufwand und Vertragsrisiko ableiten; keine feste Marge oder Amortisationszeit versprechen.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Industrieanlagen digital nachrüstet, bindet B2B-Kunden über 5- bis 10-jährige Rahmenverträge.',
+          coreTakeaway: 'Industrial IoT schafft Nutzen nur mit nachgewiesener Messqualität, sicherer Integration, klarer Verantwortung und wirtschaftlicher Validierung.',
           keyPrinciples: [
-            'Sensoren immer mit Magnet- oder Klebebefestigung ohne Eingriff in die Maschinensteuerung montieren',
-            'Alarmschwellen immer mit SMS- und E-Mail-Eskalation an den Schichtleiter koppeln'
+            'Montage, Explosionsschutz, Maschinenrichtlinien, Arbeitsschutz, Herstellervorgaben und Kalibrierung durch zuständige Fachleute freigeben lassen',
+            'Alarme risikobasiert testen, Fehlalarme überwachen und mit bestehenden sicheren Instandhaltungsprozessen verbinden'
           ]
         },
         actionTask: {
-          instruction: 'Konstruiere dein Industrial IoT Angebot:',
+          instruction: 'Erstelle einen sicheren Pilot- und Angebotsentwurf:',
           inputType: 'checklist',
           checklistItems: [
-            'Retrofit Sensor-Paket für Maschinen-Vibrationsüberwachung kalkuliert',
-            'MQTT-Telemetrie Dashboard im GOM-MAR System eingerichtet',
-            'HaaS-Mietvertrag mit 36 Monaten Mindestlaufzeit entworfen'
+            'Use Case, Referenzmessung, Funkprüfung, Sicherheitsfreigabe und Erfolgsmetriken definiert',
+            'Geräte-, Schlüssel-, Update-, Netzwerk-, Datenschutz- und Incident-Konzept dokumentiert',
+            'Preis, SLA, Haftung, Datenrechte, Support, Austausch, Laufzeit und Exit transparent kalkuliert'
           ],
           toolboxCategory: 'settings'
         }
