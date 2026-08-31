@@ -172,28 +172,28 @@ Lokal gehostetes RAG kann eine kontrollierte Schnittstelle zwischen freigegebene
         stageTitle: '87. EU-IOSS & Globale Zollabwicklung',
         title: 'Cross-Border Zoll-Architektur: IOSS, HS-Code Klassifizierung & DDP Versand',
         durationMinutes: 33,
-        description: 'Wie du Waren unter 150€ zollfrei über IOSS in die EU einführst, HS-Codes fehlerfrei deklarierst und Kunden böse Überraschungen an der Haustür ersparst.',
+        description: 'Wie IOSS die Umsatzsteuer für geeignete Fernverkäufe bis 150 € vereinfacht, wie du Waren korrekt klassifizierst und aktuelle Zollabgaben sowie Zuständigkeiten transparent behandelst.',
         learnContent: {
           videoTitle: 'Masterclass: Cross-Border E-Commerce, IOSS & DDP Logistik',
           videoDuration: '33:30',
           summaryText: 'Wenn der Kunde an der Haustür Nachzoll und Bearbeitungsgebühren zahlen muss, explodieren deine Retouren und Stornos. Erfahre, wie du mit IOSS und DDP (Delivered Duty Paid) weltweiten Versand so reibungslos wie Inlandsbestellungen gestaltest.',
           bulletPoints: [
-            'Das EU-IOSS Portal: Zentrale monatliche Mehrwertsteuer-Meldung für alle 27 EU-Staaten',
-            'DDP (Delivered Duty Paid) vs. DPU/DAP: Warum DDP die einzig zulässige Incoterm für Top-Kundenzufriedenheit ist',
+            'IOSS: Monatliche Erklärung über den Mitgliedstaat der Identifizierung für geeignete importierte B2C-Sendungen bis 150 €; seit 1. Juli 2026 gilt zusätzlich die vorübergehende EU-Abgabe von 3 € je Artikel',
+            'DDP vs. DAP/DPU: Kosten, Importeur-Rolle, Registrierung, Risiko und Eignung je Route und Geschäftsmodell prüfen',
             'HS-Code Zolltarifierung: Die 6- bis 11-stellige Warennummer zur exakten Ermittlung von Zollsätzen',
-            'Ursprungszeugnisse & Freihandelsabkommen: Wie EUR.1 und Form A Zollsätze auf 0% senken'
+            'Präferenzursprung und Freihandelsabkommen: Nur bei erfüllten Ursprungsregeln und gültigem Nachweis können niedrigere Zollsätze gelten'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
               title: 'IOSS COMPLIANCE',
-              description: 'Einheitliche EU-Mehrwertsteuer-Abfuhr ohne Zollstau an den Landesgrenzen.',
+              description: 'Vereinfachte Erklärung und Zahlung der Einfuhrumsatzsteuer für geeignete Sendungen; Zollkontrollen und Verzögerungen bleiben möglich.',
               highlight: true
             },
             {
               iconName: 'truck',
               title: 'DDP SHIPPING',
-              description: 'Kunde zahlt alle Abgaben im Checkout – null Nachzahlungen bei Lieferung.'
+              description: 'DDP kann Importabgaben in den Verkäuferpreis einbeziehen, wenn Rollen, Registrierung, Brokerdaten und tatsächliche Kosten korrekt umgesetzt sind.'
             }
           ],
           resources: [
@@ -214,18 +214,18 @@ Lokal gehostetes RAG kann eine kontrollierte Schnittstelle zwischen freigegebene
           ],
           fullArticleGuide: `### Der Schlüssel zum weltweiten E-Commerce Erfolg
 
-Ein nahtloser internationaler Checkout vervielfacht deinen adressierbaren Markt über Nacht.
+Ein transparenter internationaler Checkout kann Kaufabbrüche und Überraschungen reduzieren; Reichweite und Umsatz bleiben markt- und umsetzungsabhängig.
 
 #### Der 3-Schritte Cross-Border Standard:
 1. **Automatisierte HS-Code Zuweisung**: Jedes Produkt im Katalog erhält die exakte Zolltarifnummer.
-2. **Landed Cost Engine**: Zoll, Einfuhrumsatzsteuer und Fracht werden im Warenkorb centgenau berechnet.
+2. **Landed-Cost-Schätzung**: Zoll, Einfuhrumsatzsteuer, vorübergehende Abgaben, Fracht und Gebühren mit Versionierung und Abweichungsregeln berechnen.
 3. **Elektronische Vorab-Zolldaten**: Digitale Übermittlung der CN22/CN23 Zolldeklaration an die Fluggesellschaft.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Zölle im Checkout transparent abrechnet, senkt grenzüberschreitende Retourenquoten um über 60%.',
+          coreTakeaway: 'Transparente Gesamtkosten können unerwartete Gebühren und vermeidbare Retouren reduzieren; die Wirkung muss mit eigenen Daten gemessen werden.',
           keyPrinciples: [
             'Niemals falsche Warenwerte deklarieren – Zollprüfungen führen zu empfindlichen Strafen und Kontensperrungen',
-            'IOSS-Identifikationsnummer elektronisch in den Barcode des Versandlabels einbetten'
+            'IOSS-Nummer vertraulich über das vorgesehene elektronische Zollverfahren übermitteln und nicht offen auf Paket oder Rechnung drucken'
           ]
         },
         actionTask: {
@@ -251,16 +251,16 @@ Ein nahtloser internationaler Checkout vervielfacht deinen adressierbaren Markt 
           videoDuration: '31:45',
           summaryText: 'Wer in die USA verkauft, muss ab gewissen Umsatzschwellen (Economic Nexus) in einzelnen Bundesstaaten Sales Tax abführen. Lerne, wie du Nexus-Schwellen mit Anvalara/TaxJar überwachst und teure Rücksendungen nach Übersee vermeidest.',
           bulletPoints: [
-            'Economic Nexus Schwellen: Meist 100.000$ Umsatz oder 200 Transaktionen pro US-Bundesstaat pro Jahr',
+            'Economic Nexus: Definition, Schwelle, Zeitraum, einbezogene Umsätze und Registrierungsfrist je Bundesstaat aktuell prüfen; viele Staaten haben Transaktionsschwellen geändert oder entfernt',
             'Automatisierte Tax-Berechnung: Postleitzahlen-genaue Berechnung von State-, County- und City-Steuern',
             'Lokale Retouren-Hubs: US-Kunden senden Retouren an ein lokales Lager in den USA, wo Waren geprüft und wiederverkauft werden',
-            'Duty Drawback: Rückerstattung von gezahlten Zöllen bei retournierter oder unvollständiger Ware'
+            'Duty Drawback: mögliche Erstattung bestimmter Abgaben bei qualifizierenden Ausfuhren oder Vernichtungen mit strengen Nachweis- und Verfahrensregeln'
           ],
           coreConcepts: [
             {
               iconName: 'file-text',
               title: 'ECONOMIC NEXUS',
-              description: 'Automatische Überwachung der Steuerpflicht in allen 50 US-Bundesstaaten.',
+              description: 'Automatisierte Hinweise unterstützen die Überwachung; Registrierung, Steuerbarkeit, Marketplace-Regeln und Fristen müssen fachlich geprüft werden.',
               highlight: true
             },
             {
@@ -287,17 +287,17 @@ Ein nahtloser internationaler Checkout vervielfacht deinen adressierbaren Markt 
           ],
           fullArticleGuide: `### Die Skalierung im US-amerikanischen Markt
 
-Die USA sind der größte Konsummarkt der Welt – aber steuerlich ein Mosaik aus über 10.000 Steuerbezirken.
+Der US-Markt umfasst zahlreiche staatliche und lokale Sales-Tax-Regeln; Pflichten hängen von Nexus, Produkten, Käufern, Marktplätzen und Bundesstaat ab.
 
 #### Die Retouren-Optimierung:
 - **Keine Rücksendung nach Europa**: Das Porto übersteigt oft den Warenwert.
 - **Lokale B-Ware Auktion**: Leicht beschädigte Artikel über lokale Liquidationskanäle in den USA verwerten.`
         },
         understandContent: {
-          coreTakeaway: 'Wer US Sales Tax automatisiert, expandiert risikolos in den weltgrößten B2C-Markt.',
+          coreTakeaway: 'Sales-Tax-Automatisierung kann Berechnung und Meldung unterstützen, beseitigt aber keine Registrierungs-, Daten-, Steuerbarkeits- oder Prüfungsrisiken.',
           keyPrinciples: [
-            'Sales Tax erst nach Überschreiten der offiziellen Nexus-Schwelle des jeweiligen Bundesstaats einziehen',
-            'Ein lokales US-Fulfillment Center nutzen, um 2-Tage-Lieferzeiten zu garantieren'
+            'Vor dem ersten steuerpflichtigen Verkauf nach Eintritt einer Pflicht Registrierungszeitpunkt, Collecting-Regeln und Marketplace-Facilitator-Anrechnung je Staat klären',
+            'Lokales Fulfillment nach Kosten, Servicegebiet, Bestandsrisiko, Produktregeln, Nexus-Folgen und gemessenen Lieferzeiten bewerten'
           ]
         },
         actionTask: {
