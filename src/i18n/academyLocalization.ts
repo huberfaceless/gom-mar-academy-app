@@ -7339,6 +7339,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "77": {
+      "title": "77. Governed AI Agents & Multi-Agent Workflows",
+      "subtitle": "Tool use, bounded autonomy, state machines, evaluations and human approval",
+      "description": "Build AI-assisted workflows that can research, draft and update systems within explicit permissions. Learn when an agent is appropriate, how to treat model and tool outputs as untrusted, and how to add evaluation, monitoring, rollback and human oversight before real-world actions.",
+      "lessons": {
+        "77.1": {
+          "stageTitle": "77. Agent Architecture & Controlled Tool Use",
+          "title": "AI Agents: Bounded Planning, Tool Calls and Verified Execution",
+          "description": "Turn model decisions into controlled workflows with typed tools, least privilege, validation, budgets and approval gates.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Safe AI Agents & Tool-Use Architecture",
+            "summaryText": "An agent lets a model choose steps and tools, but it remains probabilistic and can misunderstand goals, fabricate facts or misuse valid capabilities. Reliable deployment requires deterministic controls around the model: narrowly scoped tools, authentication, validation, state, limits, monitoring, evaluations and human escalation.",
+            "bulletPoints": [
+              "Use explicit workflow state and short plans rather than exposing or depending on hidden chain-of-thought",
+              "Treat structured output as syntax to validate, not proof that values, intent or business rules are correct",
+              "Treat webpages, documents, emails, database text and tool responses as untrusted data that may contain indirect prompt injection",
+              "Design memory with purpose, consent, retention, access control, deletion and poisoning safeguards; vector retrieval is not reliable human-like memory"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "shield",
+                "title": "BOUNDED AUTONOMY",
+                "description": "The agent operates inside explicit permissions, action budgets, stop conditions and approval thresholds.",
+                "highlight": true
+              },
+              {
+                "iconName": "check-square",
+                "title": "VERIFY BEFORE EFFECT",
+                "description": "Deterministic checks and authorised humans validate sensitive actions before external impact."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Safe Agent Architecture & Threat-Model Guide",
+                "subtitle": "A PDF framework for tools, permissions, injection defence, memory and approvals",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Governed Agent Hub",
+                "subtitle": "Configure scoped tools, approvals, budgets, audit trails and test environments",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "ai"
+              }
+            ],
+            "fullArticleGuide": "### Start with the workflow and its risk\n\nNot every automation needs an agent. Use deterministic software when the steps and rules are stable. Consider an agent when the task genuinely requires interpretation or flexible sequencing, then preserve deterministic controls around every consequential effect.\n\n#### A controlled agent architecture\n1. **Define the outcome and owner**: State what success, failure and handoff mean, who is accountable and which users may initiate the workflow.\n2. **Classify actions**: Separate read-only retrieval, reversible drafts, external communication, record changes, code execution, deletion, financial and legal actions.\n3. **Design narrow tools**: Use explicit schemas, allowlisted parameters, tenant scope, short-lived credentials and server-side authorisation. Never assume prompt instructions enforce permissions.\n4. **Validate every boundary**: Check schema, type, range, identity, policy, current state and business invariants. Escape or safely handle model output before passing it to code, SQL, HTML or a shell.\n5. **Defend against injection**: Keep system policy separate from retrieved content, label provenance, restrict tools available during untrusted retrieval and never obey instructions found inside data merely because the model repeats them.\n6. **Control execution**: Add time, step, token, cost and retry budgets; idempotency keys; rate limits; dry-run previews; confirmation for material changes; and a kill switch. A fixed ten-step limit is only an example, not a universal setting.\n7. **Protect memory**: Store the minimum needed, prevent cross-user leakage, validate writes, support correction and deletion, and avoid retaining secrets or sensitive personal data without a lawful purpose.\n8. **Evaluate and monitor**: Test normal, adversarial and failure cases using representative data. Log decisions, tool requests, approvals and effects while minimising sensitive content.\n9. **Escalate safely**: Require informed human approval for high-impact, irreversible, financial, legal, safety, employment or privacy-sensitive actions. The reviewer needs context and authority, not a ceremonial click.\n\nA sandbox limits some technical effects but does not prevent data leakage, harmful API calls or incorrect business decisions. Layered controls remain necessary."
+          },
+          "understandContent": {
+            "coreTakeaway": "An agent is trustworthy only to the extent that its permissions, data boundaries, evaluations and external effects are deliberately controlled and observable.",
+            "keyPrinciples": [
+              "Assume model output and retrieved content can be wrong or adversarial; enforce authorisation and policy outside the model",
+              "Use human approval for high-impact actions and automatic halt-and-escalate behaviour when limits, uncertainty or failures exceed thresholds"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Design a read-first research agent with bounded permissions:",
+            "checklistItems": [
+              "Define the task owner, allowed sources, read-only tools, data retention and explicit forbidden actions",
+              "Add schema and policy validation, injection tests, cost and retry limits, audit events and a kill switch",
+              "Require review of sources and approval before any CRM write, email, publication or other external effect"
+            ]
+          }
+        },
+        "77.2": {
+          "stageTitle": "77. Multi-Agent Systems & Workflow Orchestration",
+          "title": "Multi-Agent Workflows: Add Roles Only When Evaluation Shows Value",
+          "description": "Compare single-agent, deterministic and multi-agent patterns, coordinate versioned state and prevent cascading errors.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Evaluated Multi-Agent Orchestration",
+            "summaryText": "Multiple agents can help when tasks have genuinely distinct contexts, permissions or evaluation roles, but they do not automatically outperform a well-designed single agent or ordinary workflow. Extra agents increase latency, cost, attack surface and the risk of error amplification. Choose the simplest architecture that passes defined evaluations.",
+            "bulletPoints": [
+              "Benchmark a deterministic workflow and a single agent before adding specialists or a supervisor",
+              "Give each role a clear input, output, permission set, stop condition and escalation path rather than relying on persona labels",
+              "Use a versioned state machine with validated transitions, provenance and idempotency instead of free-form conversations as the source of truth",
+              "Route models from measured quality, safety, latency, privacy and cost on your task; brand tiers and price alone do not determine suitability"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "git-branch",
+                "title": "EXPLICIT ORCHESTRATION",
+                "description": "State transitions, ownership and permissions are defined outside the model and can be inspected.",
+                "highlight": true
+              },
+              {
+                "iconName": "bar-chart-2",
+                "title": "EVALUATED COMPLEXITY",
+                "description": "Add an agent only when controlled tests show that its benefit exceeds added risk and cost."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Multi-Agent Evaluation & Orchestration Guide",
+                "subtitle": "A PDF blueprint for baselines, state, permissions, reviewers and failure handling",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Multi-Agent Test Studio",
+                "subtitle": "Compare workflow variants, trace state, cap budgets and review failures",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "ai"
+              }
+            ],
+            "fullArticleGuide": "### Complexity must earn its place\n\nA researcher, writer and critic may sound like a human team, but all roles can inherit the same model weaknesses, sources and prompts. A critic can miss an error, invent a new one or agree with the draft. Multi-agent review reduces neither hallucination nor liability to zero.\n\n#### An evidence-based design sequence\n1. **Create a baseline**: Measure a deterministic workflow and a single-agent version on representative tasks. Track factuality, task completion, safety, human correction, latency and total cost.\n2. **Identify a real boundary**: Add a role only for a distinct context, skill, permission or independent evaluation need. One narrow task per agent can help clarity, but it is not mandatory.\n3. **Use least privilege per role**: A researcher may read approved sources; a drafter may write only to a staging object; a reviewer should not publish; a publisher should accept only approved, validated content.\n4. **Maintain authoritative state**: Store inputs, source provenance, outputs, evaluation results, approvals and transition versions. Prevent stale writes and duplicate side effects.\n5. **Separate generation from verification**: Use deterministic checks and, where useful, independent sources, models or human expertise. A reviewer agent is another probabilistic signal, not proof.\n6. **Contain cascading failure**: Set global and per-agent budgets, circuit breakers, loop detection, maximum handoffs and clear terminal states. Do not allow agents to create new tools, permissions or agents in production without approval.\n7. **Protect data across handoffs**: Minimise context, redact secrets, respect tenant and regional boundaries, and log who received which data.\n8. **Publish through a gate**: Verify claims and rights, run policy and quality checks, and require authorised approval for public content or customer communication.\n9. **Re-evaluate continuously**: Compare the multi-agent workflow with the baseline after model, prompt, tool or data changes. Remove roles that add no measurable value.\n\nThe goal is dependable outcomes, not the appearance of an autonomous department or an unsupported claim of human quality at 100 times the speed."
+          },
+          "understandContent": {
+            "coreTakeaway": "A multi-agent system is justified only when explicit roles and controlled state improve measured outcomes enough to offset added cost, latency and failure modes.",
+            "keyPrinciples": [
+              "Never assume agents reviewing one another eliminate errors; combine independent evidence, deterministic validation and human judgment",
+              "Store versioned, validated workflow state with provenance and approvals instead of treating agent conversation as authoritative"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Run a controlled comparison before adopting a multi-agent workflow:",
+            "checklistItems": [
+              "Define representative test cases and measure deterministic, single-agent and multi-agent baselines",
+              "Assign narrow permissions, validated state transitions, budgets, circuit breakers and escalation to every role",
+              "Document quality, safety, human correction, latency and cost results, then keep only roles with measurable benefit"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -14664,6 +14792,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Udokumentuj zakres, systemy, dostawców, właścicieli kontroli i aktualne luki dowodowe",
               "Zdefiniuj SLI/SLO dostępności, RTO, RPO, zasady pomiaru i wyniki testów odtwarzania",
               "Poddaj deklaracje bezpieczeństwa, odpowiedzi i środki SLA przeglądowi odpowiedzialnych specjalistów technicznych, prawnych i audytowych"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "77": {
+      "title": "77. Nadzorowane agenty AI i przepływy wieloagentowe",
+      "subtitle": "Narzędzia, ograniczona autonomia, maszyny stanów, ewaluacje i zgoda człowieka",
+      "description": "Buduj przepływy wspierane przez AI, które badają, tworzą wersje robocze i aktualizują systemy w jawnych granicach uprawnień. Naucz się rozpoznawać właściwe zastosowania agentów, traktować wyniki modeli i narzędzi jako niezaufane oraz dodawać ewaluację, monitoring, rollback i nadzór człowieka przed skutkiem w świecie rzeczywistym.",
+      "lessons": {
+        "77.1": {
+          "stageTitle": "77. Architektura agentów i kontrolowane narzędzia",
+          "title": "Agenty AI: ograniczone planowanie, wywołania narzędzi i zweryfikowane wykonanie",
+          "description": "Przekształcaj decyzje modelu w kontrolowane przepływy z typowanymi narzędziami, najmniejszymi uprawnieniami, walidacją, budżetami i bramkami zgody.",
+          "learnContent": {
+            "videoTitle": "Masterclass: bezpieczne agenty AI i architektura użycia narzędzi",
+            "summaryText": "Agent pozwala modelowi wybierać kroki i narzędzia, lecz nadal działa probabilistycznie i może źle rozumieć cele, zmyślać fakty lub nadużywać poprawnych funkcji. Niezawodne wdrożenie wymaga deterministycznych zabezpieczeń: wąskich narzędzi, uwierzytelniania, walidacji, stanu, limitów, monitoringu, ewaluacji i eskalacji do człowieka.",
+            "bulletPoints": [
+              "Używaj jawnego stanu przepływu i krótkich planów zamiast ujawniać lub uzależniać się od ukrytego toku rozumowania",
+              "Traktuj structured output jako składnię do walidacji, a nie dowód poprawności wartości, intencji lub reguł biznesowych",
+              "Traktuj strony, dokumenty, e-maile, tekst bazy i wyniki narzędzi jako niezaufane dane mogące zawierać pośrednią prompt injection",
+              "Projektuj pamięć z celem, zgodą, retencją, kontrolą dostępu, usuwaniem i ochroną przed poisoningiem; vector retrieval nie jest ludzką pamięcią"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "shield",
+                "title": "OGRANICZONA AUTONOMIA",
+                "description": "Agent działa w jawnych uprawnieniach, budżetach działań, warunkach zatrzymania i progach zgody.",
+                "highlight": true
+              },
+              {
+                "iconName": "check-square",
+                "title": "WERYFIKUJ PRZED SKUTKIEM",
+                "description": "Kontrole deterministyczne i upoważnieni ludzie zatwierdzają wrażliwe działania przed skutkiem zewnętrznym."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik bezpiecznej architektury agentów i modelowania zagrożeń",
+                "subtitle": "Ramy PDF dla narzędzi, uprawnień, ochrony przed injection, pamięci i zgód",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Nadzorowane centrum agentów Mara CRM",
+                "subtitle": "Konfiguruj wąskie narzędzia, zgody, budżety, ślady audytu i środowiska testowe",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "ai"
+              }
+            ],
+            "fullArticleGuide": "### Zacznij od przepływu i jego ryzyka\n\nNie każda automatyzacja potrzebuje agenta. Używaj oprogramowania deterministycznego, gdy kroki i reguły są stabilne. Rozważ agenta, gdy zadanie rzeczywiście wymaga interpretacji lub elastycznej kolejności, zachowując deterministyczne kontrole nad każdym istotnym skutkiem.\n\n#### Kontrolowana architektura agenta\n1. **Określ wynik i właściciela**: Zdefiniuj sukces, błąd, przekazanie, odpowiedzialność i użytkowników uprawnionych do startu.\n2. **Klasyfikuj działania**: Oddziel odczyt, odwracalne szkice, komunikację, zmiany rekordów, kod, usuwanie oraz działania finansowe i prawne.\n3. **Projektuj wąskie narzędzia**: Używaj jawnych schematów, list dozwolonych parametrów, zakresu tenanta, krótkich poświadczeń i autoryzacji po stronie serwera. Prompt nie egzekwuje uprawnień.\n4. **Waliduj każdą granicę**: Sprawdzaj schemat, typ, zakres, tożsamość, politykę, stan i reguły biznesowe. Bezpiecznie obsługuj wynik przed kodem, SQL, HTML lub shellem.\n5. **Broń przed injection**: Oddziel politykę systemową od treści, oznacz pochodzenie, ogranicz narzędzia przy niezaufanym wyszukiwaniu i nie wykonuj instrukcji znalezionych w danych.\n6. **Kontroluj wykonanie**: Dodaj budżety czasu, kroków, tokenów, kosztu i retry; idempotency, rate limit, dry-run, potwierdzenie zmian i kill switch. Dziesięć kroków to przykład, nie uniwersalna liczba.\n7. **Chroń pamięć**: Zapisuj minimum, zapobiegaj wyciekom między użytkownikami, waliduj zapis, wspieraj korektę i usuwanie oraz nie przechowuj sekretów bez podstawy.\n8. **Ewaluuj i monitoruj**: Testuj przypadki normalne, adversarial i awarie na reprezentatywnych danych. Loguj decyzje, wywołania, zgody i skutki z minimalizacją danych.\n9. **Bezpiecznie eskaluj**: Wymagaj świadomej zgody przy działaniach wysokiego wpływu, nieodwracalnych, finansowych, prawnych, bezpieczeństwa, zatrudnienia lub prywatności. Recenzent potrzebuje kontekstu i uprawnień, nie ceremonialnego kliknięcia.\n\nSandbox ogranicza część skutków technicznych, lecz nie zapobiega wyciekom danych, szkodliwym API ani błędnym decyzjom biznesowym. Nadal potrzebne są warstwy kontroli."
+          },
+          "understandContent": {
+            "coreTakeaway": "Agent jest godny zaufania tylko w takim stopniu, w jakim jego uprawnienia, granice danych, ewaluacje i skutki zewnętrzne są celowo kontrolowane i obserwowalne.",
+            "keyPrinciples": [
+              "Zakładaj, że wynik modelu i pobrana treść mogą być błędne lub wrogie; egzekwuj autoryzację i politykę poza modelem",
+              "Stosuj zgodę człowieka przy działaniach wysokiego wpływu oraz automatyczne zatrzymanie i eskalację po przekroczeniu limitów, niepewności lub błędów"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zaprojektuj agenta badawczego read-first z ograniczonymi uprawnieniami:",
+            "checklistItems": [
+              "Określ właściciela, dozwolone źródła, narzędzia tylko do odczytu, retencję i jawnie zakazane działania",
+              "Dodaj walidację schematów i polityk, testy injection, limity kosztu i retry, audyt oraz kill switch",
+              "Wymagaj przeglądu źródeł i zgody przed zapisem CRM, e-mailem, publikacją lub innym skutkiem zewnętrznym"
+            ]
+          }
+        },
+        "77.2": {
+          "stageTitle": "77. Systemy wieloagentowe i orkiestracja",
+          "title": "Przepływy wieloagentowe: dodawaj role tylko przy wykazanej wartości",
+          "description": "Porównuj wzorce deterministyczne, jednoagentowe i wieloagentowe, koordynuj wersjonowany stan i zapobiegaj kaskadowym błędom.",
+          "learnContent": {
+            "videoTitle": "Masterclass: ewaluowana orkiestracja wieloagentowa",
+            "summaryText": "Wiele agentów może pomóc, gdy zadania mają rzeczywiście odrębne konteksty, uprawnienia lub role oceny, ale nie przewyższa automatycznie dobrego pojedynczego agenta lub zwykłego przepływu. Dodatkowi agenci zwiększają latency, koszt, attack surface i ryzyko wzmacniania błędów. Wybieraj najprostszy wariant przechodzący zdefiniowane testy.",
+            "bulletPoints": [
+              "Porównaj przepływ deterministyczny i jednego agenta przed dodaniem specjalistów lub supervisora",
+              "Nadaj każdej roli jasne wejście, wyjście, uprawnienia, warunek stop i eskalację zamiast polegać na etykiecie persony",
+              "Używaj wersjonowanej maszyny stanów z walidowanymi przejściami, pochodzeniem i idempotency zamiast swobodnej rozmowy jako źródła prawdy",
+              "Dobieraj modele według zmierzonej jakości, bezpieczeństwa, latency, prywatności i kosztu na swoim zadaniu; marka i cena nie wystarczą"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "git-branch",
+                "title": "JAWNA ORKIESTRACJA",
+                "description": "Przejścia stanu, własność i uprawnienia są zdefiniowane poza modelem i możliwe do inspekcji.",
+                "highlight": true
+              },
+              {
+                "iconName": "bar-chart-2",
+                "title": "EWALUOWANA ZŁOŻONOŚĆ",
+                "description": "Dodawaj agenta tylko wtedy, gdy testy pokazują korzyść większą od dodatkowego ryzyka i kosztu."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik ewaluacji i orkiestracji multi-agent",
+                "subtitle": "Blueprint PDF dla baseline, stanu, uprawnień, reviewerów i obsługi błędów",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Studio testów multi-agent GOM-MAR",
+                "subtitle": "Porównuj warianty, śledź stan, ograniczaj budżety i analizuj błędy",
+                "type": "tool",
+                "iconName": "cpu",
+                "actionUrl": "ai"
+              }
+            ],
+            "fullArticleGuide": "### Złożoność musi zasłużyć na miejsce\n\nResearcher, writer i critic brzmią jak zespół, lecz role mogą dziedziczyć te same słabości modelu, źródła i prompty. Critic może przeoczyć błąd, dodać nowy albo zgodzić się ze szkicem. Review multi-agent nie eliminuje halucynacji ani odpowiedzialności.\n\n#### Sekwencja oparta na dowodach\n1. **Utwórz baseline**: Zmierz przepływ deterministyczny i jednoagentowy na reprezentatywnych zadaniach. Śledź fakty, ukończenie, bezpieczeństwo, korektę człowieka, latency i koszt.\n2. **Znajdź realną granicę**: Dodaj rolę tylko dla odrębnego kontekstu, umiejętności, uprawnienia lub niezależnej oceny. Jedno wąskie zadanie może pomagać, lecz nie jest obowiązkiem.\n3. **Najmniejsze uprawnienia roli**: Researcher czyta zatwierdzone źródła; drafter zapisuje staging; reviewer nie publikuje; publisher przyjmuje tylko zatwierdzoną treść.\n4. **Utrzymuj autorytatywny stan**: Zapisuj wejścia, źródła, wyniki, ewaluacje, zgody i wersje przejść. Blokuj stale writes i duplikaty skutków.\n5. **Oddziel generowanie od weryfikacji**: Używaj kontroli deterministycznych oraz niezależnych źródeł, modeli lub wiedzy człowieka. Reviewer agent jest sygnałem probabilistycznym, nie dowodem.\n6. **Ogranicz kaskady**: Ustaw budżety globalne i per-agent, circuit breakers, wykrywanie pętli, maksimum handoff i stany końcowe. Nie pozwalaj agentom tworzyć narzędzi, uprawnień ani agentów produkcyjnych bez zgody.\n7. **Chroń dane w handoff**: Minimalizuj kontekst, redaguj sekrety, respektuj tenantów i regiony oraz loguj odbiorców danych.\n8. **Publikuj przez bramkę**: Weryfikuj twierdzenia i prawa, uruchamiaj kontrole oraz wymagaj upoważnionej zgody dla treści publicznej i komunikacji.\n9. **Ciągle oceniaj**: Porównuj multi-agent z baseline po zmianie modelu, promptu, narzędzia lub danych. Usuwaj role bez mierzalnej wartości.\n\nCelem są niezawodne wyniki, nie pozór autonomicznego działu ani niepoparte twierdzenie o ludzkiej jakości sto razy szybciej."
+          },
+          "understandContent": {
+            "coreTakeaway": "System wieloagentowy ma sens tylko wtedy, gdy jawne role i kontrolowany stan poprawiają wyniki wystarczająco, aby zrównoważyć koszt, latency i nowe błędy.",
+            "keyPrinciples": [
+              "Nie zakładaj, że wzajemny review agentów eliminuje błędy; łącz niezależne dowody, walidację deterministyczną i osąd człowieka",
+              "Przechowuj wersjonowany, walidowany stan z pochodzeniem i zgodami zamiast uznawać rozmowę agentów za autorytatywną"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przeprowadź kontrolowane porównanie przed wdrożeniem multi-agent:",
+            "checklistItems": [
+              "Zdefiniuj reprezentatywne testy i zmierz baseline deterministyczny, jednoagentowy i wieloagentowy",
+              "Przypisz każdej roli wąskie uprawnienia, walidowane przejścia, budżety, circuit breakers i eskalację",
+              "Udokumentuj jakość, bezpieczeństwo, korektę człowieka, latency i koszt, pozostawiając tylko role z mierzalną korzyścią"
             ]
           }
         }
