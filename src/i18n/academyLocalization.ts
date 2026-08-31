@@ -6955,6 +6955,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "74": {
+      "title": "74. Resilient Fulfilment & Global Supply Chain Management",
+      "subtitle": "3PL selection, customs compliance, freight planning and inventory resilience",
+      "description": "Build a reliable logistics system for physical products and merchandise. Learn how to evaluate 3PL partners, connect order data, plan inventory and coordinate international freight while keeping customs, product-safety and customer obligations clear.",
+      "lessons": {
+        "74.1": {
+          "stageTitle": "74. 3PL Fulfilment & Warehouse Networks",
+          "title": "3PL Fulfilment: Reliable Shipping Without Operating Your Own Warehouse",
+          "description": "Compare third-party logistics providers, define service levels, connect systems and design a transparent returns process.",
+          "learnContent": {
+            "videoTitle": "Masterclass: 3PL Selection & E-Commerce Fulfilment",
+            "summaryText": "A 3PL can reduce operational workload, but it does not remove the merchant's responsibilities. Delivery speed, cost and service quality depend on destination, stock location, carrier capacity and the agreed service level. Select partners using real order data and test the complete workflow before scaling.",
+            "bulletPoints": [
+              "Compare the total landed fulfilment cost: receiving, storage, pick-and-pack, packaging, postage, returns, account fees and exception handling",
+              "Choose warehouse locations from customer demand, carrier coverage, tax and customs implications—not from a universal two-warehouse formula",
+              "Confirm which branded packaging options are operationally feasible and measure their cost and customer impact instead of assuming a fixed sales uplift",
+              "Document return authorisation, inspection, disposition, refund data and responsibility for damaged or missing goods"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "truck",
+                "title": "MEASURED SERVICE LEVELS",
+                "description": "Track dispatch time, delivery performance, accuracy, damage, returns and support against agreed definitions.",
+                "highlight": true
+              },
+              {
+                "iconName": "refresh-cw",
+                "title": "CONTROLLED EXCEPTIONS",
+                "description": "A resilient process defines what happens when inventory, data, carriers or customer details fail."
+              }
+            ],
+            "resources": [
+              {
+                "title": "3PL Evaluation Matrix & SLA Review Guide",
+                "subtitle": "A PDF checklist for costs, responsibilities, data, service levels and exit planning",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Order & Logistics Sync",
+                "subtitle": "Synchronise orders, fulfilment events and tracking links with exception alerts",
+                "type": "tool",
+                "iconName": "package",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Design the operation before automating it\n\nAutomation can move order data quickly, but it cannot repair unclear ownership. Map the complete flow from purchase to delivery, return and refund before connecting a warehouse.\n\n#### A controlled 3PL rollout\n1. **Build a demand profile**: Summarise order volume, destinations, product dimensions, seasonality, returns and special handling.\n2. **Compare like with like**: Request a complete rate card and model several realistic order baskets, including slow months and exceptions.\n3. **Define the SLA**: Agree cut-off times, service calendars, measurement methods, support escalation, inventory accuracy and remedies. Contract terms and service credits require legal review and may not be enforceable in every form or jurisdiction.\n4. **Secure the data flow**: Limit access, document processors and retention, test duplicate orders and protect customer data under applicable privacy rules.\n5. **Pilot first**: Test receiving, stock reconciliation, dispatch, tracking, failed delivery, return and refund before moving all volume.\n6. **Plan an exit**: Keep data export, stock transfer and transition rights clear so the business is not locked into one provider.\n\nThe seller remains responsible for customer promises and must confirm who handles consumer rights, product recalls, packaging obligations, taxes and other legal duties in each market."
+          },
+          "understandContent": {
+            "coreTakeaway": "A scalable fulfilment system is built on clear responsibilities, tested integrations and measured service—not on automatic same-day promises.",
+            "keyPrinciples": [
+              "Negotiate remedies that match actual risk, but have SLA, liability and termination clauses reviewed for the relevant jurisdiction",
+              "Set safety stock from demand variability, replenishment lead time, service target, cash constraints and disruption risk rather than a fixed 30-day rule"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a controlled 3PL pilot:",
+            "checklistItems": [
+              "Create a comparable cost model and responsibility matrix for at least two suitable providers",
+              "Document the order, tracking, exception, return and refund data flow",
+              "Run test orders and reconcile inventory before committing full volume"
+            ]
+          }
+        },
+        "74.2": {
+          "stageTitle": "74. Customs & International Freight Planning",
+          "title": "Sea & Air Freight: Incoterms®, Classification and Import Controls",
+          "description": "Understand how delivery terms allocate cost and risk, classify goods accurately and prepare customs and product-compliance documentation.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Freight, Customs & Supply Chain Controls",
+            "summaryText": "Customs classification, origin, value and product requirements must reflect the actual goods and transaction. Incoterms® allocate specified costs, tasks and risks between seller and buyer, but they do not replace the sales contract, determine ownership or guarantee customs clearance. Use current official rules and qualified advice for each route.",
+            "bulletPoints": [
+              "Select the Incoterms® 2020 rule and name the exact place or port; DDP places import-clearance duties on the seller and may be impractical or restricted in some countries",
+              "Classify goods from their objective characteristics using the current national or regional tariff; do not choose a code merely to minimise duty",
+              "Compare LCL, FCL, air and multimodal options using total cost, lead-time range, damage risk, emissions, seasonality and shipment size",
+              "Confirm who needs an EORI number and which electronic customs system applies; ATLAS is Germany-specific, while procedures differ across EU member states"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "file-text",
+                "title": "PRECISE DELIVERY TERMS",
+                "description": "State the chosen Incoterms® rule, named location and version, then align it with transport, customs and payment terms.",
+                "highlight": true
+              },
+              {
+                "iconName": "shield",
+                "title": "DEFENSIBLE CLASSIFICATION",
+                "description": "Keep product specifications and the reasoning behind the declared tariff classification."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Incoterms® & Import Readiness Guide",
+                "subtitle": "A PDF checklist for roles, named places, customs data and product requirements",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Inventory Forecasting Engine",
+                "subtitle": "Model reorder points with variable demand, lead times and safety stock",
+                "type": "tool",
+                "iconName": "trending-up",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Build an auditable import file\n\nImport compliance begins before the purchase order. The exact rules depend on the product, origin, destination, importer role and date, so use current official tariff and product-safety sources.\n\n#### Before placing the order\n1. **Identify the parties**: Record seller, buyer, exporter, importer of record, customs representative and responsible economic operator where required.\n2. **Specify the delivery term**: Write the Incoterms® 2020 rule and precise named place in the contract. DDP does not mean the freight forwarder automatically carries every legal responsibility; the seller is responsible for import formalities under the rule.\n3. **Classify and value correctly**: Document product composition, function, origin and transaction value. Consider binding tariff information or specialist advice where classification is uncertain. Tariff nomenclatures can be updated.\n4. **Check product rules**: CE marking applies only to product categories covered by relevant EU legislation. Other safety, labelling, traceability, packaging, battery, chemical or sector rules may apply.\n5. **Prepare customs data**: Confirm the required EORI and national systems, commercial invoice, packing list, origin information, licences and transport documents.\n6. **Plan a range, not a promise**: Include production, inspection, booking, transit, customs, port congestion and final delivery. Sea freight is not always 6–8 weeks.\n7. **Protect the risk**: Decide on inspection scope and cargo insurance from product value, route and contract. Insurance is prudent in many cases but is not automatically a legal requirement for every shipment or Incoterms® rule.\n\nA customs broker or forwarder can submit declarations, but the business should verify the data and contractual allocation of responsibility."
+          },
+          "understandContent": {
+            "coreTakeaway": "Reliable importing comes from accurate data, explicit roles and current compliance checks—not guaranteed savings or a supposedly risk-free delivery term.",
+            "keyPrinciples": [
+              "Use risk-based quality controls and make final payment terms conditional only where the contract lawfully and clearly provides for it",
+              "Review classification, origin, value, product rules and customs-system requirements whenever the product, supplier, route or law changes"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare an import-readiness file for one product:",
+            "checklistItems": [
+              "Verify importer roles, EORI requirements and the applicable national customs process",
+              "Document the current tariff classification, origin, value and supporting product specifications",
+              "Record the Incoterms® 2020 rule with the exact named place and obtain specialist review where responsibilities are unclear"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -13893,6 +14021,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Określ jeden konkretny rezultat i wybierz realistyczny czas pracy",
               "Usuń zbędne rozpraszacze i zaplanuj odpowiednią przerwę na ruch, nawodnienie lub odpoczynek oczu",
               "Zapisz każdy pomysł na suplement lub ekspozycję na zimno do oceny dowodów, interakcji i osobistego ryzyka przed wypróbowaniem"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "74": {
+      "title": "74. Odporna realizacja zamówień i zarządzanie globalnym łańcuchem dostaw",
+      "subtitle": "Wybór 3PL, zgodność celna, planowanie frachtu i odporność zapasów",
+      "description": "Zbuduj niezawodny system logistyczny dla produktów fizycznych i merchandisingu. Naucz się oceniać partnerów 3PL, łączyć dane zamówień, planować zapasy i koordynować fracht międzynarodowy z jasnym podziałem obowiązków celnych, produktowych i konsumenckich.",
+      "lessons": {
+        "74.1": {
+          "stageTitle": "74. Realizacja 3PL i sieci magazynowe",
+          "title": "Realizacja 3PL: niezawodna wysyłka bez własnego magazynu",
+          "description": "Porównuj operatorów logistycznych, definiuj poziomy usług, łącz systemy i projektuj przejrzysty proces zwrotów.",
+          "learnContent": {
+            "videoTitle": "Masterclass: wybór 3PL i realizacja e-commerce",
+            "summaryText": "3PL może zmniejszyć obciążenie operacyjne, ale nie usuwa odpowiedzialności sprzedawcy. Szybkość, koszt i jakość dostawy zależą od miejsca docelowego, lokalizacji zapasu, przepustowości przewoźnika i uzgodnionego poziomu usługi. Wybieraj partnerów na podstawie rzeczywistych danych i przetestuj cały proces przed skalowaniem.",
+            "bulletPoints": [
+              "Porównuj pełny koszt realizacji: przyjęcie, magazynowanie, kompletację, opakowanie, przesyłkę, zwroty, opłaty i obsługę wyjątków",
+              "Wybieraj lokalizacje magazynów na podstawie popytu, zasięgu przewoźników oraz skutków podatkowych i celnych, a nie uniwersalnej formuły dwóch magazynów",
+              "Potwierdź wykonalne opcje opakowań markowych i mierz ich koszt oraz wpływ na klientów zamiast zakładać stały wzrost sprzedaży",
+              "Udokumentuj autoryzację zwrotu, kontrolę, dalsze postępowanie, dane refundacji i odpowiedzialność za uszkodzone lub zaginione towary"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "truck",
+                "title": "MIERZALNE POZIOMY USŁUG",
+                "description": "Mierz czas wysyłki, doręczenia, dokładność, szkody, zwroty i wsparcie według uzgodnionych definicji.",
+                "highlight": true
+              },
+              {
+                "iconName": "refresh-cw",
+                "title": "KONTROLOWANE WYJĄTKI",
+                "description": "Odporny proces określa działania przy błędach zapasu, danych, przewoźnika lub adresu klienta."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Macierz oceny 3PL i przewodnik SLA",
+                "subtitle": "Lista PDF dotycząca kosztów, odpowiedzialności, danych, poziomów usług i planu wyjścia",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Synchronizacja zamówień i logistyki Mara CRM",
+                "subtitle": "Synchronizuj zamówienia, zdarzenia realizacji i śledzenie z alertami wyjątków",
+                "type": "tool",
+                "iconName": "package",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Zaprojektuj operację przed automatyzacją\n\nAutomatyzacja szybko przesyła dane, ale nie naprawi niejasnej odpowiedzialności. Przed połączeniem magazynu rozpisz cały przepływ od zakupu przez dostawę po zwrot i refundację.\n\n#### Kontrolowane wdrożenie 3PL\n1. **Zbuduj profil popytu**: Zestaw wolumen, kierunki, wymiary produktów, sezonowość, zwroty i obsługę specjalną.\n2. **Porównuj to samo**: Poproś o pełny cennik i zasymuluj realistyczne koszyki, także słabsze miesiące i wyjątki.\n3. **Zdefiniuj SLA**: Uzgodnij godziny graniczne, kalendarz, sposób pomiaru, eskalację, dokładność zapasu i środki naprawcze. Warunki oraz kary umowne wymagają analizy prawnej i nie zawsze są wykonalne w każdej formie lub jurysdykcji.\n4. **Zabezpiecz dane**: Ogranicz dostęp, udokumentuj podmioty przetwarzające i retencję, przetestuj duplikaty oraz chroń dane klientów zgodnie z prawem prywatności.\n5. **Najpierw pilotaż**: Przetestuj przyjęcie, uzgodnienie zapasu, wysyłkę, śledzenie, nieudaną dostawę, zwrot i refundację.\n6. **Zaplanuj wyjście**: Zapewnij eksport danych, transfer zapasu i prawa przejściowe, aby uniknąć uzależnienia od jednego operatora.\n\nSprzedawca odpowiada za obietnice wobec klienta i musi ustalić odpowiedzialność za prawa konsumenta, wycofanie produktu, opakowania, podatki i inne obowiązki na każdym rynku."
+          },
+          "understandContent": {
+            "coreTakeaway": "Skalowalna realizacja opiera się na jasnej odpowiedzialności, przetestowanych integracjach i pomiarach, a nie automatycznych obietnicach dostawy tego samego dnia.",
+            "keyPrinciples": [
+              "Negocjuj środki naprawcze proporcjonalne do ryzyka, lecz poddaj SLA, odpowiedzialność i rozwiązanie umowy analizie dla właściwej jurysdykcji",
+              "Wyznaczaj zapas bezpieczeństwa z uwzględnieniem zmienności popytu, czasu uzupełnienia, celu obsługi, gotówki i ryzyka zakłóceń, nie według stałej reguły 30 dni"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj kontrolowany pilotaż 3PL:",
+            "checklistItems": [
+              "Utwórz porównywalny model kosztów i macierz odpowiedzialności dla co najmniej dwóch odpowiednich operatorów",
+              "Udokumentuj przepływ danych zamówień, śledzenia, wyjątków, zwrotów i refundacji",
+              "Wykonaj zamówienia testowe i uzgodnij zapas przed przekazaniem pełnego wolumenu"
+            ]
+          }
+        },
+        "74.2": {
+          "stageTitle": "74. Cło i planowanie frachtu międzynarodowego",
+          "title": "Fracht morski i lotniczy: Incoterms®, klasyfikacja i kontrole importowe",
+          "description": "Zrozum, jak warunki dostawy dzielą koszty i ryzyko, prawidłowo klasyfikuj towary oraz przygotuj dokumentację celną i zgodności produktu.",
+          "learnContent": {
+            "videoTitle": "Masterclass: fracht, cło i kontrola łańcucha dostaw",
+            "summaryText": "Klasyfikacja celna, pochodzenie, wartość i wymogi produktowe muszą odpowiadać rzeczywistemu towarowi i transakcji. Incoterms® dzielą określone koszty, zadania i ryzyko między sprzedawcę a kupującego, lecz nie zastępują umowy sprzedaży, nie określają własności ani nie gwarantują odprawy. Dla każdej trasy korzystaj z aktualnych źródeł urzędowych i fachowej porady.",
+            "bulletPoints": [
+              "Wybierz regułę Incoterms® 2020 i dokładnie nazwij miejsce lub port; DDP nakłada odprawę importową na sprzedawcę i w niektórych krajach może być trudne lub niedozwolone",
+              "Klasyfikuj towary według ich obiektywnych cech i aktualnej taryfy krajowej lub regionalnej; nie wybieraj kodu tylko po to, by zmniejszyć cło",
+              "Porównuj LCL, FCL, fracht lotniczy i multimodalny według pełnego kosztu, zakresu czasu, ryzyka szkód, emisji, sezonowości i wielkości partii",
+              "Potwierdź, kto potrzebuje numeru EORI i jaki system elektroniczny ma zastosowanie; ATLAS dotyczy Niemiec, a procedury różnią się między państwami UE"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "file-text",
+                "title": "PRECYZYJNE WARUNKI DOSTAWY",
+                "description": "Podaj regułę Incoterms®, nazwane miejsce i wersję, a następnie uzgodnij je z transportem, cłem i płatnością.",
+                "highlight": true
+              },
+              {
+                "iconName": "shield",
+                "title": "UZASADNIONA KLASYFIKACJA",
+                "description": "Zachowaj specyfikację produktu i uzasadnienie zadeklarowanej klasyfikacji taryfowej."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik Incoterms® i gotowości importowej",
+                "subtitle": "Lista PDF dotycząca ról, nazwanych miejsc, danych celnych i wymogów produktowych",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Silnik prognozowania zapasów Mara CRM",
+                "subtitle": "Modeluj punkty zamawiania przy zmiennym popycie, czasie dostawy i zapasie bezpieczeństwa",
+                "type": "tool",
+                "iconName": "trending-up",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Zbuduj audytowalną dokumentację importu\n\nZgodność importowa zaczyna się przed zamówieniem. Dokładne reguły zależą od produktu, pochodzenia, miejsca docelowego, roli importera i daty, dlatego korzystaj z aktualnych urzędowych źródeł taryfowych i bezpieczeństwa produktu.\n\n#### Przed złożeniem zamówienia\n1. **Określ strony**: Zapisz sprzedawcę, kupującego, eksportera, importera, przedstawiciela celnego i odpowiedzialny podmiot gospodarczy, jeśli jest wymagany.\n2. **Wskaż warunek dostawy**: Wpisz do umowy regułę Incoterms® 2020 i dokładne miejsce. DDP nie oznacza, że spedytor automatycznie przejmuje każdą odpowiedzialność prawną; zgodnie z regułą za formalności importowe odpowiada sprzedawca.\n3. **Prawidłowo klasyfikuj i wyceniaj**: Udokumentuj skład, funkcję, pochodzenie i wartość transakcyjną. Przy niepewności rozważ wiążącą informację taryfową lub poradę specjalisty. Nomenklatury są aktualizowane.\n4. **Sprawdź reguły produktowe**: Oznakowanie CE dotyczy tylko kategorii objętych właściwymi przepisami UE. Mogą obowiązywać inne wymogi bezpieczeństwa, etykietowania, identyfikowalności, opakowań, baterii, chemikaliów lub branżowe.\n5. **Przygotuj dane celne**: Potwierdź EORI i system krajowy, fakturę, listę pakową, pochodzenie, licencje i dokumenty przewozowe.\n6. **Planuj zakres, nie obietnicę**: Uwzględnij produkcję, kontrolę, rezerwację, tranzyt, cło, zatłoczenie portu i dostawę końcową. Fracht morski nie zawsze trwa 6–8 tygodni.\n7. **Zabezpiecz ryzyko**: Dobierz zakres inspekcji i ubezpieczenie cargo do wartości, trasy i umowy. Ubezpieczenie często jest rozsądne, ale nie zawsze stanowi prawny obowiązek dla każdej przesyłki lub reguły Incoterms®.\n\nAgent celny lub spedytor może składać deklaracje, lecz firma powinna zweryfikować dane i umowny podział odpowiedzialności."
+          },
+          "understandContent": {
+            "coreTakeaway": "Niezawodny import wynika z dokładnych danych, jawnych ról i aktualnych kontroli zgodności, a nie gwarantowanych oszczędności czy rzekomo bezpiecznej reguły dostawy.",
+            "keyPrinciples": [
+              "Stosuj kontrolę jakości opartą na ryzyku i uzależniaj płatność końcową od wyniku tylko wtedy, gdy umowa jasno i zgodnie z prawem tak stanowi",
+              "Ponownie sprawdzaj klasyfikację, pochodzenie, wartość, reguły produktowe i wymagania systemu celnego po zmianie produktu, dostawcy, trasy lub prawa"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj dokumentację gotowości importowej dla jednego produktu:",
+            "checklistItems": [
+              "Zweryfikuj role importera, wymagania EORI i właściwy krajowy proces celny",
+              "Udokumentuj aktualną klasyfikację taryfową, pochodzenie, wartość i wspierającą specyfikację produktu",
+              "Zapisz regułę Incoterms® 2020 z dokładnym miejscem i uzyskaj fachową opinię, gdy odpowiedzialność jest niejasna"
             ]
           }
         }
