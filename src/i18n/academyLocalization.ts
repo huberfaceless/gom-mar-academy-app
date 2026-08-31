@@ -7211,6 +7211,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "76": {
+      "title": "76. Enterprise SaaS Architecture & Multi-Tenancy",
+      "subtitle": "Tenant isolation, reliability engineering, SOC 2, ISO/IEC 27001 and measurable SLAs",
+      "description": "Design an enterprise SaaS platform around explicit trust boundaries, tested tenant isolation and realistic reliability targets. Learn how architecture, operations, audit evidence and contracts work together without treating compliance reports or uptime numbers as security guarantees.",
+      "lessons": {
+        "76.1": {
+          "stageTitle": "76. Multi-Tenant Architecture & Isolation",
+          "title": "Multi-Tenancy & Data Isolation: Choosing Pool, Schema and Silo Models",
+          "description": "Compare shared and dedicated data models, apply defence in depth and plan migrations, backups and tenant routing safely.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Enterprise Multi-Tenant SaaS Architecture",
+            "summaryText": "Tenant isolation is a system property, not a single database setting. Shared tables with row-level security, separate schemas and dedicated databases have different cost, operational and risk profiles. Choose from documented requirements and combine database controls with identity, authorisation, testing, logging and least privilege.",
+            "bulletPoints": [
+              "Model every trust boundary: user, service, support operator, background job, migration, analytics, backup and administrator",
+              "In PostgreSQL, RLS policies can restrict normal queries, but table owners, superusers and BYPASSRLS roles may bypass them unless architecture and roles are configured carefully",
+              "Control noisy-neighbour risk with tenant-aware rate limits, queues, workload budgets and observability, while defining fair degradation and escalation",
+              "Use expand-migrate-contract changes, compatibility windows, backfills, canaries and rollback plans; no-downtime migration is a target, not a universal guarantee"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "layers",
+                "title": "DEFENCE IN DEPTH",
+                "description": "Identity, application, database, infrastructure and operational controls reinforce one another.",
+                "highlight": true
+              },
+              {
+                "iconName": "key",
+                "title": "LEAST-PRIVILEGE PATHS",
+                "description": "Every human and machine path receives only the tenant scope and privileges it needs."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Multi-Tenancy Architecture & Threat-Model Guide",
+                "subtitle": "A PDF framework for isolation models, privileged paths, migrations and recovery",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Tenant Operations Cockpit",
+                "subtitle": "Monitor tenant routing, quotas, keys, incidents and recovery tests",
+                "type": "tool",
+                "iconName": "settings",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Choose isolation from risk, not customer labels\n\nA shared database can be appropriate for demanding workloads when controls are well designed and tested; a dedicated database can still be insecure when identities, networks, backups or operations are misconfigured. Avoid claiming that one model provides complete physical or logical isolation.\n\n#### A practical architecture decision\n1. **Classify data and obligations**: Record sensitivity, residency, deletion, retention, encryption, audit and recovery requirements.\n2. **Map access paths**: Include APIs, workers, support tools, analytics, exports, backups, replicas and emergency administration.\n3. **Select the model**: Compare shared tables with RLS, schema-per-tenant, database-per-tenant and hybrid tiers for blast radius, scale, cost and operational complexity.\n4. **Harden RLS correctly**: Use dedicated non-owner runtime roles, avoid unnecessary superuser or BYPASSRLS access, consider FORCE ROW LEVEL SECURITY where appropriate, test SELECT and write policies, and verify security-definer functions.\n5. **Test negative cases**: Attempt cross-tenant reads and writes through every endpoint, role, job and migration path. Include fuzzing, integration tests and independent security review based on risk.\n6. **Plan lifecycle operations**: Design tenant provisioning, key rotation, backup, point-in-time recovery, export, deletion and migration. Test restoration and document which data can be recovered per tenant.\n7. **Observe safely**: Add tenant-aware metrics and audit events without leaking sensitive data into logs.\n\nDatabase controls reduce risk, but they do not automatically close vulnerabilities in application code or privileged operational paths."
+          },
+          "understandContent": {
+            "coreTakeaway": "Robust tenant isolation comes from explicit trust boundaries, least privilege and repeated negative testing—not from assuming RLS or a dedicated database is infallible.",
+            "keyPrinciples": [
+              "Enforce tenant scope at more than one layer and keep privileged bypass paths few, audited and tested",
+              "Test backup restoration, tenant export and deletion as operational capabilities, including dependencies and shared records"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create a tenant-isolation decision record:",
+            "checklistItems": [
+              "Map all tenant data, human roles, service identities and privileged bypass paths",
+              "Choose an isolation model with documented security, cost, residency, scale and recovery trade-offs",
+              "Add automated cross-tenant read/write tests and a tested backup-and-restore procedure"
+            ]
+          }
+        },
+        "76.2": {
+          "stageTitle": "76. SOC 2, ISO/IEC 27001 & Enterprise SLAs",
+          "title": "Enterprise Assurance: SOC 2 Examinations, ISO/IEC 27001 and Defensible SLAs",
+          "description": "Build an evidence-based security programme, scope independent assurance correctly and make availability commitments the system can support.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Security Assurance & Enterprise Reliability Commitments",
+            "summaryText": "SOC 2 and ISO/IEC 27001 are different assurance approaches. A SOC 2 report is issued by an independent CPA firm against defined Trust Services Criteria and scope; it is not a certification. ISO/IEC 27001 certification evaluates a scoped information security management system. Neither replaces customer due diligence or guarantees that no incident will occur.",
+            "bulletPoints": [
+              "Define scope, systems, subservice organisations, criteria, control owners and evidence before pursuing a SOC 2 examination or ISO/IEC 27001 certification",
+              "Automation platforms can collect and monitor evidence, but management remains responsible and independent auditors evaluate the controls",
+              "Set RTO and RPO from business impact, dependencies and tested recovery capability; a 15-minute RTO is neither universal nor meaningful without an RPO and scope",
+              "Write SLAs with a precise service boundary, measurement source, maintenance and exclusion rules, reporting window, remedies and liability review"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "shield",
+                "title": "SCOPED ASSURANCE",
+                "description": "Reports and certificates provide assurance only for their stated entity, period, systems, criteria and exclusions.",
+                "highlight": true
+              },
+              {
+                "iconName": "activity",
+                "title": "TESTED RELIABILITY",
+                "description": "Availability and recovery commitments follow measurement, failure analysis and exercised runbooks."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Enterprise Security Evidence & SLA Review Guide",
+                "subtitle": "A PDF checklist for assurance scope, controls, incidents, recovery and contract metrics",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Status Page & Reliability Monitor",
+                "subtitle": "Publish service health and track SLI, SLO and SLA calculations transparently",
+                "type": "tool",
+                "iconName": "bar-chart-2",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Build the security programme before the badge\n\nEnterprise assurance begins with risk ownership and repeatable operations. Templates and monitoring tools can accelerate work, but copying standard answers or collecting screenshots does not prove that a control is designed appropriately and operating effectively.\n\n#### A defensible assurance roadmap\n1. **Understand customer needs**: Identify laws, contracts, data types, regions and buyer requirements. Do not promise a report or certification before confirming its value and scope.\n2. **Set governance**: Assign risk owners, approve policies, maintain an asset and vendor inventory, train personnel and document exceptions.\n3. **Implement controls**: Cover identity, least privilege, secure development, change management, vulnerability management, incident response, business continuity, vendor risk, privacy and evidence retention.\n4. **Use precise encryption language**: Encryption at rest and in transit is not necessarily end-to-end encryption. Choose current, supported protocols and key management from a threat model rather than presenting an algorithm name as a guarantee.\n5. **Exercise incidents and recovery**: Test communication, backup integrity, regional failure and dependency loss. Measure actual RTO and RPO and close findings.\n6. **Engage qualified assessors**: Confirm the CPA firm's SOC 2 scope or the accredited certification body's ISO/IEC 27001 scope. A Type II SOC 2 report considers controls over a period, unlike a point-in-time design review.\n7. **Make realistic commitments**: A nominal 99.99% target is roughly 52.6 minutes per 365-day year, but the contractual result depends on measurement method, scope, exclusions and window. Architecture alone does not guarantee it.\n8. **Maintain continuously**: Track control failures, incidents, changes and audit findings; reassess risk instead of treating an annual report as completion.\n\nSecurity questionnaires must be truthful and current. SSO, MFA and access controls should be prioritised from customer risk and usability, not withheld solely to create an expensive tier."
+          },
+          "understandContent": {
+            "coreTakeaway": "Enterprise trust is earned through a functioning security and reliability programme whose evidence, assurance scope and contractual promises match reality.",
+            "keyPrinciples": [
+              "Never describe SOC 2 as a certification or let evidence automation substitute for accountable control owners and independent examination",
+              "Offer an SLA only after defining service indicators and demonstrating the architecture, staffing and recovery process needed to support it"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare an evidence-based enterprise assurance package:",
+            "checklistItems": [
+              "Document assurance scope, systems, vendors, control owners and current evidence gaps",
+              "Define availability SLI/SLO, RTO, RPO, measurement rules and tested recovery results",
+              "Have security claims, questionnaire answers and SLA remedies reviewed by responsible technical, legal and assurance specialists"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -14407,6 +14535,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Wymień potrzebne usługi, decydentów, konflikty i pełny koszt modeli własnego, zewnętrznego oraz hybrydowego",
               "Zapisz cele, horyzont, płynność, zobowiązania, limity ryzyka i bieżącą koncentrację całego bilansu",
               "Zaplanuj niezależne przeglądy dostawców, depozytu, opłat, alokacji, sukcesji i cyberbezpieczeństwa"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "76": {
+      "title": "76. Architektura Enterprise SaaS i wielodostępność",
+      "subtitle": "Izolacja tenantów, niezawodność, SOC 2, ISO/IEC 27001 i mierzalne SLA",
+      "description": "Projektuj platformę Enterprise SaaS na podstawie jawnych granic zaufania, testowanej izolacji tenantów i realistycznych celów niezawodności. Poznaj współdziałanie architektury, operacji, dowodów audytowych i umów bez traktowania raportów zgodności lub liczb uptime jako gwarancji bezpieczeństwa.",
+      "lessons": {
+        "76.1": {
+          "stageTitle": "76. Architektura wielodostępna i izolacja",
+          "title": "Multi-tenancy i izolacja danych: wybór modeli pool, schema i silo",
+          "description": "Porównuj współdzielone i dedykowane modele danych, stosuj ochronę warstwową oraz bezpiecznie planuj migracje, kopie i routing tenantów.",
+          "learnContent": {
+            "videoTitle": "Masterclass: architektura wielodostępnego Enterprise SaaS",
+            "summaryText": "Izolacja tenantów jest właściwością całego systemu, a nie jednym ustawieniem bazy. Wspólne tabele z RLS, osobne schematy i dedykowane bazy mają różne profile kosztów, operacji i ryzyka. Wybieraj na podstawie udokumentowanych wymagań oraz łącz kontrolę bazy z tożsamością, autoryzacją, testami, logami i najmniejszymi uprawnieniami.",
+            "bulletPoints": [
+              "Modeluj każdą granicę zaufania: użytkownika, usługę, operatora wsparcia, zadanie w tle, migrację, analitykę, kopię i administratora",
+              "W PostgreSQL polityki RLS ograniczają zwykłe zapytania, lecz właściciele tabel, superuserzy i role BYPASSRLS mogą je omijać bez starannej architektury ról",
+              "Kontroluj noisy neighbour przez limity tenantów, kolejki, budżety obciążenia i obserwowalność oraz określ uczciwą degradację i eskalację",
+              "Stosuj zmiany expand-migrate-contract, okresy zgodności, backfill, canary i rollback; migracja bez przestoju jest celem, nie gwarancją"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "layers",
+                "title": "OCHRONA WARSTWOWA",
+                "description": "Kontrole tożsamości, aplikacji, bazy, infrastruktury i operacji wzajemnie się wzmacniają.",
+                "highlight": true
+              },
+              {
+                "iconName": "key",
+                "title": "NAJMNIEJSZE UPRAWNIENIA",
+                "description": "Każda ścieżka ludzka i maszynowa otrzymuje tylko potrzebny zakres tenanta i uprawnienia."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik architektury multi-tenancy i modelowania zagrożeń",
+                "subtitle": "Ramy PDF dla modeli izolacji, ścieżek uprzywilejowanych, migracji i odtwarzania",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Panel operacji tenantów Mara CRM",
+                "subtitle": "Monitoruj routing, limity, klucze, incydenty i testy odtwarzania tenantów",
+                "type": "tool",
+                "iconName": "settings",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Wybieraj izolację według ryzyka, nie etykiety klienta\n\nWspólna baza może obsługiwać wymagające środowiska przy dobrych kontrolach i testach; dedykowana baza nadal może być niezabezpieczona przy błędach tożsamości, sieci, kopii lub operacji. Nie twierdź, że jeden model daje pełną izolację fizyczną lub logiczną.\n\n#### Praktyczna decyzja architektoniczna\n1. **Klasyfikuj dane i obowiązki**: Zapisz wrażliwość, lokalizację, usuwanie, retencję, szyfrowanie, audyt i odtwarzanie.\n2. **Mapuj ścieżki dostępu**: Uwzględnij API, workery, wsparcie, analitykę, eksporty, kopie, repliki i administrację awaryjną.\n3. **Wybierz model**: Porównaj wspólne tabele z RLS, schemat per tenant, bazę per tenant i modele hybrydowe pod kątem blast radius, skali, kosztu i złożoności.\n4. **Prawidłowo utwardź RLS**: Używaj dedykowanych ról runtime bez własności, unikaj zbędnego SUPERUSER i BYPASSRLS, rozważ FORCE ROW LEVEL SECURITY, testuj polityki odczytu i zapisu oraz funkcje security-definer.\n5. **Testuj przypadki negatywne**: Próbuj odczytu i zapisu między tenantami przez każdy endpoint, rolę, zadanie i migrację. Dodaj fuzzing, integracje i niezależny przegląd zależny od ryzyka.\n6. **Planuj cykl życia**: Zaprojektuj tworzenie tenantów, rotację kluczy, kopie, point-in-time recovery, eksport, usunięcie i migrację. Testuj odtwarzanie i dokumentuj zakres danych per tenant.\n7. **Obserwuj bezpiecznie**: Dodaj metryki i zdarzenia audytowe tenantów bez wycieku danych do logów.\n\nKontrole bazy ograniczają ryzyko, lecz nie zamykają automatycznie luk w kodzie aplikacji lub uprzywilejowanych operacjach."
+          },
+          "understandContent": {
+            "coreTakeaway": "Solidna izolacja tenantów wynika z jawnych granic zaufania, najmniejszych uprawnień i powtarzanych testów negatywnych, a nie z wiary w nieomylność RLS lub dedykowanej bazy.",
+            "keyPrinciples": [
+              "Wymuszaj zakres tenanta w więcej niż jednej warstwie, a uprzywilejowane obejścia ograniczaj, audytuj i testuj",
+              "Testuj odtwarzanie kopii, eksport i usunięcie tenanta jako zdolności operacyjne, wraz z zależnościami i rekordami współdzielonymi"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz zapis decyzji o izolacji tenantów:",
+            "checklistItems": [
+              "Zmapuj dane tenantów, role ludzi, tożsamości usług i uprzywilejowane ścieżki obejścia",
+              "Wybierz model izolacji z udokumentowanymi kompromisami bezpieczeństwa, kosztu, lokalizacji, skali i odtwarzania",
+              "Dodaj automatyczne testy odczytu i zapisu między tenantami oraz sprawdzoną procedurę backupu i restore"
+            ]
+          }
+        },
+        "76.2": {
+          "stageTitle": "76. SOC 2, ISO/IEC 27001 i SLA Enterprise",
+          "title": "Zapewnienie Enterprise: badania SOC 2, ISO/IEC 27001 i obronne SLA",
+          "description": "Buduj program bezpieczeństwa oparty na dowodach, prawidłowo określaj zakres niezależnego zapewnienia i składaj zobowiązania dostępności wspierane przez system.",
+          "learnContent": {
+            "videoTitle": "Masterclass: zapewnienie bezpieczeństwa i zobowiązania niezawodności Enterprise",
+            "summaryText": "SOC 2 i ISO/IEC 27001 to różne podejścia. Raport SOC 2 wydaje niezależna firma CPA wobec określonych Trust Services Criteria i zakresu; nie jest to certyfikacja. Certyfikacja ISO/IEC 27001 ocenia system zarządzania bezpieczeństwem informacji w określonym zakresie. Żadne nie zastępuje due diligence klienta ani nie gwarantuje braku incydentów.",
+            "bulletPoints": [
+              "Przed badaniem SOC 2 lub certyfikacją ISO/IEC 27001 określ zakres, systemy, poddostawców, kryteria, właścicieli kontroli i dowody",
+              "Platformy automatyzacji zbierają i monitorują dowody, lecz kierownictwo nadal odpowiada, a niezależni audytorzy oceniają kontrole",
+              "Ustal RTO i RPO na podstawie wpływu biznesowego, zależności i przetestowanego odtwarzania; RTO 15 minut nie jest uniwersalne ani pełne bez RPO i zakresu",
+              "Pisz SLA z dokładną granicą usługi, źródłem pomiaru, zasadami konserwacji i wyłączeń, oknem raportowym, środkami naprawczymi i analizą odpowiedzialności"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "shield",
+                "title": "ZAPEWNIENIE W ZAKRESIE",
+                "description": "Raporty i certyfikaty zapewniają pewność tylko dla wskazanej jednostki, okresu, systemów, kryteriów i wyłączeń.",
+                "highlight": true
+              },
+              {
+                "iconName": "activity",
+                "title": "TESTOWANA NIEZAWODNOŚĆ",
+                "description": "Zobowiązania dostępności i odtwarzania wynikają z pomiarów, analizy awarii i ćwiczonych runbooków."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik dowodów bezpieczeństwa Enterprise i przeglądu SLA",
+                "subtitle": "Lista PDF dla zakresu, kontroli, incydentów, odtwarzania i metryk umownych",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Strona statusu i monitor niezawodności GOM-MAR",
+                "subtitle": "Publikuj stan usług i przejrzyście obliczaj SLI, SLO oraz SLA",
+                "type": "tool",
+                "iconName": "bar-chart-2",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Zbuduj program bezpieczeństwa przed odznaką\n\nZapewnienie Enterprise zaczyna się od właścicieli ryzyka i powtarzalnych operacji. Szablony i monitoring przyspieszają pracę, ale kopiowanie odpowiedzi lub zbieranie zrzutów nie dowodzi, że kontrola jest właściwie zaprojektowana i skutecznie działa.\n\n#### Obronna mapa zapewnienia\n1. **Poznaj potrzeby klienta**: Określ prawo, umowy, typy danych, regiony i wymagania kupującego. Nie obiecuj raportu ani certyfikatu bez potwierdzenia wartości i zakresu.\n2. **Ustal governance**: Przypisz właścicieli ryzyka, zatwierdź polityki, prowadź rejestry aktywów i dostawców, szkol ludzi i dokumentuj wyjątki.\n3. **Wdróż kontrole**: Obejmij tożsamość, najmniejsze uprawnienia, bezpieczny development, zmiany, podatności, incydenty, ciągłość, dostawców, prywatność i retencję dowodów.\n4. **Precyzyjnie mów o szyfrowaniu**: Szyfrowanie at rest i in transit nie musi być end-to-end. Dobieraj wspierane protokoły i klucze z modelu zagrożeń, nie traktuj nazwy algorytmu jako gwarancji.\n5. **Ćwicz incydenty i odtwarzanie**: Testuj komunikację, integralność kopii, awarię regionu i utratę zależności. Mierz RTO i RPO oraz zamykaj ustalenia.\n6. **Zaangażuj kwalifikowanych oceniających**: Potwierdź zakres firmy CPA dla SOC 2 lub akredytowanej jednostki dla ISO/IEC 27001. Raport Type II rozpatruje kontrole w okresie, w odróżnieniu od przeglądu projektu w punkcie czasu.\n7. **Składaj realistyczne zobowiązania**: Nominalne 99,99% to około 52,6 minuty w 365 dniach, ale wynik umowny zależy od metody, zakresu, wyłączeń i okna. Architektura sama tego nie gwarantuje.\n8. **Utrzymuj ciągle**: Śledź błędy kontroli, incydenty, zmiany i ustalenia; ponownie oceniaj ryzyko zamiast uznawać roczny raport za koniec.\n\nOdpowiedzi w kwestionariuszach muszą być prawdziwe i aktualne. SSO, MFA i kontrolę dostępu dobieraj według ryzyka oraz użyteczności, nie wstrzymuj wyłącznie dla drogiego planu."
+          },
+          "understandContent": {
+            "coreTakeaway": "Zaufanie Enterprise powstaje dzięki działającemu programowi bezpieczeństwa i niezawodności, którego dowody, zakres zapewnienia i obietnice umowne odpowiadają rzeczywistości.",
+            "keyPrinciples": [
+              "Nigdy nie nazywaj SOC 2 certyfikacją i nie pozwalaj, by automatyzacja dowodów zastąpiła odpowiedzialnych właścicieli kontroli oraz niezależne badanie",
+              "Oferuj SLA dopiero po zdefiniowaniu wskaźników i wykazaniu architektury, personelu oraz procesu odtwarzania potrzebnych do jego wsparcia"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj pakiet zapewnienia Enterprise oparty na dowodach:",
+            "checklistItems": [
+              "Udokumentuj zakres, systemy, dostawców, właścicieli kontroli i aktualne luki dowodowe",
+              "Zdefiniuj SLI/SLO dostępności, RTO, RPO, zasady pomiaru i wyniki testów odtwarzania",
+              "Poddaj deklaracje bezpieczeństwa, odpowiedzi i środki SLA przeglądowi odpowiedzialnych specjalistów technicznych, prawnych i audytowych"
             ]
           }
         }
