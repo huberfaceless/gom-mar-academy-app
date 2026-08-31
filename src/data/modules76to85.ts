@@ -1421,7 +1421,7 @@ Bei schweren Datenschutzverletzungen drohen Bußgelder von bis zu 20 Millionen E
     subtitle: 'Börsengang, S-1 Filing, Roadshows, PE LBO-Strukturen & Reichtums-Liquidierung',
     color: 'from-amber-500 via-yellow-600 to-zinc-900',
     badgeIcon: '🏛️',
-    description: 'Das ultimative Finale der Unternehmensbewertung: Verstehe die Mechanismen eines Börsengangs (IPO / SPAC), erstelle S-1 Wertpapierprospekte, meistere internationale Investoren-Roadshows und strukturiere 9-stellige Private Equity Leveraged Buyouts (LBO).',
+    description: 'Verstehe zentrale Abläufe, Offenlegungspflichten und Risiken von IPOs, de-SPAC-Transaktionen und Private-Equity-Übernahmen. Prospekte und Transaktionen werden ausschließlich mit zugelassenen Rechts-, Finanz- und Prüfungsexperten vorbereitet.',
     lessons: [
       {
         id: '85.1',
@@ -1433,24 +1433,24 @@ Bei schweren Datenschutzverletzungen drohen Bußgelder von bis zu 20 Millionen E
         learnContent: {
           videoTitle: 'Masterclass: IPO-Architektur, S-1 Prospekt & Börsennotierung',
           videoDuration: '36:40',
-          summaryText: 'Ein Börsengang ist die Krönung des Unternehmertums. Lerne, wie Konsortialbanken (Goldman Sachs, Morgan Stanley) ausgewählt werden, wie das S-1 Wertpapier-Filing strukturiert ist und wie du auf der 2-wöchigen weltweiten Roadshow institutionelle Investoren überzeugst.',
+          summaryText: 'Ein Börsengang ist eine mögliche Finanzierungs- und Liquiditätsoption mit erheblichen Kosten, Offenlegungspflichten und Marktrisiken. Lerne die Rollen von Emittent, Banken, Rechtsberatern, Prüfern, Börse und Aufsicht sowie die Grundlagen von Registrierung, Due Diligence, Bookbuilding und Roadshow.',
           bulletPoints: [
-            'Das Konsortialbanken-Syndikat: Lead-Left Bookrunner, Co-Manager und Underwriting-Spreads (3-7%)',
-            'Das S-1 Prospekt (Registration Statement): MD&A (Management Discussion & Analysis), Risikofaktoren und Finanzhistorie',
+            'Das Bankenkonsortium: Rollen, Interessenkonflikte, Due Diligence, Vergütung und verhandelbare Underwriting-Konditionen',
+            'Form S-1 in den USA: Registration Statement mit Prospekt, Geschäft, Risikofaktoren, MD&A, geprüften Finanzdaten und Angebotsangaben',
             'Das Orderbuch & Bookbuilding: Preisfindung zwischen institutionellen Fondsangeboten und Ausgabespanne',
-            'Die Lock-up Periode: Warum Gründer ihre Aktien in den ersten 180 Tagen nach dem IPO nicht verkaufen dürfen'
+            'Lock-up-Vereinbarungen: Vertragliche Verkaufsbeschränkungen, häufig etwa 180 Tage, deren Umfang, Ausnahmen und vorzeitige Freigabe im Prospekt zu prüfen sind'
           ],
           coreConcepts: [
             {
               iconName: 'trending-up',
               title: 'BOOKBUILDING PROCESS',
-              description: 'Auktionsverfahren zur Maximierung des Ausgabepreises vor Handelsbeginn.',
+              description: 'Nachfragebasierter Prozess zur Festlegung von Preis und Zuteilung; er garantiert weder Höchstpreis noch stabile Kursentwicklung.',
               highlight: true
             },
             {
               iconName: 'lock',
               title: '180-DAY LOCK-UP',
-              description: 'Gesetzliche Haltefrist stabilisiert den Aktienkurs nach dem Börsengang.'
+              description: 'Typischerweise vertragliche Verkaufsbeschränkung; Dauer, Ausnahmen und Freigaberechte unterscheiden sich.'
             }
           ],
           resources: [
@@ -1471,7 +1471,7 @@ Bei schweren Datenschutzverletzungen drohen Bußgelder von bis zu 20 Millionen E
           ],
           fullArticleGuide: `### Die Vorbereitung auf das Börsen-Debüt
 
-Ein IPO erfordert 18 bis 24 Monate akribische Vorbereitung in Rechnungslegung (IFRS / US-GAAP) und Governance.
+Die Dauer einer IPO-Vorbereitung variiert erheblich nach Emittent, Markt, Reifegrad, Rechnungslegung, Governance und regulatorischer Prüfung.
 
 #### Die Meilensteine des Börsengangs:
 1. **Beauty Contest**: Auswahl der federführenden Investmentbanken.
@@ -1481,7 +1481,7 @@ Ein IPO erfordert 18 bis 24 Monate akribische Vorbereitung in Rechnungslegung (I
 5. **Priced & Ringing the Bell**: Festlegung des Erstausgabepreises und das Läuten der Börsenglocke.`
         },
         understandContent: {
-          coreTakeaway: 'Ein Börsengang verschafft deinem Unternehmen die härteste Währung der Welt: Eigene liquide Aktien für weitere Übernahmen.',
+          coreTakeaway: 'Börsennotierte Aktien können Finanzierung und Übernahmen unterstützen, bleiben aber volatil, verwässernd und regulatorisch gebunden.',
           keyPrinciples: [
             'Niemals unrealistische Prognosen abgeben – Quartalsverfehlungen (Earnings Miss) bestraft die Börse gnadenlos',
             'Ein professionelles Investor-Relations-Team aufbauen, das kontinuierlich Vertrauen bei Analysten stiftet'
@@ -1504,28 +1504,28 @@ Ein IPO erfordert 18 bis 24 Monate akribische Vorbereitung in Rechnungslegung (I
         stageTitle: '85. PE Leveraged Buyout & Secondary Exits',
         title: 'Private Equity Mega-Exits: Leveraged Buyouts (LBO) & Mehrheitsübernahmen',
         durationMinutes: 33,
-        description: 'Wie Private Equity Riesen (KKR, Blackstone, EQT) Firmen mit 70% Fremdkapitalhebel kaufen und Gründern 8-stellige Cash-Exits ermöglichen.',
+        description: 'Wie Private-Equity-Übernahmen Eigen- und Fremdkapital, Governance, Management-Anreize und Verkäufer-Rückbeteiligungen kombinieren können; Hebel und Erlös sind weder fest noch garantiert.',
         learnContent: {
           videoTitle: 'Masterclass: Leveraged Buyouts & Private Equity Transaktionen',
           videoDuration: '33:35',
-          summaryText: 'Nicht jeder Gründer will an die Börse. Der Verkauf an Private Equity bietet oft mehr Diskretion und höhere Bewertungssicherheit. Lerne, wie LBOs strukturiert werden, wie du 80% deines Vermögens bar auszahlst und mit den restlichen 20% in der neuen Holding rückbeteiligt bleibst.',
+          summaryText: 'Ein Verkauf an Private Equity kann eine Alternative zum IPO sein, bringt jedoch Finanzierungs-, Kontroll-, Haftungs-, Steuer- und Umsetzungsrisiken mit sich. Lerne, Kaufpreis, Finanzierung, Rollover Equity, Garantien, Management-Regeln und Exit-Szenarien zu prüfen.',
           bulletPoints: [
-            'LBO-Mechanik: Wie PE-Fonds den Unternehmenskauf mit 60-75% Bankkrediten auf das Zielunternehmen finanzieren',
-            'Die Rückbeteiligung (Rollover Equity): Warum die zweite Runde mit PE oft mehr Gewinn bringt als der Erstverkauf ("Second Bite at the Apple")',
+            'LBO-Mechanik: Transaktionsspezifischer Mix aus Eigen- und Fremdkapital, dessen Tragfähigkeit von Cashflow, Sicherheiten, Covenants und Marktbedingungen abhängt',
+            'Rollover Equity: Potenzielles Upside bei gleichzeitigem Verlustrisiko, Illiquidität, Verwässerung und eingeschränkter Kontrolle',
             'Management Incentive Programme (MIP): Hurdle Rates und Carried Interest für das Führungsteam',
-            'Der finale Exit nach 4-6 Jahren: Weiterverkauf an einen noch größeren Mega-Fonds oder strategischen Käufer'
+            'Mögliche spätere Exits: strategischer Verkauf, Secondary Buyout, Rekapitalisierung oder IPO ohne garantierten Zeitpunkt oder Erlös'
           ],
           coreConcepts: [
             {
               iconName: 'pie-chart',
               title: 'ROLLOVER EQUITY',
-              description: 'Rückbeteiligung ermöglicht eine zweite Multimillionen-Auszahlung beim Folge-Exit.',
+              description: 'Rückbeteiligung kann am Folge-Exit partizipieren, kann aber auch teilweise oder vollständig an Wert verlieren.',
               highlight: true
             },
             {
               iconName: 'dollar-sign',
               title: 'CASH-OUT SECURITY',
-              description: 'Sofortige finanzielle Unabhängigkeit durch 8-stellige Barüberweisung beim Signing.'
+              description: 'Zahlungsbetrag, Closing-Bedingungen, Escrow, Kaufpreisanpassung, Steuern und Haftungsrückbehalte bestimmen den tatsächlichen Nettoerlös.'
             }
           ],
           resources: [
@@ -1546,15 +1546,15 @@ Ein IPO erfordert 18 bis 24 Monate akribische Vorbereitung in Rechnungslegung (I
           ],
           fullArticleGuide: `### Das Spiel der Private Equity Giganten
 
-Ein Leveraged Buyout maximiert die Eigenkapitalrendite durch geschickten Einsatz von Fremdkapital.
+Fremdkapital kann Eigenkapitalrenditen erhöhen, verstärkt aber zugleich Ausfall-, Refinanzierungs- und Restrukturierungsrisiken.
 
 #### Die Vorteile für Gründer:
-- **De-Risking**: 80% des Firmenwerts fließen direkt auf dein privates Bankkonto oder in deine Holding.
-- **Wachstumstreiber**: Der PE-Fonds finanziert aggressive Zukäufe (Buy-and-Build), die du alleine nicht stemmen könntest.
-- **Der zweite Exit**: Beim Weiterverkauf nach 5 Jahren verdoppelt oder verdreifacht sich der Wert deiner Restanteile.`
+- **Teil-Liquidität**: Nettoerlös hängt von Kaufpreisstruktur, Schulden, Steuern, Escrow, Garantien, Anpassungen und Closing ab.
+- **Wachstumsoption**: Buy-and-Build kann zusätzliche Ressourcen schaffen, erhöht aber Integrations-, Finanzierungs- und Ausführungsrisiken.
+- **Späterer Exit**: Wert, Zeitpunkt und Liquidität der Restanteile sind unsicher; Downside- und Verwässerungsszenarien gehören ins Modell.`
         },
         understandContent: {
-          coreTakeaway: 'Wer mit Private Equity kooperiert, sichert sein Lebenswerk ab und profitiert gleichzeitig vom nächsten Skalierungsschritt.',
+          coreTakeaway: 'Eine PE-Transaktion kann Liquidität und Wachstum ermöglichen, verändert aber Kontrolle, Risiko und Pflichten; der Ausgang bleibt unsicher.',
           keyPrinciples: [
             'Immer erfahrene M&A-Anwälte und Investmentbanker an deiner Seite haben – verhandle niemals alleine gegen PE-Profis',
             'Auf klare Mitbestimmungsrechte und Schutz vor unberechtigter Abberufung als Geschäftsführer achten'
@@ -1564,7 +1564,7 @@ Ein Leveraged Buyout maximiert die Eigenkapitalrendite durch geschickten Einsatz
           instruction: 'Modelliere deinen Private Equity Exit mit Rollover Equity:',
           inputType: 'checklist',
           checklistItems: [
-            'Unternehmensbewertung auf Basis von 12x-15x EBITDA kalkuliert',
+            'Unternehmensbewertung mit Bandbreiten aus mehreren Methoden, belastbaren Vergleichsdaten und Sensitivitäten modelliert',
             'Aufteilung zwischen Cash-Auszahlung (z. B. 75%) und Rollover (25%) simuliert',
             'Management-Incentive-Struktur im CRM hinterlegt'
           ],
