@@ -7595,6 +7595,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "79": {
+      "title": "79. Responsible Franchising & Network Quality Management",
+      "subtitle": "Validated pilots, disclosure, sustainable fees, operating standards and fair audits",
+      "description": "Assess whether a proven business can support franchise partners across jurisdictions. Build transparent economics, truthful disclosure, adaptable operating standards and proportionate quality controls without promising guaranteed profitability, frictionless global expansion or perfect uniformity.",
+      "lessons": {
+        "79.1": {
+          "stageTitle": "79. Franchise Architecture & Economics",
+          "title": "Franchise Design: Unit Economics, Disclosure, Fees and Territory",
+          "description": "Validate the model, understand jurisdiction-specific disclosure and registration duties, and design fees and support around viable franchisee economics.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Responsible Franchise System Design",
+            "summaryText": "Franchising transfers a defined business format and support system to independent operators, but it does not make their results predictable. Before selling, validate unit economics through representative operations, document risks and costs, protect candidate decision time and obtain specialist advice in every target jurisdiction.",
+            "bulletPoints": [
+              "Model initial investment, working capital, ramp-up, operating costs, fees, break-even scenarios and franchisor support cost using substantiated data",
+              "Set entry fees, royalties and marketing contributions from delivered services and sustainable economics—not standard percentages or desired headline revenue",
+              "Define any territory by demand, capacity, channels, reservations, online sales and expansion rights; exclusivity does not automatically prevent cannibalisation",
+              "Use accurate, current and jurisdiction-compliant disclosure; in the United States the FTC Franchise Rule requires a 23-item FDD and generally at least 14 calendar days before signing or payment"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "bar-chart-2",
+                "title": "VALIDATED UNIT ECONOMICS",
+                "description": "Decisions use representative revenue, cost, capital, ramp-up and closure data with documented assumptions.",
+                "highlight": true
+              },
+              {
+                "iconName": "file-text",
+                "title": "INFORMED CONSENT",
+                "description": "Candidates receive accurate information, sufficient review time and freedom to obtain independent advice."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Franchise Feasibility & Disclosure Review Guide",
+                "subtitle": "A PDF framework for pilots, economics, fees, territories, claims and legal review",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Franchise Candidate Hub",
+                "subtitle": "Track consent, documents, review periods, due diligence and selection decisions",
+                "type": "tool",
+                "iconName": "users",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Prove supportability before selling the model\n\nA successful outlet does not by itself prove a franchise is transferable. The franchisor must be able to teach, support and monitor the model while franchisees retain enough margin and working capital to operate responsibly. There is no universal requirement that a pilot run for exactly two years or consist of two to three outlets; evidence must fit the concept, seasonality and market.\n\n#### A responsible readiness process\n1. **Validate operations**: Test multiple demand scenarios, labour models, supply constraints, seasonality, ramp-up, owner involvement and closure or transfer costs.\n2. **Separate system and operator effects**: Document which outcomes depend on location, experience, local prices or exceptional founder effort.\n3. **Model both sides**: Include franchisee investment and cash flow plus the franchisor's training, support, technology, compliance and quality-control costs.\n4. **Design transparent fees**: Explain what each fee funds, when it is due, whether it changes and how refunds, taxes and late payments work. Fees such as €25,000–€50,000 or royalties of 5–8% are market examples, not targets or guarantees.\n5. **Control financial claims**: Use earnings or performance representations only where law permits and the claim has a reasonable, documented basis presented in the required form. Do not cherry-pick top operators.\n6. **Map every jurisdiction**: Franchise definitions, registration, pre-contract disclosure, cooling-off, language, governing law, data, employment, consumer and competition rules vary. A US FDD is not a global compliance document.\n7. **Select fairly**: Use role-related financial and operational criteria, verify funding lawfully, avoid discriminatory screening and allow candidates independent legal and financial advice.\n8. **Define territory and channels**: State reserved accounts, online sales, delivery, non-traditional sites, relocations, performance conditions and encroachment policy.\n9. **Govern marketing funds**: Define permitted uses, administration, reporting, allocation and audit. A trust account is not universally required or always the correct structure; obtain accounting and legal advice.\n\nFranchising uses franchisee capital, but it still requires substantial franchisor investment and creates legal, operational and reputational obligations."
+          },
+          "understandContent": {
+            "coreTakeaway": "A franchise is ready only when the format is transferable, franchisee economics are plausibly sustainable, claims are substantiated and the support system can meet disclosed obligations.",
+            "keyPrinciples": [
+              "Never select candidates merely to collect an entry fee or use unsubstantiated revenue, profit, payback or success claims",
+              "Document marketing-fund governance and territory rules transparently, with jurisdiction-specific competition, tax and contract review"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a franchise feasibility file:",
+            "checklistItems": [
+              "Build conservative, base and stress unit-economics scenarios for franchisee and franchisor",
+              "Document each fee, delivered service, territory condition, support duty and evidence behind any performance claim",
+              "Create a jurisdiction checklist for definition, disclosure, registration, review period, advertising and candidate consent"
+            ]
+          }
+        },
+        "79.2": {
+          "stageTitle": "79. Operations Manual, Training & Quality Review",
+          "title": "An Adaptable Operations Manual and Fair Quality Audits",
+          "description": "Turn essential standards into usable, versioned guidance and monitor quality through transparent, lawful and improvement-focused reviews.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Franchise Operations & Proportionate Quality Controls",
+            "summaryText": "An operations manual should make critical standards clear while allowing lawful local adaptation and continuous learning. Its length, training format and audit frequency should match risk. Mystery shopping can supply one customer-perspective signal, but it does not guarantee consistency and must respect privacy, labour, consumer and evidence rules.",
+            "bulletPoints": [
+              "Structure the manual by role and task, with owners, effective dates, local variations, safety controls and an accessible change history",
+              "Use approved-supplier or mandatory-purchase rules only where objectively justified, disclosed, contractually clear and compatible with competition law",
+              "Combine customer feedback, operational data, announced reviews, training evidence and proportionate mystery shopping rather than relying on one score",
+              "Use documented findings, severity, cure plans, support and escalation; warning and termination rights depend on the contract, facts and applicable law"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "book-open",
+                "title": "VERSIONED OPERATING SYSTEM",
+                "description": "Standards have owners, reasons, dates, local variants and controlled updates rather than becoming an infallible rulebook.",
+                "highlight": true
+              },
+              {
+                "iconName": "check-circle",
+                "title": "PROPORTIONATE ASSURANCE",
+                "description": "Quality evidence is triangulated, privacy-aware and linked to support and corrective action."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Operations Manual & Quality Review Guide",
+                "subtitle": "A PDF structure for standards, training, audit evidence, privacy and corrective action",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Franchise Learning & Standards Hub",
+                "subtitle": "Publish versioned procedures, training, attestations, findings and improvement plans",
+                "type": "tool",
+                "iconName": "award",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Standardise outcomes without freezing improvement\n\nThe purpose of the manual is safe and repeatable execution, not absolute uniformity. Local law, accessibility, language, premises and customer needs can require variation. Define which standards protect safety, brand identity or legal compliance and which allow local choice.\n\n#### Build a living operating system\n1. **Prioritise critical processes**: Cover opening, safety, customer care, data, cash, complaints, suppliers, recalls, employment interfaces, emergencies and closure. The right manual may be far shorter or longer than 300 pages.\n2. **Write for the user**: Use searchable steps, roles, checklists, media alternatives and accessible formats. Test procedures with new operators.\n3. **Control changes**: Assign owners, legal review where needed, version numbers, effective dates, acknowledgements, archive and urgent-change handling.\n4. **Train to competence**: Choose duration and assessment from role and risk; four weeks is not universal. Record completion, accommodation and retraining without assuming a certificate proves competence forever.\n5. **Review suppliers lawfully**: Document quality need, pricing, rebates, alternatives, resilience and conflicts. Mandatory sourcing can raise disclosure and competition issues.\n6. **Design fair audits**: Publish standards and scoring logic, train reviewers, preserve evidence, allow factual response and distinguish isolated errors from systemic issues.\n7. **Use mystery shopping carefully**: Establish lawful purpose and data basis, minimise personal data, avoid excessive employee surveillance, protect vulnerable individuals, control recordings and retention, and consult local labour or works-council requirements.\n8. **Correct before punishing**: Classify severity, address urgent safety risks immediately, agree remediation and verify closure. Do not automatically issue a written warning for every deviation.\n9. **Terminate with counsel**: Follow contract, notice, cure, good-faith, anti-discrimination and local franchise rules. No template guarantees a legally safe termination.\n10. **Learn from the network**: Evaluate partner innovations before controlled release, documenting rights, safety and local applicability.\n\nCustomer surveys and NPS can be useful, but compare like with like and avoid turning one metric into the sole quality judgment."
+          },
+          "understandContent": {
+            "coreTakeaway": "Network quality improves through clear critical standards, competent training, multiple evidence sources and fair corrective processes—not absolute standardisation or surveillance.",
+            "keyPrinciples": [
+              "Audit against disclosed, relevant standards and use proportional responses with evidence, support, cure and appeal where appropriate",
+              "Review mystery shopping, employee data, recordings, supplier restrictions and termination processes under applicable local law"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create the first controlled version of the operating system:",
+            "checklistItems": [
+              "List critical processes with owner, risk, local-variation rule, evidence and review date",
+              "Draft a transparent audit method combining operations, customer feedback, training and proportionate observations",
+              "Define privacy, remediation, escalation, version control and legal-review requirements before rollout"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -15178,6 +15306,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Wymień każde aktywo, właściciela, rejestrację lub podstawę, zależności osób trzecich i dozwolone użycie",
               "Modeluj zakres, wsparcie, raporty, definicje royalty, audyt, poufność, zakończenie i pełną ekonomikę",
               "Utwórz rejestr rozsądnych środków dla dostępu, umów, bezpieczeństwa, szkoleń, incydentów i offboardingu"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "79": {
+      "title": "79. Odpowiedzialna franczyza i zarządzanie jakością sieci",
+      "subtitle": "Zweryfikowany pilotaż, ujawnienia, trwałe opłaty, standardy i uczciwe audyty",
+      "description": "Oceń, czy sprawdzony biznes może wspierać franczyzobiorców w różnych jurysdykcjach. Buduj przejrzystą ekonomikę, prawdziwe ujawnienia, adaptowalne standardy i proporcjonalne kontrole bez gwarancji rentowności, łatwej globalnej ekspansji lub idealnej jednolitości.",
+      "lessons": {
+        "79.1": {
+          "stageTitle": "79. Architektura i ekonomika franczyzy",
+          "title": "Projekt franczyzy: unit economics, ujawnienia, opłaty i terytorium",
+          "description": "Zweryfikuj model, poznaj obowiązki ujawnienia i rejestracji w danym kraju oraz projektuj opłaty i wsparcie wokół rentownej ekonomiki partnera.",
+          "learnContent": {
+            "videoTitle": "Masterclass: odpowiedzialny projekt systemu franczyzowego",
+            "summaryText": "Franczyza przekazuje zdefiniowany format i system wsparcia niezależnym operatorom, lecz nie czyni wyników przewidywalnymi. Przed sprzedażą zweryfikuj ekonomikę w reprezentatywnej działalności, udokumentuj ryzyka i koszty, zapewnij kandydatowi czas na decyzję i uzyskaj poradę w każdej jurysdykcji.",
+            "bulletPoints": [
+              "Modeluj inwestycję, kapitał obrotowy, rozruch, koszty, opłaty, scenariusze break-even i koszt wsparcia na udokumentowanych danych",
+              "Ustalaj opłatę wejściową, royalty i fundusz marketingowy według świadczonych usług i trwałej ekonomiki, nie standardowych procentów",
+              "Definiuj terytorium według popytu, zdolności, kanałów, rezerwacji, sprzedaży online i ekspansji; wyłączność nie usuwa automatycznie kanibalizacji",
+              "Stosuj aktualne ujawnienia zgodne z jurysdykcją; w USA FTC Franchise Rule wymaga FDD z 23 pozycjami i zwykle minimum 14 dni przed podpisem lub płatnością"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "bar-chart-2",
+                "title": "ZWERYFIKOWANA EKONOMIKA",
+                "description": "Decyzje opierają się na reprezentatywnych danych o przychodzie, kosztach, kapitale, rozruchu i zamknięciach.",
+                "highlight": true
+              },
+              {
+                "iconName": "file-text",
+                "title": "ŚWIADOMA ZGODA",
+                "description": "Kandydaci otrzymują dokładne informacje, czas na analizę i możliwość niezależnej porady."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik wykonalności i ujawnień franczyzy",
+                "subtitle": "Ramy PDF dla pilotażu, ekonomiki, opłat, terytoriów, twierdzeń i analizy prawnej",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Centrum kandydatów franczyzowych Mara CRM",
+                "subtitle": "Śledź zgody, dokumenty, okresy przeglądu, due diligence i decyzje",
+                "type": "tool",
+                "iconName": "users",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Udowodnij zdolność wsparcia przed sprzedażą modelu\n\nUdany punkt nie dowodzi jeszcze przenoszalności franczyzy. Franczyzodawca musi uczyć, wspierać i monitorować model, pozostawiając partnerowi wystarczającą marżę i kapitał. Nie ma uniwersalnej zasady dokładnie dwóch lat lub dwóch–trzech punktów; dowody muszą pasować do koncepcji, sezonowości i rynku.\n\n#### Odpowiedzialna gotowość\n1. **Zweryfikuj operacje**: Testuj popyt, zatrudnienie, dostawy, sezonowość, rozruch, udział właściciela oraz koszt zamknięcia lub transferu.\n2. **Oddziel system od operatora**: Dokumentuj wpływ lokalizacji, doświadczenia, cen i wyjątkowej pracy założyciela.\n3. **Modeluj obie strony**: Uwzględnij inwestycję partnera oraz koszty szkolenia, wsparcia, technologii, zgodności i jakości franczyzodawcy.\n4. **Projektuj przejrzyste opłaty**: Wyjaśnij finansowanie, termin, zmiany, zwroty, podatki i opóźnienia. Kwoty 25–50 tys. euro i 5–8% royalty to przykłady rynkowe, nie cele.\n5. **Kontroluj twierdzenia finansowe**: Używaj ich tylko, gdy prawo zezwala i istnieje rozsądna udokumentowana podstawa w wymaganej formie. Nie wybieraj tylko najlepszych punktów.\n6. **Mapuj jurysdykcje**: Definicja franczyzy, rejestracja, ujawnienia, cooling-off, język, prawo, dane, zatrudnienie, konsument i konkurencja różnią się. Amerykański FDD nie jest dokumentem globalnym.\n7. **Wybieraj uczciwie**: Stosuj kryteria związane z rolą, legalnie weryfikuj finansowanie, unikaj dyskryminacji i pozwól na niezależną poradę.\n8. **Definiuj terytorium i kanały**: Wskaż klientów zastrzeżonych, online, dostawy, nietypowe lokalizacje, relokacje, warunki i politykę encroachment.\n9. **Zarządzaj funduszem marketingowym**: Określ użycie, administrację, raportowanie, alokację i audyt. Rachunek powierniczy nie jest wszędzie wymagany ani zawsze właściwy.\n\nFranczyza wykorzystuje kapitał partnera, lecz nadal wymaga istotnej inwestycji franczyzodawcy i tworzy obowiązki."
+          },
+          "understandContent": {
+            "coreTakeaway": "Franczyza jest gotowa, gdy format jest przenoszalny, ekonomika partnera wiarygodnie trwała, twierdzenia udokumentowane, a wsparcie spełnia ujawnione obowiązki.",
+            "keyPrinciples": [
+              "Nie wybieraj partnerów dla samej opłaty ani nie używaj niepopartych twierdzeń o przychodzie, zysku, zwrocie lub sukcesie",
+              "Przejrzyście dokumentuj fundusz i terytorium z analizą prawa konkurencji, podatków i umów"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj dokumentację wykonalności franczyzy:",
+            "checklistItems": [
+              "Zbuduj konserwatywny, bazowy i stresowy scenariusz ekonomiki partnera oraz franczyzodawcy",
+              "Udokumentuj każdą opłatę, usługę, warunek terytorium, obowiązek wsparcia i podstawę twierdzeń",
+              "Utwórz listę jurysdykcji dla definicji, ujawnień, rejestracji, terminów, reklamy i zgody"
+            ]
+          }
+        },
+        "79.2": {
+          "stageTitle": "79. Podręcznik operacyjny, szkolenia i jakość",
+          "title": "Adaptowalny podręcznik operacyjny i uczciwe audyty jakości",
+          "description": "Przekształcaj kluczowe standardy w użyteczne, wersjonowane instrukcje i monitoruj jakość przez przejrzyste, legalne kontrole nastawione na poprawę.",
+          "learnContent": {
+            "videoTitle": "Masterclass: operacje franczyzowe i proporcjonalna kontrola jakości",
+            "summaryText": "Podręcznik powinien jasno określać krytyczne standardy, pozwalając na legalną lokalną adaptację i uczenie. Długość, szkolenia i audyty zależą od ryzyka. Mystery shopping daje jeden sygnał perspektywy klienta, lecz nie gwarantuje spójności i musi respektować prywatność, prawo pracy, konsumenta oraz dowody.",
+            "bulletPoints": [
+              "Strukturyzuj podręcznik według ról i zadań, z właścicielami, datami, wariantami lokalnymi, bezpieczeństwem i historią zmian",
+              "Stosuj zatwierdzonych dostawców lub obowiązkowy zakup tylko przy obiektywnym uzasadnieniu, ujawnieniu, jasnej umowie i zgodności z konkurencją",
+              "Łącz opinie klientów, dane operacyjne, zapowiedziane kontrole, szkolenia i proporcjonalny mystery shopping zamiast jednego wyniku",
+              "Używaj ustaleń, poziomu wagi, cure planu, wsparcia i eskalacji; ostrzeżenie i rozwiązanie zależą od umowy, faktów i prawa"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "book-open",
+                "title": "WERSJONOWANY SYSTEM OPERACYJNY",
+                "description": "Standardy mają właścicieli, uzasadnienie, daty, warianty i kontrolowane aktualizacje.",
+                "highlight": true
+              },
+              {
+                "iconName": "check-circle",
+                "title": "PROPORCJONALNE ZAPEWNIENIE",
+                "description": "Dowody jakości są wieloźródłowe, uwzględniają prywatność i prowadzą do wsparcia oraz korekty."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik podręcznika i przeglądu jakości",
+                "subtitle": "Struktura PDF dla standardów, szkoleń, dowodów, prywatności i korekty",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Centrum nauki i standardów GOM-MAR",
+                "subtitle": "Publikuj wersjonowane procedury, szkolenia, potwierdzenia, ustalenia i plany poprawy",
+                "type": "tool",
+                "iconName": "award",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Standaryzuj wyniki bez blokowania poprawy\n\nCelem podręcznika jest bezpieczne i powtarzalne wykonanie, nie absolutna identyczność. Lokalne prawo, dostępność, język, lokal i potrzeby klientów mogą wymagać zmian. Rozróżnij standardy bezpieczeństwa, marki lub zgodności od obszarów lokalnego wyboru.\n\n#### Żywy system operacyjny\n1. **Priorytetyzuj procesy**: Obejmij otwarcie, bezpieczeństwo, klienta, dane, kasę, reklamacje, dostawców, recall, zatrudnienie, awarie i zamknięcie. Podręcznik może mieć mniej lub więcej niż 300 stron.\n2. **Pisz dla użytkownika**: Używaj wyszukiwalnych kroków, ról, checklist, alternatywnych mediów i dostępnych formatów. Testuj z nowymi operatorami.\n3. **Kontroluj zmiany**: Przypisz właścicieli, przegląd prawny, wersje, daty, potwierdzenia, archiwum i pilne zmiany.\n4. **Szkol do kompetencji**: Dobieraj czas i ocenę do roli i ryzyka; cztery tygodnie nie są uniwersalne. Rejestruj ukończenie, dostosowania i retraining.\n5. **Legalnie oceniaj dostawców**: Dokumentuj potrzebę jakości, ceny, rebates, alternatywy, odporność i konflikty. Mandatory sourcing może rodzić obowiązki ujawnienia i konkurencji.\n6. **Projektuj uczciwe audyty**: Publikuj standardy i scoring, szkol audytorów, zachowuj dowody, pozwalaj na odpowiedź i odróżniaj incydent od systemu.\n7. **Ostrożnie stosuj mystery shopping**: Ustal podstawę, minimalizuj dane, unikaj nadmiernego monitoringu pracowników, kontroluj nagrania i retencję oraz konsultuj lokalne wymogi pracy.\n8. **Koryguj przed karą**: Klasyfikuj wagę, natychmiast usuwaj ryzyko bezpieczeństwa, ustal remediation i sprawdzaj zamknięcie. Nie wystawiaj automatycznie ostrzeżenia za każdą różnicę.\n9. **Rozwiązuj z prawnikiem**: Przestrzegaj umowy, notice, cure, dobrej wiary, antydyskryminacji i lokalnych zasad. Szablon nie gwarantuje bezpiecznego rozwiązania.\n10. **Ucz się od sieci**: Oceniaj innowacje partnerów przed kontrolowanym wdrożeniem pod kątem praw, bezpieczeństwa i lokalności.\n\nNPS może być użyteczny, lecz porównuj porównywalne dane i nie czyń jednej metryki jedynym osądem."
+          },
+          "understandContent": {
+            "coreTakeaway": "Jakość sieci rośnie dzięki jasnym krytycznym standardom, kompetentnym szkoleniom, wielu źródłom dowodów i uczciwej korekcie, nie absolutnej standaryzacji lub nadzorowi.",
+            "keyPrinciples": [
+              "Audytuj według ujawnionych, istotnych standardów i stosuj proporcjonalną reakcję z dowodami, wsparciem, cure i odwołaniem",
+              "Sprawdź mystery shopping, dane pracowników, nagrania, ograniczenia dostawców i rozwiązanie umowy według lokalnego prawa"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz pierwszą kontrolowaną wersję systemu operacyjnego:",
+            "checklistItems": [
+              "Wymień krytyczne procesy z właścicielem, ryzykiem, regułą lokalnej zmiany, dowodem i terminem przeglądu",
+              "Opracuj przejrzystą metodę audytu łączącą operacje, klienta, szkolenia i proporcjonalne obserwacje",
+              "Zdefiniuj prywatność, remediation, eskalację, wersjonowanie i przegląd prawny przed wdrożeniem"
             ]
           }
         }
