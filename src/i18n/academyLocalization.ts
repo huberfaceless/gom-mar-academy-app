@@ -6597,6 +6597,121 @@ A costly package does not create a large customer.`,
     },
 
 
+    "71": {
+      "title": "71. Corporate Venture Capital & Angel Investing",
+      "subtitle": "Deal sourcing, SAFE agreements, convertible instruments, cap tables and startup investments",
+      "description": "Evaluate private startup investments as speculative, illiquid securities: understand SAFE and convertible terms, perform evidence-based due diligence and model dilution, preferences and exit outcomes without promising returns or liquidity.",
+      "lessons": {
+        "71.1": {
+          "stageTitle": "71. Angel Investing & SAFE Agreements",
+          "title": "Startup Investments: SAFEs, Convertible Instruments & Pre-Seed Due Diligence",
+          "description": "How SAFEs can provide a contractual right to future equity, how conversion terms affect outcomes and what to verify before risking capital in an early-stage company.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Angel Investing, SAFEs & Private-Market Risk",
+            "summaryText": "A SAFE is not current equity and may never convert into valuable shares. Early-stage investments can fail completely, remain illiquid for years or produce outcomes very different from headline valuations, so every decision requires suitability, legal review and independent evidence.",
+            "bulletPoints": [
+              "SAFE mechanics: compare valuation cap, discount, MFN, conversion, liquidity and dissolution provisions; pro-rata rights may require a separate side letter",
+              "Instrument and jurisdiction fit: do not assume a US template works elsewhere or that a short document removes securities, corporate, tax or consumer-law obligations",
+              "Due diligence: verify founders, ownership, authority, financial runway, customers, intellectual property, security, privacy, litigation and the complete fundraising history",
+              "Portfolio risk: diversification can reduce concentration but cannot prevent total loss, fraud, follow-on funding needs or long periods without liquidity"
+            ],
+            "coreConcepts": [
+              {
+                "title": "FUTURE-EQUITY RIGHT",
+                "description": "A SAFE is a contract that may convert after specified events; it is not shares, repayment or a guaranteed valuation today."
+              },
+              {
+                "title": "EVIDENCE BEFORE FOMO",
+                "description": "Investment decisions need verified records, downside scenarios and conflicts analysis rather than founder charisma or market hype."
+              }
+            ],
+            "resources": [
+              {
+                "title": "SAFE & Startup Due-Diligence Guide",
+                "subtitle": "Term, evidence, risk and legal-review checklist",
+                "type": "pdf"
+              },
+              {
+                "title": "Mara CRM Private Investment Register",
+                "subtitle": "Track documents, ownership, consents, updates and review dates",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Treat every startup investment as a loss-capable security\n\nPrivate companies disclose less than public issuers, valuations may be based on negotiated financing terms and there may be no market for the investment. Invest only capital whose loss does not threaten personal or business obligations.\n\n#### Four due-diligence layers\n\n1. **People and authority:** Verify identities, references, board approval, signing authority, conflicts and related-party arrangements.\n2. **Company and cap table:** Reconcile incorporation records, existing shares, options, SAFEs, notes, warrants, liens and promised side letters.\n3. **Business evidence:** Test customer claims, revenue quality, burn rate, runway, unit economics, intellectual-property ownership and regulatory dependencies.\n4. **Instrument outcomes:** Model conversion, dilution, preference stacks, dissolution and change-of-control scenarios—including zero recovery.\n\nUse a qualified securities lawyer for the relevant jurisdiction. Do not copy a template without understanding amendments, tax treatment, investor eligibility, disclosure duties and offering restrictions."
+          },
+          "understandContent": {
+            "coreTakeaway": "A SAFE can simplify documentation, but it does not make an investment safe, liquid or certain to convert into valuable equity.",
+            "keyPrinciples": [
+              "Never invest operational cash, emergency reserves or borrowed money that cannot be lost",
+              "Keep signed instruments, side letters, approvals, wire evidence and company updates in a controlled evidence file"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create an investment-review file for one hypothetical deal:",
+            "checklistItems": [
+              "Documented suitability, maximum loss, liquidity horizon, conflicts and independent-advice needs",
+              "Reconciled the cap table with all shares, options, SAFEs, notes, warrants and side letters",
+              "Modelled conversion, next-round, sale, dissolution and no-follow-on-funding scenarios"
+            ]
+          }
+        },
+        "71.2": {
+          "stageTitle": "71. Cap Tables, Dilution & Exits",
+          "title": "Cap Tables & Dilution: Scenario Modelling from Seed to Exit",
+          "description": "How financing rounds, option pools, conversion terms and liquidation preferences change ownership and proceeds—and why secondary sales require consent, compliance and a real buyer.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Cap-Table Modelling, Preferences & Exit Scenarios",
+            "summaryText": "A headline ownership percentage does not determine the money an investor receives. Build a fully diluted cap table and model security class, conversion, preference seniority, participation, transaction costs, taxes and downside cases before estimating proceeds.",
+            "bulletPoints": [
+              "Cap-table basis: distinguish issued, outstanding and fully diluted ownership and include options, warrants, SAFEs, convertible notes and promised grants",
+              "Dilution: model new money, pre- and post-money valuation, option-pool increases and instrument conversion; pro-rata rights preserve nothing unless exercised with additional capital",
+              "Liquidation preferences: compare seniority, multiples, participation, conversion choice, dividends and caps across realistic exit values",
+              "Secondary transactions: verify transfer restrictions, company and investor consents, securities-law exemptions, buyer diligence, pricing, tax and settlement; liquidity is never guaranteed"
+            ],
+            "coreConcepts": [
+              {
+                "title": "FULLY DILUTED MODEL",
+                "description": "One reconciled model shows how every security and financing assumption changes ownership and proceeds."
+              },
+              {
+                "title": "EXIT WATERFALL",
+                "description": "Distribute proceeds according to the actual preference stack before estimating what common or converted holders receive."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Cap-Table & Exit-Waterfall Workbook",
+                "subtitle": "Scenario model for rounds, conversion, dilution and preferences",
+                "type": "pdf"
+              },
+              {
+                "title": "GOM-MAR Investment Scenario Cockpit",
+                "subtitle": "Visualize ownership assumptions, evidence and outcome ranges",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Model the contract, not the dream exit\n\nPrivate-company valuations do not create cash and may not reflect the price available in a resale or acquisition. Every model should identify its data source, date and assumptions and should be reconciled after each financing, grant, conversion or transfer.\n\n#### Core modelling checks\n\n- **Security inventory:** Record legal holder, class, quantity, vesting, exercise price, conversion terms and governing documents.\n- **Financing round:** Show pre-money value, new capital, price per share, converting instruments and any option-pool adjustment.\n- **Ownership scenarios:** Compare participation with and without pro-rata exercise and show the extra cash required.\n- **Exit waterfall:** Apply debt, costs, preference seniority, multiples, participation and conversion elections before common proceeds.\n- **Transfer case:** Separate an indicative secondary quote from an executable, approved and legally compliant sale.\n\nHave company counsel and finance professionals reconcile the model against signed documents. A spreadsheet is decision support, not proof of title, valuation or future proceeds."
+          },
+          "understandContent": {
+            "coreTakeaway": "Cap-table and exit models expose assumptions and contractual priorities; they cannot guarantee an IPO, buyer, valuation or payout.",
+            "keyPrinciples": [
+              "Do not describe pro-rata, anti-dilution or information rights unless the signed instrument or side letter actually grants them",
+              "Model multiple downside and timing cases, not only a high-value exit"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Build and review a three-scenario cap-table model:",
+            "checklistItems": [
+              "Reconciled founders, investors, options, SAFEs, notes and warrants on a fully diluted basis",
+              "Compared dilution with and without pro-rata exercise and recorded the additional capital required",
+              "Calculated low, base and high exit waterfalls with preferences, costs, taxes and a zero-liquidity case"
+            ]
+          }
+        }
+      }
+    },
+
+
   },
   pl: {
     1: {
@@ -13176,6 +13291,121 @@ Droga paczka nie tworzy dużego klienta.`,
               "Porównano podatki osobiste i spółki, umowy, substancję, VAT, płace, raportowanie i pełny koszt roczny",
               "Zweryfikowano bankowość, beneficjentów rzeczywistych, źródło środków i wymogi walutowe",
               "Zapisano cel gospodarczy, zależności wdrożenia, sygnały ostrzegawcze i przesłanki corocznej ponownej oceny"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "71": {
+      "title": "71. Corporate Venture Capital i inwestowanie anielskie",
+      "subtitle": "Pozyskiwanie transakcji, umowy SAFE, instrumenty zamienne, cap table i inwestycje w startupy",
+      "description": "Oceniaj prywatne inwestycje startupowe jako spekulacyjne i niepłynne papiery wartościowe: poznaj warunki SAFE i instrumentów zamiennych, prowadź due diligence oparte na dowodach oraz modeluj rozwodnienie, preferencje i wyjścia bez obietnic zwrotu lub płynności.",
+      "lessons": {
+        "71.1": {
+          "stageTitle": "71. Inwestowanie anielskie i umowy SAFE",
+          "title": "Inwestycje w startupy: SAFE, instrumenty zamienne i due diligence pre-seed",
+          "description": "Jak SAFE może dawać umowne prawo do przyszłych udziałów, jak warunki konwersji wpływają na wynik i co sprawdzić przed zaryzykowaniem kapitału.",
+          "learnContent": {
+            "videoTitle": "Masterclass: inwestowanie anielskie, SAFE i ryzyko rynku prywatnego",
+            "summaryText": "SAFE nie jest obecnym udziałem i może nigdy nie przekształcić się w wartościowe akcje. Inwestycje wczesnego etapu mogą upaść, pozostać niepłynne przez lata lub dać wynik odmienny od nagłówkowej wyceny, dlatego wymagają oceny adekwatności, kontroli prawnej i niezależnych dowodów.",
+            "bulletPoints": [
+              "Mechanika SAFE: porównaj valuation cap, dyskonto, MFN, konwersję, płynność i rozwiązanie; prawo pro-rata może wymagać odrębnego side letter",
+              "Dopasowanie instrumentu i jurysdykcji: nie zakładaj, że wzór amerykański działa wszędzie ani że krótka umowa usuwa obowiązki z prawa papierów wartościowych, spółek, podatków lub konsumentów",
+              "Due diligence: zweryfikuj założycieli, własność, umocowanie, runway, klientów, IP, bezpieczeństwo, prywatność, spory i całą historię finansowania",
+              "Ryzyko portfela: dywersyfikacja może ograniczyć koncentrację, lecz nie zapobiega pełnej stracie, oszustwu, potrzebie dalszego kapitału ani wieloletniemu brakowi płynności"
+            ],
+            "coreConcepts": [
+              {
+                "title": "PRAWO DO PRZYSZŁYCH UDZIAŁÓW",
+                "description": "SAFE to umowa, która może się skonwertować po określonym zdarzeniu; dziś nie jest udziałem, spłatą ani gwarantowaną wyceną."
+              },
+              {
+                "title": "DOWODY PRZED FOMO",
+                "description": "Decyzja wymaga zweryfikowanych dokumentów, scenariuszy strat i analizy konfliktów, a nie charyzmy lub mody rynkowej."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik SAFE i due diligence startupu",
+                "subtitle": "Lista warunków, dowodów, ryzyk i kontroli prawnej",
+                "type": "pdf"
+              },
+              {
+                "title": "Rejestr inwestycji prywatnych Mara CRM",
+                "subtitle": "Śledź dokumenty, własność, zgody, aktualizacje i terminy kontroli",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Każdą inwestycję startupową traktuj jako papier zdolny do pełnej straty\n\nSpółki prywatne ujawniają mniej danych niż emitenci publiczni, wyceny mogą wynikać z negocjowanych warunków rundy, a rynek sprzedaży może nie istnieć. Inwestuj wyłącznie kapitał, którego utrata nie zagraża zobowiązaniom osobistym ani firmowym.\n\n#### Cztery warstwy due diligence\n\n1. **Ludzie i umocowanie:** Zweryfikuj tożsamości, referencje, zgodę zarządu, prawo podpisu, konflikty i transakcje z podmiotami powiązanymi.\n2. **Spółka i cap table:** Uzgodnij dokumenty rejestrowe, akcje, opcje, SAFE, noty zamienne, warranty, zastawy i obiecane side letters.\n3. **Dowody biznesowe:** Sprawdź klientów, jakość przychodu, burn rate, runway, unit economics, własność IP i zależności regulacyjne.\n4. **Wynik instrumentu:** Modeluj konwersję, rozwodnienie, stos preferencji, rozwiązanie i zmianę kontroli — także zerowy odzysk.\n\nSkorzystaj z prawnika właściwego dla jurysdykcji i papierów wartościowych. Nie kopiuj wzoru bez zrozumienia zmian, podatków, uprawnień inwestora, ujawnień i ograniczeń oferty."
+          },
+          "understandContent": {
+            "coreTakeaway": "SAFE może uprościć dokumentację, lecz nie czyni inwestycji bezpieczną, płynną ani pewną konwersji na wartościowe udziały.",
+            "keyPrinciples": [
+              "Nie inwestuj gotówki operacyjnej, rezerwy awaryjnej ani pożyczonych środków, których nie możesz stracić",
+              "Przechowuj podpisane instrumenty, side letters, zgody, dowody przelewu i aktualizacje spółki w kontrolowanych aktach"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz akta kontroli dla jednej hipotetycznej inwestycji:",
+            "checklistItems": [
+              "Udokumentowano adekwatność, maksymalną stratę, horyzont płynności, konflikty i potrzebę niezależnej porady",
+              "Uzgodniono cap table ze wszystkimi akcjami, opcjami, SAFE, notami, warrantami i side letters",
+              "Zamodelowano konwersję, kolejną rundę, sprzedaż, rozwiązanie i brak dalszego finansowania"
+            ]
+          }
+        },
+        "71.2": {
+          "stageTitle": "71. Cap table, rozwodnienie i wyjścia",
+          "title": "Cap table i rozwodnienie: modelowanie scenariuszy od seed do wyjścia",
+          "description": "Jak rundy, pule opcji, warunki konwersji i preferencje likwidacyjne zmieniają własność i wpływy oraz dlaczego secondary sale wymaga zgód, zgodności i realnego kupca.",
+          "learnContent": {
+            "videoTitle": "Masterclass: cap table, preferencje i scenariusze wyjścia",
+            "summaryText": "Nagłówkowy procent udziału nie określa kwoty dla inwestora. Przed oszacowaniem wpływów zbuduj w pełni rozwodniony cap table i uwzględnij klasę papieru, konwersję, kolejność preferencji, uczestnictwo, koszty transakcji, podatki i scenariusze spadkowe.",
+            "bulletPoints": [
+              "Podstawa cap table: rozróżnij udziały wyemitowane, pozostające w obrocie i fully diluted oraz uwzględnij opcje, warranty, SAFE, noty zamienne i obiecane granty",
+              "Rozwodnienie: modeluj nowy kapitał, wycenę pre- i post-money, zwiększenie puli opcji i konwersję; pro-rata niczego nie zachowuje bez wykonania prawa i dodatkowego kapitału",
+              "Preferencje likwidacyjne: porównaj kolejność, mnożniki, udział w nadwyżce, wybór konwersji, dywidendy i limity przy realistycznych wartościach wyjścia",
+              "Transakcje wtórne: sprawdź ograniczenia transferu, zgody spółki i inwestorów, wyjątki prawne, kontrolę kupującego, cenę, podatek i rozliczenie; płynność nie jest gwarantowana"
+            ],
+            "coreConcepts": [
+              {
+                "title": "MODEL FULLY DILUTED",
+                "description": "Jeden uzgodniony model pokazuje wpływ każdego papieru i założenia rundy na własność oraz wpływy."
+              },
+              {
+                "title": "WATERFALL WYJŚCIA",
+                "description": "Rozdziel wpływy według rzeczywistego stosu preferencji przed oszacowaniem kwoty dla common lub konwertujących posiadaczy."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Arkusz cap table i exit waterfall",
+                "subtitle": "Model rund, konwersji, rozwodnienia i preferencji",
+                "type": "pdf"
+              },
+              {
+                "title": "GOM-MAR Investment Scenario Cockpit",
+                "subtitle": "Wizualizuj założenia własności, dowody i przedziały wyników",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Modeluj umowę, nie wymarzone wyjście\n\nWycena spółki prywatnej nie tworzy gotówki i może nie odpowiadać cenie dostępnej przy odsprzedaży lub przejęciu. Każdy model powinien wskazywać źródło, datę i założenia oraz być uzgadniany po każdej rundzie, emisji, konwersji lub sprzedaży.\n\n#### Najważniejsze kontrole modelu\n\n- **Inwentarz papierów:** Zapisz prawnego posiadacza, klasę, ilość, vesting, cenę wykonania, warunki konwersji i dokumenty.\n- **Runda:** Pokaż wycenę pre-money, nowy kapitał, cenę akcji, konwertowane instrumenty i zmianę puli opcji.\n- **Scenariusze własności:** Porównaj udział z wykonaniem i bez wykonania pro-rata oraz pokaż wymagany dodatkowy kapitał.\n- **Exit waterfall:** Zastosuj dług, koszty, kolejność preferencji, mnożniki, udział i decyzje o konwersji przed wpływami common.\n- **Transfer:** Oddziel orientacyjną ofertę secondary od wykonalnej, zatwierdzonej i zgodnej z prawem sprzedaży.\n\nNiech prawnik spółki i specjalista finansowy uzgodnią model z podpisanymi dokumentami. Arkusz wspiera decyzję, ale nie dowodzi tytułu, wyceny ani przyszłych wpływów."
+          },
+          "understandContent": {
+            "coreTakeaway": "Modele cap table i wyjścia ujawniają założenia oraz priorytety umowne; nie gwarantują IPO, kupca, wyceny ani wypłaty.",
+            "keyPrinciples": [
+              "Nie opisuj praw pro-rata, anti-dilution lub informacyjnych, jeżeli podpisany instrument lub side letter ich nie przyznaje",
+              "Modeluj kilka scenariuszy spadkowych i czasowych, nie tylko wyjście o wysokiej wartości"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zbuduj i sprawdź trzy scenariusze cap table:",
+            "checklistItems": [
+              "Uzgodniono założycieli, inwestorów, opcje, SAFE, noty i warranty w ujęciu fully diluted",
+              "Porównano rozwodnienie z wykonaniem i bez wykonania pro-rata oraz zapisano wymagany kapitał",
+              "Obliczono niski, bazowy i wysoki exit waterfall z preferencjami, kosztami, podatkami i brakiem płynności"
             ]
           }
         }
