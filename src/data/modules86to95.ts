@@ -476,7 +476,7 @@ Belastbare Nachhaltigkeitsdaten können Kundenanfragen unterstützen, garantiere
     subtitle: 'Public Affairs, Lobbying-Transparenzregister, Botschaftsempfänge & Geopolitische Positionierung',
     color: 'from-indigo-950 via-slate-900 to-black',
     badgeIcon: '🌐',
-    description: 'Gestalte Gesetzgebung und weltweite Partnerschaften: Baue professionelle Public Affairs Abteilungen auf, trage dich in Transparenzregister ein, nutze diplomatische Netzwerke und positioniere dich als gefragter Sachverständiger in Ministerien.',
+    description: 'Vertrete Unternehmensinteressen transparent und evidenzbasiert. Prüfe Register- und Offenlegungspflichten, dokumentiere Kontakte und Beiträge und nutze Außenwirtschaftsangebote ohne privilegierten Zugang oder Einfluss zu behaupten.',
     lessons: [
       {
         id: '89.1',
@@ -488,10 +488,10 @@ Belastbare Nachhaltigkeitsdaten können Kundenanfragen unterstützen, garantiere
         learnContent: {
           videoTitle: 'Masterclass: Public Affairs, Politikberatung & Gesetzgebungsprozesse',
           videoDuration: '34:15',
-          summaryText: 'Wenn Gesetze erlassen werden, die dein Geschäftsmodell verbieten, ist es zu spät. Lerne, wie Großunternehmen über Public Affairs frühzeitig mit Abgeordneten und Ministerien sprechen und wissenschaftlich fundierte Positionspapiere einbringen.',
+          summaryText: 'Legitime Interessenvertretung kann Fachwissen in Konsultationen einbringen. Lerne Prozesse früh zu beobachten, Quellen und Interessen offenzulegen und Kontakte nach geltendem Register-, Integritäts-, Antikorruptions- und Datenschutzrecht zu führen.',
           bulletPoints: [
             'Das Gesetzgebungsverfahren: Referentenentwurf, Kabinettsbeschluss, 1./2./3. Lesung im Bundestag',
-            'Das Lobbyregistergesetz: Rechtssichere Eintragung ohne Verstöße gegen Transparenz- und Compliance-Vorschriften',
+            'Lobbyregister: Anwendungsbereich, Ausnahmen, Eintragung, Auftraggeber, Regelungsvorhaben, Stellungnahmen, finanzielle Angaben und Aktualisierungspflichten prüfen',
             'Das Positionspapier (Policy Brief): 2-seitige Entscheidungsvorlage für Politiker mit konkreten Formulierungsvorschlägen',
             'Verbände & Wirtschaftsräte: Wie du Arbeitskreise in BDI, Bitkom oder Handelskammern leitest'
           ],
@@ -505,7 +505,7 @@ Belastbare Nachhaltigkeitsdaten können Kundenanfragen unterstützen, garantiere
             {
               iconName: 'shield',
               title: 'LOBBY REGISTER COMPLIANCE',
-              description: 'Vollständige Transparenz schützt vor Reputations- und Compliance-Schäden.'
+              description: 'Transparenz reduziert Risiken, garantiert aber weder Compliance noch Schutz vor Reputationsschäden.'
             }
           ],
           resources: [
@@ -526,15 +526,15 @@ Belastbare Nachhaltigkeitsdaten können Kundenanfragen unterstützen, garantiere
           ],
           fullArticleGuide: `### Die Praxis strategischer Regierungsbeziehungen
 
-Erfolgreiche Unternehmer warten nicht auf Gesetze – sie liefern der Politik praxisnahe Lösungen für komplexe Probleme.
+Unternehmen und Verbände können nachvollziehbare Daten und Positionen in offene demokratische Verfahren einbringen.
 
-#### Die Phasen wirksamer Einflussnahme:
+#### Die Phasen verantwortungsvoller Interessenvertretung:
 1. **Frühwarnsystem**: Gesetzesinitiativen auf EU- und Bundesebene bereits in der Konsultationsphase monitoren.
 2. **Allianzen bilden**: Mit anderen Marktführern und Verbänden gemeinsame Stellungnahmen verfassen.
 3. **Parlamentarischer Abend**: Diskussionsrunde im politischen Berlin oder Brüssel ausrichten.`
         },
         understandContent: {
-          coreTakeaway: 'Politiker suchen händeringend nach praxiserprobten Fakten aus der Wirtschaft.',
+          coreTakeaway: 'Politische Entscheidungsträger berücksichtigen unterschiedliche gesellschaftliche Perspektiven; Unternehmensangaben müssen überprüfbar und als Interessenposition erkennbar sein.',
           keyPrinciples: [
             'Niemals parteipolitisch einseitig agieren – gute Kontakte zu allen demokratischen Fraktionen pflegen',
             'Stets die Verhaltensregeln des Bundestages und Transparenzgesetze peinlich genau einhalten'
@@ -557,22 +557,22 @@ Erfolgreiche Unternehmer warten nicht auf Gesetze – sie liefern der Politik pr
         stageTitle: '89. Diplomatische Delegationen & Botschaften',
         title: 'Wirtschaftsdiplomatie: Auslandsreisen mit Wirtschaftsdelegationen & Botschaften',
         durationMinutes: 31,
-        description: 'Wie du an offiziellen Delegationsreisen von Ministern teilnimmst, Kontakte über Botschaften knüpfst und internationale Großaufträge schließt.',
+        description: 'Wie du Eignung und Bedingungen offizieller Delegationen prüfst, Außenwirtschaftskontakte verantwortungsvoll nutzt und Chancen ohne Auftragsgarantie bewertest.',
         learnContent: {
           videoTitle: 'Masterclass: Wirtschaftsdiplomatie & Internationale Delegationsreisen',
           videoDuration: '31:50',
-          summaryText: 'Ein Handschlag auf einer ministeriellen Wirtschaftsdelegationsreise öffnet Türen zu ausländischen Staatsoberhäuptern und Staatskonzernen. Lerne, wie du dich für Wirtschaftsdelegationen bewirbst und diplomatische Protokolle meisterst.',
+          summaryText: 'Delegationsreisen können Marktzugang und Gespräche erleichtern, schaffen aber keinen Anspruch auf politische Kontakte, staatliche Unterstützung oder Aufträge. Lerne Auswahl, Protokoll, Compliance und Nachbereitung.',
           bulletPoints: [
             'Delegationsreisen des Bundesministeriums (BMDV / BMWK): Bewerbungsprozess und Kriterien für Unternehmer',
             'Die Rolle der Auslandshandelskammern (AHK): Weltweites B2B-Matchmaking in 140+ Standorten',
             'Diplomatisches Protokoll: Sitzordnungen, Geschenk-Etikette und formale Anrede bei Botschaftern',
-            'Bilateraler Investitionsschutz: Wie zwischenstaatliche Abkommen deine Auslandsinvestitionen absichern'
+            'Investitionsschutz: Anwendbarkeit, geschützte Investition, Ausnahmen, Verfahren und Durchsetzbarkeit mit Spezialisten prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
               title: 'MINISTERIAL DELEGATION',
-              description: 'Reisen unter dem Schutz und der Reputation der Bundesregierung.',
+              description: 'Offizielle Reiseformate mit festgelegten Teilnahmebedingungen; Unternehmen bleiben für Sorgfalt, Sicherheit, Compliance und Verträge verantwortlich.',
               highlight: true
             },
             {
@@ -599,14 +599,14 @@ Erfolgreiche Unternehmer warten nicht auf Gesetze – sie liefern der Politik pr
           ],
           fullArticleGuide: `### Der Hebel staatlicher Außenwirtschaftsförderung
 
-Nutze die diplomatische Infrastruktur deines Landes für risikofreie Expansion in Überseemärkte.
+Nutze Außenwirtschaftsangebote zur Information und Kontaktanbahnung, ohne Risiken oder staatliche Absicherung zu unterstellen.
 
 #### Die Vorbereitung einer Delegationsreise:
 - **AHK-Erstbriefing**: Marktanalyse und individuelle B2B-Gesprächstermine vor Ort vereinbaren.
 - **Letter of Intent (LOI)**: Vorbereitung von Kooperationsverträgen, die feierlich im Beisein des Ministers unterzeichnet werden.`
         },
         understandContent: {
-          coreTakeaway: 'Wer mit der Flagge seines Landes im Rücken verhandelt, genießt unübertroffenen Vertrauensvorschuss.',
+          coreTakeaway: 'Offizielle Formate können Sichtbarkeit schaffen; Vertrauen entsteht durch Eignung, Integrität, Leistung und lokale Sorgfalt.',
           keyPrinciples: [
             'Kulturelle Besonderheiten und Gastgeschenke des Ziellandes vorab mit der Botschaft abstimmen',
             'Nachbereitung der Kontakte innerhalb von 5 Werktagen mit persönlichem Dankschreiben durchführen'
