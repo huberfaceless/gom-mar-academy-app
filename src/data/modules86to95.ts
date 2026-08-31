@@ -319,7 +319,7 @@ Der US-Markt umfasst zahlreiche staatliche und lokale Sales-Tax-Regeln; Pflichte
     subtitle: 'Advisory Boards, Aufsichtsratsvergütung, Organhaftung (D&O Versicherung) & ESG Reporting',
     color: 'from-slate-800 via-zinc-800 to-stone-900',
     badgeIcon: '⚖️',
-    description: 'Führe dein Unternehmen mit der Governance eines börsennotierten Konzerns: Baue hochkarätige Beiräte auf, meistere Aufsichtsratssitzungen, schütze Geschäftsführer durch D&O-Versicherungen und erfülle CSRD/ESG-Nachhaltigkeitsberichte.',
+    description: 'Entwickle eine zur Rechtsform und Unternehmensgröße passende Governance. Kläre Beirats- und Organrollen, Entscheidungsprozesse, D&O-Deckung sowie aktuelle gesetzliche oder freiwillige Nachhaltigkeitsberichterstattung.',
     lessons: [
       {
         id: '88.1',
@@ -327,28 +327,28 @@ Der US-Markt umfasst zahlreiche staatliche und lokale Sales-Tax-Regeln; Pflichte
         stageTitle: '88. Beiratsaufbau & Organhaftung',
         title: 'Der Strategische Beirat (Advisory Board): Top-Entscheider als Sparringspartner',
         durationMinutes: 32,
-        description: 'Wie du ehemalige Dax-Vorstände und Minister für deinen Beirat gewinnst, Vergütungsmodelle (Equity vs. Cash) strukturierst und D&O-Versicherungen abschließt.',
+        description: 'Wie du qualifizierte und unabhängige Beiratsmitglieder auswählst, Interessenkonflikte und Vergütung regelst sowie D&O-Bedarf, Deckung und Ausschlüsse prüfst.',
         learnContent: {
           videoTitle: 'Masterclass: Strategischer Beirat, Organhaftung & Governance',
           videoDuration: '32:30',
-          summaryText: 'Ein Beirat verleiht deinem Unternehmen sofortige institutionelle Glaubwürdigkeit und öffnet Türen zu Großkonzernen. Lerne, wie du renommierte Persönlichkeiten berufen kannst und dich als Geschäftsführer gegen existenzielle Haftungsrisiken absicherst.',
+          summaryText: 'Ein geeigneter Beirat kann Entscheidungen verbessern, schafft aber weder automatisch Glaubwürdigkeit noch Aufträge. Lerne Mandat, Auswahl, Unabhängigkeit, Vergütung, Vertraulichkeit und Versicherungsschutz sorgfältig zu gestalten.',
           bulletPoints: [
             'Der Beiratsvertrag: Beratungsbeirat vs. Kontrollbeirat – warum Startups mit unverbindlichen Beratungsbeiräten starten',
-            'Vergütungsstrukturen: 0.25% bis 1% Anteile (mit 2-Jahres-Vesting) oder 5.000€ bis 15.000€ Sitzungsgeld',
-            'D&O Versicherung (Directors & Officers): Persönlicher Vermögensschutz bei Fehlentscheidungen der Geschäftsleitung',
-            'Die Business Judgment Rule (§ 93 AktG analog): Rechtssichere Dokumentation von unternehmerischen Risikoentscheidungen'
+            'Vergütungsstrukturen: Marktvergleich, Zeitaufwand, Verantwortung, Unabhängigkeit, Steuer- und Gesellschaftsrecht sowie Vesting fallbezogen prüfen',
+            'D&O-Versicherung: Claims-made-Prinzip, versicherte Personen, Deckung, Selbstbehalt, Ausschlüsse, Nachmeldefrist und Interessenkonflikte prüfen',
+            'Business Judgment Rule: Anwendbarkeit nach Rechtsform und Jurisdiktion prüfen; Entscheidung auf angemessener Informationsgrundlage und zum Unternehmenswohl dokumentieren'
           ],
           coreConcepts: [
             {
               iconName: 'users',
               title: 'ADVISORY GRAVITY',
-              description: 'Hochkarätige Beiräte heben das Vertrauen von Banken und Investoren auf Konzernniveau.',
+              description: 'Beiräte können Expertise und Kontrolle stärken; Wirkung hängt von Mandat, Unabhängigkeit, Qualität und tatsächlicher Arbeit ab.',
               highlight: true
             },
             {
               iconName: 'shield',
               title: 'D&O ASSET SHIELD',
-              description: 'Vollständiger Schutz des privaten Privatvermögens der Geschäftsführer.'
+              description: 'D&O kann bestimmte Ansprüche decken, enthält aber Grenzen, Ausschlüsse, Selbstbehalte und Deckungsrisiken.'
             }
           ],
           resources: [
@@ -378,10 +378,10 @@ Corporate Governance ist kein bürokratischer Selbstzweck, sondern der beste Sch
 4. **Q4 (Vergütung & Governance)**: Zielerreichung der Geschäftsführung und Boni-Freigabe.`
         },
         understandContent: {
-          coreTakeaway: 'Ein gut ausgewählter Beirat bringt 10x mehr Wert durch strategische Netzwerke als er an Aufwand kostet.',
+          coreTakeaway: 'Der Nutzen eines Beirats muss an klaren Zielen, Beiträgen, Entscheidungen und Kosten regelmäßig bewertet werden.',
           keyPrinciples: [
             'Immer eine klare Geschäftsordnung für den Beirat verfassen, um Kompetenzstreitigkeiten zu verhindern',
-            'Geschäftsbeschlüsse immer ausführlich schriftlich begründen, um die Business Judgment Rule zu erfüllen'
+            'Wesentliche Entscheidungen mit Zuständigkeit, Interessen, Informationen, Alternativen, Risiken und Unternehmenswohl angemessen dokumentieren'
           ]
         },
         actionTask: {
@@ -401,22 +401,22 @@ Corporate Governance ist kein bürokratischer Selbstzweck, sondern der beste Sch
         stageTitle: '88. ESG Reporting & CSRD Compliance',
         title: 'ESG & CSRD Nachhaltigkeitsberichterstattung: Vorgaben für den Mittelstand',
         durationMinutes: 30,
-        description: 'Wie du die Corporate Sustainability Reporting Directive (CSRD) meisterst, CO2-Bilanzen erstellst und ESG-Ratings für Großkunden optimierst.',
+        description: 'Wie du prüfst, ob und wann CSRD/ESRS gelten, freiwillige Standards nutzt, Treibhausgasdaten kontrolliert erhebst und Kundenanforderungen ohne Greenwashing beantwortest.',
         learnContent: {
           videoTitle: 'Masterclass: ESG-Compliance & CSRD Berichterstattung',
           videoDuration: '30:45',
-          summaryText: 'Großkonzerne dürfen laut Gesetz nur noch mit Lieferanten zusammenarbeiten, die ihre ESG-Daten (Environmental, Social, Governance) offenlegen. Erfahre, wie du Scope 1, 2 und 3 Emissionen berechnest und ESG als Wettbewerbsvorteil nutzt.',
+          summaryText: 'Es gibt kein allgemeines Gesetz, das Großkonzernen jede Zusammenarbeit ohne ESG-Offenlegung verbietet. Berichtspflichten und Lieferkettenanfragen hängen von aktueller Regulierung, Vertrag, Branche und Wesentlichkeit ab.',
           bulletPoints: [
-            'Die CSRD Richtlinie: Wesentlichkeitsanalyse (Double Materiality) für Umwelt- und Sozialfaktoren',
+            'CSRD/ESRS: aktuellen Anwendungsbereich, Übergangsregeln und doppelte Wesentlichkeit zum jeweiligen Berichtsjahr prüfen',
             'Scope 1, 2 und 3 Emissionen: Direkte Emissionen, Energiebezug und Lieferketten-Emissionen bilanzieren',
-            'EcoVadis & CDP Ratings: Wie du Gold- und Platin-Medaillen für Lieferanten-Audits erreichst',
-            'Greenwashing-Vermeidung: Rechtssichere Kommunikation nach der EU Green Claims Directive'
+            'Externe ESG-Ratings: Methodik, Nachweise, Gültigkeitszeitraum, Vergleichbarkeit und kommerzielle Interessen prüfen',
+            'Greenwashing-Vermeidung: geltendes Verbraucher-, Wettbewerbs- und sektorspezifisches Recht prüfen; Gesetzesvorschläge nicht als geltendes Recht darstellen'
           ],
           coreConcepts: [
             {
               iconName: 'award',
               title: 'ECOVADIS GOLD',
-              description: 'Top-Bewertungen öffnen Türen bei DAX-Einkaufsabteilungen sofort.',
+              description: 'Ratings können Beschaffung unterstützen, garantieren aber weder Qualifikation noch Auftrag.',
               highlight: true
             },
             {
@@ -443,7 +443,7 @@ Corporate Governance ist kein bürokratischer Selbstzweck, sondern der beste Sch
           ],
           fullArticleGuide: `### Nachhaltigkeit als härtester Wettbewerbsvorteil
 
-Wer seine ESG-Zahlen parat hat, verdrängt unvorbereitete Konkurrenten aus bestehenden Konzern-Lieferketten.
+Belastbare Nachhaltigkeitsdaten können Kundenanfragen unterstützen, garantieren aber keinen Wettbewerbsvorteil oder Lieferantenstatus.
 
 #### Die 3 Säulen des ESG-Dashboards:
 - **Environmental**: Strom aus erneuerbaren Energien, Reduzierung von Verpackungsmüll.
@@ -451,7 +451,7 @@ Wer seine ESG-Zahlen parat hat, verdrängt unvorbereitete Konkurrenten aus beste
 - **Governance**: Whistleblower-System, Antikorruptionsrichtlinien und transparente Eigentümerstrukturen.`
         },
         understandContent: {
-          coreTakeaway: 'ESG ist die Eintrittskarte für langfristige Verträge mit Fortune-500 Unternehmen.',
+          coreTakeaway: 'ESG-Daten können Teil der Lieferantenprüfung sein; langfristige Verträge hängen von vielen Leistungs-, Risiko- und Einkaufsfaktoren ab.',
           keyPrinciples: [
             'Niemals mit ungeprüften "Klimaneutral"-Aussagen werben – Green Claims erfordern wissenschaftliche Nachweise',
             'Ein digitales Hinweisgebersystem (Whistleblower Protection) gesetzeskonform einrichten'
