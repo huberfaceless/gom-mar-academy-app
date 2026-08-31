@@ -7,7 +7,7 @@ export const MODULES_86_TO_95: Stage[] = [
     subtitle: 'VLLM, Ollama Enterprise, Air-Gapped KI-Cluster & DSGVO-Datensouveränität',
     color: 'from-slate-700 via-blue-900 to-zinc-950',
     badgeIcon: '💽',
-    description: 'Bediene regulierte Banken, Spitäler und Regierungsbehörden: Deploye hochperformante Open-Weight LLMs (Llama 3, Mistral Large, Qwen) in isolierten Air-Gapped Rechenzentren mit VLLM, Quantisierung und 100% DSGVO-Datensouveränität.',
+    description: 'Plane kontrollierte On-Premises- oder souveräne LLM-Deployments für sensible Umgebungen. Prüfe Modelllizenzen, Datenschutzrollen, Rechtsgrundlage, Sicherheit, Betrieb und Datenflüsse; lokale Verarbeitung garantiert keine DSGVO-Konformität.',
     lessons: [
       {
         id: '86.1',
@@ -15,16 +15,16 @@ export const MODULES_86_TO_95: Stage[] = [
         stageTitle: '86. On-Premises LLM Serving & VLLM',
         title: 'Air-Gapped LLM Serving: VLLM, Tensor-Parallelismus & Quantisierung (AWQ/GPTQ)',
         durationMinutes: 35,
-        description: 'Wie du 70B+ Modelle auf eigenen GPU-Clustern mit PagedAttention hostest, Latenzen minimierst und 500+ Tokens/Sekunde servierst.',
+        description: 'Wie du Modelle anhand realer Workloads benchmarkst, Hardware und Quantisierung auswählst sowie Latenz, Durchsatz, Qualität, Verfügbarkeit und Kosten abwägst.',
         learnContent: {
           videoTitle: 'Masterclass: On-Premises LLM Serving & Hardware-Dimensionierung',
           videoDuration: '35:20',
-          summaryText: 'Regulierte Industrien dürfen keine Kundendaten an US-Cloud-APIs senden. Wer Open-Weight Modelle auf eigener Hardware mit VLLM hosten kann, gewinnt 250.000€+ Jahresverträge bei Banken und Versicherungen.',
+          summaryText: 'Regulierte Organisationen müssen Cloud-Nutzung und internationale Datentransfers fallbezogen prüfen. On-Premises kann Kontrolle erhöhen, erfordert aber weiterhin Datenschutz-, Sicherheits-, Beschaffungs- und Betriebsnachweise; Vertragswerte sind nicht garantiert.',
           bulletPoints: [
-            'PagedAttention & Continuous Batching: Wie VLLM den GPU-Speicherbedarf um 80% reduziert',
-            'Quantisierung (AWQ / GPTQ): 70B-Modelle auf sparsamen 24GB GPUs (NVIDIA RTX 4090 / A5000) betreiben',
+            'PagedAttention & Continuous Batching: Speicherverwaltung und Durchsatz anhand der verwendeten vLLM-Version und Workload benchmarken',
+            'Quantisierung (z. B. AWQ/GPTQ): Kompatibilität, Speicherbedarf, Ausführungsunterstützung und Qualitätsverlust je Modell und Hardware messen',
             'Tensor-Parallelismus: Modellgewichte über mehrere GPUs hinweg parallel ausführen',
-            'Air-Gapped Netzwerk-Isolierung: Null ausgehender Internet-Traffic – vollständige Datenimmunität'
+            'Air-Gapped Betrieb: Datenwege, Updates, Lieferkette, Wechseldatenträger und Wartungszugänge kontrollieren; Isolation schließt Datenabfluss nicht vollständig aus'
           ],
           coreConcepts: [
             {
@@ -36,7 +36,7 @@ export const MODULES_86_TO_95: Stage[] = [
             {
               iconName: 'lock',
               title: 'AIR-GAPPED SOVEREIGNTY',
-              description: '100% lokales Deployment ohne externe API-Abhängigkeit oder Datenabfluss.'
+              description: 'Lokales Deployment kann externe API-Abhängigkeit reduzieren; Datenabfluss bleibt über Betrieb, Benutzer, Lieferkette und Schnittstellen möglich.'
             }
           ],
           resources: [
@@ -66,10 +66,10 @@ Datenschutz und Unabhängigkeit sind für Banken und den Mittelstand die wichtig
 4. **Monitoring & Tracing**: Prometheus & Grafana für GPU-Temperatur, VRAM und Token-Throughput.`
         },
         understandContent: {
-          coreTakeaway: 'Wer On-Premises KI beherrscht, besitzt das Monopol bei sicherheitskritischen Enterprise-Kunden.',
+          coreTakeaway: 'On-Premises-Kompetenz kann ein Differenzierungsmerkmal sein, schafft aber weder ein Monopol noch garantierte Aufträge.',
           keyPrinciples: [
             'Niemals unberechtigte Modellgewichte ohne Lizenzprüfung für kommerzielle Zwecke einsetzen',
-            'Immer ein Fallback-GPU-Modul für Hochverfügbarkeit ohne Ausfallzeiten vorhalten'
+            'Verfügbarkeitsziele definieren und Redundanz, Ersatzteile, Failover sowie Wiederanlauf regelmäßig testen'
           ]
         },
         actionTask: {
@@ -93,11 +93,11 @@ Datenschutz und Unabhängigkeit sind für Banken und den Mittelstand die wichtig
         learnContent: {
           videoTitle: 'Masterclass: Lokale Vektordatenbanken & Enterprise RAG',
           videoDuration: '32:40',
-          summaryText: 'Ein lokales LLM nützt wenig ohne das Wissen des Unternehmens. Lerne, wie du hochperformante lokale Vektordatenbanken wie Qdrant oder Milvus aufsetzt, Chunking optimierst und Halluzinationen durch Cross-Encoder Reranker eliminierst.',
+          summaryText: 'Lokales RAG kann freigegebenes Unternehmenswissen nutzbar machen. Lerne Retrieval, Chunking, Metadaten, Berechtigungen, Reranking und Evaluation; Reranker reduzieren Fehlabrufe, eliminieren Halluzinationen aber nicht.',
           bulletPoints: [
             'Lokale Embedding-Modelle: BGE-M3 und E5-Mistral lokal auf GPU ohne OpenAI-API berechnen',
             'Hybrid-Search: Kombination aus dichter Vektorsuche (Dense) und exakter Stichwortsuche (BM25)',
-            'Cross-Encoder Reranking: Die Top 50 Suchergebnisse in 50 Millisekunden nach Relevanz nachsortieren',
+            'Cross-Encoder Reranking: Kandidatenzahl, Modell, Hardware, Latenz und Qualitätsgewinn mit repräsentativen Anfragen messen',
             'Access-Control-List (ACL) RAG: Dokumenten-Rechte des Nutzers direkt im Vektor-Filter berücksichtigen'
           ],
           coreConcepts: [
@@ -110,7 +110,7 @@ Datenschutz und Unabhängigkeit sind für Banken und den Mittelstand die wichtig
             {
               iconName: 'shield',
               title: 'ACL VECTOR FILTERING',
-              description: 'Mitarbeiter erhalten nur Antworten aus Dokumenten, für die sie Leserechte besitzen.'
+              description: 'Berechtigungsfilter müssen vor Retrieval und bei Zitaten konsistent durchgesetzt, getestet und überwacht werden.'
             }
           ],
           resources: [
@@ -131,15 +131,15 @@ Datenschutz und Unabhängigkeit sind für Banken und den Mittelstand die wichtig
           ],
           fullArticleGuide: `### Enterprise Knowledge Intelligence
 
-Lokal gehostetes RAG ist die wertvollste Schnittstelle zwischen Firmenwissen und Sprachmodell.
+Lokal gehostetes RAG kann eine kontrollierte Schnittstelle zwischen freigegebenem Firmenwissen und Sprachmodell bilden.
 
-#### Die Pipeline für 99.9% fehlerfreie Antworten:
+#### Eine evaluierbare RAG-Pipeline:
 - **Semantisches Chunking**: Dokumente nach Überschriften und Absätzen trennen, nicht starr nach Zeichenanzahl.
-- **Vektor-Index**: HNSW-Index in Qdrant für Sub-Millisekunden Retrieval.
-- **Reranker-Modell**: BGE-Reranker-Large für höchste Präzision vor der Übergabe an das LLM.`
+- **Vektor-Index**: HNSW-Parameter, Filter und Latenz mit realem Datenvolumen benchmarken.
+- **Reranker-Modell**: Modellwahl anhand domänenspezifischer Relevanz, Latenz und Ressourcen testen.`
         },
         understandContent: {
-          coreTakeaway: 'Hybride Suche mit Reranking schlägt simple Vektorsuche um das Dreifache an Präzision.',
+          coreTakeaway: 'Hybride Suche mit Reranking kann die Retrieval-Qualität verbessern; der Nutzen muss mit domänenspezifischen Datensätzen gemessen werden.',
           keyPrinciples: [
             'Niemals Dokumente ohne Metadaten (Autor, Erstellungsdatum, Berechtigungsgruppe) indexieren',
             'Antworten immer mit direkten Quellenangaben und Seitenzahlen im Zitat versehen'
