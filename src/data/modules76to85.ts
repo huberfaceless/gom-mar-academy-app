@@ -820,7 +820,7 @@ RBF ist ideal für SaaS- und E-Commerce-Unternehmen mit wiederkehrenden, verifiz
             {
               iconName: 'shield-check',
               title: 'AD FRAUD FILTERING',
-              description: 'Vollständige Eliminierung von Bots spart bis zu 25% des Mediabudgets.'
+              description: 'Mehrstufige Kontrollen können Bot- und Betrugsrisiken reduzieren, aber nicht vollständig ausschließen.'
             }
           ],
           resources: [
@@ -893,7 +893,7 @@ Programmatic Advertising gibt dir die Kontrolle über deine Mediainvestitionen z
             {
               iconName: 'shield',
               title: 'DATA CLEAN ROOMS',
-              description: 'Mathematisch sicherer Zielgruppenabgleich ohne DSGVO-Risiken.'
+              description: 'Kontrollierter Zielgruppenabgleich kann Datenrisiken reduzieren, ersetzt aber keine DSGVO-Prüfung.'
             }
           ],
           resources: [
@@ -906,7 +906,7 @@ Programmatic Advertising gibt dir die Kontrolle über deine Mediainvestitionen z
             },
             {
               title: 'GOM-MAR UID2 Identity Bridge',
-              subtitle: 'Zukunftssichere Cookielose Werbe-Identifikatoren generieren',
+              subtitle: 'Cookielose Werbe-Identifikatoren kontrolliert prüfen und verwalten',
               type: 'tool',
               iconName: 'settings',
               actionUrl: 'settings'
@@ -935,7 +935,7 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
           checklistItems: [
             'Liste von 5 relevanten Fach- und Wirtschaftsverlagen für Zielkunden recherchiert',
             'Deal-Anfrage-Template für Verlagsansprache formuliert',
-            'UID2 Identity Bridge im Mara CRM aktiviert'
+            'Identity- oder Clean-Room-Workflow rechtlich und technisch geprüft'
           ],
           toolboxCategory: 'crm'
         }

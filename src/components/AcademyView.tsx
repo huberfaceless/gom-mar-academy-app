@@ -5,6 +5,7 @@ import { LessonVideoPlayer } from './LessonVideoPlayer';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
 import { localizeAcademyStages } from '../i18n/academyLocalization';
+import { localizeAcademyStage81 } from '../i18n/academyLocalization81';
 import { 
   Play, 
   CheckCircle, 
@@ -106,7 +107,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 }) => {
   const { language } = useLanguage();
   const copy = academyCopy[language];
-  const localizedStages = useMemo(() => localizeAcademyStages(stages, language), [stages, language]);
+  const localizedStages = useMemo(() => localizeAcademyStage81(localizeAcademyStages(stages, language), language), [stages, language]);
   const isLight = user.theme === 'clean-light' || !user.theme;
 
   // If an initial lesson ID was passed, open lesson mode directly; otherwise start in course overview
