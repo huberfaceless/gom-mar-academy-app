@@ -1097,36 +1097,36 @@ Retrofit kann zusätzliche Zustandsdaten liefern, muss aber sicherheitstechnisch
     subtitle: 'Epigenetische Uhren, Ganzkörper-MRTs, NAD+ Infusionen & VIP-Langlebigkeits-Mitgliedschaften',
     color: 'from-emerald-700 via-teal-800 to-zinc-950',
     badgeIcon: '🧬',
-    description: 'Betritt den 600-Milliarden-Dollar Zukunftsmarkt der Langlebigkeit (Longevity): Baue hochpreisige Funnels für präventive Ganzkörper-MRTs, biologische Altersbestimmungen (Horvath Clock), Peptid-Therapien und 50.000€ Concierge-Health-Mitgliedschaften.',
+    description: 'Entwickle verantwortungsvolle Informations- und Patientenpfade für ärztlich geleitete Präventionsangebote. Trenne evidenzbasierte Versorgung von experimentellen Verfahren und beachte Berufsrecht, Heilmittelwerberecht, Medizinprodukterecht, Einwilligung und den besonderen Schutz von Gesundheitsdaten.',
     lessons: [
       {
         id: '93.1',
         stageId: 93,
         stageTitle: '93. Longevity-Diagnostik & VIP-Gesundheitspässe',
-        title: 'Präventive Diagnostik: Ganzkörper-MRT, Epigenetik & 10.000€ Health-Audits',
+        title: 'Präventive Diagnostik: Evidenz, Einwilligung & verantwortungsvolle Patientenpfade',
         durationMinutes: 34,
-        description: 'Wie du wohlhabende Unternehmer für präventive Früherkennung gewinnst, epigenetische Tests vertreibst und medizinische Partnerkliniken anbindest.',
+        description: 'Wie Kliniken über Nutzen, Grenzen, Zufallsbefunde, Folgeuntersuchungen und Kosten transparent informieren und Marketing strikt von ärztlicher Indikation trennen.',
         learnContent: {
           videoTitle: 'Masterclass: Longevity-Funnels & Präventivmedizin-Marketing',
           videoDuration: '34:20',
-          summaryText: 'Gesundheit ist das einzige Gut, das Milliardäre nicht direkt kaufen können – aber sie zahlen jeden Preis für die Verlängerung ihrer gesunden Lebensspanne (Healthspan). Lerne, wie du VIP-Health-Audits mit Ganzkörper-MRT, DNA-Methylierung und Kardio-Scans als hochrentable Funnels aufsetzt.',
+          summaryText: 'Präventionsangebote dürfen weder Angst noch Wohlstand als Druckmittel nutzen. Ganzkörper-MRT, epigenetische Uhren und breite Biomarker-Panels haben je nach Zielgruppe unterschiedliche Evidenz, Fehlalarm- und Zufallsbefundrisiken. Auswahl und Interpretation gehören in ärztliche Verantwortung und gemeinsame Entscheidungsfindung.',
           bulletPoints: [
-            'Der Ganzkörper-MRT Funnel: 2.500€ bis 5.000€ für 60-minütige Krebs- und Aneurysmen-Früherkennung',
-            'Epigenetische Altersmessung (DNAm PhenoAge / GrimAge): Das biologische Alter vor und nach der Therapie beweisen',
-            'Blutpanel mit 120 Biomarkern: ApoB, Lp(a), hs-CRP, Homocystein und hormonelle Optimierung',
-            'Arzt-Kooperationsmodell: Du lieferst Marketing und Funnels, akkreditierte Privatärzte führen die Diagnostik durch'
+            'Ganzkörper-MRT: Zielgruppe, Evidenz, Kontraindikationen, Zufallsbefunde, falsch-positive Ergebnisse und Folgepfade vor Werbung prüfen',
+            'Epigenetische Uhren sind Forschungs- oder Risikomarker und beweisen weder individuelle Verjüngung noch Therapieerfolg',
+            'Biomarker nur mit medizinischer Fragestellung, validiertem Labor, Referenzbereichen und ärztlicher Interpretation anbieten',
+            'Kooperation: klinische Unabhängigkeit, Vergütung, Interessenkonflikte, Zuweisungsrecht und Werbeaussagen vertraglich kontrollieren'
           ],
           coreConcepts: [
             {
               iconName: 'activity',
               title: 'PREVENTIVE MRI',
-              description: 'Vollständige Früherkennung als ultimatives Statussymbol für High-Performers.',
+              description: 'Bildgebung mit möglichem Nutzen und möglichen Schäden; keine vollständige Früherkennung oder Statuswerbung.',
               highlight: true
             },
             {
               iconName: 'heart',
               title: 'EPIGENETIC CLOCK',
-              description: 'Biologische Verjüngung durch messbare Laborwerte schwarz auf weiß belegen.'
+              description: 'Entwicklungsfähige Marker mit methodischer Unsicherheit, ohne Beweis individueller Verjüngung.'
             }
           ],
           resources: [
@@ -1145,30 +1145,30 @@ Retrofit kann zusätzliche Zustandsdaten liefern, muss aber sicherheitstechnisch
               actionUrl: 'crm'
             }
           ],
-          fullArticleGuide: `### Die Revolution der Präventionsmedizin
+          fullArticleGuide: `### Verantwortungsvolle Präventionsmedizin
 
-Die Schulmedizin behandelt Krankheiten, wenn es zu spät ist. Longevity-Medizin optimiert Gesundheit Jahrzehnte im Voraus.
+Etablierte Versorgung und neue Longevity-Angebote dürfen nicht gegeneinander ausgespielt werden. Entscheidend sind individuelle Indikation, Evidenz, Nutzen-Risiko-Abwägung und informierte Einwilligung.
 
-#### Die 4 Stufen des VIP-Health-Audits:
-1. **Bildgebung**: Ganzkörper-MRT + CT-Kalk-Score (CAC) des Herzens.
-2. **Molekular-Diagnostik**: DNA-Methylierungstest zur Bestimmung der biologischen Alterungsrate.
-3. **Kognitiver Scan**: Neuro-Assessment und Reaktionszeit-Mapping.
-4. **Das Executive Dossier**: Ein 50-seitiger personalisierter Optimierungsplan mit Arzt-Besprechung.`
+#### Governance eines Health-Assessments:
+1. **Triage und Indikation**: Anamnese, Leitlinien, Kontraindikationen und vorhandene Befunde ärztlich prüfen.
+2. **Aufklärung**: Nutzen, Grenzen, Fehlalarme, Zufallsbefunde, Strahlenbelastung bei CT, Folgeuntersuchungen und Kosten erklären.
+3. **Testauswahl**: Nur validierte Verfahren und qualitätsgesicherte Labore für eine konkrete Fragestellung einsetzen.
+4. **Befund und Folgepfad**: Ärztliche Interpretation, gemeinsame Entscheidung, Überweisung, Dokumentation und sichere Kommunikation festlegen.`
         },
         understandContent: {
-          coreTakeaway: 'Wer das biologische Alter messbar senkt, gewinnt lebenslang treue Kunden mit höchster Zahlungsbereitschaft.',
+          coreTakeaway: 'Medizinische Kommunikation muss informierte Entscheidungen ermöglichen und darf weder Verjüngung noch Früherkennungserfolg versprechen.',
           keyPrinciples: [
-            'Diagnostik und Therapie immer streng durch approbierte Ärzte nach dem Heilmittelwerbegesetz durchführen lassen',
-            'Sensible Gesundheitsdaten auf isolierten, nach ISO 27799 zertifizierten Servern speichern'
+            'Indikation, Aufklärung, Einwilligung, Befundung und Folgeplanung liegen bei qualifizierten Gesundheitsberufen',
+            'Gesundheitsdaten nur mit Rechtsgrundlage, Zweckbindung, Datenminimierung, Rollen-, Lösch- und Sicherheitskonzept verarbeiten'
           ]
         },
         actionTask: {
-          instruction: 'Konzipiere dein Executive Longevity Diagnostic Angebot:',
+          instruction: 'Erstelle ein Governance-Konzept für ein ärztlich verantwortetes Präventionsangebot:',
           inputType: 'checklist',
           checklistItems: [
-            'Leistungskatalog (MRT, Epigenetik, Blutpanel) mit Partnerarzt definiert',
-            'Bewerbungs-Landingpage für Health-Audits im Mara CRM aufgesetzt',
-            'Datenschutzerklärung für Gesundheitsdaten nach DSGVO Art. 9 hinterlegt'
+            'Evidenz, Zielgruppe, Ausschlüsse, Risiken, Zufallsbefunde und Folgepfade ärztlich geprüft',
+            'Alle Werbeaussagen nach HWG, Berufsrecht und UWG freigegeben',
+            'Art.-9-Rechtsgrundlage, Einwilligung, Zugriffe, Aufbewahrung, Löschung und Incident-Prozess dokumentiert'
           ],
           toolboxCategory: 'crm'
         }
@@ -1177,30 +1177,30 @@ Die Schulmedizin behandelt Krankheiten, wenn es zu spät ist. Longevity-Medizin 
         id: '93.2',
         stageId: 93,
         stageTitle: '93. Concierge Health & Langlebigkeits-Clubs',
-        title: 'Concierge Medicine: 50.000€ Jahres-Mitgliedschaften für private Langlebigkeits-Betreuung',
+        title: 'Concierge Medicine: Versorgungsumfang, Evidenz & sichere Mitgliedschaften',
         durationMinutes: 31,
-        description: 'Wie private Longevity-Clubs (wie Fountain Life oder Biograph) funktionieren, NAD+ Protokolle integriert werden und 24/7 Arzt-Zugänge skaliert werden.',
+        description: 'Wie Mitgliedschaften transparent abgegrenzt, medizinisch verantwortet und ohne Heil-, Verjüngungs-, Verfügbarkeits- oder Erfolgsgarantien gestaltet werden.',
         learnContent: {
           videoTitle: 'Masterclass: Private Longevity Clubs & Concierge Medicine',
           videoDuration: '31:45',
-          summaryText: 'Ein einmaliger Checkup reicht nicht. Wohlhabende Kunden wollen eine kontinuierliche 365-Tage Begleitung durch ein Team aus Ernährungsberatern, Sportwissenschaftlern und Ärzten. Erfahre, wie du exklusive Longevity-Memberships aufbaust.',
+          summaryText: 'Kontinuierliche Betreuung kann Koordination und Prävention unterstützen, muss aber Leistungsumfang, Reaktionszeiten, Notfallgrenzen, Qualifikationen und Evidenz klar benennen. Preis oder Exklusivität ersetzen keine medizinische Qualität und begründen keinen Behandlungserfolg.',
           bulletPoints: [
-            'Das 50k€ Concierge Modell: Vierteljährliche Bluttests, ständige Oura/Whoop-Überwachung und maßgeschneiderte Infusionen',
-            'Peptid- & NAD+ Protokolle: Infusionstherapien zur zellulären Regeneration und Mitochondrien-Verjüngung',
+            'Mitgliedschaft: medizinische und nichtmedizinische Leistungen, Erreichbarkeit, Notfälle, Zusatzkosten, Kündigung und Haftung transparent trennen',
+            'NAD+- und Peptid-Angebote nur nach Zulassungsstatus, Evidenz, Qualität, Kontraindikationen und ärztlicher Nutzen-Risiko-Prüfung; keine Regenerationsversprechen',
             'Der persönliche Health-Navigator: Ein dedizierter medizinscher Concierge koordiniert alle Spezialisten-Termine weltweit',
-            'Exklusive Langlebigkeits-Lounges: Kältekammern (-110°C), hyperbare Sauerstofftherapie (HBOT) und Rotlicht-Betten'
+            'Kryotherapie, HBOT und Lichtanwendungen nur mit belegter Indikation, geeigneten Geräten, qualifiziertem Personal, Screening und Notfallkonzept'
           ],
           coreConcepts: [
             {
               iconName: 'award',
               title: 'CONCIERGE HEALTH',
-              description: '24/7 medizinische Betreuung auf Abruf für Spitzenunternehmer und Familien.',
+              description: 'Vertraglich definierte Koordination und Erreichbarkeit; kein Ersatz für Rettungsdienst oder Notfallversorgung.',
               highlight: true
             },
             {
               iconName: 'zap',
               title: 'HBOT & CRYOTHERAPY',
-              description: 'Hyperbare Sauerstofftherapie beschleunigt Zellreparatur und Stammzell-Aktivität.'
+              description: 'Anwendungen mit indikationsabhängiger Evidenz und Risiken; keine pauschale Zellreparatur- oder Verjüngungsaussage.'
             }
           ],
           resources: [
@@ -1219,29 +1219,30 @@ Die Schulmedizin behandelt Krankheiten, wenn es zu spät ist. Longevity-Medizin 
               actionUrl: 'crm'
             }
           ],
-          fullArticleGuide: `### Die Architektur privater Longevity-Kliniken
+          fullArticleGuide: `### Sichere Architektur einer Concierge-Versorgung
 
-Kombiniere modernste High-Tech Diagnostik mit luxuriösem Hospitality-Ambiente.
+Eine hochwertige Umgebung kann den Zugang erleichtern, ersetzt aber keine klinische Governance, Hygiene, Qualifikation oder Evidenz.
 
-#### Der Jahreszyklus einer VIP-Health-Membership:
-- **Monat 1**: Tiefendiagnostik & Erstellung des individuellen Longevity-Protokolls.
-- **Monat 2-11**: Wöchentliche Kälte-/HBOT-Sessions, monatliche Infusionen, kontinuierliches Biomarker-Tracking.
-- **Monat 12**: Re-Testing aller 120 Biomarker und Berechnung der biologischen Verjüngung.`
+#### Mitgliedschaft mit klaren Grenzen:
+- **Aufnahme**: Ziele, Anamnese, Zuständigkeit, Einwilligung, Datenschutz und geeignete Versorgungspfade klären.
+- **Laufende Betreuung**: Nur medizinisch begründete Kontrollen; Wearables nicht als permanente Diagnose oder Notfallüberwachung darstellen.
+- **Interventionen**: Zulassung, Evidenz, Kontraindikationen, Wechselwirkungen, Geräte- und Arzneimittelsicherheit einzeln prüfen.
+- **Überprüfung**: Ergebnisse mit validierten Endpunkten bewerten; keine biologische Verjüngung, Lebensverlängerung oder Vertragsverlängerung garantieren.`
         },
         understandContent: {
-          coreTakeaway: 'Kontinuierliche Begleitung und messbare Verbesserungen erzeugen 90%+ Verlängerungsquoten bei 5-stelligen Jahresverträgen.',
+          coreTakeaway: 'Eine Mitgliedschaft ist nur vertretbar, wenn Versorgung, Evidenz, Datenverarbeitung, Notfallgrenzen und Vertragsbedingungen transparent sind.',
           keyPrinciples: [
-            'Niemals Heilversprechen abgeben – immer auf präventive Optimierung und Leistungssteigerung fokussieren',
-            'Die Lounge-Atmosphäre wie ein 5-Sterne Boutique-Hotel gestalten – keine sterile Krankenhaus-Optik'
+            'Auch Optimierungs-, Leistungs- und Verjüngungsversprechen können irreführend sein und müssen evidenzbasiert geprüft werden',
+            'Hospitality darf Hygiene, Barrierefreiheit, klinische Sicherheit, Aufklärung und professionelle Grenzen nicht verdrängen'
           ]
         },
         actionTask: {
-          instruction: 'Entwirf deinen privaten Longevity Concierge Club:',
+          instruction: 'Entwirf eine rechtlich und medizinisch geprüfte Mitgliedschaft:',
           inputType: 'checklist',
           checklistItems: [
-            'Mitgliedschaftspakete (Silber, Gold, Black Card 50k€) kalkuliert',
-            'Wearable-Datenanbindung (Oura/Apple Health) im Mara CRM getestet',
-            'Schnittstelle zu privaten Fachärzten und Notfall-Kliniken vertraglich fixiert'
+            'Leistungsumfang, Ausschlüsse, Reaktionszeit, Notfallgrenzen, Zusatzkosten, Kündigung und Beschwerden definiert',
+            'Wearable- und Gesundheitsdaten mit Rechtsgrundlage, Minimalzugriff, Sicherheit, Löschung und Widerruf konzipiert',
+            'Ärztliche Verantwortung, Zulassungsstatus, Evidenz, Geräte, Arzneimittel, Haftung und Notfallübergabe geprüft'
           ],
           toolboxCategory: 'crm'
         }
