@@ -7723,6 +7723,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "80": {
+      "title": "80. Venture Debt, Mezzanine & Revenue-Based Financing",
+      "subtitle": "Debt capacity, covenants, warrants, repayment risk and total-cost analysis",
+      "description": "Evaluate private debt and sales-based financing as risk-bearing obligations rather than easy growth capital. Model cash flow, dilution, security, guarantees, covenants, default remedies and jurisdiction-specific accounting, tax and regulatory treatment before borrowing.",
+      "lessons": {
+        "80.1": {
+          "stageTitle": "80. Venture Debt, Covenants & Warrants",
+          "title": "Venture Debt: Testing Repayment Capacity Before Adding Leverage",
+          "description": "Understand term sheets, interest, fees, security, warrants and covenant scenarios without assuming valuation growth or limited dilution.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Venture Debt Risk & Term-Sheet Analysis",
+            "summaryText": "Venture debt can extend runway or fund a defined asset, but it creates fixed claims on a company whose revenue may be uncertain. It may include warrants, fees, security interests, guarantees and restrictive covenants, so it is neither automatically non-dilutive nor safer than equity. Suitability depends on downside cash flow and refinancing options.",
+            "bulletPoints": [
+              "Calculate total cash and equity-linked cost: interest, original-issue discount, closing and legal fees, unused fees, prepayment, exit fees and warrants",
+              "Model amortisation, interest-only periods and maturity under base, downside and severe downside scenarios rather than relying on market rate ranges",
+              "Translate liquidity, revenue, fundraising, reporting, debt, material-adverse-change and other covenants into monitored triggers and cure rights",
+              "Analyse collateral, priority, account control, IP security, guarantees, intercreditor terms and lender remedies before signing"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "alert-triangle",
+                "title": "DOWNSIDE DEBT CAPACITY",
+                "description": "Borrowing capacity is set by stressed cash flow and realistic access to capital, not forecast growth.",
+                "highlight": true
+              },
+              {
+                "iconName": "file-text",
+                "title": "FULL TERM ECONOMICS",
+                "description": "Price includes cash cost, dilution, restrictions, security, reporting and default consequences."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Venture Debt Term-Sheet & Covenant Review Guide",
+                "subtitle": "A PDF checklist for cost, warrants, security, triggers, remedies and scenarios",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Debt Capacity & Runway Model",
+                "subtitle": "Simulate cash, debt service, covenants, dilution and refinancing scenarios",
+                "type": "tool",
+                "iconName": "bar-chart-2",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Debt converts forecast risk into contractual obligation\n\nBorrowing can preserve current ownership only if the company performs and repays. Warrants or conversion features dilute ownership, and distress can force a financing, asset sale or loss of control. No financing guarantees a higher next-round valuation.\n\n#### A defensible borrowing review\n1. **Define use and alternative**: Link proceeds to a measurable need and compare equity, internal cash, customer finance, bank debt and delaying spend.\n2. **Build integrated scenarios**: Model profit and loss, cash flow and balance sheet monthly through maturity, including taxes, working capital, delayed fundraising and revenue contraction.\n3. **Calculate all-in cost**: Show cash interest, compounding, fees, warrant value, professional costs and early-exit effects. Quoted interest alone is not comparable cost.\n4. **Map the payment waterfall**: Include existing debt, leases, taxes, payroll, supplier obligations and seniority.\n5. **Stress covenants**: Forecast headroom and test when each covenant, representation or reporting failure becomes breach or default. Do not assume every lender will remove protective covenants or grant a 6–12 month interest-only period.\n6. **Review control rights**: Examine consent rights over fundraising, acquisitions, dividends, budgets, new debt, asset sales and changes in business.\n7. **Value warrants realistically**: Model strike price, coverage, anti-dilution, exercise, transfer, information rights and exit effects. A 1–2% outcome is not universal.\n8. **Plan distress early**: Define board reporting, liquidity thresholds, lender contact, cure options, waivers, refinancing and restructuring. A covenant-lite loan can still default at maturity or non-payment.\n9. **Obtain specialist review**: Legal, tax, accounting and regulated finance advice must reflect entity, investors, collateral and jurisdiction.\n\nA 3x LTV-to-CAC ratio does not prove debt capacity. Cohort quality, payback timing, gross margin, churn, concentration and cash conversion matter."
+          },
+          "understandContent": {
+            "coreTakeaway": "Use venture debt only when stressed cash flow can support the full obligation and the company understands dilution, restrictions, collateral and default remedies.",
+            "keyPrinciples": [
+              "Negotiate covenants from realistic volatility and cure mechanics, but do not expect lenders to remove protections needed for credit risk",
+              "Maintain board-approved liquidity and escalation thresholds throughout the facility, not just an optimistic closing runway"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a debt-capacity memorandum for independent review:",
+            "checklistItems": [
+              "Model monthly base, downside and severe-downside cash through maturity and refinancing",
+              "Calculate all cash fees, warrant dilution, covenant headroom, security and remedies",
+              "Compare debt with equity and non-financing alternatives using the same assumptions and decision criteria"
+            ]
+          }
+        },
+        "80.2": {
+          "stageTitle": "80. Revenue-Based Financing & Mezzanine",
+          "title": "Sales-Based and Mezzanine Finance: Compare Cash-Flow Flexibility with Total Risk",
+          "description": "Analyse revenue-share repayment, factor rates, reconciliation, data access, guarantees, subordination and accounting treatment.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Revenue-Based Finance & Mezzanine Risk Analysis",
+            "summaryText": "Sales-based finance may vary payments with revenue, but products differ widely and some use fixed daily withdrawals or restrictive reconciliation. A factor or repayment cap is not an annual percentage rate and can imply a high annualised cost when repaid quickly. Mezzanine can combine debt and equity features, but classification and bank treatment depend on the exact contract and accounting framework.",
+            "bulletPoints": [
+              "Convert factor, fees, holdback and expected timing into total cash cost and annualised scenarios without mislabelling a non-APR metric",
+              "Inspect whether payments truly adjust, how reconciliation works, what counts as revenue and what happens during refunds, seasonality or platform outages",
+              "Verify personal guarantees, security, confessions of judgment, account-control and default clauses; absence of one protection is never automatic",
+              "Assess subordination, maturity, cash or PIK interest, participation, conversion and creditor remedies before calling an instrument mezzanine or equity-like"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "calculator",
+                "title": "COMPARABLE TOTAL COST",
+                "description": "Compare cash flows under the same timing and scenarios rather than headline rates or factor caps.",
+                "highlight": true
+              },
+              {
+                "iconName": "layers",
+                "title": "LEGAL SUBSTANCE OVER LABEL",
+                "description": "Contract terms determine payment, priority, control, accounting and tax consequences—not the product name."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Sales-Based Finance & Mezzanine Comparison Guide",
+                "subtitle": "A PDF framework for cash flows, factor rates, guarantees, priority and legal review",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Financing Scenario Monitor",
+                "subtitle": "Compare repayment, effective cost, liquidity and covenant outcomes without sharing live credentials",
+                "type": "tool",
+                "iconName": "activity",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Flexible payment does not eliminate repayment risk\n\nSales-based financing covers several legal and commercial structures. Some arrangements are loans; others purport to purchase future receivables. Substance, local law and drafting determine the result. A lower payment in a weak month can still drain cash needed for payroll, tax, suppliers or refunds.\n\n#### Compare offers on one cash-flow model\n1. **Identify legal form**: Determine lender or purchaser, governing law, regulator or licence status where relevant, and the true obligation.\n2. **Map every cash flow**: Include advance, withheld fees, factor or cap, fixed or variable withdrawals, minimums, true-ups, late fees, default fees and termination.\n3. **Annualise scenarios carefully**: Calculate effective annualised cost for several revenue and repayment speeds while clearly stating assumptions. A 1.15x cap can be cheap or expensive depending on timing and terms.\n4. **Test payment mechanics**: Verify holdback base, gross versus net revenue, refunds, chargebacks, taxes, multiple accounts, reconciliation frequency and dispute process.\n5. **Protect data and access**: Use least-privilege, read-only connections where possible, review processor terms and privacy, and never hand over credentials through an unsafe workflow.\n6. **Read default broadly**: Examine stacking, new debt, account changes, revenue drops, information duties, cross-default, guarantees, collateral and debit authority. Do not assume approval arrives in 48 hours or without a business review.\n7. **Analyse mezzanine substance**: Model seniority, subordination, maturity, interest, PIK accrual, profit participation, warrants, conversion and enforcement. It may improve a lender's analysis, but it is not automatically accounting equity or a major rating improvement.\n8. **Compare alternatives**: Include bank debt, overdraft, invoice finance, equity, supplier terms, customer prepayment and slower growth.\n9. **Plan exit and distress**: Test early repayment, refinancing, sale, default and restructuring before signing. Multiple overlapping facilities can create severe cash and covenant conflicts, but an absolute stacking rule depends on the contracts.\n\nUse qualified legal, tax and accounting advisers. Financing platforms, eligibility, pricing, guarantees and data requirements change and must be verified directly."
+          },
+          "understandContent": {
+            "coreTakeaway": "Choose sales-based or mezzanine finance only after comparable cash-flow modelling shows that flexibility, total cost, priority and downside remedies fit the business.",
+            "keyPrinciples": [
+              "Do not compare a factor rate directly with loan interest; model dated cash flows and disclose assumptions for any annualised figure",
+              "Verify guarantees, security, debit rights, reconciliation, stacking restrictions and data access in the executed documents"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Build a comparable financing-offer analysis:",
+            "checklistItems": [
+              "Enter every dated cash flow, fee, factor, repayment rule and early-exit term for each offer",
+              "Stress revenue, refunds, seasonality and payment timing while tracking minimum liquidity",
+              "Document legal form, priority, guarantees, data permissions, defaults and accounting or tax questions for advisers"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -15435,6 +15563,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Wymień krytyczne procesy z właścicielem, ryzykiem, regułą lokalnej zmiany, dowodem i terminem przeglądu",
               "Opracuj przejrzystą metodę audytu łączącą operacje, klienta, szkolenia i proporcjonalne obserwacje",
               "Zdefiniuj prywatność, remediation, eskalację, wersjonowanie i przegląd prawny przed wdrożeniem"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "80": {
+      "title": "80. Venture debt, mezzanine i finansowanie zależne od przychodu",
+      "subtitle": "Zdolność dłużna, covenants, warranty, ryzyko spłaty i analiza pełnego kosztu",
+      "description": "Oceniaj private debt i finansowanie sprzedażowe jako ryzykowne zobowiązania, nie łatwy kapitał wzrostowy. Modeluj cash flow, rozwodnienie, zabezpieczenia, gwarancje, covenants, skutki defaultu oraz lokalne ujęcie księgowe, podatkowe i regulacyjne.",
+      "lessons": {
+        "80.1": {
+          "stageTitle": "80. Venture debt, covenants i warranty",
+          "title": "Venture debt: test zdolności spłaty przed dodaniem dźwigni",
+          "description": "Poznaj term sheet, odsetki, opłaty, zabezpieczenia, warranty i scenariusze covenantów bez zakładania wzrostu wyceny lub małego rozwodnienia.",
+          "learnContent": {
+            "videoTitle": "Masterclass: ryzyko venture debt i analiza term sheet",
+            "summaryText": "Venture debt może wydłużyć runway lub sfinansować aktywo, ale tworzy stałe roszczenia wobec firmy o niepewnych przychodach. Może zawierać warranty, opłaty, zabezpieczenia, gwarancje i restrykcyjne covenants, więc nie jest automatycznie nierozwadniający ani bezpieczniejszy od equity. Dopasowanie zależy od downside cash flow i refinansowania.",
+            "bulletPoints": [
+              "Oblicz pełny koszt gotówkowy i equity-linked: odsetki, discount, opłaty, niewykorzystanie, prepayment, exit fees, prawnicy i warranty",
+              "Modeluj amortyzację, interest-only i maturity w scenariuszu bazowym, downside i severe downside zamiast opierać się na przedziałach rynkowych",
+              "Przekształć covenants dotyczące płynności, przychodu, fundraisingu, raportów, długu i MAC w monitorowane triggery i cure rights",
+              "Przeanalizuj collateral, priority, account control, IP security, gwarancje, intercreditor i remedies przed podpisaniem"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "alert-triangle",
+                "title": "ZDOLNOŚĆ DŁUŻNA W DOWNSIDE",
+                "description": "Zdolność wyznacza stresowy cash flow i realny dostęp do kapitału, nie prognoza wzrostu.",
+                "highlight": true
+              },
+              {
+                "iconName": "file-text",
+                "title": "PEŁNA EKONOMIKA WARUNKÓW",
+                "description": "Cena obejmuje gotówkę, rozwodnienie, ograniczenia, zabezpieczenia, raporty i skutki defaultu."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik term sheet i covenantów venture debt",
+                "subtitle": "Lista PDF dla kosztu, warrantów, zabezpieczeń, triggerów, remedies i scenariuszy",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Model zdolności dłużnej i runway Mara CRM",
+                "subtitle": "Symuluj cash, debt service, covenants, rozwodnienie i refinansowanie",
+                "type": "tool",
+                "iconName": "bar-chart-2",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Dług zamienia ryzyko prognozy w obowiązek umowny\n\nDług zachowuje obecną własność tylko przy dobrym wyniku i spłacie. Warranty lub konwersja rozwadniają, a kryzys może wymusić finansowanie, sprzedaż aktywów lub utratę kontroli. Żadne finansowanie nie gwarantuje wyższej wyceny.\n\n#### Obronna analiza\n1. **Określ użycie i alternatywy**: Powiąż środki z potrzebą i porównaj equity, gotówkę, finansowanie klienta, bank i opóźnienie wydatku.\n2. **Buduj zintegrowane scenariusze**: Modeluj P&L, cash flow i bilans miesięcznie do maturity, z podatkami, working capital, opóźnioną rundą i spadkiem przychodu.\n3. **Oblicz all-in cost**: Pokaż odsetki, kapitalizację, opłaty, wartość warrantów, koszty i early exit. Sam procent nie jest porównywalnym kosztem.\n4. **Mapuj waterfall**: Uwzględnij istniejący dług, leasing, podatki, payroll, dostawców i seniority.\n5. **Stresuj covenants**: Prognozuj headroom i moment breach lub defaultu. Nie zakładaj usunięcia covenantów lub 6–12 miesięcy interest-only.\n6. **Sprawdź prawa kontroli**: Zgody na rundy, przejęcia, dywidendy, budżet, nowy dług, sprzedaż aktywów i zmianę biznesu.\n7. **Wyceń warranty**: Modeluj strike, coverage, anti-dilution, exercise, transfer, informacje i exit. 1–2% nie jest uniwersalne.\n8. **Planuj distress**: Ustal raportowanie, progi płynności, kontakt, cure, waivers, refinansowanie i restrukturyzację.\n9. **Uzyskaj poradę**: Analiza prawna, podatkowa, księgowa i finansowa musi odpowiadać podmiotowi, inwestorom, collateral i krajowi.\n\nLTV:CAC 3x nie dowodzi zdolności. Znaczenie mają kohorty, payback, marża, churn, koncentracja i cash conversion."
+          },
+          "understandContent": {
+            "coreTakeaway": "Używaj venture debt tylko, gdy stresowy cash flow obsługuje całość, a firma rozumie rozwodnienie, ograniczenia, collateral i remedies.",
+            "keyPrinciples": [
+              "Negocjuj covenants według realnej zmienności i cure, lecz nie oczekuj usunięcia ochrony wierzyciela",
+              "Utrzymuj zatwierdzone przez zarząd progi płynności i eskalacji przez cały okres finansowania"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj memorandum zdolności dłużnej do niezależnego przeglądu:",
+            "checklistItems": [
+              "Modeluj miesięczny cash w scenariuszu bazowym, downside i severe downside do maturity i refinansowania",
+              "Oblicz opłaty, rozwodnienie, headroom covenantów, zabezpieczenia i remedies",
+              "Porównaj debt, equity i alternatywy bez finansowania na tych samych założeniach"
+            ]
+          }
+        },
+        "80.2": {
+          "stageTitle": "80. Finansowanie przychodowe i mezzanine",
+          "title": "Finansowanie sprzedażowe i mezzanine: elastyczność cash flow a pełne ryzyko",
+          "description": "Analizuj repayment od przychodu, factor rates, reconciliation, dostęp do danych, gwarancje, subordination i księgowanie.",
+          "learnContent": {
+            "videoTitle": "Masterclass: analiza ryzyka RBF i mezzanine",
+            "summaryText": "Finansowanie sprzedażowe może zmieniać płatność z przychodem, ale produkty są różne, a część stosuje stałe dzienne obciążenia lub trudne reconciliation. Factor lub cap nie jest APR i przy szybkiej spłacie może oznaczać wysoki koszt roczny. Mezzanine łączy cechy debt i equity, lecz klasyfikacja zależy od umowy i standardu rachunkowości.",
+            "bulletPoints": [
+              "Przelicz factor, opłaty, holdback i czas na total cash cost oraz scenariusze roczne bez błędnego nazywania APR",
+              "Sprawdź rzeczywistą zmienność płatności, reconciliation, definicję przychodu oraz skutki zwrotów, sezonowości i awarii platformy",
+              "Zweryfikuj gwarancje osobiste, collateral, account control i default; brak jednego zabezpieczenia nigdy nie jest automatyczny",
+              "Oceń subordination, maturity, cash lub PIK interest, participation, conversion i remedies przed nazwaniem instrumentu mezzanine lub equity-like"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "calculator",
+                "title": "PORÓWNYWALNY PEŁNY KOSZT",
+                "description": "Porównuj cash flow przy tym samym czasie i scenariuszu, nie headline rate lub factor cap.",
+                "highlight": true
+              },
+              {
+                "iconName": "layers",
+                "title": "TREŚĆ PRAWNA PONAD ETYKIETĄ",
+                "description": "Umowa określa płatność, priority, kontrolę, księgowanie i podatki, nie nazwa produktu."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik porównania RBF i mezzanine",
+                "subtitle": "Ramy PDF dla cash flow, factor rates, gwarancji, priority i analizy prawnej",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Monitor scenariuszy finansowania GOM-MAR",
+                "subtitle": "Porównuj spłatę, koszt, płynność i covenants bez udostępniania live credentials",
+                "type": "tool",
+                "iconName": "activity",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Elastyczna płatność nie usuwa ryzyka spłaty\n\nFinansowanie sprzedażowe obejmuje różne formy. Część to kredyt, część deklaruje zakup przyszłych należności. Treść, prawo i umowa decydują. Niższa płatność w słabym miesiącu nadal może odebrać środki na payroll, podatki, dostawców i zwroty.\n\n#### Porównaj oferty na jednym modelu\n1. **Ustal formę prawną**: Określ finansującego, prawo, status regulacyjny i rzeczywiste zobowiązanie.\n2. **Mapuj cash flow**: Advance, potrącone fees, factor, fixed lub variable withdrawals, minimum, true-up, late/default fees i termination.\n3. **Ostrożnie annualizuj**: Oblicz koszt dla kilku prędkości spłaty i jasno podaj założenia. Cap 1.15x może być tani lub drogi zależnie od czasu.\n4. **Testuj mechanikę**: Holdback base, gross/net revenue, refunds, chargebacks, taxes, konta, reconciliation i spory.\n5. **Chroń dane**: Stosuj least privilege i read-only, analizuj privacy i nie przekazuj credentials przez niebezpieczny workflow.\n6. **Czytaj default szeroko**: Stacking, nowy dług, zmiana konta, spadek przychodu, informacje, cross-default, guarantees, collateral i debit authority. Nie zakładaj oferty w 48 godzin.\n7. **Analizuj mezzanine**: Seniority, subordination, maturity, interest, PIK, participation, warrants, conversion i enforcement. Nie jest automatycznie księgowym equity ani dużą poprawą ratingu.\n8. **Porównaj alternatywy**: Bank, overdraft, invoice finance, equity, dostawcy, prepayment klienta i wolniejszy wzrost.\n9. **Planuj exit i distress**: Testuj wcześniejszą spłatę, refinansowanie, sprzedaż, default i restructuring. Nakładające się facilities tworzą konflikty, lecz zasady zależą od umów.\n\nKorzystaj z prawników, podatkowców i księgowych. Platformy, ceny, gwarancje i dane zmieniają się i wymagają weryfikacji."
+          },
+          "understandContent": {
+            "coreTakeaway": "Wybierz RBF lub mezzanine dopiero, gdy porównywalny model pokazuje dopasowanie elastyczności, kosztu, priority i downside remedies.",
+            "keyPrinciples": [
+              "Nie porównuj factor rate bezpośrednio z oprocentowaniem; modeluj datowane cash flow i podawaj założenia annualizacji",
+              "Zweryfikuj guarantees, collateral, debit rights, reconciliation, stacking i dostęp do danych w podpisanych dokumentach"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zbuduj porównywalną analizę ofert finansowania:",
+            "checklistItems": [
+              "Wprowadź każdy datowany cash flow, fee, factor, regułę spłaty i early-exit term",
+              "Stresuj przychód, zwroty, sezonowość i timing, śledząc minimalną płynność",
+              "Udokumentuj formę prawną, priority, gwarancje, dane, default i pytania księgowe lub podatkowe"
             ]
           }
         }
