@@ -6827,6 +6827,134 @@ A costly package does not create a large customer.`,
     },
 
 
+    "73": {
+      "title": "73. Sustainable Energy, Sleep & Focus Management",
+      "subtitle": "Sleep routines, wearable trends, HRV context, recovery, breathing and supplement safety",
+      "description": "Build sustainable performance by protecting sleep, planning recovery and using focus tools responsibly. Learn how to interpret wearable trends without treating them as diagnoses, and how to evaluate breathing exercises, cold exposure and supplements with appropriate caution.",
+      "lessons": {
+        "73.1": {
+          "stageTitle": "73. Sleep, Recovery & HRV Trends",
+          "title": "Sleep and HRV: Building a Personal Recovery Baseline",
+          "description": "Use sleep routines, daylight, a comfortable bedroom and personal trend data to support recovery—without relying on a single device score.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Sustainable Sleep & Recovery Tracking",
+            "summaryText": "Sleep needs and wearable readings vary from person to person. A consistent routine, enough time for sleep and a quiet, dark, comfortable bedroom can support recovery. Consumer devices may help you notice patterns, but their sleep-stage and HRV estimates are not medical diagnoses.",
+            "bulletPoints": [
+              "Allow enough sleep opportunity—many adults need roughly 7–9 hours—and judge the routine by daytime function as well as device data",
+              "Get daylight after waking when practical, without staring at the sun, and reduce bright light when preparing for sleep",
+              "Compare HRV only with your own longer-term baseline under similar conditions; illness, alcohol, stress, exercise and measurement method can all affect it",
+              "Treat meal, fluid and screen timing as adjustable habits rather than a universal 3-2-1 rule; do not restrict fluids needed for health or medication"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "activity",
+                "title": "TREND, NOT DIAGNOSIS",
+                "description": "Wearables can reveal patterns, but individual readings and sleep-stage estimates have limits.",
+                "highlight": true
+              },
+              {
+                "iconName": "moon",
+                "title": "SUSTAINABLE ROUTINE",
+                "description": "Consistency and adequate sleep opportunity matter more than chasing a perfect score."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Sleep & Recovery Review Guide",
+                "subtitle": "A practical PDF for routines, wearable interpretation and warning signs",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Energy & Recovery Journal",
+                "subtitle": "Track sleep opportunity, habits, symptoms and daytime energy",
+                "type": "tool",
+                "iconName": "activity",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Build a useful recovery baseline\n\nStart with two weeks of simple observations: bedtime, wake time, estimated sleep opportunity, caffeine and alcohol timing, exercise, stress and daytime alertness. Look for repeatable patterns rather than reacting to one unusual score.\n\n#### A practical sleep routine\n1. **Protect enough time**: Plan a realistic sleep window and keep timing reasonably consistent.\n2. **Use light deliberately**: Daylight during the day can support the sleep-wake rhythm. In the evening, dim bright light if it helps you wind down. Never look directly at the sun.\n3. **Create comfort**: Keep the bedroom quiet, dark and at a temperature that feels comfortable to you. There is no single ideal temperature for everyone.\n4. **Interpret devices carefully**: Consumer wearables may be useful for trends, but they do not diagnose sleep disorders and their sleep-stage estimates can be inaccurate.\n5. **Know when to seek help**: Persistent insomnia, severe daytime sleepiness, loud snoring with pauses in breathing, chest symptoms or a marked unexplained change deserve professional assessment."
+          },
+          "understandContent": {
+            "coreTakeaway": "The goal is not a perfect wearable score; it is a repeatable routine that supports alertness, health and sound decisions.",
+            "keyPrinciples": [
+              "Adjust caffeine to your own sensitivity and sleep schedule; its effects can last for hours, so a fixed 90-minute morning delay is not a universal rule",
+              "Use longer-term trends and subjective wellbeing together, and discuss persistent symptoms or concerning changes with a qualified professional"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Create a safe 14-day sleep and recovery baseline:",
+            "checklistItems": [
+              "Set a realistic sleep window and a reasonably consistent wake time",
+              "Record daytime energy, caffeine timing and key habits without obsessing over daily scores",
+              "Write down any persistent sleep symptoms or warning signs to discuss with a healthcare professional"
+            ]
+          }
+        },
+        "73.2": {
+          "stageTitle": "73. Focus, Breathing & Supplement Safety",
+          "title": "Focus Under Pressure Without Unsupported Promises",
+          "description": "Design focused work blocks, use breathing exercises as optional regulation tools and assess supplements or cold exposure with safety first.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Safe Focus Systems & Stress Regulation",
+            "summaryText": "Focused work is supported by a clear outcome, fewer distractions, appropriate breaks and adequate recovery. Slow breathing may reduce arousal for some people, but it is not an instant cure. Supplements, cold exposure and audio stimulation do not guarantee flow or productivity and require an individual risk assessment.",
+            "bulletPoints": [
+              "Define one concrete result, remove avoidable notifications and choose a work-block length you can sustain",
+              "A slow exhale or cyclic-sighing exercise may help some people settle; stop if you feel dizzy or unwell",
+              "Evidence for binaural beats or 40 Hz audio is mixed, so treat sound as an optional preference rather than a performance claim",
+              "Review caffeine and any supplement with a doctor or pharmacist when you take medication, have a condition, are pregnant or are unsure about interactions"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "wind",
+                "title": "REGULATION, NOT CURE",
+                "description": "Breathing can be a useful pause, but it does not replace medical or mental-health care.",
+                "highlight": true
+              },
+              {
+                "iconName": "shield",
+                "title": "SAFETY BEFORE STACKS",
+                "description": "Check evidence, product quality, interactions and personal risks before using supplements or cold exposure."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Focus & Supplement Safety Guide",
+                "subtitle": "A PDF decision guide for evidence, interactions and professional advice",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "GOM-MAR Flexible Focus Timer",
+                "subtitle": "Plan adaptable work blocks, breaks and distraction-free sessions",
+                "type": "tool",
+                "iconName": "timer",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Build focus from controllable conditions\n\nBegin with the task, not a biochemical promise. Define the one result that would make the session useful, prepare the material and remove avoidable interruptions. Work for a duration that fits your health, role and attention; 90 minutes is an option, not a biological requirement.\n\n#### A safety-first sequence\n1. **Set the target**: Write one observable outcome for the block.\n2. **Reduce friction**: Silence nonessential notifications and keep needed tools ready.\n3. **Use an optional reset**: Try a gentle slow-breathing exercise if it feels comfortable. Stop if it causes dizziness, breathlessness or distress.\n4. **Take an appropriate break**: Move, hydrate and rest your eyes according to your needs and accessibility requirements.\n5. **Evaluate add-ons carefully**: Supplements such as L-theanine, Lion's Mane or Alpha-GPC can have side effects, interactions and quality differences. Dietary supplements are not pre-approved for effectiveness in the same way as medicines. Seek qualified advice before combining them with medication or health conditions.\n6. **Treat cold as a real stressor**: Cold-water immersion can trigger rapid breathing and cardiovascular strain. Avoid unsupervised plunges and obtain medical guidance if risk factors are present. It is not required for effective work.\n\nBreathing exercises are not emergency treatment. Seek urgent help for chest pain, fainting, severe breathing difficulty or an acute mental-health crisis."
+          },
+          "understandContent": {
+            "coreTakeaway": "Reliable focus comes from clear priorities, fewer interruptions and sustainable recovery—not from guaranteed hacks or supplement stacks.",
+            "keyPrinciples": [
+              "Choose work and break lengths based on performance, comfort and health instead of treating 90 minutes as mandatory",
+              "Do not use cold exposure, supplements or breathing techniques to delay appropriate medical or mental-health care"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Design one safe, repeatable focus block:",
+            "checklistItems": [
+              "Define one concrete result and select a realistic work duration",
+              "Remove avoidable distractions and schedule a suitable movement, hydration or eye-rest break",
+              "List any supplement or cold-exposure idea for evidence, interaction and personal-risk review before trying it"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -13636,6 +13764,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Sprawdzono zwykły i duży tekst, kontrolki, fokus, błędy oraz grafiki względem kontrastu WCAG 2.2",
               "Zweryfikowano zoom, reflow, obsługę klawiatury, etykiety i to, że kolor nie jest jedynym nośnikiem znaczenia",
               "Przetestowano ruch z włączonym reduced motion oraz porównano zrozumienie, błędy i konwersję"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "73": {
+      "title": "73. Zrównoważone zarządzanie energią, snem i koncentracją",
+      "subtitle": "Rutyny snu, trendy z urządzeń, kontekst HRV, regeneracja, oddech i bezpieczeństwo suplementów",
+      "description": "Buduj trwałą wydajność, chroniąc sen, planując regenerację i odpowiedzialnie korzystając z narzędzi koncentracji. Naucz się interpretować trendy z urządzeń bez traktowania ich jak diagnozy oraz ostrożnie oceniać ćwiczenia oddechowe, ekspozycję na zimno i suplementy.",
+      "lessons": {
+        "73.1": {
+          "stageTitle": "73. Sen, regeneracja i trendy HRV",
+          "title": "Sen i HRV: tworzenie własnego punktu odniesienia regeneracji",
+          "description": "Wspieraj regenerację za pomocą rutyny snu, światła dziennego, komfortowej sypialni i własnych danych trendowych — bez polegania na jednym wyniku z urządzenia.",
+          "learnContent": {
+            "videoTitle": "Masterclass: zrównoważony sen i monitorowanie regeneracji",
+            "summaryText": "Potrzeby snu i odczyty urządzeń różnią się między osobami. Stała rutyna, wystarczająca ilość czasu na sen oraz cicha, ciemna i komfortowa sypialnia mogą wspierać regenerację. Urządzenia konsumenckie mogą pomagać zauważać wzorce, ale ich szacunki faz snu i HRV nie są diagnozą medyczną.",
+            "bulletPoints": [
+              "Zapewnij wystarczająco dużo czasu na sen — wielu dorosłych potrzebuje około 7–9 godzin — i oceniaj rutynę także na podstawie funkcjonowania w dzień",
+              "Korzystaj ze światła dziennego po przebudzeniu, gdy jest to praktyczne, nie patrz bezpośrednio w słońce i ograniczaj jasne światło podczas przygotowania do snu",
+              "Porównuj HRV wyłącznie z własnym długoterminowym punktem odniesienia w podobnych warunkach; choroba, alkohol, stres, wysiłek i metoda pomiaru wpływają na wynik",
+              "Traktuj pory posiłków, płynów i ekranów jako nawyki do dostosowania, a nie uniwersalną regułę 3-2-1; nie ograniczaj płynów potrzebnych dla zdrowia lub leków"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "activity",
+                "title": "TREND, NIE DIAGNOZA",
+                "description": "Urządzenia mogą pokazywać wzorce, lecz pojedyncze odczyty i szacunki faz snu mają ograniczenia.",
+                "highlight": true
+              },
+              {
+                "iconName": "moon",
+                "title": "TRWAŁA RUTYNA",
+                "description": "Regularność i wystarczający czas na sen są ważniejsze niż pogoń za idealnym wynikiem."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik przeglądu snu i regeneracji",
+                "subtitle": "Praktyczny PDF o rutynach, interpretacji urządzeń i sygnałach ostrzegawczych",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Dziennik energii i regeneracji GOM-MAR",
+                "subtitle": "Monitoruj czas na sen, nawyki, objawy i energię w ciągu dnia",
+                "type": "tool",
+                "iconName": "activity",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Zbuduj użyteczny punkt odniesienia regeneracji\n\nZacznij od dwóch tygodni prostych obserwacji: pory snu i pobudki, szacowanego czasu na sen, pory kofeiny i alkoholu, aktywności, stresu oraz czujności w ciągu dnia. Szukaj powtarzalnych wzorców zamiast reagować na jeden nietypowy wynik.\n\n#### Praktyczna rutyna snu\n1. **Zabezpiecz wystarczający czas**: Zaplanuj realistyczne okno snu i utrzymuj w miarę stałe pory.\n2. **Świadomie używaj światła**: Światło dzienne może wspierać rytm snu i czuwania. Wieczorem przyciemnij jasne światło, jeśli pomaga Ci się wyciszyć. Nigdy nie patrz bezpośrednio w słońce.\n3. **Zadbaj o komfort**: Utrzymuj sypialnię cichą, ciemną i w temperaturze, która jest dla Ciebie komfortowa. Nie istnieje jedna idealna temperatura dla wszystkich.\n4. **Ostrożnie interpretuj urządzenia**: Urządzenia konsumenckie mogą pomagać obserwować trendy, ale nie diagnozują zaburzeń snu, a ich szacunki faz snu mogą być niedokładne.\n5. **Wiedz, kiedy szukać pomocy**: Utrzymująca się bezsenność, silna senność w dzień, głośne chrapanie z przerwami w oddychaniu, objawy z klatki piersiowej lub wyraźna niewyjaśniona zmiana wymagają profesjonalnej oceny."
+          },
+          "understandContent": {
+            "coreTakeaway": "Celem nie jest idealny wynik z urządzenia, lecz powtarzalna rutyna wspierająca czujność, zdrowie i rozsądne decyzje.",
+            "keyPrinciples": [
+              "Dostosuj kofeinę do własnej wrażliwości i pory snu; jej działanie może trwać wiele godzin, więc stałe 90 minut zwłoki rano nie jest uniwersalną zasadą",
+              "Łącz długoterminowe trendy z samopoczuciem, a utrzymujące się objawy lub niepokojące zmiany omów z wykwalifikowanym specjalistą"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Utwórz bezpieczny 14-dniowy punkt odniesienia snu i regeneracji:",
+            "checklistItems": [
+              "Ustal realistyczne okno snu i w miarę stałą porę pobudki",
+              "Zapisuj energię w dzień, porę kofeiny i kluczowe nawyki bez obsesyjnego śledzenia codziennych wyników",
+              "Zapisz utrzymujące się objawy snu lub sygnały ostrzegawcze do omówienia ze specjalistą ochrony zdrowia"
+            ]
+          }
+        },
+        "73.2": {
+          "stageTitle": "73. Koncentracja, oddech i bezpieczeństwo suplementów",
+          "title": "Koncentracja pod presją bez niepotwierdzonych obietnic",
+          "description": "Projektuj skupione bloki pracy, używaj ćwiczeń oddechowych jako opcjonalnych narzędzi regulacji i oceniaj suplementy lub ekspozycję na zimno przede wszystkim pod kątem bezpieczeństwa.",
+          "learnContent": {
+            "videoTitle": "Masterclass: bezpieczne systemy koncentracji i regulacja stresu",
+            "summaryText": "Skupioną pracę wspierają jasny rezultat, mniej rozpraszaczy, odpowiednie przerwy i regeneracja. Wolny oddech może obniżyć pobudzenie u części osób, lecz nie jest natychmiastowym lekarstwem. Suplementy, zimno i stymulacja dźwiękiem nie gwarantują flow ani produktywności i wymagają indywidualnej oceny ryzyka.",
+            "bulletPoints": [
+              "Określ jeden konkretny rezultat, usuń zbędne powiadomienia i wybierz długość bloku pracy, którą możesz utrzymać",
+              "Powolny wydech lub cykliczne wzdychanie może pomagać niektórym osobom się uspokoić; przerwij, jeśli poczujesz zawroty głowy lub dyskomfort",
+              "Dowody dotyczące dudnień różnicowych i dźwięku 40 Hz są niejednoznaczne, więc traktuj dźwięk jako opcjonalną preferencję, nie obietnicę wydajności",
+              "Omów kofeinę i każdy suplement z lekarzem lub farmaceutą, jeśli przyjmujesz leki, masz chorobę, jesteś w ciąży lub nie masz pewności co do interakcji"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "wind",
+                "title": "REGULACJA, NIE LECZENIE",
+                "description": "Oddech może być użyteczną pauzą, lecz nie zastępuje opieki medycznej ani psychologicznej.",
+                "highlight": true
+              },
+              {
+                "iconName": "shield",
+                "title": "BEZPIECZEŃSTWO PRZED STOSAMI",
+                "description": "Przed suplementacją lub zimnem sprawdź dowody, jakość produktu, interakcje i osobiste ryzyko."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik bezpieczeństwa koncentracji i suplementów",
+                "subtitle": "PDF pomagający ocenić dowody, interakcje i potrzebę profesjonalnej porady",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Elastyczny timer koncentracji GOM-MAR",
+                "subtitle": "Planuj dopasowane bloki pracy, przerwy i sesje bez rozpraszaczy",
+                "type": "tool",
+                "iconName": "timer",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Buduj koncentrację z warunków, które kontrolujesz\n\nZacznij od zadania, a nie od obietnicy biochemicznej. Określ jeden rezultat, który sprawi, że sesja będzie użyteczna, przygotuj materiały i usuń zbędne przerwy. Pracuj przez czas dopasowany do zdrowia, roli i uwagi; 90 minut to opcja, nie wymóg biologiczny.\n\n#### Kolejność stawiająca bezpieczeństwo na pierwszym miejscu\n1. **Ustal cel**: Zapisz jeden obserwowalny rezultat bloku.\n2. **Zmniejsz tarcie**: Wycisz nieistotne powiadomienia i przygotuj potrzebne narzędzia.\n3. **Użyj opcjonalnego resetu**: Spróbuj łagodnego ćwiczenia wolnego oddechu, jeśli jest komfortowe. Przerwij przy zawrotach głowy, duszności lub niepokoju.\n4. **Zrób odpowiednią przerwę**: Poruszaj się, nawodnij i daj odpocząć oczom zgodnie ze swoimi potrzebami i wymaganiami dostępności.\n5. **Ostrożnie oceniaj dodatki**: Suplementy takie jak L-teanina, soplówka jeżowata czy Alpha-GPC mogą powodować skutki uboczne, interakcje i różnić się jakością. Suplementy diety nie są zatwierdzane pod kątem skuteczności przed sprzedażą tak jak leki. Zasięgnij fachowej porady przed łączeniem ich z lekami lub przy chorobach.\n6. **Traktuj zimno jako realny stresor**: Zanurzenie w zimnej wodzie może wywołać gwałtowny oddech i obciążenie układu krążenia. Unikaj samotnych zanurzeń i uzyskaj poradę medyczną przy czynnikach ryzyka. Zimno nie jest potrzebne do efektywnej pracy.\n\nĆwiczenia oddechowe nie są pomocą ratunkową. W przypadku bólu w klatce piersiowej, omdlenia, ciężkich trudności w oddychaniu lub ostrego kryzysu psychicznego szukaj pilnej pomocy."
+          },
+          "understandContent": {
+            "coreTakeaway": "Niezawodna koncentracja wynika z jasnych priorytetów, mniejszej liczby przerw i trwałej regeneracji — nie z gwarantowanych trików ani stosów suplementów.",
+            "keyPrinciples": [
+              "Dobieraj długość pracy i przerw do wydajności, komfortu i zdrowia zamiast traktować 90 minut jako obowiązek",
+              "Nie używaj zimna, suplementów ani technik oddechowych do odkładania właściwej pomocy medycznej lub psychologicznej"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zaprojektuj jeden bezpieczny, powtarzalny blok koncentracji:",
+            "checklistItems": [
+              "Określ jeden konkretny rezultat i wybierz realistyczny czas pracy",
+              "Usuń zbędne rozpraszacze i zaplanuj odpowiednią przerwę na ruch, nawodnienie lub odpoczynek oczu",
+              "Zapisz każdy pomysł na suplement lub ekspozycję na zimno do oceny dowodów, interakcji i osobistego ryzyka przed wypróbowaniem"
             ]
           }
         }
