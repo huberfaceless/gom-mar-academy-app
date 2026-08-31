@@ -948,7 +948,7 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
     subtitle: '10k€-25k€ Ticketpreise, Luxus-Locations, Bewerbungs-Funnels & Vor-Ort Closing',
     color: 'from-amber-600 via-yellow-700 to-stone-900',
     badgeIcon: '✨',
-    description: 'Fülle hochpreisige Masterminds und Luxus-Events: Meistere Bewerbungs-Funnels für 5-stellige Ticketpreise, wähle atemberaubende weltweite Locations aus und schließe vor Ort 6-stellige Jahresbegleitungen mit 80% Conversion-Rate ab.',
+    description: 'Plane hochwertige Masterminds und Events mit transparenter Preisgestaltung: Entwickle faire Bewerbungsprozesse, wähle passende Locations und biete geeigneten Teilnehmern freiwillige, klar definierte Folgeprogramme an.',
     lessons: [
       {
         id: '82.1',
@@ -956,15 +956,15 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
         stageTitle: '82. VIP-Event Bewerbungs-Funnels',
         title: 'Der Ultra-VIP Event-Funnel: 15.000€ Masterminds ausverkaufen',
         durationMinutes: 33,
-        description: 'Wie du künstliche Verknappung, Bewerbungsverfahren und persönliche Auswahlgespräche nutzt, um 20 Unternehmer in eine Luxus-Villa zu holen.',
+        description: 'Wie du echte Kapazitätsgrenzen, transparente Bewerbungsverfahren und persönliche Gespräche nutzt, um eine fachlich passende Teilnehmergruppe zusammenzustellen.',
         learnContent: {
           videoTitle: 'Masterclass: High-Ticket Event-Funnels & Exklusive Masterminds',
           videoDuration: '33:30',
-          summaryText: 'Ein 15.000€ Ticket wird niemals über einen simplen Kaufen-Button im Internet verkauft. Es wird durch Status, radikale Exklusivität und ein strenges Bewerbungsverfahren vergeben. Lerne, wie du High-Net-Worth Unternehmer für deine Masterminds begeisterst.',
+          summaryText: 'Hochpreisige Event-Tickets erfordern ein klares Leistungsversprechen, nachprüfbare Ergebnisse, transparente Kosten und persönliche Beratung. Lerne, wie du geeignete Unternehmer informierst, fair qualifizierst und ohne künstlichen Druck entscheiden lässt.',
           bulletPoints: [
-            'Die Psychologie der Exklusivität: "Bewerben, um überhaupt das Recht auf den Ticketkauf zu erhalten"',
-            'Der 4-stufige Bewerbungs-Filter: Umsatznachweis (mind. 1M€), Teamgröße, Ziele und gegenseitiger Mehrwert',
-            "Das 'Peer-Group' Versprechen: Warum Millionäre für den ungefilterten Austausch mit Gleichgesinnten jeden Preis zahlen",
+            'Echte Exklusivität: Begrenzte Betreuungskapazität und nachvollziehbare Auswahlkriterien transparent erklären',
+            'Der 4-stufige Eignungscheck: Ziele, Entwicklungsstand, Beitrag zur Gruppe und realistische Erwartungen',
+            "Der Peer-Group-Nutzen: Wie moderierter Erfahrungsaustausch messbaren Wert schaffen kann",
             'Concierge-Onboarding: Persönlicher Fahrer, 5-Sterne Hotel-Suiten und maßgeschneiderte VIP-Geschenkboxen vorab'
           ],
           coreConcepts: [
@@ -998,12 +998,12 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
           ],
           fullArticleGuide: `### Die Anatomie eines 500.000€ Mastermind-Events
 
-Ein Event mit nur 20 Teilnehmern zu je 15.000€ erzeugt 300.000€ Upfront-Umsatz und über 500.000€ an Folgeaufträgen.
+Ein Event mit 20 Teilnehmern zu je 15.000€ hätte 300.000€ Bruttoticketerlös; Gewinn und Folgeumsatz hängen jedoch von Auslastung, Steuern, Rückerstattungen, Vertriebs- und Durchführungskosten sowie tatsächlicher Nachfrage ab.
 
 #### Die Phasen der Event-Vorbereitung:
 1. **Location-Scouting**: Privatanwesen in St. Moritz, Mallorca, Dubai oder der Toskana – keine anonymen Konferenzhotels.
 2. **Private Einladungsrunde**: Gezielte persönliche Video-Botschaften an bestehende Top-Kunden.
-3. **Öffentlicher Bewerbungs-Drop**: 48 Stunden offenes Bewerbungsfenster mit Timer.
+3. **Öffentliche Bewerbungsphase**: Ein klar kommuniziertes Zeitfenster, das nur bei echter organisatorischer Frist begrenzt wird.
 4. **15-Minuten Auswahl-Calls**: Prüfung der Teilnehmerharmonie und finale Zusage.`
         },
         understandContent: {
@@ -1030,16 +1030,16 @@ Ein Event mit nur 20 Teilnehmern zu je 15.000€ erzeugt 300.000€ Upfront-Umsa
         stageTitle: '82. Vor-Ort Back-End Closing',
         title: 'Vor-Ort Monetarisierung: Das 100.000€ Boardroom-Back-End Angebot',
         durationMinutes: 31,
-        description: 'Wie du am letzten Event-Tag ohne Verkaufsdruck 6-stellige Jahres-Beiratsmandate und 1:1 Beratungen vor Ort abschließt.',
+        description: 'Wie du geeigneten Teilnehmern am Ende eines Events optionale, klar definierte Beratungsangebote präsentierst und ausreichend Entscheidungszeit einräumst.',
         learnContent: {
           videoTitle: 'Masterclass: Vor-Ort Closing & High-End Back-End Verkäufe',
           videoDuration: '31:40',
-          summaryText: 'Das Event-Ticket deckt nur die Kosten und bringt den Einstiegsumsatz. Der wahre Gewinn entsteht am letzten Abend, wenn du ausgewählten Teilnehmern eine langfristige Partnerschaft (z. B. Boardroom-Begleitung für 50.000€ bis 100.000€) anbietest.',
+          summaryText: 'Ticket- und Folgeangebote müssen jeweils eigenständig wirtschaftlich und wertvoll sein. Ein optionales Beratungsprogramm darf nur geeigneten Teilnehmern mit transparentem Leistungsumfang, Gesamtpreis, Vertragsbedingungen und angemessener Entscheidungszeit angeboten werden.',
           bulletPoints: [
-            'Der emotionale Höhepunkt: Warum der letzte Abend nach intensiven Arbeitssessions der beste Moment für Zukunftspläne ist',
+            'Der sachliche Rückblick: Ergebnisse prüfen und erst danach mögliche nächste Schritte ohne emotionalen Entscheidungsdruck besprechen',
             'Das "Natural Extension" Angebot: "Wir haben diesen Plan geschmiedet – wollen wir ihn im nächsten Jahr gemeinsam exekutieren?"',
             'Keine Pitch-Folien: Das Angebot wird im persönlichen Gespräch oder beim gemeinsamen Dinner unterbreitet',
-            'Die 80% Conversion-Quote: Warum begeisterte Teilnehmer nach 3 gemeinsamen Tagen fast geschlossen verlängern'
+            'Realistische Angebotsauswertung: Interesse, Eignung, Abschlussquote, Storno und Kundenerfolg getrennt messen'
           ],
           coreConcepts: [
             {
@@ -1051,13 +1051,13 @@ Ein Event mit nur 20 Teilnehmern zu je 15.000€ erzeugt 300.000€ Upfront-Umsa
             {
               iconName: 'briefcase',
               title: 'BOARDROOM ADVISORY',
-              description: '6-stellige Jahresbegleitungen mit minimalem operativen Aufwand.'
+              description: 'Hochwertige Jahresbegleitungen benötigen klar kalkulierte Betreuungskapazität und verlässliche Leistungserbringung.'
             }
           ],
           resources: [
             {
               title: 'Boardroom Advisory Vertrag & Mandats-Muster',
-              subtitle: 'Rechtlich geprüfte Jahresverträge für Beiratsmandate als PDF',
+              subtitle: 'Vertragsmuster zur individuellen Prüfung durch qualifizierte Rechtsberatung als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
@@ -1083,7 +1083,7 @@ Wer eine außergewöhnliche Event-Erfahrung liefert, hat sich das Vertrauen für
           coreTakeaway: 'Ein erstklassiges Live-Event ist die vertrauensvollste Verkaufsbühne der Welt.',
           keyPrinciples: [
             'Niemals aggressive Verkaufsdruck-Methoden anwenden – das zerstört den Status sofort',
-            'Sofortige Vertragsunterzeichnung per Tablet mit 20% Anzahlung vor Ort ermöglichen'
+            'Vertrag, Zahlungsplan, Kündigungs- und Rücktrittsbedingungen transparent bereitstellen und angemessene Prüfzeit ermöglichen'
           ]
         },
         actionTask: {
