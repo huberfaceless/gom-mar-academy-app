@@ -1255,7 +1255,7 @@ Eine hochwertige Umgebung kann den Zugang erleichtern, ersetzt aber keine klinis
     subtitle: 'BAFA Exportkontrolle, ITAR, NATO-Lieferanten-Codes (NCAGE) & Cyber-Defense Ausschreibungen',
     color: 'from-zinc-900 via-stone-900 to-black',
     badgeIcon: '🛡️',
-    description: 'Navigiere den sicherheitsrelevanten Hochtechnologie-Markt: Verstehe Dual-Use Exportkontrollen (BAFA/ITAR), erwirbe NATO-Lieferanten-Codes (NCAGE), sichere kritische Infrastrukturen (KRITIS) und schließe mehrjährige Rüstungs- und Cyber-Defense Verträge ab.',
+    description: 'Bewerte sicherheitsrelevante Technologiegeschäfte mit qualifizierter Rechts- und Compliance-Prüfung. Klassifiziere Güter und Transaktionen, prüfe Endverwendung, Sanktionen, Genehmigungen, Vergabe-, Geheimschutz- und KRITIS-Anforderungen, ohne Zugang oder Aufträge zu versprechen.',
     lessons: [
       {
         id: '94.1',
@@ -1267,24 +1267,24 @@ Eine hochwertige Umgebung kann den Zugang erleichtern, ersetzt aber keine klinis
         learnContent: {
           videoTitle: 'Masterclass: Dual-Use Compliance & BAFA Exportkontrolle',
           videoDuration: '34:25',
-          summaryText: 'Moderne KI-, Drohnen- und Überwachungstechnologien fallen unter die europäische Dual-Use-Verordnung. Ein Export ohne BAFA-Genehmigung ist eine Straftat mit bis zu 5 Jahren Haft. Lerne, wie du Güterlisten prüfst, Endverbleibserklärungen (EVE) einholst und rechtskonform weltweit lieferst.',
+          summaryText: 'Nicht jede KI-, Drohnen- oder Überwachungstechnologie ist automatisch gelistet; auch nicht gelistete Güter können Catch-all-, Sanktions- oder Endverwendungskontrollen unterliegen. Genehmigungspflicht und Rechtsfolgen hängen von Gut, Vorgang, Ziel, Beteiligten, Endverwendung und Verschulden ab.',
           bulletPoints: [
-            'Die EU Dual-Use Verordnung (EG 2021/821): Kategorien für Elektronik, Sensoren, Laser und Telekommunikation',
+            'Verordnung (EU) 2021/821 in aktueller Fassung: Güterliste, Catch-all, Cyberüberwachung, Vermittlung, technische Hilfe, Durchfuhr und Verbringung prüfen',
             'Das ELAN-K2 Portal des BAFA: Elektronische Einreichung von Ausfuhranträgen und Voranfragen',
-            'Endverbleibserklärung (End-User Certificate EUC): Rechtliche Absicherung, dass die Technologie nicht für verbotene Zwecke missbraucht wird',
-            'Automatisches Sanktionslisten-Screening: Abgleich aller Kunden gegen EU-, US-OFAC- und UN-Embargolisten'
+            'Endverbleibsdokumente sind ein Prüfbaustein und keine Garantie; Plausibilität, Beteiligte, Umleitung, Red Flags und Endverwendung prüfen',
+            'Sanktionsprüfung risikobasiert mit EU-Pflichten als Ausgangspunkt; weitere Regime nur nach anwendbarem Recht und Beratung'
           ],
           coreConcepts: [
             {
               iconName: 'shield',
               title: 'DUAL-USE COMPLIANCE',
-              description: 'Lückenlose Ausfuhrgenehmigungen schützen vor drakonischen Außenwirtschaftsstrafen.',
+              description: 'Ein dokumentiertes ICP reduziert Risiken, garantiert aber weder Genehmigung noch Schutz vor Verstößen.',
               highlight: true
             },
             {
               iconName: 'user-check',
               title: 'SANCTION SCREENING',
-              description: 'Echtzeit-Prüfung gegen weltweite Antiterror- und Embargolisten im CRM.'
+              description: 'Nachvollziehbare Prüfung relevanter Listen, Eigentum, Kontrolle, Aliasnamen, Treffern und Änderungen.'
             }
           ],
           resources: [
@@ -1314,19 +1314,19 @@ Technologieunternehmen im Bereich Drohnen, KI und Verschlüsselung müssen höch
 4. **Verwendungsprüfung**: Liegen Hinweise auf militärische Endverwendung in sanktionierten Staaten vor?`
         },
         understandContent: {
-          coreTakeaway: 'Wer eine lückenlose Exportkontrolle vorweisen kann, wird zum bevorzugten Partner westlicher Sicherheitsbehörden.',
+          coreTakeaway: 'Exportkontrolle ist eine fortlaufende Unternehmenspflicht und kein Vertriebszertifikat oder Auftragsvorteil.',
           keyPrinciples: [
-            'Niemals Lieferungen ohne unterzeichnete Original-Endverbleibserklärung (EUC) freigeben',
-            'Alle Exportkontroll-Prüfungen mindestens 10 Jahre manipulationssicher archivieren'
+            'Freigaben nach Genehmigung, Nebenbestimmungen, Endverwendungsprüfung und Vier-Augen-Prinzip erteilen',
+            'Aufbewahrung nach konkret anwendbaren EU-, nationalen, Genehmigungs-, Zoll- und Datenschutzregeln festlegen'
           ]
         },
         actionTask: {
-          instruction: 'Richte deinen automatisierten Sanktionslisten-Filter ein:',
+          instruction: 'Entwirf ein überprüfbares Exportkontrollverfahren:',
           inputType: 'checklist',
           checklistItems: [
             'Güterklassifizierung deiner Software/Hardware nach Ausfuhrliste geprüft',
-            'Automatisches Sanktionslisten-Screening im Mara CRM aktiviert',
-            'Standardisierte Endverbleibserklärung (EUC) als Vorlage hinterlegt'
+            'Beteiligte, Eigentum, Kontrolle, Länder, Banken, Transport und Red Flags geprüft',
+            'Genehmigung, Endverwendung, Dokumentation, Eskalation, Stop-Ship und Re-Screening definiert'
           ],
           toolboxCategory: 'settings'
         }
@@ -1337,28 +1337,28 @@ Technologieunternehmen im Bereich Drohnen, KI und Verschlüsselung müssen höch
         stageTitle: '94. NATO NCAGE & KRITIS-Ausschreibungen',
         title: 'Verteidigungsaufträge: NATO-Code (NCAGE), CAGE & KRITIS-Sicherheitsverträge',
         durationMinutes: 32,
-        description: 'Wie du einen NCAGE-Code für NATO-Lieferanten beantragst, Sicherheitsüberprüfungen (SÜG) meisterst und mehrjährige Verteidigungsbudgets gewinnst.',
+        description: 'Wie NCAGE, NSPA-Registrierung, Vergabeeignung, Sicherheitsüberprüfungen und Geheimschutz getrennt funktionieren, ohne Zulassung oder Auftragsgewinn zu versprechen.',
         learnContent: {
           videoTitle: 'Masterclass: NATO-Ausschreibungen & KRITIS-Infrastrukturprojekte',
           videoDuration: '32:30',
-          summaryText: 'Verteidigungs- und Sicherheitsbudgets sind krisenresistent und umfassen hunderte Milliarden Euro. Erfahre, wie du als IT- oder Technologie-Dienstleister den NCAGE-Code erhältst, Sicherheitsüberprüfungen für Mitarbeiter durchführst und Aufträge der NSPA (NATO Support and Procurement Agency) gewinnst.',
+          summaryText: 'Ein NCAGE-Code dient primär der Identifikation im NATO-Kodifizierungssystem. Er ist keine Zertifizierung, Sicherheitsfreigabe oder Auftragszulassung. Für NSPA-Verfahren ist zusätzlich eine Registrierung in der NSPA Source File erforderlich; jede Ausschreibung hat eigene Bedingungen.',
           bulletPoints: [
-            'Der NCAGE-Code (NATO Commercial and Government Entity): Die offizielle Kennung für Rüstungs- und Regierungszulieferer',
+            'NCAGE: Identifikationscode im NATO-Kodifizierungssystem, nicht Qualitätszertifikat oder automatische Lieferantenfreigabe',
             'Sicherheitsüberprüfungsgesetz (SÜG): Ü1, Ü2 und Ü3 Sicherheitsüberprüfungen für sicherheitsempfindliche Mitarbeiter',
-            'NSPA Beschaffungsportal: Zugang zu internationalen Ausschreibungen aller 32 NATO-Mitgliedsstaaten',
-            'KRITIS-Dachgesetz: Spezielle Schutzanforderungen für Energieversorger, Telekommunikation und Transport'
+            'NSPA Source File und eProcurement: Registrierung und verfahrensbezogene Eignung getrennt prüfen',
+            'KRITIS: geltende nationale und EU-Anforderungen, Betreiberstatus, NIS2-Umsetzung und vertragliche Sicherheitspflichten prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'award',
               title: 'NCAGE CERTIFICATION',
-              description: 'Die weltweite Zulassung als gelisteter NATO- und Regierungslieferant.',
+              description: 'Identifikation für Kodifizierung; keine weltweite Zulassung, Zertifizierung oder Auftragsgarantie.',
               highlight: true
             },
             {
               iconName: 'lock',
               title: 'SECURITY CLEARANCE',
-              description: 'Überprüfte Mitarbeiter ermöglichen den Zugriff auf geheime Großprojekte.'
+              description: 'Anforderungen folgen Auftrag, Geheimhaltungsgrad, Zuständigkeit und SÜG; Zugriff bleibt Need-to-know.'
             }
           ],
           resources: [
@@ -1387,19 +1387,19 @@ Die NATO und nationale Verteidigungsministerien suchen gezielt nach agilen Tech-
 3. **NSPA-Portal Listing**: Hinterlegung der Produkt- und Dienstleistungskataloge für weltweite Abrufe.`
         },
         understandContent: {
-          coreTakeaway: 'Ein NCAGE-Code ist der Eintrittsausweis in die solventesten und stabilsten Beschaffungsmärkte der westlichen Welt.',
+          coreTakeaway: 'NCAGE löst eine Identifikationsanforderung; Wettbewerb, Eignung, Registrierung, Sicherheit und Vertragsleistung bleiben separat.',
           keyPrinciples: [
             'Strikte Einhaltung von Geheimschutz-Vorschriften und keine öffentliche Prahlerei mit Regierungsverträgen',
             'Regelmäßige Re-Zertifizierung der Firmen- und Mitarbeiterfreigaben sicherstellen'
           ]
         },
         actionTask: {
-          instruction: 'Bereite deine Registrierung als NATO-Zulieferer vor:',
+          instruction: 'Erstelle eine No-Bid/Go-Bid-Prüfung für eine konkrete Ausschreibung:',
           inputType: 'checklist',
           checklistItems: [
             'Antrag auf Zuweisung eines NCAGE-Codes vorbereitet',
-            'Profil für das SAM.gov US-Regierungsregister angelegt',
-            'Sicherheitskonzept für sensible Projektdaten im GOM-MAR Vault aktiviert'
+            'NSPA Source File oder konkretes Portal, Eignung, Ausschlussgründe und Angebotsbedingungen geprüft',
+            'Exportkontrolle, Geheimschutz, Informationssicherheit, Lieferkette und Datenstandort bewertet'
           ],
           toolboxCategory: 'settings'
         }
