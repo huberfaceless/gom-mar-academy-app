@@ -631,7 +631,7 @@ Nutze Außenwirtschaftsangebote zur Information und Kontaktanbahnung, ohne Risik
     subtitle: 'Konzernarchitektur, Asset-Immunität, Ewige Dynastien & Das 100-Millionen-Euro Lebenswerk',
     color: 'from-amber-400 via-yellow-500 to-amber-700',
     badgeIcon: '👑',
-    description: 'Das Meisterstück unternehmerischer Souveränität: Führe alle Stränge deines Wissens in einer unzerstörbaren Konglomerats-Holding zusammen, automatisiere operative Führung vollständig und schaffe ein 9-stelliges Vermächtnis für Generationen.',
+    description: 'Prüfe, ob eine Holding-, Gruppen- oder Nachfolgestruktur zu Strategie, Rechtsform, Steuerlage, Finanzierung und Familie passt. Keine Struktur ist unzerstörbar, vollständig automatisiert oder garantiert ein bestimmtes Vermögen.',
     lessons: [
       {
         id: '90.1',
@@ -639,28 +639,28 @@ Nutze Außenwirtschaftsangebote zur Information und Kontaktanbahnung, ohne Risik
         stageTitle: '90. Die Holding-Schaltzentrale',
         title: 'Die Master-Holding: Zentrales Treasury, Intercompany-Finanzierung & Asset-Schutz',
         durationMinutes: 36,
-        description: 'Wie eine Muttergesellschaft (HoldCo) Gewinne steueroptimiert von Töchtern absaugt (§ 8b KStG 95% Freistellung) und neues Wachstum finanziert.',
+        description: 'Wie Beteiligungserträge, Veräußerungsgewinne, Ausschüttungen, Cash-Pooling und Intercompany-Finanzierung rechtlich, steuerlich und wirtschaftlich geprüft werden.',
         learnContent: {
           videoTitle: 'Masterclass: Die Holding-Schaltzentrale & Konzern-Finanzströme',
           videoDuration: '36:30',
-          summaryText: 'Gewinne in den operativen Firmen zu belassen ist ein fatales Haftungsrisiko. Eine echte Holding zieht Gewinne mit nur 1,5% effektiver Steuerlast ab und investiert sie in Immobilien, Aktien und neue Firmenzukäufe. Lerne die Architektur der Milliardäre kennen.',
+          summaryText: 'Eine Holding kann Kapitalallokation und Risikotrennung unterstützen, erzeugt aber Kosten, Pflichten und neue Risiken. Die Steuerwirkung von § 8b KStG hängt unter anderem von Ertragsart, Beteiligung, Ausnahmen und Gewerbesteuer ab und ist nicht pauschal 1,5 %.',
           bulletPoints: [
-            '§ 8b KStG Privileg: 95%ige Steuerbefreiung für Dividenden und Veräußerungsgewinne zwischen GmbHs',
+            '§ 8b KStG: unterschiedliche Regeln für Bezüge und Veräußerungsgewinne, 5-%-Hinzurechnung sowie Beteiligungs-, Gewerbesteuer- und Sonderausnahmen prüfen',
             'Zentrales Cash-Pooling: Wie die Muttergesellschaft Liquidität intern an schwächere Töchter verleiht',
-            'IP- & Lizenzgesellschaft: Wertvolle Marken und Software in einer separaten, haftungsfreien Gesellschaft parken',
-            'Operative Entkopplung: Der Holding-Inhaber arbeitet nicht mehr IM, sondern 100% AM System'
+            'IP- und Lizenzgesellschaft: wirtschaftliche Substanz, Fremdvergleich, Verrechnungspreise, Rechtekette, Insolvenz- und Steuerfolgen prüfen',
+            'Rollenentkopplung: Governance, Delegation, Kontrollen und Notfallvertretung schrittweise aufbauen'
           ],
           coreConcepts: [
             {
               iconName: 'layers',
               title: 'HOLDCO CAPITAL HUB',
-              description: 'Steuerfreies Reinvestieren von Gewinnen auf Holding-Ebene ohne private Besteuerung.',
+              description: 'Reinvestition auf Gesellschaftsebene kann private Besteuerung aufschieben; Körperschaft-, Gewerbe-, Kapitalertrag- und weitere Steuern bleiben fallabhängig.',
               highlight: true
             },
             {
               iconName: 'shield',
               title: 'LIABILITY FIREWALL',
-              description: 'Krisen einer Tochtergesellschaft können niemals auf das Vermögen der Holding überspringen.'
+              description: 'Rechtstrennung kann Risiken begrenzen, aber Garantien, Cash-Pooling, Beherrschung, Pflichtverletzungen, Anfechtung und Insolvenz können Verbindungen schaffen.'
             }
           ],
           resources: [
@@ -681,7 +681,7 @@ Nutze Außenwirtschaftsangebote zur Information und Kontaktanbahnung, ohne Risik
           ],
           fullArticleGuide: `### Die Vollendung der unternehmerischen Architektur
 
-Mit der Holding-Struktur verwandelst du dich vom erfolgreichen Selbstständigen in einen echten Industrie-Kapitalisten.
+Eine Holding ist ein Organisationsinstrument und kein Status- oder Erfolgsgarant.
 
 #### Das 3-Ebenen Modell:
 1. **Oberste Ebene**: Familienstiftung oder Eigentümer-Holding (Vermögensaufbau & Schutz).
@@ -689,7 +689,7 @@ Mit der Holding-Struktur verwandelst du dich vom erfolgreichen Selbstständigen 
 3. **Untere Ebene**: Operative Tochtergesellschaften (Ausführung & Kundenkontakt).`
         },
         understandContent: {
-          coreTakeaway: 'Wer Gewinne in der Holding bündelt, skaliert sein Vermögen mit 98,5% Zinseszinseffekt.',
+          coreTakeaway: 'Kapitalbündelung kann Reinvestition unterstützen; Nettoeffekt hängt von Steuern, Kosten, Rendite, Risiko und Ausschüttungen ab.',
           keyPrinciples: [
             'Darlehen zwischen Holding und Töchtern immer mit marktüblichen Zinsen und schriftlichen Verträgen ausstatten',
             'Niemals operative Risiken (wie Mietverträge oder Mitarbeiter) in der vermögensverwaltenden Holding eingehen'
@@ -712,13 +712,13 @@ Mit der Holding-Struktur verwandelst du dich vom erfolgreichen Selbstständigen 
         stageTitle: '90. Das 100M€ Lebenswerk & Dynastie-Building',
         title: 'Das Lebenswerk: Stiftungsverfassung, Nachfolgeplanung & Ewige Werte',
         durationMinutes: 34,
-        description: 'Wie du dein Lebenswerk vor Erbschaftsteuer, Pflichtteilsstreitigkeiten und Zerschlagung über Jahrhunderte hinweg schützt.',
+        description: 'Wie du Nachfolgeziele, Familie, Eigentum, Governance, Pflichtteils-, Steuer- und Stiftungsfragen mit Spezialisten planst, ohne ewigen Schutz zu versprechen.',
         learnContent: {
           videoTitle: 'Masterclass: Das 100-Millionen-Euro Lebenswerk & Generationen-Dynastien',
           videoDuration: '34:40',
-          summaryText: 'Wahrer Reichtum überdauert Generationen. Erfahre, wie die traditionsreichsten Familienunternehmen der Welt ihre Stiftungsverfassungen schreiben, Nachfolger ausbilden und ihr Lebenswerk für die Ewigkeit sichern.',
+          summaryText: 'Langfristige Nachfolge erfordert anpassungsfähige Governance, geeignete Nachfolger und regelmäßige rechtliche, steuerliche und familiäre Überprüfung. Stiftung und Familiencharta sind mögliche Instrumente, keine Ewigkeitsgarantie.',
           bulletPoints: [
-            'Die Stiftungsverfassung: Der unveränderliche Wille des Stifters als ewiges Gesetz für alle Vorstände',
+            'Stiftungssatzung: Zweck, Vermögen, Organe und Änderungsregeln nach geltendem Stiftungsrecht; Satzungsänderung, Zulegung, Zusammenlegung oder Auflösung können möglich sein',
             'Der Familienrat: Spielregeln für Nachkommen – keine Versorgung ohne Leistung',
             'Philanthropie & Stiftungszwecke: Wie unternehmerisches Vermögen gesellschaftlichen Wandel und Bildung antreibt',
             'Die Vollendung von Modul 90: Der Übergang vom aktiven Macher zum weisen Schirmherrn eines Imperiums'
@@ -727,7 +727,7 @@ Mit der Holding-Struktur verwandelst du dich vom erfolgreichen Selbstständigen 
             {
               iconName: 'award',
               title: 'ETERNAL LEGACY',
-              description: 'Rechtlicher und ideeller Schutz des Lebenswerks über hunderte von Jahren.',
+              description: 'Langfristige Zweck- und Governance-Struktur mit gesetzlichen Änderungs-, Aufsichts-, Insolvenz- und Auflösungsregeln.',
               highlight: true
             },
             {
@@ -758,7 +758,7 @@ Du hast den gesamten Weg von deinem allerersten Online-Euro bis zum 100-Millione
 
 #### Das Gesetz der ewigen Dynastie:
 - **Demut vor dem Erfolg**: Große Vermögen verpflichten zu außergewöhnlicher Verantwortung.
-- **Systeme statt Personen**: Ein Unternehmen, das ohne dich nicht funktioniert, ist wertlos. Ein Unternehmen, das ohne dich floriert, ist unsterblich.`
+- **Systeme statt Personen**: Ein übertragbares Unternehmen braucht dokumentierte Prozesse, Führung und Kontrollen; Wert und Fortbestand bleiben unsicher.`
         },
         understandContent: {
           coreTakeaway: 'Das größte Kunstwerk eines Unternehmers ist ein System, das Menschen ermächtigt, Generationen überdauert und die Welt positiv prägt.',
