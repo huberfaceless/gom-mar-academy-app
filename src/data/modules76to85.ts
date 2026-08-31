@@ -1105,7 +1105,7 @@ Wer eine außergewöhnliche Event-Erfahrung liefert, hat sich das Vertrauen für
     subtitle: 'Fachportale, Branchen-Awards, Print-Magazine, Lead-Monetarisierung & Sponsoring-Pakete',
     color: 'from-slate-800 via-zinc-800 to-blue-950',
     badgeIcon: '📰',
-    description: 'Werde zum unangefochtenen Leitmedium deiner Nische: Baue ein eigenes digitales Branchen-Magazin auf, veranstalte prestigeträchtige Branchen-Awards und monetarisiere deine Reichweite über 6-stellige Jahres-Sponsoringpakete von Konzernen.',
+    description: 'Baue ein glaubwürdiges digitales Branchen-Magazin und transparente Branchen-Awards auf. Entwickle passende Sponsoring-Pakete, ohne Marktführerschaft, Reichweite oder Umsätze zu garantieren.',
     lessons: [
       {
         id: '83.1',
@@ -1115,20 +1115,20 @@ Wer eine außergewöhnliche Event-Erfahrung liefert, hat sich das Vertrauen für
         durationMinutes: 33,
         description: 'Wie du ein digitales Fachportal aufbaust, Fachbeiträge kuratierst und 20.000€ bis 50.000€ Sponsoring-Pakete an Softwareanbieter und Konzerne verkaufst.',
         learnContent: {
-          videoTitle: 'Masterclass: Vertikales B2B Publishing & Medienmonopolisierung',
+          videoTitle: 'Masterclass: Vertikales B2B-Publishing & verantwortungsvolle Medienpositionierung',
           videoDuration: '33:15',
-          summaryText: 'Ein Dienstleister muss Kunden hinterherlaufen. Ein Medienhaus wird von Kunden und Partnern um Audienz gebeten. Lerne, wie du ein unabhängiges Branchenportal gründest und Werbegelder von Konzernen einsammelst.',
+          summaryText: 'Ein gut geführtes Fachmedium kann Sichtbarkeit, Vertrauen und neue Partnerschaften fördern. Lerne, wie du ein redaktionell unabhängiges Branchenportal gründest und Sponsoring transparent, messbar und rechtskonform anbietest.',
           bulletPoints: [
             'Die Medien-Dienstleister-Symbiose: Das Magazin generiert Vertrauen und Leads, deine Hauptfirma liefert die High-End Lösungen',
-            'Content-Syndizierung: Branchenexperten schreiben kostenlos für dich, um Reichweite und Renommee zu erhalten',
+            'Gastbeiträge: Faire, schriftlich vereinbarte Zusammenarbeit mit Branchenexperten einschließlich Rechte-, Vergütungs- und Kennzeichnungsregeln',
             'Sponsoring-Katalog: Native Articles, Newsletter-Header, Podcast-Sponsoring und exklusive Lead-Gen Reports',
-            'Paywall vs. Sponsored Free: Warum kostenlose, hochqualitative B2B-Inhalte mit Sponsoring 10x mehr Gewinn abwerfen als Abogebühren'
+            'Paywall vs. Sponsored Free: Erlösmodelle anhand von Zielgruppe, Kosten, Daten und redaktioneller Unabhängigkeit testen'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
               title: 'MEDIA AUTHORITY',
-              description: 'Als Inhaber des Leitmediums bestimmst du die Themen und Trends der Branche.',
+              description: 'Ein Fachmedium kann Debatten anstoßen, muss Themenauswahl und Interessenkonflikte jedoch transparent handhaben.',
               highlight: true
             },
             {
@@ -1155,19 +1155,19 @@ Wer eine außergewöhnliche Event-Erfahrung liefert, hat sich das Vertrauen für
           ],
           fullArticleGuide: `### Die Macht des vertikalen Medienhauses
 
-Wenn du der Branche eine Stimme gibst, wirst du zum unvermeidbaren Knotenpunkt für alle Marktteilnehmer.
+Ein verlässliches Fachmedium kann zu einem wichtigen Informationsknotenpunkt werden, wenn Redaktion, Quellen und kommerzielle Interessen nachvollziehbar getrennt bleiben.
 
 #### Die 4 Säulen des Medienhauses:
 1. **Nachrichtenportal**: Tägliche fundierte News und Analysen zur Nische.
-2. **Der wöchentliche Executive-Newsletter**: Pflichtlektüre für Geschäftsführer der Branche.
+2. **Der wöchentliche Executive-Newsletter**: Relevante, belegte Informationen für Führungskräfte der Branche.
 3. **Marktstudien (Whitepaper)**: Tiefgehende Reports, gesponsert von großen Softwarehäusern.
 4. **Branchen-Award**: Die jährliche Krönung der besten Unternehmen des Sektors.`
         },
         understandContent: {
-          coreTakeaway: 'Wer das Leitmedium besitzt, kontrolliert den gesamten Aufmerksamkeitsstrom seiner Nische.',
+          coreTakeaway: 'Ein glaubwürdiges Fachmedium kann Aufmerksamkeit bündeln, besitzt oder kontrolliert den Markt jedoch nicht.',
           keyPrinciples: [
             'Strikte Trennung von redaktionellem Inhalt und gesponserten Beiträgen (Kennzeichnungspflicht)',
-            'Sponsoring-Pakete immer als 12-Monats-Verträge mit Vorauszahlung abschließen'
+            'Laufzeit, Zahlung, Leistungsumfang, Kündigung und Rückerstattung passend zum Risiko transparent vereinbaren'
           ]
         },
         actionTask: {
@@ -1191,24 +1191,24 @@ Wenn du der Branche eine Stimme gibst, wirst du zum unvermeidbaren Knotenpunkt f
         learnContent: {
           videoTitle: 'Masterclass: Branchen-Awards als ultimative Autoritäts-Maschine',
           videoDuration: '31:45',
-          summaryText: 'Menschen und Unternehmen lieben Trophäen und Auszeichnungen. Ein eigener Branchen-Award bringt dir die CEOs deiner gesamten Zielgruppe als Bewerber ins Haus. Lerne, wie du eine renommierte Gala organisierst und monetarisierst.',
+          summaryText: 'Ein seriöser Branchen-Award kann Leistungen sichtbar machen und Fachleute zusammenbringen. Lerne, transparente Kriterien, eine unabhängige Jury, faire Gebühren und eine wirtschaftlich tragfähige Gala zu planen.',
           bulletPoints: [
             'Die Award-Kategorien: "Innovator des Jahres", "Bester Arbeitgeber", "Nachhaltigkeitspreis"',
-            'Die Promi-Jury: Wie du Universitätsprofessoren und Verbandspräsidenten als ehrenamtliche Juroren gewinnst',
-            'Bewerbungs-Gebühren & Einreichungen: Tausende Euro Einnahmen bereits bei der Einreichung der Unterlagen',
+            'Die Fachjury: Qualifizierte Juroren mit klaren Rollen, Einwilligung, Interessenkonflikt- und Vergütungsregeln gewinnen',
+            'Einreichungsgebühren: Kostenbasiert, vollständig offengelegt und unabhängig von Nominierung oder Gewinn gestalten',
             'Gala-Tischpakete: Konzerne kaufen ganze 10er-Tische für 5.000€ bis 15.000€, um bei der Verleihung präsent zu sein'
           ],
           coreConcepts: [
             {
               iconName: 'award',
               title: 'AWARD PRESTIGE',
-              description: 'Siegel und Trophäen schaffen lebenslange Bindung und maximale Markenbekanntheit.',
+              description: 'Siegel und Trophäen können Sichtbarkeit schaffen; Nutzung, Laufzeit und Aussagekraft müssen klar geregelt sein.',
               highlight: true
             },
             {
               iconName: 'users',
               title: 'C-LEVEL CONVERGENCE',
-              description: 'Alle relevanten Entscheider versammeln sich an einem einzigen Abend in deinem Saal.'
+              description: 'Eine Gala kann relevante Entscheider zusammenbringen, ohne Teilnehmerzahl oder Zusammensetzung zu garantieren.'
             }
           ],
           resources: [
@@ -1229,7 +1229,7 @@ Wenn du der Branche eine Stimme gibst, wirst du zum unvermeidbaren Knotenpunkt f
           ],
           fullArticleGuide: `### Die Inszenierung eines Branchen-Preises
 
-Ein gut geführter Award wird innerhalb von 3 Jahren zum wichtigsten Event des gesamten Wirtschaftszweigs.
+Ein gut geführter Award kann über mehrere Jahre Glaubwürdigkeit aufbauen, wenn Kriterien, Jury, Finanzierung und Ergebnisse transparent sind.
 
 #### Der Zeitplan eines erfolgreichen Awards:
 - **Monat 1-3**: Bekanntgabe der Kategorien & Jury-Vorstellung.
@@ -1238,9 +1238,9 @@ Ein gut geführter Award wird innerhalb von 3 Jahren zum wichtigsten Event des g
 - **Monat 9**: Große Gala-Verleihung mit 300-500 Führungskräften.`
         },
         understandContent: {
-          coreTakeaway: 'Wer die Preise vergibt, steht über dem Wettbewerb.',
+          coreTakeaway: 'Glaubwürdigkeit entsteht durch nachvollziehbare Kriterien und unabhängige Bewertung, nicht durch eine behauptete Stellung über dem Wettbewerb.',
           keyPrinciples: [
-            'Das Jury-Verfahren muss transparent und unanfechtbar sein – Neutralität schützt die Glaubwürdigkeit',
+            'Das Jury-Verfahren muss transparent, dokumentiert und mit Einspruchs-, Datenschutz- sowie Interessenkonfliktregeln versehen sein',
             'Den Gewinnern hochwertige Siegel-Lizenzen für ihr Marketing anbieten'
           ]
         },
