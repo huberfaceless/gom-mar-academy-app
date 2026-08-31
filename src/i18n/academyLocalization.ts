@@ -7083,6 +7083,134 @@ A costly package does not create a large customer.`,
       }
     },
 
+    "75": {
+      "title": "75. Legacy Planning, Family Governance & Portfolio Oversight",
+      "subtitle": "Foundation assessment, succession planning, governance, diversification and risk controls",
+      "description": "Explore how families can organise succession, decision-making and oversight across generations. Compare foundations and family-office models without assuming tax advantages, creditor protection or investment guarantees, and prepare the right questions for qualified legal, tax and investment professionals.",
+      "lessons": {
+        "75.1": {
+          "stageTitle": "75. Foundations & Responsible Succession Planning",
+          "title": "Family Foundations: Evaluating Purpose, Control, Tax and Legal Trade-offs",
+          "description": "Understand the questions that must be resolved before transferring assets to a foundation in Germany, Austria, Liechtenstein or another jurisdiction.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Foundation Assessment & Intergenerational Governance",
+            "summaryText": "A family foundation can support a defined long-term purpose, but it is not a universal shield against tax, creditors, divorce or inheritance claims. The legal owner, founder rights, beneficiary position, taxation, reporting, supervision and amendment options depend on the governing law, documents and facts. Cross-border structures require coordinated specialist advice before any transfer.",
+            "bulletPoints": [
+              "Define the genuine family purpose first and compare a foundation with a will, trust-like arrangement, company, insurance, gift or shareholder agreement",
+              "Model formation, asset-transfer, ongoing, distribution, inheritance and cross-border tax consequences in every relevant country",
+              "Do not assume privacy or asset protection: registers, reporting, anti-money-laundering rules, creditor remedies, forced-heirship rules and avoidance periods may apply",
+              "Specify beneficiary eligibility, discretion, information rights, conflicts, hardship cases and review procedures without promising fixed distributions"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "scale",
+                "title": "JURISDICTION-SPECIFIC DESIGN",
+                "description": "Legal and tax outcomes depend on residence, assets, timing, purpose, documents and applicable law.",
+                "highlight": true
+              },
+              {
+                "iconName": "users",
+                "title": "GOVERNANCE WITH CHECKS",
+                "description": "Clear powers, conflicts rules, records and independent oversight reduce—but cannot eliminate—family and operational risk."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Family Foundation Decision Guide",
+                "subtitle": "A PDF question set for purpose, tax, control, beneficiaries, reporting and alternatives",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Family Governance Register",
+                "subtitle": "Record assets, roles, decisions, documents, advisers and review dates",
+                "type": "tool",
+                "iconName": "clipboard",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Treat a foundation as a legal institution, not a shortcut\n\nTransferring assets can be difficult or impossible to reverse and may change control, taxation and access to capital. Begin with the family's objectives and constraints, then compare structures. Never transfer assets to frustrate known creditors, evade tax, conceal beneficial ownership or defeat lawful claims.\n\n#### A professional assessment sequence\n1. **Map the facts**: Record residences, citizenships, family relationships, marital regimes, assets, liabilities, companies and existing succession documents.\n2. **Define the purpose**: State which legitimate problem the structure should solve and how success will be measured.\n3. **Compare alternatives**: Analyse a will, powers of attorney, gifts, holding company, shareholder agreement, insurance and other local tools before choosing a foundation.\n4. **Model the full tax lifecycle**: Include formation, transfer, annual taxation, distributions, beneficiary taxation, exit or dissolution and cross-border reporting. For example, German law can impose substitute inheritance tax on qualifying family foundations at 30-year intervals; the exact exposure requires current advice. A foreign seat does not automatically remove tax in the founder's, beneficiary's or asset's country.\n5. **Design governance**: Separate appropriate powers, define appointment and removal, conflicts, remuneration, investment authority, records, audits and emergency succession. Family members may bring context, while independent expertise can improve oversight.\n6. **Stress-test claims**: Ask counsel how creditor law, insolvency, matrimonial property, forced-heirship, avoidance, disclosure and beneficial-ownership rules apply. No structure provides complete protection in every circumstance.\n7. **Document informed consent**: Obtain independent legal and tax advice in every relevant jurisdiction before signing or transferring value.\n\nThis lesson is educational and is not a foundation deed, tax opinion or legal recommendation."
+          },
+          "understandContent": {
+            "coreTakeaway": "A foundation is appropriate only when its purpose, costs, loss of control, tax treatment and governance are demonstrably better suited than simpler alternatives.",
+            "keyPrinciples": [
+              "Do not use a template deed without jurisdiction-specific drafting, independent advice and a documented review of amendment and exit limits",
+              "Select governing-body members for competence, independence and conflicts management—not merely trust or family status"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Prepare a neutral foundation feasibility brief for professional review:",
+            "checklistItems": [
+              "Write the family purpose, time horizon, beneficiaries and non-negotiable constraints",
+              "List residences, assets, liabilities, existing claims and jurisdictions that advisers must analyse",
+              "Prepare questions on alternatives, tax lifecycle, control, reporting, creditor rules, amendment and dissolution"
+            ]
+          }
+        },
+        "75.2": {
+          "stageTitle": "75. Family Office & Portfolio Governance",
+          "title": "Family Office Decisions: Governance, Costs, Diversification and Liquidity",
+          "description": "Evaluate whether an in-house, outsourced or hybrid family-office model fits the family's complexity, and build an investment policy around goals and risk.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Family Office Governance & Investment Policy",
+            "summaryText": "There is no universal wealth threshold or asset mix that makes a single-family office worthwhile. The decision depends on complexity, privacy, control, services, regulation, staffing and total cost. Asset allocation must reflect goals, time horizon, liquidity needs, risk capacity, taxes and concentration—not a billionaire template.",
+            "bulletPoints": [
+              "Compare a single-family office with a multi-family office, regulated adviser, bank and coordinated specialist team using a written service-and-cost model",
+              "Create an investment policy statement covering objectives, risk, liquidity, permitted assets, concentration, leverage, custody, reporting and rebalancing",
+              "Diversify between and within asset classes, while recognising that diversification reduces some risks but cannot prevent loss or guarantee purchasing power",
+              "Disclose fees, incentives, related-party transactions, valuation methods and custody arrangements; direct investments also carry costs and conflicts"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "file-text",
+                "title": "INVESTMENT POLICY FIRST",
+                "description": "Goals, constraints and decision rules come before target percentages or product selection.",
+                "highlight": true
+              },
+              {
+                "iconName": "eye",
+                "title": "INDEPENDENT OVERSIGHT",
+                "description": "Transparent reporting, custody controls and conflict management protect the decision process—not investment outcomes."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Family Office & Investment Policy Review Guide",
+                "subtitle": "A PDF framework for services, governance, allocation, fees and provider due diligence",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Mara CRM Multi-Asset Oversight Dashboard",
+                "subtitle": "Monitor allocation, liquidity, concentration, cash flows, fees and review dates",
+                "type": "tool",
+                "iconName": "pie-chart",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Build an oversight system, not a prestige structure\n\nA family office is an operating model for coordinating services. It does not make investments safe, remove regulation or ensure that wealth lasts. Start by defining the services the family actually needs and who is authorised to provide them.\n\n#### A disciplined design process\n1. **Inventory services**: List investment oversight, accounting, tax coordination, legal administration, reporting, philanthropy, property, security and family education.\n2. **Compare models**: Estimate the full cost, expertise, resilience, confidentiality, conflicts and regulatory status of in-house, outsourced and hybrid options. There is no automatic €10 million threshold.\n3. **Write the investment policy**: Set measurable goals, time horizon, drawdown tolerance, liquidity schedule, tax constraints, prohibited assets, leverage limits and decision authority.\n4. **Choose a personal allocation**: Fixed percentages such as 35% private equity or a maximum 30% per asset class are not universal safeguards. Private equity, property, commodities, shares, bonds and cash each have different market, liquidity, valuation, operational and concentration risks.\n5. **Protect liquidity**: Forecast spending, taxes, capital calls and emergencies under several scenarios. A two-year reserve may be too much or too little; define it from actual needs and the safety, access and currency of the instruments.\n6. **Control providers**: Verify licences where required, background, custody, cyber controls, valuation, fees, commissions, referral payments and business continuity. Lower visible fees do not always mean lower total cost.\n7. **Review without overtrading**: Rebalance on a documented calendar or tolerance band when appropriate, after considering tax, transaction cost and changed circumstances.\n8. **Prepare the next generation**: Separate education from automatic authority and use staged, documented roles.\n\nInvestments can lose value. Obtain regulated investment, legal and tax advice suited to the people and jurisdictions involved."
+          },
+          "understandContent": {
+            "coreTakeaway": "Durable family wealth depends on fit-for-purpose governance, transparent costs, adequate liquidity and diversified risk—not a fixed portfolio or promise of permanent wealth.",
+            "keyPrinciples": [
+              "Set concentration limits from the family's full balance sheet, liabilities, cash flows and risk capacity instead of applying a universal 30% ceiling",
+              "Review allocation and liquidity at defined intervals and after material changes, while considering taxes and transaction costs before rebalancing"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Draft a family-office and investment-governance brief:",
+            "checklistItems": [
+              "List required services, decision makers, conflicts and the full cost of in-house, outsourced and hybrid options",
+              "Record goals, horizon, liquidity needs, liabilities, risk limits and current concentration across the whole balance sheet",
+              "Schedule independent reviews of providers, custody, fees, allocation, succession and cybersecurity"
+            ]
+          }
+        }
+      }
+    },
+
   },
   pl: {
     1: {
@@ -14150,6 +14278,135 @@ Droga paczka nie tworzy dużego klienta.`,
               "Zweryfikuj role importera, wymagania EORI i właściwy krajowy proces celny",
               "Udokumentuj aktualną klasyfikację taryfową, pochodzenie, wartość i wspierającą specyfikację produktu",
               "Zapisz regułę Incoterms® 2020 z dokładnym miejscem i uzyskaj fachową opinię, gdy odpowiedzialność jest niejasna"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "75": {
+      "title": "75. Planowanie sukcesji, ład rodzinny i nadzór nad portfelem",
+      "subtitle": "Ocena fundacji, sukcesja, governance, dywersyfikacja i kontrola ryzyka",
+      "description": "Poznaj sposoby organizowania sukcesji, decyzji i nadzoru międzypokoleniowego. Porównuj fundacje i modele family office bez zakładania korzyści podatkowych, ochrony przed wierzycielami czy gwarancji inwestycyjnych oraz przygotuj pytania dla wykwalifikowanych prawników, doradców podatkowych i inwestycyjnych.",
+      "lessons": {
+        "75.1": {
+          "stageTitle": "75. Fundacje i odpowiedzialne planowanie sukcesji",
+          "title": "Fundacje rodzinne: ocena celu, kontroli, podatków i skutków prawnych",
+          "description": "Poznaj kwestie wymagające rozstrzygnięcia przed przekazaniem aktywów fundacji w Niemczech, Austrii, Liechtensteinie lub innej jurysdykcji.",
+          "learnContent": {
+            "videoTitle": "Masterclass: ocena fundacji i governance międzypokoleniowy",
+            "summaryText": "Fundacja rodzinna może wspierać określony długoterminowy cel, lecz nie jest uniwersalną tarczą przed podatkiem, wierzycielami, rozwodem ani roszczeniami spadkowymi. Właściciel prawny, prawa fundatora, pozycja beneficjentów, podatki, raportowanie, nadzór i możliwość zmian zależą od prawa, dokumentów i faktów. Struktury transgraniczne wymagają skoordynowanej porady przed transferem.",
+            "bulletPoints": [
+              "Najpierw określ rzeczywisty cel rodzinny i porównaj fundację z testamentem, strukturą powierniczą, spółką, ubezpieczeniem, darowizną lub umową wspólników",
+              "Modeluj skutki podatkowe utworzenia, transferu aktywów, działalności, wypłat, dziedziczenia i relacji transgranicznych w każdym właściwym kraju",
+              "Nie zakładaj prywatności ani ochrony aktywów: mogą obowiązywać rejestry, raportowanie, AML, środki wierzycieli, zachowek i okresy zaskarżenia czynności",
+              "Określ uprawnienia beneficjentów, uznaniowość, dostęp do informacji, konflikty, trudne sytuacje i procedury kontroli bez obiecywania stałych wypłat"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "scale",
+                "title": "PROJEKT ZALEŻNY OD JURYSDYKCJI",
+                "description": "Skutki prawne i podatkowe zależą od rezydencji, aktywów, czasu, celu, dokumentów i właściwego prawa.",
+                "highlight": true
+              },
+              {
+                "iconName": "users",
+                "title": "GOVERNANCE Z KONTROLĄ",
+                "description": "Jasne kompetencje, zasady konfliktów, dokumentacja i niezależny nadzór ograniczają, lecz nie eliminują ryzyka."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik decyzyjny fundacji rodzinnej",
+                "subtitle": "Zestaw pytań PDF o cel, podatki, kontrolę, beneficjentów, raportowanie i alternatywy",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Rejestr governance rodzinnego Mara CRM",
+                "subtitle": "Ewidencjonuj aktywa, role, decyzje, dokumenty, doradców i daty przeglądów",
+                "type": "tool",
+                "iconName": "clipboard",
+                "actionUrl": "settings"
+              }
+            ],
+            "fullArticleGuide": "### Traktuj fundację jak instytucję prawną, nie skrót\n\nPrzekazanie aktywów może być trudne lub niemożliwe do odwrócenia oraz zmienić kontrolę, opodatkowanie i dostęp do kapitału. Zacznij od celów i ograniczeń rodziny, a potem porównaj struktury. Nigdy nie przenoś aktywów, aby pokrzywdzić znanych wierzycieli, uchylić się od podatku, ukryć beneficjenta rzeczywistego lub udaremnić zgodne z prawem roszczenia.\n\n#### Profesjonalna kolejność oceny\n1. **Zbierz fakty**: Zapisz rezydencje, obywatelstwa, relacje rodzinne, ustroje majątkowe, aktywa, zobowiązania, spółki i dokumenty sukcesyjne.\n2. **Określ cel**: Wskaż zgodny z prawem problem i mierniki powodzenia.\n3. **Porównaj alternatywy**: Oceń testament, pełnomocnictwa, darowizny, holding, umowę wspólników, ubezpieczenie i inne lokalne narzędzia.\n4. **Modeluj cały cykl podatkowy**: Uwzględnij utworzenie, transfer, podatki roczne, wypłaty, opodatkowanie beneficjentów, wyjście lub likwidację i raportowanie transgraniczne. Przykładowo niemieckie prawo może nakładać na kwalifikujące się fundacje rodzinne podatek zastępujący podatek spadkowy co 30 lat; dokładny skutek wymaga aktualnej porady. Zagraniczna siedziba nie usuwa automatycznie podatków w kraju fundatora, beneficjenta ani aktywa.\n5. **Zaprojektuj governance**: Rozdziel odpowiednie kompetencje, ustal powołanie, odwołanie, konflikty, wynagrodzenia, inwestycje, dokumentację, audyt i sukcesję awaryjną. Członkowie rodziny wnoszą kontekst, a niezależna wiedza może poprawić nadzór.\n6. **Testuj obietnice**: Zapytaj prawnika o wierzycieli, niewypłacalność, majątek małżeński, zachowek, zaskarżanie czynności, ujawnienia i beneficjenta rzeczywistego. Żadna struktura nie daje pełnej ochrony zawsze.\n7. **Udokumentuj świadomą decyzję**: Przed podpisaniem i transferem uzyskaj niezależną poradę prawną i podatkową w każdej właściwej jurysdykcji.\n\nLekcja ma charakter edukacyjny i nie jest statutem, opinią podatkową ani rekomendacją prawną."
+          },
+          "understandContent": {
+            "coreTakeaway": "Fundacja jest właściwa tylko wtedy, gdy jej cel, koszty, utrata kontroli, podatki i governance są wyraźnie lepiej dopasowane niż prostsze alternatywy.",
+            "keyPrinciples": [
+              "Nie korzystaj z wzoru statutu bez opracowania dla właściwej jurysdykcji, niezależnej porady i udokumentowanej analizy ograniczeń zmian oraz wyjścia",
+              "Wybieraj członków organów według kompetencji, niezależności i zarządzania konfliktami, nie tylko zaufania lub pokrewieństwa"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj neutralną analizę wykonalności fundacji do profesjonalnego przeglądu:",
+            "checklistItems": [
+              "Zapisz cel rodziny, horyzont, beneficjentów i nieprzekraczalne ograniczenia",
+              "Wymień rezydencje, aktywa, zobowiązania, istniejące roszczenia i jurysdykcje wymagające analizy",
+              "Przygotuj pytania o alternatywy, cykl podatkowy, kontrolę, raportowanie, wierzycieli, zmiany i likwidację"
+            ]
+          }
+        },
+        "75.2": {
+          "stageTitle": "75. Family office i governance portfela",
+          "title": "Decyzje family office: governance, koszty, dywersyfikacja i płynność",
+          "description": "Oceń, czy własny, zewnętrzny lub hybrydowy model family office pasuje do złożoności rodziny, i opracuj politykę inwestycyjną opartą na celach oraz ryzyku.",
+          "learnContent": {
+            "videoTitle": "Masterclass: governance family office i polityka inwestycyjna",
+            "summaryText": "Nie istnieje uniwersalny próg majątku ani skład aktywów, od którego single family office staje się opłacalny. Decyzja zależy od złożoności, prywatności, kontroli, usług, regulacji, personelu i pełnego kosztu. Alokacja musi odpowiadać celom, horyzontowi, płynności, zdolności do ryzyka, podatkom i koncentracji, a nie wzorowi miliarderów.",
+            "bulletPoints": [
+              "Porównaj single family office z multi-family office, regulowanym doradcą, bankiem i zespołem specjalistów przy użyciu pisemnego modelu usług oraz kosztów",
+              "Utwórz politykę inwestycyjną obejmującą cele, ryzyko, płynność, dozwolone aktywa, koncentrację, dźwignię, depozyt, raportowanie i rebalancing",
+              "Dywersyfikuj między klasami i wewnątrz nich, pamiętając, że dywersyfikacja ogranicza część ryzyk, lecz nie zapobiega stratom ani nie gwarantuje siły nabywczej",
+              "Ujawniaj opłaty, bodźce, transakcje z podmiotami powiązanymi, metody wyceny i przechowywanie; inwestycje bezpośrednie również mają koszty i konflikty"
+            ],
+            "coreConcepts": [
+              {
+                "iconName": "file-text",
+                "title": "NAJPIERW POLITYKA INWESTYCYJNA",
+                "description": "Cele, ograniczenia i reguły decyzji poprzedzają docelowe procenty i wybór produktów.",
+                "highlight": true
+              },
+              {
+                "iconName": "eye",
+                "title": "NIEZALEŻNY NADZÓR",
+                "description": "Przejrzyste raportowanie, kontrola depozytu i konfliktów chronią proces decyzyjny, nie wynik inwestycji."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik przeglądu family office i polityki inwestycyjnej",
+                "subtitle": "Ramy PDF dla usług, governance, alokacji, opłat i badania dostawców",
+                "type": "pdf",
+                "iconName": "file-text",
+                "actionUrl": "tools"
+              },
+              {
+                "title": "Panel nadzoru wieloaktywowego Mara CRM",
+                "subtitle": "Monitoruj alokację, płynność, koncentrację, przepływy, opłaty i terminy przeglądów",
+                "type": "tool",
+                "iconName": "pie-chart",
+                "actionUrl": "crm"
+              }
+            ],
+            "fullArticleGuide": "### Buduj system nadzoru, nie prestiżową strukturę\n\nFamily office to model operacyjny koordynacji usług. Nie czyni inwestycji bezpiecznymi, nie usuwa regulacji ani nie zapewnia trwałości majątku. Zacznij od usług faktycznie potrzebnych rodzinie i ustal, kto może je świadczyć.\n\n#### Zdyscyplinowany proces projektowy\n1. **Zinwentaryzuj usługi**: Wymień nadzór inwestycyjny, księgowość, koordynację podatkową i prawną, raportowanie, filantropię, nieruchomości, bezpieczeństwo i edukację rodzinną.\n2. **Porównaj modele**: Oszacuj pełny koszt, wiedzę, odporność, poufność, konflikty i status regulacyjny wariantu własnego, zewnętrznego i hybrydowego. Nie ma automatycznego progu 10 mln euro.\n3. **Napisz politykę inwestycyjną**: Ustal mierzalne cele, horyzont, tolerancję spadku, harmonogram płynności, podatki, aktywa zakazane, limity dźwigni i kompetencje.\n4. **Dobierz osobistą alokację**: Stałe procenty, np. 35% private equity, lub maksimum 30% w klasie nie są uniwersalnym zabezpieczeniem. Private equity, nieruchomości, surowce, akcje, obligacje i gotówka mają różne ryzyka rynkowe, płynnościowe, wyceny, operacyjne i koncentracji.\n5. **Chroń płynność**: Prognozuj wydatki, podatki, wezwania kapitałowe i sytuacje awaryjne w kilku scenariuszach. Rezerwa na dwa lata może być za duża lub za mała; wyznacz ją z realnych potrzeb, bezpieczeństwa, dostępu i waluty instrumentów.\n6. **Kontroluj dostawców**: Sprawdź wymagane licencje, historię, depozyt, cyberbezpieczeństwo, wycenę, opłaty, prowizje, płatności za polecenia i ciągłość działania. Niższe widoczne opłaty nie zawsze oznaczają niższy koszt całkowity.\n7. **Przeglądaj bez nadmiernego handlu**: Rebalansuj według udokumentowanego kalendarza lub pasma tolerancji, gdy jest to właściwe, uwzględniając podatki, koszty i zmianę okoliczności.\n8. **Przygotuj kolejne pokolenie**: Oddziel edukację od automatycznych uprawnień i stosuj stopniowe, udokumentowane role.\n\nInwestycje mogą tracić wartość. Uzyskaj regulowaną poradę inwestycyjną, prawną i podatkową odpowiednią dla osób oraz jurysdykcji."
+          },
+          "understandContent": {
+            "coreTakeaway": "Trwałość majątku rodzinnego zależy od dopasowanego governance, przejrzystych kosztów, płynności i dywersyfikacji ryzyka, a nie stałego portfela ani obietnicy wiecznego bogactwa.",
+            "keyPrinciples": [
+              "Ustalaj limity koncentracji na podstawie pełnego bilansu rodziny, zobowiązań, przepływów i zdolności do ryzyka zamiast uniwersalnego limitu 30%",
+              "Przeglądaj alokację i płynność w określonych terminach i po istotnych zmianach, uwzględniając podatki i koszty przed rebalancingiem"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przygotuj brief family office i governance inwestycyjnego:",
+            "checklistItems": [
+              "Wymień potrzebne usługi, decydentów, konflikty i pełny koszt modeli własnego, zewnętrznego oraz hybrydowego",
+              "Zapisz cele, horyzont, płynność, zobowiązania, limity ryzyka i bieżącą koncentrację całego bilansu",
+              "Zaplanuj niezależne przeglądy dostawców, depozytu, opłat, alokacji, sukcesji i cyberbezpieczeństwa"
             ]
           }
         }
