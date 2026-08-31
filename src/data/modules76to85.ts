@@ -1263,7 +1263,7 @@ Ein gut geführter Award kann über mehrere Jahre Glaubwürdigkeit aufbauen, wen
     subtitle: 'Zero Trust, Air-Gapped Backups, Red-Team Pentesting & DSGVO-Haftungsvermeidung',
     color: 'from-red-900 via-zinc-900 to-black',
     badgeIcon: '🔒',
-    description: 'Schütze dein 8-stelliges Digitalunternehmen vor existenzbedrohenden Cyber-Angriffen: Implementiere Zero-Trust-Architekturen, Air-Gapped Immutable Backups, meistere Red-Team Penetrationstests und vermeide persönliche Geschäftsführerhaftung bei DSGVO-Vorfällen.',
+    description: 'Stärke die Cyber-Resilienz deines Digitalunternehmens mit risikobasiertem Zero Trust, getrennten unveränderlichen Backups, autorisierten Sicherheitstests und dokumentiertem Datenschutzmanagement. Keine Maßnahme verhindert jeden Angriff oder schließt Haftung aus.',
     lessons: [
       {
         id: '84.1',
@@ -1271,7 +1271,7 @@ Ein gut geführter Award kann über mehrere Jahre Glaubwürdigkeit aufbauen, wen
         stageTitle: '84. Zero Trust & Ransomware-Schutz',
         title: 'Zero Trust Security: Niemals vertrauen, immer verifizieren',
         durationMinutes: 34,
-        description: 'Wie du Zero-Trust-Netzwerke aufbaust, Hardware-Sicherheitsschlüssel (YubiKeys) erzwingst und Ransomware-Erpressungen mathematisch unmöglich machst.',
+        description: 'Wie du Zero-Trust-Prinzipien, phishing-resistente Authentifizierung, Segmentierung und getestete Backups risikobasiert einführst, um Ransomware-Risiken zu verringern.',
         learnContent: {
           videoTitle: 'Masterclass: Zero Trust Architektur & Ransomware-Abwehr',
           videoDuration: '34:30',
@@ -1279,8 +1279,8 @@ Ein gut geführter Award kann über mehrere Jahre Glaubwürdigkeit aufbauen, wen
           bulletPoints: [
             'Das Zero-Trust-Paradigma: Keine implizite Vertrauenszone mehr – jede Anfrage wird authentifiziert und autorisiert',
             'FIDO2 Hardware-Sicherheitsschlüssel: Phishing-resistente Authentifizierung ohne Passwörter',
-            'Micro-Segmentierung: Isolierung von Servern und Datenbanken, sodass keine Querausbreitung (Lateral Movement) möglich ist',
-            'Immutable Air-Gapped Backups: WORM-Speicher (Write Once Read Many), die selbst mit Admin-Rechten nicht gelöscht werden können'
+            'Micro-Segmentierung: Begrenzung erlaubter Kommunikationspfade, um laterale Bewegung zu erschweren und Auswirkungen einzudämmen',
+            'Getrennte und unveränderliche Backups: Schutzmechanismen, Aufbewahrung und getrennte Berechtigungen gegen Manipulation und Löschung'
           ],
           coreConcepts: [
             {
@@ -1292,7 +1292,7 @@ Ein gut geführter Award kann über mehrere Jahre Glaubwürdigkeit aufbauen, wen
             {
               iconName: 'database',
               title: 'IMMUTABLE BACKUPS',
-              description: 'Unveränderliche Backups garantieren 100%ige Wiederherstellung nach Ransomware-Attacken.'
+              description: 'Unveränderliche Backups können die Wiederherstellung unterstützen; Erfolg hängt von Umfang, Integrität, Schlüsseln, Abhängigkeiten und Tests ab.'
             }
           ],
           resources: [
@@ -1323,9 +1323,9 @@ Cyber-Resilienz ist der wichtigste Versicherungsschutz für den Fortbestand dein
 - **0 Fehler** bei regelmäßigen automatisierten Wiederherstellungstests.`
         },
         understandContent: {
-          coreTakeaway: 'Wer unveränderliche Backups und Hardware-Tokens besitzt, kann von Cyber-Kriminellen niemals erpresst werden.',
+          coreTakeaway: 'Phishing-resistente Authentifizierung und getestete, getrennte Backups reduzieren Risiko und Auswirkungen, verhindern Erpressung aber nicht vollständig.',
           keyPrinciples: [
-            'Niemals Passwörter oder SMS-2FA als alleinigen Schutz nutzen – Hardware-Tokens sind Pflicht',
+            'Für privilegierte und besonders gefährdete Konten phishing-resistente MFA bevorzugen und Ausnahmen risikobasiert absichern',
             'Monatliche Wiederherstellungstests durchführen, um sicherzustellen, dass Backups fehlerfrei funktionieren'
           ]
         },
@@ -1346,41 +1346,41 @@ Cyber-Resilienz ist der wichtigste Versicherungsschutz für den Fortbestand dein
         stageTitle: '84. Red Teaming & DSGVO-Haftung',
         title: 'Penetration Testing & Red Teaming: Kontrollierte Angriffe & Haftungsschutz',
         durationMinutes: 31,
-        description: 'Wie ethische Hacker Schwachstellen aufdecken und wie Geschäftsführer sich vor persönlicher Schadensersatzhaftung nach DSGVO Art. 82 schützen.',
+        description: 'Wie autorisierte Sicherheitstests Schwachstellen aufdecken und wie Organisationen technische, organisatorische und rechtliche Verantwortlichkeiten dokumentieren. Dokumentation allein schließt Haftung nicht aus.',
         learnContent: {
           videoTitle: 'Masterclass: Red Teaming, Pentests & Geschäftsführer-Compliance',
           videoDuration: '31:50',
-          summaryText: 'Warte nicht, bis echte Kriminelle deine Sicherheitslücken finden. Beauftrage Red-Teams mit simulierten Hackerangriffen. Erfahre außerdem, wie du technische und organisatorische Maßnahmen (TOMs) dokumentierst, um Bußgelder abzuwenden.',
+          summaryText: 'Plane autorisierte, klar abgegrenzte Sicherheitstests nach Risiko und Reifegrad. Dokumentiere technische und organisatorische Maßnahmen als Teil nachweisbarer Umsetzung; dies garantiert weder Compliance noch das Ausbleiben von Bußgeldern.',
           bulletPoints: [
             'Red Teaming vs. Vulnerability Scan: Reale Angriffsszenarien inklusive Social Engineering und Phishing-Simulationen',
             'Bug Bounty Programme: Wie du weltweite Sicherheitsforscher auf HackerOne legal für gefundene Lücken belohnst',
-            'DSGVO Art. 82 Haftung: Vermeidung persönlicher Geschäftsführerhaftung durch lückenlose Dokumentation nach Stand der Technik',
-            '72-Stunden Meldepflicht: Der genaue Krisenplan bei meldepflichtigen Datenschutz-Vorfällen an die Landesdatenschutzbehörde'
+            'DSGVO Art. 82: Schadensersatz betrifft Verantwortliche und Auftragsverarbeiter; Organhaftung ist gesondert nach anwendbarem Recht zu prüfen',
+            'Art. 33 DSGVO: Meldepflichtige Verletzungen des Schutzes personenbezogener Daten möglichst binnen 72 Stunden nach Kenntnis an die zuständige Aufsichtsbehörde melden'
           ],
           coreConcepts: [
             {
               iconName: 'shield-alert',
               title: 'ETHICAL RED TEAMING',
-              description: 'Gezielte simulierte Angriffe schließen Sicherheitslücken vor echten Hacks.',
+              description: 'Autorisierte simulierte Angriffe können Schwachstellen aufdecken; Behebung und Nachtests bleiben erforderlich.',
               highlight: true
             },
             {
               iconName: 'file-text',
               title: 'TOM COMPLIANCE',
-              description: 'Rechtssichere Dokumentation schützt die Geschäftsführung vor Millionen-Bußgeldern.'
+              description: 'Nachvollziehbare Dokumentation unterstützt Rechenschaftspflicht, ersetzt aber weder wirksame Maßnahmen noch Rechtsberatung.'
             }
           ],
           resources: [
             {
               title: 'TOM Dokumentations-Muster & 72h-Meldepflicht Leitfaden',
-              subtitle: 'Rechtssichere DSGVO-Nachweise als PDF',
+              subtitle: 'Arbeitsvorlage für TOM-Dokumentation und Meldungsbewertung als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
               title: 'GOM-MAR Audit Log & Compliance Tracker',
-              subtitle: 'Manipulationssichere Protokollierung aller Datenzugriffe nach DSGVO',
+              subtitle: 'Zugriffsprotokollierung mit Integritäts-, Zugriffs- und Aufbewahrungskontrollen verwalten',
               type: 'tool',
               iconName: 'settings',
               actionUrl: 'settings'
@@ -1392,13 +1392,13 @@ Bei schweren Datenschutzverletzungen drohen Bußgelder von bis zu 20 Millionen E
 
 #### Die wichtigsten Schutzmaßnahmen:
 - **Stand der Technik**: Einsatz moderner Verschlüsselungs- und Identitätsstandards.
-- **Cyber-Versicherung**: Deckung von Forensik-Kosten, Lösegeldern und Betriebsunterbrechungen.
+- **Cyber-Versicherung**: Ausschlüsse, Selbstbehalte, Sicherheitsobliegenheiten sowie Deckung für Forensik und Betriebsunterbrechung prüfen; Lösegeldzahlungen können rechtlich oder vertraglich ausgeschlossen sein.
 - **Mitarbeiter-Schulungen**: Regelmäßige simulierte Phishing-Kampagnen zur Sensibilisierung.`
         },
         understandContent: {
-          coreTakeaway: 'Sicherheit ist Chefsache: Eine lückenlose Dokumentation der Sicherheitsmaßnahmen entlastet die Geschäftsführung vollständig.',
+          coreTakeaway: 'Leitung und Fachverantwortliche müssen angemessene Maßnahmen umsetzen und nachweisen; vollständige Entlastung wird durch Dokumentation allein nicht garantiert.',
           keyPrinciples: [
-            'Bei Datenschutzvorfällen unverzüglich innerhalb von 72 Stunden die zuständige Behörde informieren',
+            'Jede Verletzung sofort bewerten; wenn Art. 33 DSGVO greift, möglichst binnen 72 Stunden nach Kenntnis melden und Verzögerungen begründen',
             'Regelmäßige externe Penetrationstests schriftlich festhalten'
           ]
         },
