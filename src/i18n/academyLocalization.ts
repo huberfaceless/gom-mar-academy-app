@@ -6712,6 +6712,121 @@ A costly package does not create a large customer.`,
     },
 
 
+    "72": {
+      "title": "72. Evidence-Based Visual UX & Conversion Research",
+      "subtitle": "Eye tracking, attention patterns, accessible contrast, typography and ethical experimentation",
+      "description": "Use eye tracking and behavioral data as limited evidence about visual attention—not as mind reading. Design clear, accessible interfaces and validate gaze cues, color, typography and motion with representative users and controlled experiments.",
+      "lessons": {
+        "72.1": {
+          "stageTitle": "72. Eye Tracking & Reading Patterns",
+          "title": "Eye Tracking and Scanning Patterns: Measuring Attention Without Overclaiming",
+          "description": "How to interpret fixations, dwell time and gaze paths, and why F- or Z-shaped patterns are context-dependent observations rather than universal rules.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Eye Tracking, Visual Hierarchy & Responsible UX Research",
+            "summaryText": "Eye tracking can show where participants looked under specific test conditions. It does not directly reveal comprehension, emotion, intent or purchase motivation, so combine gaze evidence with task outcomes, interviews, accessibility checks and real behavioral data.",
+            "bulletPoints": [
+              "Reading patterns: F-like scanning may appear on text-heavy pages, but task, content, device, language direction and prior knowledge can produce different paths",
+              "Gaze cueing: a person's gaze may redirect attention in some contexts, but effects vary and do not guarantee recall, trust, choice or conversion",
+              "Measurement quality: define areas of interest, calibration, sample, device, exclusions and hypotheses before interpreting fixation or dwell-time data",
+              "Research ethics: obtain informed consent, minimize personal data, set retention limits and never infer sensitive traits that the study cannot validly establish"
+            ],
+            "coreConcepts": [
+              {
+                "title": "ATTENTION IS NOT INTENT",
+                "description": "A fixation shows visual attention under test conditions, not understanding, agreement or a buying decision."
+              },
+              {
+                "title": "CONTEXTUAL PATTERNS",
+                "description": "Layouts should support the user's task; no single scanning pattern fits every page, audience or device."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Eye-Tracking Research & Heatmap Audit Guide",
+                "subtitle": "Protocol for hypotheses, consent, sampling, analysis and limitations",
+                "type": "pdf"
+              },
+              {
+                "title": "Mara Landing-Page Attention Mapper",
+                "subtitle": "Create testable attention hypotheses without presenting predictions as measured gaze",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Design for tasks, then test attention\n\nVisual hierarchy can help people find information, but attention is only one part of successful use. A highly viewed element may be confusing, and an unseen element may be irrelevant rather than poorly designed.\n\n#### A responsible research workflow\n\n1. **Define the task:** Specify what participants need to understand or complete and identify primary and secondary outcomes.\n2. **Recruit representative users:** Include relevant devices, languages, abilities and levels of familiarity; record important sampling limits.\n3. **Measure carefully:** Calibrate equipment, predefine areas of interest and combine gaze data with completion, errors, comprehension and qualitative feedback.\n4. **Interpret modestly:** Report uncertainty and alternative explanations. Do not convert a heatmap into a claim about emotion or purchase intent.\n5. **Validate changes:** Use an accessible prototype and a controlled test; monitor harmful effects as well as conversion.\n\nDirectional faces, arrows and contrast can be useful cues, but they must not obscure disclosures, pressure users or manipulate them away from informed choices."
+          },
+          "understandContent": {
+            "coreTakeaway": "Visual cues can influence attention, but they neither control thought nor guarantee a purchase; user goals and measured outcomes decide whether a layout works.",
+            "keyPrinciples": [
+              "Distinguish simulated attention maps from eye-tracking data collected from real, consenting participants",
+              "Test the complete task on mobile, desktop, keyboard and assistive technology instead of optimizing one heatmap"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Plan an ethical visual-attention test:",
+            "checklistItems": [
+              "Defined a user task, hypothesis, representative sample and success plus harm metrics",
+              "Prepared consent, data-minimization, retention and deletion procedures for research data",
+              "Compared gaze or attention evidence with comprehension, errors, completion and accessibility findings"
+            ]
+          }
+        },
+        "72.2": {
+          "stageTitle": "72. Color, Typography & Accessible Interaction",
+          "title": "Color and Cognitive Fluency: Clear Interfaces Without Neuromarketing Myths",
+          "description": "How to use contextual color, readable typography, sufficient contrast and restrained motion without claiming universal emotions, dopamine release or subconscious control.",
+          "learnContent": {
+            "videoTitle": "Masterclass: Accessible Color, Typography & Interaction Feedback",
+            "summaryText": "Color meanings depend on brand, culture, category, context and individual perception. Treat palette rules as design hypotheses, prioritize readability and accessibility, and use experiments rather than universal claims such as blue always creates trust or orange causes urgency.",
+            "bulletPoints": [
+              "Palette heuristics: 60-30-10 can organize a composition, but it is not a scientific conversion law and should yield to content, brand and accessibility needs",
+              "Cognitive fluency: clear language and readable typography can reduce effort, but ease does not automatically create truth, price acceptance or purchase",
+              "WCAG contrast: target at least 4.5:1 for normal text and 3:1 for large text at Level AA, plus 3:1 for meaningful component and graphic boundaries",
+              "Motion and feedback: confirm actions clearly, respect reduced-motion preferences and avoid unnecessary animation, flashing or effects presented as dopamine triggers"
+            ],
+            "coreConcepts": [
+              {
+                "title": "ACCESSIBLE HIERARCHY",
+                "description": "Use structure, spacing, labels, typography and contrast together; never communicate state through color alone."
+              },
+              {
+                "title": "TESTED CONTEXT",
+                "description": "Evaluate palettes and typography with the actual audience, content, device and task rather than generic color-emotion tables."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Accessible Palette & Contrast Toolkit",
+                "subtitle": "WCAG-oriented checks for text, components, states and motion",
+                "type": "pdf"
+              },
+              {
+                "title": "Mara Landing-Page Style Tester",
+                "subtitle": "Compare palette and typography variants with documented accessibility checks",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Clarity before persuasion\n\nA usable page helps people understand the offer, requirements, price and consequences without hiding information or manufacturing urgency. Visual polish supports that goal only when content remains readable and interaction states remain perceivable.\n\n#### Practical design controls\n\n- **Structure:** Group related labels and inputs, use consistent headings and keep important disclosures near the decision they affect.\n- **Contrast:** Test text, links, controls, focus indicators, errors, disabled states and meaningful graphics against their actual backgrounds.\n- **Typography:** Choose readable sizes, line lengths and spacing; allow zoom and reflow, and avoid enforcing an arbitrary two-font rule when one or more are justified.\n- **Color:** Use redundant icons, text or patterns for status and test associations with the intended audience.\n- **Motion:** Provide immediate feedback without distracting movement and honor `prefers-reduced-motion`.\n\nMeasure task completion, comprehension, error recovery and accessibility alongside conversion. Stop variants that create confusion, accidental consent or unequal access even if a short-term metric rises."
+          },
+          "understandContent": {
+            "coreTakeaway": "Readable, accessible design can reduce friction, but no palette, font or animation guarantees comfort, credibility or a sale.",
+            "keyPrinciples": [
+              "Meet contrast and non-color communication requirements in every interactive state, not only in a static screenshot",
+              "Use motion sparingly and provide a reduced-motion experience for people who need or prefer it"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Audit one funnel for clarity and accessibility:",
+            "checklistItems": [
+              "Checked normal and large text, controls, focus, errors and graphics against WCAG 2.2 contrast requirements",
+              "Verified zoom, reflow, keyboard operation, labels and that color is not the only carrier of meaning",
+              "Tested motion with reduced-motion enabled and compared variants using comprehension, errors and conversion"
+            ]
+          }
+        }
+      }
+    },
+
+
   },
   pl: {
     1: {
@@ -13406,6 +13521,121 @@ Droga paczka nie tworzy dużego klienta.`,
               "Uzgodniono założycieli, inwestorów, opcje, SAFE, noty i warranty w ujęciu fully diluted",
               "Porównano rozwodnienie z wykonaniem i bez wykonania pro-rata oraz zapisano wymagany kapitał",
               "Obliczono niski, bazowy i wysoki exit waterfall z preferencjami, kosztami, podatkami i brakiem płynności"
+            ]
+          }
+        }
+      }
+    },
+
+
+    "72": {
+      "title": "72. Wizualny UX i badania konwersji oparte na dowodach",
+      "subtitle": "Eye tracking, wzorce uwagi, dostępny kontrast, typografia i etyczne eksperymenty",
+      "description": "Traktuj eye tracking i dane behawioralne jako ograniczony dowód uwagi, a nie czytanie myśli. Projektuj jasne, dostępne interfejsy i sprawdzaj wskazówki wzrokowe, kolor, typografię oraz ruch z reprezentatywnymi użytkownikami w kontrolowanych testach.",
+      "lessons": {
+        "72.1": {
+          "stageTitle": "72. Eye tracking i wzorce czytania",
+          "title": "Eye tracking i wzorce skanowania: pomiar uwagi bez nadinterpretacji",
+          "description": "Jak interpretować fiksacje, czas spojrzenia i ścieżki wzroku oraz dlaczego wzorce F i Z są zależnymi od kontekstu obserwacjami, a nie uniwersalnymi regułami.",
+          "learnContent": {
+            "videoTitle": "Masterclass: eye tracking, hierarchia wizualna i odpowiedzialne badania UX",
+            "summaryText": "Eye tracking pokazuje, gdzie uczestnicy patrzyli w określonych warunkach. Nie ujawnia bezpośrednio zrozumienia, emocji, intencji ani motywacji zakupu, dlatego łącz dane wzroku z wynikami zadań, rozmowami, kontrolą dostępności i realnym zachowaniem.",
+            "bulletPoints": [
+              "Wzorce czytania: skanowanie podobne do F może wystąpić na stronach tekstowych, lecz zadanie, treść, urządzenie, kierunek języka i wiedza tworzą inne ścieżki",
+              "Gaze cueing: wzrok osoby może w pewnych warunkach przekierować uwagę, ale efekt się różni i nie gwarantuje pamięci, zaufania, wyboru ani konwersji",
+              "Jakość pomiaru: przed analizą fiksacji i dwell time określ obszary zainteresowania, kalibrację, próbę, urządzenie, wykluczenia i hipotezy",
+              "Etyka badań: uzyskaj świadomą zgodę, minimalizuj dane, ustal retencję i nie wywódź cech wrażliwych, których badanie nie potrafi trafnie ustalić"
+            ],
+            "coreConcepts": [
+              {
+                "title": "UWAGA TO NIE INTENCJA",
+                "description": "Fiksacja oznacza uwagę wzrokową w warunkach testu, nie zrozumienie, zgodę ani decyzję zakupową."
+              },
+              {
+                "title": "WZORCE KONTEKSTOWE",
+                "description": "Układ ma wspierać zadanie użytkownika; żaden wzorzec nie pasuje do każdej strony, grupy i urządzenia."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Przewodnik badania eye tracking i audytu heatmap",
+                "subtitle": "Protokół hipotez, zgody, próby, analizy i ograniczeń",
+                "type": "pdf"
+              },
+              {
+                "title": "Mara Landing-Page Attention Mapper",
+                "subtitle": "Twórz testowalne hipotezy uwagi bez przedstawiania prognozy jako zmierzonego wzroku",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Projektuj dla zadania, potem badaj uwagę\n\nHierarchia może ułatwiać znalezienie informacji, lecz uwaga jest tylko częścią użyteczności. Często oglądany element może być niejasny, a pominięty może być nieistotny zamiast źle zaprojektowany.\n\n#### Odpowiedzialny proces badawczy\n\n1. **Zdefiniuj zadanie:** Określ, co uczestnik ma zrozumieć lub wykonać, oraz główne i pomocnicze wyniki.\n2. **Zrekrutuj reprezentatywnych użytkowników:** Uwzględnij urządzenia, języki, zdolności i znajomość tematu; zapisz ograniczenia próby.\n3. **Mierz starannie:** Kalibruj sprzęt, zdefiniuj obszary zainteresowania i łącz wzrok z wykonaniem, błędami, zrozumieniem i opiniami.\n4. **Interpretuj skromnie:** Raportuj niepewność i alternatywne wyjaśnienia. Heatmapa nie dowodzi emocji ani intencji zakupu.\n5. **Waliduj zmianę:** Testuj dostępny prototyp w eksperymencie i monitoruj szkody obok konwersji.\n\nTwarze, strzałki i kontrast mogą kierować uwagę, lecz nie mogą ukrywać ujawnień, wywierać presji ani odciągać od świadomego wyboru."
+          },
+          "understandContent": {
+            "coreTakeaway": "Wskazówki wizualne mogą wpływać na uwagę, lecz nie kontrolują myśli i nie gwarantują zakupu; o jakości układu decydują cele i zmierzone wyniki użytkownika.",
+            "keyPrinciples": [
+              "Odróżniaj symulowane mapy uwagi od danych eye tracking zebranych od realnych, świadomie zgadzających się uczestników",
+              "Testuj pełne zadanie na telefonie, komputerze, klawiaturze i technologiach asystujących zamiast optymalizować jedną heatmapę"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Zaplanuj etyczny test uwagi wizualnej:",
+            "checklistItems": [
+              "Zdefiniowano zadanie, hipotezę, reprezentatywną próbę oraz wskaźniki sukcesu i szkody",
+              "Przygotowano zgodę, minimalizację danych, retencję i usuwanie danych badawczych",
+              "Porównano uwagę ze zrozumieniem, błędami, wykonaniem zadania i wynikami dostępności"
+            ]
+          }
+        },
+        "72.2": {
+          "stageTitle": "72. Kolor, typografia i dostępna interakcja",
+          "title": "Kolor i płynność poznawcza: jasny interfejs bez mitów neuromarketingu",
+          "description": "Jak używać kontekstowego koloru, czytelnej typografii, odpowiedniego kontrastu i oszczędnego ruchu bez twierdzeń o uniwersalnych emocjach, dopaminie lub kontroli podświadomości.",
+          "learnContent": {
+            "videoTitle": "Masterclass: dostępny kolor, typografia i informacja zwrotna",
+            "summaryText": "Znaczenie kolorów zależy od marki, kultury, kategorii, kontekstu i percepcji osoby. Traktuj reguły palety jako hipotezy, stawiaj na czytelność i dostępność oraz testuj zamiast twierdzić, że niebieski zawsze buduje zaufanie, a pomarańczowy pilność.",
+            "bulletPoints": [
+              "Heurystyki palety: 60-30-10 może porządkować kompozycję, lecz nie jest naukowym prawem konwersji i ustępuje treści, marce oraz dostępności",
+              "Płynność poznawcza: jasny język i czytelna typografia mogą zmniejszyć wysiłek, lecz łatwość nie tworzy automatycznie prawdy, akceptacji ceny ani zakupu",
+              "Kontrast WCAG: dąż do minimum 4,5:1 dla zwykłego tekstu i 3:1 dla dużego na poziomie AA oraz 3:1 dla istotnych granic komponentów i grafik",
+              "Ruch i feedback: jasno potwierdzaj działania, respektuj reduced motion i unikaj zbędnych animacji, migania oraz efektów przedstawianych jako wyzwalacze dopaminy"
+            ],
+            "coreConcepts": [
+              {
+                "title": "DOSTĘPNA HIERARCHIA",
+                "description": "Łącz strukturę, odstępy, etykiety, typografię i kontrast; nie przekazuj stanu wyłącznie kolorem."
+              },
+              {
+                "title": "SPRAWDZONY KONTEKST",
+                "description": "Oceniaj paletę i typografię z realną grupą, treścią, urządzeniem i zadaniem zamiast z ogólną tabelą emocji."
+              }
+            ],
+            "resources": [
+              {
+                "title": "Zestaw dostępnej palety i kontrastu",
+                "subtitle": "Kontrole WCAG dla tekstu, komponentów, stanów i ruchu",
+                "type": "pdf"
+              },
+              {
+                "title": "Mara Landing-Page Style Tester",
+                "subtitle": "Porównuj palety i typografię z udokumentowaną kontrolą dostępności",
+                "type": "tool"
+              }
+            ],
+            "fullArticleGuide": "### Jasność przed perswazją\n\nUżyteczna strona pomaga zrozumieć ofertę, warunki, cenę i skutki bez ukrywania informacji lub tworzenia sztucznej pilności. Estetyka wspiera ten cel tylko wtedy, gdy treść pozostaje czytelna, a stany interakcji są widoczne.\n\n#### Praktyczne kontrole projektu\n\n- **Struktura:** Grupuj powiązane etykiety i pola, używaj spójnych nagłówków i trzymaj ujawnienia blisko decyzji.\n- **Kontrast:** Testuj tekst, linki, kontrolki, fokus, błędy, stany wyłączone i istotne grafiki na realnym tle.\n- **Typografia:** Dobierz rozmiar, długość wiersza i odstępy; pozwól na zoom i reflow, nie narzucaj arbitralnie dwóch fontów.\n- **Kolor:** Uzupełniaj status ikoną, tekstem lub wzorem i badaj skojarzenia z grupą docelową.\n- **Ruch:** Zapewnij natychmiastowy feedback bez rozpraszania i honoruj `prefers-reduced-motion`.\n\nMierz wykonanie zadania, zrozumienie, naprawę błędów i dostępność obok konwersji. Zatrzymaj wariant wywołujący dezorientację, przypadkową zgodę lub nierówny dostęp, nawet jeśli krótkoterminowy wskaźnik rośnie."
+          },
+          "understandContent": {
+            "coreTakeaway": "Czytelny, dostępny projekt może zmniejszyć tarcie, lecz żadna paleta, czcionka ani animacja nie gwarantuje komfortu, wiarygodności lub sprzedaży.",
+            "keyPrinciples": [
+              "Spełniaj wymogi kontrastu i komunikacji niewyłącznie kolorem w każdym stanie interaktywnym, nie tylko na statycznym obrazie",
+              "Używaj ruchu oszczędnie i zapewnij wersję reduced motion osobom, które jej potrzebują lub preferują"
+            ]
+          },
+          "actionTask": {
+            "instruction": "Przeprowadź audyt jasności i dostępności jednego lejka:",
+            "checklistItems": [
+              "Sprawdzono zwykły i duży tekst, kontrolki, fokus, błędy oraz grafiki względem kontrastu WCAG 2.2",
+              "Zweryfikowano zoom, reflow, obsługę klawiatury, etykiety i to, że kolor nie jest jedynym nośnikiem znaczenia",
+              "Przetestowano ruch z włączonym reduced motion oraz porównano zrozumienie, błędy i konwersję"
             ]
           }
         }
