@@ -15,6 +15,7 @@ import { localizeAcademyStage87 } from '../i18n/academyLocalization87';
 import { localizeAcademyStage88 } from '../i18n/academyLocalization88';
 import { localizeAcademyStage89 } from '../i18n/academyLocalization89';
 import { localizeAcademyStage90 } from '../i18n/academyLocalization90';
+import { localizeAcademyStage91 } from '../i18n/academyLocalization91';
 import { 
   Play, 
   CheckCircle, 
@@ -116,7 +117,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 }) => {
   const { language } = useLanguage();
   const copy = academyCopy[language];
-  const localizedStages = useMemo(() => localizeAcademyStage90(localizeAcademyStage89(localizeAcademyStage88(localizeAcademyStage87(localizeAcademyStage86(localizeAcademyStage85(localizeAcademyStage84(localizeAcademyStage83(localizeAcademyStage82(localizeAcademyStage81(localizeAcademyStages(stages, language), language), language), language), language), language), language), language), language), language), language), [stages, language]);
+  const localizedStages = useMemo(() => localizeAcademyStage91(localizeAcademyStage90(localizeAcademyStage89(localizeAcademyStage88(localizeAcademyStage87(localizeAcademyStage86(localizeAcademyStage85(localizeAcademyStage84(localizeAcademyStage83(localizeAcademyStage82(localizeAcademyStage81(localizeAcademyStages(stages, language), language), language), language), language), language), language), language), language), language), language), language), [stages, language]);
   const isLight = user.theme === 'clean-light' || !user.theme;
 
   // If an initial lesson ID was passed, open lesson mode directly; otherwise start in course overview
