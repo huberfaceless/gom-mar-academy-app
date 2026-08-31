@@ -786,7 +786,7 @@ Du hast den gesamten Weg von deinem allerersten Online-Euro bis zum 100-Millione
     subtitle: 'Market Making, Triangular Arbitrage, Flash Loans, On-Chain Hedging & Risk-Parity Treasury',
     color: 'from-emerald-800 via-teal-900 to-black',
     badgeIcon: '⚡',
-    description: 'Automatisiere dein Unternehmens-Treasury mit algorithmischem Trading: Nutze Krypto-Arbitrage, Delta-Neutral Hedging, Flash Loans und quantitative Risikoparitäts-Modelle, um Firmenüberschüsse mit minimalem Markt-Beta zu verzinsen.',
+    description: 'Bewerte algorithmisches Trading, Krypto-Arbitrage, Hedging und DeFi für das Unternehmens-Treasury mit konservativen Limits. Berücksichtige Markt-, Basis-, Funding-, Liquidations-, Gegenpartei-, Verwahrungs-, Smart-Contract-, Regulierungs- und Steuer-Risiken.',
     lessons: [
       {
         id: '91.1',
@@ -794,28 +794,28 @@ Du hast den gesamten Weg von deinem allerersten Online-Euro bis zum 100-Millione
         stageTitle: '91. Delta-Neutral Hedging & Arbitrage',
         title: 'Delta-Neutral Yield Farming & Krypto-Zinsarbitrage',
         durationMinutes: 32,
-        description: 'Wie du Krypto-Bestände gegen Preisschwankungen per Short-Perpetual absicherst und 8-15% risikofreie Zinserträge (Funding Rates) erwirtschaftest.',
+        description: 'Wie Spot- und Derivatepositionen das Richtungsrisiko teilweise ausgleichen können und welche erheblichen Rest- und Verlustrisiken bei Funding-Strategien bestehen.',
         learnContent: {
           videoTitle: 'Masterclass: Delta-Neutral Hedging & Algorithmische Arbitrage',
           videoDuration: '32:15',
-          summaryText: 'Ein Unternehmen darf seine Liquidität keinen 50%igen Krypto-Crashs aussetzen. Durch Delta-Neutral Hedging (Spot kaufen + 1x Short auf Perpetual Futures) eliminierst du das Preisrisiko zu 100% und kassierst kontinuierlich die positiven Funding-Rates von Spekulanten.',
+          summaryText: 'Eine Kombination aus Spot- und Short-Perpetual-Position kann die unmittelbare Delta-Exponierung reduzieren, beseitigt Risiken jedoch nicht. Basisabweichungen, wechselnde oder negative Funding-Rates, Liquidation, Slippage, Börsen- und Gegenparteiausfall sowie Stablecoin- und Verwahrungsrisiken können zu erheblichen Verlusten führen.',
           bulletPoints: [
-            'Die Delta-Neutral Mechanik: Spot Long + Futures Short = Null Richtungsrisiko',
-            'Funding Rate Arbitrage: Wie Long-Trader in Bullenmärkten bis zu 25% p.a. an Short-Positionen zahlen',
-            'Triangular Arbitrage: Blitzschnelle Währungs-Dreiecke auf dezentralen Börsen (DEX) nutzen',
-            'Smart Contract Risiko-Audits: Wie du Protokolle vor der Kapitalallokation auf Sicherheitslücken prüfst'
+            'Delta-Hedging: Hedge-Ratio, Basis, Margin, Liquidationsabstand, Rebalancing-Kosten und Stressszenarien gemeinsam prüfen',
+            'Funding-Rates sind variabel, können das Vorzeichen wechseln und erlauben keine feste oder garantierte Jahresrendite',
+            'Arbitrage: Gebühren, Slippage, Latenz, MEV, Liquidität, Ausführungsfehler sowie steuerliche und regulatorische Folgen modellieren',
+            'Governance: Gegenparteien, Verwahrung, Smart Contracts, Buchhaltung, Steuern, Sanktionen und Geldwäscheprävention unabhängig prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'trending-up',
               title: 'DELTA-NEUTRAL CASHFLOW',
-              description: 'Stabile Zinserträge ohne Risiko durch fallende oder steigende Kurse.',
+              description: 'Reduzierte Richtungsabhängigkeit mit fortbestehenden Basis-, Funding-, Liquidations- und Gegenparteirisiken.',
               highlight: true
             },
             {
               iconName: 'zap',
               title: 'FUNDING RATE HARVESTING',
-              description: 'Automatischer Einzug von Halteprämien spekulativer Marktakteure.'
+              description: 'Variable Zahlungen, die positiv oder negativ werden und durch Gebühren und Verluste überkompensiert werden können.'
             }
           ],
           resources: [
@@ -844,19 +844,19 @@ Bankguthaben verlieren durch Inflation an Kaufkraft. Algorithmische Treasury-Str
 3. **Cold Storage Backing**: 70% der Mittel bleiben auf Hardware-Multisig-Wallets (Gnosis Safe).`
         },
         understandContent: {
-          coreTakeaway: 'Wer das Kursrisiko mathematisch neutralisiert, verwandelt Krypto in eine unübertroffene Cash-Maschine.',
+          coreTakeaway: 'Delta-Neutralität ist eine laufend zu überwachende Risikoposition und weder risikofrei noch eine Renditegarantie.',
           keyPrinciples: [
-            'Positionen bei extremen Marktschwankungen stündlich automatisch rebalancieren',
-            'Niemals auf unregulierten Offshore-Börsen ohne Insolvenzschutz handeln'
+            'Vor Kapitalallokation Verlustgrenzen, Liquidationspuffer, Gegenparteien, Verwahrung und Notfallprozesse genehmigen',
+            'Regulierung, Buchhaltung, Steuern, Sanktionen und Geldwäschepflichten für Unternehmen fachlich prüfen lassen'
           ]
         },
         actionTask: {
-          instruction: 'Konfiguriere deine Delta-Neutral Treasury-Strategie:',
+          instruction: 'Erstelle eine unabhängige Risiko- und Machbarkeitsprüfung, bevor Kapital eingesetzt wird:',
           inputType: 'checklist',
           checklistItems: [
-            'Berechnung der aktuellen Funding Rates auf Top-Börsen durchgeführt',
-            'Gnosis Safe Multisig-Wallet für Firmenkrypto eingerichtet',
-            'Automatischer Rebalancing-Trigger im Treasury Dashboard aktiviert'
+            'Basis-, Funding-, Liquidations-, Slippage- und Ausfallszenarien dokumentiert',
+            'Recht, Steuern, Buchhaltung, Verwahrung, Sanktionen und AML unabhängig geprüft',
+            'Vom zuständigen Organ genehmigte Limits, Verantwortlichkeiten und Notfallausstieg definiert'
           ],
           toolboxCategory: 'settings'
         }
@@ -867,28 +867,28 @@ Bankguthaben verlieren durch Inflation an Kaufkraft. Algorithmische Treasury-Str
         stageTitle: '91. Flash Loans & Liquidity Provision',
         title: 'Flash Loans & Automated Market Making (AMM) Liquiditäts-Pools',
         durationMinutes: 30,
-        description: 'Wie unbesicherte Flash-Kredite in einer einzigen Transaktions-Blockzeit ablaufen und wie du Handelsgebühren auf Uniswap v3 kassierst.',
+        description: 'Wie Flash Loans und konzentrierte Liquidität technisch funktionieren und warum Gas, MEV, Ausführung, Smart Contracts, Preisbereiche und Token-Risiken Verluste verursachen können.',
         learnContent: {
           videoTitle: 'Masterclass: Flash Loans & Konzentrierte Liquidität',
           videoDuration: '30:45',
-          summaryText: 'Ein Flash Loan leiht dir 10 Millionen Dollar für exakt 12 Sekunden ohne Sicherheiten – solange der Kredit im selben Block mit Zinsen zurückgezahlt wird. Erfahre, wie Arbitrage-Bots diese Mechanismen nutzen und wie du konzentrierte Liquidität auf Uniswap v3 bereitstellst.',
+          summaryText: 'Flash Loans werden innerhalb einer atomaren Transaktion aufgenommen und zurückgeführt; Betrag, Blockzeit und Kosten sind nicht fest. Ein Rücklauf schützt nicht vor Gas-, Entwicklungs-, Oracle-, MEV-, Smart-Contract- oder Ausführungsrisiken. Konzentrierte Liquidität kann Gebühren erhöhen, aber auch Out-of-range- und Impermanent-Loss-Risiken verstärken.',
           bulletPoints: [
-            'Flash Loan Atomarität: Wenn der Arbitrage-Gewinn die Gebühren nicht deckt, rollt die Blockchain die Transaktion automatisch zurück',
-            'Uniswap v3 Konzentrierte Liquidität: Bereitstellung von Kapital in engen Preisspannen für 5x höhere Gebühreneinnahmen',
-            'Impermanent Loss Mitigation: Wie du unbeständigen Verlust durch Stablecoin-Paare (USDC/USDT) auf null reduzierst',
-            'MEV (Maximal Extractable Value) Schutz: Private RPC-Endpunkte (Flashbots) gegen Sandwich-Attacken nutzen'
+            'Atomarität: Zustandsänderungen können zurückgerollt werden, verbrauchtes Gas und Entwicklungsaufwand jedoch nicht zwingend',
+            'Konzentrierte Liquidität: engere Bereiche verändern Kapitalnutzung, Gebühren, Rebalancing und Verlustprofil ohne festen Multiplikator',
+            'Stablecoin-Paare können Impermanent Loss reduzieren, aber Depeg-, Emittenten-, Reserve-, Liquiditäts- und Smart-Contract-Risiken bleiben',
+            'MEV-Schutz ist unvollständig; private Übermittlung reduziert bestimmte Angriffe, schafft aber neue Relay- und Ausführungsabhängigkeiten'
           ],
           coreConcepts: [
             {
               iconName: 'repeat',
               title: 'ATOMIC ARBITRAGE',
-              description: 'Null Ausfallrisiko: Transaktion wird nur ausgeführt, wenn der Gewinn garantiert ist.',
+              description: 'Atomare Ausführung begrenzt einzelne Zustandsrisiken, garantiert aber weder Gewinn noch kostenlose Fehlschläge.',
               highlight: true
             },
             {
               iconName: 'dollar-sign',
               title: 'CONCENTRATED AMM',
-              description: 'Maximale Gebührenausbeute durch gezielte Preisband-Liquidität.'
+              description: 'Gezielte Preisbereiche mit höherer Kapitalintensität sowie erhöhtem Management- und Verlustpotenzial.'
             }
           ],
           resources: [
@@ -916,19 +916,19 @@ Flash Loans und konzentrierte AMM-Pools sind die modernsten Instrumente des deze
 - **Passiver Gebührenstrom**: Tägliche Ausschüttung von Tauschgebühren direkt in deine Firmen-Wallet.`
         },
         understandContent: {
-          coreTakeaway: 'Wer private RPC-Nodes nutzt, schützt seine Handelsgewinne vor räuberischen MEV-Bots.',
+          coreTakeaway: 'Flash Loans, private Transaktionswege und AMMs verändern Risiken, beseitigen sie aber nicht und garantieren keinen Handelsgewinn.',
           keyPrinciples: [
-            'Konzentrierte Liquidität nur in hochliquiden Paaren mit extrem stabiler Korrelation einsetzen',
-            'Smart Contracts vor dem Live-Einsatz immer auf Testnets simulieren'
+            'Token-, Depeg-, Oracle-, Range-, Gebühren-, MEV- und Smart-Contract-Risiken gemeinsam stressen',
+            'Tests, Audits und Simulationen reduzieren Fehler, ersetzen aber keine Limits, Freigaben oder fachliche Prüfung'
           ]
         },
         actionTask: {
-          instruction: 'Richte eine konzentrierte Liquiditäts-Position ein:',
+          instruction: 'Erstelle eine dokumentierte DeFi-Risikoprüfung ohne Live-Kapital einzusetzen:',
           inputType: 'checklist',
           checklistItems: [
-            'Stablecoin-Liquiditätspool auf Uniswap v3 analysiert',
-            'Flashbots RPC-Endpunkt im Browser-Wallet hinterlegt',
-            'Gebühren-Tracking im Mara CRM Treasury Portal aktiviert'
+            'Gas, Slippage, MEV, Oracle, Smart Contract, Depeg und Impermanent Loss modelliert',
+            'Rechts-, Steuer-, Buchhaltungs-, Verwahrungs-, Sanktions- und AML-Prüffragen dokumentiert',
+            'Genehmigungs-, Test-, Überwachungs-, Verlustlimit- und Notfallprozess entworfen'
           ],
           toolboxCategory: 'settings'
         }
