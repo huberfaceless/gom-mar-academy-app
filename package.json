@@ -10,7 +10,8 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "audit:academy": "tsx scripts/auditAcademyLocalization.ts",
-    "audit:membership-admin": "tsx scripts/auditMembershipAdmin.ts"
+    "audit:membership-admin": "tsx scripts/auditMembershipAdmin.ts",
+    "audit:deployment": "tsx scripts/auditCloudRunDeployment.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
