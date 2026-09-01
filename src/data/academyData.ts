@@ -1274,21 +1274,21 @@ Ein Kunde, der einmal über deinen Link gekauft hat und zufrieden ist, wird auch
         stageTitle: '7. Dein System läuft',
         title: 'Online Entrepreneur Meilenstein',
         durationMinutes: 8,
-        description: 'Herzlichen Glückwunsch! Du hast alle 7 Etappen abgeschlossen. Lade dein Zertifikat herunter.',
+        description: 'Herzlichen Glückwunsch! Du hast die sieben Kernetappen abgeschlossen und einen wichtigen Lernmeilenstein erreicht.',
         learnContent: {
           videoTitle: 'Dein neuer Weg als Online Entrepreneur',
           videoDuration: '6:30',
-          summaryText: 'Du gehört jetzt zu den obersten 5% der Menschen, die ein vollständiges, funktionierendes Online-Einkommenssystem aufgebaut haben. Bleibe am Ball und feiere deinen Erfolg!',
+          summaryText: 'Du hast die Grundlagen eines Online-Einkommenssystems erarbeitet und getestet. Bleibe am Ball, prüfe deine Ergebnisse und entwickle dein System Schritt für Schritt weiter.',
           bulletPoints: [
-            '100% aller 7 Etappen gemeistert',
+            'Alle sieben Kernetappen abgeschlossen',
             'Integrierte Mail-Automation & KI-Tools einsatzbereit',
             'Zugang zur GOM-MAR Pro Community freigeschaltet'
           ],
           fullArticleGuide: `### Herzlichen Glückwunsch, Online Entrepreneur! 🎉
 
-Du hast die gesamte GOM-MAR Academy durchgearbeitet, verstanden und in der Praxis umgesetzt.
+Du hast den Kernpfad der GOM-MAR Academy durchgearbeitet und wichtige Grundlagen in der Praxis umgesetzt.
 
-Du besitzt nun ein vollständiges, automatisiertes System für digitales Nebeneinkommen:
+Du hast nun wichtige Bausteine für ein digitales Nebeneinkommenssystem vorbereitet:
 * **Eine glasklare Nische & Zielgruppe**
 * **Eine funktionsfähige Opt-In Landingpage**
 * **Eine automatisierte GOM-MAR Mail-Automation**
@@ -1296,20 +1296,20 @@ Du besitzt nun ein vollständiges, automatisiertes System für digitales Nebenei
 
 Halte das Rad am Laufen, bleibe fokussiert und genieße deinen Weg zu mehr finanzieller und zeitlicher Freiheit!`,
           practicalExamples: [
-            'Schalte dein offizielles GOM-MAR Absolventen-Zertifikat frei!'
+            'Prüfe, ob die Voraussetzungen für deinen GOM-MAR-Abschlussnachweis erfüllt sind.'
           ]
         },
         understandContent: {
-          coreTakeaway: 'Glückwunsch! Du bist nun offizieller Online Entrepreneur der GOM-MAR Academy!',
+          coreTakeaway: 'Glückwunsch zu diesem Lernmeilenstein. Nachhaltiger Fortschritt entsteht durch weitere Umsetzung, Messung und Verbesserung.',
           keyPrinciples: ['Niemals aufhören zu lernen', 'Community nutzen & Erfahrungen teilen']
         },
         actionTask: {
-          instruction: 'Schließe das finale Modul ab & schalte deinen Level 5 Status frei!',
+          instruction: 'Schließe das letzte Kernmodul ab und dokumentiere deine nächste Überprüfung:',
           inputType: 'checklist',
           checklistItems: [
-            'Ich habe alle Aufgaben absolviert',
-            'Mein System läuft bereit zur Skalierung',
-            'Ich trage stolz den Titel Online Entrepreneur'
+            'Ich habe alle Kernaufgaben abgeschlossen',
+            'Ich habe geprüft, wie mein System funktioniert und was noch verbessert werden muss',
+            'Ich habe die nächste sichere und realistische Verbesserung dokumentiert'
           ]
         }
       }
