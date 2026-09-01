@@ -63,6 +63,7 @@ async function startServer() {
         niche,
         targetAudience,
         history,
+        language,
       } = req.body;
 
       if (!prompt || typeof prompt !== 'string') {
@@ -70,6 +71,7 @@ async function startServer() {
         return;
       }
 
+      const outputLanguage = language === 'en' ? 'Englisch' : language === 'pl' ? 'Polnisch' : 'Deutsch';
       const systemInstruction = `Du bist "Frag GOM-MAR", der persönliche KI-Mentor der GOM-MAR Academy.
 Die GOM-MAR Academy führt Nutzer Schritt für Schritt zu ihrem eigenen Online-Nebeneinkommen.
 Grundsatz: "Wir zeigen dir, was du als Nächstes tun musst." Keine trockene Theorie, sondern konkrete Handlungsanweisungen.
@@ -81,7 +83,7 @@ Aktueller Kontext des Nutzers:
 - Zielgruppe: ${targetAudience || 'Noch nicht definiert'}
 
 Verhaltensregeln:
-1. Antworte immer auf Deutsch in einer motivierenden, professionellen, klaren und freundlichen Tonalität.
+1. Antworte vollständig auf ${outputLanguage} in einer motivierenden, professionellen, klaren und freundlichen Tonalität.
 2. Beziehe dich direkt auf den Lernpfad der GOM-MAR Academy und gib präzise Antworten.
 3. Wenn der Nutzer nach Orientierung fragt (z.B. "Was mache ich jetzt?"), verweise ihn auf den nächsten konkreten Schritt im Lernpfad oder in der Toolbox.
 4. Halte Antworten prägnant, übersichtlich mit Bullet Points oder Schritten, wenn passend.
@@ -122,24 +124,25 @@ Verhaltensregeln:
 
       const inferActionFromText = (text: string): ActionView | undefined => {
         const normalizedText = text.toLowerCase();
-        if (/\b(profil|nische|zielgruppe|profildaten)\b/.test(normalizedText)) return 'profile';
-        if (/\b(e-?mail|kampagne|autoresponder|automation)\b/.test(normalizedText)) return 'email';
-        if (/\b(toolbox|werkzeug|generator|vorlage|template)\b/.test(normalizedText)) return 'toolbox';
-        if (/\b(academy|akademie|lektion|lernpfad|stage|etappe)\b/.test(normalizedText)) return 'academy';
+        if (/\b(profil|profile|nische|niche|nisza|zielgruppe|audience|profildaten)\b/.test(normalizedText)) return 'profile';
+        if (/\b(e-?mail|kampagne|campaign|kampania|autoresponder|automation|automatyzacja)\b/.test(normalizedText)) return 'email';
+        if (/\b(toolbox|werkzeug|tool|generator|vorlage|template|narzędzi\w*)\b/.test(normalizedText)) return 'toolbox';
+        if (/\b(academy|akademie|lektion|lesson|lekcja|lernpfad|stage|etappe|etap)\b/.test(normalizedText)) return 'academy';
         return undefined;
       };
 
       const promptAction = inferActionFromText(prompt);
-      const answerSuggestsNavigation = /\b(klick|öffn|geh|spring|wechsel|direkt zu|findest du)\w*/i.test(answer);
+      const answerSuggestsNavigation = /\b(klick|öffn|geh|spring|wechsel|direkt zu|findest du|click|open|go to|switch|przejdź|otwórz|kliknij)\w*/i.test(answer);
       const answerAction = answerSuggestsNavigation ? inferActionFromText(answer) : undefined;
       const actionView = markerAction || promptAction || answerAction;
 
-      const actionLabels: Record<'academy' | 'email' | 'toolbox' | 'profile', string> = {
-        academy: 'Zur aktuellen Lektion',
-        email: 'Zum E-Mail-Bereich',
-        toolbox: 'Toolbox öffnen',
-        profile: 'Profil vervollständigen',
+      const actionLabelsByLanguage: Record<string, Record<ActionView, string>> = {
+        de: { academy: 'Zur aktuellen Lektion', email: 'Zum E-Mail-Bereich', toolbox: 'Toolbox öffnen', profile: 'Profil vervollständigen' },
+        en: { academy: 'Go to the current lesson', email: 'Open the email section', toolbox: 'Open the Toolbox', profile: 'Complete your profile' },
+        pl: { academy: 'Przejdź do bieżącej lekcji', email: 'Otwórz sekcję e-mail', toolbox: 'Otwórz narzędzia', profile: 'Uzupełnij profil' },
       };
+      const responseLanguage = language === 'en' || language === 'pl' ? language : 'de';
+      const actionLabels = actionLabelsByLanguage[responseLanguage];
 
       const suggestedAction = actionView
         ? {
@@ -155,7 +158,7 @@ Verhaltensregeln:
         : undefined;
 
       res.json({
-        answer: answer || 'Entschuldigung, ich konnte gerade keine Antwort generieren.',
+        answer: answer || ({ de: 'Entschuldigung, ich konnte gerade keine Antwort generieren.', en: 'Sorry, I could not generate an answer right now.', pl: 'Przepraszam, nie udało mi się teraz wygenerować odpowiedzi.' })[responseLanguage],
         suggestedAction,
       });
     } catch (err: unknown) {
