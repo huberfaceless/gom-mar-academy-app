@@ -169,7 +169,7 @@ PPP-Projekte sind das Fundament moderner Energie-, Verkehrs- und Digitalnetze.
     subtitle: 'LEO Satelliten-Konstellationen, ITU Frequenzallokation, Subsea Kabel & Weltraumrecht',
     color: 'from-blue-900 via-indigo-950 to-black',
     badgeIcon: '🚀',
-    description: 'Die letzte Grenze unternehmerischer Skalierung: Verstehe die Ökonomie von LEO-Satellitenkonstellationen, ITU-Funkfrequenzlizenzen, Unterseekabel-Konsortien und das Völkerrecht des Weltraumvertrags (Outer Space Treaty).',
+    description: 'Analysiere die Ökonomie von LEO-Satellitenkonstellationen und Unterseekabeln mit ihren Genehmigungs-, Frequenzkoordinations-, Haftungs-, Sicherheits-, Umwelt-, Finanzierungs- und Betriebsrisiken.',
     lessons: [
       {
         id: '97.1',
@@ -177,41 +177,41 @@ PPP-Projekte sind das Fundament moderner Energie-, Verkehrs- und Digitalnetze.
         stageTitle: '97. NewSpace & Satelliten-Konstellationen',
         title: 'NewSpace Ökonomie: SmallSats, Raketen-Rideshares & ITU-Frequenzrechte',
         durationMinutes: 34,
-        description: 'Wie CubeSats und LEO-Konstellationen finanziert werden, wie Frequenzanmeldungen bei der ITU ablaufen und weltweite Kommunikationsnetze entstehen.',
+        description: 'Wie CubeSats und LEO-Konstellationen geplant und finanziert werden, wie nationale Verwaltungen ITU-Verfahren anstoßen und welche Lizenz-, Haftungs-, Weltraummüll- und Betriebsrisiken bestehen.',
         learnContent: {
           videoTitle: 'Masterclass: NewSpace Wirtschaft, Raketenstarts & Orbitale Frequenzen',
           videoDuration: '34:30',
-          summaryText: 'Durch sinkende Startkosten (SpaceX Rideshares) ist der Weltraum für Privatunternehmen zugänglich geworden. Erfahre, wie LEO-Konstellationen für Datenübertragung, Sensorik und Erdbeobachtung aufgebaut werden und wie du dir wertvolle ITU-Frequenzbänder sicherst.',
+          summaryText: 'Rideshare-Angebote können den Zugang zum Orbit erleichtern, doch Missionskosten, Termine und Erfolg bleiben nutzlast-, provider- und marktbezogen. Frequenzanmeldungen erfolgen über eine zuständige nationale Verwaltung und erfordern je nach System Koordination, Notifizierung, Inbetriebnahme sowie nationale Genehmigungen; sie schaffen kein uneingeschränktes Eigentum an Frequenzen.',
           bulletPoints: [
-            'Die Startkosten-Revolution: Von 50.000$/kg auf unter 1.500$/kg in den niedrigen Erdorbit (LEO)',
-            'ITU Frequenzkoordination: Das internationale Anmeldeverfahren in Genf für Ka-, Ku- und V-Band Frequenzen',
-            'CubeSat Standards: 1U bis 12U modulare Satellitenplattformen für extrem günstige Serienfertigung',
-            'Weltraumhaftung (Outer Space Treaty 1967): Startstaat-Haftung und weltraumrechtliche Versicherungspflichten'
+            'Startökonomie: Gesamtbudget aus Nutzlastintegration, Test, Start, Versicherung, Bodenbetrieb, Reserven und möglicher Verzögerung statt eines pauschalen Dollar-pro-Kilogramm-Werts ableiten',
+            'ITU-Verfahren: Die nationale Verwaltung reicht Frequenzzuweisungen ein; Koordination, Notifizierung, Eintragung und fristgerechte Inbetriebnahme richten sich nach den Radio Regulations',
+            'CubeSat-Formfaktoren standardisieren Schnittstellen, garantieren aber weder niedrige Gesamtkosten noch Zuverlässigkeit, Startplatz oder Marktfähigkeit',
+            'Weltraumrecht: Nationale Zulassung und fortlaufende Aufsicht, Registrierung, Haftungszuordnung, Exportkontrolle und gegebenenfalls Versicherungsauflagen jurisdiktionsbezogen prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
-              title: 'ITU FREQUENCY RIGHTS',
-              description: 'Orbitale Funkfrequenzen sind globale Monopole mit unschätzbarem Marktwert.',
+              title: 'COORDINATED SPECTRUM',
+              description: 'Regulatorisch koordinierte Nutzung zum Schutz vor Störungen, kein grenzenloses globales Monopol.',
               highlight: true
             },
             {
               iconName: 'zap',
               title: 'LEO CONSTELLATION',
-              description: 'Niedrige Latenzzeiten (25ms) durch Schwärme hunderter kleiner Satelliten.'
+              description: 'Latenz und Leistung hängen von Orbit, Gateway, Routing, Auslastung, Wetter und Endgerät ab.'
             }
           ],
           resources: [
             {
-              title: 'NewSpace Launch & Frequency Licensing Master-Guide',
-              subtitle: 'ITU-Anmeldeleitfaden & Satelliten-Budgetierungsmodell als PDF',
+              title: 'NewSpace Genehmigungs- und Missionsleitfaden',
+              subtitle: 'Frequenz-, Lizenz-, Haftungs- und Satelliten-Budgetmodell als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
               title: 'Mara CRM Orbital Mission Tracker',
-              subtitle: 'Satelliten-Telemetrie, Bodenstations-Verträge und Starttermine überwachen',
+              subtitle: 'Genehmigungen, Telemetrie, Bodenstationsverträge, Risiken und Starttermine überwachen',
               type: 'tool',
               iconName: 'globe',
               actionUrl: 'settings'
@@ -221,26 +221,29 @@ PPP-Projekte sind das Fundament moderner Energie-, Verkehrs- und Digitalnetze.
 
 Satellitenkonstellationen revolutionieren globale Kommunikation, Logistikverfolgung und Finanzmärkte.
 
-#### Der 4-Stufen Pfad in den Orbit:
-1. **Frequenzanmeldung (ITU)**: Vorab-Koordination über die nationale Bundesnetzagentur.
-2. **Plattformbau**: Beschaffung standardisierter Bus-Systeme mit optischen Laser-Inter-Satelliten-Links (ISL).
-3. **Launch Contract**: Buchung eines Rideshare-Slots auf Falcon 9 oder Electron.
-4. **Bodenstationsnetz (GSaaS)**: AWS Ground Station oder KSAT für weltweites Downlink-Streaming.`
+#### Prüffelder einer Orbitalmission:
+1. **Dienst und Frequenzen**: Linkbudget, Abdeckung und Störverträglichkeit entwerfen; mit der zuständigen nationalen Verwaltung Koordination, Notifizierung, Gebühren, Meilensteine und Inbetriebnahme klären.
+2. **Zulassung und Verantwortung**: Nationale Weltraum-, Funk-, Erdbeobachtungs-, Datenschutz-, Exportkontroll- und Sanktionsregeln sowie Registrierung, laufende Aufsicht, Haftung und Versicherung prüfen.
+3. **Raumsegment**: Nutzlast, Bus, Strahlungsumgebung, Kollisionsvermeidung, Cybersecurity, Lieferkette, Tests und Ausfallmodi validieren; Standards ersetzen keine Qualifikation.
+4. **Start und Betrieb**: Provider, Integration, Verschiebung, Missionsverlust, Bodenstationen, Schlüsselverwaltung, Datenpfade und Service-Level mit Alternativen planen.
+5. **Nachhaltigkeit und Ende**: Konstellationsausbau, Weltraumlage, Manövrierfähigkeit, Passivierung, De-Orbit und Entsorgung nach geltenden Vorgaben dokumentieren.
+
+Eine ITU-Eintragung schützt nur innerhalb des anwendbaren Regelwerks und unter seinen Bedingungen. Sie garantiert weder störungsfreien Betrieb noch Marktzugang oder wirtschaftlichen Erfolg.`
         },
         understandContent: {
-          coreTakeaway: 'Wer sich frühzeitig Frequenzbänder sichert, baut uneinholbare Markteintrittsbarrieren auf.',
+          coreTakeaway: 'Eine tragfähige Weltraummission verbindet Frequenzkoordination, nationale Zulassung, technische Zuverlässigkeit, Finanzierung und verantwortungsvolles Lebenszyklusmanagement; eine frühe Anmeldung allein schafft keinen uneinholbaren Vorteil.',
           keyPrinciples: [
-            'De-Orbiting Mechanismen (Passivierungspläne) strikt nach internationalen Weltraummüll-Richtlinien vorsehen',
-            'Payloads immer vor dem Start gegen Totalschaden beim Launch versichern'
+            'Kollisionsvermeidung, Passivierung und De-Orbit nach anwendbaren Vorgaben auslegen und mit realistischen Ausfallfällen testen',
+            'Versicherbarkeit, Deckung, Ausschlüsse, Selbstbehalt und Haftungsrückgriff prüfen; Versicherung ist nicht immer vorgeschrieben oder vollständig verfügbar'
           ]
         },
         actionTask: {
           instruction: 'Konfiguriere deinen NewSpace Projektplan:',
           inputType: 'checklist',
           checklistItems: [
-            'ITU-Frequenzbedarfsanalyse für Zielanwendung erstellt',
-            'Launch-Broker Angebote (Rideshare-Optionen) verglichen',
-            'Ground-Station-as-a-Service Anbindung im Mara CRM hinterlegt'
+            'Dienst, Linkbudget, Spektrum, Koordination, nationale Lizenzen und Inbetriebnahmefristen dokumentiert',
+            'Start-, Integrations-, Versicherungs-, Exportkontroll-, Haftungs- und Verzögerungsszenarien verglichen',
+            'Bodenstationen, Cybersecurity, Datenschutz, Betrieb, Kollisionsvermeidung und Missionsende dokumentiert'
           ],
           toolboxCategory: 'settings'
         }
@@ -251,41 +254,41 @@ Satellitenkonstellationen revolutionieren globale Kommunikation, Logistikverfolg
         stageTitle: '97. Tiefsee-Infrastruktur & Subsea-Kabel',
         title: 'Tiefsee-Kabel & Unterwasser-Rechenzentren: Das physische Rückgrat des Internets',
         durationMinutes: 31,
-        description: 'Wie 99% des weltweiten Internet-Traffics über Unterseekabel laufen, wie Landerechte verhandelt werden und Tiefsee-Rechenzentren Energie sparen.',
+        description: 'Wie Unterseekabel den überwiegenden Teil des interkontinentalen Internetverkehrs tragen, wie Landungen und Kapazitätsrechte strukturiert werden und wie neuartige Unterwasser-Rechenzentren nüchtern bewertet werden.',
         learnContent: {
           videoTitle: 'Masterclass: Untersee-Glasfasernetze & Tiefsee-Rechenzentren',
           videoDuration: '31:40',
-          summaryText: 'Nicht Satelliten, sondern 1,4 Millionen Kilometer Unterseekabel auf dem Meeresgrund tragen das weltweite Internet. Erfahre, wie Kabelkonsortien strukturiert werden, Landestationen (Cable Landing Stations) monetarisiert werden und Unterwasser-Rechenzentren mit 0% Kühlkosten arbeiten.',
+          summaryText: 'Unterseekabel sind kritische Infrastruktur für den interkontinentalen Datenverkehr. Konsortien, Landestationen und Kapazitätsverträge erfordern hohe Vorleistungen, Genehmigungen, robuste Sicherheit und langfristige Wartung. Unterwasser-Rechenzentren können Kühlvorteile untersuchen, verursachen aber weiterhin Energie-, Bau-, Betriebs-, Bergungs- und Umweltrisiken.',
           bulletPoints: [
-            'Subsea Kabel-Konsortien: Wie Tech-Giganten (Google, Meta) und Telekom-Konzerne Milliardenkabel gemeinsam finanzieren',
-            'Wet Segment vs. Dry Segment: Seekabel mit optischen Repeatern alle 60 km und Landestationen mit Hochsicherheitsstrom',
-            'IRU-Verträge (Indefeasible Right of Use): 20 Jahre garantierte Glasfaser-Kapazitäten (Terabits/s) verkaufen',
-            'Project Natick Prinzip: Warum Rechenzentren auf dem Meeresboden 8x geringere Serverausfallraten durch Stickstoffatmosphäre haben'
+            'Konsortien und Eigentum: Beiträge, Kapazitätsanteile, Governance, Übertragungsrechte, Finanzierung, Interessenkonflikte und Ausfall eines Mitglieds vertraglich regeln',
+            'Wet und Dry Segment: Trasse, Repeaterabstände, Stromversorgung und Landestation sind systemspezifisch und beeinflussen Kosten, Sicherheit und Reparatur',
+            'IRU-Verträge: Langfristige Nutzungsrechte definieren Kapazität, Entgelt, Laufzeit, Wartung und Abhilfe, garantieren aber keine ununterbrochene Verfügbarkeit oder Nachfrage',
+            'Unterwasser-Rechenzentren: Project Natick war ein Forschungsprojekt; gemessene Zuverlässigkeit eines Versuchs ist kein allgemeiner Beleg für Kosten-, Energie- oder Betriebsvorteile'
           ],
           coreConcepts: [
             {
               iconName: 'server',
               title: 'SUBSEA DATA BACKBONE',
-              description: 'Echtes physisches Eigentum am globalen Informationsfluss zwischen Kontinenten.',
+              description: 'Kritische physische Konnektivität mit geteilter Governance, Regulierung, Sicherheits- und Betriebsabhängigkeiten.',
               highlight: true
             },
             {
               iconName: 'activity',
               title: 'SUBSEA COOLING',
-              description: 'Null Kühlenergie durch natürliche Kälte des Ozeans senkt Betriebskosten um 40%.'
+              description: 'Potenzieller Kühlvorteil, der gegen Pumpen, Strom, Abdichtung, Wartung, Bergung und Umweltfolgen abzuwägen ist.'
             }
           ],
           resources: [
             {
-              title: 'Subsea Cable Consortium Agreement & IRU Vertragsvorlage',
-              subtitle: 'Rechtliche Verträge für Seekabelkapazitäten als PDF',
+              title: 'Seekabel-Konsortiums- und IRU-Prüfleitfaden',
+              subtitle: 'Vertragliche, regulatorische und technische Prüffelder als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
               title: 'GOM-MAR Global Subsea Cable Map',
-              subtitle: 'Internationale Landestationen und Bandbreiten-Kontrakte überwachen',
+              subtitle: 'Trassen, Landestationen, Kapazitäten, Störungen und Reparaturen überwachen',
               type: 'tool',
               iconName: 'globe',
               actionUrl: 'settings'
@@ -293,26 +296,31 @@ Satellitenkonstellationen revolutionieren globale Kommunikation, Logistikverfolg
           ],
           fullArticleGuide: `### Die unsichtbaren Adern der globalen Wirtschaft
 
-Wer Glasfaserpaare auf interkontinentalen Seekabeln besitzt, kontrolliert die digitalisierten Handelsrouten des 21. Jahrhunderts.
+Glasfaserpaare und Kapazitätsrechte vermitteln keine Kontrolle über den globalen Datenverkehr. Ihr Wert hängt von Nachfrage, Wettbewerb, Konnektivität, Verfügbarkeit, Regulierung und Betrieb ab.
 
-#### Die Erlösquellen eines Seekabels:
-- **Spektrum-Verkauf**: Verkauf ganzer Faserpaare an Cloud-Provider.
-- **Transatlantische Latenz-Arbitrage**: HFT-Banken zahlen Millionenprämien für 2 Millisekunden schnellere Verbindungen.`
+#### Prüfrahmen für ein Seekabelprojekt:
+- **Trasse und Genehmigungen**: Seerecht, Küstenstaaten, Ausschließliche Wirtschaftszonen, Landerechte, Umweltprüfung, Telekom- und Sicherheitsgenehmigungen jurisdiktionsbezogen klären.
+- **Technik und Resilienz**: Bathymetrie, Fischerei, Anker, Erdrutsche, Erdbeben, Sabotage, Cyberrisiken, Landing-Station-Strom und diverse Routen untersuchen.
+- **Verträge und Nachfrage**: Eigentum, IRU oder Leasing, Kapazität, Upgrades, Service-Level, Wartung, Reparaturkosten, Gutschriften, Kündigung und Gegenparteirisiko definieren.
+- **Finanzierung und Betrieb**: Bau-, Zins-, Währungs-, Steuer-, Bilanzierungs-, Versicherungs-, Lieferketten-, Schiffs- und Ersatzteilrisiken stressen.
+- **Integrität und Sicherheit**: Wirtschaftlich Berechtigte, Vergabe, Anti-Korruption, Sanktionen, Exportkontrolle, Datenschutz und nationale Sicherheitsauflagen prüfen.
+
+Niedrige Latenz kann einen Preisaufschlag ermöglichen, garantiert aber weder Kunden, Prämie noch Rendite. Auch langfristige Kapazitätsrechte bleiben Störungs-, Reparatur-, Obsoleszenz- und Insolvenzrisiken ausgesetzt.`
         },
         understandContent: {
-          coreTakeaway: 'Infrastruktur auf dem Meeresgrund generiert planbare, unkündbare Cashflows über Jahrzehnte.',
+          coreTakeaway: 'Seekabel können langfristige Erlöse ermöglichen, doch Cashflows bleiben kündigungs-, nachfrage-, preis-, störungs-, reparatur-, regulatorischen und Gegenparteirisiken ausgesetzt.',
           keyPrinciples: [
-            'Kabeltrassen immer mit geologischen Sonar-Scans vor Unterwasser-Vulkanen und Ankerplätzen schützen',
-            'Redundante Landestationen in politisch stabilen Jurisdiktionen wählen'
+            'Trassenrisiken mit Bathymetrie, geophysikalischen Daten, Fischerei-, Anker- und Naturgefahrenanalysen mindern; kein Scan kann Schäden ausschließen',
+            'Routen, Landestationen, Strom, Backhaul, Ersatzteile und Reparaturschiffe diversifizieren und politische Stabilität nicht als dauerhaft voraussetzen'
           ]
         },
         actionTask: {
           instruction: 'Strukturiere ein Seekabel-Kapazitäts-Memorandum:',
           inputType: 'checklist',
           checklistItems: [
-            'IRU-Kapazitätsvertrag mit 15 Jahren Laufzeit kalkuliert',
-            'Landestations-Sicherheitskonzept nach internationalen Standards entworfen',
-            'Bandbreiten-Routing im Mara CRM konfiguriert'
+            'IRU- oder Leasingmodell mit Nachfrage-, Preis-, Ausfall-, Wartungs-, Reparatur-, Steuer- und Gegenparteistress kalkuliert',
+            'Trassen-, Landing-, Umwelt-, Telekom-, Sicherheits-, Sanktions- und Datenschutzgenehmigungen erfasst',
+            'Physische und Cyber-Sicherheit, diverse Routen, Reparaturplan, Versicherung und Incident Response dokumentiert'
           ],
           toolboxCategory: 'settings'
         }
