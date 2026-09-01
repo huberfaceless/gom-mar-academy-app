@@ -51,6 +51,7 @@ function ViewLoadingFallback() {
 
 export default function App() {
   const { user: firebaseUser, loading: authLoading, authState } = useAuth();
+  const { t } = useLanguage();
 
   const [user, setUser] = useState<UserProfile>(() => {
     const loaded = loadUserProfile();
@@ -198,11 +199,13 @@ export default function App() {
     if (isFirstCompletion) {
       setCelebrationModal({
         isOpen: true,
-        title: stageCompleted ? `🎉 Etappe ${stageId} Abgeschlossen!` : `✅ Lektion ${lessonId} Erledigt!`,
+        title: stageCompleted
+          ? t('celebration.stageTitle', { stage: stageId })
+          : t('celebration.lessonTitle', { lesson: lessonId }),
         message: stageCompleted
-          ? `Fantastisch! Du hast alle Lektionen von Etappe ${stageId} absolviert. Weiter geht's zur nächsten Etappe!`
-          : `Du hast einen weiteren wichtigen Baustein für dein Online-Nebeneinkommen fertiggestellt!`,
-        levelTitle: level > user.level ? `Level-Up: ${levelTitle}` : undefined,
+          ? t('celebration.stageMessage', { stage: stageId })
+          : t('celebration.lessonMessage'),
+        levelTitle: level > user.level ? t('celebration.levelUp', { level: levelTitle }) : undefined,
       });
     }
   };
