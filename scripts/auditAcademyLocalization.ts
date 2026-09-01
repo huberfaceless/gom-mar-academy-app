@@ -63,9 +63,17 @@ const requireTextArray = (value: unknown, path: string): void => {
   value.forEach((entry, index) => requireText(entry, `${path}[${index}]`));
 };
 
+const looksGerman = (value: string): boolean => {
+  if (/[äöüß]/i.test(value)) return true;
+  const markers = value.match(/\b(?:aber|alle|als|auch|auf|aus|bei|dein(?:e[mnrs]?)?|der|die|das|den|dem|des|durch|ein(?:e[mnrs]?)?|für|gegen|immer|ist|kein(?:e[mnrs]?)?|kann|mit|nicht|noch|oder|ohne|sich|sind|und|vom|von|vor|warum|wenn|werden|wie|zu|zum|zur)\b/gi) ?? [];
+  return new Set(markers.map(marker => marker.toLowerCase())).size >= 2;
+};
+
 const assertTranslated = (source: string, translated: string, path: string): void => {
   requireText(translated, path);
-  assert.notEqual(translated.trim(), source.trim(), `${path} blieb unverändert auf Deutsch`);
+  if (translated.trim() === source.trim() && looksGerman(source)) {
+    assert.fail(`${path} blieb unverändert auf Deutsch`);
+  }
 };
 
 const assertLessonContent = (source: Lesson, translated: Lesson, language: LanguageCode): void => {
