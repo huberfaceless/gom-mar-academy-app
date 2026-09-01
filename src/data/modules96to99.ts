@@ -329,11 +329,11 @@ Niedrige Latenz kann einen Preisaufschlag ermöglichen, garantiert aber weder Ku
   },
   {
     id: 98,
-    title: '98. Post-Quantum Kryptographie & Next-Gen Cyber-Immunität',
+    title: '98. Post-Quantum-Kryptografie & Krypto-Agilität',
     subtitle: 'NIST PQC Standards (Kyber, Dilithium), Quantenüberlegenheit, Zero-Knowledge Proofs & QKD',
     color: 'from-cyan-900 via-indigo-950 to-black',
     badgeIcon: '🔮',
-    description: 'Schütze deine Vermögenswerte und Daten vor Quantencomputern: Implementiere die neuen NIST Post-Quantum Kryptographie-Standards (ML-KEM / ML-DSA), meistere Zero-Knowledge-Proofs (ZKP) und Quantum Key Distribution (QKD) für absolute kryptografische Ewigkeit.',
+    description: 'Plane eine risikobasierte Migration zu den NIST-Standards ML-KEM, ML-DSA und SLH-DSA und bewerte Zero-Knowledge-Proofs sowie Quantum Key Distribution ohne absolute Sicherheitsversprechen.',
     lessons: [
       {
         id: '98.1',
@@ -341,41 +341,41 @@ Niedrige Latenz kann einen Preisaufschlag ermöglichen, garantiert aber weder Ku
         stageTitle: '98. NIST Post-Quantum Standards & Kyber',
         title: 'Post-Quantum Kryptographie: Kyber (ML-KEM) & Dilithium (ML-DSA) Migration',
         durationMinutes: 34,
-        description: 'Warum RSA und ECC durch Shors Algorithmus gebrochen werden und wie du Gitter-basierte Kryptographie (Lattice Cryptography) in Produktionssysteme integrierst.',
+        description: 'Warum ausreichend leistungsfähige, fehlertolerante Quantencomputer heutige Public-Key-Verfahren gefährden könnten und wie eine kontrollierte Migration zu standardisierter Post-Quantum-Kryptografie vorbereitet wird.',
         learnContent: {
           videoTitle: 'Masterclass: Post-Quantum Kryptographie & NIST-Standards',
           videoDuration: '34:20',
-          summaryText: 'Wenn Quantencomputer mit 10.000 logischen Qubits Realität werden, wird jede heutige RSA- und ECC-Verschlüsselung innerhalb von Sekunden entschlüsselt. Lerne, wie du "Harvest Now, Decrypt Later" Angriffe abwehrst und deine Systeme jetzt auf NIST-PQC Standards umrüstest.',
+          summaryText: 'Ein kryptografisch relevanter Quantencomputer könnte verbreitete RSA- und Elliptic-Curve-Verfahren angreifen; Zeitpunkt, Ressourcenbedarf und Laufzeit sind jedoch ungewiss. Organisationen sollten langlebige Daten priorisieren, ihre Kryptografie inventarisieren und interoperable, getestete Migrationen zu finalisierten Standards planen.',
           bulletPoints: [
-            'Die Quanten-Bedrohung: Shors Algorithmus bricht asymmetrische Kryptographie (RSA-2048, ECDSA, Curve25519)',
-            '"Harvest Now, Decrypt Later": Warum Geheimdienste verschlüsselten Datenverkehr heute mitschneiden, um ihn später zu knacken',
-            'NIST PQC Gewinner: CRYSTALS-Kyber (Schlüsselaustausch) und CRYSTALS-Dilithium (Digitale Signaturen)',
-            'Gitter-basierte Mathematik (Lattice-Based): Mathematische Probleme in hochdimensionalen Räumen, die selbst Quantencomputer nicht lösen können'
+            'Quantenrisiko: Shors Algorithmus bedroht RSA, Diffie-Hellman und elliptische Kurven auf einem ausreichend leistungsfähigen fehlertoleranten Quantencomputer, nicht auf heutigen Geräten',
+            'Harvest now, decrypt later: Schutzdauer und Sensibilität gespeicherter Daten bestimmen die Migrationspriorität; Herkunft und Fähigkeiten eines Angreifers nicht pauschal behaupten',
+            'Finalisierte NIST-Standards: FIPS 203 ML-KEM für Schlüsselvereinbarung sowie FIPS 204 ML-DSA und FIPS 205 SLH-DSA für Signaturen',
+            'Sicherheitsannahmen: Für standardisierte PQC-Verfahren sind keine effizienten klassischen oder Quantenangriffe bekannt; Implementierungsfehler und neue Kryptoanalyse bleiben möglich'
           ],
           coreConcepts: [
             {
               iconName: 'lock',
-              title: 'POST-QUANTUM RESILIENT',
-              description: 'Mathematische Sicherheit auch gegen künftige fehlerkorrigierte Quantencomputer.',
+              title: 'POST-QUANTUM MIGRATION',
+              description: 'Standardisierte Verfahren, Inventar, Tests und Krypto-Agilität statt Garantie zukünftiger Sicherheit.',
               highlight: true
             },
             {
               iconName: 'shield',
               title: 'HYBRID TLS 1.3',
-              description: 'Kombination aus klassischer und Post-Quantum Verschlüsselung im Übergang.'
+              description: 'Optionale Übergangskonstruktion, die nur mit spezifiziertem Kombinierer, kompatiblen Protokollen und geprüfter Implementierung eingesetzt wird.'
             }
           ],
           resources: [
             {
-              title: 'NIST Post-Quantum Cryptography Migration Guide',
-              subtitle: 'Gitter-Kryptographie & OpenSSL 3.3 Setup als PDF',
+              title: 'NIST-PQC-Migrations- und Krypto-Inventarleitfaden',
+              subtitle: 'ML-KEM, ML-DSA, SLH-DSA, Abhängigkeiten und Testplan als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
-              title: 'Mara CRM Post-Quantum Security Engine',
-              subtitle: 'Kyber-512/768 Schlüsselpaare für End-to-End Verschlüsselung aktivieren',
+              title: 'Mara CRM Post-Quantum Readiness Register',
+              subtitle: 'Krypto-Abhängigkeiten, Anbieter-Roadmaps, Tests und Ausnahmen dokumentieren',
               type: 'tool',
               iconName: 'shield',
               actionUrl: 'settings'
@@ -385,25 +385,29 @@ Niedrige Latenz kann einen Preisaufschlag ermöglichen, garantiert aber weder Ku
 
 Unternehmen, die vertrauliche Verträge und Kundendaten für 20+ Jahre schützen müssen, müssen heute handeln.
 
-#### Die 3 Schritte zur Quanten-Resilienz:
-1. **Krypto-Inventar (Cryptographic Bill of Materials)**: Finde alle RSA- und ECC-Schlüssel in deiner Infrastruktur.
-2. **Hybrid Key Exchange**: Aktiviere X25519 + ML-KEM-768 in deinem Webserver.
-3. **PQC Zertifikate**: Ersetze X.509 Zertifikate schrittweise durch Dilithium-Signaturen.`
+#### Der risikobasierte Migrationspfad:
+1. **Krypto-Inventar**: Algorithmen, Schlüssel, Zertifikate, Protokolle, Bibliotheken, Hardware, Datenflüsse, Anbieter und Schutzfristen erfassen; Schatten- und eingebettete Kryptografie einbeziehen.
+2. **Priorisierung**: Langfristig vertrauliche Daten, Signaturen, Identitäten, Code-Signing, Firmware, OT und schwer austauschbare Systeme nach Auswirkung und Migrationsdauer ordnen.
+3. **Zielarchitektur**: Ausschließlich geeignete Standards, Protokollprofile und validierte Produkte wählen; Hybridverfahren nur einsetzen, wenn Spezifikation, Kombinierer und Gegenstellen dies unterstützen.
+4. **Test und Einführung**: Leistung, Paketgrößen, Zertifikatsketten, HSM, Backups, Interoperabilität, Side-Channels, Fehlerbehandlung und Rollback in Stufen prüfen.
+5. **Krypto-Agilität**: Eigentümer, Freigaben, Schlüsselrotation, Telemetrie, Lieferantenpflichten, Vorfallreaktion und erneute Algorithmusmigration vorbereiten.
+
+PQC reduziert bestimmte Quantenrisiken, verhindert aber keine kompromittierten Endpunkte, schwache Zufallszahlen, gestohlenen Schlüssel, Implementierungsfehler oder künftige kryptanalytische Fortschritte.`
         },
         understandContent: {
-          coreTakeaway: 'Wer heute auf Post-Quantum Kryptographie migriert, garantiert seinen Kunden ewige Datensicherheit.',
+          coreTakeaway: 'Post-Quantum-Migration ist ein fortlaufendes Risikoprogramm: Standards, Krypto-Agilität und sichere Implementierung verbessern Schutz, garantieren aber keine dauerhafte Datensicherheit.',
           keyPrinciples: [
-            'Immer hybride Verschlüsselung nutzen, um gegen eventuelle neue Schwachstellen in PQC-Algorithmen abgesichert zu sein',
-            'Schlüssellängen rechtzeitig im Hardware-Speicherbudget einplanen (PQC-Schlüssel sind 10x größer als ECC)'
+            'Hybridverfahren nur nach anwendbarer Spezifikation und Interoperabilität einsetzen; zusätzliche Komplexität kann neue Fehler erzeugen',
+            'Schlüssel-, Ciphertext-, Signatur- und Zertifikatsgrößen je Algorithmus und Parameter messen statt einen pauschalen Größenfaktor anzunehmen'
           ]
         },
         actionTask: {
           instruction: 'Migriere deine Sicherheitsarchitektur auf Post-Quantum Standards:',
           inputType: 'checklist',
           checklistItems: [
-            'Kryptografische Bestandsaufnahme aller genutzten Algorithmen abgeschlossen',
-            'Hybrid TLS 1.3 mit Kyber-768 im Mara CRM aktiviert',
-            'PQC-Notfallplan für Schlüsselrotation hinterlegt'
+            'Krypto-Inventar mit Datenlebensdauer, Systemverantwortlichen, Lieferanten und Abhängigkeiten erstellt',
+            'Zielprofile mit finalisierten Standards, Kompatibilität, Leistungs-, HSM- und Side-Channel-Tests festgelegt',
+            'Gestufte Migration mit Schlüsselrotation, Rollback, Telemetrie, Vorfallplan und Lieferanten-Roadmap dokumentiert'
           ],
           toolboxCategory: 'settings'
         }
@@ -414,41 +418,41 @@ Unternehmen, die vertrauliche Verträge und Kundendaten für 20+ Jahre schützen
         stageTitle: '98. Zero-Knowledge Proofs & Quantum Key Distribution',
         title: 'Zero-Knowledge Proofs (zk-SNARKs) & Quanten-Schlüsselaustausch (QKD)',
         durationMinutes: 31,
-        description: 'Wie du die Gültigkeit von Bilanzen und Transaktionen beweist, ohne sensible Daten offenzulegen (ZKP) und physikalisch abhörsichere Glasfasern nutzt.',
+        description: 'Wie Zero-Knowledge-Proofs ausgewählte Aussagen bei begrenzter Offenlegung prüfen können und warum QKD trotz quantenphysikalischer Eigenschaften Implementierungs-, Endpunkt- und Betriebsrisiken behält.',
         learnContent: {
           videoTitle: 'Masterclass: Zero-Knowledge Proofs & Quanten-Physikalische Sicherheit',
           videoDuration: '31:45',
-          summaryText: 'Ein Zero-Knowledge Proof beweist mathematisch, dass eine Aussage wahr ist (z. B. "Ich habe 10 Millionen Liquidität"), ohne den genauen Kontostand oder Namen zu verraten. Lerne, wie du ZK-Rollups und Quantenschlüsselaustausch (QKD) für unzerbrechliche Privatsphäre einsetzt.',
+          summaryText: 'Ein korrektes Zero-Knowledge-System kann beweisen, dass gebundene Eingaben eine exakt definierte Relation erfüllen, ohne alle Eingaben offenzulegen. Es beweist nicht automatisch Herkunft, Vollständigkeit oder rechtliche Bedeutung der Daten. QKD kann Abhörversuche am Quantenkanal erkennbar machen, ist aber weder unzerbrechlich noch ein Ersatz für Authentisierung, Endpunktschutz und klassische Verschlüsselung.',
           bulletPoints: [
-            'zk-SNARKs & zk-STARKs: Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge',
-            'Proof of Solvency: Nachweis vollständiger Zahlungsfähigkeit für Banken und Kunden ohne Bilanzoffenlegung',
-            'Quanten-Schlüsselaustausch (QKD): Photonen-Verschränkung – jeder Abhörversuch verändert den Quantenzustand und fliegt sofort auf',
-            'Privacy-Preserving Compliance: Nachweis der Steuerkonformität an Behörden bei 100%iger Wahrung des Geschäftsgeheimnisses'
+            'zk-SNARKs und zk-STARKs: Unterschiedliche Annahmen, Setup-, Größen-, Leistungs-, Rekursions- und Implementierungseigenschaften vergleichen',
+            'Proof of reserves oder solvency: Nur die kodierte Aussage wird bewiesen; versteckte Verpflichtungen, Bewertung, Eigentum und Datenvollständigkeit benötigen zusätzliche Kontrollen',
+            'QKD: Störungen im Quantenkanal können statistisch erkennbar sein, während Geräte, Implementierung, Authentisierung, Schlüsselmanagement, Endpunkte und Verfügbarkeit angreifbar bleiben',
+            'Datensparsame Nachweise: Offenlegung kann reduziert werden, doch Steuer-, Bilanzierungs-, Prüfungs-, AML-, Sanktions-, Datenschutz- und Aufbewahrungspflichten bleiben fallbezogen'
           ],
           coreConcepts: [
             {
               iconName: 'eye-off',
               title: 'ZERO-KNOWLEDGE PRIVACY',
-              description: 'Vollständige Verifikation ohne Offenlegung der eigentlichen Geschäftsgeheimnisse.',
+              description: 'Verifikation einer definierten Relation mit begrenzter Offenlegung und klaren Annahmen.',
               highlight: true
             },
             {
               iconName: 'zap',
-              title: 'QKD ENTANGLEMENT',
-              description: 'Physikalisch unhackbar: Naturgesetze der Quantenmechanik verhindern jedes Abhören.'
+              title: 'QKD LIMITS',
+              description: 'Quantenbasierte Schlüsselerzeugung mit Geräte-, Authentisierungs-, Distanz-, Endpunkt- und Verfügbarkeitsrisiken.'
             }
           ],
           resources: [
             {
-              title: 'Zero-Knowledge Proof & zk-SNARK Developer Blueprint',
-              subtitle: 'Circom Schaltkreise & Proof-Verification als PDF',
+              title: 'Zero-Knowledge-Architektur- und Prüfungsleitfaden',
+              subtitle: 'Aussage, Datenbindung, Schaltkreis, Setup und Verifikation als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
-              title: 'GOM-MAR ZK-Proof Generator',
-              subtitle: 'Mathematische Solvenz- und Audit-Nachweise auf Knopfdruck erzeugen',
+              title: 'GOM-MAR ZK-Proof Sandbox',
+              subtitle: 'Testnachweise ohne Darstellung als vollständige Solvenz- oder Abschlussprüfung modellieren',
               type: 'tool',
               iconName: 'lock',
               actionUrl: 'settings'
@@ -458,25 +462,29 @@ Unternehmen, die vertrauliche Verträge und Kundendaten für 20+ Jahre schützen
 
 Zero-Knowledge Proofs sind der größte Durchbruch der modernen Kryptographie.
 
-#### Typische Business-Anwendungen von ZKP:
-- **Kreditwürdigkeitsnachweis**: Beweis, dass dein Schufa-Score über 98% liegt, ohne Gehaltsabrechnungen einzureichen.
-- **Alter- & Identitätsnachweis**: Beweis, dass der Kunde über 18 ist, ohne Geburtsdatum und Ausweisfoto zu speichern.
-- **Audit-Konformität**: Wirtschaftsprüfer erhalten den mathematischen Beweis korrekter Buchführung in 1 Millisekunde.`
+#### Prüffelder für ZKP und QKD:
+- **Aussage und Datenbindung**: Exakt definieren, was bewiesen wird, wer die Quelldaten bestätigt, wie Zeitbezug, Vollständigkeit, Verbindlichkeiten, Bewertung und Widerruf behandelt werden.
+- **Beweissystem**: Vertrauensannahmen, Setup, Kurven oder Hashfunktionen, Quantensicherheit, Schaltkreis-Compiler, Beweisgröße, Laufzeit und Rekursion vergleichen.
+- **Implementierung**: Schaltkreis, Bibliotheken, Zufall, Schlüssel, Parameter, Hardware, Side-Channels, Upgrades und Verifier unabhängig prüfen; formale Verifikation deckt nicht jede Systemannahme ab.
+- **Recht und Prüfung**: Mit Behörden, Wirtschaftsprüfern und Datenschutzfachleuten klären, welche Unterlagen offenzulegen oder aufzubewahren sind. Ein Proof ersetzt keine gesetzliche Abschluss-, Steuer- oder Identitätsprüfung.
+- **QKD-Systemgrenze**: Authentisierten klassischen Kanal, Gerätevertrauen, Schlüsselübergabe, Entfernung, Verluste, Repeater, Denial of Service, Endpunkte und Kosten gegen standardisierte PQC-Alternativen abwägen.
+
+Ein Alters- oder Attributnachweis kann Daten minimieren, sofern ein vertrauenswürdiger Aussteller und ein passendes Berechtigungssystem existieren. Ein Solvenznachweis ist nur so vollständig wie die einbezogenen Vermögenswerte, Verpflichtungen, Bewertungen und Datenquellen.`
         },
         understandContent: {
-          coreTakeaway: 'Zero-Knowledge Proofs vereinen absolute regulatorische Compliance mit kompromisslosem Datenschutz.',
+          coreTakeaway: 'Zero-Knowledge-Proofs können Offenlegung reduzieren, beweisen aber nur die definierte Aussage unter ihren Annahmen; Compliance, Datenqualität und Systemschutz bleiben eigenständige Aufgaben.',
           keyPrinciples: [
-            'Auf bewährte zk-STARKs setzen, wenn kein Trusted-Setup erwünscht ist',
-            'Schaltkreise vor der Produktion formal verifizieren lassen'
+            'Beweissystem nach Aussage, Vertrauensmodell, Leistung, Reife, Quantensicherheitsbedarf und Interoperabilität auswählen; kein Typ ist pauschal überlegen',
+            'Schaltkreis und Gesamtsystem unabhängig prüfen sowie Datenbindung, Setup, Schlüssel, Compiler, Verifier und Betrieb in das Bedrohungsmodell aufnehmen'
           ]
         },
         actionTask: {
           instruction: 'Erstelle deinen ersten Zero-Knowledge Solvenz-Beweis:',
           inputType: 'checklist',
           checklistItems: [
-            'ZK-Schaltkreis für Bilanzprüfung im ZK-Proof Generator ausgewählt',
-            'Kryptografischer Nachweis ohne Klardaten erfolgreich generiert',
-            'Verifikations-Zertifikat für Wirtschaftsprüfer im Mara CRM hinterlegt'
+            'Aussage, Datenquellen, Verpflichtungen, Bewertung, Zeitbezug und nicht abgedeckte Sachverhalte dokumentiert',
+            'Beweissystem, Setup, Schaltkreis, Bibliotheken, Schlüssel, Verifier und Side-Channel-Risiken geprüft',
+            'Rechtliche Anerkennung, erforderliche Offenlegung, Datenschutz, Aufbewahrung und unabhängige Prüfung geklärt'
           ],
           toolboxCategory: 'settings'
         }
