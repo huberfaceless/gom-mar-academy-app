@@ -20,6 +20,7 @@ import { localizeAcademyStage96 } from '../src/i18n/academyLocalization96';
 import { localizeAcademyStage97 } from '../src/i18n/academyLocalization97';
 import { localizeAcademyStage98 } from '../src/i18n/academyLocalization98';
 import { localizeAcademyStage99 } from '../src/i18n/academyLocalization99';
+import { preserveAcademyTechnicalFields } from '../src/i18n/academyLocalizationIntegrity';
 import { LanguageCode } from '../src/i18n/translations';
 import { Lesson, Stage } from '../src/types';
 
@@ -49,7 +50,10 @@ const localizers: Localizer[] = [
 ];
 
 const localize = (language: LanguageCode): Stage[] =>
-  localizers.reduce((stages, apply) => apply(stages, language), ACADEMY_STAGES);
+  preserveAcademyTechnicalFields(
+    ACADEMY_STAGES,
+    localizers.reduce((stages, apply) => apply(stages, language), ACADEMY_STAGES),
+  );
 
 const requireText = (value: unknown, path: string): void => {
   assert.equal(typeof value, 'string', `${path} muss Text sein`);
