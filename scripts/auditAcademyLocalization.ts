@@ -147,6 +147,44 @@ const assertLessonContent = (source: Lesson, translated: Lesson, language: Langu
 assert.equal(ACADEMY_STAGES.length, 99, 'Die Academy muss genau 99 Etappen enthalten');
 assert.deepEqual(ACADEMY_STAGES.map(stage => stage.id), Array.from({ length: 99 }, (_, index) => index + 1), 'Etappen-IDs müssen lückenlos von 1 bis 99 laufen');
 
+const technicalErrors: string[] = [];
+const compareTechnical = (actual: unknown, expected: unknown, path: string): void => {
+  if (actual !== expected) technicalErrors.push(`${path}: ${JSON.stringify(expected)} -> ${JSON.stringify(actual)}`);
+};
+
+for (const language of ['en', 'pl'] as const) {
+  const translatedStages = localize(language);
+  translatedStages.forEach((translated, stageIndex) => {
+    const source = ACADEMY_STAGES[stageIndex];
+    compareTechnical(translated.id, source.id, `${language}.${source.id}.id`);
+    compareTechnical(translated.color, source.color, `${language}.${source.id}.color`);
+    compareTechnical(translated.badgeIcon, source.badgeIcon, `${language}.${source.id}.badgeIcon`);
+    translated.lessons.forEach((lesson, lessonIndex) => {
+      const original = source.lessons[lessonIndex];
+      const path = `${language}.${original.id}`;
+      compareTechnical(lesson.id, original.id, `${path}.id`);
+      compareTechnical(lesson.stageId, original.stageId, `${path}.stageId`);
+      compareTechnical(lesson.durationMinutes, original.durationMinutes, `${path}.durationMinutes`);
+      compareTechnical(lesson.learnContent.videoDuration, original.learnContent.videoDuration, `${path}.videoDuration`);
+      compareTechnical(lesson.learnContent.videoUrl, original.learnContent.videoUrl, `${path}.videoUrl`);
+      compareTechnical(lesson.actionTask.inputType, original.actionTask.inputType, `${path}.inputType`);
+      compareTechnical(lesson.actionTask.toolboxCategory, original.actionTask.toolboxCategory, `${path}.toolboxCategory`);
+      original.learnContent.videoChapters?.forEach((chapter, index) => compareTechnical(lesson.learnContent.videoChapters?.[index]?.time, chapter.time, `${path}.videoChapters[${index}].time`));
+      original.learnContent.coreConcepts?.forEach((concept, index) => {
+        compareTechnical(lesson.learnContent.coreConcepts?.[index]?.iconName, concept.iconName, `${path}.coreConcepts[${index}].iconName`);
+        compareTechnical(lesson.learnContent.coreConcepts?.[index]?.highlight, concept.highlight, `${path}.coreConcepts[${index}].highlight`);
+      });
+      original.learnContent.resources?.forEach((resource, index) => {
+        compareTechnical(lesson.learnContent.resources?.[index]?.type, resource.type, `${path}.resources[${index}].type`);
+        compareTechnical(lesson.learnContent.resources?.[index]?.iconName, resource.iconName, `${path}.resources[${index}].iconName`);
+        compareTechnical(lesson.learnContent.resources?.[index]?.actionUrl, resource.actionUrl, `${path}.resources[${index}].actionUrl`);
+      });
+    });
+  });
+}
+
+assert.equal(technicalErrors.length, 0, `Technische Felder wurden verändert:\n${technicalErrors.join('\n')}`);
+
 for (const language of ['en', 'pl'] as const) {
   const translatedStages = localize(language);
   assert.equal(translatedStages.length, ACADEMY_STAGES.length, `${language}: Etappenanzahl wurde verändert`);
