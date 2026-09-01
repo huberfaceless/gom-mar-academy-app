@@ -187,7 +187,14 @@ async function startServer() {
 
   // Health check
   app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok', hasKey: !!apiKey });
+    res.setHeader('Cache-Control', 'no-store');
+    res.json({
+      status: 'ok',
+      hasKey: !!apiKey,
+      service: process.env.K_SERVICE || null,
+      revision: process.env.K_REVISION || null,
+      commit: process.env.APP_COMMIT_SHA || null,
+    });
   });
 
   app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
