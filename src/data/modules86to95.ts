@@ -1412,7 +1412,7 @@ Die NATO und nationale Verteidigungsministerien suchen gezielt nach agilen Tech-
     subtitle: 'REITs, Immobilien-Tokenisierung, Mezzanine-Bauträgerkredite & 100M€ Portfolio-Asset-Management',
     color: 'from-amber-700 via-yellow-800 to-stone-950',
     badgeIcon: '🏙️',
-    description: 'Baue gigantische Sachwert-Vermögen auf: Meistere gewerbliche Immobilien-Syndizierungen, strukturiere Real Estate Investment Trusts (REITs), tokenisiere Großimmobilien auf der Blockchain und verwalte 9-stellige Immobilien-Portfolios mit 10x Hebelwirkung.',
+    description: 'Bewerte Immobilien-Syndizierungen, Fonds-, REIT- und Tokenstrukturen mit vollständiger Risiko-, Rechts-, Steuer-, Finanzierungs- und Anlegerprüfung. Hebel, Illiquidität, Bau-, Miet-, Zins-, Bewertungs- und Ausfallrisiken bleiben bestehen.',
     lessons: [
       {
         id: '95.1',
@@ -1424,24 +1424,24 @@ Die NATO und nationale Verteidigungsministerien suchen gezielt nach agilen Tech-
         learnContent: {
           videoTitle: 'Masterclass: Commercial Real Estate Syndication & GP/LP Modelle',
           videoDuration: '35:10',
-          summaryText: 'Niemand kauft ein 50-Millionen-Bürogebäude oder Logistikzentrum alleine mit eigenem Geld. Lerne, wie du als General Partner (GP) Großprojekte strukturierst, 10-20 Millionen Eigenkapital von wohlhabenden Co-Investoren (LPs) einsammelst und durch die "Waterfall"-Gewinnverteilung überproportional verdienst.',
+          summaryText: 'Eine GP/LP- oder andere Beteiligungsstruktur verteilt Kontrolle, Kapital, Vergütung und Verluste vertraglich. Kapitalaufnahme kann Prospekt-, Erlaubnis-, Vertriebs-, Geldwäsche- und Anlegerpflichten auslösen. Waterfalls ändern die Verteilung, garantieren aber weder Preferred Return noch GP-Gewinn.',
           bulletPoints: [
             'Die GP/LP Architektur: Der General Partner managt das Projekt, Limited Partners stellen passives Eigenkapital',
-            'Preferred Return (z. B. 7-8%): Die LPs erhalten zuerst ihre Mindestverzinsung, bevor der GP am Gewinn beteiligt wird',
-            'Der "Promote" (Carried Interest): Nach Erreichen der Hurdle Rate erhält der GP 20% bis 40% des verbleibenden Übergewinns',
-            'Private Placement Memorandum (PPM): Rechtssicherer Wertpapierprospekt nach § 506(c) oder VermAnlG'
+            'Preferred Return ist eine vertragliche Verteilungspriorität und keine garantierte Mindestverzinsung',
+            'Promote und Catch-up anhand realer Cashflows, Rückforderung, Interessenkonflikten und Downside-Szenarien modellieren',
+            'Angebotsweg nach Jurisdiktion bestimmen: Rule 506(c) verlangt u. a. verifizierte Accredited Investors; deutsche/EU-Pflichten sind separat zu prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'pie-chart',
               title: 'WATERFALL DISTRIBUTIONS',
-              description: 'Stufenweise Gewinnverteilung belohnt den Projektentwickler mit massiven Performance-Gebühren.',
+              description: 'Stufenweise Verteilung mit Offenlegung, Interessenkonflikten und ohne garantierte Ausschüttung.',
               highlight: true
             },
             {
               iconName: 'dollar-sign',
               title: 'GP PROMOTE LEVERAGE',
-              description: 'Überproportionale Rendite auf minimales eigenes eingesetztes Kapital.'
+              description: 'Asymmetrische Vergütung kann Anreize und Verlustrisiken verschärfen und muss fair offengelegt werden.'
             }
           ],
           resources: [
@@ -1471,7 +1471,7 @@ Durch Syndizierung hebelst du dein Know-how mit dem Kapital wohlhabender Anleger
 4. **Finaler Split (70/30 oder 60/40)**: Der verbleibende Millionengewinn wird zwischen LPs und GP geteilt.`
         },
         understandContent: {
-          coreTakeaway: 'Als General Partner baust du 8-stellige Sachwerte auf, indem du die Deals findest und das Kapital orchestrierst.',
+          coreTakeaway: 'Syndizierung ist regulierte Kapitalaufnahme mit treuhänderischen, vertraglichen und wirtschaftlichen Pflichten, keine Vermögensgarantie.',
           keyPrinciples: [
             'Immer mindestens 5% "Skin in the Game" (eigenes Kapital) investieren, um das Vertrauen der LPs zu sichern',
             'Konservative Mietsteigerungs- und Zinsszenarien kalkulieren – niemals auf Schönwetterprognosen verlassen'
@@ -1482,8 +1482,8 @@ Durch Syndizierung hebelst du dein Know-how mit dem Kapital wohlhabender Anleger
           inputType: 'checklist',
           checklistItems: [
             'Finanzierungsmodell für ein 10M€ Gewerbeobjekt mit 70% Bankkredit und 30% LP-Kapital erstellt',
-            '8% Preferred Return und 30% GP-Promote Waterfall durchgerechnet',
-            'Investoren-Onboarding Strecke im Mara CRM eingerichtet'
+            'Base-, Downside-, Leerstands-, Zins-, Kosten-, Refinanzierungs- und Exit-Szenarien modelliert',
+            'Angebots-, Vertriebs-, KYC/AML-, Eignungs-, Offenlegungs- und Datenschutzpflichten fachlich geprüft'
           ],
           toolboxCategory: 'crm'
         }
@@ -1498,18 +1498,18 @@ Durch Syndizierung hebelst du dein Know-how mit dem Kapital wohlhabender Anleger
         learnContent: {
           videoTitle: 'Masterclass: Immobilien-Tokenisierung & REIT-Architektur',
           videoDuration: '32:35',
-          summaryText: 'Klassische Immobilien sind illiquide und mit hohen Notarkosten verbunden. Durch Security Token Offerings (STOs) nach dem ERC-3643 Standard machst du Anteile an Wolkenkratzern und Logistikzentren digital handelbar und sammelst Kapital ab 500€ weltweit ein.',
+          summaryText: 'Tokenisierung digitalisiert Rechte oder Registerprozesse, beseitigt aber weder Wertpapier-, Fonds-, Prospekt-, Vertriebs-, Steuer-, Grundbuch- noch Geldwäschepflichten. Ein technischer Standard schafft keinen zugelassenen Markt, keine weltweite Vertriebserlaubnis und keine Liquidität.',
           bulletPoints: [
             'ERC-3643 Permissioned Tokens: Eingebaute On-Chain Identitätsprüfung (KYC/AML) vor jedem Transfer',
-            'REIT (Real Estate Investment Trust) Vorteile: Steuerbefreiung auf Gesellschaftsebene bei Ausschüttung von 90% der Gewinne',
-            'Sekundärmarkt-Liquidität: Anleger können ihre Immobilienanteile 24/7 über regulierte Krypto-Börsen verkaufen',
-            'Automatisierte Mietdividenden: Smart Contracts schütten Mieteinnahmen sekundengenau und automatisiert an Token-Halter aus'
+            'REIT-Regeln sind jurisdiktionsabhängig; deutsche REIT-AG, US-REIT und andere Systeme nicht vermischen',
+            'Sekundärhandel setzt zugelassenen Handelsplatz, übertragbare Rechte, Käufer, Preisfindung und Compliance voraus',
+            'Ausschüttungen benötigen Beschluss, verfügbare Mittel, Steuer-, Register- und Zahlungsprozesse; Smart Contracts ersetzen diese nicht'
           ],
           coreConcepts: [
             {
               iconName: 'lock',
               title: 'ERC-3643 SECURITY TOKEN',
-              description: 'Regulierte Wertpapier-Tokenisierung mit lückenloser Anleger-Legitimation.',
+              description: 'Technischer Standard, dessen konkrete Emission, Identität und Übertragung rechtlich umgesetzt werden müssen.',
               highlight: true
             },
             {
@@ -1544,10 +1544,10 @@ Die Tokenisierung demokratisiert den Zugang zu erstklassigen institutionellen Im
 - **Transparente Eigentümerstruktur**: Unveränderliches Grundbuch-Mapping auf der Blockchain.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Immobilien tokenisiert, vereint die Wertstabilität von Beton mit der Liquidität von Aktien.',
+          coreTakeaway: 'Tokenisierung verändert Verwaltung und Übertragung, nicht automatisch Wertstabilität, Handelbarkeit oder Anlegerschutz.',
           keyPrinciples: [
-            'Immer ein BaFin-gebilligtes Wertpapier-Informationsblatt (WIB) oder Prospekt erstellen',
-            'Die physische Immobilie in einer separaten Zweckgesellschaft (SPV) insolvenzfest absichern'
+            'Instrument und Angebotsweg fachlich klassifizieren; Prospekt, WIB oder Ausnahme nur verwenden, wenn rechtlich passend',
+            'SPV, Insolvenzferne, Eigentum, Sicherheiten, Rang, Governance und Anlegeransprüche nicht behaupten, sondern rechtlich prüfen'
           ]
         },
         actionTask: {
