@@ -180,7 +180,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
                     VSL Vorschau aktiv (Sprachausgabe)
                   </p>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    "In dieser 7-Etappen Academy lernst du genau, wie du ohne Gesicht deine erste automatisierte Kampagne mit E-Mail-Marketing aufsetzt..."
+                    "In dieser Academy mit 99 Etappen lernst du Schritt für Schritt, wie du eine automatisierte Kampagne mit E-Mail-Marketing aufbaust..."
                   </p>
                 </div>
               )}
@@ -338,10 +338,10 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
           <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-5 space-y-2">
             <h4 className="text-sm font-bold text-white flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>7-Etappen Masterclass</span>
+              <span>99-Etappen-Masterclass</span>
             </h4>
             <p className="text-xs text-slate-400">
-              99 praxisnahe Lektionen mit Videos, Vorlagen und sofort anwendbaren Strategien.
+              99 praxisnahe Etappen mit Lektionen, Videos, Vorlagen und umsetzbaren Strategien.
             </p>
           </div>
 
