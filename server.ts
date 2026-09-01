@@ -168,10 +168,11 @@ Verhaltensregeln:
   // 🛠️ GOM-MAR Toolbox Generator Endpoint
   app.post('/api/toolbox/generate', async (req, res) => {
     try {
-      const { toolType, format, topic, targetAudience, niche, offer, additionalInfo } = req.body;
+      const { toolType, format, topic, targetAudience, niche, offer, additionalInfo, language } = req.body;
 
       let promptText = '';
-      let sysInstruction = 'Du bist der spezialisierte KI-Content- & Text-Generator der GOM-MAR Academy.';
+      const outputLanguage = language === 'en' ? 'Englisch' : language === 'pl' ? 'Polnisch' : 'Deutsch';
+      const sysInstruction = `Du bist der spezialisierte KI-Content- & Text-Generator der GOM-MAR Academy. Antworte vollständig auf ${outputLanguage}.`;
 
       if (toolType === 'content') {
         promptText = `Erstelle einen hochkonvertierenden Social Media Beitrag für die Plattform "${format || 'Facebook'}".
