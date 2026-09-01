@@ -40,5 +40,8 @@ jobs:
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 
+      - name: Firebase-Tarifverwaltung pruefen
+        run: bun run audit:membership-admin
+
       - name: Produktions-Build erstellen
         run: bun run build
