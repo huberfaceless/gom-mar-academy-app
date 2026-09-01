@@ -1,10 +1,13 @@
 import { UserProfile, Campaign, StudentRecord, Stage, Lesson } from '../types';
 import { INITIAL_CAMPAIGN, ACADEMY_STAGES } from '../data/academyData';
+import { migrateLegacyAcademyUnlocks } from './academyProgress';
 
 const STORAGE_KEY_USER = 'gommar_user_profile_v1';
 const STORAGE_KEY_CAMPAIGNS = 'gommar_campaigns_v1';
 const STORAGE_KEY_STUDENTS = 'gommar_students_directory_v1';
 const STORAGE_KEY_CUSTOM_STAGES = 'gommar_custom_stages_v1';
+export const TOTAL_ACADEMY_LESSONS = ACADEMY_STAGES.reduce((total, stage) => total + stage.lessons.length, 0);
+const calculateStudentProgress = (completedLessons: number) => Math.round((completedLessons / TOTAL_ACADEMY_LESSONS) * 100);
 
 export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
   {
@@ -15,8 +18,8 @@ export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
     registeredAt: '2026-08-10',
     lastActiveAt: '2026-08-15',
     completedLessonsCount: 14,
-    totalLessonsCount: 99,
-    progressPercent: 14,
+    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
+    progressPercent: calculateStudentProgress(14),
     currentLessonId: '2.1',
     level: 2,
     niche: 'Faceless Instagram & Reels',
@@ -30,8 +33,8 @@ export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
     registeredAt: '2026-08-12',
     lastActiveAt: '2026-08-14',
     completedLessonsCount: 5,
-    totalLessonsCount: 99,
-    progressPercent: 5,
+    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
+    progressPercent: calculateStudentProgress(5),
     currentLessonId: '1.6',
     level: 1,
     niche: 'Affiliate Marketing für Einsteiger',
@@ -45,8 +48,8 @@ export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
     registeredAt: '2026-08-01',
     lastActiveAt: '2026-08-15',
     completedLessonsCount: 38,
-    totalLessonsCount: 99,
-    progressPercent: 38,
+    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
+    progressPercent: calculateStudentProgress(38),
     currentLessonId: '3.10',
     level: 3,
     niche: 'Digital Produkte & Skalierung',
@@ -60,8 +63,8 @@ export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
     registeredAt: '2026-08-14',
     lastActiveAt: '2026-08-15',
     completedLessonsCount: 1,
-    totalLessonsCount: 99,
-    progressPercent: 1,
+    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
+    progressPercent: calculateStudentProgress(1),
     currentLessonId: '1.2',
     level: 1,
     niche: 'Nebeneinkommen neben dem Hauptjob',
@@ -75,8 +78,8 @@ export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
     registeredAt: '2026-07-28',
     lastActiveAt: '2026-08-13',
     completedLessonsCount: 22,
-    totalLessonsCount: 99,
-    progressPercent: 22,
+    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
+    progressPercent: calculateStudentProgress(22),
     currentLessonId: '2.9',
     level: 2,
     niche: 'E-Mail Copywriting & Funnels',
@@ -94,7 +97,7 @@ export const DEFAULT_USER_PROFILE: UserProfile = {
   currentStageId: 1,
   currentLessonId: '1.1',
   completedTaskIds: [],
-  unlockedStageIds: [1, 2, 3, 4, 5, 6, 7],
+  unlockedStageIds: [1],
   leadsCount: 0,
   activeCampaignsCount: 1,
   earnedBadges: [],
@@ -120,7 +123,7 @@ export function createFreshUserProfile(name: string, email: string, tier: 'FREE'
     currentStageId: 1,
     currentLessonId: '1.1',
     completedTaskIds: [],
-    unlockedStageIds: [1, 2, 3, 4, 5, 6, 7],
+    unlockedStageIds: [1],
     leadsCount: 0,
     activeCampaignsCount: 1,
     earnedBadges: [],
@@ -145,6 +148,18 @@ export function loadUserProfile(): UserProfile {
       if (!parsed.role) {
         parsed.role = 'member';
       }
+      const hasLegacyUnlocks = Array.isArray(parsed.unlockedStageIds)
+        && parsed.unlockedStageIds.length === 7
+        && parsed.unlockedStageIds.every((stageId: unknown, index: number) => stageId === index + 1);
+
+      if (hasLegacyUnlocks) {
+        parsed.unlockedStageIds = migrateLegacyAcademyUnlocks(
+          parsed.currentStageId,
+          Array.isArray(parsed.completedTaskIds) ? parsed.completedTaskIds : [],
+          ACADEMY_STAGES,
+        );
+      }
+
       return parsed;
     }
   } catch (e) {
@@ -200,7 +215,7 @@ export function addOrUpdateStudentRecord(newStudent: Partial<StudentRecord> & { 
       registeredAt: new Date().toISOString().split('T')[0],
       lastActiveAt: new Date().toISOString().split('T')[0],
       completedLessonsCount: newStudent.completedLessonsCount || 0,
-      totalLessonsCount: newStudent.totalLessonsCount || 99,
+      totalLessonsCount: newStudent.totalLessonsCount || TOTAL_ACADEMY_LESSONS,
       progressPercent: newStudent.progressPercent || 0,
       currentLessonId: newStudent.currentLessonId || '1.1',
       level: newStudent.level || 1,
