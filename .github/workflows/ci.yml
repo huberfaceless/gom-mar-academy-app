@@ -37,5 +37,8 @@ jobs:
       - name: TypeScript pruefen
         run: bun run lint
 
+      - name: Academy-Lokalisierung pruefen
+        run: bun run audit:academy
+
       - name: Produktions-Build erstellen
         run: bun run build
