@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { 
   Calendar as CalendarIcon, 
   CheckCircle2, 
@@ -91,7 +92,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       setSchedulerJobs(sJobs);
 
       // Fetch server background scheduler status
-      fetch('/api/scheduler/status')
+      authenticatedFetch('/api/scheduler/status')
         .then(res => res.json())
         .then(data => {
           if (data.success) {

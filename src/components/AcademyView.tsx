@@ -25,6 +25,7 @@ import { localizeAcademyStage97 } from '../i18n/academyLocalization97';
 import { localizeAcademyStage98 } from '../i18n/academyLocalization98';
 import { localizeAcademyStage99 } from '../i18n/academyLocalization99';
 import { preserveAcademyTechnicalFields } from '../i18n/academyLocalizationIntegrity';
+import { authenticatedFetch } from '../services/authenticatedFetch';
 import { 
   Play, 
   CheckCircle, 
@@ -75,27 +76,28 @@ interface AcademyViewProps {
   onCompleteLesson: (lessonId: string, stageId: number) => void;
   onNavigateToToolbox: (category?: string) => void;
   onOpenFragGommar: (prompt?: string) => void;
+  stageAccessLimit: number;
 }
 
 const academyCopy: Record<LanguageCode, Record<string, string>> = {
   de: {
     allModules: 'Alle 99 Module', foundation: 'Modul 1–10 (Fundament)', traffic: 'Modul 11–25 (Traffic & Funnels)', scale: 'Modul 26–50 (Skalierung & Copy)', systems: 'Modul 51–75 (High-Ticket & Systeme)', empire: 'Modul 76–99 (Konzern & Imperium)',
     aiUnavailable: 'Entschuldigung, der KI-Mentor konnte gerade nicht antworten.', aiConnection: 'Fehler bei der Verbindung zum KI-Mentor.', aiLanguage: 'Antworte vollständig auf Deutsch.', currentCourse: 'Aktueller Kurs', courseTitle: 'Die GOM-MAR Masterclass', totalProgress: 'Gesamtfortschritt', lessons: 'Lektionen',
-    search: "Suche nach Modul, Thema oder Lektion (z. B. 'Landingpage', 'Traffic', '77')…", showing: 'Zeige', ofModules: 'von 99 Modulen', range: 'Bereich:', noModules: 'Keine Module gefunden', noModulesHint: 'Versuche einen anderen Suchbegriff oder setze die Filter zurück.', reset: 'Filter zurücksetzen', module: 'Modul', completed: 'Abgeschlossen', inProgress: 'In Bearbeitung', locked: 'Gesperrt',
+    search: "Suche nach Modul, Thema oder Lektion (z. B. 'Landingpage', 'Traffic', '77')…", showing: 'Zeige', ofModules: 'von 99 Modulen', range: 'Bereich:', noModules: 'Keine Module gefunden', noModulesHint: 'Versuche einen anderen Suchbegriff oder setze die Filter zurück.', reset: 'Filter zurücksetzen', module: 'Modul', completed: 'Abgeschlossen', inProgress: 'In Bearbeitung', locked: 'Gesperrt', proRequired: 'PRO erforderlich',
     videoGuide: 'Video & Leitfaden', view: 'Ansehen', startNow: 'Jetzt starten 🚀', nextLesson: 'Nächste Lektion', lockedPrevious: 'Gesperrt • Erfordert vorherige Lektion', backCourse: '← Zurück zur Kurs-Übersicht', askMentor: '🤖 Frag GOM-MAR AI Mentor', stageLessons: 'Lektionen', stage: 'Etappe', lesson: 'Lektion', taskDone: 'Aufgabe erledigt', openTask: 'Offene Aufgabe', handbook: 'Handbuch', handbookLong: 'Lektions-Handbuch (Artikel)', video: 'Video', videoOverview: 'Video & Übersicht', aiTutor: 'KI-Tutor', aiTutorLong: 'KI-Lektions-Tutor', concepts: 'Kernkonzepte', practicalExample: 'Konkretes Praxisbeispiel:',
     takeaway: '💡 Merk-Satz für deinen Erfolg:', tutorFor: 'GOM-MAR KI-Tutor für Lektion', tutorIntro: 'Du hast eine Frage zu dieser Lektion oder brauchst ein konkretes Beispiel für deine Nische? Frage direkt deinen persönlichen KI-Mentor!', explain: '💡 Erkläre mir das noch einfacher', example: '🎯 Beispiel für meine Nische', mistakes: '⚠️ Häufigste Anfängerfehler', questionPlaceholder: 'Deine Frage zu dieser Lektion…', mentorAnswer: 'Antwort deines KI-Mentors:', lessonProgress: 'Lektionsfortschritt', resources: 'Ressourcen & Tools', toolboxHelp: 'Nutze die GOM-MAR Toolbox, um diese Aufgabe in wenigen Sekunden mit KI-Unterstützung zu lösen:', openToolboxNow: 'GOM-MAR Toolbox jetzt öffnen →', nextStep: 'Nächster Schritt', tryNow: 'Jetzt selbst ausprobieren', nextStepText: 'Nutze unsere vorgefertigten High-Converting Templates in der GOM-MAR Toolbox und setze das Gelernte direkt in die Praxis um.', openToolbox: 'GOM-MAR Toolbox öffnen', previous: 'Vorherige Lektion', markAgain: 'Aufgabe erneut als erledigt markieren', taskComplete: 'Aufgabe abgeschlossen! ✅', next: 'Weiter ➡️',
   },
   en: {
     allModules: 'All 99 modules', foundation: 'Modules 1–10 (Foundation)', traffic: 'Modules 11–25 (Traffic & Funnels)', scale: 'Modules 26–50 (Scaling & Copy)', systems: 'Modules 51–75 (High-Ticket & Systems)', empire: 'Modules 76–99 (Company & Empire)',
     aiUnavailable: 'Sorry, the AI mentor cannot answer right now.', aiConnection: 'Could not connect to the AI mentor.', aiLanguage: 'Answer entirely in English.', currentCourse: 'Current course', courseTitle: 'The GOM-MAR Masterclass', totalProgress: 'Overall progress', lessons: 'Lessons',
-    search: "Search by module, topic, or lesson (e.g. 'Landing page', 'Traffic', '77')…", showing: 'Showing', ofModules: 'of 99 modules', range: 'Range:', noModules: 'No modules found', noModulesHint: 'Try another search term or reset the filters.', reset: 'Reset filters', module: 'Module', completed: 'Completed', inProgress: 'In progress', locked: 'Locked',
+    search: "Search by module, topic, or lesson (e.g. 'Landing page', 'Traffic', '77')…", showing: 'Showing', ofModules: 'of 99 modules', range: 'Range:', noModules: 'No modules found', noModulesHint: 'Try another search term or reset the filters.', reset: 'Reset filters', module: 'Module', completed: 'Completed', inProgress: 'In progress', locked: 'Locked', proRequired: 'PRO required',
     videoGuide: 'Video & guide', view: 'View', startNow: 'Start now 🚀', nextLesson: 'Next lesson', lockedPrevious: 'Locked • Complete the previous lesson', backCourse: '← Back to course overview', askMentor: '🤖 Ask the GOM-MAR AI Mentor', stageLessons: 'lessons', stage: 'Stage', lesson: 'Lesson', taskDone: 'Task completed', openTask: 'Open task', handbook: 'Guide', handbookLong: 'Lesson guide (article)', video: 'Video', videoOverview: 'Video & overview', aiTutor: 'AI Tutor', aiTutorLong: 'AI lesson tutor', concepts: 'core concepts', practicalExample: 'Practical example:',
     takeaway: '💡 Key takeaway:', tutorFor: 'GOM-MAR AI tutor for lesson', tutorIntro: 'Have a question about this lesson or need an example for your niche? Ask your personal AI mentor directly!', explain: '💡 Explain it more simply', example: '🎯 Example for my niche', mistakes: '⚠️ Common beginner mistakes', questionPlaceholder: 'Your question about this lesson…', mentorAnswer: 'Your AI mentor’s answer:', lessonProgress: 'Lesson progress', resources: 'Resources & tools', toolboxHelp: 'Use the GOM-MAR Toolbox to complete this task in seconds with AI support:', openToolboxNow: 'Open the GOM-MAR Toolbox now →', nextStep: 'Next step', tryNow: 'Try it yourself now', nextStepText: 'Use our high-converting templates in the GOM-MAR Toolbox and put this lesson into practice.', openToolbox: 'Open the GOM-MAR Toolbox', previous: 'Previous lesson', markAgain: 'Mark task as completed again', taskComplete: 'Task completed! ✅', next: 'Continue ➡️',
   },
   pl: {
     allModules: 'Wszystkie 99 modułów', foundation: 'Moduły 1–10 (Podstawy)', traffic: 'Moduły 11–25 (Ruch i lejki)', scale: 'Moduły 26–50 (Skalowanie i copy)', systems: 'Moduły 51–75 (High-Ticket i systemy)', empire: 'Moduły 76–99 (Firma i imperium)',
     aiUnavailable: 'Przepraszamy, mentor AI nie może teraz odpowiedzieć.', aiConnection: 'Nie udało się połączyć z mentorem AI.', aiLanguage: 'Odpowiedz w całości po polsku.', currentCourse: 'Aktualny kurs', courseTitle: 'GOM-MAR Masterclass', totalProgress: 'Łączny postęp', lessons: 'Lekcje',
-    search: "Szukaj modułu, tematu lub lekcji (np. 'Landing page', 'Ruch', '77')…", showing: 'Wyświetlono', ofModules: 'z 99 modułów', range: 'Zakres:', noModules: 'Nie znaleziono modułów', noModulesHint: 'Wpisz inne hasło lub zresetuj filtry.', reset: 'Resetuj filtry', module: 'Moduł', completed: 'Ukończono', inProgress: 'W trakcie', locked: 'Zablokowano',
+    search: "Szukaj modułu, tematu lub lekcji (np. 'Landing page', 'Ruch', '77')…", showing: 'Wyświetlono', ofModules: 'z 99 modułów', range: 'Zakres:', noModules: 'Nie znaleziono modułów', noModulesHint: 'Wpisz inne hasło lub zresetuj filtry.', reset: 'Resetuj filtry', module: 'Moduł', completed: 'Ukończono', inProgress: 'W trakcie', locked: 'Zablokowano', proRequired: 'Wymagany PRO',
     videoGuide: 'Wideo i przewodnik', view: 'Zobacz', startNow: 'Zacznij teraz 🚀', nextLesson: 'Następna lekcja', lockedPrevious: 'Zablokowano • Ukończ poprzednią lekcję', backCourse: '← Wróć do kursu', askMentor: '🤖 Zapytaj mentora AI GOM-MAR', stageLessons: 'lekcje', stage: 'Etap', lesson: 'Lekcja', taskDone: 'Zadanie wykonane', openTask: 'Otwarte zadanie', handbook: 'Poradnik', handbookLong: 'Poradnik lekcji (artykuł)', video: 'Wideo', videoOverview: 'Wideo i przegląd', aiTutor: 'Tutor AI', aiTutorLong: 'Tutor AI lekcji', concepts: 'główne koncepcje', practicalExample: 'Praktyczny przykład:',
     takeaway: '💡 Najważniejsza myśl:', tutorFor: 'Tutor AI GOM-MAR dla lekcji', tutorIntro: 'Masz pytanie o lekcję lub potrzebujesz przykładu dla swojej niszy? Zapytaj osobistego mentora AI!', explain: '💡 Wyjaśnij to prościej', example: '🎯 Przykład dla mojej niszy', mistakes: '⚠️ Typowe błędy początkujących', questionPlaceholder: 'Twoje pytanie o tę lekcję…', mentorAnswer: 'Odpowiedź mentora AI:', lessonProgress: 'Postęp lekcji', resources: 'Zasoby i narzędzia', toolboxHelp: 'Użyj GOM-MAR Toolbox, aby wykonać zadanie w kilka sekund ze wsparciem AI:', openToolboxNow: 'Otwórz teraz GOM-MAR Toolbox →', nextStep: 'Następny krok', tryNow: 'Wypróbuj to teraz', nextStepText: 'Użyj naszych skutecznych szablonów w GOM-MAR Toolbox i zastosuj wiedzę w praktyce.', openToolbox: 'Otwórz GOM-MAR Toolbox', previous: 'Poprzednia lekcja', markAgain: 'Ponownie oznacz jako wykonane', taskComplete: 'Zadanie wykonane! ✅', next: 'Dalej ➡️',
   },
@@ -123,6 +125,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   onCompleteLesson,
   onNavigateToToolbox,
   onOpenFragGommar,
+  stageAccessLimit,
 }) => {
   const { language } = useLanguage();
   const copy = academyCopy[language];
@@ -132,10 +135,14 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   const isLight = user.theme === 'clean-light' || !user.theme;
 
   // If an initial lesson ID was passed, open lesson mode directly; otherwise start in course overview
+  const requestedInitialStageId = initialStageId || user.currentStageId || 1;
+  const requestedStageIsAccessible = requestedInitialStageId <= stageAccessLimit
+    && (requestedInitialStageId === 1 || unlockedStageIdSet.has(requestedInitialStageId));
+  const safeInitialStageId = requestedStageIsAccessible ? requestedInitialStageId : 1;
   const [viewMode, setViewMode] = useState<'overview' | 'lesson'>(
-    initialLessonId ? 'lesson' : 'overview'
+    initialLessonId && requestedStageIsAccessible ? 'lesson' : 'overview'
   );
-  const [selectedStageId, setSelectedStageId] = useState<number>(initialStageId || user.currentStageId || 1);
+  const [selectedStageId, setSelectedStageId] = useState<number>(safeInitialStageId);
   const [selectedLessonId, setSelectedLessonId] = useState<string>(initialLessonId || user.currentLessonId || '1.1');
   const [taskInputValue, setTaskInputValue] = useState<string>('');
   const [checklistState, setChecklistState] = useState<Record<string, boolean>>({});
@@ -214,7 +221,10 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
     const currentIndex = currentStage.lessons.findIndex((l) => l.id === currentLesson.id);
     if (currentIndex < currentStage.lessons.length - 1) {
       setSelectedLessonId(currentStage.lessons[currentIndex + 1].id);
-    } else if (selectedStageId < localizedStages.length) {
+    } else if (
+      selectedStageId < Math.min(localizedStages.length, stageAccessLimit)
+      && unlockedStageIdSet.has(selectedStageId + 1)
+    ) {
       const nextStage = localizedStages.find((s) => s.id === selectedStageId + 1);
       if (nextStage) {
         setSelectedStageId(nextStage.id);
@@ -254,7 +264,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
     setAiAnswer('');
 
     try {
-      const res = await fetch('/api/ask-gommar', {
+      const res = await authenticatedFetch('/api/ask-gommar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -403,10 +413,11 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
           ) : (
             filteredStages.map((stage) => {
             const completedInStage = stage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length;
-            const isStageComplete = completedInStage === stage.lessons.length;
+            const isWithinTier = stage.id <= stageAccessLimit;
+            const isStageComplete = isWithinTier && completedInStage === stage.lessons.length;
             const isStageInProgress = completedInStage > 0 && !isStageComplete;
             const isCurrentActiveStage = stage.id === (user.currentStageId || 1);
-            const isStageUnlocked = stage.id === 1 || isCurrentActiveStage || unlockedStageIdSet.has(stage.id);
+            const isStageUnlocked = isWithinTier && (stage.id === 1 || isCurrentActiveStage || unlockedStageIdSet.has(stage.id));
 
             // Determine status type for badge
             let statusType: 'completed' | 'in_progress' | 'locked' = 'locked';
@@ -455,7 +466,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                     {statusType === 'locked' && (
                       <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700 px-3.5 py-1.5 rounded-full text-xs font-semibold inline-flex items-center gap-1.5">
                         <Lock className="w-4 h-4 text-slate-400" />
-                        {copy.locked}
+                        {isWithinTier ? copy.locked : copy.proRequired}
                       </span>
                     )}
                   </div>
@@ -470,7 +481,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                       idx === 0 || completedTaskIdSet.has(stage.lessons[idx - 1]?.id)
                     );
 
-                    if (isLessonDone) {
+                    if (isStageUnlocked && isLessonDone) {
                       return (
                         <div 
                           key={lesson.id}
@@ -589,8 +600,8 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
           {localizedStages.map((stage) => {
             const isStageActive = stage.id === selectedStageId;
             const completedCount = stage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length;
-            const isStageFullyDone = completedCount === stage.lessons.length;
-            const isStageUnlocked = stage.id === 1 || unlockedStageIdSet.has(stage.id);
+            const isStageFullyDone = stage.id <= stageAccessLimit && completedCount === stage.lessons.length;
+            const isStageUnlocked = stage.id <= stageAccessLimit && (stage.id === 1 || unlockedStageIdSet.has(stage.id));
 
             return (
               <button

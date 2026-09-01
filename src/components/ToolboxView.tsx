@@ -3,6 +3,7 @@ import { PromptTemplate } from '../types';
 import { PROMPT_LIBRARY } from '../data/academyData';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
+import { authenticatedFetch } from '../services/authenticatedFetch';
 import { 
   Wrench, 
   Sparkles, 
@@ -99,7 +100,7 @@ export const ToolboxView: React.FC<ToolboxViewProps> = ({
     setIsLoading(true);
     setGeneratedResult('');
     try {
-      const response = await fetch('/api/toolbox/generate', {
+      const response = await authenticatedFetch('/api/toolbox/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

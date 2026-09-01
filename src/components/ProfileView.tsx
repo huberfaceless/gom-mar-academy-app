@@ -6,16 +6,16 @@ import { User, Crown, Check, ShieldCheck, Mail, Sparkles, BookOpen, Layers, Edit
 
 const profileCopy: Record<LanguageCode, Record<string, string>> = {
   de: {
-    academy: '{name}s Academy', member: 'Mitglied', niche: 'Nische', cancel: 'Abbrechen', edit: 'Profil bearbeiten', details: 'Profil-Details anpassen', name: 'Dein Name:', nicheLabel: 'Deine Nische:', audience: 'Deine Zielgruppe:', save: 'Profil speichern', overview: 'Mitglieder-Übersicht & Kennzahlen', progress: 'Fortschritt', course: 'Aktueller Kurs', stage: 'Etappe', tasks: 'Aufgaben', milestones: 'Meilensteine', campaigns: 'Kampagnen', leads: 'Leads', memberships: 'GOM-MAR Academy Mitgliedschafts-Ebenen', choose: 'Wähle dein bevorzugtes Level für vollen Funktionszugriff:', active: 'Aktiver Plan', recommended: 'Empfohlen',
-    freeDesc: 'Grundlagen & einfache Einstiegstools zum Kennenlernen.', free1: '✓ Lektionen der Etappen 1 und 2', free2: '✓ Begrenzter KI-Zugang', free3: '✓ Grundlegende Checklisten', freeAction: 'Zu FREE wechseln', proDesc: 'Komplette Academy, E-Mail-Automation & volle KI-Toolbox.', pro1: '✓ Vollständiger Lernpfad mit 99 Etappen', pro2: '✓ GOM-MAR E-Mail-Automation', pro3: '✓ Frag GOM-MAR KI-Mentor', pro4: '✓ Alle KI-Toolbox-Generatoren', proAction: 'Zu PRO aufsteigen', premiumDesc: 'Für individuelle Begleitung, VIP-Trainings & VIP-Support.', premium1: '✓ Alles aus PRO enthalten', premium2: '✓ Persönliche System-Audits', premium3: '✓ VIP 1-zu-1 KI-Prompts', premiumAction: 'Zu PREMIUM wechseln'
+    academy: '{name}s Academy', member: 'Mitglied', niche: 'Nische', cancel: 'Abbrechen', edit: 'Profil bearbeiten', details: 'Profil-Details anpassen', name: 'Dein Name:', nicheLabel: 'Deine Nische:', audience: 'Deine Zielgruppe:', save: 'Profil speichern', overview: 'Mitglieder-Übersicht & Kennzahlen', progress: 'Fortschritt', course: 'Aktueller Kurs', stage: 'Etappe', tasks: 'Aufgaben', milestones: 'Meilensteine', campaigns: 'Kampagnen', leads: 'Leads', memberships: 'GOM-MAR Academy Mitgliedschafts-Ebenen', choose: 'Tarifübersicht: Änderungen werden erst nach bestätigter Freigabe wirksam.', active: 'Aktiver Plan', recommended: 'Empfohlen',
+    freeDesc: 'Grundlagen & einfache Einstiegstools zum Kennenlernen.', free1: '✓ Lektionen der Etappen 1 und 2', free2: '✓ Begrenzter KI-Zugang', free3: '✓ Grundlegende Checklisten', freeAction: 'FREE-Wechsel anfragen', proDesc: 'Komplette Academy, E-Mail-Automation & volle KI-Toolbox.', pro1: '✓ Vollständiger Lernpfad mit 99 Etappen', pro2: '✓ GOM-MAR E-Mail-Automation', pro3: '✓ Frag GOM-MAR KI-Mentor', pro4: '✓ Alle KI-Toolbox-Generatoren', proAction: 'PRO-Freischaltung anfragen', premiumDesc: 'Für individuelle Begleitung, VIP-Trainings & VIP-Support.', premium1: '✓ Alles aus PRO enthalten', premium2: '✓ Persönliche System-Audits', premium3: '✓ VIP 1-zu-1 KI-Prompts', premiumAction: 'PREMIUM-Freischaltung anfragen'
   },
   en: {
-    academy: "{name}'s Academy", member: 'Member', niche: 'Niche', cancel: 'Cancel', edit: 'Edit profile', details: 'Edit profile details', name: 'Your name:', nicheLabel: 'Your niche:', audience: 'Your target audience:', save: 'Save profile', overview: 'Member overview & metrics', progress: 'Progress', course: 'Current course', stage: 'Stage', tasks: 'Tasks', milestones: 'Milestones', campaigns: 'Campaigns', leads: 'Leads', memberships: 'GOM-MAR Academy membership levels', choose: 'Choose your preferred level for full feature access:', active: 'Active plan', recommended: 'Recommended',
-    freeDesc: 'Foundations & simple starter tools to explore.', free1: '✓ Lessons from Stages 1 and 2', free2: '✓ Limited AI access', free3: '✓ Basic checklists', freeAction: 'Switch to FREE', proDesc: 'Complete Academy, email automation & full AI toolbox.', pro1: '✓ Complete 99-stage learning path', pro2: '✓ GOM-MAR email automation', pro3: '✓ Ask GOM-MAR AI Mentor', pro4: '✓ All AI toolbox generators', proAction: 'Upgrade to PRO', premiumDesc: 'For personal guidance, VIP training & VIP support.', premium1: '✓ Everything in PRO', premium2: '✓ Personal system audits', premium3: '✓ VIP one-to-one AI prompts', premiumAction: 'Switch to PREMIUM'
+    academy: "{name}'s Academy", member: 'Member', niche: 'Niche', cancel: 'Cancel', edit: 'Edit profile', details: 'Edit profile details', name: 'Your name:', nicheLabel: 'Your niche:', audience: 'Your target audience:', save: 'Save profile', overview: 'Member overview & metrics', progress: 'Progress', course: 'Current course', stage: 'Stage', tasks: 'Tasks', milestones: 'Milestones', campaigns: 'Campaigns', leads: 'Leads', memberships: 'GOM-MAR Academy membership levels', choose: 'Plan overview: changes take effect only after confirmed approval.', active: 'Active plan', recommended: 'Recommended',
+    freeDesc: 'Foundations & simple starter tools to explore.', free1: '✓ Lessons from Stages 1 and 2', free2: '✓ Limited AI access', free3: '✓ Basic checklists', freeAction: 'Request FREE plan', proDesc: 'Complete Academy, email automation & full AI toolbox.', pro1: '✓ Complete 99-stage learning path', pro2: '✓ GOM-MAR email automation', pro3: '✓ Ask GOM-MAR AI Mentor', pro4: '✓ All AI toolbox generators', proAction: 'Request PRO access', premiumDesc: 'For personal guidance, VIP training & VIP support.', premium1: '✓ Everything in PRO', premium2: '✓ Personal system audits', premium3: '✓ VIP one-to-one AI prompts', premiumAction: 'Request PREMIUM access'
   },
   pl: {
-    academy: 'Academy użytkownika {name}', member: 'Członek', niche: 'Nisza', cancel: 'Anuluj', edit: 'Edytuj profil', details: 'Edytuj dane profilu', name: 'Twoje imię:', nicheLabel: 'Twoja nisza:', audience: 'Twoja grupa docelowa:', save: 'Zapisz profil', overview: 'Przegląd i wyniki użytkownika', progress: 'Postęp', course: 'Aktualny kurs', stage: 'Etap', tasks: 'Zadania', milestones: 'Kamienie milowe', campaigns: 'Kampanie', leads: 'Leady', memberships: 'Poziomy członkostwa GOM-MAR Academy', choose: 'Wybierz poziom zapewniający pełny dostęp do funkcji:', active: 'Aktywny plan', recommended: 'Polecany',
-    freeDesc: 'Podstawy i proste narzędzia na dobry początek.', free1: '✓ Lekcje etapów 1 i 2', free2: '✓ Ograniczony dostęp do AI', free3: '✓ Podstawowe listy kontrolne', freeAction: 'Przejdź na FREE', proDesc: 'Pełna Academy, automatyzacja e-mail i wszystkie narzędzia AI.', pro1: '✓ Pełna ścieżka nauki obejmująca 99 etapów', pro2: '✓ Automatyzacja e-mail GOM-MAR', pro3: '✓ Mentor GOM-MAR AI', pro4: '✓ Wszystkie generatory AI', proAction: 'Przejdź na PRO', premiumDesc: 'Indywidualne wsparcie, szkolenia VIP i pomoc VIP.', premium1: '✓ Wszystko z planu PRO', premium2: '✓ Indywidualne audyty systemu', premium3: '✓ Indywidualne prompty AI VIP', premiumAction: 'Przejdź na PREMIUM'
+    academy: 'Academy użytkownika {name}', member: 'Członek', niche: 'Nisza', cancel: 'Anuluj', edit: 'Edytuj profil', details: 'Edytuj dane profilu', name: 'Twoje imię:', nicheLabel: 'Twoja nisza:', audience: 'Twoja grupa docelowa:', save: 'Zapisz profil', overview: 'Przegląd i wyniki użytkownika', progress: 'Postęp', course: 'Aktualny kurs', stage: 'Etap', tasks: 'Zadania', milestones: 'Kamienie milowe', campaigns: 'Kampanie', leads: 'Leady', memberships: 'Poziomy członkostwa GOM-MAR Academy', choose: 'Przegląd taryf: zmiany obowiązują dopiero po zatwierdzeniu.', active: 'Aktywny plan', recommended: 'Polecany',
+    freeDesc: 'Podstawy i proste narzędzia na dobry początek.', free1: '✓ Lekcje etapów 1 i 2', free2: '✓ Ograniczony dostęp do AI', free3: '✓ Podstawowe listy kontrolne', freeAction: 'Poproś o taryfę FREE', proDesc: 'Pełna Academy, automatyzacja e-mail i wszystkie narzędzia AI.', pro1: '✓ Pełna ścieżka nauki obejmująca 99 etapów', pro2: '✓ Automatyzacja e-mail GOM-MAR', pro3: '✓ Mentor GOM-MAR AI', pro4: '✓ Wszystkie generatory AI', proAction: 'Poproś o dostęp PRO', premiumDesc: 'Indywidualne wsparcie, szkolenia VIP i pomoc VIP.', premium1: '✓ Wszystko z planu PRO', premium2: '✓ Indywidualne audyty systemu', premium3: '✓ Indywidualne prompty AI VIP', premiumAction: 'Poproś o dostęp PREMIUM'
   }
 };
 
@@ -24,6 +24,7 @@ interface ProfileViewProps {
   onUpdateUser: (updatedUser: UserProfile) => void;
   progressPercent: number;
   completedTasksCount: number;
+  onRequestTierChange: (tier: AcademyTier) => void;
 }
 
 export const ProfileView: React.FC<ProfileViewProps> = ({
@@ -31,6 +32,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   onUpdateUser,
   progressPercent,
   completedTasksCount,
+  onRequestTierChange,
 }) => {
   const { language } = useLanguage();
   const copy = profileCopy[language];
@@ -47,10 +49,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       targetAudience: editAudience,
     });
     setIsEditing(false);
-  };
-
-  const handleSelectTier = (tier: AcademyTier) => {
-    onUpdateUser({ ...user, tier });
   };
 
   return (
@@ -217,11 +215,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             </div>
 
             <button
-              onClick={() => handleSelectTier('FREE')}
-              className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
+              type="button"
+              disabled={user.tier === 'FREE'}
+              onClick={() => onRequestTierChange('FREE')}
+              className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                 user.tier === 'FREE'
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  ? 'bg-slate-900 text-white cursor-default'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer'
               }`}
             >
               {user.tier === 'FREE' ? copy.active : copy.freeAction}
@@ -251,11 +251,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             </div>
 
             <button
-              onClick={() => handleSelectTier('PRO')}
-              className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
+              type="button"
+              disabled={user.tier === 'PRO'}
+              onClick={() => onRequestTierChange('PRO')}
+              className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                 user.tier === 'PRO'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20 cursor-default'
+                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 cursor-pointer'
               }`}
             >
               {user.tier === 'PRO' ? copy.active : copy.proAction}
@@ -281,11 +283,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             </div>
 
             <button
-              onClick={() => handleSelectTier('PREMIUM')}
-              className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
+              type="button"
+              disabled={user.tier === 'PREMIUM'}
+              onClick={() => onRequestTierChange('PREMIUM')}
+              className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                 user.tier === 'PREMIUM'
-                  ? 'bg-amber-500 text-white'
-                  : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'
+                  ? 'bg-amber-500 text-white cursor-default'
+                  : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 cursor-pointer'
               }`}
             >
               {user.tier === 'PREMIUM' ? copy.active : copy.premiumAction}

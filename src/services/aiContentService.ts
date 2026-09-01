@@ -6,6 +6,7 @@ import {
   YouTubeVideoData, 
   YouTubeShort 
 } from '../types/contentEngine';
+import { authenticatedFetch } from './authenticatedFetch';
 
 export class AIContentService {
   /**
@@ -18,7 +19,7 @@ export class AIContentService {
     targetUrl?: string,
     cta?: string
   ): Promise<{ brief: ContentBrief; rawText?: string }> {
-    const response = await fetch('/api/content-engine/brief', {
+    const response = await authenticatedFetch('/api/content-engine/brief', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -51,7 +52,7 @@ export class AIContentService {
     brief: ContentBrief,
     projectSettings: ProjectSettings
   ): Promise<BlogArticle> {
-    const response = await fetch('/api/content-engine/blog', {
+    const response = await authenticatedFetch('/api/content-engine/blog', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -89,7 +90,7 @@ export class AIContentService {
     brief: ContentBrief,
     projectSettings: ProjectSettings
   ): Promise<PinterestPin[]> {
-    const response = await fetch('/api/content-engine/pins', {
+    const response = await authenticatedFetch('/api/content-engine/pins', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -130,7 +131,7 @@ export class AIContentService {
     brief: ContentBrief,
     projectSettings: ProjectSettings
   ): Promise<YouTubeVideoData> {
-    const response = await fetch('/api/content-engine/youtube', {
+    const response = await authenticatedFetch('/api/content-engine/youtube', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -179,7 +180,7 @@ export class AIContentService {
     brief: ContentBrief,
     projectSettings: ProjectSettings
   ): Promise<YouTubeShort[]> {
-    const response = await fetch('/api/content-engine/shorts', {
+    const response = await authenticatedFetch('/api/content-engine/shorts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

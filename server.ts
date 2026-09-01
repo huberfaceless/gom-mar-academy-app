@@ -2,14 +2,127 @@ import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
+import { verify as verifySignature } from 'crypto';
 
 dotenv.config();
+
+type FirebaseTokenPayload = {
+  aud: string;
+  iss: string;
+  sub: string;
+  exp: number;
+  iat: number;
+  auth_time: number;
+  email?: string;
+  email_verified?: boolean;
+  academyTier?: unknown;
+  academyRole?: unknown;
+  admin?: unknown;
+  [key: string]: unknown;
+};
+
+type FirebaseRequest = Request & { firebaseUser?: FirebaseTokenPayload };
+type FirebaseCertificates = Record<string, string>;
+
+const FIREBASE_PROJECT_ID = process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie';
+const FIREBASE_CERTIFICATES_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com';
+let firebaseCertificateCache: { certificates: FirebaseCertificates; expiresAt: number } | null = null;
+
+const decodeJwtSegment = <T>(segment: string): T => JSON.parse(Buffer.from(segment, 'base64url').toString('utf8')) as T;
+
+const getFirebaseCertificates = async (): Promise<FirebaseCertificates> => {
+  if (firebaseCertificateCache && firebaseCertificateCache.expiresAt > Date.now()) {
+    return firebaseCertificateCache.certificates;
+  }
+
+  const response = await fetch(FIREBASE_CERTIFICATES_URL);
+  if (!response.ok) throw new Error('Firebase-Zertifikate konnten nicht geladen werden.');
+  const certificates = await response.json() as FirebaseCertificates;
+  const maxAgeMatch = response.headers.get('cache-control')?.match(/max-age=(\d+)/i);
+  const maxAgeSeconds = maxAgeMatch ? Number(maxAgeMatch[1]) : 300;
+  firebaseCertificateCache = {
+    certificates,
+    expiresAt: Date.now() + Math.max(60, maxAgeSeconds) * 1000,
+  };
+  return certificates;
+};
+
+const verifyFirebaseIdToken = async (idToken: string): Promise<FirebaseTokenPayload> => {
+  const segments = idToken.split('.');
+  if (segments.length !== 3) throw new Error('Ungültiges Firebase-Tokenformat.');
+
+  const header = decodeJwtSegment<{ alg?: string; kid?: string }>(segments[0]);
+  const payload = decodeJwtSegment<FirebaseTokenPayload>(segments[1]);
+  if (header.alg !== 'RS256' || !header.kid) throw new Error('Ungültiger Firebase-Tokenheader.');
+
+  const certificates = await getFirebaseCertificates();
+  const certificate = certificates[header.kid];
+  if (!certificate) throw new Error('Unbekannter Firebase-Signaturschlüssel.');
+
+  const signatureIsValid = verifySignature(
+    'RSA-SHA256',
+    Buffer.from(`${segments[0]}.${segments[1]}`),
+    certificate,
+    Buffer.from(segments[2], 'base64url'),
+  );
+  if (!signatureIsValid) throw new Error('Ungültige Firebase-Tokensignatur.');
+
+  const now = Math.floor(Date.now() / 1000);
+  if (payload.aud !== FIREBASE_PROJECT_ID) throw new Error('Ungültige Firebase-Zielgruppe.');
+  if (payload.iss !== `https://securetoken.google.com/${FIREBASE_PROJECT_ID}`) throw new Error('Ungültiger Firebase-Aussteller.');
+  if (!payload.sub || typeof payload.sub !== 'string') throw new Error('Firebase-Benutzerkennung fehlt.');
+  if (!Number.isFinite(payload.exp) || payload.exp <= now) throw new Error('Firebase-Token ist abgelaufen.');
+  if (!Number.isFinite(payload.iat) || payload.iat > now) throw new Error('Ungültiger Firebase-Ausstellungszeitpunkt.');
+  if (!Number.isFinite(payload.auth_time) || payload.auth_time > now) throw new Error('Ungültiger Firebase-Anmeldezeitpunkt.');
+
+  return payload;
+};
+
+const firebaseTierRank = (payload: FirebaseTokenPayload): number => {
+  const isAdmin = payload.academyRole === 'admin'
+    || payload.admin === true
+    || payload.email?.toLowerCase() === 'admin@gom-mar.de';
+  if (isAdmin || payload.academyTier === 'PREMIUM') return 2;
+  if (payload.academyTier === 'PRO') return 1;
+  return 0;
+};
 
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
   app.use(express.json());
+
+  const requireVerifiedMember = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const authHeader = req.headers.authorization;
+      const idToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7).trim() : '';
+      if (!idToken) {
+        res.status(401).json({ error: 'Eine Firebase-Anmeldung ist erforderlich.' });
+        return;
+      }
+
+      const firebaseUser = await verifyFirebaseIdToken(idToken);
+      if (firebaseUser.email_verified !== true) {
+        res.status(403).json({ error: 'Die E-Mail-Adresse muss zuerst bestätigt werden.' });
+        return;
+      }
+
+      (req as FirebaseRequest).firebaseUser = firebaseUser;
+      next();
+    } catch {
+      res.status(401).json({ error: 'Die Firebase-Anmeldung ist ungültig oder abgelaufen.' });
+    }
+  };
+
+  const requireProMember = (req: Request, res: Response, next: NextFunction) => {
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    if (!firebaseUser || firebaseTierRank(firebaseUser) < 1) {
+      res.status(403).json({ error: 'Für diese Funktion ist ein freigeschalteter PRO-Tarif erforderlich.' });
+      return;
+    }
+    next();
+  };
 
   const requireSchedulerSecret = (req: Request, res: Response, next: NextFunction) => {
     const configuredSecret = process.env.SCHEDULER_SECRET;
@@ -52,7 +165,7 @@ async function startServer() {
   });
 
   // 🤖 Frag GOM-MAR AI Mentor Endpoint
-  app.post('/api/ask-gommar', async (req, res) => {
+  app.post('/api/ask-gommar', requireVerifiedMember, async (req, res) => {
     try {
       const {
         prompt,
@@ -169,7 +282,7 @@ Verhaltensregeln:
   });
 
   // 🛠️ GOM-MAR Toolbox Generator Endpoint
-  app.post('/api/toolbox/generate', async (req, res) => {
+  app.post('/api/toolbox/generate', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { toolType, format, topic, targetAudience, niche, offer, additionalInfo, language } = req.body;
 
@@ -240,7 +353,7 @@ Erstelle:
   });
 
   // 🚀 Content Engine: 1. Generate Content Brief
-  app.post('/api/content-engine/brief', async (req, res) => {
+  app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { topic, projectSettings, customAngle, targetUrl, cta } = req.body;
       if (!topic) {
@@ -310,7 +423,7 @@ Antworte ausschließlich im folgenden validen JSON-Format:
   });
 
   // 🚀 Content Engine: 2. Generate Full Blog Article
-  app.post('/api/content-engine/blog', async (req, res) => {
+  app.post('/api/content-engine/blog', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic || !brief) {
@@ -372,7 +485,7 @@ Antworte im JSON-Format:
   });
 
   // 🚀 Content Engine: 3. Generate 5 Distinct Pinterest Pins (5 Angles)
-  app.post('/api/content-engine/pins', async (req, res) => {
+  app.post('/api/content-engine/pins', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic) {
@@ -488,7 +601,7 @@ Antworte im JSON-Format:
   });
 
   // 🚀 Content Engine: 4. Generate YouTube Faceless Video Script & Metadata
-  app.post('/api/content-engine/youtube', async (req, res) => {
+  app.post('/api/content-engine/youtube', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic) {
@@ -572,7 +685,7 @@ Antworte im JSON-Format:
   });
 
   // 🚀 Content Engine: 5. Generate 3 YouTube Shorts
-  app.post('/api/content-engine/shorts', async (req, res) => {
+  app.post('/api/content-engine/shorts', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic) {
@@ -647,7 +760,7 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest API Integration: 1. Test Connection
-  app.post('/api/pinterest/test-connection', async (req, res) => {
+  app.post('/api/pinterest/test-connection', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { accessToken } = req.body;
       if (!accessToken || typeof accessToken !== 'string') {
@@ -697,7 +810,7 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest API: 2. Get User Boards
-  app.post('/api/pinterest/boards', async (req, res) => {
+  app.post('/api/pinterest/boards', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { accessToken } = req.body;
       if (!accessToken) {
@@ -752,7 +865,7 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest API: 3. Create New Board
-  app.post('/api/pinterest/create-board', async (req, res) => {
+  app.post('/api/pinterest/create-board', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { accessToken, name, description, privacy } = req.body;
       if (!name) {
@@ -803,7 +916,7 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest API: 4. Publish Real Pin (Single or Scheduled)
-  app.post('/api/pinterest/publish-pin', async (req, res) => {
+  app.post('/api/pinterest/publish-pin', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { accessToken, pinData, boardId } = req.body;
 
@@ -892,7 +1005,7 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest AI Image Prompt & Visual Enhancement Endpoint
-  app.post('/api/pinterest/generate-image', async (req, res) => {
+  app.post('/api/pinterest/generate-image', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { prompt, topic, angle } = req.body;
       if (!prompt && !topic) {
@@ -951,7 +1064,7 @@ Antworte mit einem reinen JSON-Objekt:
   ServerSchedulerWorker.start(60000);
 
   // Status check endpoint for scheduler
-  app.get('/api/scheduler/status', (_req, res) => {
+  app.get('/api/scheduler/status', requireVerifiedMember, requireProMember, (_req, res) => {
     res.json({
       success: true,
       ...ServerSchedulerWorker.getStatus(),

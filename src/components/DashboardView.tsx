@@ -45,6 +45,7 @@ interface DashboardViewProps {
   totalTasksCount: number;
   onNavigate: (view: string, stageId?: number, lessonId?: string) => void;
   onOpenFragGommar: (prompt?: string) => void;
+  stageAccessLimit: number;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
@@ -54,6 +55,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   totalTasksCount,
   onNavigate,
   onOpenFragGommar,
+  stageAccessLimit,
 }) => {
   const { language } = useLanguage();
   const copy = dashboardCopy[language];
@@ -61,10 +63,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
 
   // Find current stage & next incomplete lesson
-  const currentStage = ACADEMY_STAGES.find((s) => s.id === user.currentStageId) || ACADEMY_STAGES[0];
+  const accessibleStages = ACADEMY_STAGES.filter((stage) => stage.id <= stageAccessLimit);
+  const currentStage = accessibleStages.find((s) => s.id === user.currentStageId) || accessibleStages[0];
   
   let nextLesson: Lesson | undefined;
-  for (const stage of ACADEMY_STAGES) {
+  for (const stage of accessibleStages) {
     const incomplete = stage.lessons.find((l) => !completedTaskIdSet.has(l.id));
     if (incomplete) {
       nextLesson = incomplete;
