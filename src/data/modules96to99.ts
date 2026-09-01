@@ -493,83 +493,86 @@ Ein Alters- oder Attributnachweis kann Daten minimieren, sofern ein vertrauensw�
   },
   {
     id: 99,
-    title: '99. Die Unendliche Grenze: Das 1-Milliarde-Euro Imperium & Die GOM-MAR Hall of Fame',
-    subtitle: 'Kardaschow-Skalierung, Globale Monopole, Unsterbliches Unternehmertum & Das Meister-Diplom',
+    title: '99. Die nächste Grenze: Verantwortungsvolles Wachstum & Academy-Abschluss',
+    subtitle: 'Dauerhafte Wertschöpfung, Wettbewerb, Verantwortung, Lernnachweis und nächste Schritte',
     color: 'from-amber-300 via-yellow-500 to-amber-800',
     badgeIcon: '🏆',
-    description: 'Die absolute Vollendung der GOM-MAR Academy: Du hast alle 99 Module gemeistert – von deinem allerersten Affiliate-Euro über SaaS-Architektur, M&A, Staatsfonds und Quantenkryptographie bis zum 10-stelligen Monopol. Tritt ein in die Hall of Fame.',
+    description: 'Schließe die GOM-MAR Academy mit einer ehrlichen Bestandsaufnahme ab: Fasse Erkenntnisse, Nachweise, offene Risiken und deinen nächsten verantwortungsvollen Lern- und Umsetzungsplan zusammen.',
     lessons: [
       {
         id: '99.1',
         stageId: 99,
-        stageTitle: '99. Das 1-Milliarde-Euro Monopol',
-        title: 'Die Kardaschow-Skalierung: Vom Marktführer zum unersetzlichen Pfeiler der Zivilisation',
+        stageTitle: '99. Dauerhafte Wertschöpfung & Verantwortung',
+        title: 'Vom Produkt zum belastbaren Unternehmen: Skalierung ohne Monopolversprechen',
         durationMinutes: 38,
-        description: 'Wie die wertvollsten Unternehmen der Welt (Apple, Microsoft, ASML, BlackRock) unanfechtbare zivilisatorische Monopole errichten.',
+        description: 'Wie Technologie, Netzwerkeffekte, Skaleneffekte und Marke Vorteile schaffen können und warum Wettbewerb, Regulierung, Abhängigkeiten, Erneuerung und gesellschaftliche Verantwortung fortbestehen.',
         learnContent: {
-          videoTitle: 'Masterclass: Die Architektur des 1-Milliarde-Euro Monopols',
+          videoTitle: 'Masterclass: Die Architektur eines belastbaren, verantwortungsvollen Unternehmens',
           videoDuration: '38:40',
-          summaryText: 'Ein gutes Unternehmen löst ein Problem. Ein 10-stelliges Imperium wird zur Infrastruktur, auf der die gesamte Gesellschaft aufbaut. Erfahre, wie Monopole durch Netzwerkeffekte, proprietäre Standards, Rohstoffkontrolle und unüberwindbare Wechselkosten entstehen.',
+          summaryText: 'Ein dauerhaftes Unternehmen löst relevante Probleme, verdient Vertrauen und erneuert seine Fähigkeiten. Netzwerkeffekte, Standards, Skaleneffekte und Wechselkosten können Vorteile schaffen, garantieren aber weder Marktführung noch Bewertung, Rendite oder Bestand und können Wettbewerbs-, Verbraucher- und Regulierungsrisiken erhöhen.',
           bulletPoints: [
-            'Die 4 Säulen des ewigen Monopols: Proprietäre Technologie, 2-seitige Netzwerkeffekte, Skalenökonomie und Marken-Identität',
-            'Der Flywheel-Effekt: Mehr Nutzer -> Bessere Daten -> Höhere Marge -> Größere F&E-Investitionen -> Uneinholbarer Vorsprung',
-            'Systemrelevanz (Too Essential to Fail): Warum ASML und TSMC für die Welt wichtiger sind als einzelne Nationalstaaten',
-            'Der Übergang vom Wettbewerb zur Zivilisations-Architektur: Reinvestition von Gewinnen in Zukunftstechnologien'
+            'Vorteilsquellen: Technologie, Netzwerkeffekte, Skaleneffekte, Marke, Prozesse und Kundennutzen mit Kosten, Kopierbarkeit und Verfallsrisiko bewerten',
+            'Flywheels sind Hypothesen: Mehr Nutzung kann Daten und Produkt verbessern, kann aber auch Kosten, Datenschutz-, Sicherheits-, Moderations- und Konzentrationsrisiken erhöhen',
+            'Kritische Abhängigkeiten: Systemrelevanz erhöht Verantwortung, Aufsicht, Resilienz-, Lieferketten- und Notfallanforderungen statt Unangreifbarkeit',
+            'Kapitalallokation: Reinvestition, Ausschüttung, Reserven, Forschung, Mitarbeiter, Sicherheit und gesellschaftliche Folgen anhand klarer Kriterien abwägen'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
-              title: 'CIVILIZATIONAL MOAT',
-              description: 'Ein Schutzwall, den selbst Staaten oder Billionenkonzerne nicht kopieren können.',
+              title: 'DURABLE VALUE',
+              description: 'Kundennutzen und Fähigkeiten, die regelmäßig gegen Wettbewerb, Wandel und Schäden geprüft werden.',
               highlight: true
             },
             {
               iconName: 'zap',
-              title: 'PERPETUAL FLYWHEEL',
-              description: 'Ein sich selbst beschleunigendes Schwungrad aus Kapital, Talent und Technologie.'
+              title: 'RESPONSIBLE FLYWHEEL',
+              description: 'Eine messbare Wachstumshypothese mit Grenzen, Gegenindikatoren und Stop-Kriterien.'
             }
           ],
           resources: [
             {
-              title: 'The 1-Billion-Euro Monopoly Blueprint & Capital Architecture',
-              subtitle: 'Das finale Strategie-Kompendium der GOM-MAR Academy als PDF',
+              title: 'Leitfaden für verantwortungsvolles Wachstum & Kapitalallokation',
+              subtitle: 'Abschluss-Workbook für Strategie, Risiken, Governance und Wirkung als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
-              title: 'Mara CRM Imperium Cockpit (Modul 1-99)',
-              subtitle: 'Vollständiges globales Konzern-Management auf einer Oberfläche',
+              title: 'Mara CRM Academy Review Cockpit (Modul 1–99)',
+              subtitle: 'Lernfortschritt, Nachweise, offene Fragen und nächste Prüfungen dokumentieren',
               type: 'tool',
               iconName: 'layers',
               actionUrl: 'settings'
             }
           ],
-          fullArticleGuide: `### Die Vollendung der unternehmerischen Meisterschaft
+          fullArticleGuide: `### Abschluss als Ausgangspunkt
 
-Du hast alle 99 Stufen durchschritten.
+Das Bearbeiten von 99 Etappen ist ein Lernmeilenstein, kein Nachweis, jedes Thema praktisch zu beherrschen.
 
-#### Die Evolutionsstufen des Unternehmers:
-1. **Stufe 1-10**: Der Praktiker (Verkaufen, E-Mail-Marketing, Traffic, erster Cashflow).
-2. **Stufe 11-35**: Der Systembauer (Funnels, Automatisierung, Conversion, Skalierung).
-3. **Stufe 36-65**: Der CEO (Führung, Enterprise B2B, TV/Media, KI-Systeme, Vergaberecht).
-4. **Stufe 66-85**: Der Investor (M&A, Holdings, Venture Debt, PMP, IPO & Megadeals).
-5. **Stufe 86-99**: Der Staatsmann & Architekt (Sovereign Infrastructure, ZKP, Post-Quantum, Ewiges Vermächtnis).`
+#### Der verantwortungsvolle Abschluss-Review:
+1. **Lernergebnisse**: Notiere, welche Konzepte du erklären, anwenden oder noch nicht beurteilen kannst. Trenne Kursabschluss von Berufserfahrung, Zulassung und nachgewiesener Kompetenz.
+2. **Belege und Annahmen**: Verknüpfe jede wichtige These mit Daten, Tests, Quellen und Datum. Markiere Unsicherheit, Gegenbelege und Themen für fachkundige Beratung.
+3. **Risiken und Grenzen**: Fasse Finanz-, Rechts-, Steuer-, Bilanzierungs-, Datenschutz-, Cyber-, Arbeits-, Umwelt-, Sanktions-, AML-, Verwahrungs- und Reputationsrisiken zusammen.
+4. **Strategie und Governance**: Definiere Kundennutzen, faire Wettbewerbsmethoden, Zuständigkeiten, Interessenkonflikte, Beschwerden, Notfallpläne und Stop-Kriterien.
+5. **Nächste 90 Tage**: Wähle kleine, reversible Experimente mit Budget-, Zeit- und Verlustgrenzen statt eines festen Milliarden- oder Monopolziels.
+6. **Langfristige Verantwortung**: Plane Gesundheit, Beziehungen, Mitarbeiterwohl, Nachfolge, Resilienz und gesellschaftliche Wirkung ebenso wie Wachstum.
+
+Kein Kurs garantiert Umsatz, Finanzierung, Marktführerschaft oder unternehmerischen Erfolg. Reglementierte Tätigkeiten und wesentliche Entscheidungen erfordern die jeweils zuständigen Fachleute und Genehmigungen.`
         },
         understandContent: {
-          coreTakeaway: 'Wahrer Reichtum ist die Fähigkeit, Freiheit, Wohlstand und Zukunft für Millionen von Menschen zu schaffen.',
+          coreTakeaway: 'Dauerhafte Wertschöpfung verbindet Kundennutzen, wirtschaftliche Tragfähigkeit, fairen Wettbewerb, überprüfbare Governance und Verantwortung für Betroffene.',
           keyPrinciples: [
-            'Niemals die Wurzeln und die Demut vor den einfachen Prinzipien des Anfangs vergessen',
-            'Verantwortung für das Wohl der Mitarbeiter, Kunden und der nächsten Generationen übernehmen'
+            'Wachstum, Marktstellung und gesellschaftliche Bedeutung nie als Anspruch oder Garantie behandeln',
+            'Auswirkungen auf Mitarbeiter, Kunden, Partner, Umwelt und nächste Generationen messen, offenlegen und korrigieren'
           ]
         },
         actionTask: {
-          instruction: 'Vollende dein persönliches Master-Manifest:',
+          instruction: 'Vervollständige deinen verantwortungsvollen Abschluss- und Umsetzungsplan:',
           inputType: 'checklist',
           checklistItems: [
-            'Das 1-Milliarde-Euro Zivilisations-Manifest für dein Lebenswerk verfasst',
-            'Alle 99 Module der GOM-MAR Academy im System als abgeschlossen markiert',
-            'Das Master-Diplom der GOM-MAR Academy beantragt und freigeschaltet'
+            'Lernergebnisse, Belege, Annahmen, offene Fragen und benötigte Fachberatung zusammengefasst',
+            '90-Tage-Experimente mit Verantwortlichen, Budgetgrenzen, Messwerten und Stop-Kriterien geplant',
+            'Langfristige Strategie mit Governance, Resilienz, Nachfolge und Stakeholder-Auswirkungen geprüft'
           ],
           toolboxCategory: 'settings'
         }
@@ -577,74 +580,76 @@ Du hast alle 99 Stufen durchschritten.
       {
         id: '99.2',
         stageId: 99,
-        stageTitle: '99. Die GOM-MAR Hall of Fame & Master-Diplom',
-        title: 'Die GOM-MAR Hall of Fame: Feierliche Verleihung des Grandmaster Diploms',
+        stageTitle: '99. Abschlussnachweis & nächster Lernzyklus',
+        title: 'Der GOM-MAR-Academy-Abschluss: Leistung ehrlich dokumentieren und weiterlernen',
         durationMinutes: 30,
-        description: 'Herzlichen Glückwunsch! Du hast die umfassendste Business- und Skalierungs-Ausbildung der Welt erfolgreich durchlaufen.',
+        description: 'Würdige deinen Lernfortschritt, prüfe die tatsächlichen Abschlusskriterien und beschreibe einen möglichen Nachweis ohne Rang-, Erfolgs-, Akkreditierungs- oder Zugangsversprechen.',
         learnContent: {
-          videoTitle: 'Abschluss-Gala: Die feierliche Aufnahme in die GOM-MAR Hall of Fame',
+          videoTitle: 'Abschluss: Rückblick, Lernnachweis und verantwortungsvoller nächster Schritt',
           videoDuration: '30:00',
-          summaryText: 'Von Lektion 1.1 bis Lektion 99.2 hast du hunderte Stunden hochkonzentriertes Praxiswissen verinnerlicht. Du gehörst nun zur absoluten Welt-Elite der Unternehmer, Strategen und Systembauer.',
+          summaryText: 'Der Abschluss dokumentiert die in der Academy tatsächlich erfüllten Anforderungen. Er ist kein staatlich anerkanntes Diplom, keine Berufszulassung, kein Kompetenz-, Einkommens- oder Erfolgsgarant und keine automatische Mitgliedschaft. Entscheidend ist, was du nachweisbar verstanden, umgesetzt und verantwortungsvoll weiterentwickelt hast.',
           bulletPoints: [
-            'Das GOM-MAR Grandmaster Zertifikat: Auszeichnung mit verifizierter ID und On-Chain Verankerung',
-            'Lebenslanger Zugang zum Hall-of-Fame Beirat: Exklusiver Kreis der Absolventen aller 99 Module',
-            'Mentoring & Weitergabe: Wie du dein Wissen nutzt, um die nächste Generation von Gründern zu fördern',
-            'Der Beginn deiner wahren Reise: Wissen ist nur Potenzial – die Exekution in der echten Welt ist dein Meisterwerk'
+            'Abschlussnachweis: Aussteller, Kriterien, Datum, Umfang und Verifikationsweg klar angeben; nur tatsächlich verfügbare Funktionen zusagen',
+            'Datenschutz: Veröffentlichung, Profil, Badge oder On-Chain-Eintrag nur freiwillig, datensparsam, sicher und mit verständlichen Folgen gestalten',
+            'Mentoring und Weitergabe: Eigene Grenzen benennen, Quellen nennen, keine reglementierte Beratung vortäuschen und Rückmeldung ermöglichen',
+            'Nächster Lernzyklus: Wissen durch kleine Tests, reale Nachweise, Reflexion, Aktualisierung und gegebenenfalls fachkundige Aufsicht vertiefen'
           ],
           coreConcepts: [
             {
               iconName: 'award',
-              title: 'GRANDMASTER CERTIFICATE',
-              description: 'Das höchste und umfassendste Ausbildungs-Diplom im modernen Unternehmertum.',
+              title: 'COMPLETION RECORD',
+              description: 'Nachweis definierter Academy-Anforderungen, keine externe Akkreditierung oder Berufszulassung.',
               highlight: true
             },
             {
               iconName: 'users',
-              title: 'HALL OF FAME CIRCLE',
-              description: 'Lebenslange Mitgliedschaft im globalen Beiratskreis der 99er Absolventen.'
+              title: 'CONTINUOUS LEARNING',
+              description: 'Freiwilliger Austausch nur nach tatsächlich geltenden Zugangs-, Datenschutz- und Community-Regeln.'
             }
           ],
           resources: [
             {
-              title: 'Offizielles GOM-MAR Grandmaster Diplom (PDF & Urkunde)',
-              subtitle: 'Druckfähige Urkunde mit Signatur und Siegellack-Prägung',
+              title: 'GOM-MAR Academy Abschlussnachweis',
+              subtitle: 'PDF-Vorlage mit Kriterien, Umfang, Datum und wahrheitsgemäßer Einordnung',
               type: 'pdf',
               iconName: 'award',
               actionUrl: 'tools'
             },
             {
-              title: 'GOM-MAR Hall of Fame Lifetime Dashboard',
-              subtitle: 'Dauerhafter unbegrenzter Zugang zu allen Tools, CRM & KI-Engines',
+              title: 'GOM-MAR Lernfortschritts- und Review-Dashboard',
+              subtitle: 'Verfügbaren Fortschritt, Nachweise und nächste Reviews nach aktuellen Produktbedingungen verwalten',
               type: 'tool',
               iconName: 'star',
               actionUrl: 'settings'
             }
           ],
-          fullArticleGuide: `### Herzlichen Glückwunsch, Grandmaster!
+          fullArticleGuide: `### Herzlichen Glückwunsch zum Lernmeilenstein!
 
-Du hast etwas vollbracht, was weniger als 0,01% aller Unternehmer jemals erreichen: Die lückenlose Beherrschung aller 99 Disziplinen des Geschäftslebens.
+Der Abschluss verdient Anerkennung. Er bedeutet nicht, alle Disziplinen des Geschäftslebens lückenlos zu beherrschen.
 
-#### Dein ewiger Werkzeugkasten:
-- **Mara CRM & KI-Engines**: Deine digitale Schaltzentrale für alle Lebens- und Unternehmenslagen.
-- **Die GOM-MAR Community**: Ein unzerbrechliches Netzwerk gleichgesinnter Titanen.
-- **Dein Geist**: Geschärft durch 99 Module kompromissloser Exzellenz.
+#### Dein verantwortungsvoller Abschluss:
+- **Kriterien prüfen**: Einen Nachweis nur ausstellen oder teilen, wenn die definierten Anforderungen und eine belastbare Verifikation tatsächlich bestehen.
+- **Bedeutung klarstellen**: Kursname, Umfang, Aussteller und Datum nennen; keine staatliche Anerkennung, Berufsberechtigung, Marktstellung oder praktische Meisterschaft suggerieren.
+- **Privatsphäre schützen**: Lernfortschritt standardmäßig privat halten. Öffentliche Profile, Ranglisten, Wallets oder dauerhafte Register benötigen freiwillige, informierte Zustimmung und Datensparsamkeit.
+- **Zugang korrekt beschreiben**: Community-, Tool- oder Alumni-Zugang nur entsprechend den aktuell veröffentlichten Bedingungen, Laufzeiten, Preisen und technischen Verfügbarkeiten darstellen.
+- **Weiterlernen**: Quellen und Annahmen aktualisieren, Ergebnisse messen, Fehler dokumentieren und bei regulierten oder wesentlichen Entscheidungen Fachleute hinzuziehen.
 
-*Gehe hinaus, baue Großes und präge die Welt zum Besseren.*`
+*Feiere den Fortschritt – und gehe den nächsten Schritt mit Neugier, Belegen und Verantwortung.*`
         },
         understandContent: {
-          coreTakeaway: 'Du bist nun bereit für jede Herausforderung des globalen Marktes. Herzlichen Glückwunsch zum Abschluss von Modul 99!',
+          coreTakeaway: 'Der Abschluss markiert einen Lernmeilenstein, nicht das Ende des Lernens oder eine Garantie für jede Marktherausforderung.',
           keyPrinciples: [
-            'Bleibe immer wissbegierig, diszipliniert und prinzipientreu',
-            'Nutze deine unternehmerische Macht stets zum Guten und zur Erschaffung von echtem Wert'
+            'Beschreibe Lernstand, Zertifikat, Zugang und Ergebnisse jederzeit wahrheitsgemäß und überprüfbar',
+            'Bleibe neugierig, korrigiere Fehler und nutze Wissen für nachvollziehbaren Wert ohne vermeidbaren Schaden'
           ]
         },
         actionTask: {
-          instruction: 'Feiere deinen Abschluss und aktiviere deinen Grandmaster Status:',
+          instruction: 'Dokumentiere deinen Abschluss und plane den nächsten Lernzyklus:',
           inputType: 'checklist',
           checklistItems: [
-            'Offizielles Grandmaster Diplom heruntergeladen und gerahmt',
-            'Profil in der GOM-MAR Hall of Fame verewigt',
-            'Vollständige Freischaltung aller 99 Module im Hauptmenü gefeiert'
+            'Erfüllte Kriterien, offene Aufgaben und tatsächlichen Umfang des Abschlussnachweises geprüft',
+            'Privatsphäre- und Einwilligungsentscheidung für jedes optionale öffentliche Profil oder Badge getroffen',
+            'Nächsten 90-Tage-Lernzyklus mit Praxisprojekt, Review-Termin und Aktualisierungsquellen geplant'
           ],
           toolboxCategory: 'settings'
         }
