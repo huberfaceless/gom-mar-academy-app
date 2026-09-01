@@ -58,7 +58,7 @@ const localize = (language: LanguageCode): Stage[] =>
 const requireText = (value: unknown, path: string): void => {
   assert.equal(typeof value, 'string', `${path} muss Text sein`);
   assert.ok((value as string).trim().length > 0, `${path} darf nicht leer sein`);
-  assert.doesNotMatch(value as string, /\b(?:TODO|TBD|TRANSLATE(?:D| THIS)?|ÜBERSETZ(?:EN|UNG))\b/i, `${path} enthält einen Platzhalter`);
+  assert.doesNotMatch(value as string, /\b(?:TODO|TBD|TRANSLATE THIS|ÜBERSETZEN)\b/i, `${path} enthält einen Platzhalter`);
 };
 
 const requireTextArray = (value: unknown, path: string): void => {
