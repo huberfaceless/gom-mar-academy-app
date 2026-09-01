@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Award, CheckCircle2, Sparkles, ArrowRight, Trophy } from 'lucide-react';
+import { Sparkles, Trophy } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CelebrationModalProps {
   isOpen: boolean;
@@ -17,6 +18,8 @@ export const CelebrationModal: React.FC<CelebrationModalProps> = ({
   message,
   levelTitle,
 }) => {
+  const { t } = useLanguage();
+
   useEffect(() => {
     if (isOpen) {
       try {
@@ -46,7 +49,7 @@ export const CelebrationModal: React.FC<CelebrationModalProps> = ({
         <div className="space-y-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            Meilenstein Erreicht!
+            {t('celebration.milestone')}
           </span>
           <h3 className="text-2xl font-black text-white">{title}</h3>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{message}</p>
@@ -61,7 +64,7 @@ export const CelebrationModal: React.FC<CelebrationModalProps> = ({
           onClick={onClose}
           className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
         >
-          <span>Weiter geht's! →</span>
+          <span>{t('celebration.continue')}</span>
         </button>
       </div>
     </div>
