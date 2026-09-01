@@ -7,7 +7,7 @@ export const MODULES_96_TO_99: Stage[] = [
     subtitle: 'Nationale Staatsfonds, Bilaterale Megadeals, Staatsanleihen & Globales Co-Investing',
     color: 'from-amber-600 via-yellow-700 to-zinc-950',
     badgeIcon: '🏛️',
-    description: 'Bediene die größten institutionellen Kapitalpools der Welt: Verstehe die Anlagestrategien globaler Staatsfonds (Norwegen GPFG, Abu Dhabi ADIA, Singapur GIC, Saudi PIF), strukturiere 9-stellige Co-Investments und erfülle bilaterale Staatskriterien.',
+    description: 'Analysiere die unterschiedlichen Mandate globaler Staatsfonds und strukturiere mögliche Co-Investments unter Beachtung von Governance, Vergabe-, Investitionsprüfungs-, Sanktions-, Geldwäsche-, Steuer-, Bilanzierungs- und Verwahrungsanforderungen.',
     lessons: [
       {
         id: '96.1',
@@ -15,41 +15,41 @@ export const MODULES_96_TO_99: Stage[] = [
         stageTitle: '96. Staatsfonds-Architektur & Mandate',
         title: 'Sovereign Wealth Funds: Wie Staatsfonds investieren & Co-Investment Mandate vergeben',
         durationMinutes: 35,
-        description: 'Wie Staatsfonds Asset-Klassen aufteilen, welche ESG- und Nachhaltigkeits-Filter greifen und wie du Zugang zu Sovereign Investment Committees erhältst.',
+        description: 'Wie Staatsfonds Anlageklassen, Liquidität und Risiken unterschiedlich steuern und welche Governance-, ESG-, Investitionsprüfungs- und Compliance-Anforderungen eine mögliche Zusammenarbeit prägen.',
         learnContent: {
           videoTitle: 'Masterclass: Sovereign Wealth Fund Allokation & Megadeals',
           videoDuration: '35:20',
-          summaryText: 'Staatsfonds verwalten über 11 Billionen Dollar. Sie suchen nach renditestarken, krisenresistenten Infrastruktur-, Tech- und Immobilien-Assets. Erfahre, wie Institutionelle Investment-Committees ticken und wie du als Co-General Partner Milliarden-Tickets mobilisierst.',
+          summaryText: 'Staatsfonds unterscheiden sich erheblich nach gesetzlichem Mandat, Finanzierungsquelle, Verpflichtungen, Liquiditätsbedarf, Risikobudget, Anlagehorizont und politischen Vorgaben. Eine Zusammenarbeit setzt belastbare Due Diligence, transparente Governance und eine einzelfallbezogene regulatorische Prüfung voraus; Zugang, Ticketgröße und Rendite sind nicht garantiert.',
           bulletPoints: [
-            'Die globale SWF-Landschaft: Rohstoffbasierte Fonds (Mubadala, PIF) vs. Devisenreserven-Fonds (GIC, Temasek)',
-            'Direct Investing vs. Fund-of-Funds: Warum Staatsfonds zunehmend direkt neben Spitzen-Unternehmern co-investieren',
-            'Santiago Principles: Der 24-Punkte Standard für Transparenz, Governance und Unabhängigkeit von Staatsfonds',
-            'Geopolitische FDI-Freigaben: Investitionsprüfungen durch nationale Außenwirtschaftsministerien (CFIUS / BMWK)'
+            'Mandate unterscheiden: Stabilisierungs-, Spar-, Reserveanlage-, Pensionsreserve- und strategische Entwicklungsziele nicht pauschal gleichsetzen',
+            'Direktanlagen, Fondsmandate und Co-Investments anhand von Fähigkeiten, Gebühren, Kontrolle, Konzentration, Liquidität und Interessenkonflikten vergleichen',
+            'Santiago Principles: 24 freiwillige Grundsätze guter Praxis für Rechtsrahmen, Governance, Rechenschaft und umsichtiges Investieren durch Staatsfonds',
+            'FDI-Prüfungen sind länder- und transaktionsbezogen; EU-Kooperation, deutsche Investitionsprüfung und US-CFIUS sind getrennte Verfahren'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
               title: 'SWF GRAVITY',
-              description: 'Zugang zu den größten, langfristigsten Kapitalgebern der Weltgeschichte.',
+              description: 'Mandatsgerechte Ansprache langfristiger Investoren ohne Zusage von Zugang, Kapital oder Abschluss.',
               highlight: true
             },
             {
               iconName: 'shield',
-              title: 'SANTIAGO COMPLIANCE',
-              description: 'Höchste internationale Standards für institutionelle Governance und Transparenz.'
+              title: 'SANTIAGO PRINCIPLES',
+              description: 'Freiwillige Grundsätze für Staatsfonds, keine Projektzertifizierung oder Investitionsfreigabe.'
             }
           ],
           resources: [
             {
-              title: 'Global Sovereign Wealth Fund Allocation Whitepaper',
-              subtitle: 'SWF-Profile, Kriterien & Mandatsstrukturen als PDF',
+              title: 'Staatsfonds-Mandats- und Risikoprüfung',
+              subtitle: 'SWF-Profile, Governance, Kriterien und Mandatsstrukturen als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
               title: 'Mara CRM Institutional Investor Cockpit',
-              subtitle: 'Sovereign Funds, Family Offices und Pensionskassen verwalten',
+              subtitle: 'Kontakte, Prüfpfade und Freigaben institutioneller Investoren dokumentieren',
               type: 'tool',
               iconName: 'briefcase',
               actionUrl: 'crm'
@@ -59,26 +59,29 @@ export const MODULES_96_TO_99: Stage[] = [
 
 Staatsfonds denken nicht in Quartalen, sondern in Generationen.
 
-#### Die 4 Kriterien für Staatsfonds-Allokationen:
-1. **Skalierbarkeit**: Tickets unter 50 Millionen Euro sind für die meisten SWFs zu klein.
-2. **Technologische Souveränität**: Beitrag zur strategischen Transformation des Herkunftslandes.
-3. **ESG & Santiago Principles**: Lückenlose Nachweise ethischer Unternehmensführung.
-4. **Co-Governance**: Eingeräumte Sitze im Gesellschafterausschuss oder Beirat.`
+#### Prüffelder für eine mögliche Staatsfonds-Allokation:
+1. **Mandat und Portfoliofit**: Gesetzliche Ziele, Referenzportfolio, Risikobudget, Laufzeit, Liquidität, Währung und Ausschlüsse prüfen; es gibt keine universelle Mindestticketgröße.
+2. **Wirtschaftlichkeit und Risiken**: Cashflows, Bewertung, Gebühren, Verschuldung, Konzentration, Ausfall-, Gegenpartei-, Länder- und Exitrisiken in Stressszenarien untersuchen.
+3. **Governance und Integrität**: Eigentümer, Interessenkonflikte, Vergütung, Berichtswesen, Beschaffung sowie Anti-Korruptions-, PEP-, Sanktions- und Geldwäscheprüfungen dokumentieren.
+4. **Recht und Betrieb**: Investitionsprüfung, Wettbewerbs- und Beihilferecht, Steuern, Bilanzierung, Verwahrung, Datenschutz sowie grenzüberschreitende Vertriebsregeln fachkundig prüfen lassen.
+5. **Mitwirkungsrechte**: Informations-, Zustimmungs-, Kontroll- und Exitrechte verhandeln, ohne einen Sitz, eine Investition oder staatliche Unterstützung vorauszusetzen.
+
+Die Santiago Principles richten sich an Staatsfonds. Ein Projekt kann ihre Anwendung unterstützen, aber keine allgemeine „Santiago-Compliance“ als Gütesiegel beanspruchen.`
         },
         understandContent: {
-          coreTakeaway: 'Wer die Sprache von Staatsfonds spricht, finanziert Megaprojekte mit unbegrenztem Zeithorizont.',
+          coreTakeaway: 'Ein glaubwürdiges Staatsfonds-Dossier verbindet Mandatsfit, risikobereinigte Wirtschaftlichkeit, Governance und regulatorische Umsetzbarkeit; es garantiert weder Zugang noch Finanzierung.',
           keyPrinciples: [
-            'Niemals Vermittlungsprovisionen ohne behördliche Compliance-Prüfung annehmen',
-            'Investitionsprüfungen bei der Außenwirtschaftsbehörde frühzeitig vor Notarterminen einleiten'
+            'Vermittler, wirtschaftlich Berechtigte, staatlich exponierte Personen, Vergütung, Lobbying, Sanktionen und Geldwäsche fachkundig prüfen',
+            'Investitionsprüfung, Vergabe-, Wettbewerbs-, Steuer-, Bilanzierungs- und Verwahrungsfragen frühzeitig und jurisdiktionsbezogen klären'
           ]
         },
         actionTask: {
           instruction: 'Strukturiere ein institutionelles Co-Investment Dossier:',
           inputType: 'checklist',
           checklistItems: [
-            'Santiago Principles Compliance-Checkliste für dein Projekt ausgefüllt',
-            'Institutionelles Investment Memorandum (50M€+ Scope) hinterlegt',
-            'FDI-Prüfungsunterlagen für Außenwirtschaftsfreigaben vorbereitet'
+            'Mandat, Portfoliofit, Governance, Ausschlüsse und Entscheidungsprozess des Zielinvestors dokumentiert',
+            'Investment Memorandum mit Gebühren, Bewertung, Liquidität sowie Basis- und Stressszenarien erstellt',
+            'FDI-, Vergabe-, Steuer-, Bilanzierungs-, Verwahrungs-, Sanktions-, PEP- und AML-Prüfpfad vorbereitet'
           ],
           toolboxCategory: 'crm'
         }
@@ -89,41 +92,41 @@ Staatsfonds denken nicht in Quartalen, sondern in Generationen.
         stageTitle: '96. Bilaterale Staatsabkommen & PPP',
         title: 'Public-Private Partnerships (PPP) & Bilaterale Regierungsprojekte',
         durationMinutes: 32,
-        description: 'Wie du staatliche Konzessionen gewinnst, Maut- und Energietarife über 30 Jahre vertraglich absicherst und Staatsgarantien nutzt.',
+        description: 'Wie PPP- und Konzessionsmodelle Risiken verteilen und wie Verfügbarkeitsentgelte, Tarife, Garantien, Vergabe und öffentliche Finanzierbarkeit sorgfältig geprüft werden.',
         learnContent: {
           videoTitle: 'Masterclass: Public-Private Partnerships & 30-Jahre Staatskonzessionen',
           videoDuration: '32:45',
-          summaryText: 'Ein PPP-Projekt verbindet staatliche Sicherheit mit privater Effizienz. Lerne, wie du Build-Operate-Transfer (BOT) Modelle strukturierst und 30 Jahre lang inflationsindexierte Cashflows vom Staat einziehst.',
+          summaryText: 'Ein PPP verteilt Bau-, Betriebs-, Nachfrage-, Finanzierungs- und politische Risiken vertraglich zwischen öffentlicher Hand und privaten Parteien. BOT-Modelle, Vergütungen und Garantien sind projektspezifisch, häufig leistungsabhängig und beseitigen weder Ausfall- noch Währungs-, Rechts- oder Ausführungsrisiken.',
           bulletPoints: [
             'BOT & BOOT Modelle: Build, Own, Operate, Transfer – Planung, Bau, Betrieb und spätere Übergabe an den Staat',
-            'Verfügbarkeitsentgelte: Der Staat zahlt nicht nach Nutzung, sondern nach garantierter Verfügbarkeit der Infrastruktur',
-            'Sovereign Guarantees: Staatsbürgschaften sichern Bankkredite und senken Zinskosten auf AAA-Niveau',
-            'Inflationskopplung: Automatische Preisanpassung aller staatlichen Vergütungen an den Verbraucherpreisindex'
+            'Verfügbarkeitsentgelte: Zahlungen hängen von vertraglicher Leistung ab und können durch Nichtverfügbarkeit oder Qualitätsmängel gekürzt werden',
+            'Staatliche Garantien: Umfang, Bedingungen, Höchstbetrag, Haushaltsgenehmigung, Immunität, Recht und Durchsetzbarkeit prüfen; sie schaffen kein automatisches AAA-Risiko',
+            'Inflationskopplung: Index, Anteil, Ober- und Untergrenzen, Verzögerung und Neubasierung sind vertraglich festzulegen und nicht automatisch vollständig'
           ],
           coreConcepts: [
             {
               iconName: 'repeat',
               title: '30-YEAR CONCESSION',
-              description: 'Jahrzehntelange garantierte Cashflows mit staatlicher Bonitätsgarantie.',
+              description: 'Langfristige, bedingte Zahlungsmechanik mit Bau-, Leistungs-, Rechts-, Kredit- und Kündigungsrisiken.',
               highlight: true
             },
             {
               iconName: 'shield-check',
               title: 'SOVEREIGN GUARANTEE',
-              description: 'Staatsbürgschaften minimieren das Ausfallrisiko für finanzierende Banken.'
+              description: 'Begrenzt definierte Risikoübernahme, die Bonitäts-, Haushalts-, Rechts- und Durchsetzungsrisiken nicht beseitigt.'
             }
           ],
           resources: [
             {
-              title: 'PPP Vertragsmuster & BOT Konzessions-Leitfaden',
-              subtitle: 'Rechtliche Rahmenverträge für Großinfrastruktur als PDF',
+              title: 'PPP-Risiko- und BOT-Konzessionsleitfaden',
+              subtitle: 'Prüffelder für Großinfrastrukturverträge als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
               title: 'GOM-MAR Sovereign Concession Tracker',
-              subtitle: 'Laufzeiten, Wartungszyklen und staatliche Zahlungsmeilensteine verwalten',
+              subtitle: 'Laufzeiten, Wartung, Leistungskennzahlen, Abzüge und Zahlungsmeilensteine verwalten',
               type: 'tool',
               iconName: 'calendar',
               actionUrl: 'crm'
@@ -133,25 +136,27 @@ Staatsfonds denken nicht in Quartalen, sondern in Generationen.
 
 PPP-Projekte sind das Fundament moderner Energie-, Verkehrs- und Digitalnetze.
 
-#### Phasen des BOT-Lebenszyklus:
-- **Phase 1 (Bau & Finanzierung)**: Konsortialkredit mit 85% Fremdkapitalquote.
-- **Phase 2 (Betrieb)**: 25-30 Jahre operativer Betrieb mit 12-18% Eigenkapitalrendite.
-- **Phase 3 (Transfer)**: Reibungslose Übergabe der intakten Infrastruktur an die öffentliche Hand.`
+#### Phasen und Risiken des BOT-Lebenszyklus:
+- **Vorbereitung und Vergabe**: Bedarf, Value for Money, Haushaltsverträglichkeit, Wettbewerbs- und Beihilferecht, transparente Beschaffung, Grundstücke, Genehmigungen sowie Umwelt- und Sozialfolgen prüfen.
+- **Bau und Finanzierung**: Verschuldung und Eigenkapital projektspezifisch bemessen; Kosten-, Termin-, Zins-, Währungs-, Refinanzierungs-, Ausfall- und Gegenparteirisiken stressen.
+- **Betrieb**: Vergütung, Nachfrage, Leistungskennzahlen, Abzüge, Instandhaltung, Steuern, Versicherung und Änderungen von Recht oder Tarifregime modellieren. Renditen sind weder fest noch garantiert.
+- **Kündigung und höhere Gewalt**: Entschädigung, Schritt-in-Rechte, politische Ereignisse, Enteignung, Korruption, Sanktionen, Streitbeilegung und staatliche Immunität eindeutig regeln.
+- **Transfer**: Restlebensdauer, Zustandsprüfung, Rücklagen, Daten, Personal und Handback-Anforderungen lange vor Vertragsende planen; eine reibungslose Übergabe ist nicht sicher.`
         },
         understandContent: {
-          coreTakeaway: 'Staatliche Konzessionen mit Verfügbarkeitsentgelten sind die krisensichersten Anleihe-Äquivalente der Welt.',
+          coreTakeaway: 'Eine PPP-Konzession ist kein Anleihe-Ersatz: Zahlungsansprüche bleiben von Leistung, Vertrag, öffentlicher Bonität, Haushalt, Recht, Politik und Durchsetzbarkeit abhängig.',
           keyPrinciples: [
-            'Pönalen für Nichtverfügbarkeit durch redundante Auslegung der Systeme mathematisch ausschließen',
-            'Laufende Wartungsprotokolle lückenlos nach DIN/ISO dokumentieren'
+            'Verfügbarkeitsabzüge, Ausfälle und Korrelationen konservativ modellieren; Redundanz kann Risiken mindern, aber nicht mathematisch ausschließen',
+            'Wartung, Leistungsnachweise, Versicherungen und Handback-Zustand nach Vertrag und anwendbaren Standards prüfbar dokumentieren'
           ]
         },
         actionTask: {
           instruction: 'Kalkuliere ein 20-Jahres BOT-Konzessionsmodell:',
           inputType: 'checklist',
           checklistItems: [
-            'Cashflow-Modell mit Inflationsindexierung und Betriebskosten berechnet',
-            'Konzessionsvertrag-Muster mit Kündigungsschutz und Entschädigungsklauseln geprüft',
-            'Projektgesellschaft (SPV) im Mara CRM vorkonfiguriert'
+            'Basis- und Stressmodell für Bau, Betrieb, Nachfrage, Abzüge, Inflation, Zins, Währung, Steuer und Refinanzierung erstellt',
+            'Vergabe, Garantieumfang, Kündigung, Entschädigung, Rechtsänderung, höhere Gewalt, Immunität und Streitbeilegung fachkundig geprüft',
+            'SPV, wirtschaftlich Berechtigte, Verwahrung, Buchhaltung, AML/Sanktionen, Umwelt- und Sozialpflichten sowie Handback dokumentiert'
           ],
           toolboxCategory: 'crm'
         }
