@@ -21,11 +21,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
       .catch(() => setHasApiKey(false));
   }, []);
 
-  const themeOptions = [
+  const themeOptions: Array<{
+    id: NonNullable<UserProfile['theme']>;
+    name: string;
+    desc: string;
+    previewBg: string;
+    badgeColor: string;
+    icon: typeof Moon;
+  }> = [
     {
       id: 'dark-emerald',
       name: 'GOM-MAR Emerald Dark',
-      desc: 'Klassisches Academy-Design mit tiefdunklem Hintergrund und smaragdgrünen Akzenten',
+      desc: t('settings.theme.emeraldDescription'),
       previewBg: 'bg-slate-950 border-emerald-500',
       badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
       icon: Moon,
@@ -33,7 +40,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
     {
       id: 'cyber-slate',
       name: 'Cyber Slate & Cyan',
-      desc: 'Modernes High-Tech Design mit Anthrazit-Farbtönen und leuchtenden Cyan-Highlights',
+      desc: t('settings.theme.cyberDescription'),
       previewBg: 'bg-slate-900 border-cyan-500',
       badgeColor: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
       icon: Sparkles,
@@ -41,7 +48,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
     {
       id: 'deep-indigo',
       name: 'Midnight Violet',
-      desc: 'Elegantes VIP-Design mit dunklen Violett- und Indigo-Nuancen',
+      desc: t('settings.theme.violetDescription'),
       previewBg: 'bg-zinc-950 border-purple-500',
       badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
       icon: Palette,
@@ -49,7 +56,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
     {
       id: 'clean-light',
       name: 'Clean Light Layout',
-      desc: 'Helfer, augenschonender Hellmodus mit maximalem Textkontrast',
+      desc: t('settings.theme.lightDescription'),
       previewBg: 'bg-slate-100 border-slate-400',
       badgeColor: 'bg-emerald-600/10 text-emerald-700 border-emerald-600/30',
       icon: Sun,
@@ -90,10 +97,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
         <div>
           <h3 className="text-base font-bold text-slate-950 flex items-center gap-2">
             <Palette className="w-5 h-5 text-indigo-600" />
-            Erscheinungsbild & Theme wählen
+            {t('settings.appearanceTitle')}
           </h3>
           <p className="text-xs text-slate-500 mt-1">
-            Hier kannst du das optische Erscheinungsbild der Academy jederzeit nach deinen Wünschen anpassen.
+            {t('settings.appearanceDescription')}
           </p>
         </div>
 
@@ -105,7 +112,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
             return (
               <div
                 key={opt.id}
-                onClick={() => handleSelectTheme(opt.id as any)}
+                onClick={() => handleSelectTheme(opt.id)}
                 className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                   isSelected
                     ? 'bg-indigo-50/70 border-indigo-600 ring-2 ring-indigo-600/20 shadow-sm'
@@ -122,7 +129,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
                     </span>
                     {isSelected && (
                       <span className="text-xs font-bold text-indigo-600 flex items-center gap-1">
-                        <CheckCircle2 className="w-4 h-4 text-indigo-600" /> Aktiv
+                        <CheckCircle2 className="w-4 h-4 text-indigo-600" /> {t('settings.active')}
                       </span>
                     )}
                   </div>
@@ -143,7 +150,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
                         : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    {isSelected ? 'Ausgewählt' : 'Aktivieren'}
+                    {isSelected ? t('settings.selected') : t('settings.activate')}
                   </button>
                 </div>
               </div>
@@ -156,7 +163,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
       <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
         <h3 className="text-base font-bold text-slate-950 flex items-center gap-2">
           <Key className="w-5 h-5 text-indigo-600" />
-          Gemini KI API Status
+          {t('settings.apiTitle')}
         </h3>
 
         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
@@ -173,10 +180,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
 
             <div>
               <p className="text-sm font-bold text-slate-950">
-                {hasApiKey ? 'Server-Side Gemini API Verbunden' : 'GOM-MAR KI API Schlüssel wird automatisch injiziert'}
+                {hasApiKey ? t('settings.apiConnected') : t('settings.apiManaged')}
               </p>
               <p className="text-xs text-slate-500">
-                Der API-Schlüssel wird sicher über den Server verwaltet und niemals im Browser geladen.
+                {t('settings.apiSecurity')}
               </p>
             </div>
           </div>
@@ -184,7 +191,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${
             hasApiKey ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-amber-100 text-amber-800 border border-amber-200'
           }`}>
-            {hasApiKey ? 'Aktiv' : 'Bereit'}
+            {hasApiKey ? t('settings.active') : hasApiKey === null ? t('settings.apiChecking') : t('settings.apiReady')}
           </span>
         </div>
       </div>
@@ -193,22 +200,22 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ user, onUpdateUser, 
       <div className="bg-white border border-rose-200 rounded-3xl p-6 shadow-sm space-y-4">
         <h3 className="text-base font-bold text-rose-700 flex items-center gap-2">
           <RefreshCw className="w-5 h-5 text-rose-600" />
-          Fortschritt Zurücksetzen
+          {t('settings.resetTitle')}
         </h3>
 
         <p className="text-xs text-slate-600">
-          Wenn du den Lernpfad komplett von vorne beginnen möchtest, kannst du deine Fortschritte und erledigten Aufgaben hier auf den Ausgangszustand zurücksetzen.
+          {t('settings.resetDescription')}
         </p>
 
         <button
           onClick={() => {
-            if (window.confirm('Möchtest du deine Lernfortschritte wirklich auf den Ausgangszustand zurücksetzen?')) {
+            if (window.confirm(t('settings.resetConfirm'))) {
               onResetProgress();
             }
           }}
           className="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold transition-colors cursor-pointer"
         >
-          Lernstand zurücksetzen
+          {t('settings.resetAction')}
         </button>
       </div>
     </div>
