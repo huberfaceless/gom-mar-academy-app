@@ -3,6 +3,11 @@ import path from 'path';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 import { verify as verifySignature } from 'crypto';
+import {
+  AcademyTier,
+  listFirebaseMembers,
+  updateFirebaseMemberTier,
+} from './server/firebaseMembershipAdmin.js';
 
 dotenv.config();
 
@@ -26,6 +31,12 @@ type FirebaseCertificates = Record<string, string>;
 
 const FIREBASE_PROJECT_ID = process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie';
 const FIREBASE_CERTIFICATES_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com';
+const ACADEMY_ADMIN_EMAILS = new Set(
+  (process.env.ACADEMY_ADMIN_EMAILS || 'admin@gom-mar.de')
+    .split(',')
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean),
+);
 let firebaseCertificateCache: { certificates: FirebaseCertificates; expiresAt: number } | null = null;
 
 const decodeJwtSegment = <T>(segment: string): T => JSON.parse(Buffer.from(segment, 'base64url').toString('utf8')) as T;
@@ -81,7 +92,7 @@ const verifyFirebaseIdToken = async (idToken: string): Promise<FirebaseTokenPayl
 const firebaseTierRank = (payload: FirebaseTokenPayload): number => {
   const isAdmin = payload.academyRole === 'admin'
     || payload.admin === true
-    || payload.email?.toLowerCase() === 'admin@gom-mar.de';
+    || (payload.email_verified === true && ACADEMY_ADMIN_EMAILS.has(payload.email?.toLowerCase() || ''));
   if (isAdmin || payload.academyTier === 'PREMIUM') return 2;
   if (payload.academyTier === 'PRO') return 1;
   return 0;
@@ -119,6 +130,21 @@ async function startServer() {
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
     if (!firebaseUser || firebaseTierRank(firebaseUser) < 1) {
       res.status(403).json({ error: 'Für diese Funktion ist ein freigeschalteter PRO-Tarif erforderlich.' });
+      return;
+    }
+    next();
+  };
+
+  const requireAcademyAdmin = (req: Request, res: Response, next: NextFunction) => {
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    const isAdmin = firebaseUser?.academyRole === 'admin'
+      || firebaseUser?.admin === true
+      || (
+        firebaseUser?.email_verified === true
+        && ACADEMY_ADMIN_EMAILS.has(firebaseUser.email?.toLowerCase() || '')
+      );
+    if (!isAdmin) {
+      res.status(403).json({ error: 'Nur autorisierte Academy-Administratoren dürfen Tarife verwalten.' });
       return;
     }
     next();
@@ -162,6 +188,55 @@ async function startServer() {
   // Health check
   app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok', hasKey: !!apiKey });
+  });
+
+  app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    try {
+      const pageToken = typeof req.query.pageToken === 'string' ? req.query.pageToken : undefined;
+      const result = await listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ success: true, ...result });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Mitglieder konnten nicht geladen werden.';
+      res.status(503).json({ error: message });
+    }
+  });
+
+  app.post('/api/admin/members/:uid/tier', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const uid = req.params.uid?.trim();
+    const tier = req.body?.tier as AcademyTier | undefined;
+    if (!uid || uid.length > 128) {
+      res.status(400).json({ error: 'Ungültige Firebase-Benutzerkennung.' });
+      return;
+    }
+    if (tier !== 'FREE' && tier !== 'PRO' && tier !== 'PREMIUM') {
+      res.status(400).json({ error: 'Der Tarif muss FREE, PRO oder PREMIUM sein.' });
+      return;
+    }
+
+    try {
+      const { member, previousTier } = await updateFirebaseMemberTier(FIREBASE_PROJECT_ID, uid, tier);
+      const actor = (req as FirebaseRequest).firebaseUser;
+      console.info('Academy-Tarif geändert', {
+        action: 'academy.membership.tier.updated',
+        actorUid: actor?.sub,
+        actorEmail: actor?.email,
+        targetUid: uid,
+        previousTier,
+        tier,
+        timestamp: new Date().toISOString(),
+      });
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({
+        success: true,
+        member,
+        message: 'Tarif gespeichert. Das Mitglied erhält den neuen Zugriff nach der nächsten Token-Aktualisierung.',
+      });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Tarif konnte nicht gespeichert werden.';
+      const status = message.includes('nicht gefunden') ? 404 : 503;
+      res.status(status).json({ error: message });
+    }
   });
 
   // 🤖 Frag GOM-MAR AI Mentor Endpoint
