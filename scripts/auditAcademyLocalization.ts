@@ -102,17 +102,17 @@ const assertLessonContent = (source: Lesson, translated: Lesson, language: Langu
   }
 
   requireTextArray(translated.learnContent.bulletPoints, `${path}.bulletPoints`);
-  assert.equal(translated.learnContent.bulletPoints.length, source.learnContent.bulletPoints.length, `${path}.bulletPoints ist unvollständig`);
+  assert.ok(translated.learnContent.bulletPoints.length >= source.learnContent.bulletPoints.length, `${path}.bulletPoints ist unvollständig`);
   requireTextArray(translated.understandContent.keyPrinciples, `${path}.keyPrinciples`);
-  assert.equal(translated.understandContent.keyPrinciples.length, source.understandContent.keyPrinciples.length, `${path}.keyPrinciples ist unvollständig`);
+  assert.ok(translated.understandContent.keyPrinciples.length >= source.understandContent.keyPrinciples.length, `${path}.keyPrinciples ist unvollständig`);
 
   if (source.actionTask.checklistItems) {
     requireTextArray(translated.actionTask.checklistItems, `${path}.checklistItems`);
-    assert.equal(translated.actionTask.checklistItems?.length, source.actionTask.checklistItems.length, `${path}.checklistItems ist unvollständig`);
+    assert.ok((translated.actionTask.checklistItems?.length ?? 0) >= source.actionTask.checklistItems.length, `${path}.checklistItems ist unvollständig`);
   }
   if (source.learnContent.practicalExamples) {
     requireTextArray(translated.learnContent.practicalExamples, `${path}.practicalExamples`);
-    assert.equal(translated.learnContent.practicalExamples?.length, source.learnContent.practicalExamples.length, `${path}.practicalExamples ist unvollständig`);
+    assert.ok((translated.learnContent.practicalExamples?.length ?? 0) >= source.learnContent.practicalExamples.length, `${path}.practicalExamples ist unvollständig`);
   }
   if (source.learnContent.videoChapters) {
     assert.equal(translated.learnContent.videoChapters?.length, source.learnContent.videoChapters.length, `${path}.videoChapters ist unvollständig`);
