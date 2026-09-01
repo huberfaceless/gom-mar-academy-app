@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { 
   Users, 
   BookOpen, 
@@ -23,7 +23,20 @@ import {
   AlertTriangle,
   RotateCcw
 } from 'lucide-react';
-import { StudentRecord, Stage, Lesson, UserProfile } from '../types';
+import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types';
+import { auth } from '../firebase/config';
+
+type FirebaseMember = {
+  uid: string;
+  email: string;
+  displayName: string;
+  emailVerified: boolean;
+  disabled: boolean;
+  tier: AcademyTier;
+  role: 'member' | 'admin';
+  createdAt?: string;
+  lastSignInAt?: string;
+};
 
 interface AdminDashboardViewProps {
   user: UserProfile;
@@ -48,6 +61,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [studentSearch, setStudentSearch] = useState<string>('');
   const [tierFilter, setTierFilter] = useState<string>('all');
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
+  const [firebaseMembers, setFirebaseMembers] = useState<FirebaseMember[]>([]);
+  const [membersLoading, setMembersLoading] = useState(false);
+  const [membersLoaded, setMembersLoaded] = useState(false);
+  const [membersError, setMembersError] = useState('');
+  const [updatingMemberUid, setUpdatingMemberUid] = useState<string | null>(null);
 
   // Curriculum Editor state
   const [selectedStageId, setSelectedStageId] = useState<number>(1);
@@ -85,6 +103,80 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
   const selectedStage = stages.find(s => s.id === selectedStageId) || stages[0];
 
+  const authenticatedRequest = useCallback(async (url: string, init?: RequestInit) => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) throw new Error('Die Firebase-Anmeldung ist abgelaufen. Bitte erneut anmelden.');
+    const idToken = await currentUser.getIdToken();
+    return fetch(url, {
+      ...init,
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
+    });
+  }, []);
+
+  const loadFirebaseMembers = useCallback(async () => {
+    setMembersLoading(true);
+    setMembersError('');
+    try {
+      const members: FirebaseMember[] = [];
+      const seenPageTokens = new Set<string>();
+      let pageToken: string | undefined;
+
+      do {
+        const query = pageToken ? `?pageToken=${encodeURIComponent(pageToken)}` : '';
+        const response = await authenticatedRequest(`/api/admin/members${query}`);
+        const result = await response.json() as {
+          error?: string;
+          members?: FirebaseMember[];
+          nextPageToken?: string;
+        };
+        if (!response.ok) throw new Error(result.error || 'Mitglieder konnten nicht geladen werden.');
+        members.push(...(result.members || []));
+        pageToken = result.nextPageToken;
+        if (pageToken && seenPageTokens.has(pageToken)) break;
+        if (pageToken) seenPageTokens.add(pageToken);
+      } while (pageToken && seenPageTokens.size < 100);
+
+      setFirebaseMembers(members.sort((a, b) => a.email.localeCompare(b.email)));
+      setMembersLoaded(true);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'Mitglieder konnten nicht geladen werden.');
+    } finally {
+      setMembersLoading(false);
+    }
+  }, [authenticatedRequest]);
+
+  useEffect(() => {
+    void loadFirebaseMembers();
+  }, [loadFirebaseMembers]);
+
+  const handleTierChange = async (member: FirebaseMember, tier: AcademyTier) => {
+    if (tier === member.tier || member.role === 'admin') return;
+    const memberLabel = member.email || member.displayName;
+    if (!window.confirm(`Tarif für ${memberLabel} wirklich von ${member.tier} auf ${tier} ändern?`)) return;
+
+    setUpdatingMemberUid(member.uid);
+    setMembersError('');
+    try {
+      const response = await authenticatedRequest(
+        `/api/admin/members/${encodeURIComponent(member.uid)}/tier`,
+        { method: 'POST', body: JSON.stringify({ tier }) },
+      );
+      const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
+      if (!response.ok || !result.member) throw new Error(result.error || 'Tarif konnte nicht gespeichert werden.');
+      setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? result.member! : item));
+      setSaveSuccessMsg(result.message || 'Tarif erfolgreich gespeichert.');
+      window.setTimeout(() => setSaveSuccessMsg(''), 5000);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'Tarif konnte nicht gespeichert werden.');
+    } finally {
+      setUpdatingMemberUid(null);
+    }
+  };
+
   // Filtered Students
   const filteredStudents = students.filter(student => {
     const matchesSearch = 
@@ -94,13 +186,22 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     const matchesTier = tierFilter === 'all' || student.tier === tierFilter;
     return matchesSearch && matchesTier;
   });
+  const filteredFirebaseMembers = firebaseMembers.filter((member) => {
+    const search = studentSearch.trim().toLowerCase();
+    const matchesSearch = !search
+      || member.displayName.toLowerCase().includes(search)
+      || member.email.toLowerCase().includes(search);
+    return matchesSearch && (tierFilter === 'all' || member.tier === tierFilter);
+  });
 
   // Calculate Metrics
-  const totalStudents = students.length;
-  const proStudents = students.filter(s => s.tier === 'PRO' || s.tier === 'PREMIUM').length;
-  const freeStudents = students.filter(s => s.tier === 'FREE').length;
+  const authoritativeStudents = membersLoaded ? firebaseMembers : students;
+  const totalStudents = authoritativeStudents.length;
+  const proStudents = authoritativeStudents.filter(s => s.tier === 'PRO').length;
+  const premiumStudents = authoritativeStudents.filter(s => s.tier === 'PREMIUM').length;
+  const freeStudents = authoritativeStudents.filter(s => s.tier === 'FREE').length;
   const totalLessons = stages.reduce((acc, s) => acc + s.lessons.length, 0);
-  const avgProgress = totalStudents > 0 ? Math.round(students.reduce((acc, s) => acc + s.progressPercent, 0) / totalStudents) : 0;
+  const avgProgress = students.length > 0 ? Math.round(students.reduce((acc, s) => acc + s.progressPercent, 0) / students.length) : 0;
 
   // Open Lesson in Editor
   const handleOpenEditLesson = (lesson: Lesson) => {
@@ -279,6 +380,93 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       {/* ================= TAB 1: KURSTEILNEHMER ÜBERSICHT ================= */}
       {activeTab === 'students' && (
         <div className="space-y-6 animate-fadeIn">
+          <section className="overflow-hidden rounded-2xl border border-indigo-200 bg-white shadow-xs" aria-labelledby="firebase-members-heading">
+            <div className="flex flex-col gap-3 border-b border-indigo-100 bg-indigo-50/70 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+              <div>
+                <h2 id="firebase-members-heading" className="flex items-center gap-2 text-sm font-black text-slate-900">
+                  <ShieldCheck className="h-4 w-4 text-indigo-700" />
+                  Firebase-Tarifverwaltung
+                </h2>
+                <p className="mt-1 text-xs text-slate-600">
+                  Diese Claims bestimmen den tatsächlichen Zugriff auf Academy, E-Mail-Automation, Toolbox und Content Engine.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => void loadFirebaseMembers()}
+                disabled={membersLoading}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-700 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-indigo-800 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <RotateCcw className={`h-4 w-4 ${membersLoading ? 'animate-spin' : ''}`} />
+                {membersLoading ? 'Wird geladen …' : 'Firebase aktualisieren'}
+              </button>
+            </div>
+
+            {membersError && (
+              <div role="alert" className="m-4 flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-800">
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                <span>{membersError}</span>
+              </div>
+            )}
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="border-b border-slate-200 bg-slate-50 font-extrabold uppercase tracking-wider text-slate-600">
+                  <tr>
+                    <th className="px-4 py-3.5">Firebase-Mitglied</th>
+                    <th className="px-4 py-3.5">E-Mail</th>
+                    <th className="px-4 py-3.5">Kontostatus</th>
+                    <th className="px-4 py-3.5">Zugriffstarif</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                  {membersLoading && !membersLoaded ? (
+                    <tr><td colSpan={4} className="px-4 py-8 text-center text-slate-500">Firebase-Mitglieder werden geladen …</td></tr>
+                  ) : filteredFirebaseMembers.length === 0 ? (
+                    <tr><td colSpan={4} className="px-4 py-8 text-center text-slate-400">Keine Firebase-Mitglieder für diesen Filter gefunden.</td></tr>
+                  ) : filteredFirebaseMembers.map((member) => (
+                    <tr key={member.uid} className="hover:bg-slate-50/80">
+                      <td className="px-4 py-3.5">
+                        <p className="font-bold text-slate-900">{member.displayName}</p>
+                        <p className="font-mono text-[10px] text-slate-400">{member.uid}</p>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <p>{member.email || 'Keine E-Mail hinterlegt'}</p>
+                        <span className={member.emailVerified ? 'text-emerald-700' : 'text-amber-700'}>
+                          {member.emailVerified ? 'Bestätigt' : 'Nicht bestätigt'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <span className={`inline-flex rounded-lg border px-2.5 py-1 text-[11px] font-black ${
+                          member.disabled
+                            ? 'border-rose-300 bg-rose-50 text-rose-800'
+                            : 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                        }`}>
+                          {member.disabled ? 'Deaktiviert' : member.role === 'admin' ? 'Administrator' : 'Aktiv'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <label className="sr-only" htmlFor={`tier-${member.uid}`}>Tarif für {member.email || member.displayName}</label>
+                        <select
+                          id={`tier-${member.uid}`}
+                          value={member.tier}
+                          onChange={(event) => void handleTierChange(member, event.target.value as AcademyTier)}
+                          disabled={member.role === 'admin' || updatingMemberUid === member.uid}
+                          title={member.role === 'admin' ? 'Administratoren besitzen immer PREMIUM-Zugriff.' : 'Zugriffstarif ändern'}
+                          className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-black text-slate-800 focus:border-indigo-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500"
+                        >
+                          <option value="FREE">FREE</option>
+                          <option value="PRO">PRO</option>
+                          <option value="PREMIUM">PREMIUM</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
           {/* Filters & Actions Bar */}
           <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="relative w-full md:w-80">
@@ -318,7 +506,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   tierFilter === 'PRO' ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                PRO ({students.filter(s => s.tier === 'PRO').length})
+                PRO ({proStudents})
               </button>
               <button
                 onClick={() => setTierFilter('PREMIUM')}
@@ -326,7 +514,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   tierFilter === 'PREMIUM' ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                VIP ({students.filter(s => s.tier === 'PREMIUM').length})
+                PREMIUM ({premiumStudents})
               </button>
             </div>
           </div>
