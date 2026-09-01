@@ -127,6 +127,8 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   const { language } = useLanguage();
   const copy = academyCopy[language];
   const localizedStages = useMemo(() => preserveAcademyTechnicalFields(stages, localizeAcademyStage99(localizeAcademyStage98(localizeAcademyStage97(localizeAcademyStage96(localizeAcademyStage95(localizeAcademyStage94(localizeAcademyStage93(localizeAcademyStage92(localizeAcademyStage91(localizeAcademyStage90(localizeAcademyStage89(localizeAcademyStage88(localizeAcademyStage87(localizeAcademyStage86(localizeAcademyStage85(localizeAcademyStage84(localizeAcademyStage83(localizeAcademyStage82(localizeAcademyStage81(localizeAcademyStages(stages, language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language)), [stages, language]);
+  const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
+  const unlockedStageIdSet = useMemo(() => new Set(user.unlockedStageIds), [user.unlockedStageIds]);
   const isLight = user.theme === 'clean-light' || !user.theme;
 
   // If an initial lesson ID was passed, open lesson mode directly; otherwise start in course overview
@@ -188,7 +190,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   const currentStage = localizedStages.find((s) => s.id === selectedStageId) || localizedStages[0];
   const currentLesson = currentStage.lessons.find((l) => l.id === selectedLessonId) || currentStage.lessons[0];
 
-  const isCompleted = currentLesson ? user.completedTaskIds.includes(currentLesson.id) : false;
+  const isCompleted = currentLesson ? completedTaskIdSet.has(currentLesson.id) : false;
 
   // Overall statistics
   const allLessons = localizedStages.flatMap((s) => s.lessons);
@@ -400,16 +402,17 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
             </div>
           ) : (
             filteredStages.map((stage) => {
-            const completedInStage = stage.lessons.filter((l) => user.completedTaskIds.includes(l.id)).length;
+            const completedInStage = stage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length;
             const isStageComplete = completedInStage === stage.lessons.length;
             const isStageInProgress = completedInStage > 0 && !isStageComplete;
             const isCurrentActiveStage = stage.id === (user.currentStageId || 1);
+            const isStageUnlocked = stage.id === 1 || isCurrentActiveStage || unlockedStageIdSet.has(stage.id);
 
             // Determine status type for badge
             let statusType: 'completed' | 'in_progress' | 'locked' = 'locked';
             if (isStageComplete) {
               statusType = 'completed';
-            } else if (isStageInProgress || isCurrentActiveStage || stage.id === 1) {
+            } else if (isStageUnlocked && (isStageInProgress || isCurrentActiveStage || stage.id === 1)) {
               statusType = 'in_progress';
             }
 
@@ -461,10 +464,10 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                 {/* Lessons inside Module */}
                 <div className="flex flex-col gap-3">
                   {stage.lessons.map((lesson, idx) => {
-                    const isLessonDone = user.completedTaskIds.includes(lesson.id);
+                    const isLessonDone = completedTaskIdSet.has(lesson.id);
                     // Determine if lesson is the next active lesson
-                    const isNextActiveLesson = !isLessonDone && (
-                      idx === 0 || user.completedTaskIds.includes(stage.lessons[idx - 1]?.id) || stage.id === 1
+                    const isNextActiveLesson = isStageUnlocked && !isLessonDone && (
+                      idx === 0 || completedTaskIdSet.has(stage.lessons[idx - 1]?.id)
                     );
 
                     if (isLessonDone) {
@@ -580,28 +583,32 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
         </div>
       </div>
 
-      {/* 7 Etappen Horizontal Stepper Tabs */}
+      {/* Horizontal stage navigation */}
       <div className="overflow-x-auto pb-2 scrollbar-none">
         <div className="flex items-center gap-2 min-w-max">
           {localizedStages.map((stage) => {
             const isStageActive = stage.id === selectedStageId;
-            const completedCount = stage.lessons.filter((l) => user.completedTaskIds.includes(l.id)).length;
+            const completedCount = stage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length;
             const isStageFullyDone = completedCount === stage.lessons.length;
+            const isStageUnlocked = stage.id === 1 || unlockedStageIdSet.has(stage.id);
 
             return (
               <button
                 key={stage.id}
+                disabled={!isStageUnlocked && !isStageFullyDone}
                 onClick={() => {
                   setSelectedStageId(stage.id);
                   setSelectedLessonId(stage.lessons[0].id);
                   setAiAnswer('');
                 }}
-                className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all duration-200 cursor-pointer ${
+                className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all duration-200 ${
                   isStageActive
-                    ? 'bg-slate-900 dark:bg-slate-800 text-white border-indigo-600 dark:border-indigo-500 shadow-md scale-105'
+                    ? 'bg-slate-900 dark:bg-slate-800 text-white border-indigo-600 dark:border-indigo-500 shadow-md scale-105 cursor-pointer'
                     : isStageFullyDone
-                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300'
+                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 cursor-pointer'
+                    : isStageUnlocked
+                    ? 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 cursor-pointer'
+                    : 'bg-slate-100 dark:bg-slate-950 text-slate-400 border-slate-200 dark:border-slate-800 cursor-not-allowed opacity-60'
                 }`}
               >
                 <div className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[10px] ${
@@ -631,13 +638,13 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
             <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center justify-between">
               <span>{copy.stage} {currentStage.id} {copy.stageLessons}</span>
               <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">
-                {currentStage.lessons.filter((l) => user.completedTaskIds.includes(l.id)).length} / {currentStage.lessons.length}
+                {currentStage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length} / {currentStage.lessons.length}
               </span>
             </p>
 
             <div className="space-y-1.5">
               {currentStage.lessons.map((lesson) => {
-                const isLessonDone = user.completedTaskIds.includes(lesson.id);
+                const isLessonDone = completedTaskIdSet.has(lesson.id);
                 const isLessonSelected = lesson.id === selectedLessonId;
 
                 return (

@@ -23,6 +23,8 @@ import { localizeAcademyStage99 } from '../src/i18n/academyLocalization99';
 import { preserveAcademyTechnicalFields } from '../src/i18n/academyLocalizationIntegrity';
 import { LanguageCode } from '../src/i18n/translations';
 import { Lesson, Stage } from '../src/types';
+import { DEFAULT_USER_PROFILE, TOTAL_ACADEMY_LESSONS, createFreshUserProfile } from '../src/utils/storage';
+import { migrateLegacyAcademyUnlocks, unlockNextAcademyStage } from '../src/utils/academyProgress';
 
 type Localizer = (stages: Stage[], language: LanguageCode) => Stage[];
 
@@ -151,6 +153,13 @@ const assertLessonContent = (source: Lesson, translated: Lesson, language: Langu
 
 assert.equal(ACADEMY_STAGES.length, 99, 'Die Academy muss genau 99 Etappen enthalten');
 assert.deepEqual(ACADEMY_STAGES.map(stage => stage.id), Array.from({ length: 99 }, (_, index) => index + 1), 'Etappen-IDs müssen lückenlos von 1 bis 99 laufen');
+assert.equal(TOTAL_ACADEMY_LESSONS, ACADEMY_STAGES.reduce((total, stage) => total + stage.lessons.length, 0), 'Die Gesamtzahl der Lektionen muss aus allen 99 Etappen berechnet werden');
+assert.deepEqual(DEFAULT_USER_PROFILE.unlockedStageIds, [1], 'Neue Profile dürfen nur mit Etappe 1 starten');
+assert.deepEqual(createFreshUserProfile('Test', 'test@example.com').unlockedStageIds, [1], 'Frisch registrierte Profile dürfen nur mit Etappe 1 starten');
+assert.deepEqual(unlockNextAcademyStage([1, 2, 3, 4, 5, 6, 7], 7, 99), [1, 2, 3, 4, 5, 6, 7, 8], 'Etappe 7 muss Etappe 8 freischalten');
+assert.deepEqual(unlockNextAcademyStage([98], 98, 99), [98, 99], 'Etappe 98 muss Etappe 99 freischalten');
+assert.deepEqual(unlockNextAcademyStage([99], 99, 99), [99], 'Nach Etappe 99 darf keine weitere Etappe freigeschaltet werden');
+assert.deepEqual(migrateLegacyAcademyUnlocks(7, ACADEMY_STAGES[6].lessons.map(lesson => lesson.id), ACADEMY_STAGES), [1, 2, 3, 4, 5, 6, 7, 8], 'Ein Altprofil mit abgeschlossener Etappe 7 muss Etappe 8 erhalten');
 
 const technicalErrors: string[] = [];
 const compareTechnical = (actual: unknown, expected: unknown, path: string): void => {

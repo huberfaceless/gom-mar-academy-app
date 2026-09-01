@@ -27,6 +27,7 @@ import { AuthModal } from './components/AuthModal';
 import { Loader2 } from 'lucide-react';
 import gommarLogo from './assets/images/gommar_logo.jpg';
 import { useLanguage } from './context/LanguageContext';
+import { unlockNextAcademyStage } from './utils/academyProgress';
 
 const DashboardView = lazy(() => import('./components/DashboardView').then((module) => ({ default: module.DashboardView })));
 const AcademyView = lazy(() => import('./components/AcademyView').then((module) => ({ default: module.AcademyView })));
@@ -161,10 +162,9 @@ export default function App() {
     const stageObj = stages.find((s) => s.id === stageId);
     const stageCompleted = stageObj?.lessons.every((l) => newCompleted.includes(l.id));
 
-    let unlockedStages = [...user.unlockedStageIds];
-    if (stageCompleted && stageId < 7 && !unlockedStages.includes(stageId + 1)) {
-      unlockedStages.push(stageId + 1);
-    }
+    const unlockedStages = stageCompleted
+      ? unlockNextAcademyStage(user.unlockedStageIds, stageId, stages.length)
+      : [...user.unlockedStageIds];
 
     // Badges update
     let badges = [...user.earnedBadges];
@@ -189,6 +189,7 @@ export default function App() {
         name: user.name,
         email: user.email,
         completedLessonsCount: newCompleted.length,
+        totalLessonsCount: totalTasksCount,
         progressPercent: Math.min(100, Math.round((newCompleted.length / totalTasksCount) * 100)),
         currentLessonId: lessonId,
         tier: user.tier,
