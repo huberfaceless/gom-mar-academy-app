@@ -25,6 +25,7 @@ import { LanguageCode } from '../src/i18n/translations';
 import { Lesson, Stage } from '../src/types';
 import { DEFAULT_USER_PROFILE, TOTAL_ACADEMY_LESSONS, createFreshUserProfile } from '../src/utils/storage';
 import { migrateLegacyAcademyUnlocks, unlockNextAcademyStage } from '../src/utils/academyProgress';
+import { canAccessView, getAcademyStageLimit, resolveMembershipClaims } from '../src/utils/membershipAccess';
 
 type Localizer = (stages: Stage[], language: LanguageCode) => Stage[];
 
@@ -160,6 +161,13 @@ assert.deepEqual(unlockNextAcademyStage([1, 2, 3, 4, 5, 6, 7], 7, 99), [1, 2, 3,
 assert.deepEqual(unlockNextAcademyStage([98], 98, 99), [98, 99], 'Etappe 98 muss Etappe 99 freischalten');
 assert.deepEqual(unlockNextAcademyStage([99], 99, 99), [99], 'Nach Etappe 99 darf keine weitere Etappe freigeschaltet werden');
 assert.deepEqual(migrateLegacyAcademyUnlocks(7, ACADEMY_STAGES[6].lessons.map(lesson => lesson.id), ACADEMY_STAGES), [1, 2, 3, 4, 5, 6, 7, 8], 'Ein Altprofil mit abgeschlossener Etappe 7 muss Etappe 8 erhalten');
+assert.equal(getAcademyStageLimit('FREE', 'member', 99), 2, 'FREE darf nur die ersten zwei Etappen öffnen');
+assert.equal(getAcademyStageLimit('PRO', 'member', 99), 99, 'PRO muss den vollständigen Lernpfad nutzen können');
+assert.equal(canAccessView('toolbox', 'FREE', 'member'), false, 'FREE darf die PRO-Toolbox nicht öffnen');
+assert.equal(canAccessView('toolbox', 'PRO', 'member'), true, 'PRO muss die Toolbox öffnen können');
+assert.equal(canAccessView('admin', 'PREMIUM', 'member'), false, 'PREMIUM allein darf keinen Adminzugang erhalten');
+assert.deepEqual(resolveMembershipClaims({}, 'member@example.com'), { tier: 'FREE', role: 'member' }, 'Fehlende Claims müssen sicher auf FREE zurückfallen');
+assert.deepEqual(resolveMembershipClaims({ academyTier: 'PRO' }, 'member@example.com'), { tier: 'PRO', role: 'member' }, 'Ein bestätigter PRO-Claim muss erkannt werden');
 
 const technicalErrors: string[] = [];
 const compareTechnical = (actual: unknown, expected: unknown, path: string): void => {

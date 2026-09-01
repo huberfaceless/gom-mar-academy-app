@@ -97,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
                   GOM-MAR Academy
                 </h1>
                 <span className="bg-indigo-600 text-white font-extrabold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm shadow-indigo-600/30">
-                  PRO
+                  {user.tier}
                 </span>
               </div>
             </div>

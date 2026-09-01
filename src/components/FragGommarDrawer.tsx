@@ -3,6 +3,7 @@ import { UserProfile, ChatMessage } from '../types';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
+import { authenticatedFetch } from '../services/authenticatedFetch';
 import { 
   Bot, 
   Send, 
@@ -375,7 +376,7 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
     const timeoutId = window.setTimeout(() => controller.abort(), 30000);
 
     try {
-      const response = await fetch('/api/ask-gommar', {
+      const response = await authenticatedFetch('/api/ask-gommar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: controller.signal,

@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { UserProfile, Campaign, StudentRecord, Stage } from './types';
+import { UserProfile, Campaign, StudentRecord, Stage, AcademyTier } from './types';
 import { 
   loadUserProfile, 
   saveUserProfile, 
@@ -7,7 +7,6 @@ import {
   saveCampaigns, 
   calculateLevelAndTitle,
   loadStudents,
-  saveStudents,
   addOrUpdateStudentRecord,
   loadAcademyStages,
   saveAcademyStages,
@@ -18,6 +17,7 @@ import { Sidebar } from './components/Sidebar';
 import { VisitorAccessGateModal } from './components/VisitorAccessGateModal';
 import { FragGommarDrawer } from './components/FragGommarDrawer';
 import { CelebrationModal } from './components/CelebrationModal';
+import { MembershipAccessModal } from './components/MembershipAccessModal';
 import { BottomNav } from './components/BottomNav';
 import { Footer } from './components/Footer';
 import { LegalModal, LegalDocType } from './components/LegalModal';
@@ -28,6 +28,12 @@ import { Loader2 } from 'lucide-react';
 import gommarLogo from './assets/images/gommar_logo.jpg';
 import { useLanguage } from './context/LanguageContext';
 import { unlockNextAcademyStage } from './utils/academyProgress';
+import {
+  canAccessView,
+  getAcademyStageLimit,
+  requiredTierForView,
+  resolveMembershipClaims,
+} from './utils/membershipAccess';
 
 const DashboardView = lazy(() => import('./components/DashboardView').then((module) => ({ default: module.DashboardView })));
 const AcademyView = lazy(() => import('./components/AcademyView').then((module) => ({ default: module.AcademyView })));
@@ -56,13 +62,18 @@ export default function App() {
 
   const [user, setUser] = useState<UserProfile>(() => {
     const loaded = loadUserProfile();
-    return loaded;
+    return { ...loaded, tier: 'FREE', role: 'member' };
   });
 
   const [campaigns, setCampaigns] = useState<Campaign[]>(loadCampaigns());
   const [stages, setStages] = useState<Stage[]>(loadAcademyStages());
   const [students, setStudents] = useState<StudentRecord[]>(loadStudents());
   const [activeView, setActiveView] = useState<string>('dashboard');
+  const [membershipGate, setMembershipGate] = useState<{
+    isOpen: boolean;
+    mode: 'access' | 'change';
+    requestedTier: AcademyTier;
+  }>({ isOpen: false, mode: 'access', requestedTier: 'PRO' });
 
   // Auth modal toggle with mode support
   const [authModalState, setAuthModalState] = useState<{
@@ -105,19 +116,40 @@ export default function App() {
 
   // Keep local user profile in sync with Firebase Auth User
   useEffect(() => {
+    let cancelled = false;
+
     if (firebaseUser) {
-      const isAdminEmail = firebaseUser.email === 'admin@gom-mar.de';
-      setUser((prev) => {
-        const updated: UserProfile = {
-          ...prev,
-          email: firebaseUser.email || prev.email,
-          name: firebaseUser.displayName || prev.name || 'GOM-MAR Mitglied',
-          isRegistered: true,
-          emailVerified: firebaseUser.emailVerified,
-          role: isAdminEmail ? 'admin' : (prev.role === 'admin' && !isAdminEmail ? 'member' : (prev.role || 'member'))
-        };
-        saveUserProfile(updated);
-        return updated;
+      void firebaseUser.getIdTokenResult().then((tokenResult) => {
+        if (cancelled) return;
+        const membership = resolveMembershipClaims(tokenResult.claims, firebaseUser.email);
+        setUser((prev) => {
+          const updated: UserProfile = {
+            ...prev,
+            email: firebaseUser.email || prev.email,
+            name: firebaseUser.displayName || prev.name || 'GOM-MAR Mitglied',
+            isRegistered: true,
+            emailVerified: firebaseUser.emailVerified,
+            tier: membership.tier,
+            role: membership.role,
+          };
+          saveUserProfile(updated);
+          return updated;
+        });
+      }).catch(() => {
+        if (cancelled) return;
+        setUser((prev) => {
+          const updated: UserProfile = {
+            ...prev,
+            email: firebaseUser.email || prev.email,
+            name: firebaseUser.displayName || prev.name || 'GOM-MAR Mitglied',
+            isRegistered: true,
+            emailVerified: firebaseUser.emailVerified,
+            tier: 'FREE',
+            role: 'member',
+          };
+          saveUserProfile(updated);
+          return updated;
+        });
       });
     } else {
       setUser((prev) => {
@@ -125,12 +157,17 @@ export default function App() {
           ...prev,
           isRegistered: false,
           emailVerified: false,
-          role: 'member'
+          tier: 'FREE',
+          role: 'member',
         };
         saveUserProfile(updated);
         return updated;
       });
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, [firebaseUser]);
 
   // Calculate overall progress across all lessons in all modules
@@ -138,6 +175,7 @@ export default function App() {
   const totalTasksCount = allLessons.length;
   const completedTasksCount = user.completedTaskIds.length;
   const { level, title: levelTitle, progressPercent } = calculateLevelAndTitle(completedTasksCount, totalTasksCount);
+  const academyStageLimit = getAcademyStageLimit(user.tier, user.role, stages.length);
 
   // Auto-sync level changes
   useEffect(() => {
@@ -150,6 +188,11 @@ export default function App() {
 
   // Handle Lesson Completion
   const handleCompleteLesson = (lessonId: string, stageId: number) => {
+    if (stageId > academyStageLimit) {
+      setMembershipGate({ isOpen: true, mode: 'access', requestedTier: 'PRO' });
+      return;
+    }
+
     let newCompleted = [...user.completedTaskIds];
     let isFirstCompletion = false;
 
@@ -163,7 +206,7 @@ export default function App() {
     const stageCompleted = stageObj?.lessons.every((l) => newCompleted.includes(l.id));
 
     const unlockedStages = stageCompleted
-      ? unlockNextAcademyStage(user.unlockedStageIds, stageId, stages.length)
+      ? unlockNextAcademyStage(user.unlockedStageIds, stageId, academyStageLimit)
       : [...user.unlockedStageIds];
 
     // Badges update
@@ -176,7 +219,7 @@ export default function App() {
       ...user,
       completedTaskIds: newCompleted,
       unlockedStageIds: unlockedStages,
-      currentStageId: stageCompleted && stageId < stages.length ? stageId + 1 : stageId,
+      currentStageId: stageCompleted && stageId < academyStageLimit ? stageId + 1 : stageId,
       earnedBadges: badges,
     };
 
@@ -221,17 +264,21 @@ export default function App() {
     saveAcademyStages(newStages);
   };
 
-  const handleUpdateStudents = (newStudents: StudentRecord[]) => {
-    setStudents(newStudents);
-    saveStudents(newStudents);
-  };
-
   const handleResetStages = () => {
     const defaultStages = resetAcademyStagesToDefault();
     setStages(defaultStages);
   };
 
   const handleNavigate = (view: string, stageId?: number, lessonId?: string) => {
+    if (!canAccessView(view, user.tier, user.role)) {
+      setMembershipGate({
+        isOpen: true,
+        mode: 'access',
+        requestedTier: requiredTierForView(view) || 'PREMIUM',
+      });
+      return;
+    }
+
     setActiveView(view);
     if (stageId) setAcademyStageId(stageId);
     if (lessonId) setAcademyLessonId(lessonId);
@@ -239,6 +286,10 @@ export default function App() {
   };
 
   const handleNavigateToToolbox = (category?: string) => {
+    if (!canAccessView('toolbox', user.tier, user.role)) {
+      setMembershipGate({ isOpen: true, mode: 'access', requestedTier: 'PRO' });
+      return;
+    }
     setToolboxCategory(category);
     setActiveView('toolbox');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -342,6 +393,7 @@ export default function App() {
           totalTasksCount={totalTasksCount}
           onOpenFragGommar={() => handleOpenFragGommar()}
           userRole={user.role || 'member'}
+          userTier={user.tier}
         />
 
         {/* Content View Area */}
@@ -355,20 +407,20 @@ export default function App() {
               totalTasksCount={totalTasksCount}
               onNavigate={handleNavigate}
               onOpenFragGommar={handleOpenFragGommar}
+              stageAccessLimit={academyStageLimit}
             />
           )}
 
-          {activeView === 'contentEngine' && (
+          {activeView === 'contentEngine' && canAccessView('contentEngine', user.tier, user.role) && (
             <ContentEngineView />
           )}
 
-          {activeView === 'admin' && (
+          {activeView === 'admin' && user.role === 'admin' && (
             <AdminDashboardView
               user={user}
               stages={stages}
               students={students}
               onUpdateStages={handleUpdateStages}
-              onUpdateStudents={handleUpdateStudents}
               onResetStages={handleResetStages}
               onNavigate={handleNavigate}
             />
@@ -383,10 +435,11 @@ export default function App() {
               onCompleteLesson={handleCompleteLesson}
               onNavigateToToolbox={handleNavigateToToolbox}
               onOpenFragGommar={handleOpenFragGommar}
+              stageAccessLimit={academyStageLimit}
             />
           )}
 
-          {activeView === 'email' && (
+          {activeView === 'email' && canAccessView('email', user.tier, user.role) && (
             <EmailAutomationView
               campaigns={campaigns}
               onUpdateCampaigns={handleUpdateCampaigns}
@@ -395,7 +448,7 @@ export default function App() {
             />
           )}
 
-          {activeView === 'toolbox' && (
+          {activeView === 'toolbox' && canAccessView('toolbox', user.tier, user.role) && (
             <ToolboxView
               initialCategory={toolboxCategory}
               onOpenFragGommar={handleOpenFragGommar}
@@ -420,6 +473,9 @@ export default function App() {
               }}
               progressPercent={progressPercent}
               completedTasksCount={completedTasksCount}
+              onRequestTierChange={(requestedTier) => {
+                setMembershipGate({ isOpen: true, mode: 'change', requestedTier });
+              }}
             />
           )}
 
@@ -496,11 +552,26 @@ export default function App() {
         levelTitle={celebrationModal.levelTitle}
       />
 
+      <MembershipAccessModal
+        isOpen={membershipGate.isOpen}
+        mode={membershipGate.mode}
+        currentTier={user.tier}
+        requestedTier={membershipGate.requestedTier}
+        onClose={() => setMembershipGate((prev) => ({ ...prev, isOpen: false }))}
+        onOpenProfile={() => {
+          setMembershipGate((prev) => ({ ...prev, isOpen: false }));
+          setActiveView('profile');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+
       {/* 📱 Mobile Bottom Navigation Bar */}
       <BottomNav
         activeView={activeView}
         onNavigate={handleNavigate}
         onOpenFragGommar={() => handleOpenFragGommar()}
+        userRole={user.role || 'member'}
+        userTier={user.tier}
       />
     </div>
   );

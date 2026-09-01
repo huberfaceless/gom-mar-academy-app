@@ -1,8 +1,9 @@
 import React from 'react';
-import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, Bot, ChevronRight, Globe, ShieldCheck, Layers } from 'lucide-react';
+import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, Bot, ChevronRight, Globe, ShieldCheck, Layers, Lock } from 'lucide-react';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
-import { UserRole } from '../types';
+import type { AcademyTier, UserRole } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { canAccessView } from '../utils/membershipAccess';
 
 interface SidebarProps {
   activeView: string;
@@ -11,7 +12,8 @@ interface SidebarProps {
   completedTasksCount: number;
   totalTasksCount: number;
   onOpenFragGommar: () => void;
-  userRole?: UserRole;
+  userRole: UserRole;
+  userTier: AcademyTier;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -21,7 +23,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   completedTasksCount,
   totalTasksCount,
   onOpenFragGommar,
-  userRole = 'admin'
+  userRole,
+  userTier,
 }) => {
   const { t } = useLanguage();
   const menuItems = [
@@ -64,7 +67,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="overflow-hidden">
             <div className="flex items-center gap-1.5">
               <span className="font-black text-sm text-slate-950 truncate">GOM-MAR</span>
-              <span className="bg-indigo-600 text-white font-extrabold text-[9px] px-1.5 py-0.2 rounded uppercase">PRO</span>
+              <span className="bg-indigo-600 text-white font-extrabold text-[9px] px-1.5 py-0.2 rounded uppercase">{userTier}</span>
             </div>
             <p className="text-[10px] text-slate-500 font-medium truncate">Academy Platform</p>
           </div>
@@ -79,14 +82,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeView === item.id;
+              const hasAccess = canAccessView(item.id, userTier, userRole);
               return (
                 <button
                   key={item.id}
                   id={`nav-item-${item.id}`}
                   onClick={() => onNavigate(item.id)}
+                  aria-label={!hasAccess ? `${item.label} – PRO` : item.label}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 cursor-pointer ${
                     isActive
                       ? 'bg-indigo-50 text-indigo-600 font-extrabold shadow-sm'
+                      : !hasAccess
+                      ? 'text-slate-400 hover:bg-slate-50'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
@@ -94,14 +101,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`} />
                     <span>{item.label}</span>
                   </div>
-                  {item.badge && (
+                  {!hasAccess ? (
+                    <span className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">
+                      <Lock className="h-3 w-3" /> PRO
+                    </span>
+                  ) : item.badge ? (
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       isActive ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-500'
                     }`}>
                       {item.badge}
                     </span>
-                  )}
-                  {item.highlight && !isActive && (
+                  ) : null}
+                  {hasAccess && item.highlight && !isActive && (
                     <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
                   )}
                 </button>

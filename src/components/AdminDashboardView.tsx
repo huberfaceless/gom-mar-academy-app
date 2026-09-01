@@ -21,22 +21,15 @@ import {
   UserCheck,
   Award,
   AlertTriangle,
-  RotateCcw,
-  Lock,
-  KeyRound,
-  LogOut
+  RotateCcw
 } from 'lucide-react';
-import { StudentRecord, Stage, Lesson, AcademyTier, UserProfile } from '../types';
-
-const ADMIN_SECURITY_PIN = '858697';
-const ADMIN_AUTH_SESSION_KEY = 'gommar_admin_auth_unlocked_v1';
+import { StudentRecord, Stage, Lesson, UserProfile } from '../types';
 
 interface AdminDashboardViewProps {
   user: UserProfile;
   stages: Stage[];
   students: StudentRecord[];
   onUpdateStages: (stages: Stage[]) => void;
-  onUpdateStudents: (students: StudentRecord[]) => void;
   onResetStages: () => void;
   onNavigate: (view: string, stageId?: number, lessonId?: string) => void;
 }
@@ -46,20 +39,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   stages,
   students,
   onUpdateStages,
-  onUpdateStudents,
   onResetStages,
   onNavigate
 }) => {
-  // PIN Verification State
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    try {
-      return sessionStorage.getItem(ADMIN_AUTH_SESSION_KEY) === 'true';
-    } catch {
-      return false;
-    }
-  });
-  const [inputPin, setInputPin] = useState<string>('');
-  const [pinError, setPinError] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'students' | 'curriculum' | 'stats'>('students');
   
   // Search & Filter state for Students
@@ -217,114 +199,6 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     setTimeout(() => setSaveSuccessMsg(''), 3000);
   };
 
-  // Update Student Tier / Status
-  const handleUpdateStudentTier = (studentId: string, newTier: AcademyTier) => {
-    const updated = students.map(s => {
-      if (s.id === studentId) {
-        return { ...s, tier: newTier };
-      }
-      return s;
-    });
-    onUpdateStudents(updated);
-  };
-
-  // PIN Verification handler
-  const handleVerifyPin = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (inputPin.trim() === ADMIN_SECURITY_PIN) {
-      setIsAuthenticated(true);
-      setPinError('');
-      try {
-        sessionStorage.setItem(ADMIN_AUTH_SESSION_KEY, 'true');
-      } catch {
-        // ignore storage errors
-      }
-    } else {
-      setPinError('Ungültiger PIN-Code. Zugriff verweigert.');
-      setInputPin('');
-    }
-  };
-
-  const handleAdminLock = () => {
-    setIsAuthenticated(false);
-    setInputPin('');
-    try {
-      sessionStorage.removeItem(ADMIN_AUTH_SESSION_KEY);
-    } catch {
-      // ignore
-    }
-  };
-
-  // If not authenticated with PIN, show PIN gate
-  if (!isAuthenticated) {
-    return (
-      <div className="max-w-md mx-auto my-12 p-6 sm:p-8 bg-slate-900 border border-indigo-500/30 rounded-3xl text-white shadow-2xl text-center space-y-6 relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-amber-500 mx-auto flex items-center justify-center shadow-lg shadow-indigo-500/30 text-white">
-          <Lock className="w-8 h-8" />
-        </div>
-
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            Geschützter Bereich
-          </div>
-          <h2 className="text-2xl font-black tracking-tight text-white">
-            Admin-Zentrale entsperren
-          </h2>
-          <p className="text-xs text-slate-300">
-            Bitte gib deinen 6-stelligen Sicherheits-PIN ein, um das Kursteilnehmer- & Lehrplan-Management zu öffnen.
-          </p>
-        </div>
-
-        <form onSubmit={handleVerifyPin} className="space-y-4">
-          <div className="space-y-2 text-left">
-            <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-              <KeyRound className="w-3.5 h-3.5 text-amber-400" />
-              Sicherheits-PIN
-            </label>
-            <input
-              type="password"
-              inputMode="numeric"
-              maxLength={10}
-              placeholder="••••••"
-              value={inputPin}
-              onChange={(e) => {
-                setInputPin(e.target.value);
-                setPinError('');
-              }}
-              autoFocus
-              className="w-full bg-slate-950/80 border border-slate-700 rounded-2xl px-4 py-3.5 text-center text-2xl font-mono tracking-widest text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all"
-            />
-            {pinError && (
-              <p className="text-xs text-rose-400 font-medium flex items-center justify-center gap-1 mt-1.5">
-                <AlertTriangle className="w-3.5 h-3.5" />
-                {pinError}
-              </p>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-2xl text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2"
-          >
-            <ShieldCheck className="w-4 h-4" />
-            Admin-Bereich freischalten
-          </button>
-        </form>
-
-        <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-          <span>GOM-MAR Security Gate</span>
-          <button
-            onClick={() => onNavigate('dashboard')}
-            className="text-slate-400 hover:text-white underline transition-colors cursor-pointer"
-          >
-            Zurück zum Dashboard
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6 pb-20 max-w-7xl mx-auto">
       {/* Header Banner */}
@@ -341,14 +215,6 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold">
                 Voller Systemzugriff
               </span>
-              <button
-                onClick={handleAdminLock}
-                title="Admin-Bereich jetzt sperren"
-                className="px-2.5 py-0.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold flex items-center gap-1 transition-all border border-slate-700 cursor-pointer ml-1"
-              >
-                <Lock className="w-3 h-3 text-amber-400" />
-                <span>Sperren</span>
-              </button>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
               GOM-MAR Academy Management
@@ -465,6 +331,13 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             </div>
           </div>
 
+          <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-900">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
+            <p>
+              Tarife werden aus verifizierten Firebase-Claims gelesen. Diese Übersicht zeigt den synchronisierten Status; lokale Tabellenänderungen vergeben keinen Mitgliederzugang.
+            </p>
+          </div>
+
           {/* Students Table */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
@@ -505,10 +378,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
                         {/* Tier */}
                         <td className="py-3.5 px-4">
-                          <select
-                            value={student.tier}
-                            onChange={(e) => handleUpdateStudentTier(student.id, e.target.value as AcademyTier)}
-                            className={`px-2.5 py-1 rounded-lg font-black text-[11px] border cursor-pointer focus:outline-none ${
+                          <span
+                            className={`inline-flex px-2.5 py-1 rounded-lg font-black text-[11px] border ${
                               student.tier === 'FREE'
                                 ? 'bg-slate-100 text-slate-700 border-slate-300'
                                 : student.tier === 'PRO'
@@ -516,10 +387,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                                   : 'bg-purple-50 text-purple-800 border-purple-300'
                             }`}
                           >
-                            <option value="FREE">FREE Member</option>
-                            <option value="PRO">PRO Member</option>
-                            <option value="PREMIUM">PREMIUM VIP</option>
-                          </select>
+                            {student.tier} Member
+                          </span>
                         </td>
 
                         {/* Progress */}

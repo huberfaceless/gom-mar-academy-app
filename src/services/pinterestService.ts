@@ -1,4 +1,5 @@
 import { PinterestAccountConfig, PinterestBoard, PinterestPin } from '../types/contentEngine';
+import { authenticatedFetch } from './authenticatedFetch';
 
 const PINTEREST_STORAGE_KEY = 'gommar_pinterest_account_config';
 
@@ -37,7 +38,7 @@ export const pinterestService = {
    */
   async testConnection(accessToken: string): Promise<{ success: boolean; user?: Record<string, unknown>; error?: string }> {
     try {
-      const res = await fetch('/api/pinterest/test-connection', {
+      const res = await authenticatedFetch('/api/pinterest/test-connection', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessToken }),
@@ -58,7 +59,7 @@ export const pinterestService = {
    */
   async getBoards(accessToken: string): Promise<{ success: boolean; boards: PinterestBoard[]; error?: string }> {
     try {
-      const res = await fetch('/api/pinterest/boards', {
+      const res = await authenticatedFetch('/api/pinterest/boards', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessToken }),
@@ -79,7 +80,7 @@ export const pinterestService = {
    */
   async createBoard(accessToken: string, name: string, description?: string): Promise<{ success: boolean; board?: PinterestBoard; error?: string }> {
     try {
-      const res = await fetch('/api/pinterest/create-board', {
+      const res = await authenticatedFetch('/api/pinterest/create-board', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessToken, name, description }),
@@ -105,7 +106,7 @@ export const pinterestService = {
     imageBase64?: string
   ): Promise<{ success: boolean; publishedPin?: { id: string; pin_url: string; title: string }; error?: string }> {
     try {
-      const res = await fetch('/api/pinterest/publish-pin', {
+      const res = await authenticatedFetch('/api/pinterest/publish-pin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -134,7 +135,7 @@ export const pinterestService = {
    */
   async optimizeImagePrompt(topic: string, prompt: string, angle?: string): Promise<{ success: boolean; optimizedPrompt?: string; stockKeywords?: string[] }> {
     try {
-      const res = await fetch('/api/pinterest/generate-image', {
+      const res = await authenticatedFetch('/api/pinterest/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, prompt, angle }),
