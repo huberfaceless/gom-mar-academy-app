@@ -1,22 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UserProfile, ChatMessage } from '../types';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
+import { useLanguage } from '../context/LanguageContext';
+import { LanguageCode } from '../i18n/translations';
 import { 
   Bot, 
   Send, 
   X, 
-  Sparkles, 
   Loader2, 
-  User, 
   ArrowRight, 
-  HelpCircle,
-  Zap,
-   Lightbulb,
+  Lightbulb,
   Copy,
   Check,
   RotateCcw,
   MessageSquarePlus
 } from 'lucide-react';
+
+const mentorCopy = {
+  de: {
+    name: '🤖 Frag GOM-MAR', welcome: 'Hallo {name}! 👋 Ich bin dein KI-Mentor „Frag GOM-MAR“.\n\nIch kenne deinen Lernstand: Du bist gerade bei Etappe {stage}.\n\nWie kann ich dir bei deiner nächsten Aufgabe oder deinem Online-System helfen?', mentor: 'KI-Mentor', guided: 'Geführtes Systemwissen • Etappe {stage}', newChat: 'Neuer Chat', close: 'Frag GOM-MAR schließen', confirmNew: 'Möchtest du den bisherigen Chatverlauf wirklich löschen und einen neuen Chat starten?', retry: 'Erneut versuchen', copyAnswer: 'Antwort kopieren', copied: 'Kopiert', copy: 'Kopieren', thinking: 'GOM-MAR denkt nach...', frequent: 'Häufige Fragen:', placeholder: 'Frage GOM-MAR nach Hilfe zu deinem System...', send: 'Nachricht senden', timeout: 'Die Antwort dauert ungewöhnlich lange. Bitte versuche es erneut.', rateLimit: 'Der KI-Mentor erhält gerade sehr viele Anfragen. Bitte versuche es in einem Moment erneut.', serverError: 'Der KI-Mentor ist vorübergehend nicht erreichbar. Bitte versuche es gleich erneut.', invalidResponse: 'Die Antwort konnte nicht richtig verarbeitet werden. Bitte versuche es erneut.', requestError: 'Die Anfrage konnte nicht gesendet werden. Prüfe deine Verbindung und versuche es erneut.', q1: 'Ich weiß nicht, welche Nische ich wählen soll.', q2: 'Meine Landingpage ist fertig. Was ist der nächste Schritt?', q3: 'Hilf mir, einen Lead-Magneten zu entwickeln.', q4: 'Schreibe eine Betreffzeile für meine Willkommens-E-Mail.',
+  },
+  en: {
+    name: '🤖 Ask GOM-MAR', welcome: 'Hello {name}! 👋 I am your AI mentor, “Ask GOM-MAR”.\n\nI know your learning progress: you are currently on Stage {stage}.\n\nHow can I help with your next task or online system?', mentor: 'AI mentor', guided: 'Guided system knowledge • Stage {stage}', newChat: 'New chat', close: 'Close Ask GOM-MAR', confirmNew: 'Do you really want to delete the current conversation and start a new chat?', retry: 'Try again', copyAnswer: 'Copy answer', copied: 'Copied', copy: 'Copy', thinking: 'GOM-MAR is thinking...', frequent: 'Common questions:', placeholder: 'Ask GOM-MAR for help with your system...', send: 'Send message', timeout: 'The answer is taking unusually long. Please try again.', rateLimit: 'The AI mentor is receiving many requests. Please try again in a moment.', serverError: 'The AI mentor is temporarily unavailable. Please try again shortly.', invalidResponse: 'The answer could not be processed correctly. Please try again.', requestError: 'The request could not be sent. Check your connection and try again.', q1: 'I do not know which niche to choose.', q2: 'My landing page is ready. What is the next step?', q3: 'Help me develop a lead magnet.', q4: 'Write a subject line for my welcome email.',
+  },
+  pl: {
+    name: '🤖 Zapytaj GOM-MAR', welcome: 'Cześć {name}! 👋 Jestem twoim mentorem AI „Zapytaj GOM-MAR”.\n\nZnam twój postęp: jesteś obecnie na etapie {stage}.\n\nJak mogę pomóc w następnym zadaniu lub rozwoju systemu online?', mentor: 'Mentor AI', guided: 'Prowadzenie po systemie • Etap {stage}', newChat: 'Nowy czat', close: 'Zamknij Zapytaj GOM-MAR', confirmNew: 'Czy na pewno chcesz usunąć dotychczasową rozmowę i rozpocząć nowy czat?', retry: 'Spróbuj ponownie', copyAnswer: 'Kopiuj odpowiedź', copied: 'Skopiowano', copy: 'Kopiuj', thinking: 'GOM-MAR przygotowuje odpowiedź...', frequent: 'Częste pytania:', placeholder: 'Zapytaj GOM-MAR o pomoc w swoim systemie...', send: 'Wyślij wiadomość', timeout: 'Odpowiedź trwa wyjątkowo długo. Spróbuj ponownie.', rateLimit: 'Mentor AI otrzymuje teraz wiele zapytań. Spróbuj ponownie za chwilę.', serverError: 'Mentor AI jest chwilowo niedostępny. Spróbuj ponownie za moment.', invalidResponse: 'Nie udało się prawidłowo przetworzyć odpowiedzi. Spróbuj ponownie.', requestError: 'Nie udało się wysłać zapytania. Sprawdź połączenie i spróbuj ponownie.', q1: 'Nie wiem, którą niszę wybrać.', q2: 'Moja strona docelowa jest gotowa. Jaki jest następny krok?', q3: 'Pomóż mi opracować lead magnet.', q4: 'Napisz temat mojego e-maila powitalnego.',
+  },
+} satisfies Record<LanguageCode, Record<string, string>>;
 
 interface FragGommarDrawerProps {
   isOpen: boolean;
@@ -58,15 +68,13 @@ const parseSuggestedAction = (value: unknown): SuggestedAction | undefined => {
 
 const createWelcomeMessage = (
   user: UserProfile,
-  currentStageTitle: string,
+  language: LanguageCode,
 ): ChatMessage => ({
   id: `welcome-${Date.now()}`,
   sender: 'gommar',
-  text: `Hallo ${user.name}! 👋 Ich bin dein KI-Mentor "Frag GOM-MAR".
-
-Ich kenne genau deinen Lernstand (Du bist gerade bei Stage ${user.currentStageId}: "${currentStageTitle}").
-
-Wie kann ich dir bei deiner nächsten Aufgabe oder bei deinem Online-System helfen?`,
+  text: mentorCopy[language].welcome
+    .replace('{name}', user.name)
+    .replace('{stage}', String(user.currentStageId)),
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
 });
 
@@ -255,23 +263,25 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
   currentLessonTitle = '1.1 Wie funktioniert Online-Einkommen?',
   onNavigate,
 }) => {
+  const { language } = useLanguage();
+  const copy = mentorCopy[language];
   const [inputPrompt, setInputPrompt] = useState<string>('');
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
-    createWelcomeMessage(user, currentStageTitle),
+    createWelcomeMessage(user, language),
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const [failedPrompts, setFailedPrompts] = useState<Record<string, string>>({});
   const [loadedStorageKey, setLoadedStorageKey] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const storageKey = `frag-gommar-chat:${(user.email || user.name || 'gast').trim().toLowerCase()}`;
+  const storageKey = `frag-gommar-chat:${language}:${(user.email || user.name || 'guest').trim().toLowerCase()}`;
 
   // Quick suggestion chips
   const quickQuestions = [
-    'Ich habe keine Ahnung, welche Nische ich nehmen soll.',
-    'Ich habe meine Landingpage erstellt. Was mache ich jetzt?',
-    'Hilf mir, einen Lead Magneten zu erfinden.',
-    'Schreibe eine Betreffzeile für meine Willkommens-E-Mail.',
+    copy.q1,
+    copy.q2,
+    copy.q3,
+    copy.q4,
   ];
 
   useEffect(() => {
@@ -284,24 +294,24 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
     try {
       const storedValue = window.localStorage.getItem(storageKey);
       if (!storedValue) {
-        setMessages([createWelcomeMessage(user, currentStageTitle)]);
+        setMessages([createWelcomeMessage(user, language)]);
       } else {
         const parsedValue: unknown = JSON.parse(storedValue);
         if (Array.isArray(parsedValue) && parsedValue.length > 0 && parsedValue.every(isStoredChatMessage)) {
           setMessages(parsedValue);
         } else {
           window.localStorage.removeItem(storageKey);
-          setMessages([createWelcomeMessage(user, currentStageTitle)]);
+          setMessages([createWelcomeMessage(user, language)]);
         }
       }
     } catch (err) {
       console.warn('Chatverlauf konnte nicht geladen werden:', err);
-      setMessages([createWelcomeMessage(user, currentStageTitle)]);
+      setMessages([createWelcomeMessage(user, language)]);
     } finally {
       setFailedPrompts({});
       setLoadedStorageKey(storageKey);
     }
-  }, [storageKey]);
+  }, [language, storageKey]);
 
   useEffect(() => {
     if (loadedStorageKey !== storageKey) return;
@@ -326,12 +336,12 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
   const handleStartNewChat = () => {
     if (isLoading) return;
     const confirmed = window.confirm(
-      'Möchtest du den bisherigen Chatverlauf wirklich löschen und einen neuen Chat starten?',
+      copy.confirmNew,
     );
     if (!confirmed) return;
 
     window.localStorage.removeItem(storageKey);
-    setMessages([createWelcomeMessage(user, currentStageTitle)]);
+    setMessages([createWelcomeMessage(user, language)]);
     setFailedPrompts({});
     setCopiedMessageId(null);
     setInputPrompt('');
@@ -377,6 +387,7 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
           currentLessonTitle,
           niche: user.niche,
           targetAudience: user.targetAudience,
+          language,
           history: messages
             .filter((message) => message.id !== retryMessageId)
             .slice(-6)
@@ -422,14 +433,14 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
       console.error('Error asking Frag GOM-MAR:', err);
       const errorCode = err instanceof Error ? err.message : '';
       const errorText = err instanceof DOMException && err.name === 'AbortError'
-        ? 'Die Antwort dauert ungewöhnlich lange. Bitte versuche es erneut.'
+        ? copy.timeout
         : errorCode === 'RATE_LIMIT'
-          ? 'Der KI-Mentor erhält gerade sehr viele Anfragen. Bitte versuche es in einem Moment erneut.'
+          ? copy.rateLimit
           : errorCode === 'SERVER_ERROR'
-            ? 'Der KI-Mentor ist vorübergehend nicht erreichbar. Bitte versuche es gleich erneut.'
+            ? copy.serverError
             : errorCode === 'INVALID_RESPONSE' || errorCode === 'EMPTY_ANSWER'
-              ? 'Die Antwort konnte nicht richtig verarbeitet werden. Bitte versuche es erneut.'
-              : 'Die Anfrage konnte nicht gesendet werden. Prüfe deine Verbindung und versuche es erneut.';
+              ? copy.invalidResponse
+              : copy.requestError;
       const errorMessageId = (Date.now() + 1).toString();
       const errorMessage: ChatMessage = {
         id: errorMessageId,
@@ -458,7 +469,7 @@ const handleCopyMessage = async (message: ChatMessage) => {
       className="fixed inset-0 z-50 flex justify-end bg-slate-950/40 backdrop-blur-sm animate-fadeIn"
       role="dialog"
       aria-modal="true"
-      aria-label="Frag GOM-MAR KI-Mentor"
+      aria-label={`Frag GOM-MAR ${copy.mentor}`}
     >
       {/* Backdrop overlay */}
       <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
@@ -478,13 +489,13 @@ const handleCopyMessage = async (message: ChatMessage) => {
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="whitespace-nowrap text-sm font-extrabold text-slate-950 sm:text-base">🤖 Frag GOM-MAR</h3>
+                <h3 className="whitespace-nowrap text-sm font-extrabold text-slate-950 sm:text-base">{copy.name}</h3>
                 <span className="hidden rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 font-mono text-[10px] font-bold text-indigo-700 sm:inline-flex">
-                  KI Mentor
+                  {copy.mentor}
                 </span>
               </div>
               <p className="truncate text-[10px] text-slate-500 sm:text-[11px]">
-                Geführtes System-Wissen • Stage {user.currentStageId}
+                {copy.guided.replace('{stage}', String(user.currentStageId))}
               </p>
             </div>
           </div>
@@ -495,16 +506,16 @@ const handleCopyMessage = async (message: ChatMessage) => {
               onClick={handleStartNewChat}
               disabled={isLoading}
               className="inline-flex h-11 w-11 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-slate-100 hover:text-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:px-3"
-              aria-label="Neuen Chat starten"
-              title="Neuen Chat starten"
+              aria-label={copy.newChat}
+              title={copy.newChat}
             >
               <MessageSquarePlus className="h-4 w-4" />
-              <span className="hidden text-[11px] font-bold sm:inline">Neuer Chat</span>
+              <span className="hidden text-[11px] font-bold sm:inline">{copy.newChat}</span>
             </button>
             <button
               onClick={onClose}
               className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-600 transition-colors hover:bg-slate-200 hover:text-slate-950"
-              aria-label="Frag GOM-MAR schließen"
+              aria-label={copy.close}
             >
               <X className="w-5 h-5" />
             </button>
@@ -560,7 +571,7 @@ const handleCopyMessage = async (message: ChatMessage) => {
                     className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-[11px] font-bold text-indigo-700 transition-colors hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
-                    Erneut versuchen
+                    {copy.retry}
                   </button>
                 )}
                <div className="mt-2 flex items-center justify-between gap-3">
@@ -569,17 +580,17 @@ const handleCopyMessage = async (message: ChatMessage) => {
       type="button"
       onClick={() => handleCopyMessage(msg)}
       className="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer"
-      aria-label="Antwort kopieren"
+      aria-label={copy.copyAnswer}
     >
       {copiedMessageId === msg.id ? (
         <>
           <Check className="w-3.5 h-3.5" />
-          Kopiert
+          {copy.copied}
         </>
       ) : (
         <>
           <Copy className="w-3.5 h-3.5" />
-          Kopieren
+          {copy.copy}
         </>
       )}
     </button>
@@ -610,7 +621,7 @@ const handleCopyMessage = async (message: ChatMessage) => {
               </div>
               <div className="flex items-center gap-2 p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <Loader2 className="w-4 h-4 animate-spin text-indigo-600" />
-                <span className="text-slate-700">GOM-MAR denkt nach...</span>
+                <span className="text-slate-700">{copy.thinking}</span>
               </div>
             </div>
           )}
@@ -622,7 +633,7 @@ const handleCopyMessage = async (message: ChatMessage) => {
         <div className="shrink-0 space-y-2 border-t border-slate-200 bg-white px-3 py-2.5 sm:px-6 sm:py-3">
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1">
             <Lightbulb className="w-3 h-3 text-amber-500" />
-            Häufige Fragen:
+            {copy.frequent}
           </p>
           <div className="flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 scrollbar-none">
             {quickQuestions.map((q, idx) => (
@@ -658,11 +669,12 @@ const handleCopyMessage = async (message: ChatMessage) => {
                   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
                 }, 150);
               }}
-              placeholder="Frage GOM-MAR nach Hilfe zu deinem System..."
+              placeholder={copy.placeholder}
               className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-base text-slate-900 placeholder:text-slate-400 transition-colors focus:border-indigo-600 focus:bg-white focus:outline-none sm:px-4 sm:text-sm"
             />
             <button
               type="submit"
+              aria-label={copy.send}
               disabled={isLoading || !inputPrompt.trim()}
               className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-indigo-600 text-xs font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
