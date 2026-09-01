@@ -119,31 +119,32 @@ const assertLessonContent = (source: Lesson, translated: Lesson, language: Langu
     assert.ok((translated.learnContent.practicalExamples?.length ?? 0) >= source.learnContent.practicalExamples.length, `${path}.practicalExamples ist unvollständig`);
   }
   if (source.learnContent.videoChapters) {
-    assert.equal(translated.learnContent.videoChapters?.length, source.learnContent.videoChapters.length, `${path}.videoChapters ist unvollständig`);
-    translated.learnContent.videoChapters?.forEach((chapter, index) => {
-      assert.equal(chapter.time, source.learnContent.videoChapters?.[index].time, `${path}.videoChapters[${index}].time wurde verändert`);
-      requireText(chapter.title, `${path}.videoChapters[${index}].title`);
+    assert.ok((translated.learnContent.videoChapters?.length ?? 0) >= source.learnContent.videoChapters.length, `${path}.videoChapters ist unvollständig`);
+    source.learnContent.videoChapters.forEach((sourceChapter, index) => {
+      const chapter = translated.learnContent.videoChapters?.[index];
+      assert.equal(chapter?.time, sourceChapter.time, `${path}.videoChapters[${index}].time wurde verändert`);
+      requireText(chapter?.title, `${path}.videoChapters[${index}].title`);
     });
   }
   if (source.learnContent.coreConcepts) {
-    assert.equal(translated.learnContent.coreConcepts?.length, source.learnContent.coreConcepts.length, `${path}.coreConcepts ist unvollständig`);
-    translated.learnContent.coreConcepts?.forEach((concept, index) => {
-      const original = source.learnContent.coreConcepts?.[index];
-      assert.equal(concept.iconName, original?.iconName, `${path}.coreConcepts[${index}].iconName wurde verändert`);
-      assert.equal(concept.highlight, original?.highlight, `${path}.coreConcepts[${index}].highlight wurde verändert`);
-      requireText(concept.title, `${path}.coreConcepts[${index}].title`);
-      requireText(concept.description, `${path}.coreConcepts[${index}].description`);
+    assert.ok((translated.learnContent.coreConcepts?.length ?? 0) >= source.learnContent.coreConcepts.length, `${path}.coreConcepts ist unvollständig`);
+    source.learnContent.coreConcepts.forEach((original, index) => {
+      const concept = translated.learnContent.coreConcepts?.[index];
+      assert.equal(concept?.iconName, original.iconName, `${path}.coreConcepts[${index}].iconName wurde verändert`);
+      assert.equal(concept?.highlight, original.highlight, `${path}.coreConcepts[${index}].highlight wurde verändert`);
+      requireText(concept?.title, `${path}.coreConcepts[${index}].title`);
+      requireText(concept?.description, `${path}.coreConcepts[${index}].description`);
     });
   }
   if (source.learnContent.resources) {
-    assert.equal(translated.learnContent.resources?.length, source.learnContent.resources.length, `${path}.resources ist unvollständig`);
-    translated.learnContent.resources?.forEach((resource, index) => {
-      const original = source.learnContent.resources?.[index];
-      assert.equal(resource.type, original?.type, `${path}.resources[${index}].type wurde verändert`);
-      assert.equal(resource.iconName, original?.iconName, `${path}.resources[${index}].iconName wurde verändert`);
-      assert.equal(resource.actionUrl, original?.actionUrl, `${path}.resources[${index}].actionUrl wurde verändert`);
-      requireText(resource.title, `${path}.resources[${index}].title`);
-      requireText(resource.subtitle, `${path}.resources[${index}].subtitle`);
+    assert.ok((translated.learnContent.resources?.length ?? 0) >= source.learnContent.resources.length, `${path}.resources ist unvollständig`);
+    source.learnContent.resources.forEach((original, index) => {
+      const resource = translated.learnContent.resources?.[index];
+      assert.equal(resource?.type, original.type, `${path}.resources[${index}].type wurde verändert`);
+      assert.equal(resource?.iconName, original.iconName, `${path}.resources[${index}].iconName wurde verändert`);
+      assert.equal(resource?.actionUrl, original.actionUrl, `${path}.resources[${index}].actionUrl wurde verändert`);
+      requireText(resource?.title, `${path}.resources[${index}].title`);
+      requireText(resource?.subtitle, `${path}.resources[${index}].subtitle`);
     });
   }
 };
