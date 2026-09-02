@@ -10,8 +10,8 @@ assert.match(workflow, /google-github-actions\/auth@v3/, 'Workload-Identity-Auth
 assert.match(workflow, /google-github-actions\/deploy-cloudrun@v3/, 'Cloud-Run-Deployment fehlt.');
 assert.match(workflow, /id-token: write/, 'GitHub OIDC-Berechtigung fehlt.');
 assert.match(workflow, /source: \./, 'Deployment muss den geprüften Repository-Stand verwenden.');
-assert.match(workflow, /flags: --container=app-container --clear-base-image/, 'Die frühere AI-Studio-Basisbildverwaltung muss beim Deployment deaktiviert werden.');
-assert.match(workflow, /env_vars_update_strategy: merge/, 'Bestehende Cloud-Run-Konfiguration muss erhalten bleiben.');
+assert.match(workflow, /--container="app-container"[\\s\\S]*--source="\\."[\\s\\S]*--update-env-vars=[\\s\\S]*--clear-base-image/, 'Containerschalter und Quellparameter müssen in Cloud-Run-kompatibler Reihenfolge stehen.');
+assert.match(workflow, /--update-env-vars=/, 'Bestehende Cloud-Run-Konfiguration muss per Update erhalten bleiben.');
 assert.match(workflow, /APP_COMMIT_SHA=\$\{\{ github\.sha \}\}/, 'Commit-Nachweis fehlt.');
 assert.doesNotMatch(workflow, /credentials_json|GCP_SA_KEY/, 'Dauerhafte Service-Account-Schlüssel sind nicht zulässig.');
 
