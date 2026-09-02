@@ -4,27 +4,7 @@ import { ACADEMY_STAGES } from '../data/academyData';
 import { LessonVideoPlayer } from './LessonVideoPlayer';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
-import { localizeAcademyStages } from '../i18n/academyLocalization';
-import { localizeAcademyStage81 } from '../i18n/academyLocalization81';
-import { localizeAcademyStage82 } from '../i18n/academyLocalization82';
-import { localizeAcademyStage83 } from '../i18n/academyLocalization83';
-import { localizeAcademyStage84 } from '../i18n/academyLocalization84';
-import { localizeAcademyStage85 } from '../i18n/academyLocalization85';
-import { localizeAcademyStage86 } from '../i18n/academyLocalization86';
-import { localizeAcademyStage87 } from '../i18n/academyLocalization87';
-import { localizeAcademyStage88 } from '../i18n/academyLocalization88';
-import { localizeAcademyStage89 } from '../i18n/academyLocalization89';
-import { localizeAcademyStage90 } from '../i18n/academyLocalization90';
-import { localizeAcademyStage91 } from '../i18n/academyLocalization91';
-import { localizeAcademyStage92 } from '../i18n/academyLocalization92';
-import { localizeAcademyStage93 } from '../i18n/academyLocalization93';
-import { localizeAcademyStage94 } from '../i18n/academyLocalization94';
-import { localizeAcademyStage95 } from '../i18n/academyLocalization95';
-import { localizeAcademyStage96 } from '../i18n/academyLocalization96';
-import { localizeAcademyStage97 } from '../i18n/academyLocalization97';
-import { localizeAcademyStage98 } from '../i18n/academyLocalization98';
-import { localizeAcademyStage99 } from '../i18n/academyLocalization99';
-import { preserveAcademyTechnicalFields } from '../i18n/academyLocalizationIntegrity';
+import { localizeAllAcademyStages } from '../i18n/localizeAllAcademyStages';
 import { authenticatedFetch } from '../services/authenticatedFetch';
 import { 
   Play, 
@@ -129,7 +109,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 }) => {
   const { language } = useLanguage();
   const copy = academyCopy[language];
-  const localizedStages = useMemo(() => preserveAcademyTechnicalFields(stages, localizeAcademyStage99(localizeAcademyStage98(localizeAcademyStage97(localizeAcademyStage96(localizeAcademyStage95(localizeAcademyStage94(localizeAcademyStage93(localizeAcademyStage92(localizeAcademyStage91(localizeAcademyStage90(localizeAcademyStage89(localizeAcademyStage88(localizeAcademyStage87(localizeAcademyStage86(localizeAcademyStage85(localizeAcademyStage84(localizeAcademyStage83(localizeAcademyStage82(localizeAcademyStage81(localizeAcademyStages(stages, language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language), language)), [stages, language]);
+  const localizedStages = useMemo(() => localizeAllAcademyStages(stages, language), [stages, language]);
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
   const unlockedStageIdSet = useMemo(() => new Set(user.unlockedStageIds), [user.unlockedStageIds]);
   const isLight = user.theme === 'clean-light' || !user.theme;

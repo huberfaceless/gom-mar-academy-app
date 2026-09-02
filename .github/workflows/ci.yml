@@ -40,6 +40,9 @@ jobs:
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 
+      - name: Oeffentliche Lokalisierung pruefen
+        run: bun run audit:public-i18n
+
       - name: Firebase-Tarifverwaltung pruefen
         run: bun run audit:membership-admin
 
