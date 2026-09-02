@@ -3,6 +3,7 @@ import { UserProfile, Lesson } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
 import { ACADEMY_STAGES } from '../data/academyData';
+import { localizeAllAcademyStages } from '../i18n/localizeAllAcademyStages';
 import { 
   Rocket, 
   ArrowRight, 
@@ -24,15 +25,15 @@ import {
 const dashboardCopy: Record<LanguageCode, Record<string, string>> = {
   de: {
     greeting: 'Willkommen zurück, {name}!', intro: 'Dein System läuft. Lass uns heute den nächsten entscheidenden Schritt für dein Business machen.', next: '🎯 Dein nächster Schritt', lesson: 'Lektion', start: 'Lektion {id} starten', continue: 'Lektion fortsetzen', approx: 'Ca. {minutes} Min', learningProgress: 'Dein Lernfortschritt', phase: 'Phase {stage}: {title} • {completed} von {total} Lektionen', stage1: 'Etappe 1 (Start)', stage2: 'Etappe 2 (Funnels)', stage3: 'Etappe 3 (Traffic)', stage47: 'Etappen 4–99 (Aufbau & Vertiefung)', clearPath: 'Dein klarer Weg', allModules: 'Alle Module in der Academy ansehen', current: 'Aktuell', course: 'Gesamter Kurs', modules: '99 Module verfügbar', level: 'Level', status: 'Status', emailSystem: 'E-Mail-System', mails: '5 E-Mails', active: 'Aktiv geschaltet', toolbox: 'Toolbox', aiTools: 'KI-Tools', ready: 'Bereit zum Einsatz',
-    road1: 'Schritt 1: Grundlagen & Wertschöpfung', road2: 'Schritt 2: Nischen- & Zielgruppenwahl', road3: 'Schritt 3: High-Converting Landingpage', road4: 'Schritt 4: Automatisierte E-Mail-Sequenz', road5: 'Schritt 5: Organische Traffic-Generierung', fallbackTitle: 'Wie funktioniert Online-Einkommen?', fallbackDescription: 'Starte mit den Grundlagen des GOM-MAR Systems und lerne, wie du automatisiert digitalen Mehrwert aufbaust.'
+    road1: 'Schritt 1: Grundlagen & Wertschöpfung', road2: 'Schritt 2: Nischen- & Zielgruppenwahl', road3: 'Schritt 3: High-Converting Landingpage', road4: 'Schritt 4: Automatisierte E-Mail-Sequenz', road5: 'Schritt 5: Organische Traffic-Generierung', fallbackTitle: 'Wie funktioniert Online-Einkommen?', fallbackDescription: 'Starte mit den Grundlagen des GOM-MAR Systems und lerne, wie du automatisiert digitalen Mehrwert aufbaust.', memberName: 'GOM-MAR Mitglied'
   },
   en: {
     greeting: 'Welcome back, {name}!', intro: 'Your system is running. Let’s take the next decisive step for your business today.', next: '🎯 Your next step', lesson: 'Lesson', start: 'Start lesson {id}', continue: 'Continue lesson', approx: 'Approx. {minutes} min', learningProgress: 'Your learning progress', phase: 'Stage {stage}: {title} • {completed} of {total} lessons', stage1: 'Stage 1 (Start)', stage2: 'Stage 2 (Funnels)', stage3: 'Stage 3 (Traffic)', stage47: 'Stages 4–99 (Build & deepen)', clearPath: 'Your clear path', allModules: 'View all Academy modules', current: 'Current', course: 'Entire course', modules: '99 modules available', level: 'Level', status: 'Status', emailSystem: 'Email system', mails: '5 emails', active: 'Activated', toolbox: 'Toolbox', aiTools: 'AI tools', ready: 'Ready to use',
-    road1: 'Step 1: Foundations & value creation', road2: 'Step 2: Choose niche & target audience', road3: 'Step 3: High-converting landing page', road4: 'Step 4: Automated email sequence', road5: 'Step 5: Organic traffic generation', fallbackTitle: 'How does online income work?', fallbackDescription: 'Start with the foundations of the GOM-MAR system and learn how to build digital value automatically.'
+    road1: 'Step 1: Foundations & value creation', road2: 'Step 2: Choose niche & target audience', road3: 'Step 3: High-converting landing page', road4: 'Step 4: Automated email sequence', road5: 'Step 5: Organic traffic generation', fallbackTitle: 'How does online income work?', fallbackDescription: 'Start with the foundations of the GOM-MAR system and learn how to build digital value automatically.', memberName: 'GOM-MAR member'
   },
   pl: {
     greeting: 'Witaj ponownie, {name}!', intro: 'Twój system działa. Zróbmy dziś kolejny decydujący krok dla Twojego biznesu.', next: '🎯 Twój następny krok', lesson: 'Lekcja', start: 'Rozpocznij lekcję {id}', continue: 'Kontynuuj lekcję', approx: 'Około {minutes} min', learningProgress: 'Twój postęp w nauce', phase: 'Etap {stage}: {title} • {completed} z {total} lekcji', stage1: 'Etap 1 (Start)', stage2: 'Etap 2 (Lejki)', stage3: 'Etap 3 (Ruch)', stage47: 'Etapy 4–99 (Rozwój i pogłębianie)', clearPath: 'Twoja jasna droga', allModules: 'Zobacz wszystkie moduły Academy', current: 'Aktualnie', course: 'Cały kurs', modules: 'Dostępnych 99 modułów', level: 'Poziom', status: 'Status', emailSystem: 'System e-mail', mails: '5 wiadomości', active: 'Aktywny', toolbox: 'Narzędzia', aiTools: 'Narzędzia AI', ready: 'Gotowe do użycia',
-    road1: 'Krok 1: Podstawy i tworzenie wartości', road2: 'Krok 2: Wybór niszy i grupy docelowej', road3: 'Krok 3: Skuteczna strona docelowa', road4: 'Krok 4: Automatyczna sekwencja e-mail', road5: 'Krok 5: Organiczne pozyskiwanie ruchu', fallbackTitle: 'Jak działa dochód online?', fallbackDescription: 'Zacznij od podstaw systemu GOM-MAR i naucz się automatycznie tworzyć wartość cyfrową.'
+    road1: 'Krok 1: Podstawy i tworzenie wartości', road2: 'Krok 2: Wybór niszy i grupy docelowej', road3: 'Krok 3: Skuteczna strona docelowa', road4: 'Krok 4: Automatyczna sekwencja e-mail', road5: 'Krok 5: Organiczne pozyskiwanie ruchu', fallbackTitle: 'Jak działa dochód online?', fallbackDescription: 'Zacznij od podstaw systemu GOM-MAR i naucz się automatycznie tworzyć wartość cyfrową.', memberName: 'Użytkowniku GOM-MAR'
   }
 };
 
@@ -61,9 +62,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const copy = dashboardCopy[language];
   const isLight = user.theme === 'clean-light' || !user.theme;
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
+  const localizedStages = useMemo(() => localizeAllAcademyStages(ACADEMY_STAGES, language), [language]);
+  const displayName = user.name === 'GOM-MAR Mitglied' ? copy.memberName : user.name;
 
   // Find current stage & next incomplete lesson
-  const accessibleStages = ACADEMY_STAGES.filter((stage) => stage.id <= stageAccessLimit);
+  const accessibleStages = localizedStages.filter((stage) => stage.id <= stageAccessLimit);
   const currentStage = accessibleStages.find((s) => s.id === user.currentStageId) || accessibleStages[0];
   
   let nextLesson: Lesson | undefined;
@@ -113,7 +116,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* 1. Header Greeting (As in Screen 3) */}
       <div className="space-y-2">
         <h1 className={`text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight ${isLight ? 'text-slate-950' : 'text-white'}`}>
-          {formatCopy(copy.greeting, { name: user.name })}
+          {formatCopy(copy.greeting, { name: displayName })}
         </h1>
         <p className={`text-sm sm:text-base font-normal ${isLight ? 'text-slate-600' : 'text-slate-400'} max-w-2xl leading-relaxed`}>
           {copy.intro}
