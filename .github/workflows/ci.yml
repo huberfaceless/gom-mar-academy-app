@@ -86,7 +86,7 @@ jobs:
           region: ${{ vars.GCP_REGION }}
           service: ${{ vars.CLOUD_RUN_SERVICE }}
           source: .
-          flags: --clear-base-image
+          flags: --container=app-container --clear-base-image
           env_vars: APP_COMMIT_SHA=${{ github.sha }}
           env_vars_update_strategy: merge
 
