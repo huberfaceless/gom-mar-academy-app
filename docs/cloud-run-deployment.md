@@ -111,4 +111,4 @@ Nach dem Speichern der fünf Variablen wird unter `Actions → Projektpruefung �
 
 ## Kontrolle
 
-Der Deployment-Job übergibt den exakten Git-Commit als `APP_COMMIT_SHA`. Anschließend ruft er `/api/health` auf und akzeptiert die Bereitstellung nur, wenn Cloud Run genau diesen Commit meldet. `--clear-base-image` beendet beim Deployment die frühere AI-Studio-Basisbildverwaltung, damit der Dockerfile-Container ohne veraltete Quellen-Markierungen übernommen wird. Bestehende Cloud-Run-Umgebungsvariablen und Secret-Manager-Zuordnungen werden durch die Merge-Strategie beibehalten.
+Der Deployment-Job übergibt den exakten Git-Commit als `APP_COMMIT_SHA`. Anschließend ruft er `/api/health` auf und akzeptiert die Bereitstellung nur, wenn Cloud Run genau diesen Commit meldet. `--container=app-container --clear-base-image` übernimmt bei der ersten Migration den bestehenden AI-Studio-Containernamen und beendet anschließend die frühere Basisbildverwaltung, damit der Dockerfile-Container ohne veraltete Quellen-Markierungen übernommen wird. Bestehende Cloud-Run-Umgebungsvariablen und Secret-Manager-Zuordnungen werden durch die Merge-Strategie beibehalten.
