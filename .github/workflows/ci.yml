@@ -96,7 +96,7 @@ jobs:
             --container="app-container" \
             --source="." \
             --update-env-vars="APP_COMMIT_SHA=${GITHUB_SHA}" \
-            --clear-base-image
+            --no-automatic-updates
           SERVICE_URL="$(gcloud run services describe "${CLOUD_RUN_SERVICE}" \
             --project="${GCP_PROJECT_ID}" \
             --region="${GCP_REGION}" \
