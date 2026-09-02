@@ -88,7 +88,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setLoading(true);
     try {
       const registeredUser = await registerWithEmail(email, password, displayName);
+
+      // Commit the authenticated user before sending email. This guarantees that
+      // registration always advances to the verification screen, even if email
+      // delivery is temporarily unavailable.
       setUser(registeredUser);
+
+      try {
+        await firebaseSendVerification(registeredUser, language);
+      } catch (verificationError) {
+        setError(getFirebaseAuthErrorMessage(verificationError, language));
+      }
     } catch (err) {
       const msg = getFirebaseAuthErrorMessage(err, language);
       setError(msg);

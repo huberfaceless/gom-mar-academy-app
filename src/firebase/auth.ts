@@ -54,8 +54,8 @@ export function getFirebaseAuthErrorMessage(error: unknown, language: LanguageCo
 }
 
 /**
- * Register a new user with email and password, set display name, and send verification email.
- * Note: emailVerified starts as false from Firebase.
+ * Register a new user with email and password and set the display name.
+ * Verification email delivery is handled by AuthContext after the user state is committed.
  */
 export async function registerWithEmail(
   email: string,
@@ -75,12 +75,6 @@ export async function registerWithEmail(
     }
   }
 
-  // Send verification email immediately
-  try {
-    await sendEmailVerification(user);
-  } catch (emailErr) {
-    console.warn('Could not send initial verification email:', emailErr);
-  }
 
   return user;
 }
