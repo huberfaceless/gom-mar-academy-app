@@ -8,7 +8,7 @@ Unter `Settings → Secrets and variables → Actions → Variables` werden dies
 
 | Variable | Wert |
 | --- | --- |
-| `GCP_PROJECT_ID` | `gom-mar-akademie` |
+| `GCP_PROJECT_ID` | `gen-lang-client-0943155541` |
 | `GCP_REGION` | `us-west1` |
 | `CLOUD_RUN_SERVICE` | `gom-mar-academy` |
 | `GCP_WORKLOAD_IDENTITY_PROVIDER` | vollständiger Providername aus Google Cloud |
@@ -21,8 +21,8 @@ Solange eine Variable fehlt, bleibt der Deployment-Job sicher übersprungen. Die
 Die folgenden Namen sind Vorschläge; bestehende gleichwertige Ressourcen können wiederverwendet werden.
 
 ```bash
-PROJECT_ID="gom-mar-akademie"
-PROJECT_NUMBER="234012879678"
+PROJECT_ID="gen-lang-client-0943155541"
+PROJECT_NUMBER="$(gcloud projects describe "${PROJECT_ID}" --format='value(projectNumber)')"
 REGION="us-west1"
 SERVICE="gom-mar-academy"
 POOL="github"
@@ -111,4 +111,4 @@ Nach dem Speichern der fünf Variablen wird unter `Actions → Projektpruefung �
 
 ## Kontrolle
 
-Der Deployment-Job übergibt den exakten Git-Commit als `APP_COMMIT_SHA`. Anschließend ruft er `/api/health` auf und akzeptiert die Bereitstellung nur, wenn Cloud Run genau diesen Commit meldet. Bestehende Cloud-Run-Umgebungsvariablen und Secret-Manager-Zuordnungen werden durch die Merge-Strategie beibehalten.
+Der Deployment-Job übergibt den exakten Git-Commit als `APP_COMMIT_SHA`. Anschließend ruft er `/api/health` auf und akzeptiert die Bereitstellung nur, wenn Cloud Run genau diesen Commit meldet. `--clear-base-image` beendet beim Deployment die frühere AI-Studio-Basisbildverwaltung, damit der Dockerfile-Container ohne veraltete Quellen-Markierungen übernommen wird. Bestehende Cloud-Run-Umgebungsvariablen und Secret-Manager-Zuordnungen werden durch die Merge-Strategie beibehalten.
