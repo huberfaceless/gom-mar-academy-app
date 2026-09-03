@@ -70,7 +70,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = async (email: string, password: string): Promise<void> => {
     setError(null);
-    setLoading(true);
     try {
       const signedInUser = await loginWithEmail(email, password);
       setUser(signedInUser);
@@ -78,14 +77,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const msg = getFirebaseAuthErrorMessage(err, language);
       setError(msg);
       throw new Error(msg);
-    } finally {
-      setLoading(false);
     }
   };
 
   const register = async (email: string, password: string, displayName?: string): Promise<void> => {
     setError(null);
-    setLoading(true);
     try {
       const registeredUser = await registerWithEmail(email, password, displayName);
 
@@ -103,8 +99,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const msg = getFirebaseAuthErrorMessage(err, language);
       setError(msg);
       throw new Error(msg);
-    } finally {
-      setLoading(false);
     }
   };
 
