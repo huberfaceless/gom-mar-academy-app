@@ -1,5 +1,5 @@
 import { UserProfile, Campaign, StudentRecord, Stage, Lesson } from '../types';
-import { INITIAL_CAMPAIGN, ACADEMY_STAGES } from '../data/academyData';
+import { ACADEMY_STAGES } from '../data/academyData';
 import { migrateLegacyAcademyUnlocks } from './academyProgress';
 
 const STORAGE_KEY_USER = 'gommar_user_profile_v1';
@@ -7,85 +7,7 @@ const STORAGE_KEY_CAMPAIGNS = 'gommar_campaigns_v1';
 const STORAGE_KEY_STUDENTS = 'gommar_students_directory_v1';
 const STORAGE_KEY_CUSTOM_STAGES = 'gommar_custom_stages_v1';
 export const TOTAL_ACADEMY_LESSONS = ACADEMY_STAGES.reduce((total, stage) => total + stage.lessons.length, 0);
-const calculateStudentProgress = (completedLessons: number) => Math.round((completedLessons / TOTAL_ACADEMY_LESSONS) * 100);
-
-export const INITIAL_STUDENTS_LIST: StudentRecord[] = [
-  {
-    id: 'usr_001',
-    name: 'Sarah Lindemann',
-    email: 'sarah.lindemann@gmail.com',
-    tier: 'PRO',
-    registeredAt: '2026-08-10',
-    lastActiveAt: '2026-08-15',
-    completedLessonsCount: 14,
-    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
-    progressPercent: calculateStudentProgress(14),
-    currentLessonId: '2.1',
-    level: 2,
-    niche: 'Faceless Instagram & Reels',
-    status: 'active'
-  },
-  {
-    id: 'usr_002',
-    name: 'Tobias Becker',
-    email: 't.becker@web.de',
-    tier: 'FREE',
-    registeredAt: '2026-08-12',
-    lastActiveAt: '2026-08-14',
-    completedLessonsCount: 5,
-    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
-    progressPercent: calculateStudentProgress(5),
-    currentLessonId: '1.6',
-    level: 1,
-    niche: 'Affiliate Marketing für Einsteiger',
-    status: 'active'
-  },
-  {
-    id: 'usr_003',
-    name: 'Melanie Krause',
-    email: 'melanie.k@outlook.com',
-    tier: 'PREMIUM',
-    registeredAt: '2026-08-01',
-    lastActiveAt: '2026-08-15',
-    completedLessonsCount: 38,
-    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
-    progressPercent: calculateStudentProgress(38),
-    currentLessonId: '3.10',
-    level: 3,
-    niche: 'Digital Produkte & Skalierung',
-    status: 'active'
-  },
-  {
-    id: 'usr_004',
-    name: 'Christian Meyer',
-    email: 'christian.meyer@gmx.net',
-    tier: 'FREE',
-    registeredAt: '2026-08-14',
-    lastActiveAt: '2026-08-15',
-    completedLessonsCount: 1,
-    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
-    progressPercent: calculateStudentProgress(1),
-    currentLessonId: '1.2',
-    level: 1,
-    niche: 'Nebeneinkommen neben dem Hauptjob',
-    status: 'verified'
-  },
-  {
-    id: 'usr_005',
-    name: 'Julia Wagner',
-    email: 'j.wagner@icloud.com',
-    tier: 'PRO',
-    registeredAt: '2026-07-28',
-    lastActiveAt: '2026-08-13',
-    completedLessonsCount: 22,
-    totalLessonsCount: TOTAL_ACADEMY_LESSONS,
-    progressPercent: calculateStudentProgress(22),
-    currentLessonId: '2.9',
-    level: 2,
-    niche: 'E-Mail Copywriting & Funnels',
-    status: 'active'
-  }
-];
+export const INITIAL_STUDENTS_LIST: StudentRecord[] = [];
 
 export const DEFAULT_USER_PROFILE: UserProfile = {
   name: 'GOM-MAR Mitglied',
@@ -99,7 +21,7 @@ export const DEFAULT_USER_PROFILE: UserProfile = {
   completedTaskIds: [],
   unlockedStageIds: [1],
   leadsCount: 0,
-  activeCampaignsCount: 1,
+  activeCampaignsCount: 0,
   earnedBadges: [],
   niche: 'Faceless Content & Social Media',
   targetAudience: 'Berufstätige & Einsteiger mit Wunsch nach zeitlicher Freiheit',
@@ -125,7 +47,7 @@ export function createFreshUserProfile(name: string, email: string, tier: 'FREE'
     completedTaskIds: [],
     unlockedStageIds: [1],
     leadsCount: 0,
-    activeCampaignsCount: 1,
+    activeCampaignsCount: 0,
     earnedBadges: [],
     niche: niche || 'Faceless Content & Social Media',
     targetAudience: 'Interessenten für automatisiertes Online-Einkommen',
@@ -268,7 +190,7 @@ export function loadCampaigns(): Campaign[] {
   } catch (e) {
     console.error('Error loading campaigns:', e);
   }
-  return [INITIAL_CAMPAIGN];
+  return [];
 }
 
 export function saveCampaigns(campaigns: Campaign[]): void {
