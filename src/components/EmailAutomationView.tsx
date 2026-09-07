@@ -46,6 +46,14 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   onOpenFragGommar,
 }) => {
   const activeCampaign = campaigns[0];
+  const activeCampaignCount = campaigns.filter((campaign) => campaign.status === 'active').length;
+  const plannedCampaignCount = campaigns.filter((campaign) => campaign.status === 'draft').length;
+  const sentEmailCount = activeCampaign?.emails.filter((email) => email.status === 'sent').length || 0;
+  const deliveredEmailCount = (activeCampaign?.leadsCount || 0) * sentEmailCount;
+  const totalOpenCount = activeCampaign?.emails.reduce((total, email) => total + (email.opensCount || 0), 0) || 0;
+  const totalClickCount = activeCampaign?.emails.reduce((total, email) => total + (email.clicksCount || 0), 0) || 0;
+  const openRate = deliveredEmailCount > 0 ? Math.round((totalOpenCount / deliveredEmailCount) * 100) : 0;
+  const clickRate = deliveredEmailCount > 0 ? Math.round((totalClickCount / deliveredEmailCount) * 100) : 0;
   const [mainTab, setMainTab] = useState<'marketing' | 'crm'>('marketing');
   const [selectedEmail, setSelectedEmail] = useState<EmailMessage | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -168,6 +176,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       emails: [],
     }]);
   };
+
+  const activeLeadCount = contacts.filter((contact) => contact.badgeType !== 'cold').length;
+  const customerCount = contacts.filter((contact) => contact.badgeType === 'active' || contact.tags.includes('Kunde')).length;
+  const conversionRate = contacts.length > 0 ? ((customerCount / contacts.length) * 100).toFixed(1) : '0';
 
   // Simulate new Lead Opt-In
   const handleSimulateLead = () => {
@@ -337,9 +349,9 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 <Users className="w-4 h-4 text-indigo-600" />
                 <span>Gesamtkontakte</span>
               </div>
-              <p className="text-2xl sm:text-3xl font-black text-slate-950">12.450</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-950">{activeCampaign.leadsCount}</p>
               <p className="text-xs text-indigo-600 font-bold flex items-center gap-1">
-                <TrendingUp className="w-3.5 h-3.5" /> +12% diesen Monat
+                <TrendingUp className="w-3.5 h-3.5" /> Aktueller Stand
               </p>
             </div>
 
@@ -348,8 +360,8 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 <Layers className="w-4 h-4 text-emerald-600" />
                 <span>Aktive Kampagnen</span>
               </div>
-              <p className="text-2xl sm:text-3xl font-black text-slate-950">4</p>
-              <p className="text-xs text-slate-500 font-medium">2 geplant</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-950">{activeCampaignCount}</p>
+              <p className="text-xs text-slate-500 font-medium">{plannedCampaignCount} geplant</p>
             </div>
 
             <div
@@ -458,27 +470,27 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
               <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50 hover:border-slate-300 transition-colors space-y-3">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-slate-900 text-sm">Q3 Produkt-Update & Onboarding</h4>
+                  <h4 className="font-bold text-slate-900 text-sm">{activeCampaign.description || activeCampaign.title}</h4>
                   <span className="text-xs text-slate-500 font-mono">Auto-Sequenz</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 text-xs">
                   <div>
                     <p className="text-slate-500 mb-0.5">Gesendet</p>
-                    <p className="font-bold text-slate-900 text-sm sm:text-base">4.200</p>
+                    <p className="font-bold text-slate-900 text-sm sm:text-base">{deliveredEmailCount}</p>
                   </div>
                   <div>
                     <p className="text-slate-500 mb-0.5">Geöffnet</p>
-                    <p className="font-bold text-indigo-600 text-sm sm:text-base">42%</p>
+                    <p className="font-bold text-indigo-600 text-sm sm:text-base">{openRate}%</p>
                   </div>
                   <div>
                     <p className="text-slate-500 mb-0.5">Geklickt</p>
-                    <p className="font-bold text-emerald-600 text-sm sm:text-base">12%</p>
+                    <p className="font-bold text-emerald-600 text-sm sm:text-base">{clickRate}%</p>
                   </div>
                 </div>
 
                 <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden border border-slate-200">
-                  <div className="bg-indigo-600 h-full rounded-full" style={{ width: '42%' }} />
+                  <div className="bg-indigo-600 h-full rounded-full" style={{ width: `${openRate}%` }} />
                 </div>
               </div>
             </div>
@@ -793,27 +805,27 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white p-6 rounded-3xl border-l-4 border-l-indigo-600 border-y border-r border-slate-200 shadow-sm space-y-1">
               <p className="text-xs font-semibold text-slate-500">Gesamtkontakte</p>
-              <p className="text-3xl font-black text-slate-950">1,248</p>
+              <p className="text-3xl font-black text-slate-950">{contacts.length}</p>
               <div className="mt-3 flex items-center gap-1.5 text-emerald-600 text-xs font-bold">
                 <TrendingUp className="w-4 h-4" />
-                <span>+12% diesen Monat</span>
+                <span>Aktueller Stand</span>
               </div>
             </div>
 
             <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
               <p className="text-xs font-semibold text-slate-500">Aktive Leads</p>
-              <p className="text-3xl font-black text-slate-950">342</p>
+              <p className="text-3xl font-black text-slate-950">{activeLeadCount}</p>
               <div className="mt-3 w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-slate-200">
-                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2.5 rounded-full" style={{ width: '25%' }} />
+                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2.5 rounded-full" style={{ width: `${contacts.length > 0 ? Math.round((activeLeadCount / contacts.length) * 100) : 0}%` }} />
               </div>
             </div>
 
             <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
               <p className="text-xs font-semibold text-slate-500">Conversion Rate</p>
-              <p className="text-3xl font-black text-slate-950">8.4%</p>
+              <p className="text-3xl font-black text-slate-950">{conversionRate}%</p>
               <div className="mt-3 flex items-center gap-1.5 text-slate-500 text-xs font-medium">
                 <Clock className="w-3.5 h-3.5 text-slate-400" />
-                <span>Letztes Update: Heute 09:00</span>
+                <span>Aktueller Stand</span>
               </div>
             </div>
           </div>
