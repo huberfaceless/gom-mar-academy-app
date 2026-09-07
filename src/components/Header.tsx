@@ -123,6 +123,8 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
 
+            <LanguageSelector compact />
+
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
@@ -143,7 +145,6 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               </div>
             )}
-            <LanguageSelector compact />
           </div>
         </div>
       </header>

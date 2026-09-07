@@ -19,7 +19,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ compact = fa
   return (
     <label className={`inline-flex items-center gap-2 ${compact ? '' : 'w-full sm:w-auto'}`}>
       <span className="sr-only">{t('language.label')}</span>
-      <Globe2 className="h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+      {!compact && <Globe2 className="h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />}
       <select
         value={language}
         onChange={(event) => setLanguage(event.target.value as LanguageCode)}
@@ -37,4 +37,3 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ compact = fa
     </label>
   );
 };
-
