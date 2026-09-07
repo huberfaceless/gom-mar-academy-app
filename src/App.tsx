@@ -383,7 +383,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen ${themeClass} flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-300 relative`}>
+    <div className={`min-h-screen w-full max-w-full overflow-x-hidden ${themeClass} flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-300 relative`}>
       {/* Header */}
       <Header
         user={user}
@@ -393,7 +393,7 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <div className={`flex-1 max-w-7xl w-full mx-auto flex flex-col md:flex-row items-start ${isNotAuthenticated && activeView !== 'landing' ? 'pointer-events-none select-none filter blur-[2px] opacity-70' : ''}`}>
+      <div className={`flex-1 max-w-7xl w-full min-w-0 mx-auto flex items-start ${isNotAuthenticated && activeView !== 'landing' ? 'pointer-events-none select-none filter blur-[2px] opacity-70' : ''}`}>
         {/* Sidebar */}
         <Sidebar
           activeView={activeView}
