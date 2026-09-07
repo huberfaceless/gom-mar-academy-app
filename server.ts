@@ -8,6 +8,8 @@ import {
   listFirebaseMembers,
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
+import { listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
+import { Lesson } from './src/types.js';
 
 dotenv.config();
 
@@ -102,7 +104,7 @@ async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json());
+  app.use(express.json({ limit: '1mb' }));
 
   const requireVerifiedMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -206,6 +208,41 @@ async function startServer() {
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Mitglieder konnten nicht geladen werden.';
       res.status(503).json({ error: message });
+    }
+  });
+
+  app.get('/api/academy/curriculum-overrides', requireVerifiedMember, async (_req, res) => {
+    try {
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ overrides: await listCurriculumOverrides(FIREBASE_PROJECT_ID) });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Curriculum konnte nicht geladen werden.' });
+    }
+  });
+
+  app.put('/api/admin/curriculum/lessons/:lessonId', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const lessonId = req.params.lessonId?.trim();
+    const stageId = Number(req.body?.stageId);
+    const deleted = req.body?.deleted === true;
+    const lesson = req.body?.lesson as Lesson | undefined;
+    if (!lessonId || lessonId.length > 40 || !Number.isInteger(stageId) || stageId < 1 || (!deleted && lesson?.id !== lessonId)) {
+      res.status(400).json({ error: 'Die Lektionsdaten sind ungültig.' });
+      return;
+    }
+    try {
+      await saveCurriculumOverride(FIREBASE_PROJECT_ID, { lessonId, stageId, deleted, lesson: deleted ? undefined : lesson });
+      res.json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Lektion konnte nicht gespeichert werden.' });
+    }
+  });
+
+  app.delete('/api/admin/curriculum-overrides', requireVerifiedMember, requireAcademyAdmin, async (_req, res) => {
+    try {
+      await resetCurriculumOverrides(FIREBASE_PROJECT_ID);
+      res.json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Curriculum konnte nicht zurückgesetzt werden.' });
     }
   });
 

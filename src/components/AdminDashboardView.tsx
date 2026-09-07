@@ -42,8 +42,8 @@ interface AdminDashboardViewProps {
   user: UserProfile;
   stages: Stage[];
   students: StudentRecord[];
-  onUpdateStages: (stages: Stage[]) => void;
-  onResetStages: () => void;
+  onUpdateStages: (stages: Stage[]) => Promise<void>;
+  onResetStages: () => Promise<void>;
   onNavigate: (view: string, stageId?: number, lessonId?: string) => void;
 }
 
@@ -253,7 +253,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   };
 
   // Save Lesson changes
-  const handleSaveLesson = () => {
+  const handleSaveLesson = async () => {
     if (!lessonFormData.title?.trim() || !lessonFormData.id?.trim()) {
       alert('Bitte Titel und Lektions-ID angeben.');
       return;
@@ -281,15 +281,19 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       return stage;
     });
 
-    onUpdateStages(updatedStages);
-    setEditingLesson(null);
-    setIsCreatingLesson(false);
-    setSaveSuccessMsg('Lektion erfolgreich im System gespeichert!');
-    setTimeout(() => setSaveSuccessMsg(''), 3000);
+    try {
+      await onUpdateStages(updatedStages);
+      setEditingLesson(null);
+      setIsCreatingLesson(false);
+      setSaveSuccessMsg('Lektion zentral für alle Mitglieder gespeichert!');
+      setTimeout(() => setSaveSuccessMsg(''), 3000);
+    } catch (error: unknown) {
+      window.alert(error instanceof Error ? error.message : 'Lektion konnte nicht gespeichert werden.');
+    }
   };
 
   // Delete Lesson
-  const handleDeleteLesson = (lessonId: string) => {
+  const handleDeleteLesson = async (lessonId: string) => {
     if (!window.confirm(`Möchtest du Lektion ${lessonId} wirklich unwiderruflich löschen?`)) {
       return;
     }
@@ -302,9 +306,13 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       }
       return stage;
     });
-    onUpdateStages(updatedStages);
-    setSaveSuccessMsg(`Lektion ${lessonId} gelöscht.`);
-    setTimeout(() => setSaveSuccessMsg(''), 3000);
+    try {
+      await onUpdateStages(updatedStages);
+      setSaveSuccessMsg(`Lektion ${lessonId} zentral gelöscht.`);
+      setTimeout(() => setSaveSuccessMsg(''), 3000);
+    } catch (error: unknown) {
+      window.alert(error instanceof Error ? error.message : 'Lektion konnte nicht gelöscht werden.');
+    }
   };
 
   return (
@@ -582,8 +590,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               <button
                 onClick={() => {
                   if (window.confirm('Möchtest du alle Lektionen auf den ursprünglichen Standard zurücksetzen?')) {
-                    onResetStages();
-                    setSaveSuccessMsg('Curriculum auf Standard zurückgesetzt.');
+                    void onResetStages()
+                      .then(() => setSaveSuccessMsg('Curriculum zentral auf Standard zurückgesetzt.'))
+                      .catch((error: unknown) => window.alert(error instanceof Error ? error.message : 'Curriculum konnte nicht zurückgesetzt werden.'));
                   }
                 }}
                 title="Auf Werkseinstellung zurücksetzen"

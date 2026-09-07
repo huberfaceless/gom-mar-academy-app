@@ -46,6 +46,9 @@ jobs:
       - name: Firebase-Tarifverwaltung pruefen
         run: bun run audit:membership-admin
 
+      - name: Zentrale Lektionenverwaltung pruefen
+        run: bun run audit:curriculum-admin
+
       - name: Cloud-Run-Deployment pruefen
         run: bun run audit:deployment
 
