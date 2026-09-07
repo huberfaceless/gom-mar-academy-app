@@ -502,19 +502,39 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 <div>
                   <h3 className="text-lg font-bold text-slate-950 flex items-center gap-2">
                     <Activity className="w-5 h-5 text-indigo-600" />
-                    Automatisierte E-Mail-Serie (Willkommens-Sequenz)
+                    E-Mail-Serie
                   </h3>
                   <p className="text-xs text-slate-500 mt-1">
-                    {activeCampaign.emails.length} E-Mails • Auslöser bei Registrierung
+                    {activeCampaign.emails.length > 0
+                      ? `${activeCampaign.emails.length} E-Mails • Auslöser bei Registrierung`
+                      : 'Noch keine Automatisierung eingerichtet'}
                   </p>
                 </div>
                 <span className="text-xs text-slate-500 font-normal">
-                  Klicke auf eine E-Mail zum Ansehen & Bearbeiten
+                  {activeCampaign.emails.length > 0
+                    ? 'Klicke auf eine E-Mail zum Ansehen & Bearbeiten'
+                    : 'Erstelle zuerst eine E-Mail'}
                 </span>
               </div>
 
               {/* Emails List */}
               <div className="grid grid-cols-1 gap-3">
+                {activeCampaign.emails.length === 0 && (
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
+                    <p className="font-bold text-slate-900">Diese Kampagne enthält noch keine E-Mails.</p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Erstelle mit dem KI-E-Mail-Generator den ersten Entwurf für deine Sequenz.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => onNavigateToToolbox('email')}
+                      className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-indigo-700"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      Erste E-Mail erstellen
+                    </button>
+                  </div>
+                )}
                 {activeCampaign.emails.map((email) => {
                   const isSelected = selectedEmail?.id === email.id;
                   return (
