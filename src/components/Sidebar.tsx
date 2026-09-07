@@ -29,7 +29,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { t } = useLanguage();
   const menuItems = [
     { id: 'dashboard', label: t('nav.dashboard'), icon: LayoutDashboard, badge: 'Home' },
-    { id: 'contentEngine', label: t('nav.contentHub'), icon: Layers, highlight: true, badge: 'Vital50' },
     { id: 'academy', label: t('nav.academy'), icon: GraduationCap, badge: `${completedTasksCount}/${totalTasksCount}` },
     { id: 'email', label: t('nav.email'), icon: Mail },
     { id: 'toolbox', label: t('nav.toolbox'), icon: Wrench, badge: t('nav.ai') },
@@ -40,12 +39,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   if (userRole === 'admin') {
-    menuItems.splice(4, 0, {
-      id: 'admin',
-      label: t('nav.admin'),
-      icon: ShieldCheck,
-      badge: 'Admin'
-    });
+    menuItems.splice(
+      1,
+      0,
+      {
+        id: 'admin',
+        label: t('nav.admin'),
+        icon: ShieldCheck,
+        badge: 'Admin'
+      },
+      {
+        id: 'contentEngine',
+        label: t('nav.contentHub'),
+        icon: Layers,
+        highlight: true,
+        badge: 'Vital50'
+      },
+    );
   }
 
   return (
