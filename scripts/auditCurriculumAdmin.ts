@@ -10,6 +10,7 @@ const checks: Array<[boolean, string]> = [
   [server.includes("app.put('/api/admin/curriculum/lessons/:lessonId'"), 'Nur der Admin-Endpunkt speichert Lektionen.'],
   [server.includes("app.delete('/api/admin/curriculum-overrides'"), 'Der Admin kann zentrale Änderungen zurücksetzen.'],
   [persistence.includes('academyCurriculumOverrides'), 'Änderungen werden in einer eigenen Firestore-Sammlung gespeichert.'],
+  [persistence.includes("process.env.FIREBASE_DATABASE_ID || 'gom-mar-academy'"), 'Die produktive benannte Firestore-Datenbank wird angesprochen.'],
   [app.includes('applyCurriculumOverrides'), 'Die App wendet zentrale Änderungen auf das Standard-Curriculum an.'],
   [admin.includes('zentral für alle Mitglieder gespeichert'), 'Der Editor bestätigt die zentrale Speicherung eindeutig.'],
 ];
