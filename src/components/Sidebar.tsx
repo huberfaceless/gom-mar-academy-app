@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, Bot, ChevronRight, Globe, ShieldCheck, Layers, Lock } from 'lucide-react';
+import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, Bot, ChevronRight, Globe, ShieldCheck, Layers, Lock, type LucideIcon } from 'lucide-react';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import type { AcademyTier, UserRole } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -27,9 +27,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   userTier,
 }) => {
   const { t } = useLanguage();
-  const menuItems = [
+  const menuItems: Array<{
+    id: string;
+    label: string;
+    icon: LucideIcon;
+    badge?: string;
+    highlight?: boolean;
+  }> = [
     { id: 'dashboard', label: t('nav.dashboard'), icon: LayoutDashboard, badge: 'Home' },
-    { id: 'contentEngine', label: t('nav.contentHub'), icon: Layers, highlight: true, badge: 'Vital50' },
     { id: 'academy', label: t('nav.academy'), icon: GraduationCap, badge: `${completedTasksCount}/${totalTasksCount}` },
     { id: 'email', label: t('nav.email'), icon: Mail },
     { id: 'toolbox', label: t('nav.toolbox'), icon: Wrench, badge: t('nav.ai') },
@@ -40,12 +45,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   if (userRole === 'admin') {
-    menuItems.splice(4, 0, {
-      id: 'admin',
-      label: t('nav.admin'),
-      icon: ShieldCheck,
-      badge: 'Admin'
-    });
+    menuItems.splice(
+      1,
+      0,
+      {
+        id: 'admin',
+        label: t('nav.admin'),
+        icon: ShieldCheck,
+        badge: 'Admin'
+      },
+      {
+        id: 'contentEngine',
+        label: t('nav.contentHub'),
+        icon: Layers,
+        highlight: true,
+        badge: 'Vital50'
+      },
+    );
   }
 
   return (

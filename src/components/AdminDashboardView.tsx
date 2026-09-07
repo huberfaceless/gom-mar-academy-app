@@ -388,7 +388,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   Firebase-Tarifverwaltung
                 </h2>
                 <p className="mt-1 text-xs text-slate-600">
-                  Diese Claims bestimmen den tatsächlichen Zugriff auf Academy, E-Mail-Automation, Toolbox und Content Engine.
+                  Diese Claims bestimmen den tatsächlichen Zugriff auf Academy, E-Mail-Automation und Toolbox. Der Vital50 Content Engine Hub bleibt ausschließlich Administratoren vorbehalten.
                 </p>
               </div>
               <button

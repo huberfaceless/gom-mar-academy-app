@@ -6,7 +6,8 @@ const TIER_RANK: Record<AcademyTier, number> = {
   PREMIUM: 2,
 };
 
-const PRO_VIEWS = new Set(['contentEngine', 'email', 'toolbox']);
+const PRO_VIEWS = new Set(['email', 'toolbox']);
+const ADMIN_VIEWS = new Set(['admin', 'contentEngine']);
 
 export const normalizeAcademyTier = (value: unknown): AcademyTier => (
   value === 'PRO' || value === 'PREMIUM' ? value : 'FREE'
@@ -32,7 +33,7 @@ export const canAccessView = (
   role: UserRole = 'member',
 ): boolean => {
   if (role === 'admin') return true;
-  if (view === 'admin') return false;
+  if (ADMIN_VIEWS.has(view)) return false;
   if (PRO_VIEWS.has(view)) return TIER_RANK[tier] >= TIER_RANK.PRO;
   return true;
 };
