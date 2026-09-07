@@ -379,12 +379,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </span>
                 </div>
                 <div>
-                  <p className="text-2xl sm:text-3xl font-black text-slate-950">34,2%</p>
+                  <p className="text-2xl sm:text-3xl font-black text-slate-950">{openRate}%</p>
                   {/* Progress bar */}
                   <div className="w-full bg-slate-100 h-2.5 rounded-full mt-3 overflow-hidden border border-slate-200">
                     <div
                       className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full"
-                      style={{ width: '68%' }}
+                      style={{ width: `${openRate}%` }}
                     />
                   </div>
                 </div>
@@ -407,7 +407,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </div>
                 </div>
                 <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-                  Aktiv
+                  {contacts.length} Kontakte
                 </span>
               </div>
 
@@ -459,12 +459,13 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     <Send className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-950 text-base">Aktive Kampagne</h3>
+                    <h3 className="font-bold text-slate-950 text-base">{activeCampaign.status === 'active' ? 'Aktive Kampagne' : activeCampaign.status === 'paused' ? 'Pausierte Kampagne' : 'Kampagnenentwurf'}</h3>
                     <p className="text-xs text-slate-500">"{activeCampaign.title}"</p>
                   </div>
                 </div>
-                <span className="bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border border-emerald-200">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Aktiv
+                <span className={`text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border ${activeCampaign.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${activeCampaign.status === 'active' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+                  {activeCampaign.status === 'active' ? 'Aktiv' : activeCampaign.status === 'paused' ? 'Pausiert' : 'Entwurf'}
                 </span>
               </div>
 
@@ -504,7 +505,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     Automatisierte E-Mail-Serie (Willkommens-Sequenz)
                   </h3>
                   <p className="text-xs text-slate-500 mt-1">
-                    5-Tage E-Mail Sequenzer • Auslöser bei Registrierung
+                    {activeCampaign.emails.length} E-Mails • Auslöser bei Registrierung
                   </p>
                 </div>
                 <span className="text-xs text-slate-500 font-normal">
