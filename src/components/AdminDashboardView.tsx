@@ -344,7 +344,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             </div>
             <div className="text-center px-2">
               <p className="text-xs text-slate-400 font-semibold">Ø Fortschritt</p>
-              <p className="text-xl font-black text-emerald-400">{avgProgress}%</p>
+              <p className="text-xl font-black text-emerald-400">—</p>
             </div>
           </div>
         </div>
@@ -533,107 +533,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             </p>
           </div>
 
-          {/* Students Table */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-extrabold uppercase tracking-wider">
-                  <tr>
-                    <th className="py-3.5 px-4">Teilnehmer</th>
-                    <th className="py-3.5 px-4">Status / Tier</th>
-                    <th className="py-3.5 px-4">Lernfortschritt</th>
-                    <th className="py-3.5 px-4">Aktuelle Lektion</th>
-                    <th className="py-3.5 px-4">Nische & Fokus</th>
-                    <th className="py-3.5 px-4">Registriert</th>
-                    <th className="py-3.5 px-4 text-right">Aktionen</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
-                  {filteredStudents.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="py-8 text-center text-slate-400">
-                        Keine Kursteilnehmer für diesen Filter gefunden.
-                      </td>
-                    </tr>
-                  ) : (
-                    filteredStudents.map((student) => (
-                      <tr key={student.id} className="hover:bg-slate-50/80 transition-colors">
-                        {/* Name & Email */}
-                        <td className="py-3.5 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-black flex items-center justify-center text-xs shrink-0">
-                              {student.name.substring(0, 1)}
-                            </div>
-                            <div>
-                              <p className="font-bold text-slate-900">{student.name}</p>
-                              <p className="text-[11px] text-slate-400 font-normal">{student.email}</p>
-                            </div>
-                          </div>
-                        </td>
-
-                        {/* Tier */}
-                        <td className="py-3.5 px-4">
-                          <span
-                            className={`inline-flex px-2.5 py-1 rounded-lg font-black text-[11px] border ${
-                              student.tier === 'FREE'
-                                ? 'bg-slate-100 text-slate-700 border-slate-300'
-                                : student.tier === 'PRO'
-                                  ? 'bg-amber-50 text-amber-800 border-amber-300'
-                                  : 'bg-purple-50 text-purple-800 border-purple-300'
-                            }`}
-                          >
-                            {student.tier} Member
-                          </span>
-                        </td>
-
-                        {/* Progress */}
-                        <td className="py-3.5 px-4">
-                          <div className="w-36 space-y-1">
-                            <div className="flex items-center justify-between text-[10px] font-bold">
-                              <span>{student.completedLessonsCount} / {student.totalLessonsCount}</span>
-                              <span className="text-indigo-600 font-extrabold">{student.progressPercent}%</span>
-                            </div>
-                            <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
-                              <div
-                                className="h-full bg-indigo-600 rounded-full"
-                                style={{ width: `${student.progressPercent}%` }}
-                              />
-                            </div>
-                          </div>
-                        </td>
-
-                        {/* Current Lesson */}
-                        <td className="py-3.5 px-4">
-                          <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-mono font-bold text-[11px] border border-indigo-200">
-                            Lektion {student.currentLessonId}
-                          </span>
-                        </td>
-
-                        {/* Niche */}
-                        <td className="py-3.5 px-4 text-slate-600 max-w-xs truncate">
-                          {student.niche}
-                        </td>
-
-                        {/* Registered Date */}
-                        <td className="py-3.5 px-4 text-slate-500 font-mono text-[11px]">
-                          {student.registeredAt}
-                        </td>
-
-                        {/* Actions */}
-                        <td className="py-3.5 px-4 text-right">
-                          <button
-                            onClick={() => setSelectedStudent(student)}
-                            className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition-colors cursor-pointer"
-                          >
-                            Details
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600 shadow-xs">
+            Mitglieder und Zugriffstarife werden ausschließlich aus Firebase geladen. Lernfortschritte werden hier erst angezeigt, sobald eine serverseitige Fortschrittssynchronisierung eingerichtet ist.
           </div>
         </div>
       )}
