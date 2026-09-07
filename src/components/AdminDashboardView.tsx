@@ -178,7 +178,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   };
 
   // Filtered Students
-  const filteredStudents = students.filter(student => {
+  const filteredStudents = students.filter((student) => {
+    const duplicatesFirebaseMember = membersLoaded && firebaseMembers.some(
+      (member) => member.email.toLowerCase() === student.email.toLowerCase(),
+    );
+    if (duplicatesFirebaseMember) return false;
     const matchesSearch = 
       student.name.toLowerCase().includes(studentSearch.toLowerCase()) ||
       student.email.toLowerCase().includes(studentSearch.toLowerCase()) ||
@@ -201,7 +205,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const premiumStudents = authoritativeStudents.filter(s => s.tier === 'PREMIUM').length;
   const freeStudents = authoritativeStudents.filter(s => s.tier === 'FREE').length;
   const totalLessons = stages.reduce((acc, s) => acc + s.lessons.length, 0);
-  const avgProgress = students.length > 0 ? Math.round(students.reduce((acc, s) => acc + s.progressPercent, 0) / students.length) : 0;
+  const progressStudents = membersLoaded ? filteredStudents : students;
+  const avgProgress = progressStudents.length > 0
+    ? Math.round(progressStudents.reduce((acc, student) => acc + student.progressPercent, 0) / progressStudents.length)
+    : 0;
 
   // Open Lesson in Editor
   const handleOpenEditLesson = (lesson: Lesson) => {
