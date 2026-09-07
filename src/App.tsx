@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { UserProfile, Campaign, StudentRecord, Stage, AcademyTier } from './types';
+import { UserProfile, Campaign, StudentRecord, Stage, Lesson, AcademyTier } from './types';
 import { 
   loadUserProfile, 
   saveUserProfile, 
@@ -28,6 +28,7 @@ import { Loader2 } from 'lucide-react';
 import gommarLogo from './assets/images/gommar_logo.jpg';
 import { useLanguage } from './context/LanguageContext';
 import { unlockNextAcademyStage } from './utils/academyProgress';
+import { applyCurriculumOverrides, CurriculumOverride } from './utils/academyCurriculum';
 import {
   canAccessView,
   getAcademyStageLimit,
@@ -68,6 +69,20 @@ export default function App() {
   const [campaigns, setCampaigns] = useState<Campaign[]>(loadCampaigns());
   const [stages, setStages] = useState<Stage[]>(loadAcademyStages());
   const [students, setStudents] = useState<StudentRecord[]>(loadStudents());
+
+  useEffect(() => {
+    if (!firebaseUser?.emailVerified) return;
+    let cancelled = false;
+    void firebaseUser.getIdToken()
+      .then((token) => fetch('/api/academy/curriculum-overrides', { headers: { Authorization: `Bearer ${token}` } }))
+      .then(async (response) => {
+        const result = await response.json() as { overrides?: CurriculumOverride[] };
+        if (!response.ok) throw new Error('Curriculum konnte nicht geladen werden.');
+        if (!cancelled) setStages(applyCurriculumOverrides(result.overrides || []));
+      })
+      .catch((error) => console.error(error));
+    return () => { cancelled = true; };
+  }, [firebaseUser]);
   const [activeView, setActiveView] = useState<string>('dashboard');
   const [membershipGate, setMembershipGate] = useState<{
     isOpen: boolean;
@@ -259,12 +274,34 @@ export default function App() {
     saveCampaigns(updatedCampaigns);
   };
 
-  const handleUpdateStages = (newStages: Stage[]) => {
+  const handleUpdateStages = async (newStages: Stage[]) => {
+    if (!firebaseUser) throw new Error('Die Firebase-Anmeldung ist abgelaufen.');
+    const previousLessons = new Map<string, Lesson>(stages.flatMap((stage) => stage.lessons.map((lesson) => [lesson.id, lesson] as [string, Lesson])));
+    const nextLessons = new Map<string, Lesson>(newStages.flatMap((stage) => stage.lessons.map((lesson) => [lesson.id, lesson] as [string, Lesson])));
+    const changes: CurriculumOverride[] = newStages.flatMap((stage) => stage.lessons
+      .filter((lesson) => JSON.stringify(previousLessons.get(lesson.id)) !== JSON.stringify(lesson))
+      .map((lesson) => ({ lessonId: lesson.id, stageId: stage.id, deleted: false, lesson })));
+    for (const [lessonId, lesson] of previousLessons) {
+      if (!nextLessons.has(lessonId)) changes.push({ lessonId, stageId: lesson.stageId, deleted: true });
+    }
+    const token = await firebaseUser.getIdToken();
+    for (const change of changes) {
+      const response = await fetch(`/api/admin/curriculum/lessons/${encodeURIComponent(change.lessonId)}`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(change),
+      });
+      if (!response.ok) throw new Error((await response.json() as { error?: string }).error || 'Lektion konnte nicht gespeichert werden.');
+    }
     setStages(newStages);
     saveAcademyStages(newStages);
   };
 
-  const handleResetStages = () => {
+  const handleResetStages = async () => {
+    if (!firebaseUser) throw new Error('Die Firebase-Anmeldung ist abgelaufen.');
+    const token = await firebaseUser.getIdToken();
+    const response = await fetch('/api/admin/curriculum-overrides', { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+    if (!response.ok) throw new Error((await response.json() as { error?: string }).error || 'Curriculum konnte nicht zurückgesetzt werden.');
     const defaultStages = resetAcademyStagesToDefault();
     setStages(defaultStages);
   };

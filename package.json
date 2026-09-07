@@ -12,6 +12,7 @@
     "audit:academy": "tsx scripts/auditAcademyLocalization.ts",
     "audit:membership-admin": "tsx scripts/auditMembershipAdmin.ts",
     "audit:deployment": "tsx scripts/auditCloudRunDeployment.ts",
+    "audit:curriculum-admin": "tsx scripts/auditCurriculumAdmin.ts",
     "audit:public-i18n": "tsx scripts/auditPublicLocalization.ts"
   },
   "dependencies": {
