@@ -54,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Brand Card in Sidebar */}
         <div 
           onClick={() => onNavigate('dashboard')}
-          className="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 flex items-center gap-3 transition-colors cursor-pointer"
+          className="hidden md:flex p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 items-center gap-3 transition-colors cursor-pointer"
         >
           <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-0.5 overflow-hidden shrink-0 shadow-xs">
             <img 
