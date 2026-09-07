@@ -37,226 +37,7 @@ interface EmailAutomationViewProps {
   onOpenFragGommar: (prompt?: string) => void;
 }
 
-const INITIAL_CONTACTS: LeadContact[] = [
-  {
-    id: 'lead_8492',
-    name: 'Julia Weber',
-    role: 'Marketing Director',
-    company: 'TechNova GmbH',
-    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuByM1LC5YoZxO_BJji7-S4WwD1qH1o1YEqO8vEODfmTSdlNFX2kROD19YdQFP_tfyWSlTwBHnb-2FBwbTVvv0dIk_yvJXlxnQ-krWgRfRakZnRzvjhQl9d0fCjTy-DYQSOo49ukHZscfbm2UQe6j0bYgFYJ8Glvn8V5cP-9oVadrY8UPrb5DKVc5S0isL23M5JgP5dLg6bqQfeF_nSLLPTVu3w1TuDSF0odl69dPcPYf2O6PS03x0As',
-    email: 'julia.weber@technova.de',
-    phone: '+49 171 884 92 01',
-    location: 'Frankfurt a.M., Germany',
-    badge: 'MARA INSIGHTS (92%)',
-    badgeType: 'hot',
-    score: 92,
-    scoreDescription: 'Mara prognostiziert eine hohe Abschlussrate basierend auf 3 gelesenen Whitepapers und wiederholten Besuchen der Preis-Seite in den letzten 48 Stunden.',
-    tags: ['MARA AI', 'Tech-Branche', 'Whitepaper', 'Skalierung'],
-    lastInteraction: 'Heute, 14:00',
-    leadIdNumber: '#8492',
-    maraInsights: {
-      leadIdNumber: '#8492',
-      conversionProbability: 92,
-      probabilityDescription: 'Mara prognostiziert eine hohe Abschlussrate basierend auf 3 gelesenen Whitepapers und wiederholten Besuchen der Preis-Seite in den letzten 48 Stunden.',
-      nextRecommendedAction: {
-        type: 'Personalisierter E-Mail Entwurf',
-        draftText: 'Hallo Julia, mir ist aufgefallen, dass Sie sich intensiv mit unserem Skalierungs-Whitepaper beschäftigt haben. Viele Marketing Directoren in der Tech-Branche stehen vor ähnlichen Herausforderungen. Hätten Sie am Donnerstag Zeit für einen kurzen 10-Minuten-Austausch zu den Best Practices?',
-        subject: 'Austausch zu Skalierungsstrategien in Tech-Unternehmen'
-      },
-      behaviorAnalysis: {
-        emailsOpened: '4 / 5',
-        websiteVisits: '12 Klicks (Pricing, Features)',
-        bestContactTime: 'Dienstag, 09:30 - 11:00'
-      },
-      followUpSchedule: [
-        { time: 'Heute, 14:00', title: 'Initiale E-Mail senden', active: true },
-        { time: 'Tag 3', title: 'Follow-up: Case Study', active: false },
-        { time: 'Tag 7', title: 'LinkedIn Connect Anfrage', active: false }
-      ]
-    },
-    timeline: [
-      {
-        id: 't8492_1',
-        type: 'pageview',
-        title: 'Whitepaper heruntergeladen & Preise besucht',
-        timestamp: 'Heute, 11:20',
-        description: '3 Whitepapers zur Skalierung gelesen und /pricing 4x aufgerufen.'
-      },
-      {
-        id: 't8492_2',
-        type: 'email',
-        title: 'E-Mail Kampagne geöffnet',
-        timestamp: 'Gestern, 09:45',
-        emailDetails: {
-          subject: 'Modernes Lead-Management im B2B',
-          snippet: 'Hallo Frau Weber, vielen Dank für Ihr Interesse an Mara CRM...',
-          opens: 4
-        }
-      }
-    ]
-  },
-  {
-    id: 'lead_1',
-    name: 'Anna Müller',
-    role: 'Marketing Director',
-    company: 'TechFlow GmbH',
-    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDSzRYQITKoHFR-0pMUWvo5WqM96xmc-LGyKKPgW-iSc2i6eFRq-u7uPejZpvE9fi4NnvyHs_6RuCiqwlSlHFeUpLRJRp4V1sX_X96UfTe_Z9le3kGSUlOdoJlEIbTj_-kKvU7Je0VFClXS09FmmluwByZWyVe85j7ls53KqfK9TpG-1rH2w2sJjSS_Ft4aYWqNt5SLxTtdZe1br4fMb-v-53DWfDxSSy3mi-_FveYKGcTd_NmtUU4Z',
-    email: 'anna.mueller@techflow.de',
-    phone: '+49 170 123 45 67',
-    location: 'Berlin, Germany',
-    badge: 'Hot Lead',
-    badgeType: 'hot',
-    score: 85,
-    scoreDescription: 'Sehr hohe Wahrscheinlichkeit für einen Abschluss. Nächster Schritt: Produkt-Demo anbieten.',
-    tags: ['B2B', 'Interessiert', 'Newsletter'],
-    lastInteraction: 'Heute, 10:30',
-    timeline: [
-      {
-        id: 't1',
-        type: 'webinar',
-        title: 'Webinar-Anmeldung',
-        timestamp: 'Heute, 10:30',
-        description: 'Angemeldet für "B2B Marketing Strategies 2024"'
-      },
-      {
-        id: 't2',
-        type: 'pageview',
-        title: 'Landingpage besucht',
-        timestamp: 'Gestern, 14:15',
-        description: 'Besuch auf /pricing und /features. Verweildauer: 4m 20s.'
-      },
-      {
-        id: 't3',
-        type: 'email',
-        title: 'E-Mail gesendet (Automatisiert)',
-        timestamp: '12. Okt, 09:00',
-        emailDetails: {
-          subject: 'Willkommen bei der Academy',
-          snippet: 'Hallo Anna, vielen Dank für dein Interesse...',
-          opens: 2
-        }
-      },
-      {
-        id: 't4',
-        type: 'note',
-        title: 'Notiz hinzugefügt von Max Mustermann',
-        timestamp: '10. Okt, 16:45',
-        noteDetails: {
-          author: 'Max Mustermann',
-          text: 'Anna sucht nach einer Lösung für das Sales-Team (ca. 15 Personen). Budget ist vorhanden für Q1. Folgetermin im November vereinbaren.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'lead_2',
-    name: 'Sarah Müller',
-    role: 'Head of Growth',
-    company: 'NextGen Ventures',
-    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCoPTfuZP1dnoijFSJc-o8xWwSkLQrKSNRJUBKySXZyrVwlhoM1sFvCeCNaXEYf0xq0Hg9cr8K7qhrVOUxkyE17m-Z7JwLA9rkt_Cwoon4fd7lpgNAWMBiS614BTGuRusBKJlQeNMI5hQHQG3LBIcwrs_8lAo_QLjBWylpAG5Lmaxki8gtCgiPH7Ei6bFzg8mmHDf6uhtByMzRN0g_tBtsBapgfgNaEA7-VBrIsbisfOffkpPVz-KTn',
-    email: 'sarah.m@example.com',
-    phone: '+49 171 987 65 43',
-    location: 'München, Germany',
-    badge: 'Neu (Lead)',
-    badgeType: 'new',
-    score: 65,
-    scoreDescription: 'Neuer Interessent über Opt-In-Formular. Willkommens-Sequenz aktiv.',
-    tags: ['Webinar', 'Opt-In'],
-    lastInteraction: 'Heute, 10:42',
-    timeline: [
-      {
-        id: 't2_1',
-        type: 'webinar',
-        title: 'Webinar-Anmeldung',
-        timestamp: 'Heute, 10:42',
-        description: 'Eingetragen über Haupt-Landingpage.'
-      }
-    ]
-  },
-  {
-    id: 'lead_3',
-    name: 'Janik Dietrich',
-    role: 'CEO & Founder',
-    company: 'Dietrich Consulting',
-    avatarUrl: '',
-    email: 'j.dietrich@firma.de',
-    phone: '+49 172 555 12 34',
-    location: 'Hamburg, Germany',
-    badge: 'Kunde (Aktiv)',
-    badgeType: 'active',
-    score: 95,
-    scoreDescription: 'Aktiver PRO-Kunde. Hat alle Module 1 bis 15 erfolgreich absolviert.',
-    tags: ['Kunde', 'PRO Member', 'B2B'],
-    lastInteraction: 'Gestern, 15:30',
-    timeline: [
-      {
-        id: 't3_1',
-        type: 'email',
-        title: 'Upgrade auf PRO gebucht',
-        timestamp: 'Gestern, 15:30',
-        emailDetails: {
-          subject: 'Deine Buchungsbestätigung GOM-MAR Academy PRO',
-          snippet: 'Herzlich willkommen im PRO-Circle...',
-          opens: 5
-        }
-      }
-    ]
-  },
-  {
-    id: 'lead_4',
-    name: 'Michael Bauer',
-    role: 'Freelance Marketer',
-    company: 'Bauer Media',
-    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCWaJCSUOXra3o6QZX6Tx2SmIHeH4fG_G-_W3dVWoO_GOYBbB3dnTaw8x3qbX6k-f_iesX2Bz4yX5b4CTfgIXy-_YhwrXUh8XdgF4O8gCTr2sbW1vnBNIpD3ejYm5HxZ6lRlRULAVdRzwC4CrdX18FSI5OLVN1JXfh5k9BtM1TwzPMfV_Be4XsTPSflDvCGz5wVjpJbaVd1w24vsaqH8C_ejVkj4HLCikcvwtOLUy4tPeh3msGUSo7c',
-    email: 'm.bauer@web.de',
-    phone: '+49 160 444 88 99',
-    location: 'Köln, Germany',
-    badge: 'Abgebrochen',
-    badgeType: 'cold',
-    score: 25,
-    scoreDescription: 'Warenkorb vor 30 Tagen abgebrochen. Re-Engagement Kampagne empfohlen.',
-    tags: ['Cart-Abandon', 'Inaktiv'],
-    lastInteraction: '12. Okt 2023',
-    timeline: [
-      {
-        id: 't4_1',
-        type: 'pageview',
-        title: 'Checkout besucht (Abgebrochen)',
-        timestamp: '12. Okt 2023',
-        description: 'Checkout-Seite vor Zahlungsabschluss verlassen.'
-      }
-    ]
-  },
-  {
-    id: 'lead_5',
-    name: 'Lukas Klein',
-    role: 'E-Commerce Manager',
-    company: 'Klein Retail',
-    avatarUrl: '',
-    email: 'lukas.klein@retail.de',
-    phone: '+49 151 777 99 00',
-    location: 'Frankfurt, Germany',
-    badge: 'Warm',
-    badgeType: 'active',
-    score: 70,
-    scoreDescription: 'Regelmäßiger Newsletter-Leser mit Klicks auf KI-Tools.',
-    tags: ['Newsletter', 'KI-Tools'],
-    lastInteraction: 'Vor 5h',
-    timeline: [
-      {
-        id: 't5_1',
-        type: 'email',
-        title: 'Newsletter geöffnet',
-        timestamp: 'Vor 5h',
-        emailDetails: {
-          subject: 'KI-Agenten & Autonome Workflows',
-          snippet: 'Die neuen Features in Modul 18...',
-          opens: 3
-        }
-      }
-    ]
-  }
-];
+const INITIAL_CONTACTS: LeadContact[] = [];
 
 export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   campaigns,
@@ -374,6 +155,20 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     return true;
   });
 
+  const handleCreateFirstCampaign = () => {
+    const campaignId = `camp_${Date.now()}`;
+    onUpdateCampaigns([{
+      id: campaignId,
+      title: 'Neue Kampagne',
+      targetAudience: '',
+      description: '',
+      leadsCount: 0,
+      status: 'draft',
+      createdAt: new Date().toISOString().split('T')[0],
+      emails: [],
+    }]);
+  };
+
   // Simulate new Lead Opt-In
   const handleSimulateLead = () => {
     const newLeadCount = activeCampaign.leadsCount + 1;
@@ -412,6 +207,40 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setSimulatedLeadSuccess(`🎉 Neuer Test-Lead (${testLead.email}) erfasst! Willkommens-Mail (Mail 1) wurde automatisch versendet!`);
     setTimeout(() => setSimulatedLeadSuccess(null), 5000);
   };
+
+  if (!activeCampaign && mainTab === 'marketing') {
+    return (
+      <div className="space-y-8 animate-fadeIn">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 text-center shadow-sm">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
+            <Mail className="h-7 w-7" />
+          </div>
+          <h1 className="text-2xl font-black text-slate-950">Noch keine Kampagne vorhanden</h1>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-600">
+            Die Testkampagnen wurden entfernt. Erstelle eine neue leere Kampagne oder öffne dein noch leeres CRM.
+          </p>
+          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={handleCreateFirstCampaign}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-indigo-700"
+            >
+              <Plus className="h-4 w-4" />
+              Erste Kampagne erstellen
+            </button>
+            <button
+              type="button"
+              onClick={() => setMainTab('crm')}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50"
+            >
+              <Users className="h-4 w-4" />
+              CRM öffnen
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-fadeIn">
