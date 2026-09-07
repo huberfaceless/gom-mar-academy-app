@@ -5,7 +5,7 @@ export type CurriculumOverride = { lessonId: string; stageId: number; deleted: b
 type FirestoreDocument = { name?: string; fields?: Record<string, { stringValue?: string; integerValue?: string; booleanValue?: boolean }> };
 
 const googleAuth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
-const FIRESTORE_DATABASE_ID = process.env.FIREBASE_DATABASE_ID || 'gom-mar-academy';
+const FIRESTORE_DATABASE_ID = process.env.FIREBASE_DATABASE_ID || '(default)';
 
 const collectionUrl = (projectId: string) => `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(FIRESTORE_DATABASE_ID)}/documents/academyCurriculumOverrides`;
 
