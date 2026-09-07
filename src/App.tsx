@@ -282,7 +282,17 @@ export default function App() {
     setActiveView(view);
     if (stageId) setAcademyStageId(stageId);
     if (lessonId) setAcademyLessonId(lessonId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    window.requestAnimationFrame(() => {
+      if (window.matchMedia('(max-width: 767px)').matches) {
+        document.getElementById('active-view-content')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+        return;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   };
 
   const handleNavigateToToolbox = (category?: string) => {
@@ -397,7 +407,7 @@ export default function App() {
         />
 
         {/* Content View Area */}
-        <main className="flex-1 p-4 lg:p-8 w-full min-w-0">
+        <main id="active-view-content" className="flex-1 scroll-mt-24 p-4 lg:p-8 w-full min-w-0">
           <Suspense fallback={<ViewLoadingFallback />}>
           {activeView === 'dashboard' && (
             <DashboardView
