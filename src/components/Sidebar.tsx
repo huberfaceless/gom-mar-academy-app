@@ -65,7 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }
 
   return (
-    <aside className="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200/90 text-slate-700 p-4 flex flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[74px] md:self-start md:max-h-[calc(100vh-74px)] md:overflow-y-auto scrollbar-thin">
+    <aside className="hidden md:flex md:w-64 bg-white border-r border-slate-200/90 text-slate-700 p-4 flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[74px] md:self-start md:max-h-[calc(100vh-74px)] md:overflow-y-auto scrollbar-thin">
       <div className="space-y-5">
         {/* Brand Card in Sidebar */}
         <div 

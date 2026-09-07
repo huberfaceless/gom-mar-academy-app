@@ -43,8 +43,8 @@ export const Header: React.FC<HeaderProps> = ({
         isLight 
           ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 text-slate-900' 
           : 'bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-slate-100'
-      } px-4 lg:px-8 py-3.5 shadow-xs transition-colors duration-200`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      } w-full max-w-full overflow-x-hidden px-3 sm:px-4 lg:px-8 py-3 shadow-xs transition-colors duration-200`}>
+        <div className="max-w-7xl min-w-0 mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4">
           
           {/* LEFT: Branding/Badge on desktop */}
           <div className="hidden lg:flex items-center gap-2 text-xs">
@@ -80,10 +80,10 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* CENTER: GOM-MAR Academy Headline & Logo */}
           <div 
-            className="flex flex-col items-center justify-center text-center cursor-pointer group flex-1"
+            className="flex min-w-0 w-full sm:w-auto flex-col items-center justify-center text-center cursor-pointer group flex-1"
             onClick={() => onNavigate('dashboard')}
           >
-            <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex min-w-0 items-center justify-center gap-2 sm:gap-3">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white border border-slate-200/90 p-0.5 shadow-sm group-hover:scale-105 transition-transform duration-200 overflow-hidden flex items-center justify-center shrink-0">
                 <img 
                   src={gommarLogo} 
@@ -92,8 +92,8 @@ export const Header: React.FC<HeaderProps> = ({
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="flex items-center gap-2.5">
-                <h1 className={`font-black text-xl sm:text-2xl md:text-3xl tracking-tight leading-none ${isLight ? 'text-slate-950' : 'text-white'}`}>
+              <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
+                <h1 className={`font-black whitespace-nowrap text-lg min-[380px]:text-xl sm:text-2xl md:text-3xl tracking-tight leading-none ${isLight ? 'text-slate-950' : 'text-white'}`}>
                   GOM-MAR Academy
                 </h1>
                 <span className="bg-indigo-600 text-white font-extrabold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm shadow-indigo-600/30">
@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* RIGHT: Actions (Admin / Auth) */}
-          <div className="w-auto flex items-center justify-end gap-2.5">
+          <div className="w-full sm:w-auto min-w-0 flex items-center justify-center sm:justify-end gap-2">
             {isAdmin && (
               <button
                 onClick={() => onNavigate('admin')}
