@@ -19,7 +19,7 @@ const repaired = buildTierCustomAttributes('{ungueltig', 'PRO');
 assert.equal(repaired.previousTier, 'FREE');
 assert.deepEqual(JSON.parse(repaired.customAttributes), { academyTier: 'PRO' });
 
-for (const view of ['email', 'toolbox', 'contentEngine']) {
+for (const view of ['email', 'toolbox']) {
   assert.equal(canAccessView(view, 'FREE', 'member'), false, `FREE darf keinen Zugriff auf ${view} erhalten`);
   assert.equal(canAccessView(view, 'PRO', 'member'), true, `PRO muss Zugriff auf ${view} erhalten`);
   assert.equal(canAccessView(view, 'PREMIUM', 'member'), true, `PREMIUM muss Zugriff auf ${view} erhalten`);
@@ -31,7 +31,12 @@ for (const view of ['dashboard', 'academy', 'progress', 'profile', 'settings']) 
   assert.equal(canAccessView(view, 'FREE', 'member'), true, `FREE muss Zugriff auf ${view} behalten`);
 }
 
-assert.equal(canAccessView('admin', 'PREMIUM', 'member'), false, 'Mitglied darf den Adminbereich nicht öffnen');
-assert.equal(canAccessView('admin', 'FREE', 'admin'), true, 'Admin muss den Adminbereich öffnen können');
+for (const view of ['admin', 'contentEngine']) {
+  assert.equal(canAccessView(view, 'FREE', 'member'), false, `FREE-Mitglied darf ${view} nicht öffnen`);
+  assert.equal(canAccessView(view, 'PRO', 'member'), false, `PRO-Mitglied darf ${view} nicht öffnen`);
+  assert.equal(canAccessView(view, 'PREMIUM', 'member'), false, `PREMIUM-Mitglied darf ${view} nicht öffnen`);
+  assert.equal(canAccessView(view, 'FREE', 'admin'), true, `Admin muss ${view} öffnen können`);
+  assert.equal(requiredTierForView(view), null);
+}
 
 console.log('Firebase-Tarifverwaltung und FREE/PRO-Zugriffsgrenzen geprüft.');
