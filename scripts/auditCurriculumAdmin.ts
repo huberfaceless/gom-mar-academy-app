@@ -19,6 +19,8 @@ const checks: Array<[boolean, string]> = [
   [admin.includes("renderTranslationFields('en'") && admin.includes("renderTranslationFields('pl'"), 'Der Admin-Editor bietet Eingabebereiche für Englisch und Polnisch.'],
   [localization.includes('lesson.translations?.[language]'), 'Die Academy wendet die zentral gespeicherte Sprachversion an.'],
   [localization.includes('withoutEmptyStrings'), 'Leere Übersetzungsfelder fallen auf die deutsche Version zurück.'],
+  [admin.includes('localizeAllAcademyStages(stages, language)'), 'Die Admin-Curriculum-Übersicht folgt der gewählten Sprache.'],
+  [admin.includes('selectedStage.lessons.find(source => source.id === lesson.id)'), 'Der Editor bearbeitet trotz lokalisierter Anzeige die sichere Originallektion.'],
 ];
 
 for (const [passed, message] of checks) {

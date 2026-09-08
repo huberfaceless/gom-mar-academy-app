@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { 
   Users, 
   BookOpen, 
@@ -25,6 +25,8 @@ import {
 } from 'lucide-react';
 import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types';
 import { auth } from '../firebase/config';
+import { useLanguage } from '../context/LanguageContext';
+import { localizeAllAcademyStages } from '../i18n/localizeAllAcademyStages';
 
 type FirebaseMember = {
   uid: string;
@@ -55,6 +57,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   onResetStages,
   onNavigate
 }) => {
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<'students' | 'curriculum' | 'stats'>('students');
   
   // Search & Filter state for Students
@@ -102,6 +105,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   });
 
   const selectedStage = stages.find(s => s.id === selectedStageId) || stages[0];
+  const localizedStages = useMemo(() => localizeAllAcademyStages(stages, language), [stages, language]);
+  const selectedLocalizedStage = localizedStages.find(stage => stage.id === selectedStageId) || localizedStages[0];
 
   const authenticatedRequest = useCallback(async (url: string, init?: RequestInit) => {
     const currentUser = auth.currentUser;
@@ -587,7 +592,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           {/* Stage Selector */}
           <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
-              {stages.map((stage) => {
+              {localizedStages.map((stage) => {
                 const isSelected = stage.id === selectedStageId;
                 return (
                   <button
@@ -641,10 +646,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-2xl flex items-center justify-between">
             <div>
               <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded">
-                Aktive Etappe {selectedStage.id}
+                Aktive Etappe {selectedLocalizedStage.id}
               </span>
-              <h3 className="text-base font-black text-slate-900 mt-1">{selectedStage.title}</h3>
-              <p className="text-xs text-slate-600">{selectedStage.description}</p>
+              <h3 className="text-base font-black text-slate-900 mt-1">{selectedLocalizedStage.title}</h3>
+              <p className="text-xs text-slate-600">{selectedLocalizedStage.description}</p>
             </div>
             <div className="text-right text-xs font-bold text-slate-500">
               {selectedStage.lessons.length} Lektionen in dieser Etappe
@@ -653,7 +658,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
           {/* Lessons List in Stage */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {selectedStage.lessons.map((lesson) => (
+            {selectedLocalizedStage.lessons.map((lesson) => (
               <div
                 key={lesson.id}
                 className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
@@ -687,7 +692,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
                   <div className="flex items-center gap-1.5">
                     <button
-                      onClick={() => handleOpenEditLesson(lesson)}
+                      onClick={() => handleOpenEditLesson(selectedStage.lessons.find(source => source.id === lesson.id) || lesson)}
                       className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
