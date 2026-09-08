@@ -718,7 +718,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     onClick={() => onNavigate('academy', selectedStage.id, lesson.id)}
                     className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer"
                   >
-                    <span>Vorschau</span>
+                    <span>{lesson.publicationStatus === 'draft' ? 'Entwurf ansehen' : 'Vorschau'}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </button>
 
