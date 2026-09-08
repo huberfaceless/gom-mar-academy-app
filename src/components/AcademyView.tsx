@@ -122,8 +122,10 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 
   // If an initial lesson ID was passed, open lesson mode directly; otherwise start in course overview
   const requestedInitialStageId = initialStageId || user.currentStageId || 1;
-  const requestedStageIsAccessible = requestedInitialStageId <= stageAccessLimit
-    && (requestedInitialStageId === 1 || unlockedStageIdSet.has(requestedInitialStageId));
+  const requestedStageIsAccessible = user.role === 'admin' || (
+    requestedInitialStageId <= stageAccessLimit
+    && (requestedInitialStageId === 1 || unlockedStageIdSet.has(requestedInitialStageId))
+  );
   const safeInitialStageId = requestedStageIsAccessible ? requestedInitialStageId : 1;
   const [viewMode, setViewMode] = useState<'overview' | 'lesson'>(
     initialLessonId && requestedStageIsAccessible ? 'lesson' : 'overview'
