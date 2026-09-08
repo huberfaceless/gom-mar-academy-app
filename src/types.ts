@@ -44,6 +44,7 @@ export interface StudentRecord {
 
 export interface Lesson {
   id: string;
+  publicationStatus?: 'draft' | 'published';
   stageId: number;
   stageTitle: string;
   title: string;

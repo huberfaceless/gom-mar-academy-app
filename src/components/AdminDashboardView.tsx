@@ -238,6 +238,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     setIsCreatingLesson(true);
     setLessonFormData({
       id: newId,
+      publicationStatus: 'draft',
       stageId: selectedStage.id,
       stageTitle: selectedStage.title,
       title: '',
@@ -271,7 +272,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       return;
     }
 
-    if (isCreatingLesson) {
+    const isCustomLesson = !standardLessonIds.has(lessonFormData.id);
+    if (lessonFormData.publicationStatus === 'published' && (isCreatingLesson || isCustomLesson)) {
       const incompleteLanguages = (['en', 'pl'] as const).filter((language) => {
         const translation = lessonFormData.translations?.[language];
         return !translation?.title?.trim()
@@ -688,9 +690,16 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 font-mono font-black text-xs border border-indigo-200">
-                      Lektion {lesson.id}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 font-mono font-black text-xs border border-indigo-200">
+                        Lektion {lesson.id}
+                      </span>
+                      {lesson.publicationStatus === 'draft' && (
+                        <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wide border border-amber-200">
+                          Entwurf
+                        </span>
+                      )}
+                    </div>
                     <span className="text-xs text-slate-400 font-semibold flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
                       {lesson.durationMinutes} Min
@@ -781,6 +790,20 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             <div className="p-6 overflow-y-auto space-y-6">
               <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-900">
                 <strong>Eine Lektions-ID für alle Sprachen:</strong> Die folgenden Hauptfelder sind immer die deutsche Grundversion. Englisch und Polnisch werden weiter unten innerhalb derselben Lektion eingetragen.
+              </div>
+              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-4 space-y-2">
+                <label className="block text-xs font-black text-indigo-950">Sichtbarkeit der Lektion</label>
+                <select
+                  value={lessonFormData.publicationStatus || 'published'}
+                  onChange={(event) => setLessonFormData({
+                    ...lessonFormData,
+                    publicationStatus: event.target.value as 'draft' | 'published',
+                  })}
+                  className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-indigo-200 font-bold focus:outline-none focus:border-indigo-500"
+                >
+                  <option value="draft">Entwurf – nur in der Admin-Zentrale sichtbar</option>
+                  <option value="published">Veröffentlicht – für berechtigte Mitglieder sichtbar</option>
+                </select>
               </div>
               {/* Basic Details */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -946,7 +969,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md shadow-indigo-600/30 flex items-center gap-2 transition-all cursor-pointer"
               >
                 <Save className="w-4 h-4" />
-                <span>Lektion speichern</span>
+                <span>{lessonFormData.publicationStatus === 'draft' ? 'Entwurf speichern' : 'Lektion veröffentlichen'}</span>
               </button>
             </div>
           </div>
