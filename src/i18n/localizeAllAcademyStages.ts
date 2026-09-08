@@ -22,10 +22,15 @@ import { localizeAcademyStage98 } from './academyLocalization98';
 import { localizeAcademyStage99 } from './academyLocalization99';
 import { preserveAcademyTechnicalFields } from './academyLocalizationIntegrity';
 
+const withoutEmptyStrings = <T extends object>(value: T | undefined): Partial<T> => Object.fromEntries(
+  Object.entries(value || {}).filter(([, item]) => item !== ''),
+) as Partial<T>;
+
 export const localizeAllAcademyStages = (
   stages: Stage[],
   language: LanguageCode,
-): Stage[] => preserveAcademyTechnicalFields(
+): Stage[] => {
+  const localizedStages = preserveAcademyTechnicalFields(
   stages,
   localizeAcademyStage99(
     localizeAcademyStage98(
@@ -85,4 +90,21 @@ export const localizeAllAcademyStages = (
     ),
     language,
   ),
-);
+  );
+
+  if (language === 'de') return localizedStages;
+  return localizedStages.map((stage) => ({
+    ...stage,
+    lessons: stage.lessons.map((lesson) => {
+      const translation = lesson.translations?.[language];
+      if (!translation) return lesson;
+      return {
+        ...lesson,
+        ...withoutEmptyStrings(translation),
+        learnContent: { ...lesson.learnContent, ...withoutEmptyStrings(translation.learnContent) },
+        understandContent: { ...lesson.understandContent, ...withoutEmptyStrings(translation.understandContent) },
+        actionTask: { ...lesson.actionTask, ...withoutEmptyStrings(translation.actionTask) },
+      };
+    }),
+  }));
+};

@@ -4,6 +4,8 @@ const app = fs.readFileSync('src/App.tsx', 'utf8');
 const admin = fs.readFileSync('src/components/AdminDashboardView.tsx', 'utf8');
 const server = fs.readFileSync('server.ts', 'utf8');
 const persistence = fs.readFileSync('server/academyCurriculumAdmin.ts', 'utf8');
+const localization = fs.readFileSync('src/i18n/localizeAllAcademyStages.ts', 'utf8');
+const types = fs.readFileSync('src/types.ts', 'utf8');
 
 const checks: Array<[boolean, string]> = [
   [server.includes("app.get('/api/academy/curriculum-overrides'"), 'Mitglieder können zentrale Curriculum-Änderungen laden.'],
@@ -13,6 +15,10 @@ const checks: Array<[boolean, string]> = [
   [persistence.includes("process.env.FIREBASE_DATABASE_ID || '(default)'"), 'Die produktive Firestore-Standarddatenbank wird angesprochen.'],
   [app.includes('applyCurriculumOverrides'), 'Die App wendet zentrale Änderungen auf das Standard-Curriculum an.'],
   [admin.includes('zentral für alle Mitglieder gespeichert'), 'Der Editor bestätigt die zentrale Speicherung eindeutig.'],
+  [types.includes("translations?: Partial<Record<'en' | 'pl', LessonTranslation>>"), 'Zentrale Lektionen unterstützen englische und polnische Sprachversionen.'],
+  [admin.includes("renderTranslationFields('en'") && admin.includes("renderTranslationFields('pl'"), 'Der Admin-Editor bietet Eingabebereiche für Englisch und Polnisch.'],
+  [localization.includes('lesson.translations?.[language]'), 'Die Academy wendet die zentral gespeicherte Sprachversion an.'],
+  [localization.includes('withoutEmptyStrings'), 'Leere Übersetzungsfelder fallen auf die deutsche Version zurück.'],
 ];
 
 for (const [passed, message] of checks) {
