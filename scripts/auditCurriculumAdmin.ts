@@ -2,6 +2,7 @@ import fs from 'node:fs';
 
 const app = fs.readFileSync('src/App.tsx', 'utf8');
 const admin = fs.readFileSync('src/components/AdminDashboardView.tsx', 'utf8');
+const academy = fs.readFileSync('src/components/AcademyView.tsx', 'utf8');
 const server = fs.readFileSync('server.ts', 'utf8');
 const persistence = fs.readFileSync('server/academyCurriculumAdmin.ts', 'utf8');
 const localization = fs.readFileSync('src/i18n/localizeAllAcademyStages.ts', 'utf8');
@@ -29,6 +30,9 @@ const checks: Array<[boolean, string]> = [
   [admin.includes('incompleteLanguages') && admin.includes('vollständige ${incompleteLanguages'), 'Neue Lektionen erfordern vollständige englische und polnische Inhalte.'],
   [admin.includes('Originalversion wiederherstellen') && admin.includes('standardLessonIds.has(lesson.id)'), 'Nur Standardlektionen bieten eine einzelne Wiederherstellung an.'],
   [admin.includes('Entwurf – nur in der Admin-Zentrale sichtbar') && admin.includes('Lektion veröffentlichen'), 'Der Admin steuert die Sichtbarkeit bewusst im Editor.'],
+  [admin.includes("lesson.publicationStatus === 'draft' ? 'Entwurf ansehen'"), 'Entwürfe besitzen eine eindeutige Vorschau-Aktion.'],
+  [app.includes("onBackToAdmin={() => handleNavigate('admin')}"), 'Die Entwurfsvorschau führt zurück zur Admin-Zentrale.'],
+  [academy.includes("currentLesson.publicationStatus === 'draft'") && academy.includes('draftPreview'), 'Die vollständige Lektionsansicht kennzeichnet Admin-Entwürfe eindeutig.'],
 ];
 
 for (const [passed, message] of checks) {
