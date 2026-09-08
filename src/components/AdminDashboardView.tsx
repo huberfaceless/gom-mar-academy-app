@@ -27,6 +27,7 @@ import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types
 import { auth } from '../firebase/config';
 import { useLanguage } from '../context/LanguageContext';
 import { localizeAllAcademyStages } from '../i18n/localizeAllAcademyStages';
+import { ACADEMY_STAGES } from '../data/academyData';
 
 type FirebaseMember = {
   uid: string;
@@ -46,6 +47,7 @@ interface AdminDashboardViewProps {
   students: StudentRecord[];
   onUpdateStages: (stages: Stage[]) => Promise<void>;
   onResetStages: () => Promise<void>;
+  onRestoreLesson: (lessonId: string) => Promise<void>;
   onNavigate: (view: string, stageId?: number, lessonId?: string) => void;
 }
 
@@ -55,6 +57,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   students,
   onUpdateStages,
   onResetStages,
+  onRestoreLesson,
   onNavigate
 }) => {
   const { language } = useLanguage();
@@ -107,6 +110,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const selectedStage = stages.find(s => s.id === selectedStageId) || stages[0];
   const localizedStages = useMemo(() => localizeAllAcademyStages(stages, language), [stages, language]);
   const selectedLocalizedStage = localizedStages.find(stage => stage.id === selectedStageId) || localizedStages[0];
+  const standardLessonIds = useMemo(
+    () => new Set(ACADEMY_STAGES.flatMap(stage => stage.lessons.map(lesson => lesson.id))),
+    [],
+  );
 
   const authenticatedRequest = useCallback(async (url: string, init?: RequestInit) => {
     const currentUser = auth.currentUser;
@@ -707,6 +714,22 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   </button>
 
                   <div className="flex items-center gap-1.5">
+                    {standardLessonIds.has(lesson.id) && (
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Lektion ${lesson.id} auf die vollständige Originalversion zurücksetzen? Alle zentral gespeicherten Änderungen an dieser Lektion werden entfernt.`)) {
+                            void onRestoreLesson(lesson.id)
+                              .then(() => setSaveSuccessMsg(`Lektion ${lesson.id} wurde auf die Originalversion zurückgesetzt.`))
+                              .catch((error: unknown) => window.alert(error instanceof Error ? error.message : 'Die Originallektion konnte nicht wiederhergestellt werden.'));
+                          }
+                        }}
+                        title="Originalversion wiederherstellen"
+                        className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span className="hidden xl:inline">Original</span>
+                      </button>
+                    )}
                     <button
                       onClick={() => handleOpenEditLesson(selectedStage.lessons.find(source => source.id === lesson.id) || lesson)}
                       className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"

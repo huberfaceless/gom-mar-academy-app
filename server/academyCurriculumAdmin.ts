@@ -52,6 +52,10 @@ export const saveCurriculumOverride = async (projectId: string, override: Curric
   });
 };
 
+export const deleteCurriculumOverride = async (projectId: string, lessonId: string): Promise<void> => {
+  await firestoreRequest(`${collectionUrl(projectId)}/${encodeURIComponent(lessonId)}`, { method: 'DELETE' });
+};
+
 export const resetCurriculumOverrides = async (projectId: string): Promise<void> => {
   const result = await (await firestoreRequest(`${collectionUrl(projectId)}?pageSize=1000`)).json() as { documents?: FirestoreDocument[] };
   await Promise.all((result.documents || []).map(async (document) => {

@@ -306,6 +306,22 @@ export default function App() {
     setStages(defaultStages);
   };
 
+  const handleRestoreLesson = async (lessonId: string) => {
+    if (!firebaseUser) throw new Error('Die Firebase-Anmeldung ist abgelaufen.');
+    const token = await firebaseUser.getIdToken();
+    const response = await fetch(`/api/admin/curriculum/lessons/${encodeURIComponent(lessonId)}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) throw new Error((await response.json() as { error?: string }).error || 'Die Originallektion konnte nicht wiederhergestellt werden.');
+    const curriculumResponse = await fetch('/api/academy/curriculum-overrides', { headers: { Authorization: `Bearer ${token}` } });
+    const result = await curriculumResponse.json() as { overrides?: CurriculumOverride[]; error?: string };
+    if (!curriculumResponse.ok) throw new Error(result.error || 'Curriculum konnte nicht neu geladen werden.');
+    const restoredStages = applyCurriculumOverrides(result.overrides || []);
+    setStages(restoredStages);
+    saveAcademyStages(restoredStages);
+  };
+
   const handleNavigate = (view: string, stageId?: number, lessonId?: string) => {
     if (!canAccessView(view, user.tier, user.role)) {
       setMembershipGate({
@@ -469,6 +485,7 @@ export default function App() {
               students={students}
               onUpdateStages={handleUpdateStages}
               onResetStages={handleResetStages}
+              onRestoreLesson={handleRestoreLesson}
               onNavigate={handleNavigate}
             />
           )}

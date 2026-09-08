@@ -11,8 +11,10 @@ const checks: Array<[boolean, string]> = [
   [server.includes("app.get('/api/academy/curriculum-overrides'"), 'Mitglieder können zentrale Curriculum-Änderungen laden.'],
   [server.includes("app.put('/api/admin/curriculum/lessons/:lessonId'"), 'Nur der Admin-Endpunkt speichert Lektionen.'],
   [server.includes("app.delete('/api/admin/curriculum-overrides'"), 'Der Admin kann zentrale Änderungen zurücksetzen.'],
+  [server.includes("app.delete('/api/admin/curriculum/lessons/:lessonId'"), 'Der Admin kann eine einzelne Standardlektion wiederherstellen.'],
   [persistence.includes('academyCurriculumOverrides'), 'Änderungen werden in einer eigenen Firestore-Sammlung gespeichert.'],
   [persistence.includes("process.env.FIREBASE_DATABASE_ID || '(default)'"), 'Die produktive Firestore-Standarddatenbank wird angesprochen.'],
+  [persistence.includes('deleteCurriculumOverride'), 'Die Wiederherstellung entfernt ausschließlich den Override der gewählten Lektion.'],
   [app.includes('applyCurriculumOverrides'), 'Die App wendet zentrale Änderungen auf das Standard-Curriculum an.'],
   [admin.includes('zentral für alle Mitglieder gespeichert'), 'Der Editor bestätigt die zentrale Speicherung eindeutig.'],
   [types.includes("translations?: Partial<Record<'en' | 'pl', LessonTranslation>>"), 'Zentrale Lektionen unterstützen englische und polnische Sprachversionen.'],
@@ -23,6 +25,7 @@ const checks: Array<[boolean, string]> = [
   [admin.includes('selectedStage.lessons.find(source => source.id === lesson.id)'), 'Der Editor bearbeitet trotz lokalisierter Anzeige die sichere Originallektion.'],
   [admin.includes('Eine Lektions-ID für alle Sprachen'), 'Der Editor erklärt die gemeinsame Lektions-ID eindeutig.'],
   [admin.includes('incompleteLanguages') && admin.includes('vollständige ${incompleteLanguages'), 'Neue Lektionen erfordern vollständige englische und polnische Inhalte.'],
+  [admin.includes('Originalversion wiederherstellen') && admin.includes('standardLessonIds.has(lesson.id)'), 'Nur Standardlektionen bieten eine einzelne Wiederherstellung an.'],
 ];
 
 for (const [passed, message] of checks) {
