@@ -1,5 +1,13 @@
 # Cloud-Run-Bereitstellung
 
+## Produktive Adresse
+
+Die einzige öffentlich zu verwendende Academy-Adresse ist:
+
+`https://academy.gomo-marketing.at`
+
+Die von Cloud Run erzeugte Dienst-URL wird ausschließlich intern für Deployment- und Healthchecks verwendet. Sie darf nicht in Nutzerkommunikation, Lektionsinhalten, E-Mails oder öffentlichen Links erscheinen.
+
 Nach erfolgreicher Projektprüfung kann GitHub Actions den geprüften Stand automatisch nach Cloud Run deployen. Die Anmeldung verwendet kurzlebige OpenID-Connect-Tokens über Workload Identity Federation; ein dauerhafter Service-Account-Schlüssel gehört nicht in GitHub.
 
 ## Repository-Variablen
