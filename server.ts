@@ -8,7 +8,7 @@ import {
   listFirebaseMembers,
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
-import { listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
+import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -234,6 +234,20 @@ async function startServer() {
       res.json({ success: true });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Lektion konnte nicht gespeichert werden.' });
+    }
+  });
+
+  app.delete('/api/admin/curriculum/lessons/:lessonId', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const lessonId = req.params.lessonId?.trim();
+    if (!lessonId || lessonId.length > 40) {
+      res.status(400).json({ error: 'Die Lektions-ID ist ungültig.' });
+      return;
+    }
+    try {
+      await deleteCurriculumOverride(FIREBASE_PROJECT_ID, lessonId);
+      res.json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Die Originallektion konnte nicht wiederhergestellt werden.' });
     }
   });
 
