@@ -471,7 +471,6 @@ export default function App() {
               onNavigate={handleNavigate}
               onOpenFragGommar={handleOpenFragGommar}
               stageAccessLimit={academyStageLimit}
-              onBackToAdmin={() => handleNavigate('admin')}
             />
           )}
 
@@ -501,6 +500,7 @@ export default function App() {
               onNavigateToToolbox={handleNavigateToToolbox}
               onOpenFragGommar={handleOpenFragGommar}
               stageAccessLimit={academyStageLimit}
+              onBackToAdmin={() => handleNavigate('admin')}
             />
           )}
 

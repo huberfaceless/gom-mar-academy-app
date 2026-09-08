@@ -31,7 +31,8 @@ const checks: Array<[boolean, string]> = [
   [admin.includes('Originalversion wiederherstellen') && admin.includes('standardLessonIds.has(lesson.id)'), 'Nur Standardlektionen bieten eine einzelne Wiederherstellung an.'],
   [admin.includes('Entwurf – nur in der Admin-Zentrale sichtbar') && admin.includes('Lektion veröffentlichen'), 'Der Admin steuert die Sichtbarkeit bewusst im Editor.'],
   [admin.includes("lesson.publicationStatus === 'draft' ? 'Entwurf ansehen'"), 'Entwürfe besitzen eine eindeutige Vorschau-Aktion.'],
-  [app.includes("onBackToAdmin={() => handleNavigate('admin')}"), 'Die Entwurfsvorschau führt zurück zur Admin-Zentrale.'],
+  [app.includes("activeView === 'academy'") && app.includes("onBackToAdmin={() => handleNavigate('admin')}"), 'Die Entwurfsvorschau führt zurück zur Admin-Zentrale.'],
+  [academy.includes("user.role === 'admin' || (") && academy.includes('requestedStageIsAccessible'), 'Administratoren können Entwürfe unabhängig von der Mitglieder-Freischaltung direkt öffnen.'],
   [academy.includes("currentLesson.publicationStatus === 'draft'") && academy.includes('draftPreview'), 'Die vollständige Lektionsansicht kennzeichnet Admin-Entwürfe eindeutig.'],
 ];
 
