@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 const workflow = readFileSync('.github/workflows/ci.yml', 'utf8');
 const server = readFileSync('server.ts', 'utf8');
 const dockerfile = readFileSync('Dockerfile', 'utf8');
+const index = readFileSync('index.html', 'utf8');
+const deploymentDocs = readFileSync('docs/cloud-run-deployment.md', 'utf8');
 
 assert.match(workflow, /needs: quality/, 'Deployment muss die Qualitätsprüfung abwarten.');
 assert.match(workflow, /google-github-actions\/auth@v3/, 'Workload-Identity-Authentifizierung fehlt.');
@@ -31,5 +33,8 @@ assert.match(server, /process\.env\.K_REVISION \|\| null/, 'Cloud-Run-Revision f
 assert.match(server, /process\.env\.APP_COMMIT_SHA \|\| null/, 'Commit fehlt im Health-Check.');
 assert.match(dockerfile, /RUN bun install --frozen-lockfile/, 'Reproduzierbare Installation im Docker-Build fehlt.');
 assert.match(dockerfile, /CMD \["node", "dist\/server\.js"\]/, 'Produktionsstart im Dockerfile fehlt.');
+assert.match(index, /<link rel="canonical" href="https:\/\/academy\.gomo-marketing\.at\/" \/>/, 'Die kanonische Academy-Domain fehlt.');
+assert.match(index, /<meta property="og:url" content="https:\/\/academy\.gomo-marketing\.at\/" \/>/, 'Die öffentliche Academy-Adresse fehlt in den Metadaten.');
+assert.match(deploymentDocs, /Die einzige öffentlich zu verwendende Academy-Adresse ist:[\s\S]*https:\/\/academy\.gomo-marketing\.at/, 'Die Produktionsdomain ist nicht eindeutig dokumentiert.');
 
-console.log('Cloud-Run-Deployment geprüft: Qualitätstor, OIDC, Konfigurationserhalt und Revisionsnachweis sind aktiv.');
+console.log('Cloud-Run-Deployment geprüft: Qualitätstor, OIDC, Konfigurationserhalt, Revisionsnachweis und kanonische Produktionsdomain sind aktiv.');
