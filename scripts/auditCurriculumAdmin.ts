@@ -21,6 +21,8 @@ const checks: Array<[boolean, string]> = [
   [localization.includes('withoutEmptyStrings'), 'Leere Übersetzungsfelder fallen auf die deutsche Version zurück.'],
   [admin.includes('localizeAllAcademyStages(stages, language)'), 'Die Admin-Curriculum-Übersicht folgt der gewählten Sprache.'],
   [admin.includes('selectedStage.lessons.find(source => source.id === lesson.id)'), 'Der Editor bearbeitet trotz lokalisierter Anzeige die sichere Originallektion.'],
+  [admin.includes('Eine Lektions-ID für alle Sprachen'), 'Der Editor erklärt die gemeinsame Lektions-ID eindeutig.'],
+  [admin.includes('incompleteLanguages') && admin.includes('vollständige ${incompleteLanguages'), 'Neue Lektionen erfordern vollständige englische und polnische Inhalte.'],
 ];
 
 for (const [passed, message] of checks) {
