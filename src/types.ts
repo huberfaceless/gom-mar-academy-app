@@ -90,6 +90,15 @@ export interface Lesson {
     checklistItems?: string[];
     placeholder?: string;
   };
+  translations?: Partial<Record<'en' | 'pl', LessonTranslation>>;
+}
+
+export interface LessonTranslation {
+  title?: string;
+  description?: string;
+  learnContent?: Partial<Lesson['learnContent']>;
+  understandContent?: Partial<Lesson['understandContent']>;
+  actionTask?: Partial<Lesson['actionTask']>;
 }
 
 export interface Stage {

@@ -315,6 +315,40 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     }
   };
 
+  const updateTranslation = (
+    language: 'en' | 'pl',
+    section: 'root' | 'learnContent' | 'understandContent' | 'actionTask',
+    field: string,
+    value: string,
+  ) => {
+    const translations = lessonFormData.translations || {};
+    const translation = translations[language] || {};
+    const updatedTranslation = section === 'root'
+      ? { ...translation, [field]: value }
+      : { ...translation, [section]: { ...translation[section], [field]: value } };
+    setLessonFormData({
+      ...lessonFormData,
+      translations: { ...translations, [language]: updatedTranslation },
+    });
+  };
+
+  const renderTranslationFields = (language: 'en' | 'pl', label: string) => {
+    const translation = lessonFormData.translations?.[language];
+    return (
+      <details className="rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4">
+        <summary className="cursor-pointer text-sm font-black text-indigo-700">{label}</summary>
+        <div className="mt-4 space-y-4">
+          <input className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" placeholder="Lektions-Titel" value={translation?.title || ''} onChange={(event) => updateTranslation(language, 'root', 'title', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={2} placeholder="Kurzbeschreibung" value={translation?.description || ''} onChange={(event) => updateTranslation(language, 'root', 'description', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={3} placeholder="Zusammenfassung (Kernbotschaft)" value={translation?.learnContent?.summaryText || ''} onChange={(event) => updateTranslation(language, 'learnContent', 'summaryText', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200 font-mono" rows={6} placeholder="Vollständiger Artikel (Markdown)" value={translation?.learnContent?.fullArticleGuide || ''} onChange={(event) => updateTranslation(language, 'learnContent', 'fullArticleGuide', event.target.value)} />
+          <input className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" placeholder="Kern-Erkenntnis" value={translation?.understandContent?.coreTakeaway || ''} onChange={(event) => updateTranslation(language, 'understandContent', 'coreTakeaway', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={2} placeholder="Aufgabe für den Kursteilnehmer" value={translation?.actionTask?.instruction || ''} onChange={(event) => updateTranslation(language, 'actionTask', 'instruction', event.target.value)} />
+        </div>
+      </details>
+    );
+  };
+
   return (
     <div className="space-y-6 pb-20 max-w-7xl mx-auto">
       {/* Header Banner */}
@@ -838,6 +872,13 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     placeholder="Was genau soll der Teilnehmer tun oder notieren?"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-3 pt-2 border-t border-slate-200">
+                <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">🌍 Sprachversionen</h4>
+                <p className="text-xs text-slate-500">Leere Felder verwenden als Rückfall die deutsche Version.</p>
+                {renderTranslationFields('en', '🇬🇧 Englisch')}
+                {renderTranslationFields('pl', '🇵🇱 Polnisch')}
               </div>
             </div>
 
