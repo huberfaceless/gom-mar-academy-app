@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Repository laden
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Bun einrichten
         uses: oven-sh/setup-bun@v2
@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Repository laden
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Kurzlebig bei Google Cloud anmelden
         uses: google-github-actions/auth@v3
