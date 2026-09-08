@@ -260,8 +260,24 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   // Save Lesson changes
   const handleSaveLesson = async () => {
     if (!lessonFormData.title?.trim() || !lessonFormData.id?.trim()) {
-      alert('Bitte Titel und Lektions-ID angeben.');
+      alert('Bitte deutschen Titel und Lektions-ID angeben.');
       return;
+    }
+
+    if (isCreatingLesson) {
+      const incompleteLanguages = (['en', 'pl'] as const).filter((language) => {
+        const translation = lessonFormData.translations?.[language];
+        return !translation?.title?.trim()
+          || !translation.description?.trim()
+          || !translation.learnContent?.summaryText?.trim()
+          || !translation.learnContent?.fullArticleGuide?.trim()
+          || !translation.understandContent?.coreTakeaway?.trim()
+          || !translation.actionTask?.instruction?.trim();
+      });
+      if (incompleteLanguages.length > 0) {
+        alert(`Bitte die vollständige ${incompleteLanguages.map(language => language === 'en' ? 'englische' : 'polnische').join(' und ')} Sprachversion in derselben Lektion ergänzen.`);
+        return;
+      }
     }
 
     const updatedStages = stages.map(stage => {
@@ -740,6 +756,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
             {/* Modal Body: Form Fields */}
             <div className="p-6 overflow-y-auto space-y-6">
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-900">
+                <strong>Eine Lektions-ID für alle Sprachen:</strong> Die folgenden Hauptfelder sind immer die deutsche Grundversion. Englisch und Polnisch werden weiter unten innerhalb derselben Lektion eingetragen.
+              </div>
               {/* Basic Details */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
@@ -754,7 +773,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Lektions-Titel</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">🇩🇪 Deutscher Lektions-Titel</label>
                   <input
                     type="text"
                     value={lessonFormData.title || ''}
@@ -793,7 +812,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Kurzbeschreibung (Vorschau)</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">🇩🇪 Deutsche Kurzbeschreibung (Vorschau)</label>
                 <textarea
                   rows={2}
                   value={lessonFormData.description || ''}
@@ -881,9 +900,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
               <div className="space-y-3 pt-2 border-t border-slate-200">
                 <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">🌍 Sprachversionen</h4>
-                <p className="text-xs text-slate-500">Leere Felder verwenden als Rückfall die deutsche Version.</p>
-                {renderTranslationFields('en', '🇬🇧 Englisch')}
-                {renderTranslationFields('pl', '🇵🇱 Polnisch')}
+                <p className="text-xs text-slate-500">Beide Sprachversionen gehören zu derselben Lektions-ID. Für neue Lektionen müssen alle angezeigten Übersetzungsfelder ausgefüllt sein.</p>
+                {renderTranslationFields('en', '🇬🇧 Englische Version derselben Lektion')}
+                {renderTranslationFields('pl', '🇵🇱 Polnische Version derselben Lektion')}
               </div>
             </div>
 
