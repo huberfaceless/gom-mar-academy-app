@@ -100,6 +100,10 @@ const firebaseTierRank = (payload: FirebaseTokenPayload): number => {
   return 0;
 };
 
+const isAcademyAdminToken = (payload?: FirebaseTokenPayload): boolean => payload?.academyRole === 'admin'
+  || payload?.admin === true
+  || (payload?.email_verified === true && ACADEMY_ADMIN_EMAILS.has(payload.email?.toLowerCase() || ''));
+
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
@@ -139,12 +143,7 @@ async function startServer() {
 
   const requireAcademyAdmin = (req: Request, res: Response, next: NextFunction) => {
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
-    const isAdmin = firebaseUser?.academyRole === 'admin'
-      || firebaseUser?.admin === true
-      || (
-        firebaseUser?.email_verified === true
-        && ACADEMY_ADMIN_EMAILS.has(firebaseUser.email?.toLowerCase() || '')
-      );
+    const isAdmin = isAcademyAdminToken(firebaseUser);
     if (!isAdmin) {
       res.status(403).json({ error: 'Nur autorisierte Academy-Administratoren dürfen Tarife verwalten.' });
       return;
@@ -211,10 +210,16 @@ async function startServer() {
     }
   });
 
-  app.get('/api/academy/curriculum-overrides', requireVerifiedMember, async (_req, res) => {
+  app.get('/api/academy/curriculum-overrides', requireVerifiedMember, async (req, res) => {
     try {
+      const overrides = await listCurriculumOverrides(FIREBASE_PROJECT_ID);
+      const visibleOverrides = isAcademyAdminToken((req as FirebaseRequest).firebaseUser)
+        ? overrides
+        : overrides.map((override) => override.lesson?.publicationStatus === 'draft'
+          ? { lessonId: override.lessonId, stageId: override.stageId, deleted: true }
+          : override);
       res.setHeader('Cache-Control', 'no-store');
-      res.json({ overrides: await listCurriculumOverrides(FIREBASE_PROJECT_ID) });
+      res.json({ overrides: visibleOverrides });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Curriculum konnte nicht geladen werden.' });
     }
