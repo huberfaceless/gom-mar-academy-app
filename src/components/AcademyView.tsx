@@ -4,7 +4,7 @@ import { ACADEMY_STAGES } from '../data/academyData';
 import { LessonVideoPlayer } from './LessonVideoPlayer';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
-import { localizeAllAcademyStages } from '../i18n/localizeAllAcademyStages';
+import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { authenticatedFetch } from '../services/authenticatedFetch';
 import { 
   Play, 
@@ -115,7 +115,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 }) => {
   const { language } = useLanguage();
   const copy = academyCopy[language];
-  const localizedStages = useMemo(() => localizeAllAcademyStages(stages, language), [stages, language]);
+  const localizedStages = useLocalizedAcademyStages(stages, language);
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
   const unlockedStageIdSet = useMemo(() => new Set(user.unlockedStageIds), [user.unlockedStageIds]);
   const isLight = user.theme === 'clean-light' || !user.theme;

@@ -26,7 +26,7 @@ import {
 import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types';
 import { auth } from '../firebase/config';
 import { useLanguage } from '../context/LanguageContext';
-import { localizeAllAcademyStages } from '../i18n/localizeAllAcademyStages';
+import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { ACADEMY_STAGES } from '../data/academyData';
 
 type FirebaseMember = {
@@ -108,7 +108,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   });
 
   const selectedStage = stages.find(s => s.id === selectedStageId) || stages[0];
-  const localizedStages = useMemo(() => localizeAllAcademyStages(stages, language), [stages, language]);
+  const localizedStages = useLocalizedAcademyStages(stages, language);
   const selectedLocalizedStage = localizedStages.find(stage => stage.id === selectedStageId) || localizedStages[0];
   const standardLessonIds = useMemo(
     () => new Set(ACADEMY_STAGES.flatMap(stage => stage.lessons.map(lesson => lesson.id))),
