@@ -10,6 +10,16 @@ assert.match(
   /localizeAllAcademyStages\(ACADEMY_STAGES, language\)/,
   'Das Dashboard muss dieselben lokalisierten Academy-Daten wie die Academy verwenden.',
 );
+assert.doesNotMatch(
+  dashboard,
+  /import \{ localizeAllAcademyStages \} from '\.\.\/i18n\/localizeAllAcademyStages';/,
+  'Das Dashboard darf die vollständige Academy-Lokalisierung nicht synchron laden.',
+);
+assert.match(
+  dashboard,
+  /import\('\.\.\/i18n\/localizeAllAcademyStages'\)/,
+  'Das Dashboard muss die vollständige Academy-Lokalisierung bei Bedarf nachladen.',
+);
 assert.match(
   academy,
   /localizeAllAcademyStages\(stages, language\)/,
