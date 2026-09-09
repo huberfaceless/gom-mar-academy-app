@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { UserProfile, Lesson, Stage } from '../types';
+import React, { useMemo } from 'react';
+import { UserProfile, Lesson } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
 import { ACADEMY_STAGES } from '../data/academyData';
+import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { 
   Rocket, 
   ArrowRight, 
@@ -61,27 +62,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const copy = dashboardCopy[language];
   const isLight = user.theme === 'clean-light' || !user.theme;
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
-  const [localizedStages, setLocalizedStages] = useState<Stage[]>(ACADEMY_STAGES);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    if (language === 'de') {
-      setLocalizedStages(ACADEMY_STAGES);
-      return () => { cancelled = true; };
-    }
-
-    setLocalizedStages(ACADEMY_STAGES);
-    void import('../i18n/localizeAllAcademyStages')
-      .then(({ localizeAllAcademyStages }) => {
-        if (!cancelled) setLocalizedStages(localizeAllAcademyStages(ACADEMY_STAGES, language));
-      })
-      .catch(() => {
-        if (!cancelled) setLocalizedStages(ACADEMY_STAGES);
-      });
-
-    return () => { cancelled = true; };
-  }, [language]);
+  const localizedStages = useLocalizedAcademyStages(ACADEMY_STAGES, language);
   const displayName = user.name === 'GOM-MAR Mitglied' ? copy.memberName : user.name;
   const hasProAccess = user.role === 'admin' || user.tier === 'PRO' || user.tier === 'PREMIUM';
 

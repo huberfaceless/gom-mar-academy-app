@@ -4,27 +4,17 @@ import { readFileSync } from 'node:fs';
 const dashboard = readFileSync('src/components/DashboardView.tsx', 'utf8');
 const academy = readFileSync('src/components/AcademyView.tsx', 'utf8');
 const footer = readFileSync('src/components/Footer.tsx', 'utf8');
+const localizationHook = readFileSync('src/i18n/useLocalizedAcademyStages.ts', 'utf8');
+const viteConfig = readFileSync('vite.config.ts', 'utf8');
 
-assert.match(
-  dashboard,
-  /localizeAllAcademyStages\(ACADEMY_STAGES, language\)/,
-  'Das Dashboard muss dieselben lokalisierten Academy-Daten wie die Academy verwenden.',
-);
-assert.doesNotMatch(
-  dashboard,
-  /import \{ localizeAllAcademyStages \} from '\.\.\/i18n\/localizeAllAcademyStages';/,
-  'Das Dashboard darf die vollständige Academy-Lokalisierung nicht synchron laden.',
-);
-assert.match(
-  dashboard,
-  /import\('\.\.\/i18n\/localizeAllAcademyStages'\)/,
-  'Das Dashboard muss die vollständige Academy-Lokalisierung bei Bedarf nachladen.',
-);
-assert.match(
-  academy,
-  /localizeAllAcademyStages\(stages, language\)/,
-  'Die Academy muss den gemeinsamen Lokalisierungshelfer verwenden.',
-);
+for (const [source, label] of [[dashboard, 'Dashboard'], [academy, 'Academy']] as const) {
+  assert.match(source, /useLocalizedAcademyStages\(/, `${label} muss den gemeinsamen Lokalisierungshook verwenden.`);
+  assert.doesNotMatch(source, /localizeAllAcademyStages/, `${label} darf die vollständige Lokalisierung nicht synchron laden.`);
+}
+assert.match(localizationHook, /import\('virtual:academy-localization-en'\)/, 'Englisch muss separat geladen werden.');
+assert.match(localizationHook, /import\('virtual:academy-localization-pl'\)/, 'Polnisch muss separat geladen werden.');
+assert.match(viteConfig, /virtual:academy-localization-en/, 'Der Build muss ein eigenes englisches Lokalisierungsmodul erzeugen.');
+assert.match(viteConfig, /virtual:academy-localization-pl/, 'Der Build muss ein eigenes polnisches Lokalisierungsmodul erzeugen.');
 assert.match(footer, /useLanguage\(\)/, 'Der Footer muss auf die gewählte Sprache reagieren.');
 
 for (const language of ['de', 'en', 'pl']) {

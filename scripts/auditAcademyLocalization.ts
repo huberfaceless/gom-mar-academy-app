@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createServer } from 'vite';
 import { ACADEMY_STAGES } from '../src/data/academyData';
 import { localizeAcademyStages } from '../src/i18n/academyLocalization';
 import { localizeAcademyStage81 } from '../src/i18n/academyLocalization81';
@@ -223,6 +224,28 @@ for (const language of ['en', 'pl'] as const) {
     assert.equal(translated.lessons.length, source.lessons.length, `${path}.lessons ist unvollständig`);
     translated.lessons.forEach((lesson, lessonIndex) => assertLessonContent(source.lessons[lessonIndex], lesson, language));
   });
+}
+
+const vite = await createServer({
+  appType: 'custom',
+  logLevel: 'silent',
+  server: { middlewareMode: true },
+});
+
+try {
+  const runtimeModule = await vite.ssrLoadModule('/src/i18n/useLocalizedAcademyStages.ts') as {
+    loadAcademyLocalizer: (language: 'en' | 'pl') => Promise<(stages: Stage[]) => Stage[]>;
+  };
+  for (const language of ['en', 'pl'] as const) {
+    const localizeRuntimeStages = await runtimeModule.loadAcademyLocalizer(language);
+    assert.deepEqual(
+      localizeRuntimeStages(ACADEMY_STAGES),
+      localize(language),
+      `${language}: Die bedarfsgeladene Sprachfassung weicht von der geprüften Academy-Lokalisierung ab`,
+    );
+  }
+} finally {
+  await vite.close();
 }
 
 console.log('Academy-Lokalisierung geprüft: 99 Etappen, Englisch und Polnisch, Inhalte und technische Felder vollständig.');
