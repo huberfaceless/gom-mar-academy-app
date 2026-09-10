@@ -234,14 +234,24 @@ const vite = await createServer({
 
 try {
   const runtimeModule = await vite.ssrLoadModule('/src/i18n/useLocalizedAcademyStages.ts') as {
-    loadAcademyLocalizer: (language: 'en' | 'pl') => Promise<(stages: Stage[]) => Stage[]>;
+    loadAcademyLocalizer: (language: 'en' | 'pl', stageIds?: number[]) => Promise<(stages: Stage[]) => Stage[]>;
   };
   for (const language of ['en', 'pl'] as const) {
     const localizeRuntimeStages = await runtimeModule.loadAcademyLocalizer(language);
+    const fullyLocalizedStages = localize(language);
     assert.deepEqual(
       localizeRuntimeStages(ACADEMY_STAGES),
-      localize(language),
+      fullyLocalizedStages,
       `${language}: Die bedarfsgeladene Sprachfassung weicht von der geprüften Academy-Lokalisierung ab`,
+    );
+
+    const localizeFirstGroup = await runtimeModule.loadAcademyLocalizer(language, [1, 2]);
+    const firstGroupOnly = localizeFirstGroup(ACADEMY_STAGES);
+    assert.deepEqual(firstGroupOnly.slice(0, 20), fullyLocalizedStages.slice(0, 20), `${language}: Etappengruppe 1–20 ist unvollständig`);
+    assert.deepEqual(
+      firstGroupOnly.slice(20),
+      preserveAcademyTechnicalFields(ACADEMY_STAGES, ACADEMY_STAGES).slice(20),
+      `${language}: Nicht angeforderte Etappengruppen wurden geladen`,
     );
   }
 } finally {

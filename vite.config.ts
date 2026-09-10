@@ -10,13 +10,24 @@ const academyLocalizationFiles = [
   ...Array.from({ length: 19 }, (_, index) => `academyLocalization${index + 81}.ts`),
 ];
 
-const academyLocalizationModuleIds = {
-  en: 'virtual:academy-localization-en',
-  pl: 'virtual:academy-localization-pl',
-} as const;
+const academyLocalizationGroups = [
+  { key: '1-20', from: 1, to: 20 },
+  { key: '21-40', from: 21, to: 40 },
+  { key: '41-60', from: 41, to: 60 },
+  { key: '61-80', from: 61, to: 80 },
+  { key: '81-99', from: 81, to: 99 },
+] as const;
 
-const createAcademyLocalizationModule = (language: keyof typeof academyLocalizationModuleIds) => {
-  const patches = academyLocalizationFiles.map((filename) => {
+const academyLocalizationModules = (['en', 'pl'] as const).flatMap((language) => (
+  academyLocalizationGroups.map((group) => ({
+    ...group,
+    language,
+    id: `virtual:academy-localization-${language}-${group.key}`,
+  }))
+));
+
+const createAcademyLocalizationModule = (language: 'en' | 'pl', from: number, to: number) => {
+  const patches = academyLocalizationFiles.flatMap((filename) => {
     const filePath = path.resolve(__dirname, 'src/i18n', filename);
     const sourceText = fs.readFileSync(filePath, 'utf8');
     const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
@@ -39,26 +50,41 @@ const createAcademyLocalizationModule = (language: keyof typeof academyLocalizat
       throw new Error(`Sprachfassung ${language} fehlt in ${filename}.`);
     }
 
-    return languageProperty.initializer.getText(sourceFile);
+    if (!ts.isObjectLiteralExpression(languageProperty.initializer)) {
+      throw new Error(`Sprachfassung ${language} in ${filename} ist kein Etappenobjekt.`);
+    }
+
+    return languageProperty.initializer.properties.flatMap((property) => {
+      if (!ts.isPropertyAssignment(property)) return [];
+      const name = property.name;
+      if (!ts.isIdentifier(name) && !ts.isStringLiteral(name) && !ts.isNumericLiteral(name)) return [];
+      const stageId = Number(name.text);
+      return Number.isInteger(stageId) && stageId >= from && stageId <= to
+        ? [property.getText(sourceFile)]
+        : [];
+    });
   });
 
-  return `export default Object.assign({}, ${patches.join(',\n')});`;
+  return `export default {${patches.join(',\n')}};`;
 };
 
 const academyLocalizationPlugin = () => ({
-  name: 'academy-localization-by-language',
+  name: 'academy-localization-by-stage-group',
   resolveId(id: string) {
-    if (id === academyLocalizationModuleIds.en || id === academyLocalizationModuleIds.pl) return `\0${id}`;
+    if (academyLocalizationModules.some((module) => module.id === id)) return `\0${id}`;
     return null;
   },
   load(id: string) {
-    const language = Object.entries(academyLocalizationModuleIds)
-      .find(([, moduleId]) => id === `\0${moduleId}`)?.[0] as keyof typeof academyLocalizationModuleIds | undefined;
-    if (!language) return null;
+    const localizationModule = academyLocalizationModules.find((module) => id === `\0${module.id}`);
+    if (!localizationModule) return null;
     for (const filename of academyLocalizationFiles) {
       this.addWatchFile(path.resolve(__dirname, 'src/i18n', filename));
     }
-    return createAcademyLocalizationModule(language);
+    return createAcademyLocalizationModule(
+      localizationModule.language,
+      localizationModule.from,
+      localizationModule.to,
+    );
   },
 });
 
