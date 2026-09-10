@@ -7,12 +7,23 @@ import {
   updateProfile,
   reload,
   User,
-  AuthError
+  AuthError,
+  type ActionCodeSettings,
 } from 'firebase/auth';
 import { auth } from './config';
 import { LanguageCode, TranslationKey, translations } from '../i18n/translations';
 
 const tr = (language: LanguageCode, key: TranslationKey) => translations[language][key] || translations.de[key];
+const AUTH_EMAIL_CONTINUE_URL = 'https://academy.gomo-marketing.at/';
+const AUTH_EMAIL_ACTION_SETTINGS: ActionCodeSettings = {
+  url: AUTH_EMAIL_CONTINUE_URL,
+  handleCodeInApp: false,
+};
+
+const prepareAuthEmail = (language: LanguageCode): ActionCodeSettings => {
+  auth.languageCode = language;
+  return AUTH_EMAIL_ACTION_SETTINGS;
+};
 
 /**
  * Translates Firebase Auth error codes into clean, user-friendly German messages.
@@ -102,7 +113,7 @@ export async function sendVerificationEmail(userToVerify?: User | null, language
   if (!targetUser) {
     throw new Error(tr(language, 'auth.error.noUser'));
   }
-  await sendEmailVerification(targetUser);
+  await sendEmailVerification(targetUser, prepareAuthEmail(language));
 }
 
 /**
@@ -127,5 +138,5 @@ export async function sendPasswordReset(email: string, language: LanguageCode = 
   if (!email || !email.trim()) {
     throw new Error(tr(language, 'auth.validation.email'));
   }
-  await sendPasswordResetEmail(auth, email.trim());
+  await sendPasswordResetEmail(auth, email.trim(), prepareAuthEmail(language));
 }

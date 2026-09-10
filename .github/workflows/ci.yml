@@ -37,6 +37,9 @@ jobs:
       - name: TypeScript pruefen
         run: bun run lint
 
+      - name: Firebase-Authentifizierungs-E-Mails pruefen
+        run: bun run audit:auth-email
+
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 
