@@ -28,7 +28,8 @@ import {
   Check,
   Play,
   Share2,
-  Layers
+  Layers,
+  Trash2
 } from 'lucide-react';
 
 export interface TimelineItem {
@@ -94,6 +95,7 @@ interface LeadDetailModalProps {
   onClose: () => void;
   onSendEmail: (lead: LeadContact, subject: string, body: string) => Promise<void>;
   onUpdateLead: (lead: LeadContact) => Promise<void>;
+  onDeleteLead: (lead: LeadContact) => Promise<void>;
   onAddNote?: (leadId: string, noteText: string) => void;
 }
 
@@ -102,6 +104,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   onClose,
   onSendEmail,
   onUpdateLead,
+  onDeleteLead,
   onAddNote
 }) => {
   const [activeTab, setActiveTab] = useState<'maraInsights' | 'details' | 'writeEmail' | 'addNote'>(
@@ -118,6 +121,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [actionErrorMessage, setActionErrorMessage] = useState<string | null>(null);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSavingLead, setIsSavingLead] = useState(false);
+  const [isDeletingLead, setIsDeletingLead] = useState(false);
   const [campaignStarted, setCampaignStarted] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
 
@@ -252,6 +256,22 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
       setActionSuccessMessage(null);
       onClose();
     }, 2000);
+  };
+
+  const handleDeleteLead = async () => {
+    const wasConfirmed = window.confirm(
+      `Kontakt „${lead.name}“ (${lead.email}) wirklich dauerhaft löschen? Der gesamte CRM-Verlauf wird entfernt.`,
+    );
+    if (!wasConfirmed) return;
+    setActionErrorMessage(null);
+    setIsDeletingLead(true);
+    try {
+      await onDeleteLead(lead);
+      onClose();
+    } catch (error: unknown) {
+      setActionErrorMessage(error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht gelöscht werden.');
+      setIsDeletingLead(false);
+    }
   };
 
   return (
@@ -589,6 +609,15 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   >
                     <Edit3 className="w-4 h-4 text-amber-400" />
                     <span>Notiz hinzufügen</span>
+                  </button>
+
+                  <button
+                    onClick={handleDeleteLead}
+                    disabled={isDeletingLead}
+                    className="w-full py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 disabled:cursor-not-allowed disabled:opacity-60 transition-all cursor-pointer"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    <span>{isDeletingLead ? 'Wird gelöscht…' : 'Kontakt dauerhaft löschen'}</span>
                   </button>
                 </div>
               </div>

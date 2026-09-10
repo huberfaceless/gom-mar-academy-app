@@ -18,3 +18,12 @@ export const saveCrmContacts = async (contacts: LeadContact[]): Promise<LeadCont
   if (!response.ok) throw new Error(result.error || 'CRM-Kontakte konnten nicht gespeichert werden.');
   return Array.isArray(result.contacts) ? result.contacts : [];
 };
+
+export const deleteCrmContact = async (contactId: string): Promise<LeadContact[]> => {
+  const response = await authenticatedFetch(`/api/crm/contacts/${encodeURIComponent(contactId)}`, {
+    method: 'DELETE',
+  });
+  const result = await response.json().catch(() => ({})) as { contacts?: LeadContact[]; error?: string };
+  if (!response.ok) throw new Error(result.error || 'Der CRM-Kontakt konnte nicht gelöscht werden.');
+  return Array.isArray(result.contacts) ? result.contacts : [];
+};

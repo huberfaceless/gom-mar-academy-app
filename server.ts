@@ -9,7 +9,7 @@ import {
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
-import { loadCrmContacts, saveCrmContacts } from './server/crmContactsAdmin.js';
+import { deleteCrmContact, loadCrmContacts, saveCrmContacts } from './server/crmContactsAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -233,6 +233,22 @@ async function startServer() {
       const message = error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht gespeichert werden.';
       const isValidationError = /ungültig|Größe|zu groß|überschreitet/.test(message);
       res.status(isValidationError ? 400 : 503).json({ error: message });
+    }
+  });
+
+  app.delete('/api/crm/contacts/:contactId', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const contacts = await deleteCrmContact(FIREBASE_PROJECT_ID, userId, req.params.contactId);
+      if (!contacts) {
+        res.status(404).json({ error: 'Der CRM-Kontakt wurde nicht gefunden.' });
+        return;
+      }
+      res.json({ contacts });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht gelöscht werden.';
+      res.status(message.includes('ungültig') ? 400 : 503).json({ error: message });
     }
   });
 
