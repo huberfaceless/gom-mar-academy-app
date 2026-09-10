@@ -91,3 +91,18 @@ export const saveCrmContacts = async (
   }
   return validatedContacts;
 };
+
+export const deleteCrmContact = async (
+  projectId: string,
+  userId: string,
+  contactId: string,
+): Promise<Record<string, unknown>[] | null> => {
+  if (!/^[a-zA-Z0-9_-]{1,100}$/.test(contactId)) {
+    throw new Error('Die CRM-Kontakt-ID ist ungültig.');
+  }
+
+  const contacts = await loadCrmContacts(projectId, userId);
+  const remainingContacts = contacts.filter((contact) => contact.id !== contactId);
+  if (remainingContacts.length === contacts.length) return null;
+  return saveCrmContacts(projectId, userId, remainingContacts);
+};

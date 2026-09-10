@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Campaign, EmailMessage } from '../types';
 import { LeadDetailModal, LeadContact } from './LeadDetailModal';
 import { sendEmail } from '../services/emailDeliveryService';
-import { loadCrmContacts, saveCrmContacts } from '../services/crmContactsService';
+import { deleteCrmContact, loadCrmContacts, saveCrmContacts } from '../services/crmContactsService';
 import { 
   Mail, 
   Plus, 
@@ -1019,6 +1019,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             const storedContacts = await saveCrmContacts(updatedContacts);
             setContacts(storedContacts);
             setSelectedLead(updatedLead);
+          }}
+          onDeleteLead={async (lead) => {
+            if (lead.id.startsWith('lead_sim_')) {
+              setContacts((currentContacts) => currentContacts.filter((contact) => contact.id !== lead.id));
+              return;
+            }
+            const storedContacts = await deleteCrmContact(lead.id);
+            setContacts(storedContacts);
+            setSimulatedLeadSuccess(`Kontakt „${lead.name}“ wurde dauerhaft gelöscht.`);
+            setTimeout(() => setSimulatedLeadSuccess(null), 5000);
           }}
           onAddNote={() => {
             setSimulatedLeadSuccess('📝 Neue Notiz im CRM-Verlauf gespeichert!');
