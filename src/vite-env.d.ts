@@ -15,12 +15,7 @@ declare module '*.svg' {
   export default src;
 }
 
-declare module 'virtual:academy-localization-en' {
-  const patches: Record<number, unknown>;
-  export default patches;
-}
-
-declare module 'virtual:academy-localization-pl' {
+declare module 'virtual:academy-localization-*' {
   const patches: Record<number, unknown>;
   export default patches;
 }

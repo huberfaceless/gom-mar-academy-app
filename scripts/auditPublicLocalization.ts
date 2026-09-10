@@ -11,10 +11,12 @@ for (const [source, label] of [[dashboard, 'Dashboard'], [academy, 'Academy']] a
   assert.match(source, /useLocalizedAcademyStages\(/, `${label} muss den gemeinsamen Lokalisierungshook verwenden.`);
   assert.doesNotMatch(source, /localizeAllAcademyStages/, `${label} darf die vollständige Lokalisierung nicht synchron laden.`);
 }
-assert.match(localizationHook, /import\('virtual:academy-localization-en'\)/, 'Englisch muss separat geladen werden.');
-assert.match(localizationHook, /import\('virtual:academy-localization-pl'\)/, 'Polnisch muss separat geladen werden.');
-assert.match(viteConfig, /virtual:academy-localization-en/, 'Der Build muss ein eigenes englisches Lokalisierungsmodul erzeugen.');
-assert.match(viteConfig, /virtual:academy-localization-pl/, 'Der Build muss ein eigenes polnisches Lokalisierungsmodul erzeugen.');
+assert.match(localizationHook, /virtual:academy-localization-en-1-20/, 'Englisch muss nach Etappengruppen geladen werden.');
+assert.match(localizationHook, /virtual:academy-localization-pl-81-99/, 'Polnisch muss nach Etappengruppen geladen werden.');
+assert.match(viteConfig, /\{ key: '1-20', from: 1, to: 20 \}/, 'Der Build muss mit Etappengruppe 1–20 beginnen.');
+assert.match(viteConfig, /\{ key: '81-99', from: 81, to: 99 \}/, 'Der Build muss mit Etappengruppe 81–99 enden.');
+assert.match(dashboard, /accessibleSourceStages\.map\(\(stage\) => stage\.id\)/, 'Das Dashboard darf nur zugängliche Etappengruppen laden.');
+assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\]/, 'Eine direkt geöffnete Lektion darf nur ihre Etappengruppe laden.');
 assert.match(footer, /useLanguage\(\)/, 'Der Footer muss auf die gewählte Sprache reagieren.');
 
 for (const language of ['de', 'en', 'pl']) {

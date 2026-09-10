@@ -115,7 +115,6 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 }) => {
   const { language } = useLanguage();
   const copy = academyCopy[language];
-  const localizedStages = useLocalizedAcademyStages(stages, language);
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
   const unlockedStageIdSet = useMemo(() => new Set(user.unlockedStageIds), [user.unlockedStageIds]);
   const isLight = user.theme === 'clean-light' || !user.theme;
@@ -144,6 +143,11 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   // Search & Filter state for 99 Modules
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedRangeFilter, setSelectedRangeFilter] = useState<string>('all');
+  const localizationStageIds = useMemo(
+    () => viewMode === 'lesson' ? [selectedStageId] : stages.map((stage) => stage.id),
+    [viewMode, selectedStageId, stages],
+  );
+  const localizedStages = useLocalizedAcademyStages(stages, language, localizationStageIds);
 
   const rangeFilters = [
     { id: 'all', label: copy.allModules, range: [1, 99] },

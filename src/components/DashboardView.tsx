@@ -62,12 +62,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const copy = dashboardCopy[language];
   const isLight = user.theme === 'clean-light' || !user.theme;
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
-  const localizedStages = useLocalizedAcademyStages(ACADEMY_STAGES, language);
+  const accessibleSourceStages = useMemo(
+    () => ACADEMY_STAGES.filter((stage) => stage.id <= stageAccessLimit),
+    [stageAccessLimit],
+  );
+  const accessibleStages = useLocalizedAcademyStages(
+    accessibleSourceStages,
+    language,
+    accessibleSourceStages.map((stage) => stage.id),
+  );
   const displayName = user.name === 'GOM-MAR Mitglied' ? copy.memberName : user.name;
   const hasProAccess = user.role === 'admin' || user.tier === 'PRO' || user.tier === 'PREMIUM';
 
   // Find current stage & next incomplete lesson
-  const accessibleStages = localizedStages.filter((stage) => stage.id <= stageAccessLimit);
   const currentStage = accessibleStages.find((s) => s.id === user.currentStageId) || accessibleStages[0];
   
   let nextLesson: Lesson | undefined;
