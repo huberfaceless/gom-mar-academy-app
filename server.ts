@@ -9,6 +9,7 @@ import {
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
+import { loadCrmContacts, saveCrmContacts } from './server/crmContactsAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -208,6 +209,31 @@ async function startServer() {
       commit: process.env.APP_COMMIT_SHA || null,
       emailDeliveryConfigured: Boolean(process.env.SENDGRID_API_KEY?.trim() && process.env.SENDGRID_FROM_EMAIL?.trim()),
     });
+  });
+
+  app.get('/api/crm/contacts', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const contacts = await loadCrmContacts(FIREBASE_PROJECT_ID, userId);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ contacts });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht geladen werden.' });
+    }
+  });
+
+  app.put('/api/crm/contacts', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const contacts = await saveCrmContacts(FIREBASE_PROJECT_ID, userId, req.body?.contacts);
+      res.json({ contacts });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht gespeichert werden.';
+      const isValidationError = /ungültig|Größe|zu groß|überschreitet/.test(message);
+      res.status(isValidationError ? 400 : 503).json({ error: message });
+    }
   });
 
   app.post('/api/email/send', requireVerifiedMember, requireProMember, async (req, res) => {

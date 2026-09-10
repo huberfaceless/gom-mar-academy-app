@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Campaign, EmailMessage } from '../types';
 import { LeadDetailModal, LeadContact } from './LeadDetailModal';
 import { sendEmail } from '../services/emailDeliveryService';
+import { loadCrmContacts, saveCrmContacts } from '../services/crmContactsService';
 import { 
   Mail, 
   Plus, 
@@ -38,8 +39,6 @@ interface EmailAutomationViewProps {
   onOpenFragGommar: (prompt?: string) => void;
 }
 
-const INITIAL_CONTACTS: LeadContact[] = [];
-
 export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   campaigns,
   onUpdateCampaigns,
@@ -63,7 +62,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [simulatedLeadSuccess, setSimulatedLeadSuccess] = useState<string | null>(null);
 
   // CRM State
-  const [contacts, setContacts] = useState<LeadContact[]>(INITIAL_CONTACTS);
+  const [contacts, setContacts] = useState<LeadContact[]>([]);
+  const [contactsError, setContactsError] = useState<string | null>(null);
+  const [isLoadingContacts, setIsLoadingContacts] = useState(true);
+  const [isSavingContact, setIsSavingContact] = useState(false);
   const [selectedLead, setSelectedLead] = useState<LeadContact | null>(null);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,6 +75,21 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [newLeadEmail, setNewLeadEmail] = useState('');
   const [newLeadRole, setNewLeadRole] = useState('');
   const [newLeadCompany, setNewLeadCompany] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+    void loadCrmContacts()
+      .then((storedContacts) => {
+        if (!cancelled) setContacts(storedContacts);
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) setContactsError(error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht geladen werden.');
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoadingContacts(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   const handleSelectEmail = (email: EmailMessage) => {
     setSelectedEmail(email);
@@ -103,7 +120,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   };
 
   // Create new Lead in CRM
-  const handleCreateNewLead = (e: React.FormEvent) => {
+  const handleCreateNewLead = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newLeadName.trim() || !newLeadEmail.trim()) return;
 
@@ -136,7 +153,18 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       ]
     };
 
-    setContacts([newLead, ...contacts]);
+    setContactsError(null);
+    setIsSavingContact(true);
+    try {
+      const persistentContacts = contacts.filter((contact) => !contact.id.startsWith('lead_sim_'));
+      const storedContacts = await saveCrmContacts([newLead, ...persistentContacts]);
+      setContacts(storedContacts);
+    } catch (error: unknown) {
+      setContactsError(error instanceof Error ? error.message : 'Der Kontakt konnte nicht gespeichert werden.');
+      return;
+    } finally {
+      setIsSavingContact(false);
+    }
     setNewLeadName('');
     setNewLeadEmail('');
     setNewLeadRole('');
@@ -318,6 +346,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
         <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-semibold flex items-center gap-3 animate-fadeIn shadow-sm">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
           <span>{simulatedLeadSuccess}</span>
+        </div>
+      )}
+
+      {contactsError && (
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-semibold" role="alert">
+          {contactsError}
         </div>
       )}
 
@@ -813,10 +847,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/20"
+                    disabled={isSavingContact}
+                    className="px-6 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/20"
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>Kontakt speichern</span>
+                    <span>{isSavingContact ? 'Wird gespeichert…' : 'Kontakt speichern'}</span>
                   </button>
                 </div>
               </form>
@@ -950,7 +985,13 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               </div>
             ))}
 
-            {filteredContacts.length === 0 && (
+            {isLoadingContacts && (
+              <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 text-slate-500">
+                <p className="text-sm font-semibold">CRM-Kontakte werden geladen…</p>
+              </div>
+            )}
+
+            {!isLoadingContacts && filteredContacts.length === 0 && (
               <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 text-slate-500 space-y-2">
                 <Users className="w-8 h-8 text-slate-400 mx-auto" />
                 <p className="text-sm font-semibold">Keine Kontakte gefunden.</p>
@@ -962,20 +1003,29 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       )}
 
       {/* LEAD DETAILS FULL INTERACTIVE MODAL */}
-      <LeadDetailModal
-        lead={selectedLead}
-        isOpen={isLeadModalOpen}
-        onClose={() => setIsLeadModalOpen(false)}
-        onSendEmail={async (lead, sub, body) => {
-          await sendEmail({ to: lead.email, subject: sub, body });
-          setSimulatedLeadSuccess(`📨 E-Mail "${sub}" an ${lead.name} (${lead.email}) versendet!`);
-          setTimeout(() => setSimulatedLeadSuccess(null), 5000);
-        }}
-        onAddNote={(leadId, noteText) => {
-          setSimulatedLeadSuccess(`📝 Neue Notiz im CRM-Verlauf gespeichert!`);
-          setTimeout(() => setSimulatedLeadSuccess(null), 5000);
-        }}
-      />
+      {selectedLead && isLeadModalOpen ? (
+        <LeadDetailModal
+          key={selectedLead.id}
+          lead={selectedLead}
+          onClose={() => setIsLeadModalOpen(false)}
+          onSendEmail={async (lead, sub, body) => {
+            await sendEmail({ to: lead.email, subject: sub, body });
+            setSimulatedLeadSuccess(`📨 E-Mail "${sub}" an ${lead.name} (${lead.email}) versendet!`);
+            setTimeout(() => setSimulatedLeadSuccess(null), 5000);
+          }}
+          onUpdateLead={async (updatedLead) => {
+            const persistentContacts = contacts.filter((contact) => !contact.id.startsWith('lead_sim_'));
+            const updatedContacts = persistentContacts.map((contact) => contact.id === updatedLead.id ? updatedLead : contact);
+            const storedContacts = await saveCrmContacts(updatedContacts);
+            setContacts(storedContacts);
+            setSelectedLead(updatedLead);
+          }}
+          onAddNote={() => {
+            setSimulatedLeadSuccess('📝 Neue Notiz im CRM-Verlauf gespeichert!');
+            setTimeout(() => setSimulatedLeadSuccess(null), 5000);
+          }}
+        />
+      ) : null}
     </div>
   );
 };
