@@ -19,6 +19,8 @@ assert.match(dashboard, /accessibleSourceStages\.map\(\(stage\) => stage\.id\)/,
 assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\]/, 'Eine direkt geöffnete Lektion darf nur ihre Etappengruppe laden.');
 assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\] : overviewStageIds/, 'Die Academy-Übersicht darf nur sichtbare Etappengruppen laden.');
 assert.match(academy, /stage\.id >= selectedRange\[0\] && stage\.id <= selectedRange\[1\]/, 'Der ausgewählte Academy-Bereich muss die geladenen Etappen begrenzen.');
+assert.match(academy, /else \{\s+handleBackToOverview\(\);\s+\}/, 'Die erste Lektion muss über die Rückwärtsnavigation verlassen werden können.');
+assert.match(academy, /if \(isStageUnlocked\) \{[\s\S]*onClick=\{\(\) => handleOpenLesson\(stage\.id, lesson\.id\)\}/, 'Alle Lektionen einer freigeschalteten Etappe müssen anklickbar sein.');
 assert.match(footer, /useLanguage\(\)/, 'Der Footer muss auf die gewählte Sprache reagieren.');
 
 for (const language of ['de', 'en', 'pl']) {
