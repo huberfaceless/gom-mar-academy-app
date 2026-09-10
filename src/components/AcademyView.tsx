@@ -214,6 +214,11 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleBackToOverview = () => {
+    setViewMode('overview');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Helper for navigating to next lesson
   const handleNextLesson = () => {
     const currentIndex = currentStage.lessons.findIndex((l) => l.id === currentLesson.id);
@@ -242,6 +247,8 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
         setSelectedStageId(prevStage.id);
         setSelectedLessonId(prevStage.lessons[prevStage.lessons.length - 1].id);
       }
+    } else {
+      handleBackToOverview();
     }
     setAiAnswer('');
   };
@@ -536,6 +543,33 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                       );
                     }
 
+                    if (isStageUnlocked) {
+                      return (
+                        <div
+                          key={lesson.id}
+                          onClick={() => handleOpenLesson(stage.id, lesson.id)}
+                          className="flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group cursor-pointer border border-slate-200/80 dark:border-slate-700"
+                        >
+                          <div className="w-10 h-10 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                            <Play className="w-4 h-4 fill-current ml-0.5" />
+                          </div>
+
+                          <div className="flex-1">
+                            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                              {lesson.id} {lesson.title}
+                            </h3>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                              {copy.videoGuide} • {lesson.durationMinutes} Min
+                            </p>
+                          </div>
+
+                          <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
+                            {copy.view}
+                          </span>
+                        </div>
+                      );
+                    }
+
                     // Locked Lesson
                     return (
                       <div 
@@ -574,7 +608,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
       {/* Top Controls: Back to Course Overview & AI Assistant Trigger */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
         <button
-          onClick={() => setViewMode('overview')}
+          onClick={handleBackToOverview}
           className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-extrabold flex items-center gap-2 transition-colors cursor-pointer self-start sm:self-auto"
         >
           <ArrowLeft className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
