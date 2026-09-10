@@ -6,6 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
 import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { authenticatedFetch } from '../services/authenticatedFetch';
+import { isAcademyStageAccessible, resolvePreviousAcademyLocation } from '../utils/academyNavigation';
 import { 
   Play, 
   CheckCircle, 
@@ -120,7 +121,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 
   // If an initial lesson ID was passed, open lesson mode directly; otherwise start in course overview
   const requestedInitialStageId = initialStageId || user.currentStageId || 1;
-  const requestedStageIsAccessible = requestedInitialStageId <= stageAccessLimit;
+  const requestedStageIsAccessible = isAcademyStageAccessible(requestedInitialStageId, stageAccessLimit);
   const safeInitialStageId = requestedStageIsAccessible ? requestedInitialStageId : 1;
   const [viewMode, setViewMode] = useState<'overview' | 'lesson'>(
     initialLessonId && requestedStageIsAccessible ? 'lesson' : 'overview'
@@ -233,17 +234,12 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   };
 
   const handlePrevLesson = () => {
-    const currentIndex = currentStage.lessons.findIndex((l) => l.id === currentLesson.id);
-    if (currentIndex > 0) {
-      setSelectedLessonId(currentStage.lessons[currentIndex - 1].id);
-    } else if (selectedStageId > 1) {
-      const prevStage = localizedStages.find((s) => s.id === selectedStageId - 1);
-      if (prevStage) {
-        setSelectedStageId(prevStage.id);
-        setSelectedLessonId(prevStage.lessons[prevStage.lessons.length - 1].id);
-      }
-    } else {
+    const previousLocation = resolvePreviousAcademyLocation(localizedStages, selectedStageId, currentLesson.id);
+    if (previousLocation.viewMode === 'overview') {
       handleBackToOverview();
+    } else {
+      setSelectedStageId(previousLocation.stageId);
+      setSelectedLessonId(previousLocation.lessonId);
     }
     setAiAnswer('');
   };
@@ -413,7 +409,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
           ) : (
             filteredStages.map((stage) => {
             const completedInStage = stage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length;
-            const isWithinTier = stage.id <= stageAccessLimit;
+            const isWithinTier = isAcademyStageAccessible(stage.id, stageAccessLimit);
             const isStageComplete = isWithinTier && completedInStage === stage.lessons.length;
             const isStageInProgress = completedInStage > 0 && !isStageComplete;
             const isCurrentActiveStage = stage.id === (user.currentStageId || 1);
@@ -637,7 +633,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
             const isStageActive = stage.id === selectedStageId;
             const completedCount = stage.lessons.filter((l) => completedTaskIdSet.has(l.id)).length;
             const isStageFullyDone = stage.id <= stageAccessLimit && completedCount === stage.lessons.length;
-            const isStageAccessible = stage.id <= stageAccessLimit;
+            const isStageAccessible = isAcademyStageAccessible(stage.id, stageAccessLimit);
 
             return (
               <button

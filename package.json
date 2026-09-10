@@ -10,6 +10,7 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "audit:academy": "tsx scripts/auditAcademyLocalization.ts",
+    "audit:academy-navigation": "tsx scripts/auditAcademyNavigation.ts",
     "audit:membership-admin": "tsx scripts/auditMembershipAdmin.ts",
     "audit:deployment": "tsx scripts/auditCloudRunDeployment.ts",
     "audit:curriculum-admin": "tsx scripts/auditCurriculumAdmin.ts",
