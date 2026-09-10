@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Campaign, EmailMessage } from '../types';
 import { LeadDetailModal, LeadContact } from './LeadDetailModal';
+import { sendEmail } from '../services/emailDeliveryService';
 import { 
   Mail, 
   Plus, 
@@ -216,7 +217,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     };
     setContacts([testLead, ...contacts]);
 
-    setSimulatedLeadSuccess(`🎉 Neuer Test-Lead (${testLead.email}) erfasst! Willkommens-Mail (Mail 1) wurde automatisch versendet!`);
+    setSimulatedLeadSuccess(`Neuer Test-Lead (${testLead.email}) lokal erfasst. Es wurde keine E-Mail versendet.`);
     setTimeout(() => setSimulatedLeadSuccess(null), 5000);
   };
 
@@ -965,7 +966,8 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
         lead={selectedLead}
         isOpen={isLeadModalOpen}
         onClose={() => setIsLeadModalOpen(false)}
-        onSendEmail={(lead, sub, body) => {
+        onSendEmail={async (lead, sub, body) => {
+          await sendEmail({ to: lead.email, subject: sub, body });
           setSimulatedLeadSuccess(`📨 E-Mail "${sub}" an ${lead.name} (${lead.email}) versendet!`);
           setTimeout(() => setSimulatedLeadSuccess(null), 5000);
         }}
@@ -977,4 +979,3 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     </div>
   );
 };
-

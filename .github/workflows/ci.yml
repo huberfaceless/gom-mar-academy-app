@@ -40,6 +40,9 @@ jobs:
       - name: Firebase-Authentifizierungs-E-Mails pruefen
         run: bun run audit:auth-email
 
+      - name: CRM-E-Mail-Versand pruefen
+        run: bun run audit:email-delivery
+
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 

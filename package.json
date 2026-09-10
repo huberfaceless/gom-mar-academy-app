@@ -12,6 +12,7 @@
     "audit:academy": "tsx scripts/auditAcademyLocalization.ts",
     "audit:academy-navigation": "tsx scripts/auditAcademyNavigation.ts",
     "audit:auth-email": "tsx scripts/auditAuthEmailDelivery.ts",
+    "audit:email-delivery": "tsx scripts/auditEmailDelivery.ts",
     "audit:membership-admin": "tsx scripts/auditMembershipAdmin.ts",
     "audit:deployment": "tsx scripts/auditCloudRunDeployment.ts",
     "audit:curriculum-admin": "tsx scripts/auditCurriculumAdmin.ts",

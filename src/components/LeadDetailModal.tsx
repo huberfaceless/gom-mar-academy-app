@@ -93,7 +93,7 @@ interface LeadDetailModalProps {
   lead: LeadContact | null;
   isOpen: boolean;
   onClose: () => void;
-  onSendEmail?: (lead: LeadContact, subject: string, body: string) => void;
+  onSendEmail: (lead: LeadContact, subject: string, body: string) => Promise<void>;
   onAddNote?: (leadId: string, noteText: string) => void;
 }
 
@@ -117,6 +117,8 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [showTagInput, setShowTagInput] = useState(false);
   const [newTagText, setNewTagText] = useState('');
   const [actionSuccessMessage, setActionSuccessMessage] = useState<string | null>(null);
+  const [actionErrorMessage, setActionErrorMessage] = useState<string | null>(null);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [campaignStarted, setCampaignStarted] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
 
@@ -155,53 +157,65 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
     setTimeout(() => setActionSuccessMessage(null), 4000);
   };
 
-  const handleSendEmailSubmit = () => {
-    if (!emailSubject.trim() || !emailBody.trim()) return;
-    const newEntry: TimelineItem = {
-      id: `email_${Date.now()}`,
-      type: 'email',
-      title: 'E-Mail gesendet (Manuell)',
-      timestamp: 'Gerade eben',
-      emailDetails: {
-        subject: emailSubject.trim(),
-        snippet: emailBody.trim().substring(0, 80) + '...',
-        opens: 0
-      }
-    };
-    setTimeline([newEntry, ...timeline]);
-    if (onSendEmail) {
-      onSendEmail(lead, emailSubject, emailBody);
+  const deliverEmail = async (subject: string, body: string, title: string, successMessage: string) => {
+    const wasConfirmed = window.confirm(`E-Mail mit dem Betreff „${subject}“ jetzt an ${lead.email} senden?`);
+    if (!wasConfirmed) return false;
+    setActionErrorMessage(null);
+    setActionSuccessMessage(null);
+    setIsSendingEmail(true);
+    try {
+      await onSendEmail(lead, subject, body);
+      const newEntry: TimelineItem = {
+        id: `email_${Date.now()}`,
+        type: 'email',
+        title,
+        timestamp: 'Gerade eben',
+        emailDetails: {
+          subject,
+          snippet: `${body.substring(0, 80)}${body.length > 80 ? '...' : ''}`,
+          opens: 0
+        }
+      };
+      setTimeline((currentTimeline) => [newEntry, ...currentTimeline]);
+      setActionSuccessMessage(successMessage);
+      setTimeout(() => setActionSuccessMessage(null), 4000);
+      return true;
+    } catch (error: unknown) {
+      setActionErrorMessage(error instanceof Error ? error.message : 'Die E-Mail konnte nicht versendet werden.');
+      return false;
+    } finally {
+      setIsSendingEmail(false);
     }
+  };
+
+  const handleSendEmailSubmit = async () => {
+    if (!emailSubject.trim() || !emailBody.trim()) return;
+    const subject = emailSubject.trim();
+    const body = emailBody.trim();
+    const wasSent = await deliverEmail(
+      subject,
+      body,
+      'E-Mail gesendet (Manuell)',
+      `📨 E-Mail erfolgreich an ${lead.email} versendet!`,
+    );
+    if (!wasSent) return;
     setEmailSubject('');
     setEmailBody('');
     setActiveTab(lead.maraInsights ? 'maraInsights' : 'details');
-    setActionSuccessMessage(`📨 E-Mail erfolgreich an ${lead.email} versendet!`);
-    setTimeout(() => setActionSuccessMessage(null), 4000);
   };
 
-  const handleUseDraftDirectly = () => {
+  const handleUseDraftDirectly = async () => {
     if (!lead.maraInsights) return;
     const draft = lead.maraInsights.nextRecommendedAction;
     const subject = draft.subject || `Austausch zu Wachstumsstrategien & Skalierung – ${lead.company}`;
     const body = draft.draftText;
     
-    const newEntry: TimelineItem = {
-      id: `email_${Date.now()}`,
-      type: 'email',
-      title: 'KI-Empfohlene E-Mail gesendet',
-      timestamp: 'Gerade eben',
-      emailDetails: {
-        subject: subject,
-        snippet: body.substring(0, 80) + '...',
-        opens: 0
-      }
-    };
-    setTimeline([newEntry, ...timeline]);
-    if (onSendEmail) {
-      onSendEmail(lead, subject, body);
-    }
-    setActionSuccessMessage(`🚀 Personalisierter Mara KI-Entwurf erfolgreich an ${lead.email} versendet!`);
-    setTimeout(() => setActionSuccessMessage(null), 4000);
+    await deliverEmail(
+      subject,
+      body,
+      'KI-Empfohlene E-Mail gesendet',
+      `🚀 Personalisierter Mara KI-Entwurf erfolgreich an ${lead.email} versendet!`,
+    );
   };
 
   const handleEditDraft = () => {
@@ -301,6 +315,12 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
           </div>
         )}
 
+        {actionErrorMessage && (
+          <div className="m-4 p-3.5 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs sm:text-sm font-semibold flex items-center gap-2 animate-fadeIn" role="alert">
+            <span>{actionErrorMessage}</span>
+          </div>
+        )}
+
         {/* MARA INSIGHTS DEDICATED VIEW */}
         {activeTab === 'maraInsights' && lead.maraInsights && (
           <div className="p-4 sm:p-6 lg:p-8 space-y-6 animate-fadeIn">
@@ -385,10 +405,11 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 <div className="flex items-center gap-3 pt-2">
                   <button
                     onClick={handleUseDraftDirectly}
-                    className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
+                    disabled={isSendingEmail}
+                    className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Entwurf Verwenden</span>
+                    <span>{isSendingEmail ? 'Wird gesendet…' : 'Entwurf jetzt senden'}</span>
                   </button>
                   <button
                     onClick={handleEditDraft}
@@ -660,10 +681,11 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                       </button>
                       <button
                         onClick={handleSendEmailSubmit}
-                        className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30"
+                        disabled={isSendingEmail || !emailSubject.trim() || !emailBody.trim()}
+                        className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30"
                       >
                         <Send className="w-4 h-4" />
-                        <span>E-Mail jetzt senden</span>
+                        <span>{isSendingEmail ? 'Wird gesendet…' : 'E-Mail jetzt senden'}</span>
                       </button>
                     </div>
                   </div>
