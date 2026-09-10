@@ -20,7 +20,9 @@ assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\]/, 'Eine dire
 assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\] : overviewStageIds/, 'Die Academy-Übersicht darf nur sichtbare Etappengruppen laden.');
 assert.match(academy, /stage\.id >= selectedRange\[0\] && stage\.id <= selectedRange\[1\]/, 'Der ausgewählte Academy-Bereich muss die geladenen Etappen begrenzen.');
 assert.match(academy, /else \{\s+handleBackToOverview\(\);\s+\}/, 'Die erste Lektion muss über die Rückwärtsnavigation verlassen werden können.');
-assert.match(academy, /if \(isStageUnlocked\) \{[\s\S]*onClick=\{\(\) => handleOpenLesson\(stage\.id, lesson\.id\)\}/, 'Alle Lektionen einer freigeschalteten Etappe müssen anklickbar sein.');
+assert.match(academy, /const isStageAccessible = stage\.id <= stageAccessLimit;/, 'Etappen müssen ausschließlich entsprechend der Tarifgrenze anklickbar sein.');
+assert.match(academy, /if \(isStageAccessible\) \{[\s\S]*onClick=\{\(\) => handleOpenLesson\(stage\.id, lesson\.id\)\}/, 'Alle Lektionen einer zugänglichen Etappe müssen anklickbar sein.');
+assert.doesNotMatch(academy, /unlockedStageIdSet/, 'Gespeicherter Lernfortschritt darf zugängliche Etappen nicht zusätzlich sperren.');
 assert.match(footer, /useLanguage\(\)/, 'Der Footer muss auf die gewählte Sprache reagieren.');
 
 for (const language of ['de', 'en', 'pl']) {
