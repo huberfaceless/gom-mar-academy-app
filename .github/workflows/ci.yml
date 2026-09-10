@@ -43,6 +43,9 @@ jobs:
       - name: CRM-E-Mail-Versand pruefen
         run: bun run audit:email-delivery
 
+      - name: CRM-Kontaktspeicherung pruefen
+        run: bun run audit:crm-persistence
+
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 

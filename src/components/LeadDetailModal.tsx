@@ -90,22 +90,20 @@ export interface LeadContact {
 }
 
 interface LeadDetailModalProps {
-  lead: LeadContact | null;
-  isOpen: boolean;
+  lead: LeadContact;
   onClose: () => void;
   onSendEmail: (lead: LeadContact, subject: string, body: string) => Promise<void>;
+  onUpdateLead: (lead: LeadContact) => Promise<void>;
   onAddNote?: (leadId: string, noteText: string) => void;
 }
 
 export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   lead,
-  isOpen,
   onClose,
   onSendEmail,
+  onUpdateLead,
   onAddNote
 }) => {
-  if (!isOpen || !lead) return null;
-
   const [activeTab, setActiveTab] = useState<'maraInsights' | 'details' | 'writeEmail' | 'addNote'>(
     lead.maraInsights ? 'maraInsights' : 'details'
   );
@@ -119,6 +117,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [actionSuccessMessage, setActionSuccessMessage] = useState<string | null>(null);
   const [actionErrorMessage, setActionErrorMessage] = useState<string | null>(null);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [isSavingLead, setIsSavingLead] = useState(false);
   const [campaignStarted, setCampaignStarted] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
 
@@ -135,7 +134,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
     setTags(tags.filter((t) => t !== tagToRemove));
   };
 
-  const handleSaveNote = () => {
+  const handleSaveNote = async () => {
     if (!newNoteText.trim()) return;
     const newEntry: TimelineItem = {
       id: `note_${Date.now()}`,
@@ -147,14 +146,22 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
         text: newNoteText.trim()
       }
     };
-    setTimeline([newEntry, ...timeline]);
-    if (onAddNote) {
-      onAddNote(lead.id, newNoteText.trim());
+    const nextTimeline = [newEntry, ...timeline];
+    setActionErrorMessage(null);
+    setIsSavingLead(true);
+    try {
+      await onUpdateLead({ ...lead, timeline: nextTimeline, lastInteraction: 'Gerade eben' });
+      setTimeline(nextTimeline);
+      if (onAddNote) onAddNote(lead.id, newNoteText.trim());
+      setNewNoteText('');
+      setActiveTab(lead.maraInsights ? 'maraInsights' : 'details');
+      setActionSuccessMessage('✅ Notiz erfolgreich im Interaktionsverlauf gespeichert!');
+      setTimeout(() => setActionSuccessMessage(null), 4000);
+    } catch (error: unknown) {
+      setActionErrorMessage(error instanceof Error ? error.message : 'Die CRM-Notiz konnte nicht gespeichert werden.');
+    } finally {
+      setIsSavingLead(false);
     }
-    setNewNoteText('');
-    setActiveTab(lead.maraInsights ? 'maraInsights' : 'details');
-    setActionSuccessMessage('✅ Notiz erfolgreich im Interaktionsverlauf gespeichert!');
-    setTimeout(() => setActionSuccessMessage(null), 4000);
   };
 
   const deliverEmail = async (subject: string, body: string, title: string, successMessage: string) => {
@@ -176,7 +183,13 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
           opens: 0
         }
       };
-      setTimeline((currentTimeline) => [newEntry, ...currentTimeline]);
+      const nextTimeline = [newEntry, ...timeline];
+      setTimeline(nextTimeline);
+      try {
+        await onUpdateLead({ ...lead, timeline: nextTimeline, lastInteraction: 'Gerade eben' });
+      } catch {
+        setActionErrorMessage('Die E-Mail wurde versendet, aber der CRM-Verlauf konnte nicht gespeichert werden.');
+      }
       setActionSuccessMessage(successMessage);
       setTimeout(() => setActionSuccessMessage(null), 4000);
       return true;
@@ -731,10 +744,11 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                       </button>
                       <button
                         onClick={handleSaveNote}
-                        className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-500/20"
+                        disabled={isSavingLead || !newNoteText.trim()}
+                        className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60 text-slate-950 text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-500/20"
                       >
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>Notiz im Verlauf speichern</span>
+                        <span>{isSavingLead ? 'Wird gespeichert…' : 'Notiz im Verlauf speichern'}</span>
                       </button>
                     </div>
                   </div>
