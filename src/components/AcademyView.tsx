@@ -143,20 +143,26 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   // Search & Filter state for 99 Modules
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedRangeFilter, setSelectedRangeFilter] = useState<string>('all');
-  const localizationStageIds = useMemo(
-    () => viewMode === 'lesson' ? [selectedStageId] : stages.map((stage) => stage.id),
-    [viewMode, selectedStageId, stages],
-  );
-  const localizedStages = useLocalizedAcademyStages(stages, language, localizationStageIds);
-
-  const rangeFilters = [
+  const rangeFilters = useMemo(() => [
     { id: 'all', label: copy.allModules, range: [1, 99] },
     { id: '1-10', label: copy.foundation, range: [1, 10] },
     { id: '11-25', label: copy.traffic, range: [11, 25] },
     { id: '26-50', label: copy.scale, range: [26, 50] },
     { id: '51-75', label: copy.systems, range: [51, 75] },
     { id: '76-99', label: copy.empire, range: [76, 99] },
-  ];
+  ], [copy]);
+  const overviewStageIds = useMemo(() => {
+    const selectedRange = rangeFilters.find((filter) => filter.id === selectedRangeFilter)?.range;
+    if (!selectedRange || selectedRangeFilter === 'all') return stages.map((stage) => stage.id);
+    return stages
+      .filter((stage) => stage.id >= selectedRange[0] && stage.id <= selectedRange[1])
+      .map((stage) => stage.id);
+  }, [rangeFilters, selectedRangeFilter, stages]);
+  const localizationStageIds = useMemo(
+    () => viewMode === 'lesson' ? [selectedStageId] : overviewStageIds,
+    [viewMode, selectedStageId, overviewStageIds],
+  );
+  const localizedStages = useLocalizedAcademyStages(stages, language, localizationStageIds);
 
   const filteredStages = useMemo(() => {
     return localizedStages.filter((stage) => {
@@ -184,7 +190,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 
       return true;
     });
-  }, [searchQuery, selectedRangeFilter, localizedStages, language]);
+  }, [searchQuery, selectedRangeFilter, localizedStages, rangeFilters]);
 
   const currentStage = localizedStages.find((s) => s.id === selectedStageId) || localizedStages[0];
   const currentLesson = currentStage.lessons.find((l) => l.id === selectedLessonId) || currentStage.lessons[0];

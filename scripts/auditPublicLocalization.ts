@@ -17,6 +17,8 @@ assert.match(viteConfig, /\{ key: '1-20', from: 1, to: 20 \}/, 'Der Build muss m
 assert.match(viteConfig, /\{ key: '81-99', from: 81, to: 99 \}/, 'Der Build muss mit Etappengruppe 81–99 enden.');
 assert.match(dashboard, /accessibleSourceStages\.map\(\(stage\) => stage\.id\)/, 'Das Dashboard darf nur zugängliche Etappengruppen laden.');
 assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\]/, 'Eine direkt geöffnete Lektion darf nur ihre Etappengruppe laden.');
+assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\] : overviewStageIds/, 'Die Academy-Übersicht darf nur sichtbare Etappengruppen laden.');
+assert.match(academy, /stage\.id >= selectedRange\[0\] && stage\.id <= selectedRange\[1\]/, 'Der ausgewählte Academy-Bereich muss die geladenen Etappen begrenzen.');
 assert.match(footer, /useLanguage\(\)/, 'Der Footer muss auf die gewählte Sprache reagieren.');
 
 for (const language of ['de', 'en', 'pl']) {
