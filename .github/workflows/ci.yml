@@ -40,6 +40,9 @@ jobs:
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 
+      - name: Academy-Navigation pruefen
+        run: bun run audit:academy-navigation
+
       - name: Oeffentliche Lokalisierung pruefen
         run: bun run audit:public-i18n
 
