@@ -31,8 +31,18 @@ type FirebaseTokenPayload = {
 type FirebaseRequest = Request & { firebaseUser?: FirebaseTokenPayload };
 type FirebaseCertificates = Record<string, string>;
 
+type SendEmailRequest = {
+  to?: unknown;
+  subject?: unknown;
+  body?: unknown;
+};
+
 const FIREBASE_PROJECT_ID = process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie';
 const FIREBASE_CERTIFICATES_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com';
+const SENDGRID_API_URL = 'https://api.sendgrid.com/v3/mail/send';
+const EMAIL_ADDRESS_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_SEND_WINDOW_MS = 60_000;
+const EMAIL_SEND_LIMIT = 5;
 const ACADEMY_ADMIN_EMAILS = new Set(
   (process.env.ACADEMY_ADMIN_EMAILS || 'admin@gom-mar.de')
     .split(',')
@@ -107,6 +117,7 @@ const isAcademyAdminToken = (payload?: FirebaseTokenPayload): boolean => payload
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
+  const recentEmailSends = new Map<string, number[]>();
 
   app.use(express.json({ limit: '1mb' }));
 
@@ -195,7 +206,74 @@ async function startServer() {
       service: process.env.K_SERVICE || null,
       revision: process.env.K_REVISION || null,
       commit: process.env.APP_COMMIT_SHA || null,
+      emailDeliveryConfigured: Boolean(process.env.SENDGRID_API_KEY?.trim() && process.env.SENDGRID_FROM_EMAIL?.trim()),
     });
+  });
+
+  app.post('/api/email/send', requireVerifiedMember, requireProMember, async (req, res) => {
+    const sendGridApiKey = process.env.SENDGRID_API_KEY?.trim();
+    const senderEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
+    const senderName = process.env.SENDGRID_FROM_NAME?.trim() || 'GOM-MAR Academy';
+    if (!sendGridApiKey || !senderEmail || !EMAIL_ADDRESS_PATTERN.test(senderEmail)) {
+      res.status(503).json({ error: 'Der E-Mail-Versand ist derzeit nicht vollständig konfiguriert.' });
+      return;
+    }
+
+    const { to, subject, body } = (req.body || {}) as SendEmailRequest;
+    const recipient = typeof to === 'string' ? to.trim().toLowerCase() : '';
+    const emailSubject = typeof subject === 'string' ? subject.trim() : '';
+    const emailBody = typeof body === 'string' ? body.trim() : '';
+    if (!EMAIL_ADDRESS_PATTERN.test(recipient)) {
+      res.status(400).json({ error: 'Bitte gib eine gültige Empfängeradresse ein.' });
+      return;
+    }
+    if (!emailSubject || emailSubject.length > 200) {
+      res.status(400).json({ error: 'Der Betreff muss zwischen 1 und 200 Zeichen lang sein.' });
+      return;
+    }
+    if (!emailBody || emailBody.length > 20_000) {
+      res.status(400).json({ error: 'Der Nachrichtentext muss zwischen 1 und 20.000 Zeichen lang sein.' });
+      return;
+    }
+
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    const userId = firebaseUser?.sub || '';
+    const windowStart = Date.now() - EMAIL_SEND_WINDOW_MS;
+    const sendsInWindow = (recentEmailSends.get(userId) || []).filter((timestamp) => timestamp > windowStart);
+    if (sendsInWindow.length >= EMAIL_SEND_LIMIT) {
+      res.status(429).json({ error: 'Zu viele E-Mails in kurzer Zeit. Bitte warte eine Minute.' });
+      return;
+    }
+    recentEmailSends.set(userId, [...sendsInWindow, Date.now()]);
+
+    try {
+      const response = await fetch(SENDGRID_API_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${sendGridApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          personalizations: [{ to: [{ email: recipient }] }],
+          from: { email: senderEmail, name: senderName.slice(0, 100) },
+          subject: emailSubject,
+          content: [{ type: 'text/plain', value: emailBody }],
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('SendGrid-Versand fehlgeschlagen.', {
+          status: response.status,
+          requestId: response.headers.get('x-message-id'),
+        });
+        res.status(502).json({ error: 'SendGrid hat die E-Mail nicht angenommen. Bitte versuche es erneut.' });
+        return;
+      }
+
+      res.status(202).json({ success: true });
+    } catch {
+      res.status(502).json({ error: 'Der E-Mail-Dienst ist momentan nicht erreichbar.' });
+    }
   });
 
   app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
