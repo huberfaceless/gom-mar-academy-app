@@ -521,19 +521,19 @@ async function startServer() {
     const pageCopy = {
       de: {
         title: 'Marketing-E-Mails abmelden', promptTitle: 'Abmeldung bestätigen', successTitle: 'Abmeldung gespeichert', errorTitle: 'Abmeldung nicht möglich',
-        prompt: 'Bestätige, dass du keine Marketing-E-Mails der GOM-MAR Academy mehr erhalten möchtest.', confirm: 'Marketing-E-Mails abmelden',
+        prompt: 'Schade, dass du keine Marketing-E-Mails mehr erhalten möchtest. Wenn dir etwas nicht gefallen hat, freuen wir uns über dein Feedback. Mit der Abmeldung erhältst du keine E-Mail-Hinweise mehr auf neue Academy-Inhalte, hilfreiche Tipps und Angebote. Dein Academy-Zugang und deine Mitgliedschaft bleiben vollständig erhalten. Möchtest du dich trotzdem abmelden?', confirm: 'Marketing-E-Mails abmelden',
         success: 'Du erhältst keine weiteren Marketing-E-Mails. Wichtige Nachrichten zu deinem Konto und deiner Mitgliedschaft bleiben davon unberührt.',
         error: 'Der Abmeldelink ist ungültig. Bitte widerrufe die Einwilligung alternativ in deinem Academy-Profil.', back: 'Zur GOM-MAR Academy',
       },
       en: {
         title: 'Unsubscribe from marketing emails', promptTitle: 'Confirm unsubscribe', successTitle: 'Unsubscribe saved', errorTitle: 'Unable to unsubscribe',
-        prompt: 'Confirm that you no longer want to receive marketing emails from the GOM-MAR Academy.', confirm: 'Unsubscribe from marketing emails',
+        prompt: 'We are sorry to see you unsubscribe from marketing emails. If something did not meet your expectations, we welcome your feedback. After unsubscribing, you will no longer receive email updates about new Academy content, helpful tips, and offers. Your Academy access and membership remain fully active. Do you still want to unsubscribe?', confirm: 'Unsubscribe from marketing emails',
         success: 'You will receive no further marketing emails. Important account and membership messages are not affected.',
         error: 'The unsubscribe link is invalid. You can also withdraw your consent in your Academy profile.', back: 'Go to GOM-MAR Academy',
       },
       pl: {
         title: 'Rezygnacja z e-maili marketingowych', promptTitle: 'Potwierdź rezygnację', successTitle: 'Rezygnacja zapisana', errorTitle: 'Nie można zrezygnować',
-        prompt: 'Potwierdź, że nie chcesz już otrzymywać e-maili marketingowych od GOM-MAR Academy.', confirm: 'Zrezygnuj z e-maili marketingowych',
+        prompt: 'Przykro nam, że rezygnujesz z e-maili marketingowych. Jeśli coś nie spełniło Twoich oczekiwań, chętnie poznamy Twoją opinię. Po rezygnacji nie będziesz otrzymywać e-maili o nowych treściach Academy, pomocnych wskazówkach i ofertach. Twój dostęp do Academy i członkostwo pozostaną w pełni aktywne. Czy mimo to chcesz zrezygnować?', confirm: 'Zrezygnuj z e-maili marketingowych',
         success: 'Nie będziesz otrzymywać kolejnych e-maili marketingowych. Nie ma to wpływu na ważne wiadomości dotyczące konta i członkostwa.',
         error: 'Link rezygnacji jest nieprawidłowy. Możesz również wycofać zgodę w swoim profilu Academy.', back: 'Przejdź do GOM-MAR Academy',
       },

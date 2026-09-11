@@ -42,6 +42,9 @@ assert.match(server, /\{ type: 'text\/html', value: deliveredHtml \}/, 'Gmail mu
 assert.match(server, /background:#4f46e5[\s\S]{0,200}unsubscribeLabel/, 'Der HTML-Abmeldelink muss als gut sichtbare Schaltfläche dargestellt werden.');
 assert.match(server, /withdrawEmailConsent\(FIREBASE_PROJECT_ID, result\.memberUserId, result\.email, 'email-unsubscribe-link'\)/, 'Die Abmeldung muss eine verknüpfte Mitglieder-Einwilligung widerrufen.');
 assert.match(server, /Wichtige Nachrichten zu deinem Konto und deiner Mitgliedschaft bleiben davon unberührt/, 'Die Abmeldeseite muss notwendige Konto-Nachrichten klar abgrenzen.');
+assert.match(server, /Dein Academy-Zugang und deine Mitgliedschaft bleiben vollständig erhalten/, 'Die deutsche Abmeldeseite darf keinen falschen Zugangsverlust behaupten.');
+assert.match(server, /Your Academy access and membership remain fully active/, 'Der englische Hinweis zum erhaltenen Zugang fehlt.');
+assert.match(server, /Twój dostęp do Academy i członkostwo pozostaną w pełni aktywne/, 'Der polnische Hinweis zum erhaltenen Zugang fehlt.');
 assert.match(consentStorage, /academyEmailConsents/, 'Einwilligungen müssen zentral in Firestore gespeichert werden.');
 assert.match(consentStorage, /historyJson/, 'Erteilung und Widerruf müssen historisch dokumentiert werden.');
 assert.match(consentStorage, /policyVersion/, 'Die verwendete Einwilligungstext-Version muss dokumentiert werden.');
