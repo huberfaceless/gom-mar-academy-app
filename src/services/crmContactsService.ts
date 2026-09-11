@@ -27,3 +27,23 @@ export const deleteCrmContact = async (contactId: string): Promise<LeadContact[]
   if (!response.ok) throw new Error(result.error || 'Der CRM-Kontakt konnte nicht gelöscht werden.');
   return Array.isArray(result.contacts) ? result.contacts : [];
 };
+
+export const syncConsentedMembers = async (): Promise<{
+  contacts: LeadContact[];
+  eligibleCount: number;
+  importedCount: number;
+}> => {
+  const response = await authenticatedFetch('/api/admin/crm/sync-consented-members', { method: 'POST' });
+  const result = await response.json().catch(() => ({})) as {
+    contacts?: LeadContact[];
+    eligibleCount?: number;
+    importedCount?: number;
+    error?: string;
+  };
+  if (!response.ok) throw new Error(result.error || 'Mitglieder konnten nicht mit dem CRM synchronisiert werden.');
+  return {
+    contacts: Array.isArray(result.contacts) ? result.contacts : [],
+    eligibleCount: typeof result.eligibleCount === 'number' ? result.eligibleCount : 0,
+    importedCount: typeof result.importedCount === 'number' ? result.importedCount : 0,
+  };
+};
