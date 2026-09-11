@@ -64,6 +64,16 @@ export const validateEmailCampaigns = (value: unknown): Record<string, unknown>[
       if (email.requiredLessonId !== undefined && !isBoundedString(email.requiredLessonId, 40)) throw new Error('Eine erforderliche Lektions-ID ist ungültig.');
       if (!isOptionalCount(email.opensCount) || !isOptionalCount(email.clicksCount)) throw new Error('Eine E-Mail-Statistik ist ungültig.');
     }
+
+    if (campaign.status === 'active') {
+      if (!String(campaign.targetAudience).trim() || !String(campaign.description).trim()) {
+        throw new Error('Eine aktive Kampagne benötigt eine Zielgruppe und Beschreibung.');
+      }
+      if (campaign.emails.length === 0) throw new Error('Eine aktive Kampagne benötigt mindestens eine E-Mail.');
+      if (campaign.emails.some((email) => isRecord(email) && email.status === 'draft')) {
+        throw new Error('Eine aktive Kampagne darf keine E-Mail-Entwürfe enthalten.');
+      }
+    }
   }
 
   if (Buffer.byteLength(JSON.stringify(campaigns), 'utf8') > 900_000) {

@@ -36,6 +36,10 @@ assert.match(view, /campaigns\.find\(\(campaign\) => campaign\.id === selectedCa
 assert.match(view, /id="campaign-selector"/, 'Mehrere Kampagnen müssen über eine eindeutige Auswahl erreichbar sein.');
 assert.match(view, /await onUpdateCampaigns\(\[\.\.\.campaigns, newCampaign\]\)/, 'Eine neue Kampagne muss ergänzt werden, ohne bestehende Kampagnen zu überschreiben.');
 assert.match(view, /Die bestehende Kampagne bleibt vollständig erhalten/, 'Die sichere Ergänzung muss in der Oberfläche erklärt werden.');
+assert.match(view, /getCampaignReadinessError/, 'Vor der Freigabe müssen die Kampagneninhalte vollständig geprüft werden.');
+assert.match(view, /handleChangeCampaignStatus/, 'Kampagnen müssen kontrolliert freigegeben und pausiert werden können.');
+assert.match(view, /Ein automatischer Empfängerversand wird dadurch noch nicht ausgelöst/, 'Die Freigabe darf keinen automatischen Versand vortäuschen.');
+assert.doesNotMatch(view, /handleChangeCampaignStatus[\s\S]{0,2500}sendEmail\(/, 'Die Statusänderung darf keine Empfänger-E-Mail versenden.');
 
 const validCampaign = {
   id: 'camp_1',
@@ -69,5 +73,15 @@ assert.throws(
   'E-Mails dürfen keiner fremden Kampagne zugeordnet sein.',
 );
 assert.throws(() => validateEmailCampaigns(new Array(101).fill(validCampaign)), /zu groß/, 'Mehr als 100 Kampagnen müssen abgelehnt werden.');
+assert.throws(
+  () => validateEmailCampaigns([{ ...validCampaign, status: 'active', targetAudience: '', description: '', emails: [] }]),
+  /Zielgruppe und Beschreibung/,
+  'Eine unvollständige Kampagne darf nicht aktiviert werden.',
+);
+assert.throws(
+  () => validateEmailCampaigns([{ ...validCampaign, status: 'active', emails: [{ ...validCampaign.emails[0], status: 'draft' }] }]),
+  /keine E-Mail-Entwürfe/,
+  'Eine aktive Kampagne darf keine E-Mail-Entwürfe enthalten.',
+);
 
 console.log('E-Mail-Kampagnen geprüft: benutzergetrennt, validiert und zentral in Firestore gespeichert.');

@@ -460,6 +460,57 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     }
   };
 
+  const getCampaignReadinessError = (): string | null => {
+    if (!activeCampaign.title.trim()) return 'Ergänze zuerst einen Kampagnennamen.';
+    if (!activeCampaign.targetAudience.trim()) return 'Ergänze zuerst die Zielgruppe.';
+    if (!activeCampaign.description.trim()) return 'Ergänze zuerst die Kampagnenbeschreibung.';
+    if (activeCampaign.emails.length === 0) return 'Erstelle zuerst mindestens eine E-Mail.';
+    if (activeCampaign.emails.some((email) => !email.title.trim() || !email.subject.trim() || !email.content.trim())) {
+      return 'Vervollständige zuerst alle E-Mail-Inhalte.';
+    }
+    return null;
+  };
+
+  const handleChangeCampaignStatus = async () => {
+    const shouldPause = activeCampaign.status === 'active';
+    if (!shouldPause) {
+      const readinessError = getCampaignReadinessError();
+      if (readinessError) {
+        setCampaignActionError(readinessError);
+        return;
+      }
+    }
+    const confirmed = shouldPause
+      ? window.confirm(`Kampagne „${activeCampaign.title}“ jetzt pausieren?`)
+      : window.confirm('Kampagne freigeben? Die E-Mails werden als geplant markiert. Ein automatischer Empfängerversand wird dadurch noch nicht ausgelöst.');
+    if (!confirmed) return;
+    const nextStatus: Campaign['status'] = shouldPause ? 'paused' : 'active';
+    const updatedCampaigns = campaigns.map((campaign) => campaign.id === activeCampaign.id
+      ? {
+          ...campaign,
+          status: nextStatus,
+          emails: shouldPause
+            ? campaign.emails
+            : campaign.emails.map((email) => email.status === 'draft' ? { ...email, status: 'scheduled' as const } : email),
+        }
+      : campaign);
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns(updatedCampaigns);
+      setSelectedEmail(null);
+      setIsEditing(false);
+      setSimulatedLeadSuccess(shouldPause
+        ? 'Die Kampagne wurde pausiert.'
+        : 'Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.');
+      setTimeout(() => setSimulatedLeadSuccess(null), 5000);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Der Kampagnenstatus konnte nicht gespeichert werden.');
+    } finally {
+      setIsSavingCampaign(false);
+    }
+  };
+
   const activeLeadCount = contacts.filter((contact) => contact.badgeType !== 'cold').length;
   const customerCount = contacts.filter((contact) => contact.badgeType === 'active' || contact.tags.includes('Kunde')).length;
   const conversionRate = contacts.length > 0 ? ((customerCount / contacts.length) * 100).toFixed(1) : '0';
@@ -840,8 +891,21 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     <Edit className="h-3.5 w-3.5" />
                     Kampagne bearbeiten
                   </button>
+                  <button
+                    type="button"
+                    onClick={handleChangeCampaignStatus}
+                    disabled={isSavingCampaign}
+                    className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white disabled:cursor-not-allowed disabled:opacity-60 ${activeCampaign.status === 'active' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-emerald-600 hover:bg-emerald-700'}`}
+                  >
+                    {activeCampaign.status === 'active' ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+                    {activeCampaign.status === 'active' ? 'Pausieren' : activeCampaign.status === 'paused' ? 'Fortsetzen' : 'Freigeben'}
+                  </button>
                 </div>
               </div>
+
+              <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-medium text-slate-600">
+                Die Freigabe markiert vollständige E-Mails als geplant. Automatischer Empfängerversand wird erst in einem separaten Schritt verbunden.
+              </p>
 
               {isEditingCampaign && (
                 <form onSubmit={handleSaveCampaign} className="space-y-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4">
