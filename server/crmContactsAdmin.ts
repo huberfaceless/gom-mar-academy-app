@@ -1,4 +1,7 @@
 import { GoogleAuth } from 'google-auth-library';
+import { createHash } from 'node:crypto';
+import type { FirebaseMember } from './firebaseMembershipAdmin.js';
+import { loadEmailConsent } from './emailConsentAdmin.js';
 
 type FirestoreDocument = {
   fields?: {
@@ -21,6 +24,9 @@ const getAccessToken = async (): Promise<string> => {
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+
+const memberContactId = (uid: string) =>
+  `member_${createHash('sha256').update(uid).digest('hex').slice(0, 32)}`;
 
 export const validateCrmContacts = (value: unknown): Record<string, unknown>[] => {
   if (!Array.isArray(value) || value.length > 1_000) {
@@ -105,4 +111,86 @@ export const deleteCrmContact = async (
   const remainingContacts = contacts.filter((contact) => contact.id !== contactId);
   if (remainingContacts.length === contacts.length) return null;
   return saveCrmContacts(projectId, userId, remainingContacts);
+};
+
+export const syncConsentedMembersToCrm = async (
+  projectId: string,
+  adminUserId: string,
+  members: FirebaseMember[],
+): Promise<{
+  contacts: Record<string, unknown>[];
+  eligibleCount: number;
+  importedCount: number;
+}> => {
+  const eligibleMembers: Array<{ member: FirebaseMember; consentUpdatedAt: string | null }> = [];
+  const candidates = members.filter((member) => member.emailVerified && !member.disabled && Boolean(member.email));
+
+  for (let offset = 0; offset < candidates.length; offset += 20) {
+    const batch = candidates.slice(offset, offset + 20);
+    const checked = await Promise.all(batch.map(async (member) => ({
+      member,
+      consent: await loadEmailConsent(projectId, member.uid),
+    })));
+    for (const { member, consent } of checked) {
+      if (consent.granted && consent.email.trim().toLowerCase() === member.email.trim().toLowerCase()) {
+        eligibleMembers.push({ member, consentUpdatedAt: consent.updatedAt });
+      }
+    }
+  }
+
+  const existingContacts = await loadCrmContacts(projectId, adminUserId);
+  const existingMemberContacts = new Map(
+    existingContacts
+      .filter((contact) => typeof contact.id === 'string' && contact.id.startsWith('member_'))
+      .map((contact) => [contact.id as string, contact]),
+  );
+  const manualContacts = existingContacts.filter(
+    (contact) => typeof contact.id !== 'string' || !contact.id.startsWith('member_'),
+  );
+  const occupiedEmails = new Set(
+    manualContacts
+      .map((contact) => typeof contact.email === 'string' ? contact.email.trim().toLowerCase() : '')
+      .filter(Boolean),
+  );
+  let importedCount = 0;
+  const syncedMemberContacts: Record<string, unknown>[] = [];
+
+  for (const { member, consentUpdatedAt } of eligibleMembers.sort((a, b) => a.member.email.localeCompare(b.member.email))) {
+    const email = member.email.trim().toLowerCase();
+    if (occupiedEmails.has(email)) continue;
+    occupiedEmails.add(email);
+    const id = memberContactId(member.uid);
+    const existing = existingMemberContacts.get(id);
+    if (!existing) importedCount += 1;
+    syncedMemberContacts.push({
+      ...(existing || {}),
+      id,
+      name: member.displayName || email.split('@')[0],
+      role: `Academy-Mitglied (${member.tier})`,
+      company: 'GOM-MAR Academy',
+      avatarUrl: typeof existing?.avatarUrl === 'string' ? existing.avatarUrl : '',
+      email,
+      phone: typeof existing?.phone === 'string' ? existing.phone : '—',
+      location: typeof existing?.location === 'string' ? existing.location : '—',
+      badge: 'Einwilligung aktiv',
+      badgeType: 'active',
+      score: typeof existing?.score === 'number' ? existing.score : 50,
+      scoreDescription: 'Bestätigtes Academy-Mitglied mit dokumentierter E-Mail-Einwilligung.',
+      tags: ['Academy-Mitglied', 'E-Mail-Einwilligung', member.tier],
+      lastInteraction: consentUpdatedAt || 'Einwilligung erteilt',
+      timeline: Array.isArray(existing?.timeline) ? existing.timeline : [{
+        id: `consent_${id.slice(7)}`,
+        type: 'note',
+        title: 'E-Mail-Einwilligung erteilt',
+        timestamp: consentUpdatedAt || 'Dokumentiert',
+        noteDetails: {
+          author: 'System',
+          text: 'Aus der dokumentierten Academy-Einwilligung synchronisiert.',
+        },
+      }],
+    });
+  }
+
+  const contacts = await saveCrmContacts(projectId, adminUserId, [...syncedMemberContacts, ...manualContacts]);
+  return { contacts, eligibleCount: eligibleMembers.length, importedCount };
 };

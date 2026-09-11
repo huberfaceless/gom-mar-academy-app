@@ -10,7 +10,7 @@ import {
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
-import { deleteCrmContact, loadCrmContacts, saveCrmContacts } from './server/crmContactsAdmin.js';
+import { deleteCrmContact, loadCrmContacts, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { loadEmailConsent, saveEmailConsent } from './server/emailConsentAdmin.js';
 import { Lesson } from './src/types.js';
@@ -252,6 +252,34 @@ async function startServer() {
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht gelöscht werden.';
       res.status(message.includes('ungültig') ? 400 : 503).json({ error: message });
+    }
+  });
+
+  app.post('/api/admin/crm/sync-consented-members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    try {
+      const adminUserId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!adminUserId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const members = [];
+      let pageToken: string | undefined;
+      for (let page = 0; page < 10; page += 1) {
+        const result = await listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken);
+        members.push(...result.members);
+        pageToken = result.nextPageToken;
+        if (!pageToken) break;
+      }
+      if (pageToken) throw new Error('Die Mitgliederliste ist für einen sicheren Abgleich zu groß.');
+      const result = await syncConsentedMembersToCrm(FIREBASE_PROJECT_ID, adminUserId, members);
+      console.info('Academy-Mitglieder mit CRM synchronisiert', {
+        action: 'academy.crm.members.synced',
+        actorUid: adminUserId,
+        eligibleCount: result.eligibleCount,
+        importedCount: result.importedCount,
+        timestamp: new Date().toISOString(),
+      });
+      res.setHeader('Cache-Control', 'no-store');
+      res.json(result);
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Mitglieder konnten nicht mit dem CRM synchronisiert werden.' });
     }
   });
 
