@@ -72,6 +72,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [membersLoaded, setMembersLoaded] = useState(false);
   const [membersError, setMembersError] = useState('');
   const [updatingMemberUid, setUpdatingMemberUid] = useState<string | null>(null);
+  const [emailingMember, setEmailingMember] = useState<FirebaseMember | null>(null);
+  const [memberEmailSubject, setMemberEmailSubject] = useState('');
+  const [memberEmailBody, setMemberEmailBody] = useState('');
+  const [sendingMemberEmail, setSendingMemberEmail] = useState(false);
 
   // Curriculum Editor state
   const [selectedStageId, setSelectedStageId] = useState<number>(1);
@@ -186,6 +190,35 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       setMembersError(error instanceof Error ? error.message : 'Tarif konnte nicht gespeichert werden.');
     } finally {
       setUpdatingMemberUid(null);
+    }
+  };
+
+  const handleSendMemberEmail = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!emailingMember || !memberEmailSubject.trim() || !memberEmailBody.trim()) return;
+    if (!window.confirm(`E-Mail wirklich an ${emailingMember.email} senden?`)) return;
+
+    setSendingMemberEmail(true);
+    setMembersError('');
+    try {
+      const response = await authenticatedRequest(
+        `/api/admin/members/${encodeURIComponent(emailingMember.uid)}/email`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ subject: memberEmailSubject.trim(), body: memberEmailBody.trim() }),
+        },
+      );
+      const result = await response.json().catch(() => ({})) as { error?: string };
+      if (!response.ok) throw new Error(result.error || 'Die E-Mail konnte nicht versendet werden.');
+      setEmailingMember(null);
+      setMemberEmailSubject('');
+      setMemberEmailBody('');
+      setSaveSuccessMsg(`E-Mail an ${emailingMember.email} wurde von SendGrid angenommen.`);
+      window.setTimeout(() => setSaveSuccessMsg(''), 5000);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'Die E-Mail konnte nicht versendet werden.');
+    } finally {
+      setSendingMemberEmail(false);
     }
   };
 
@@ -514,6 +547,20 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                         <span className={member.emailVerified ? 'text-emerald-700' : 'text-amber-700'}>
                           {member.emailVerified ? 'Bestätigt' : 'Nicht bestätigt'}
                         </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEmailingMember(member);
+                            setMemberEmailSubject('');
+                            setMemberEmailBody('');
+                            setMembersError('');
+                          }}
+                          disabled={!member.emailVerified || member.disabled || !member.email}
+                          className="mt-2 flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-2.5 py-1.5 text-[11px] font-bold text-indigo-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
+                        >
+                          <Mail className="h-3.5 w-3.5" />
+                          E-Mail schreiben
+                        </button>
                       </td>
                       <td className="px-4 py-3.5">
                         <span className={`inline-flex rounded-lg border px-2.5 py-1 text-[11px] font-black ${
@@ -544,6 +591,37 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </tbody>
               </table>
             </div>
+
+            {emailingMember && (
+              <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/60 p-3 sm:items-center" role="dialog" aria-modal="true" aria-labelledby="member-email-title">
+                <form onSubmit={handleSendMemberEmail} className="w-full max-w-xl space-y-4 rounded-2xl bg-white p-5 shadow-2xl">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 id="member-email-title" className="text-lg font-black text-slate-950">E-Mail an Mitglied</h3>
+                      <p className="text-xs text-slate-600">{emailingMember.displayName} · {emailingMember.email}</p>
+                    </div>
+                    <button type="button" onClick={() => setEmailingMember(null)} disabled={sendingMemberEmail} aria-label="E-Mail-Fenster schließen" className="rounded-lg p-2 text-slate-500 hover:bg-slate-100">
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                  <div>
+                    <label htmlFor="member-email-subject" className="mb-1 block text-xs font-bold text-slate-700">Betreff *</label>
+                    <input id="member-email-subject" required maxLength={200} value={memberEmailSubject} onChange={(event) => setMemberEmailSubject(event.target.value)} className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor="member-email-body" className="mb-1 block text-xs font-bold text-slate-700">Nachricht *</label>
+                    <textarea id="member-email-body" required maxLength={20000} rows={8} value={memberEmailBody} onChange={(event) => setMemberEmailBody(event.target.value)} className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
+                  </div>
+                  <p className="text-xs text-slate-500">Die Empfängeradresse wird sicher aus dem Firebase-Mitgliedskonto übernommen.</p>
+                  <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                    <button type="button" onClick={() => setEmailingMember(null)} disabled={sendingMemberEmail} className="rounded-xl border border-slate-300 px-4 py-2.5 text-xs font-bold text-slate-700">Abbrechen</button>
+                    <button type="submit" disabled={sendingMemberEmail} className="rounded-xl bg-indigo-700 px-4 py-2.5 text-xs font-bold text-white disabled:cursor-not-allowed disabled:opacity-60">
+                      {sendingMemberEmail ? 'Wird gesendet …' : 'E-Mail senden'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </section>
 
           {/* Filters & Actions Bar */}

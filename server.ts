@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { verify as verifySignature } from 'crypto';
 import {
   AcademyTier,
+  getFirebaseMember,
   listFirebaseMembers,
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
@@ -356,6 +357,37 @@ async function startServer() {
       return;
     }
     await handleEmailSend(req, res, ownVerifiedEmail);
+  });
+
+  app.post('/api/admin/members/:uid/email', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const uid = req.params.uid?.trim();
+    if (!uid || uid.length > 128) {
+      res.status(400).json({ error: 'Ungültige Firebase-Benutzerkennung.' });
+      return;
+    }
+    try {
+      const member = await getFirebaseMember(FIREBASE_PROJECT_ID, uid);
+      if (!member) {
+        res.status(404).json({ error: 'Firebase-Mitglied wurde nicht gefunden.' });
+        return;
+      }
+      if (!member.emailVerified || member.disabled || !EMAIL_ADDRESS_PATTERN.test(member.email)) {
+        res.status(400).json({ error: 'E-Mails können nur an aktive Mitglieder mit bestätigter Adresse gesendet werden.' });
+        return;
+      }
+      await handleEmailSend(req, res, member.email.trim().toLowerCase());
+      if (res.statusCode === 202) {
+        const actor = (req as FirebaseRequest).firebaseUser;
+        console.info('Academy-Mitglied kontaktiert', {
+          action: 'academy.membership.email.sent',
+          actorUid: actor?.sub,
+          targetUid: member.uid,
+          timestamp: new Date().toISOString(),
+        });
+      }
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Das Mitglied konnte nicht kontaktiert werden.' });
+    }
   });
 
   app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {

@@ -140,6 +140,21 @@ export const listFirebaseMembers = async (
   };
 };
 
+export const getFirebaseMember = async (
+  projectId: string,
+  uid: string,
+): Promise<FirebaseMember | null> => {
+  const response = await firebaseAdminRequest<FirebaseAccountsResponse>(
+    projectId,
+    'accounts:lookup',
+    {
+      method: 'POST',
+      body: JSON.stringify({ localId: [uid] }),
+    },
+  );
+  return response.users?.[0] ? toFirebaseMember(response.users[0]) : null;
+};
+
 export const updateFirebaseMemberTier = async (
   projectId: string,
   uid: string,
