@@ -5,6 +5,9 @@ const server = readFileSync('server.ts', 'utf8');
 const service = readFileSync('src/services/emailDeliveryService.ts', 'utf8');
 const modal = readFileSync('src/components/LeadDetailModal.tsx', 'utf8');
 const automation = readFileSync('src/components/EmailAutomationView.tsx', 'utf8');
+const consentStorage = readFileSync('server/emailConsentAdmin.ts', 'utf8');
+const consentService = readFileSync('src/services/emailConsentService.ts', 'utf8');
+const profile = readFileSync('src/components/ProfileView.tsx', 'utf8');
 
 assert.match(
   server,
@@ -17,6 +20,17 @@ assert.match(server, /getFirebaseMember\(FIREBASE_PROJECT_ID, uid\)/, 'Die Empf�
 assert.match(server, /!member\.emailVerified \|\| member\.disabled/, 'Unbestätigte oder deaktivierte Mitglieder dürfen nicht angeschrieben werden.');
 assert.match(server, /handleEmailSend\(req, res, member\.email\.trim\(\)\.toLowerCase\(\)\)/, 'Der Client darf die Mitglieder-Empfängeradresse nicht bestimmen.');
 assert.match(server, /handleEmailSend\(req, res, ownVerifiedEmail\)/, 'Der Testversand muss die bestätigte eigene Firebase-Adresse erzwingen.');
+assert.match(server, /app\.get\('\/api\/email\/consent', requireVerifiedMember/, 'Nur bestätigte Mitglieder dürfen ihre Einwilligung laden.');
+assert.match(server, /app\.put\('\/api\/email\/consent', requireVerifiedMember/, 'Nur bestätigte Mitglieder dürfen ihre Einwilligung ändern.');
+assert.match(server, /firebaseUser\.email_verified === true/, 'Die Einwilligung muss an die bestätigte Firebase-Adresse gebunden sein.');
+assert.match(consentStorage, /academyEmailConsents/, 'Einwilligungen müssen zentral in Firestore gespeichert werden.');
+assert.match(consentStorage, /historyJson/, 'Erteilung und Widerruf müssen historisch dokumentiert werden.');
+assert.match(consentStorage, /policyVersion/, 'Die verwendete Einwilligungstext-Version muss dokumentiert werden.');
+assert.match(consentService, /authenticatedFetch\('\/api\/email\/consent'/, 'Das Profil muss den geschützten Einwilligungs-Endpunkt verwenden.');
+assert.match(profile, /Einwilligung ist freiwillig und jederzeit widerrufbar/, 'Die deutsche Einwilligung muss freiwillig und widerrufbar erklärt werden.');
+assert.match(profile, /Consent is voluntary and can be withdrawn at any time/, 'Die englische Einwilligungserklärung fehlt.');
+assert.match(profile, /Zgoda jest dobrowolna i można ją wycofać w każdej chwili/, 'Die polnische Einwilligungserklärung fehlt.');
+assert.match(profile, /window\.confirm\(nextGranted \? copy\.emailConsentConfirmGrant : copy\.emailConsentConfirmWithdraw\)/, 'Erteilung und Widerruf müssen ausdrücklich bestätigt werden.');
 assert.match(server, /process\.env\.SENDGRID_API_KEY/, 'Der SendGrid-Schlüssel muss aus der Laufzeitumgebung kommen.');
 assert.match(server, /process\.env\.SENDGRID_FROM_EMAIL/, 'Die bestätigte Absenderadresse muss konfiguriert sein.');
 assert.match(server, /https:\/\/api\.sendgrid\.com\/v3\/mail\/send/, 'Der echte SendGrid-Endpunkt fehlt.');
