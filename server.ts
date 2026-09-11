@@ -157,7 +157,7 @@ async function startServer() {
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
     const isAdmin = isAcademyAdminToken(firebaseUser);
     if (!isAdmin) {
-      res.status(403).json({ error: 'Nur autorisierte Academy-Administratoren dürfen Tarife verwalten.' });
+      res.status(403).json({ error: 'Nur autorisierte Academy-Administratoren dürfen diese Funktion verwenden.' });
       return;
     }
     next();
@@ -211,7 +211,7 @@ async function startServer() {
     });
   });
 
-  app.get('/api/crm/contacts', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.get('/api/crm/contacts', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
@@ -223,7 +223,7 @@ async function startServer() {
     }
   });
 
-  app.put('/api/crm/contacts', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.put('/api/crm/contacts', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
@@ -236,7 +236,7 @@ async function startServer() {
     }
   });
 
-  app.delete('/api/crm/contacts/:contactId', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.delete('/api/crm/contacts/:contactId', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');

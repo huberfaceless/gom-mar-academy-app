@@ -8,9 +8,9 @@ const service = readFileSync('src/services/crmContactsService.ts', 'utf8');
 const view = readFileSync('src/components/EmailAutomationView.tsx', 'utf8');
 const modal = readFileSync('src/components/LeadDetailModal.tsx', 'utf8');
 
-assert.match(server, /app\.get\('\/api\/crm\/contacts', requireVerifiedMember, requireProMember/, 'CRM-Lesen muss eine bestätigte PRO-Anmeldung verlangen.');
-assert.match(server, /app\.put\('\/api\/crm\/contacts', requireVerifiedMember, requireProMember/, 'CRM-Speichern muss eine bestätigte PRO-Anmeldung verlangen.');
-assert.match(server, /app\.delete\('\/api\/crm\/contacts\/:contactId', requireVerifiedMember, requireProMember/, 'CRM-Löschen muss eine bestätigte PRO-Anmeldung verlangen.');
+assert.match(server, /app\.get\('\/api\/crm\/contacts', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Lesen muss eine bestätigte Admin-Anmeldung verlangen.');
+assert.match(server, /app\.put\('\/api\/crm\/contacts', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Speichern muss eine bestätigte Admin-Anmeldung verlangen.');
+assert.match(server, /app\.delete\('\/api\/crm\/contacts\/:contactId', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Löschen muss eine bestätigte Admin-Anmeldung verlangen.');
 assert.match(storage, /academyCrmContacts\//, 'CRM-Kontakte müssen zentral in Firestore gespeichert werden.');
 assert.match(storage, /encodeURIComponent\(userId\)/, 'CRM-Kontakte müssen nach Firebase-Benutzer getrennt werden.');
 assert.match(storage, /value\.length > 1_000/, 'Die Kontaktanzahl muss serverseitig begrenzt sein.');
@@ -21,6 +21,9 @@ assert.match(view, /loadCrmContacts\(\)/, 'Gespeicherte CRM-Kontakte müssen bei
 assert.match(view, /!contact\.id\.startsWith\('lead_sim_'\)/, 'Lokale Test-Leads dürfen nicht in Firestore gespeichert werden.');
 assert.match(view, /onUpdateLead=\{async/, 'Änderungen am Interaktionsverlauf müssen zentral gespeichert werden.');
 assert.match(view, /onDeleteLead=\{async/, 'Kontakte müssen aus der zentralen Speicherung gelöscht werden.');
+assert.match(view, /if \(!isAdmin\)/, 'Normale Mitglieder dürfen keine CRM-Kontakte laden.');
+assert.match(view, /isAdmin && mainTab === 'crm'/, 'Der CRM-Bereich darf nur für Administratoren gerendert werden.');
+assert.match(readFileSync('src/App.tsx', 'utf8'), /isAdmin=\{user\.role === 'admin'\}/, 'Die Admin-Rolle muss ausdrücklich an den CRM-Bereich übergeben werden.');
 assert.match(modal, /Kontakt dauerhaft löschen/, 'Das Kontaktprofil muss eine sichtbare Löschfunktion anbieten.');
 assert.match(modal, /window\.confirm/, 'Vor dem dauerhaften Löschen muss eine Bestätigung verlangt werden.');
 

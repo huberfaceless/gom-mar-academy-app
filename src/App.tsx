@@ -510,6 +510,7 @@ export default function App() {
               onUpdateCampaigns={handleUpdateCampaigns}
               onNavigateToToolbox={handleNavigateToToolbox}
               onOpenFragGommar={handleOpenFragGommar}
+              isAdmin={user.role === 'admin'}
             />
           )}
 
