@@ -674,9 +674,9 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
         </div>
       )}
 
-      {(campaignsError || campaignActionError) && (
+      {campaignsError && (
         <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-semibold" role="alert">
-          {campaignActionError || campaignsError}
+          {campaignsError}
         </div>
       )}
 
@@ -902,6 +902,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </button>
                 </div>
               </div>
+
+              {campaignActionError && (
+                <p className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-800" role="alert">
+                  {campaignActionError}
+                </p>
+              )}
 
               <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-medium text-slate-600">
                 Die Freigabe markiert vollständige E-Mails als geplant. Automatischer Empfängerversand wird erst in einem separaten Schritt verbunden.
