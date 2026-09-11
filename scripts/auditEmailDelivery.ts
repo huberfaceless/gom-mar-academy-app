@@ -38,6 +38,8 @@ assert.match(server, /app\.post\('\/api\/email\/unsubscribe', async/, 'Erst eine
 assert.match(server, /<form method="post" action="\/api\/email\/unsubscribe">/, 'Automatische Linkprüfungen dürfen keine Abmeldung auslösen.');
 assert.match(server, /isMarketingEmailSuppressed\(FIREBASE_PROJECT_ID, recipient, marketing\.consentUpdatedAt\)/, 'Abgemeldete Kontakte müssen vor jedem Marketing-Versand blockiert werden.');
 assert.match(server, /createMarketingUnsubscribeToken\(FIREBASE_PROJECT_ID, recipient, marketing\.memberUserId\)/, 'Jede echte Marketing-E-Mail benötigt einen sicheren Abmeldelink.');
+assert.match(server, /\{ type: 'text\/html', value: deliveredHtml \}/, 'Gmail muss einen deutlich sichtbaren HTML-Abmeldelink erhalten.');
+assert.match(server, /background:#4f46e5[\s\S]{0,200}unsubscribeLabel/, 'Der HTML-Abmeldelink muss als gut sichtbare Schaltfläche dargestellt werden.');
 assert.match(server, /withdrawEmailConsent\(FIREBASE_PROJECT_ID, result\.memberUserId, result\.email, 'email-unsubscribe-link'\)/, 'Die Abmeldung muss eine verknüpfte Mitglieder-Einwilligung widerrufen.');
 assert.match(server, /Wichtige Nachrichten zu deinem Konto und deiner Mitgliedschaft bleiben davon unberührt/, 'Die Abmeldeseite muss notwendige Konto-Nachrichten klar abgrenzen.');
 assert.match(consentStorage, /academyEmailConsents/, 'Einwilligungen müssen zentral in Firestore gespeichert werden.');
