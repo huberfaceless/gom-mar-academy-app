@@ -4,6 +4,8 @@ type EmailDeliveryPayload = {
   to: string;
   subject: string;
   body: string;
+  contactId: string;
+  language: 'de' | 'en' | 'pl';
 };
 
 export const sendEmail = async (payload: EmailDeliveryPayload): Promise<void> => {
@@ -19,7 +21,7 @@ export const sendEmail = async (payload: EmailDeliveryPayload): Promise<void> =>
   }
 };
 
-export const sendTestEmail = async (payload: Omit<EmailDeliveryPayload, 'to'>): Promise<void> => {
+export const sendTestEmail = async (payload: Pick<EmailDeliveryPayload, 'subject' | 'body'>): Promise<void> => {
   const response = await authenticatedFetch('/api/email/test-send', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

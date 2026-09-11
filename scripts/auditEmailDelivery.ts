@@ -8,6 +8,7 @@ const automation = readFileSync('src/components/EmailAutomationView.tsx', 'utf8'
 const consentStorage = readFileSync('server/emailConsentAdmin.ts', 'utf8');
 const consentService = readFileSync('src/services/emailConsentService.ts', 'utf8');
 const profile = readFileSync('src/components/ProfileView.tsx', 'utf8');
+const unsubscribeStorage = readFileSync('server/emailUnsubscribeAdmin.ts', 'utf8');
 
 assert.match(
   server,
@@ -32,6 +33,13 @@ assert.match(server, /Referrer-Policy', 'no-referrer'/, 'Der Bestätigungstoken 
 assert.match(server, /<form method="post" action="\/api\/email\/consent\/confirm">/, 'Automatische E-Mail-Linkprüfungen dürfen die Einwilligung nicht aktivieren.');
 assert.match(server, /Confirmation not possible/, 'Die englische Bestätigungsseite fehlt.');
 assert.match(server, /Potwierdzenie niemożliwe/, 'Die polnische Bestätigungsseite fehlt.');
+assert.match(server, /app\.get\('\/api\/email\/unsubscribe', \(req, res\)/, 'Der Abmeldelink muss öffentlich erreichbar sein.');
+assert.match(server, /app\.post\('\/api\/email\/unsubscribe', async/, 'Erst eine bewusste Bestätigung darf Marketing-E-Mails abmelden.');
+assert.match(server, /<form method="post" action="\/api\/email\/unsubscribe">/, 'Automatische Linkprüfungen dürfen keine Abmeldung auslösen.');
+assert.match(server, /isMarketingEmailSuppressed\(FIREBASE_PROJECT_ID, recipient, marketing\.consentUpdatedAt\)/, 'Abgemeldete Kontakte müssen vor jedem Marketing-Versand blockiert werden.');
+assert.match(server, /createMarketingUnsubscribeToken\(FIREBASE_PROJECT_ID, recipient, marketing\.memberUserId\)/, 'Jede echte Marketing-E-Mail benötigt einen sicheren Abmeldelink.');
+assert.match(server, /withdrawEmailConsent\(FIREBASE_PROJECT_ID, result\.memberUserId, result\.email, 'email-unsubscribe-link'\)/, 'Die Abmeldung muss eine verknüpfte Mitglieder-Einwilligung widerrufen.');
+assert.match(server, /Wichtige Nachrichten zu deinem Konto und deiner Mitgliedschaft bleiben davon unberührt/, 'Die Abmeldeseite muss notwendige Konto-Nachrichten klar abgrenzen.');
 assert.match(consentStorage, /academyEmailConsents/, 'Einwilligungen müssen zentral in Firestore gespeichert werden.');
 assert.match(consentStorage, /historyJson/, 'Erteilung und Widerruf müssen historisch dokumentiert werden.');
 assert.match(consentStorage, /policyVersion/, 'Die verwendete Einwilligungstext-Version muss dokumentiert werden.');
@@ -39,6 +47,10 @@ assert.match(consentStorage, /randomBytes\(32\)/, 'Bestätigungslinks benötigen
 assert.match(consentStorage, /createHash\('sha256'\)/, 'Der Bestätigungstoken darf nicht im Klartext gespeichert werden.');
 assert.match(consentStorage, /CONFIRMATION_VALIDITY_MS = 24 \* 60 \* 60 \* 1000/, 'Bestätigungslinks müssen nach 24 Stunden ablaufen.');
 assert.match(consentStorage, /action: 'confirmed'/, 'Die bestätigte Einwilligung muss in der Historie dokumentiert werden.');
+assert.match(unsubscribeStorage, /randomBytes\(32\)/, 'Abmeldelinks benötigen einen kryptografisch zufälligen Token.');
+assert.match(unsubscribeStorage, /academyEmailSuppressions/, 'Abmeldungen müssen zentral und dauerhaft gespeichert werden.');
+assert.match(unsubscribeStorage, /academyEmailUnsubscribeTokens/, 'Abmeldetoken müssen serverseitig gespeichert werden.');
+assert.match(unsubscribeStorage, /createHash\('sha256'\)/, 'Abmeldetoken dürfen nicht im Klartext gespeichert werden.');
 assert.match(consentService, /authenticatedFetch\('\/api\/email\/consent'/, 'Das Profil muss den geschützten Einwilligungs-Endpunkt verwenden.');
 assert.match(profile, /Einwilligung ist freiwillig und jederzeit widerrufbar/, 'Die deutsche Einwilligung muss freiwillig und widerrufbar erklärt werden.');
 assert.match(profile, /Consent is voluntary and can be withdrawn at any time/, 'Die englische Einwilligungserklärung fehlt.');
@@ -51,6 +63,7 @@ assert.match(server, /process\.env\.SENDGRID_FROM_EMAIL/, 'Die bestätigte Absen
 assert.match(server, /https:\/\/api\.sendgrid\.com\/v3\/mail\/send/, 'Der echte SendGrid-Endpunkt fehlt.');
 assert.match(server, /EMAIL_SEND_LIMIT/, 'Der Einzelversand muss serverseitig begrenzt sein.');
 assert.match(service, /authenticatedFetch\('\/api\/email\/send'/, 'Der Client muss den geschützten E-Mail-Endpunkt verwenden.');
+assert.match(service, /contactId: string/, 'Der Marketing-Versand muss an einen serverseitig geprüften CRM-Kontakt gebunden sein.');
 assert.match(service, /authenticatedFetch\('\/api\/email\/test-send'/, 'Der Client muss den geschützten Testversand verwenden.');
 assert.doesNotMatch(service, /sendTestEmail[\s\S]{0,300}to:/, 'Der Client darf beim Testversand keine fremde Empfängeradresse bestimmen.');
 assert.match(modal, /await onSendEmail\(lead, subject, body\)/, 'Eine Erfolgsmeldung darf erst nach der Serverantwort entstehen.');

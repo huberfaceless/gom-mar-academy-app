@@ -15,7 +15,7 @@ type ConsentEvent = {
   action: 'requested' | 'confirmed' | 'withdrawn';
   email: string;
   policyVersion: string;
-  source: 'academy-profile';
+  source: 'academy-profile' | 'email-unsubscribe-link';
   timestamp: string;
 };
 
@@ -174,6 +174,7 @@ export const withdrawEmailConsent = async (
   projectId: string,
   userId: string,
   email: string,
+  source: ConsentEvent['source'] = 'academy-profile',
 ): Promise<EmailConsent> => {
   const currentDocument = await loadConsentDocument(projectId, userId);
   const timestamp = new Date().toISOString();
@@ -181,7 +182,7 @@ export const withdrawEmailConsent = async (
     action: 'withdrawn' as const,
     email,
     policyVersion: EMAIL_CONSENT_POLICY_VERSION,
-    source: 'academy-profile' as const,
+    source,
     timestamp,
   }].slice(-100);
   await writeConsentDocument(projectId, userId, {
@@ -189,7 +190,7 @@ export const withdrawEmailConsent = async (
     granted: { booleanValue: false },
     email: { stringValue: email },
     policyVersion: { stringValue: EMAIL_CONSENT_POLICY_VERSION },
-    source: { stringValue: 'academy-profile' },
+    source: { stringValue: source },
     updatedAt: { timestampValue: timestamp },
     confirmationTokenHash: { stringValue: '' },
     confirmationExpiresAt: { timestampValue: timestamp },
