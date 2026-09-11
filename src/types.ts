@@ -120,7 +120,7 @@ export interface EmailMessage {
   subject: string;
   previewText: string;
   content: string;
-  status: 'sent' | 'scheduled' | 'locked';
+  status: 'draft' | 'sent' | 'scheduled' | 'locked';
   requiredLessonId?: string;
   opensCount?: number;
   clicksCount?: number;
