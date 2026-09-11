@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogIn, LogOut, ShieldCheck, UserCheck, AlertCircle } from 'lucide-react';
+import { LogIn, LogOut, ShieldCheck, UserCheck, AlertCircle, UserRound } from 'lucide-react';
 import { UserProfile } from '../types';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import { useAuth } from '../context/AuthContext';
@@ -120,6 +120,22 @@ export const Header: React.FC<HeaderProps> = ({
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                 <span className="hidden sm:inline">{t('header.admin')}</span>
                 <span className="sm:hidden">Admin</span>
+              </button>
+            )}
+
+            {isAuthenticated && (
+              <button
+                type="button"
+                onClick={() => onNavigate('profile')}
+                title={t('nav.profile')}
+                aria-label={t('nav.profile')}
+                className={`md:hidden rounded-xl border p-2 transition-colors ${
+                  activeView === 'profile'
+                    ? 'border-indigo-300 bg-indigo-50 text-indigo-700'
+                    : 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-700'
+                }`}
+              >
+                <UserRound className="h-4 w-4" />
               </button>
             )}
 

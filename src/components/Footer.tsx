@@ -76,11 +76,15 @@ const footerCopy: Record<LanguageCode, Record<string, string>> = {
 interface FooterProps {
   theme?: string;
   onOpenLegal: (docType: LegalDocType) => void;
+  onNavigate: (view: string) => void;
+  onOpenFragGommar: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   theme = 'clean-light',
   onOpenLegal,
+  onNavigate,
+  onOpenFragGommar,
 }) => {
   const { language } = useLanguage();
   const copy = footerCopy[language];
@@ -130,25 +134,25 @@ export const Footer: React.FC<FooterProps> = ({
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <span className="text-slate-400 hover:text-white transition-colors cursor-pointer font-medium flex items-center gap-1.5">
+                <button type="button" onClick={() => onNavigate('academy')} className="text-left text-slate-400 hover:text-white transition-colors cursor-pointer font-medium flex items-center gap-1.5">
                   <GraduationCap className="w-3.5 h-3.5 text-indigo-400" />
                   {copy.curriculum}
-                </span>
+                </button>
               </li>
               <li>
-                <span className="text-slate-400 hover:text-white transition-colors cursor-pointer font-medium">
+                <button type="button" onClick={() => onNavigate('email')} className="text-left text-slate-400 hover:text-white transition-colors cursor-pointer font-medium">
                   {copy.email}
-                </span>
+                </button>
               </li>
               <li>
-                <span className="text-slate-400 hover:text-white transition-colors cursor-pointer font-medium">
+                <button type="button" onClick={() => onNavigate('toolbox')} className="text-left text-slate-400 hover:text-white transition-colors cursor-pointer font-medium">
                   {copy.toolbox}
-                </span>
+                </button>
               </li>
               <li>
-                <span className="text-slate-400 hover:text-white transition-colors cursor-pointer font-medium">
+                <button type="button" onClick={onOpenFragGommar} className="text-left text-slate-400 hover:text-white transition-colors cursor-pointer font-medium">
                   {copy.mentor}
-                </span>
+                </button>
               </li>
             </ul>
           </div>

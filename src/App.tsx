@@ -470,6 +470,8 @@ export default function App() {
         <Footer 
           theme={user.theme} 
           onOpenLegal={handleOpenLegalModal} 
+          onNavigate={handleNavigate}
+          onOpenFragGommar={() => handleOpenFragGommar()}
         />
         <LegalModal
           isOpen={isLegalModalOpen}
@@ -617,6 +619,8 @@ export default function App() {
       <Footer 
         theme={user.theme} 
         onOpenLegal={handleOpenLegalModal} 
+        onNavigate={handleNavigate}
+        onOpenFragGommar={() => handleOpenFragGommar()}
       />
 
       {/* ⚖️ Legal Modal (DSGVO Datenschutz, Impressum, Cookie-Einstellungen) */}
