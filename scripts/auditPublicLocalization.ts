@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 const dashboard = readFileSync('src/components/DashboardView.tsx', 'utf8');
 const academy = readFileSync('src/components/AcademyView.tsx', 'utf8');
 const footer = readFileSync('src/components/Footer.tsx', 'utf8');
+const header = readFileSync('src/components/Header.tsx', 'utf8');
 const localizationHook = readFileSync('src/i18n/useLocalizedAcademyStages.ts', 'utf8');
 const viteConfig = readFileSync('vite.config.ts', 'utf8');
 
@@ -24,6 +25,11 @@ assert.match(academy, /const isStageAccessible = isAcademyStageAccessible\(stage
 assert.match(academy, /if \(isStageAccessible\) \{[\s\S]*onClick=\{\(\) => handleOpenLesson\(stage\.id, lesson\.id\)\}/, 'Alle Lektionen einer zugänglichen Etappe müssen anklickbar sein.');
 assert.doesNotMatch(academy, /unlockedStageIdSet/, 'Gespeicherter Lernfortschritt darf zugängliche Etappen nicht zusätzlich sperren.');
 assert.match(footer, /useLanguage\(\)/, 'Der Footer muss auf die gewählte Sprache reagieren.');
+assert.match(header, /onClick=\{\(\) => onNavigate\('profile'\)\}/, 'Das Profil muss auf Mobilgeräten direkt erreichbar sein.');
+assert.match(footer, /onClick=\{\(\) => onNavigate\('academy'\)\}/, 'Der Footer muss zur Academy navigieren.');
+assert.match(footer, /onClick=\{\(\) => onNavigate\('email'\)\}/, 'Der Footer muss zum E-Mail-Bereich navigieren.');
+assert.match(footer, /onClick=\{\(\) => onNavigate\('toolbox'\)\}/, 'Der Footer muss zur Toolbox navigieren.');
+assert.match(footer, /onClick=\{onOpenFragGommar\}/, 'Der Footer muss den KI-Mentor öffnen.');
 
 for (const language of ['de', 'en', 'pl']) {
   assert.match(
