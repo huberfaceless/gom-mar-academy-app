@@ -37,6 +37,7 @@ interface EmailAutomationViewProps {
   onUpdateCampaigns: (campaigns: Campaign[]) => void;
   onNavigateToToolbox: (category?: string) => void;
   onOpenFragGommar: (prompt?: string) => void;
+  isAdmin: boolean;
 }
 
 export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
@@ -44,6 +45,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   onUpdateCampaigns,
   onNavigateToToolbox,
   onOpenFragGommar,
+  isAdmin,
 }) => {
   const activeCampaign = campaigns[0];
   const activeCampaignCount = campaigns.filter((campaign) => campaign.status === 'active').length;
@@ -77,6 +79,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [newLeadCompany, setNewLeadCompany] = useState('');
 
   useEffect(() => {
+    if (!isAdmin) {
+      setIsLoadingContacts(false);
+      return;
+    }
     let cancelled = false;
     void loadCrmContacts()
       .then((storedContacts) => {
@@ -89,7 +95,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
         if (!cancelled) setIsLoadingContacts(false);
       });
     return () => { cancelled = true; };
-  }, []);
+  }, [isAdmin]);
 
   const handleSelectEmail = (email: EmailMessage) => {
     setSelectedEmail(email);
@@ -258,7 +264,9 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
           </div>
           <h1 className="text-2xl font-black text-slate-950">Noch keine Kampagne vorhanden</h1>
           <p className="mx-auto mt-3 max-w-xl text-sm text-slate-600">
-            Die Testkampagnen wurden entfernt. Erstelle eine neue leere Kampagne oder öffne dein noch leeres CRM.
+            {isAdmin
+              ? 'Die Testkampagnen wurden entfernt. Erstelle eine neue leere Kampagne oder öffne dein noch leeres CRM.'
+              : 'Die Testkampagnen wurden entfernt. Erstelle eine neue leere Kampagne.'}
           </p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <button
@@ -269,14 +277,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <Plus className="h-4 w-4" />
               Erste Kampagne erstellen
             </button>
-            <button
-              type="button"
-              onClick={() => setMainTab('crm')}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50"
-            >
-              <Users className="h-4 w-4" />
-              CRM öffnen
-            </button>
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => setMainTab('crm')}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50"
+              >
+                <Users className="h-4 w-4" />
+                CRM öffnen
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -301,24 +311,26 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             <span>E-Mail Marketing & Sequenzen</span>
           </button>
 
-          <button
-            onClick={() => setMainTab('crm')}
-            id="tab-crm-contacts"
-            className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer ${
-              mainTab === 'crm'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            <span>Kontakte verwalten (CRM)</span>
-            <span className="px-2 py-0.5 rounded-full bg-slate-100 text-indigo-700 text-[11px] font-black border border-indigo-200">
-              {contacts.length}
-            </span>
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => setMainTab('crm')}
+              id="tab-crm-contacts"
+              className={`px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer ${
+                mainTab === 'crm'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span>Kontakte verwalten (CRM)</span>
+              <span className="px-2 py-0.5 rounded-full bg-slate-100 text-indigo-700 text-[11px] font-black border border-indigo-200">
+                {contacts.length}
+              </span>
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
+        {isAdmin && <div className="flex items-center gap-3">
           {mainTab === 'crm' ? (
             <button
               onClick={() => setShowAddLeadForm(!showAddLeadForm)}
@@ -338,7 +350,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <span>+ Test-Lead eintragen</span>
             </button>
           )}
-        </div>
+        </div>}
       </div>
 
       {/* Lead Simulation Toast Success */}
@@ -349,7 +361,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
         </div>
       )}
 
-      {contactsError && (
+      {isAdmin && contactsError && (
         <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-semibold" role="alert">
           {contactsError}
         </div>
@@ -400,8 +412,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             </div>
 
             <div
-              onClick={() => setMainTab('crm')}
-              className="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm col-span-2 relative overflow-hidden group cursor-pointer hover:border-indigo-400 transition-colors"
+              onClick={isAdmin ? () => setMainTab('crm') : undefined}
+              className={`bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm col-span-2 relative overflow-hidden group transition-colors ${
+                isAdmin ? 'cursor-pointer hover:border-indigo-400' : ''
+              }`}
             >
               <div className="relative z-10 flex flex-col h-full justify-between gap-3">
                 <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
@@ -409,9 +423,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     <Eye className="w-4 h-4 text-indigo-600" />
                     <span>Durchschn. Öffnungsrate</span>
                   </div>
-                  <span className="text-indigo-600 text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    CRM öffnen <ArrowUpRight className="w-3.5 h-3.5" />
-                  </span>
+                  {isAdmin && (
+                    <span className="text-indigo-600 text-xs font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      CRM öffnen <ArrowUpRight className="w-3.5 h-3.5" />
+                    </span>
+                  )}
                 </div>
                 <div>
                   <p className="text-2xl sm:text-3xl font-black text-slate-950">{openRate}%</p>
@@ -430,7 +446,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
           {/* Main Sections Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Quick Contacts Preview */}
-            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col space-y-4">
+            {isAdmin && <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
@@ -484,10 +500,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               >
                 Alle Kontakte verwalten (CRM) →
               </button>
-            </div>
+            </div>}
 
             {/* Campaign Status */}
-            <div className="bg-white border-l-4 border-l-indigo-600 border-y border-r border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col lg:col-span-2 space-y-4">
+            <div className={`bg-white border-l-4 border-l-indigo-600 border-y border-r border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col space-y-4 ${isAdmin ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
@@ -755,7 +771,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       {/* ========================================================= */}
       {/* VIEW 2: KONTAKTE VERWALTEN (CRM)                         */}
       {/* ========================================================= */}
-      {mainTab === 'crm' && (
+      {isAdmin && mainTab === 'crm' && (
         <div className="space-y-8 animate-fadeIn">
           {/* Header Section */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -1003,7 +1019,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       )}
 
       {/* LEAD DETAILS FULL INTERACTIVE MODAL */}
-      {selectedLead && isLeadModalOpen ? (
+      {isAdmin && selectedLead && isLeadModalOpen ? (
         <LeadDetailModal
           key={selectedLead.id}
           lead={selectedLead}
