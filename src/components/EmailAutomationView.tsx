@@ -52,7 +52,8 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   isLoadingCampaigns,
   campaignsError,
 }) => {
-  const activeCampaign = campaigns[0];
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(null);
+  const activeCampaign = campaigns.find((campaign) => campaign.id === selectedCampaignId) || campaigns[0];
   const activeCampaignCount = campaigns.filter((campaign) => campaign.status === 'active').length;
   const plannedCampaignCount = campaigns.filter((campaign) => campaign.status === 'draft').length;
   const sentEmailCount = activeCampaign?.emails.filter((email) => email.status === 'sent').length || 0;
@@ -79,6 +80,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [newEmailPreviewText, setNewEmailPreviewText] = useState('');
   const [newEmailContent, setNewEmailContent] = useState('');
   const [newEmailDayOffset, setNewEmailDayOffset] = useState(0);
+  const [isCreatingCampaign, setIsCreatingCampaign] = useState(false);
+  const [newCampaignTitle, setNewCampaignTitle] = useState('');
+  const [newCampaignTargetAudience, setNewCampaignTargetAudience] = useState('');
+  const [newCampaignDescription, setNewCampaignDescription] = useState('');
   const [simulatedLeadSuccess, setSimulatedLeadSuccess] = useState<string | null>(null);
   const [campaignActionError, setCampaignActionError] = useState<string | null>(null);
   const [isSavingCampaign, setIsSavingCampaign] = useState(false);
@@ -97,6 +102,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [newLeadEmail, setNewLeadEmail] = useState('');
   const [newLeadRole, setNewLeadRole] = useState('');
   const [newLeadCompany, setNewLeadCompany] = useState('');
+
+  useEffect(() => {
+    if (campaigns.length === 0) {
+      setSelectedCampaignId(null);
+      return;
+    }
+    if (!selectedCampaignId || !campaigns.some((campaign) => campaign.id === selectedCampaignId)) {
+      setSelectedCampaignId(campaigns[0].id);
+    }
+  }, [campaigns, selectedCampaignId]);
 
   useEffect(() => {
     if (!isAdmin) {
@@ -259,11 +274,58 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setIsSavingCampaign(true);
     try {
       await onUpdateCampaigns([newCampaign]);
+      setSelectedCampaignId(campaignId);
     } catch (error: unknown) {
       setCampaignActionError(error instanceof Error ? error.message : 'Die Kampagne konnte nicht gespeichert werden.');
     } finally {
       setIsSavingCampaign(false);
     }
+  };
+
+  const handleOpenCampaignCreator = () => {
+    setNewCampaignTitle('');
+    setNewCampaignTargetAudience('');
+    setNewCampaignDescription('');
+    setCampaignActionError(null);
+    setIsCreatingCampaign(true);
+  };
+
+  const handleCreateCampaign = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!newCampaignTitle.trim()) return;
+    const campaignId = `camp_${Date.now()}`;
+    const newCampaign: Campaign = {
+      id: campaignId,
+      title: newCampaignTitle.trim(),
+      targetAudience: newCampaignTargetAudience.trim(),
+      description: newCampaignDescription.trim(),
+      leadsCount: 0,
+      status: 'draft',
+      createdAt: new Date().toISOString().split('T')[0],
+      emails: [],
+    };
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns([...campaigns, newCampaign]);
+      setSelectedCampaignId(campaignId);
+      setSelectedEmail(null);
+      setIsEditingCampaign(false);
+      setIsCreatingCampaign(false);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Die neue Kampagne konnte nicht gespeichert werden.');
+    } finally {
+      setIsSavingCampaign(false);
+    }
+  };
+
+  const handleSelectCampaign = (campaignId: string) => {
+    setSelectedCampaignId(campaignId);
+    setSelectedEmail(null);
+    setIsEditing(false);
+    setIsEditingCampaign(false);
+    setIsAddingEmail(false);
+    setCampaignActionError(null);
   };
 
   const handleOpenCampaignEditor = () => {
@@ -346,6 +408,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setIsSavingCampaign(true);
     try {
       await onUpdateCampaigns(campaigns.filter((campaign) => campaign.id !== activeCampaign.id));
+      setSelectedCampaignId(null);
       setSelectedEmail(null);
       setIsEditingCampaign(false);
     } catch (error: unknown) {
@@ -559,14 +622,65 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 Überblick und Steuerung deiner automatisierten Kampagnen & Sequenzen.
               </p>
             </div>
-            <button
-              onClick={() => onNavigateToToolbox('email')}
-              className="px-4 py-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer w-fit shadow-sm"
-            >
-              <Sparkles className="w-4 h-4 text-indigo-600" />
-              <span>KI-E-Mail Generator</span>
-            </button>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-end">
+              <label className="sr-only" htmlFor="campaign-selector">Kampagne auswählen</label>
+              <select
+                id="campaign-selector"
+                value={activeCampaign.id}
+                onChange={(event) => handleSelectCampaign(event.target.value)}
+                className="min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs font-bold text-slate-800 focus:border-indigo-600 focus:outline-none sm:max-w-56"
+              >
+                {campaigns.map((campaign) => (
+                  <option key={campaign.id} value={campaign.id}>{campaign.title}</option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={handleOpenCampaignCreator}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-indigo-700"
+              >
+                <Plus className="h-4 w-4" />
+                Neue Kampagne
+              </button>
+              <button
+                onClick={() => onNavigateToToolbox('email')}
+                className="px-4 py-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
+              >
+                <Sparkles className="w-4 h-4 text-indigo-600" />
+                <span>KI-E-Mail Generator</span>
+              </button>
+            </div>
           </div>
+
+          {isCreatingCampaign && (
+            <form onSubmit={handleCreateCampaign} className="space-y-4 rounded-3xl border-2 border-indigo-300 bg-white p-5 shadow-sm sm:p-6">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <h2 className="font-black text-slate-950">Neue Kampagne anlegen</h2>
+                  <p className="mt-1 text-xs text-slate-500">Die bestehende Kampagne bleibt vollständig erhalten.</p>
+                </div>
+                <button type="button" onClick={() => setIsCreatingCampaign(false)} className="text-xs font-bold text-slate-500 hover:text-slate-800">Schließen</button>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="mb-1 block text-xs font-bold text-slate-700">Kampagnenname *</label>
+                  <input required maxLength={200} value={newCampaignTitle} onChange={(event) => setNewCampaignTitle(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 text-sm focus:border-indigo-600 focus:bg-white focus:outline-none" />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-bold text-slate-700">Zielgruppe</label>
+                  <input maxLength={1000} value={newCampaignTargetAudience} onChange={(event) => setNewCampaignTargetAudience(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 text-sm focus:border-indigo-600 focus:bg-white focus:outline-none" />
+                </div>
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-bold text-slate-700">Beschreibung</label>
+                <textarea rows={3} maxLength={5000} value={newCampaignDescription} onChange={(event) => setNewCampaignDescription(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 text-sm focus:border-indigo-600 focus:bg-white focus:outline-none" />
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+                <button type="button" onClick={() => setIsCreatingCampaign(false)} className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-bold text-slate-700">Abbrechen</button>
+                <button disabled={isSavingCampaign} className="rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white disabled:opacity-60">{isSavingCampaign ? 'Wird gespeichert…' : 'Kampagne anlegen'}</button>
+              </div>
+            </form>
+          )}
 
           {/* Stats Bento Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
