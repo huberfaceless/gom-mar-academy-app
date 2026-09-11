@@ -26,6 +26,12 @@ assert.match(view, /handleSaveCampaign/, 'Kampagnendaten müssen zentral bearbei
 assert.match(view, /handleCreateEmail/, 'Neue E-Mail-Entwürfe müssen direkt in einer Kampagne angelegt werden können.');
 assert.match(view, /status: 'draft'/, 'Neue E-Mails müssen sicher als Entwurf angelegt werden.');
 assert.match(view, /nicht automatisch versendet/, 'Der Entwurfsstatus muss in der Oberfläche eindeutig erklärt werden.');
+assert.match(view, /handleDeleteCampaign/, 'Kampagnenentwürfe müssen gelöscht werden können.');
+assert.match(view, /activeCampaign\.status !== 'draft'/, 'Aktive oder pausierte Kampagnen dürfen nicht versehentlich gelöscht werden.');
+assert.match(view, /handleDeleteEmail/, 'Einzelne E-Mail-Entwürfe müssen gelöscht werden können.');
+assert.match(view, /selectedEmail\.status !== 'draft'/, 'Bereits geplante oder versendete E-Mails dürfen nicht gelöscht werden.');
+assert.match(view, /window\.confirm\(`Kampagne/, 'Vor dem Löschen einer Kampagne muss eine Bestätigung verlangt werden.');
+assert.match(view, /window\.confirm\(`E-Mail-Entwurf/, 'Vor dem Löschen eines E-Mail-Entwurfs muss eine Bestätigung verlangt werden.');
 
 const validCampaign = {
   id: 'camp_1',
