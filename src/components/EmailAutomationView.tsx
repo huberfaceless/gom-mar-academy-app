@@ -3,6 +3,7 @@ import { Campaign, EmailMessage } from '../types';
 import { LeadDetailModal, LeadContact } from './LeadDetailModal';
 import { sendEmail, sendTestEmail } from '../services/emailDeliveryService';
 import { deleteCrmContact, loadCrmContacts, saveCrmContacts, syncConsentedMembers } from '../services/crmContactsService';
+import type { LanguageCode } from '../i18n/translations';
 import { 
   Mail, 
   Plus, 
@@ -42,6 +43,7 @@ interface EmailAutomationViewProps {
   isAdmin: boolean;
   isLoadingCampaigns: boolean;
   campaignsError: string | null;
+  language: LanguageCode;
 }
 
 export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
@@ -52,6 +54,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   isAdmin,
   isLoadingCampaigns,
   campaignsError,
+  language,
 }) => {
   const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(null);
   const activeCampaign = campaigns.find((campaign) => campaign.id === selectedCampaignId) || campaigns[0];
@@ -1607,7 +1610,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
           lead={selectedLead}
           onClose={() => setIsLeadModalOpen(false)}
           onSendEmail={async (lead, sub, body) => {
-            await sendEmail({ to: lead.email, subject: sub, body });
+            await sendEmail({ to: lead.email, subject: sub, body, contactId: lead.id, language });
             setSimulatedLeadSuccess(`📨 E-Mail "${sub}" an ${lead.name} (${lead.email}) versendet!`);
             setTimeout(() => setSimulatedLeadSuccess(null), 5000);
           }}

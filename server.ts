@@ -10,9 +10,10 @@ import {
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
-import { deleteCrmContact, loadCrmContacts, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
+import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
+import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -39,6 +40,8 @@ type SendEmailRequest = {
   to?: unknown;
   subject?: unknown;
   body?: unknown;
+  contactId?: unknown;
+  language?: unknown;
 };
 
 const FIREBASE_PROJECT_ID = process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie';
@@ -502,7 +505,86 @@ async function startServer() {
     }
   });
 
-  const handleEmailSend = async (req: Request, res: Response, recipientOverride?: string) => {
+  type PublicEmailLanguage = 'de' | 'en' | 'pl';
+  type UnsubscribePageState = 'prompt' | 'success' | 'error';
+  const unsubscribePage = (
+    language: PublicEmailLanguage,
+    state: UnsubscribePageState,
+    token = '',
+  ) => {
+    const pageCopy = {
+      de: {
+        title: 'Marketing-E-Mails abmelden', promptTitle: 'Abmeldung bestätigen', successTitle: 'Abmeldung gespeichert', errorTitle: 'Abmeldung nicht möglich',
+        prompt: 'Bestätige, dass du keine Marketing-E-Mails der GOM-MAR Academy mehr erhalten möchtest.', confirm: 'Marketing-E-Mails abmelden',
+        success: 'Du erhältst keine weiteren Marketing-E-Mails. Wichtige Nachrichten zu deinem Konto und deiner Mitgliedschaft bleiben davon unberührt.',
+        error: 'Der Abmeldelink ist ungültig. Bitte widerrufe die Einwilligung alternativ in deinem Academy-Profil.', back: 'Zur GOM-MAR Academy',
+      },
+      en: {
+        title: 'Unsubscribe from marketing emails', promptTitle: 'Confirm unsubscribe', successTitle: 'Unsubscribe saved', errorTitle: 'Unable to unsubscribe',
+        prompt: 'Confirm that you no longer want to receive marketing emails from the GOM-MAR Academy.', confirm: 'Unsubscribe from marketing emails',
+        success: 'You will receive no further marketing emails. Important account and membership messages are not affected.',
+        error: 'The unsubscribe link is invalid. You can also withdraw your consent in your Academy profile.', back: 'Go to GOM-MAR Academy',
+      },
+      pl: {
+        title: 'Rezygnacja z e-maili marketingowych', promptTitle: 'Potwierdź rezygnację', successTitle: 'Rezygnacja zapisana', errorTitle: 'Nie można zrezygnować',
+        prompt: 'Potwierdź, że nie chcesz już otrzymywać e-maili marketingowych od GOM-MAR Academy.', confirm: 'Zrezygnuj z e-maili marketingowych',
+        success: 'Nie będziesz otrzymywać kolejnych e-maili marketingowych. Nie ma to wpływu na ważne wiadomości dotyczące konta i członkostwa.',
+        error: 'Link rezygnacji jest nieprawidłowy. Możesz również wycofać zgodę w swoim profilu Academy.', back: 'Przejdź do GOM-MAR Academy',
+      },
+    } as const;
+    const copy = pageCopy[language];
+    const title = state === 'success' ? copy.successTitle : state === 'prompt' ? copy.promptTitle : copy.errorTitle;
+    const message = state === 'success' ? copy.success : state === 'prompt' ? copy.prompt : copy.error;
+    const confirmationForm = state === 'prompt' ? `<form method="post" action="/api/email/unsubscribe">
+<input type="hidden" name="token" value="${token}"><input type="hidden" name="lang" value="${language}">
+<button type="submit">${copy.confirm}</button></form>` : '';
+    return `<!doctype html>
+<html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #cbd5e1;border-radius:24px;box-shadow:0 12px 35px #0f172a18;max-width:560px;margin:24px;padding:32px}h1{font-size:24px;margin:0 0 14px;color:${state === 'success' ? '#047857' : state === 'error' ? '#be123c' : '#312e81'}p{line-height:1.6}a,button{display:inline-block;margin-top:10px;border:0;border-radius:12px;background:#4f46e5;color:white;padding:12px 18px;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}a{background:#475569}</style></head>
+<body><main class="card"><h1>${title}</h1><p>${message}</p>${confirmationForm}<a href="${ACADEMY_PUBLIC_URL}">${copy.back}</a></main></body></html>`;
+  };
+
+  app.get('/api/email/unsubscribe', (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const token = typeof req.query.token === 'string' ? req.query.token.trim() : '';
+    const language: PublicEmailLanguage = req.query.lang === 'en' || req.query.lang === 'pl' ? req.query.lang : 'de';
+    if (!/^[A-Za-z0-9_-]{40,60}$/.test(token)) {
+      res.status(400).type('html').send(unsubscribePage(language, 'error'));
+      return;
+    }
+    res.type('html').send(unsubscribePage(language, 'prompt', token));
+  });
+
+  app.post('/api/email/unsubscribe', async (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const token = typeof req.body?.token === 'string' ? req.body.token.trim() : '';
+    const language: PublicEmailLanguage = req.body?.lang === 'en' || req.body?.lang === 'pl' ? req.body.lang : 'de';
+    if (!/^[A-Za-z0-9_-]{40,60}$/.test(token)) {
+      res.status(400).type('html').send(unsubscribePage(language, 'error'));
+      return;
+    }
+    try {
+      const result = await unsubscribeMarketingEmail(FIREBASE_PROJECT_ID, token);
+      if (result.memberUserId) {
+        await withdrawEmailConsent(FIREBASE_PROJECT_ID, result.memberUserId, result.email, 'email-unsubscribe-link');
+      }
+      console.info('Academy-Marketing-E-Mail abgemeldet', {
+        action: 'academy.email.marketing.unsubscribed',
+        memberUserId: result.memberUserId,
+        timestamp: new Date().toISOString(),
+      });
+      res.type('html').send(unsubscribePage(language, 'success'));
+    } catch {
+      res.status(400).type('html').send(unsubscribePage(language, 'error'));
+    }
+  });
+
+  const handleEmailSend = async (
+    req: Request,
+    res: Response,
+    recipientOverride?: string,
+    marketing?: { memberUserId?: string; consentUpdatedAt?: string | null; language: PublicEmailLanguage },
+  ) => {
     const sendGridApiKey = process.env.SENDGRID_API_KEY?.trim();
     const senderEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
     const senderName = process.env.SENDGRID_FROM_NAME?.trim() || 'GOM-MAR Academy';
@@ -539,6 +621,21 @@ async function startServer() {
     recentEmailSends.set(userId, [...sendsInWindow, Date.now()]);
 
     try {
+      let deliveredBody = emailBody;
+      if (marketing) {
+        if (await isMarketingEmailSuppressed(FIREBASE_PROJECT_ID, recipient, marketing.consentUpdatedAt)) {
+          res.status(409).json({ error: 'Dieser Kontakt hat Marketing-E-Mails abbestellt.' });
+          return;
+        }
+        const unsubscribeToken = await createMarketingUnsubscribeToken(FIREBASE_PROJECT_ID, recipient, marketing.memberUserId);
+        const unsubscribeUrl = `${ACADEMY_PUBLIC_URL}/api/email/unsubscribe?token=${encodeURIComponent(unsubscribeToken)}&lang=${marketing.language}`;
+        const unsubscribeLabel = {
+          de: 'Marketing-E-Mails abbestellen',
+          en: 'Unsubscribe from marketing emails',
+          pl: 'Zrezygnuj z e-maili marketingowych',
+        }[marketing.language];
+        deliveredBody = `${emailBody}\n\n—\n${unsubscribeLabel}:\n${unsubscribeUrl}`;
+      }
       const response = await fetch(SENDGRID_API_URL, {
         method: 'POST',
         headers: {
@@ -549,7 +646,7 @@ async function startServer() {
           personalizations: [{ to: [{ email: recipient }] }],
           from: { email: senderEmail, name: senderName.slice(0, 100) },
           subject: emailSubject,
-          content: [{ type: 'text/plain', value: emailBody }],
+          content: [{ type: 'text/plain', value: deliveredBody }],
         }),
       });
 
@@ -569,7 +666,53 @@ async function startServer() {
   };
 
   app.post('/api/email/send', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
-    await handleEmailSend(req, res);
+    const actorUserId = (req as FirebaseRequest).firebaseUser?.sub || '';
+    const contactId = typeof req.body?.contactId === 'string' ? req.body.contactId.trim() : '';
+    const requestedRecipient = typeof req.body?.to === 'string' ? req.body.to.trim().toLowerCase() : '';
+    const language: PublicEmailLanguage = req.body?.language === 'en' || req.body?.language === 'pl' ? req.body.language : 'de';
+    if (!actorUserId || !/^[a-zA-Z0-9_-]{1,100}$/.test(contactId)) {
+      res.status(400).json({ error: 'Der CRM-Kontakt ist ungültig.' });
+      return;
+    }
+    try {
+      const contacts = await loadCrmContacts(FIREBASE_PROJECT_ID, actorUserId);
+      const contact = contacts.find((item) => item.id === contactId);
+      const storedRecipient = typeof contact?.email === 'string' ? contact.email.trim().toLowerCase() : '';
+      if (!contact || storedRecipient !== requestedRecipient || !EMAIL_ADDRESS_PATTERN.test(storedRecipient)) {
+        res.status(400).json({ error: 'Der CRM-Kontakt oder seine E-Mail-Adresse ist ungültig.' });
+        return;
+      }
+
+      let memberUserId: string | undefined;
+      let consentUpdatedAt: string | null | undefined;
+      if (contactId.startsWith('member_')) {
+        const members = [];
+        let pageToken: string | undefined;
+        for (let page = 0; page < 10; page += 1) {
+          const result = await listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken);
+          members.push(...result.members);
+          pageToken = result.nextPageToken;
+          if (!pageToken) break;
+        }
+        if (pageToken) throw new Error('Die Mitgliederliste ist für eine sichere Prüfung zu groß.');
+        const member = members.find((item) => memberContactId(item.uid) === contactId);
+        if (!member || member.email.trim().toLowerCase() !== storedRecipient) {
+          res.status(409).json({ error: 'Das verknüpfte Academy-Mitglied konnte nicht sicher bestätigt werden.' });
+          return;
+        }
+        const consent = await loadEmailConsent(FIREBASE_PROJECT_ID, member.uid);
+        if (!consent.granted || consent.email.trim().toLowerCase() !== storedRecipient) {
+          res.status(409).json({ error: 'Dieses Mitglied hat keine aktive Marketing-E-Mail-Einwilligung.' });
+          return;
+        }
+        memberUserId = member.uid;
+        consentUpdatedAt = consent.updatedAt;
+      }
+
+      await handleEmailSend(req, res, storedRecipient, { memberUserId, consentUpdatedAt, language });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht geprüft werden.' });
+    }
   });
 
   app.post('/api/email/test-send', requireVerifiedMember, requireProMember, async (req, res) => {

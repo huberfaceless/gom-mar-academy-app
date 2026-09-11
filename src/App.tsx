@@ -60,7 +60,7 @@ function ViewLoadingFallback() {
 
 export default function App() {
   const { user: firebaseUser, loading: authLoading, authState } = useAuth();
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   const [user, setUser] = useState<UserProfile>(() => {
     const loaded = loadUserProfile();
@@ -560,6 +560,7 @@ export default function App() {
               isAdmin={user.role === 'admin'}
               isLoadingCampaigns={isLoadingCampaigns}
               campaignsError={campaignsError}
+              language={language}
             />
           )}
 

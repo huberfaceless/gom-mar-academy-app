@@ -25,7 +25,7 @@ const getAccessToken = async (): Promise<string> => {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 
-const memberContactId = (uid: string) =>
+export const memberContactId = (uid: string) =>
   `member_${createHash('sha256').update(uid).digest('hex').slice(0, 32)}`;
 
 export const validateCrmContacts = (value: unknown): Record<string, unknown>[] => {
