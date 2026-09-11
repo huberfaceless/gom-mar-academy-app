@@ -3,8 +3,8 @@ import { UserProfile, Campaign, StudentRecord, Stage, Lesson, AcademyTier } from
 import { 
   loadUserProfile, 
   saveUserProfile, 
-  loadCampaigns, 
-  saveCampaigns, 
+  loadCampaigns as loadLegacyCampaigns,
+  saveCampaigns as saveLegacyCampaigns,
   calculateLevelAndTitle,
   loadStudents,
   addOrUpdateStudentRecord,
@@ -35,6 +35,7 @@ import {
   requiredTierForView,
   resolveMembershipClaims,
 } from './utils/membershipAccess';
+import { loadEmailCampaigns, saveEmailCampaigns } from './services/emailCampaignsService';
 
 const DashboardView = lazy(() => import('./components/DashboardView').then((module) => ({ default: module.DashboardView })));
 const AcademyView = lazy(() => import('./components/AcademyView').then((module) => ({ default: module.AcademyView })));
@@ -66,7 +67,13 @@ export default function App() {
     return { ...loaded, tier: 'FREE', role: 'member' };
   });
 
-  const [campaigns, setCampaigns] = useState<Campaign[]>(loadCampaigns());
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [campaignsError, setCampaignsError] = useState<string | null>(null);
+  const [isLoadingCampaigns, setIsLoadingCampaigns] = useState(false);
+  const [legacyCampaignState] = useState(() => ({
+    campaigns: loadLegacyCampaigns(),
+    ownerEmail: loadUserProfile().email.trim().toLowerCase(),
+  }));
   const [stages, setStages] = useState<Stage[]>(loadAcademyStages());
   const [students, setStudents] = useState<StudentRecord[]>(loadStudents());
 
@@ -83,6 +90,43 @@ export default function App() {
       .catch((error) => console.error(error));
     return () => { cancelled = true; };
   }, [firebaseUser]);
+
+  useEffect(() => {
+    const canLoadCampaigns = Boolean(firebaseUser?.emailVerified)
+      && canAccessView('email', user.tier, user.role);
+    if (!canLoadCampaigns) {
+      setCampaigns([]);
+      setCampaignsError(null);
+      setIsLoadingCampaigns(false);
+      return;
+    }
+
+    let cancelled = false;
+    setIsLoadingCampaigns(true);
+    setCampaignsError(null);
+    void loadEmailCampaigns()
+      .then(async (remoteState) => {
+        const currentEmail = firebaseUser?.email?.trim().toLowerCase() || '';
+        const canMigrateLegacy = !remoteState.exists
+          && legacyCampaignState.campaigns.length > 0
+          && Boolean(currentEmail)
+          && legacyCampaignState.ownerEmail === currentEmail;
+        const storedCampaigns = canMigrateLegacy
+          ? await saveEmailCampaigns(legacyCampaignState.campaigns)
+          : remoteState.campaigns;
+        if (!cancelled) {
+          setCampaigns(storedCampaigns);
+          saveLegacyCampaigns([]);
+        }
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) setCampaignsError(error instanceof Error ? error.message : 'E-Mail-Kampagnen konnten nicht geladen werden.');
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoadingCampaigns(false);
+      });
+    return () => { cancelled = true; };
+  }, [firebaseUser, legacyCampaignState, user.role, user.tier]);
   const [activeView, setActiveView] = useState<string>('dashboard');
   const [membershipGate, setMembershipGate] = useState<{
     isOpen: boolean;
@@ -269,9 +313,10 @@ export default function App() {
     }
   };
 
-  const handleUpdateCampaigns = (updatedCampaigns: Campaign[]) => {
-    setCampaigns(updatedCampaigns);
-    saveCampaigns(updatedCampaigns);
+  const handleUpdateCampaigns = async (updatedCampaigns: Campaign[]) => {
+    setCampaignsError(null);
+    const storedCampaigns = await saveEmailCampaigns(updatedCampaigns);
+    setCampaigns(storedCampaigns);
   };
 
   const handleUpdateStages = async (newStages: Stage[]) => {
@@ -511,6 +556,8 @@ export default function App() {
               onNavigateToToolbox={handleNavigateToToolbox}
               onOpenFragGommar={handleOpenFragGommar}
               isAdmin={user.role === 'admin'}
+              isLoadingCampaigns={isLoadingCampaigns}
+              campaignsError={campaignsError}
             />
           )}
 
