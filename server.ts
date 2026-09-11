@@ -10,6 +10,7 @@ import {
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, saveCrmContacts } from './server/crmContactsAdmin.js';
+import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -249,6 +250,31 @@ async function startServer() {
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht gelöscht werden.';
       res.status(message.includes('ungültig') ? 400 : 503).json({ error: message });
+    }
+  });
+
+  app.get('/api/email/campaigns', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const result = await loadEmailCampaigns(FIREBASE_PROJECT_ID, userId);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json(result);
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'E-Mail-Kampagnen konnten nicht geladen werden.' });
+    }
+  });
+
+  app.put('/api/email/campaigns', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const campaigns = await saveEmailCampaigns(FIREBASE_PROJECT_ID, userId, req.body?.campaigns);
+      res.json({ campaigns });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'E-Mail-Kampagnen konnten nicht gespeichert werden.';
+      const isValidationError = /ungültig|zu groß|überschreiten/.test(message);
+      res.status(isValidationError ? 400 : 503).json({ error: message });
     }
   });
 

@@ -34,10 +34,12 @@ import {
 
 interface EmailAutomationViewProps {
   campaigns: Campaign[];
-  onUpdateCampaigns: (campaigns: Campaign[]) => void;
+  onUpdateCampaigns: (campaigns: Campaign[]) => Promise<void>;
   onNavigateToToolbox: (category?: string) => void;
   onOpenFragGommar: (prompt?: string) => void;
   isAdmin: boolean;
+  isLoadingCampaigns: boolean;
+  campaignsError: string | null;
 }
 
 export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
@@ -46,6 +48,8 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   onNavigateToToolbox,
   onOpenFragGommar,
   isAdmin,
+  isLoadingCampaigns,
+  campaignsError,
 }) => {
   const activeCampaign = campaigns[0];
   const activeCampaignCount = campaigns.filter((campaign) => campaign.status === 'active').length;
@@ -62,6 +66,8 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [editSubject, setEditSubject] = useState<string>('');
   const [editContent, setEditContent] = useState<string>('');
   const [simulatedLeadSuccess, setSimulatedLeadSuccess] = useState<string | null>(null);
+  const [campaignActionError, setCampaignActionError] = useState<string | null>(null);
+  const [isSavingCampaign, setIsSavingCampaign] = useState(false);
 
   // CRM State
   const [contacts, setContacts] = useState<LeadContact[]>([]);
@@ -104,7 +110,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setIsEditing(false);
   };
 
-  const handleSaveEmail = () => {
+  const handleSaveEmail = async () => {
     if (!selectedEmail) return;
     const updatedEmails = activeCampaign.emails.map((m) =>
       m.id === selectedEmail.id ? { ...m, subject: editSubject, content: editContent } : m
@@ -114,9 +120,17 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       c.id === activeCampaign.id ? { ...c, emails: updatedEmails } : c
     );
 
-    onUpdateCampaigns(updatedCampaigns);
-    setSelectedEmail({ ...selectedEmail, subject: editSubject, content: editContent });
-    setIsEditing(false);
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns(updatedCampaigns);
+      setSelectedEmail({ ...selectedEmail, subject: editSubject, content: editContent });
+      setIsEditing(false);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Die E-Mail-Änderungen konnten nicht gespeichert werden.');
+    } finally {
+      setIsSavingCampaign(false);
+    }
   };
 
   // Open Lead Details
@@ -198,9 +212,9 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     return true;
   });
 
-  const handleCreateFirstCampaign = () => {
+  const handleCreateFirstCampaign = async () => {
     const campaignId = `camp_${Date.now()}`;
-    onUpdateCampaigns([{
+    const newCampaign: Campaign = {
       id: campaignId,
       title: 'Neue Kampagne',
       targetAudience: '',
@@ -209,7 +223,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       status: 'draft',
       createdAt: new Date().toISOString().split('T')[0],
       emails: [],
-    }]);
+    };
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns([newCampaign]);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Die Kampagne konnte nicht gespeichert werden.');
+    } finally {
+      setIsSavingCampaign(false);
+    }
   };
 
   const activeLeadCount = contacts.filter((contact) => contact.badgeType !== 'cold').length;
@@ -218,12 +241,6 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
   // Simulate new Lead Opt-In
   const handleSimulateLead = () => {
-    const newLeadCount = activeCampaign.leadsCount + 1;
-    const updatedCampaigns = campaigns.map((c) =>
-      c.id === activeCampaign.id ? { ...c, leadsCount: newLeadCount } : c
-    );
-    onUpdateCampaigns(updatedCampaigns);
-
     const testLead: LeadContact = {
       id: `lead_sim_${Date.now()}`,
       name: 'Max Mustermann',
@@ -255,6 +272,14 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setTimeout(() => setSimulatedLeadSuccess(null), 5000);
   };
 
+  if (isLoadingCampaigns) {
+    return (
+      <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center text-sm font-semibold text-slate-600 shadow-sm">
+        E-Mail-Kampagnen werden geladen…
+      </div>
+    );
+  }
+
   if (!activeCampaign && mainTab === 'marketing') {
     return (
       <div className="space-y-8 animate-fadeIn">
@@ -268,14 +293,20 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               ? 'Die Testkampagnen wurden entfernt. Erstelle eine neue leere Kampagne oder öffne dein noch leeres CRM.'
               : 'Die Testkampagnen wurden entfernt. Erstelle eine neue leere Kampagne.'}
           </p>
+          {(campaignsError || campaignActionError) && (
+            <p className="mx-auto mt-4 max-w-xl rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm font-semibold text-rose-800" role="alert">
+              {campaignActionError || campaignsError}
+            </p>
+          )}
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <button
               type="button"
               onClick={handleCreateFirstCampaign}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-indigo-700"
+              disabled={isSavingCampaign}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <Plus className="h-4 w-4" />
-              Erste Kampagne erstellen
+              {isSavingCampaign ? 'Wird gespeichert…' : 'Erste Kampagne erstellen'}
             </button>
             {isAdmin && (
               <button
@@ -364,6 +395,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       {isAdmin && contactsError && (
         <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-semibold" role="alert">
           {contactsError}
+        </div>
+      )}
+
+      {(campaignsError || campaignActionError) && (
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-semibold" role="alert">
+          {campaignActionError || campaignsError}
         </div>
       )}
 
@@ -724,10 +761,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   <div className="flex justify-end gap-3 pt-2">
                     <button
                       onClick={handleSaveEmail}
-                      className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-2 shadow-md cursor-pointer transition-colors"
+                      disabled={isSavingCampaign}
+                      className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60 text-white font-bold text-xs flex items-center gap-2 shadow-md cursor-pointer transition-colors"
                     >
                       <CheckCircle2 className="w-4 h-4" />
-                      <span>Änderungen speichern</span>
+                      <span>{isSavingCampaign ? 'Wird gespeichert…' : 'Änderungen speichern'}</span>
                     </button>
                   </div>
                 </div>

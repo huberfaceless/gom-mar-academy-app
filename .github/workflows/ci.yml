@@ -43,6 +43,9 @@ jobs:
       - name: CRM-E-Mail-Versand pruefen
         run: bun run audit:email-delivery
 
+      - name: E-Mail-Kampagnenspeicherung pruefen
+        run: bun run audit:email-campaigns
+
       - name: CRM-Kontaktspeicherung pruefen
         run: bun run audit:crm-persistence
 
