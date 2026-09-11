@@ -278,7 +278,7 @@ async function startServer() {
     }
   });
 
-  app.post('/api/email/send', requireVerifiedMember, requireProMember, async (req, res) => {
+  const handleEmailSend = async (req: Request, res: Response, recipientOverride?: string) => {
     const sendGridApiKey = process.env.SENDGRID_API_KEY?.trim();
     const senderEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
     const senderName = process.env.SENDGRID_FROM_NAME?.trim() || 'GOM-MAR Academy';
@@ -288,7 +288,7 @@ async function startServer() {
     }
 
     const { to, subject, body } = (req.body || {}) as SendEmailRequest;
-    const recipient = typeof to === 'string' ? to.trim().toLowerCase() : '';
+    const recipient = recipientOverride || (typeof to === 'string' ? to.trim().toLowerCase() : '');
     const emailSubject = typeof subject === 'string' ? subject.trim() : '';
     const emailBody = typeof body === 'string' ? body.trim() : '';
     if (!EMAIL_ADDRESS_PATTERN.test(recipient)) {
@@ -342,6 +342,20 @@ async function startServer() {
     } catch {
       res.status(502).json({ error: 'Der E-Mail-Dienst ist momentan nicht erreichbar.' });
     }
+  };
+
+  app.post('/api/email/send', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    await handleEmailSend(req, res);
+  });
+
+  app.post('/api/email/test-send', requireVerifiedMember, requireProMember, async (req, res) => {
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    const ownVerifiedEmail = typeof firebaseUser?.email === 'string' ? firebaseUser.email.trim().toLowerCase() : '';
+    if (!EMAIL_ADDRESS_PATTERN.test(ownVerifiedEmail)) {
+      res.status(400).json({ error: 'Die eigene bestätigte Anmeldeadresse ist nicht verfügbar.' });
+      return;
+    }
+    await handleEmailSend(req, res, ownVerifiedEmail);
   });
 
   app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Campaign, EmailMessage } from '../types';
 import { LeadDetailModal, LeadContact } from './LeadDetailModal';
-import { sendEmail } from '../services/emailDeliveryService';
+import { sendEmail, sendTestEmail } from '../services/emailDeliveryService';
 import { deleteCrmContact, loadCrmContacts, saveCrmContacts } from '../services/crmContactsService';
 import { 
   Mail, 
@@ -87,6 +87,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [simulatedLeadSuccess, setSimulatedLeadSuccess] = useState<string | null>(null);
   const [campaignActionError, setCampaignActionError] = useState<string | null>(null);
   const [isSavingCampaign, setIsSavingCampaign] = useState(false);
+  const [isSendingTestEmail, setIsSendingTestEmail] = useState(false);
 
   // CRM State
   const [contacts, setContacts] = useState<LeadContact[]>([]);
@@ -437,6 +438,25 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       setCampaignActionError(error instanceof Error ? error.message : 'Der E-Mail-Entwurf konnte nicht gelöscht werden.');
     } finally {
       setIsSavingCampaign(false);
+    }
+  };
+
+  const handleSendTestEmail = async () => {
+    if (!selectedEmail) return;
+    if (!window.confirm(`E-Mail „${selectedEmail.subject}“ jetzt ausschließlich an deine eigene Anmeldeadresse senden?`)) return;
+    setCampaignActionError(null);
+    setIsSendingTestEmail(true);
+    try {
+      await sendTestEmail({
+        subject: `[TEST] ${selectedEmail.subject}`.slice(0, 200),
+        body: selectedEmail.content,
+      });
+      setSimulatedLeadSuccess('Die Test-E-Mail wurde an deine eigene bestätigte Anmeldeadresse gesendet.');
+      setTimeout(() => setSimulatedLeadSuccess(null), 5000);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Die Test-E-Mail konnte nicht versendet werden.');
+    } finally {
+      setIsSendingTestEmail(false);
     }
   };
 
@@ -1196,13 +1216,24 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </div>
 
                   <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                    <button
-                      onClick={() => onNavigateToToolbox('email')}
-                      className="px-4 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-semibold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Text mit KI Generator neu formulieren</span>
-                    </button>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={handleSendTestEmail}
+                        disabled={isSendingTestEmail}
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        <Send className="h-3.5 w-3.5" />
+                        <span>{isSendingTestEmail ? 'Test wird gesendet…' : 'Test an mich senden'}</span>
+                      </button>
+                      <button
+                        onClick={() => onNavigateToToolbox('email')}
+                        className="px-4 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-semibold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Text mit KI Generator neu formulieren</span>
+                      </button>
+                    </div>
 
                     <button
                       onClick={() => onOpenFragGommar(`Wie kann ich die Betreffzeile "${selectedEmail.subject}" verbessern, um mehr Öffnungen zu bekommen?`)}
