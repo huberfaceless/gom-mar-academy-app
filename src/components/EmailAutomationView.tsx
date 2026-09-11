@@ -64,7 +64,20 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [selectedEmail, setSelectedEmail] = useState<EmailMessage | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editSubject, setEditSubject] = useState<string>('');
+  const [editTitle, setEditTitle] = useState<string>('');
+  const [editPreviewText, setEditPreviewText] = useState<string>('');
+  const [editDayOffset, setEditDayOffset] = useState<number>(0);
   const [editContent, setEditContent] = useState<string>('');
+  const [isEditingCampaign, setIsEditingCampaign] = useState(false);
+  const [campaignTitle, setCampaignTitle] = useState('');
+  const [campaignTargetAudience, setCampaignTargetAudience] = useState('');
+  const [campaignDescription, setCampaignDescription] = useState('');
+  const [isAddingEmail, setIsAddingEmail] = useState(false);
+  const [newEmailTitle, setNewEmailTitle] = useState('');
+  const [newEmailSubject, setNewEmailSubject] = useState('');
+  const [newEmailPreviewText, setNewEmailPreviewText] = useState('');
+  const [newEmailContent, setNewEmailContent] = useState('');
+  const [newEmailDayOffset, setNewEmailDayOffset] = useState(0);
   const [simulatedLeadSuccess, setSimulatedLeadSuccess] = useState<string | null>(null);
   const [campaignActionError, setCampaignActionError] = useState<string | null>(null);
   const [isSavingCampaign, setIsSavingCampaign] = useState(false);
@@ -105,7 +118,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
   const handleSelectEmail = (email: EmailMessage) => {
     setSelectedEmail(email);
+    setEditTitle(email.title);
     setEditSubject(email.subject);
+    setEditPreviewText(email.previewText);
+    setEditDayOffset(email.dayOffset);
     setEditContent(email.content);
     setIsEditing(false);
   };
@@ -113,7 +129,14 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const handleSaveEmail = async () => {
     if (!selectedEmail) return;
     const updatedEmails = activeCampaign.emails.map((m) =>
-      m.id === selectedEmail.id ? { ...m, subject: editSubject, content: editContent } : m
+      m.id === selectedEmail.id ? {
+        ...m,
+        title: editTitle.trim(),
+        subject: editSubject.trim(),
+        previewText: editPreviewText.trim(),
+        dayOffset: editDayOffset,
+        content: editContent.trim(),
+      } : m
     );
 
     const updatedCampaigns = campaigns.map((c) =>
@@ -124,7 +147,14 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setIsSavingCampaign(true);
     try {
       await onUpdateCampaigns(updatedCampaigns);
-      setSelectedEmail({ ...selectedEmail, subject: editSubject, content: editContent });
+      setSelectedEmail({
+        ...selectedEmail,
+        title: editTitle.trim(),
+        subject: editSubject.trim(),
+        previewText: editPreviewText.trim(),
+        dayOffset: editDayOffset,
+        content: editContent.trim(),
+      });
       setIsEditing(false);
     } catch (error: unknown) {
       setCampaignActionError(error instanceof Error ? error.message : 'Die E-Mail-Änderungen konnten nicht gespeichert werden.');
@@ -230,6 +260,76 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       await onUpdateCampaigns([newCampaign]);
     } catch (error: unknown) {
       setCampaignActionError(error instanceof Error ? error.message : 'Die Kampagne konnte nicht gespeichert werden.');
+    } finally {
+      setIsSavingCampaign(false);
+    }
+  };
+
+  const handleOpenCampaignEditor = () => {
+    setCampaignTitle(activeCampaign.title);
+    setCampaignTargetAudience(activeCampaign.targetAudience);
+    setCampaignDescription(activeCampaign.description);
+    setCampaignActionError(null);
+    setIsEditingCampaign(true);
+  };
+
+  const handleSaveCampaign = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!campaignTitle.trim()) return;
+    const updatedCampaigns = campaigns.map((campaign) => campaign.id === activeCampaign.id
+      ? {
+          ...campaign,
+          title: campaignTitle.trim(),
+          targetAudience: campaignTargetAudience.trim(),
+          description: campaignDescription.trim(),
+        }
+      : campaign);
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns(updatedCampaigns);
+      setIsEditingCampaign(false);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Die Kampagne konnte nicht gespeichert werden.');
+    } finally {
+      setIsSavingCampaign(false);
+    }
+  };
+
+  const handleOpenEmailCreator = () => {
+    setNewEmailTitle(`E-Mail ${activeCampaign.emails.length + 1}`);
+    setNewEmailSubject('');
+    setNewEmailPreviewText('');
+    setNewEmailContent('');
+    setNewEmailDayOffset(activeCampaign.emails.length === 0 ? 0 : activeCampaign.emails.length);
+    setCampaignActionError(null);
+    setIsAddingEmail(true);
+  };
+
+  const handleCreateEmail = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!newEmailTitle.trim() || !newEmailSubject.trim() || !newEmailContent.trim()) return;
+    const newEmail: EmailMessage = {
+      id: `mail_${Date.now()}`,
+      campaignId: activeCampaign.id,
+      dayOffset: newEmailDayOffset,
+      title: newEmailTitle.trim(),
+      subject: newEmailSubject.trim(),
+      previewText: newEmailPreviewText.trim(),
+      content: newEmailContent.trim(),
+      status: 'draft',
+    };
+    const updatedCampaigns = campaigns.map((campaign) => campaign.id === activeCampaign.id
+      ? { ...campaign, emails: [...campaign.emails, newEmail] }
+      : campaign);
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns(updatedCampaigns);
+      setIsAddingEmail(false);
+      handleSelectEmail(newEmail);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Der E-Mail-Entwurf konnte nicht gespeichert werden.');
     } finally {
       setIsSavingCampaign(false);
     }
@@ -541,7 +641,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
             {/* Campaign Status */}
             <div className={`bg-white border-l-4 border-l-indigo-600 border-y border-r border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col space-y-4 ${isAdmin ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
                     <Send className="w-5 h-5" />
@@ -551,11 +651,63 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     <p className="text-xs text-slate-500">"{activeCampaign.title}"</p>
                   </div>
                 </div>
-                <span className={`text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border ${activeCampaign.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${activeCampaign.status === 'active' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-                  {activeCampaign.status === 'active' ? 'Aktiv' : activeCampaign.status === 'paused' ? 'Pausiert' : 'Entwurf'}
-                </span>
+                <div className="flex flex-col items-end gap-2">
+                  <span className={`text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border ${activeCampaign.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${activeCampaign.status === 'active' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+                    {activeCampaign.status === 'active' ? 'Aktiv' : activeCampaign.status === 'paused' ? 'Pausiert' : 'Entwurf'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleOpenCampaignEditor}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 hover:text-indigo-900"
+                  >
+                    <Edit className="h-3.5 w-3.5" />
+                    Kampagne bearbeiten
+                  </button>
+                </div>
               </div>
+
+              {isEditingCampaign && (
+                <form onSubmit={handleSaveCampaign} className="space-y-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4">
+                  <div>
+                    <label className="mb-1 block text-xs font-bold text-slate-700">Kampagnenname *</label>
+                    <input
+                      required
+                      maxLength={200}
+                      value={campaignTitle}
+                      onChange={(event) => setCampaignTitle(event.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-bold text-slate-700">Zielgruppe</label>
+                    <input
+                      maxLength={1000}
+                      value={campaignTargetAudience}
+                      onChange={(event) => setCampaignTargetAudience(event.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-bold text-slate-700">Beschreibung</label>
+                    <textarea
+                      rows={3}
+                      maxLength={5000}
+                      value={campaignDescription}
+                      onChange={(event) => setCampaignDescription(event.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <button type="button" onClick={() => setIsEditingCampaign(false)} className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700">
+                      Abbrechen
+                    </button>
+                    <button disabled={isSavingCampaign} className="rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-60">
+                      {isSavingCampaign ? 'Wird gespeichert…' : 'Kampagne speichern'}
+                    </button>
+                  </div>
+                </form>
+              )}
 
               <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50 hover:border-slate-300 transition-colors space-y-3">
                 <div className="flex justify-between items-center">
@@ -598,12 +750,47 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                       : 'Noch keine Automatisierung eingerichtet'}
                   </p>
                 </div>
-                <span className="text-xs text-slate-500 font-normal">
-                  {activeCampaign.emails.length > 0
-                    ? 'Klicke auf eine E-Mail zum Ansehen & Bearbeiten'
-                    : 'Erstelle zuerst eine E-Mail'}
-                </span>
+                <button
+                  type="button"
+                  onClick={handleOpenEmailCreator}
+                  className="inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-indigo-700"
+                >
+                  <Plus className="h-4 w-4" />
+                  E-Mail hinzufügen
+                </button>
               </div>
+
+              {isAddingEmail && (
+                <form onSubmit={handleCreateEmail} className="space-y-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4 sm:p-5">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-1 block text-xs font-bold text-slate-700">Interner Name *</label>
+                      <input required maxLength={200} value={newEmailTitle} onChange={(event) => setNewEmailTitle(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-xs font-bold text-slate-700">Versand nach Tagen</label>
+                      <input type="number" min={0} max={3650} required value={newEmailDayOffset} onChange={(event) => setNewEmailDayOffset(Number(event.target.value))} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-bold text-slate-700">Betreff *</label>
+                    <input required maxLength={300} value={newEmailSubject} onChange={(event) => setNewEmailSubject(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-bold text-slate-700">Vorschautext</label>
+                    <input maxLength={1000} value={newEmailPreviewText} onChange={(event) => setNewEmailPreviewText(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-bold text-slate-700">E-Mail-Inhalt *</label>
+                    <textarea required rows={8} maxLength={100000} value={newEmailContent} onChange={(event) => setNewEmailContent(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm leading-relaxed focus:border-indigo-600 focus:outline-none" />
+                  </div>
+                  <p className="text-xs font-semibold text-amber-800">Die E-Mail wird als Entwurf gespeichert und nicht automatisch versendet.</p>
+                  <div className="flex justify-end gap-2">
+                    <button type="button" onClick={() => setIsAddingEmail(false)} className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700">Abbrechen</button>
+                    <button disabled={isSavingCampaign} className="rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-60">{isSavingCampaign ? 'Wird gespeichert…' : 'Entwurf speichern'}</button>
+                  </div>
+                </form>
+              )}
 
               {/* Emails List */}
               <div className="grid grid-cols-1 gap-3">
@@ -615,10 +802,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     </p>
                     <button
                       type="button"
-                      onClick={() => onNavigateToToolbox('email')}
+                      onClick={handleOpenEmailCreator}
                       className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-indigo-700"
                     >
-                      <Sparkles className="h-4 w-4" />
+                      <Plus className="h-4 w-4" />
                       Erste E-Mail erstellen
                     </button>
                   </div>
@@ -642,6 +829,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                               <CheckCircle2 className="w-5 h-5" />
                             </div>
                           )}
+                          {email.status === 'draft' && (
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-200 bg-indigo-100 font-bold text-indigo-700">
+                              <Edit className="h-5 w-5" />
+                            </div>
+                          )}
                           {email.status === 'scheduled' && (
                             <div className="w-9 h-9 rounded-xl bg-amber-100 border border-amber-200 text-amber-700 flex items-center justify-center font-bold">
                               <Clock className="w-5 h-5" />
@@ -662,6 +854,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                             {email.status === 'sent' && (
                               <span className="text-[10px] font-bold px-2 py-0.2 rounded bg-emerald-100 text-emerald-800">
                                 ✅ Versendet
+                              </span>
+                            )}
+                            {email.status === 'draft' && (
+                              <span className="rounded bg-indigo-100 px-2 py-0.5 text-[10px] font-bold text-indigo-800">
+                                Entwurf
                               </span>
                             )}
                             {email.status === 'scheduled' && (
@@ -734,6 +931,33 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
               {isEditing ? (
                 <div className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        Interner Name:
+                      </label>
+                      <input
+                        type="text"
+                        maxLength={200}
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600 focus:bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                        Versand nach Tagen:
+                      </label>
+                      <input
+                        type="number"
+                        min={0}
+                        max={3650}
+                        value={editDayOffset}
+                        onChange={(e) => setEditDayOffset(Number(e.target.value))}
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600 focus:bg-white"
+                      />
+                    </div>
+                  </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
                       E-Mail Betreffzeile:
@@ -743,6 +967,19 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                       value={editSubject}
                       onChange={(e) => setEditSubject(e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600 focus:bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      Vorschautext:
+                    </label>
+                    <input
+                      type="text"
+                      maxLength={1000}
+                      value={editPreviewText}
+                      onChange={(e) => setEditPreviewText(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white"
                     />
                   </div>
 

@@ -10,7 +10,7 @@ const googleAuth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/da
 const FIRESTORE_DATABASE_ID = process.env.FIREBASE_DATABASE_ID || '(default)';
 const ID_PATTERN = /^[a-zA-Z0-9_-]{1,100}$/;
 const CAMPAIGN_STATUSES = new Set(['active', 'draft', 'paused']);
-const EMAIL_STATUSES = new Set(['sent', 'scheduled', 'locked']);
+const EMAIL_STATUSES = new Set(['draft', 'sent', 'scheduled', 'locked']);
 
 const documentUrl = (projectId: string, userId: string) =>
   `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(FIRESTORE_DATABASE_ID)}/documents/academyEmailCampaigns/${encodeURIComponent(userId)}`;

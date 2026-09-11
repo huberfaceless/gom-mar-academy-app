@@ -22,6 +22,10 @@ assert.doesNotMatch(app, /useState<Campaign\[]>\(loadCampaigns\(\)\)/, 'Globale 
 assert.doesNotMatch(view, /handleSimulateLead[\s\S]{0,500}onUpdateCampaigns/, 'Lokale Test-Leads dürfen gespeicherte Kampagnenwerte nicht verändern.');
 assert.match(view, /isLoadingCampaigns/, 'Der Kampagnenbereich muss den Ladezustand anzeigen.');
 assert.match(view, /campaignActionError/, 'Speicherfehler müssen sichtbar angezeigt werden.');
+assert.match(view, /handleSaveCampaign/, 'Kampagnendaten müssen zentral bearbeitet werden können.');
+assert.match(view, /handleCreateEmail/, 'Neue E-Mail-Entwürfe müssen direkt in einer Kampagne angelegt werden können.');
+assert.match(view, /status: 'draft'/, 'Neue E-Mails müssen sicher als Entwurf angelegt werden.');
+assert.match(view, /nicht automatisch versendet/, 'Der Entwurfsstatus muss in der Oberfläche eindeutig erklärt werden.');
 
 const validCampaign = {
   id: 'camp_1',
@@ -44,6 +48,11 @@ const validCampaign = {
 };
 
 assert.deepEqual(validateEmailCampaigns([validCampaign]), [validCampaign], 'Eine gültige Kampagne muss akzeptiert werden.');
+assert.deepEqual(
+  validateEmailCampaigns([{ ...validCampaign, emails: [{ ...validCampaign.emails[0], status: 'draft' }] }]),
+  [{ ...validCampaign, emails: [{ ...validCampaign.emails[0], status: 'draft' }] }],
+  'Ein neuer E-Mail-Entwurf muss akzeptiert werden.',
+);
 assert.throws(
   () => validateEmailCampaigns([{ ...validCampaign, emails: [{ ...validCampaign.emails[0], campaignId: 'fremd' }] }]),
   /falsch zugeordnet/,
