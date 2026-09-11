@@ -12,6 +12,7 @@ import {
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, saveCrmContacts } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
+import { loadEmailConsent, saveEmailConsent } from './server/emailConsentAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -276,6 +277,48 @@ async function startServer() {
       const message = error instanceof Error ? error.message : 'E-Mail-Kampagnen konnten nicht gespeichert werden.';
       const isValidationError = /ungültig|zu groß|überschreiten/.test(message);
       res.status(isValidationError ? 400 : 503).json({ error: message });
+    }
+  });
+
+  app.get('/api/email/consent', requireVerifiedMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const consent = await loadEmailConsent(FIREBASE_PROJECT_ID, userId);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ consent });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Die E-Mail-Einwilligung konnte nicht geladen werden.' });
+    }
+  });
+
+  app.put('/api/email/consent', requireVerifiedMember, async (req, res) => {
+    const granted = req.body?.granted;
+    if (typeof granted !== 'boolean') {
+      res.status(400).json({ error: 'Der Einwilligungsstatus ist ungültig.' });
+      return;
+    }
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    const userId = firebaseUser?.sub;
+    const verifiedEmail = typeof firebaseUser?.email === 'string' && firebaseUser.email_verified === true
+      ? firebaseUser.email.trim().toLowerCase()
+      : '';
+    if (!userId || !EMAIL_ADDRESS_PATTERN.test(verifiedEmail)) {
+      res.status(400).json({ error: 'Eine bestätigte E-Mail-Adresse ist erforderlich.' });
+      return;
+    }
+    try {
+      const consent = await saveEmailConsent(FIREBASE_PROJECT_ID, userId, verifiedEmail, granted);
+      console.info('Academy-E-Mail-Einwilligung geändert', {
+        action: granted ? 'academy.email.consent.granted' : 'academy.email.consent.withdrawn',
+        actorUid: userId,
+        policyVersion: consent.policyVersion,
+        timestamp: consent.updatedAt,
+      });
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ consent });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Die E-Mail-Einwilligung konnte nicht gespeichert werden.' });
     }
   });
 
