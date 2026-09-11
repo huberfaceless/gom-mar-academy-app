@@ -40,6 +40,7 @@ assert.match(view, /getCampaignReadinessError/, 'Vor der Freigabe müssen die Ka
 assert.match(view, /handleChangeCampaignStatus/, 'Kampagnen müssen kontrolliert freigegeben und pausiert werden können.');
 assert.match(view, /Ein automatischer Empfängerversand wird dadurch noch nicht ausgelöst/, 'Die Freigabe darf keinen automatischen Versand vortäuschen.');
 assert.doesNotMatch(view, /handleChangeCampaignStatus[\s\S]{0,2500}sendEmail\(/, 'Die Statusänderung darf keine Empfänger-E-Mail versenden.');
+assert.match(view, /campaignActionError[\s\S]{0,300}Die Freigabe markiert vollständige E-Mails als geplant/, 'Freigabefehler müssen direkt an der Kampagne sichtbar sein.');
 
 const validCampaign = {
   id: 'camp_1',
