@@ -51,6 +51,12 @@ const ACADEMY_PUBLIC_URL = 'https://academy.gomo-marketing.at';
 const EMAIL_ADDRESS_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_SEND_WINDOW_MS = 60_000;
 const EMAIL_SEND_LIMIT = 5;
+const escapeHtml = (value: string): string => value
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#39;');
 const ACADEMY_ADMIN_EMAILS = new Set(
   (process.env.ACADEMY_ADMIN_EMAILS || 'admin@gom-mar.de')
     .split(',')
@@ -459,7 +465,7 @@ async function startServer() {
 <button type="submit">${copy.confirm}</button></form>` : '';
     return `<!doctype html>
 <html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #cbd5e1;border-radius:24px;box-shadow:0 12px 35px #0f172a18;max-width:560px;margin:24px;padding:32px}h1{font-size:24px;margin:0 0 14px;color:${state === 'success' ? '#047857' : state === 'error' ? '#be123c' : '#312e81'}p{line-height:1.6}a,button{display:inline-block;margin-top:10px;border:0;border-radius:12px;background:#4f46e5;color:white;padding:12px 18px;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}a{background:#475569}</style></head>
+<title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #cbd5e1;border-radius:24px;box-shadow:0 12px 35px #0f172a18;max-width:560px;margin:24px;padding:32px}h1{font-size:24px;margin:0 0 14px;color:${state === 'success' ? '#047857' : state === 'error' ? '#be123c' : '#312e81'}}p{line-height:1.6}a,button{display:inline-block;margin-top:10px;border:0;border-radius:12px;background:#4f46e5;color:white;padding:12px 18px;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}a{background:#475569}</style></head>
 <body><main class="card"><h1>${title}</h1><p>${message}</p>${confirmationForm}<a href="${ACADEMY_PUBLIC_URL}">${copy.back}</a></main></body></html>`;
   };
 
@@ -540,7 +546,7 @@ async function startServer() {
 <button type="submit">${copy.confirm}</button></form>` : '';
     return `<!doctype html>
 <html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #cbd5e1;border-radius:24px;box-shadow:0 12px 35px #0f172a18;max-width:560px;margin:24px;padding:32px}h1{font-size:24px;margin:0 0 14px;color:${state === 'success' ? '#047857' : state === 'error' ? '#be123c' : '#312e81'}p{line-height:1.6}a,button{display:inline-block;margin-top:10px;border:0;border-radius:12px;background:#4f46e5;color:white;padding:12px 18px;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}a{background:#475569}</style></head>
+<title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #cbd5e1;border-radius:24px;box-shadow:0 12px 35px #0f172a18;max-width:560px;margin:24px;padding:32px}h1{font-size:24px;margin:0 0 14px;color:${state === 'success' ? '#047857' : state === 'error' ? '#be123c' : '#312e81'}}p{line-height:1.6}a,button{display:inline-block;margin-top:10px;border:0;border-radius:12px;background:#4f46e5;color:white;padding:12px 18px;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}a{background:#475569}</style></head>
 <body><main class="card"><h1>${title}</h1><p>${message}</p>${confirmationForm}<a href="${ACADEMY_PUBLIC_URL}">${copy.back}</a></main></body></html>`;
   };
 
@@ -622,6 +628,7 @@ async function startServer() {
 
     try {
       let deliveredBody = emailBody;
+      let deliveredHtml: string | null = null;
       if (marketing) {
         if (await isMarketingEmailSuppressed(FIREBASE_PROJECT_ID, recipient, marketing.consentUpdatedAt)) {
           res.status(409).json({ error: 'Dieser Kontakt hat Marketing-E-Mails abbestellt.' });
@@ -635,6 +642,10 @@ async function startServer() {
           pl: 'Zrezygnuj z e-maili marketingowych',
         }[marketing.language];
         deliveredBody = `${emailBody}\n\n—\n${unsubscribeLabel}:\n${unsubscribeUrl}`;
+        deliveredHtml = `<div style="font-family:Arial,sans-serif;color:#0f172a;line-height:1.6;white-space:normal">${escapeHtml(emailBody).replaceAll('\n', '<br>')}</div>
+<div style="margin-top:32px;padding-top:20px;border-top:1px solid #cbd5e1;font-family:Arial,sans-serif;color:#475569;font-size:14px;line-height:1.5">
+<a href="${unsubscribeUrl}" style="display:inline-block;padding:12px 18px;border-radius:10px;background:#4f46e5;color:#ffffff;text-decoration:none;font-weight:700">${escapeHtml(unsubscribeLabel)}</a>
+</div>`;
       }
       const response = await fetch(SENDGRID_API_URL, {
         method: 'POST',
@@ -646,7 +657,12 @@ async function startServer() {
           personalizations: [{ to: [{ email: recipient }] }],
           from: { email: senderEmail, name: senderName.slice(0, 100) },
           subject: emailSubject,
-          content: [{ type: 'text/plain', value: deliveredBody }],
+          content: deliveredHtml
+            ? [
+                { type: 'text/plain', value: deliveredBody },
+                { type: 'text/html', value: deliveredHtml },
+              ]
+            : [{ type: 'text/plain', value: deliveredBody }],
         }),
       });
 
