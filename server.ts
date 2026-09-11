@@ -12,7 +12,7 @@ import {
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
-import { loadEmailConsent, saveEmailConsent } from './server/emailConsentAdmin.js';
+import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -44,6 +44,7 @@ type SendEmailRequest = {
 const FIREBASE_PROJECT_ID = process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie';
 const FIREBASE_CERTIFICATES_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com';
 const SENDGRID_API_URL = 'https://api.sendgrid.com/v3/mail/send';
+const ACADEMY_PUBLIC_URL = 'https://academy.gomo-marketing.at';
 const EMAIL_ADDRESS_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_SEND_WINDOW_MS = 60_000;
 const EMAIL_SEND_LIMIT = 5;
@@ -124,6 +125,7 @@ async function startServer() {
   const recentEmailSends = new Map<string, number[]>();
 
   app.use(express.json({ limit: '1mb' }));
+  app.use(express.urlencoded({ extended: false, limit: '16kb' }));
 
   const requireVerifiedMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -336,17 +338,167 @@ async function startServer() {
       return;
     }
     try {
-      const consent = await saveEmailConsent(FIREBASE_PROJECT_ID, userId, verifiedEmail, granted);
+      if (!granted) {
+        const consent = await withdrawEmailConsent(FIREBASE_PROJECT_ID, userId, verifiedEmail);
+        console.info('Academy-E-Mail-Einwilligung widerrufen', {
+          action: 'academy.email.consent.withdrawn',
+          actorUid: userId,
+          policyVersion: consent.policyVersion,
+          timestamp: consent.updatedAt,
+        });
+        res.setHeader('Cache-Control', 'no-store');
+        res.json({ consent });
+        return;
+      }
+
+      const sendGridApiKey = process.env.SENDGRID_API_KEY?.trim();
+      const senderEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
+      const senderName = process.env.SENDGRID_FROM_NAME?.trim() || 'GOM-MAR Academy';
+      if (!sendGridApiKey || !senderEmail || !EMAIL_ADDRESS_PATTERN.test(senderEmail)) {
+        res.status(503).json({ error: 'Die Bestätigungs-E-Mail kann derzeit nicht versendet werden.' });
+        return;
+      }
+
+      const windowStart = Date.now() - EMAIL_SEND_WINDOW_MS;
+      const sendKey = `consent:${userId}`;
+      const sendsInWindow = (recentEmailSends.get(sendKey) || []).filter((timestamp) => timestamp > windowStart);
+      if (sendsInWindow.length >= EMAIL_SEND_LIMIT) {
+        res.status(429).json({ error: 'Zu viele Bestätigungs-E-Mails in kurzer Zeit. Bitte warte eine Minute.' });
+        return;
+      }
+
+      const { consent, confirmationToken } = await requestEmailConsent(FIREBASE_PROJECT_ID, userId, verifiedEmail);
+      const language = req.body?.language === 'en' || req.body?.language === 'pl' ? req.body.language : 'de';
+      const confirmationUrl = `${ACADEMY_PUBLIC_URL}/api/email/consent/confirm?uid=${encodeURIComponent(userId)}&token=${encodeURIComponent(confirmationToken)}&lang=${language}`;
+      const messages = {
+        de: {
+          subject: 'Bitte bestätige deine E-Mail-Einwilligung',
+          body: `Du hast in der GOM-MAR Academy den Erhalt von Academy-Neuigkeiten, hilfreichen Tipps und Angeboten angefordert.\n\nBestätige deine Einwilligung innerhalb von 24 Stunden:\n${confirmationUrl}\n\nErst nach dem Klick wird die Einwilligung aktiv. Falls du dies nicht angefordert hast, ignoriere diese E-Mail. Wichtige Nachrichten zu deinem Konto bleiben davon unberührt.`,
+        },
+        en: {
+          subject: 'Please confirm your email consent',
+          body: `You requested Academy news, helpful tips, and offers from the GOM-MAR Academy.\n\nConfirm your consent within 24 hours:\n${confirmationUrl}\n\nYour consent becomes active only after you click the link. If you did not request this, ignore this email. Important account messages are not affected.`,
+        },
+        pl: {
+          subject: 'Potwierdź zgodę na wiadomości e-mail',
+          body: `W GOM-MAR Academy poproszono o wiadomości z aktualnościami Academy, pomocnymi wskazówkami i ofertami.\n\nPotwierdź zgodę w ciągu 24 godzin:\n${confirmationUrl}\n\nZgoda stanie się aktywna dopiero po kliknięciu linku. Jeśli nie wysłano tej prośby, zignoruj tę wiadomość. Nie ma to wpływu na ważne wiadomości dotyczące konta.`,
+        },
+      } as const;
+      const message = messages[language];
+      const sendResponse = await fetch(SENDGRID_API_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${sendGridApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          personalizations: [{ to: [{ email: verifiedEmail }] }],
+          from: { email: senderEmail, name: senderName.slice(0, 100) },
+          subject: message.subject,
+          content: [{ type: 'text/plain', value: message.body }],
+        }),
+      });
+      if (!sendResponse.ok) {
+        console.error('SendGrid-Bestätigungsversand fehlgeschlagen.', {
+          status: sendResponse.status,
+          requestId: sendResponse.headers.get('x-message-id'),
+        });
+        res.status(502).json({ error: 'Die Bestätigungs-E-Mail wurde nicht angenommen. Bitte versuche es erneut.' });
+        return;
+      }
+      recentEmailSends.set(sendKey, [...sendsInWindow, Date.now()]);
       console.info('Academy-E-Mail-Einwilligung geändert', {
-        action: granted ? 'academy.email.consent.granted' : 'academy.email.consent.withdrawn',
+        action: 'academy.email.consent.requested',
         actorUid: userId,
         policyVersion: consent.policyVersion,
         timestamp: consent.updatedAt,
       });
       res.setHeader('Cache-Control', 'no-store');
-      res.json({ consent });
+      res.status(202).json({ consent });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Die E-Mail-Einwilligung konnte nicht gespeichert werden.' });
+    }
+  });
+
+  type ConsentConfirmationLanguage = 'de' | 'en' | 'pl';
+  type ConsentConfirmationState = 'prompt' | 'success' | 'error';
+  const consentConfirmationPage = (
+    language: ConsentConfirmationLanguage,
+    state: ConsentConfirmationState,
+    userId = '',
+    confirmationToken = '',
+  ) => {
+    const confirmationCopy = {
+      de: {
+        title: 'E-Mail-Einwilligung', promptTitle: 'Einwilligung bestätigen', successTitle: 'Einwilligung bestätigt', errorTitle: 'Bestätigung nicht möglich',
+        prompt: 'Bestätige jetzt bewusst, dass du E-Mails mit Academy-Neuigkeiten, hilfreichen Tipps und Angeboten erhalten möchtest.', confirm: 'Einwilligung jetzt bestätigen',
+        success: 'Du kannst jetzt E-Mails mit Academy-Neuigkeiten, hilfreichen Tipps und Angeboten erhalten. Die Einwilligung kannst du jederzeit in deinem Profil widerrufen.',
+        error: 'Der Bestätigungslink ist ungültig oder abgelaufen. Bitte fordere im Profil eine neue E-Mail an.', back: 'Zur GOM-MAR Academy',
+      },
+      en: {
+        title: 'Email consent', promptTitle: 'Confirm consent', successTitle: 'Consent confirmed', errorTitle: 'Confirmation not possible',
+        prompt: 'Please confirm that you want to receive Academy news, helpful tips, and offers by email.', confirm: 'Confirm consent now',
+        success: 'You can now receive Academy news, helpful tips, and offers by email. You can withdraw your consent at any time in your profile.',
+        error: 'The confirmation link is invalid or has expired. Please request a new email in your profile.', back: 'Go to GOM-MAR Academy',
+      },
+      pl: {
+        title: 'Zgoda na wiadomości e-mail', promptTitle: 'Potwierdź zgodę', successTitle: 'Zgoda potwierdzona', errorTitle: 'Potwierdzenie niemożliwe',
+        prompt: 'Potwierdź, że chcesz otrzymywać e-maile z aktualnościami Academy, pomocnymi wskazówkami i ofertami.', confirm: 'Potwierdź zgodę teraz',
+        success: 'Możesz teraz otrzymywać e-maile z aktualnościami Academy, pomocnymi wskazówkami i ofertami. Zgodę możesz w każdej chwili wycofać w swoim profilu.',
+        error: 'Link potwierdzający jest nieprawidłowy lub wygasł. Poproś o nowy e-mail w swoim profilu.', back: 'Przejdź do GOM-MAR Academy',
+      },
+    } as const;
+    const copy = confirmationCopy[language];
+    const title = state === 'success' ? copy.successTitle : state === 'prompt' ? copy.promptTitle : copy.errorTitle;
+    const message = state === 'success' ? copy.success : state === 'prompt' ? copy.prompt : copy.error;
+    const confirmationForm = state === 'prompt' ? `<form method="post" action="/api/email/consent/confirm">
+<input type="hidden" name="uid" value="${userId}"><input type="hidden" name="token" value="${confirmationToken}"><input type="hidden" name="lang" value="${language}">
+<button type="submit">${copy.confirm}</button></form>` : '';
+    return `<!doctype html>
+<html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #cbd5e1;border-radius:24px;box-shadow:0 12px 35px #0f172a18;max-width:560px;margin:24px;padding:32px}h1{font-size:24px;margin:0 0 14px;color:${state === 'success' ? '#047857' : state === 'error' ? '#be123c' : '#312e81'}p{line-height:1.6}a,button{display:inline-block;margin-top:10px;border:0;border-radius:12px;background:#4f46e5;color:white;padding:12px 18px;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}a{background:#475569}</style></head>
+<body><main class="card"><h1>${title}</h1><p>${message}</p>${confirmationForm}<a href="${ACADEMY_PUBLIC_URL}">${copy.back}</a></main></body></html>`;
+  };
+
+  const setConsentConfirmationHeaders = (res: Response) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Referrer-Policy', 'no-referrer');
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  };
+
+  app.get('/api/email/consent/confirm', (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const userId = typeof req.query.uid === 'string' ? req.query.uid.trim() : '';
+    const confirmationToken = typeof req.query.token === 'string' ? req.query.token.trim() : '';
+    const language: ConsentConfirmationLanguage = req.query.lang === 'en' || req.query.lang === 'pl' ? req.query.lang : 'de';
+
+    if (!userId || userId.length > 128 || !/^[A-Za-z0-9_-]{40,60}$/.test(confirmationToken)) {
+      res.status(400).type('html').send(consentConfirmationPage(language, 'error'));
+      return;
+    }
+    res.type('html').send(consentConfirmationPage(language, 'prompt', userId, confirmationToken));
+  });
+
+  app.post('/api/email/consent/confirm', async (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const userId = typeof req.body?.uid === 'string' ? req.body.uid.trim() : '';
+    const confirmationToken = typeof req.body?.token === 'string' ? req.body.token.trim() : '';
+    const language: ConsentConfirmationLanguage = req.body?.lang === 'en' || req.body?.lang === 'pl' ? req.body.lang : 'de';
+    if (!userId || userId.length > 128 || !/^[A-Za-z0-9_-]{40,60}$/.test(confirmationToken)) {
+      res.status(400).type('html').send(consentConfirmationPage(language, 'error'));
+      return;
+    }
+    try {
+      const consent = await confirmEmailConsent(FIREBASE_PROJECT_ID, userId, confirmationToken);
+      console.info('Academy-E-Mail-Einwilligung bestätigt', {
+        action: 'academy.email.consent.confirmed',
+        actorUid: userId,
+        policyVersion: consent.policyVersion,
+        timestamp: consent.updatedAt,
+      });
+      res.type('html').send(consentConfirmationPage(language, 'success'));
+    } catch {
+      res.status(400).type('html').send(consentConfirmationPage(language, 'error'));
     }
   });
 
