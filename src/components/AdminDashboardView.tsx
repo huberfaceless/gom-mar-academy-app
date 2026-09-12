@@ -477,7 +477,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            <span>Curriculum & Lektionen-Editor ({totalLessons})</span>
+            <span>Lehrplan und Lektionsverwaltung ({totalLessons})</span>
           </button>
         </div>
       </div>
