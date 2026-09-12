@@ -255,12 +255,22 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     return true;
   });
 
+  const supportsPublishingQueue = (item: typeof items[0]): boolean =>
+    item.platform === 'PINTEREST' && item.contentType === 'PIN';
+
   // Enqueue a specific item into the Firestore publishing queue
   const handleEnqueueItem = async (item: typeof items[0]) => {
     if (!user?.uid) {
       setActionNotice({
         text: 'Bitte melde dich an, um Inhalte in der Firestore Publishing Queue zu planen.',
         type: 'warning',
+      });
+      return;
+    }
+    if (!supportsPublishingQueue(item)) {
+      setActionNotice({
+        text: `${item.platformLabel} kann bereits vorbereitet und freigegeben, aber noch nicht automatisch veröffentlicht werden.`,
+        type: 'info',
       });
       return;
     }
@@ -276,7 +286,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         payload: item.payloadData,
       });
 
-      handleStatusChange(item.id, 'scheduled');
+      onUpdateProject({
+        ...project,
+        pinterestPins: project.pinterestPins.map(pin => pin.id === item.id ? { ...pin, status: 'scheduled' } : pin),
+      });
       await loadJobs();
 
       setActionNotice({
@@ -305,7 +318,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     onUpdateProject(updated);
 
     if (user?.uid) {
-      for (const item of items) {
+      const supportedItems = items.filter(supportsPublishingQueue);
+      let queuedCount = 0;
+      let failedCount = 0;
+      for (const item of supportedItems) {
         try {
           await PublishingService.enqueueJob(user.uid, {
             projectId: project.projectSettings.id,
@@ -316,14 +332,16 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             scheduledAt: item.scheduledDate ? `${item.scheduledDate}T09:00:00.000Z` : new Date().toISOString(),
             payload: item.payloadData,
           });
+          queuedCount++;
         } catch (e) {
+          failedCount++;
           console.warn('Batch enqueue item error:', e);
         }
       }
       await loadJobs();
       setActionNotice({
-        text: `Alle ${items.length} Inhalte freigegeben und in die Firestore Publishing Queue eingereiht!`,
-        type: 'success',
+        text: `${items.length} Inhalte freigegeben: ${queuedCount} Pinterest-Pins eingereiht, ${items.length - supportedItems.length} noch nicht automatisierbare Blog-/YouTube-Inhalte nicht eingereiht${failedCount > 0 ? `, ${failedCount} Pinterest-Aufträge fehlgeschlagen` : ''}.`,
+        type: failedCount > 0 ? 'warning' : 'success',
       });
     }
   };
@@ -360,6 +378,14 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   };
 
   const handleStatusChange = async (itemId: string, newStatus: ContentStatus) => {
+    const selectedItem = items.find(item => item.id === itemId);
+    if (selectedItem && toCanonicalStatus(newStatus) === 'SCHEDULED' && !supportsPublishingQueue(selectedItem)) {
+      setActionNotice({
+        text: `${selectedItem.platformLabel} kann noch nicht automatisch eingeplant werden.`,
+        type: 'info',
+      });
+      return;
+    }
     const updated = { ...project };
     if (itemId === 'blog_main' && updated.blogArticle) {
       updated.blogArticle.status = newStatus;
@@ -545,6 +571,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           const statusConf = STATUS_CONFIG[rawStatus] || STATUS_CONFIG.GENERATING;
           const Icon = item.icon;
           const matchingJob = publishingJobs.find((j) => j.contentId === item.id);
+          const queueSupported = supportsPublishingQueue(item);
 
           return (
             <div
@@ -602,11 +629,15 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   <option value="GENERATING">KI Generiert</option>
                   <option value="NEEDS_REVIEW">Prüfung nötig</option>
                   <option value="APPROVED">Freigegeben ✅</option>
-                  <option value="SCHEDULED">In Queue 📅</option>
+                  <option value="SCHEDULED" disabled={!queueSupported}>In Queue 📅</option>
                   <option value="PUBLISHED">Veröffentlicht 🚀</option>
                 </select>
 
-                {!matchingJob ? (
+                {!queueSupported ? (
+                  <span className="px-3 py-1.5 bg-slate-100 text-slate-500 text-xs font-bold rounded-xl border border-slate-200">
+                    Automatisierung folgt
+                  </span>
+                ) : !matchingJob ? (
                   <button
                     type="button"
                     onClick={() => handleEnqueueItem(item)}
@@ -786,7 +817,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         )}
                       </td>
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
-                        {job.status === 'FAILED' ? (
+                        {(job.platform !== 'PINTEREST' || job.contentType !== 'PIN') ? (
+                          <span className="text-[10px] font-bold text-slate-400">Nicht unterstützt</span>
+                        ) : job.status === 'FAILED' ? (
                           <button
                             type="button"
                             disabled={isRunning}
