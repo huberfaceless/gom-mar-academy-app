@@ -5,16 +5,14 @@
  * guarantees idempotency, executes genuine platform publishing via PublishingService,
  * records audit execution logs, and manages retry backoffs with crash recovery.
  */
-import { 
-  collection, 
-  query, 
-  where, 
-  getDocs 
-} from 'firebase/firestore';
-import { db, isFirestoreOperational, handleFirestoreError } from '../firebase/config';
 import { PublishingJob } from '../types/contentEngine';
 import { PublishingService } from './publishingService';
-import { loadAllPublishingJobs, saveAllPublishingJobs } from '../utils/contentStorage';
+import {
+  claimServerPublishingJob,
+  listServerPublishingJobs,
+  saveServerPublishingJob,
+  syncServerPublishingOutcome,
+} from '../../server/publishingQueueAdmin.js';
 
 
 export interface SchedulerExecutionResult {
@@ -124,45 +122,8 @@ export class ServerSchedulerWorker {
     };
 
     try {
-      let candidateJobs: PublishingJob[] = [];
-
-      if (isFirestoreOperational()) {
-        try {
-          const jobsRef = collection(db, 'publishingJobs');
-          const scheduledQuery = query(jobsRef, where('status', '==', 'SCHEDULED'));
-          const publishingQuery = query(jobsRef, where('status', '==', 'PUBLISHING'));
-
-          const [scheduledSnap, publishingSnap] = await Promise.all([
-            getDocs(scheduledQuery).catch((err) => {
-              handleFirestoreError(err);
-              return null;
-            }),
-            getDocs(publishingQuery).catch((err) => {
-              handleFirestoreError(err);
-              return null;
-            }),
-          ]);
-
-          if (scheduledSnap || publishingSnap) {
-            const candidateDocs = [
-              ...(scheduledSnap ? scheduledSnap.docs : []),
-              ...(publishingSnap ? publishingSnap.docs : []),
-            ];
-            candidateJobs = candidateDocs.map(docSnap => ({
-              ...(docSnap.data() as PublishingJob),
-              id: docSnap.id,
-            }));
-          }
-        } catch (queryErr) {
-          handleFirestoreError(queryErr);
-        }
-      }
-
-      // Fallback to local queue if Firestore is disabled or returned no network data
-      if (candidateJobs.length === 0) {
-        const localJobs = loadAllPublishingJobs();
-        candidateJobs = localJobs.filter(j => j.status === 'SCHEDULED' || j.status === 'PUBLISHING');
-      }
+      const candidateJobs: PublishingJob[] = (await listServerPublishingJobs())
+        .filter(job => job.status === 'SCHEDULED' || job.status === 'PUBLISHING');
 
       result.jobsChecked = candidateJobs.length;
 
@@ -201,7 +162,7 @@ export class ServerSchedulerWorker {
         }
 
         // 🔒 3. Atomic Claiming via Firestore Transaction
-        const claimResult = await PublishingService.claimJobAtomically(jobId, workerInstanceId);
+        const claimResult = await claimServerPublishingJob(jobId, workerInstanceId);
 
         if (!claimResult.success || !claimResult.job) {
           if (claimResult.reason === 'already_published') {
@@ -233,8 +194,11 @@ export class ServerSchedulerWorker {
           claimedJob.userId,
           claimedJob,
           pinterestToken,
-          triggeredBy
+          triggeredBy,
+          false,
         );
+        await saveServerPublishingJob(finalizedJob, claimResult.updateTime);
+        await syncServerPublishingOutcome(finalizedJob);
 
         if (pubResult.success) {
           result.publishedCount++;
@@ -258,11 +222,7 @@ export class ServerSchedulerWorker {
       }
     } catch (err: unknown) {
       const errMsg = err instanceof Error ? err.message : String(err);
-      if (errMsg.includes('PERMISSION_DENIED') || errMsg.includes('has not been used')) {
-        console.warn('[ServerSchedulerWorker] Cloud Firestore API is not enabled yet in GCP project gom-mar-akademie. Standing by until enabled.');
-      } else {
-        console.warn('[ServerSchedulerWorker] Warning during scheduler runTick:', errMsg);
-      }
+      console.warn('[ServerSchedulerWorker] Warning during scheduler runTick:', errMsg);
     } finally {
       isSchedulerRunning = false;
       lastExecutionResult = result;

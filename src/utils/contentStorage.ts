@@ -20,6 +20,9 @@ export const DEFAULT_VITAL50_PROJECT: ProjectSettings = {
 
 const memoryStore: Record<string, string> = {};
 
+const scopedKey = (baseKey: string, userId?: string): string =>
+  userId ? `${baseKey}:${userId}` : `${baseKey}:anonymous`;
+
 function safeGetItem(key: string): string | null {
   try {
     if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
@@ -39,16 +42,16 @@ function safeSetItem(key: string, value: string): void {
   memoryStore[key] = value;
 }
 
-export function loadAllProjectSettings(): ProjectSettings[] {
+export function loadAllProjectSettings(userId?: string): ProjectSettings[] {
   try {
-    const raw = safeGetItem(STORAGE_KEY_PROJECT_SETTINGS);
+    const raw = safeGetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId));
     if (!raw) {
-      saveAllProjectSettings([DEFAULT_VITAL50_PROJECT]);
+      saveAllProjectSettings([DEFAULT_VITAL50_PROJECT], userId);
       return [DEFAULT_VITAL50_PROJECT];
     }
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed) || parsed.length === 0) {
-      saveAllProjectSettings([DEFAULT_VITAL50_PROJECT]);
+      saveAllProjectSettings([DEFAULT_VITAL50_PROJECT], userId);
       return [DEFAULT_VITAL50_PROJECT];
     }
     return parsed;
@@ -58,17 +61,17 @@ export function loadAllProjectSettings(): ProjectSettings[] {
   }
 }
 
-export function saveAllProjectSettings(projects: ProjectSettings[]): void {
+export function saveAllProjectSettings(projects: ProjectSettings[], userId?: string): void {
   try {
-    safeSetItem(STORAGE_KEY_PROJECT_SETTINGS, JSON.stringify(projects));
+    safeSetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId), JSON.stringify(projects));
   } catch (e) {
     console.error('Error saving project settings', e);
   }
 }
 
-export function loadAllContentProjects(): CentralContentProject[] {
+export function loadAllContentProjects(userId?: string): CentralContentProject[] {
   try {
-    const raw = safeGetItem(STORAGE_KEY_CONTENT_PROJECTS);
+    const raw = safeGetItem(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -78,36 +81,36 @@ export function loadAllContentProjects(): CentralContentProject[] {
   }
 }
 
-export function saveAllContentProjects(projects: CentralContentProject[]): void {
+export function saveAllContentProjects(projects: CentralContentProject[], userId?: string): void {
   try {
-    safeSetItem(STORAGE_KEY_CONTENT_PROJECTS, JSON.stringify(projects));
+    safeSetItem(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId), JSON.stringify(projects));
   } catch (e) {
     console.error('Error saving content projects', e);
   }
 }
 
-export function saveOrUpdateContentProject(project: CentralContentProject): void {
-  const current = loadAllContentProjects();
+export function saveOrUpdateContentProject(project: CentralContentProject, userId?: string): void {
+  const current = loadAllContentProjects(userId);
   const index = current.findIndex((p) => p.id === project.id);
   if (index >= 0) {
     current[index] = project;
   } else {
     current.unshift(project);
   }
-  saveAllContentProjects(current);
+  saveAllContentProjects(current, userId);
 }
 
-export function deleteContentProject(id: string): void {
-  const current = loadAllContentProjects().filter((p) => p.id !== id);
-  saveAllContentProjects(current);
+export function deleteContentProject(id: string, userId?: string): void {
+  const current = loadAllContentProjects(userId).filter((p) => p.id !== id);
+  saveAllContentProjects(current, userId);
 }
 
 const STORAGE_KEY_PUBLISHING_JOBS = 'gommar_publishing_jobs_list_v1';
 const STORAGE_KEY_SCHEDULER_JOBS = 'gommar_scheduler_jobs_list_v1';
 
-export function loadAllPublishingJobs(): import('../types/contentEngine').PublishingJob[] {
+export function loadAllPublishingJobs(userId?: string): import('../types/contentEngine').PublishingJob[] {
   try {
-    const raw = safeGetItem(STORAGE_KEY_PUBLISHING_JOBS);
+    const raw = safeGetItem(scopedKey(STORAGE_KEY_PUBLISHING_JOBS, userId));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -117,17 +120,17 @@ export function loadAllPublishingJobs(): import('../types/contentEngine').Publis
   }
 }
 
-export function saveAllPublishingJobs(jobs: import('../types/contentEngine').PublishingJob[]): void {
+export function saveAllPublishingJobs(jobs: import('../types/contentEngine').PublishingJob[], userId?: string): void {
   try {
-    safeSetItem(STORAGE_KEY_PUBLISHING_JOBS, JSON.stringify(jobs));
+    safeSetItem(scopedKey(STORAGE_KEY_PUBLISHING_JOBS, userId), JSON.stringify(jobs));
   } catch (e) {
     console.error('Error saving publishing jobs', e);
   }
 }
 
-export function loadAllSchedulerJobs(): import('../types/contentEngine').SchedulerJob[] {
+export function loadAllSchedulerJobs(userId?: string): import('../types/contentEngine').SchedulerJob[] {
   try {
-    const raw = safeGetItem(STORAGE_KEY_SCHEDULER_JOBS);
+    const raw = safeGetItem(scopedKey(STORAGE_KEY_SCHEDULER_JOBS, userId));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -137,9 +140,9 @@ export function loadAllSchedulerJobs(): import('../types/contentEngine').Schedul
   }
 }
 
-export function saveAllSchedulerJobs(jobs: import('../types/contentEngine').SchedulerJob[]): void {
+export function saveAllSchedulerJobs(jobs: import('../types/contentEngine').SchedulerJob[], userId?: string): void {
   try {
-    safeSetItem(STORAGE_KEY_SCHEDULER_JOBS, JSON.stringify(jobs));
+    safeSetItem(scopedKey(STORAGE_KEY_SCHEDULER_JOBS, userId), JSON.stringify(jobs));
   } catch (e) {
     console.error('Error saving scheduler jobs', e);
   }

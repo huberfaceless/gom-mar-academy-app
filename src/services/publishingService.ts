@@ -370,7 +370,8 @@ export class PublishingService {
     userId: string,
     job: PublishingJob,
     pinterestToken?: string,
-    triggeredBy: 'SCHEDULER_CRON' | 'MANUAL_RUN' | 'API_TRIGGER' = 'MANUAL_RUN'
+    triggeredBy: 'SCHEDULER_CRON' | 'MANUAL_RUN' | 'API_TRIGGER' = 'MANUAL_RUN',
+    persistWithClient: boolean = true,
   ): Promise<{ job: PublishingJob; result: PublishResult }> {
     const startedAt = new Date().toISOString();
 
@@ -486,6 +487,8 @@ export class PublishingService {
       executionLogs: updatedLogs,
       updatedAt: completedAt,
     };
+
+    if (!persistWithClient) return { job: updatedJob, result };
 
     await FirestoreContentService.savePublishingJob(userId, updatedJob);
 
