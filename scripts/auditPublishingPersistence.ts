@@ -76,6 +76,12 @@ assert.match(contentEngine, /Projekt „\$\{updatedSettings\.name\}“ wurde erf
   'Erfolgreich gespeicherte Projekte müssen sichtbar bestätigt werden.');
 assert.match(contentEngine, /contentSaved = await handleUpdateActiveProject/,
   'Die Speicherbestätigung darf erst nach dem zugehörigen Content-Projekt erscheinen.');
+assert.match(contentEngine, /const getSuggestedTopics = \(project: ProjectSettings\)/,
+  'Themen-Inspirationen müssen aus den Einstellungen des aktiven Projekts abgeleitet werden.');
+assert.match(contentEngine, /const suggestedTopics = getSuggestedTopics\(activeProjectSettings\)/,
+  'Die sichtbaren Inspirationen müssen beim Projektwechsel neu bestimmt werden.');
+assert.match(contentEngine, /suggestedTopics\.map\(\(topic, i\)/,
+  'Die Oberfläche muss die projektspezifischen Themen-Inspirationen anzeigen.');
 assert.match(calendar, /Der Job konnte nicht gelöscht werden/,
   'Fehler beim Löschen eines Queue-Jobs müssen sichtbar angezeigt werden.');
 
