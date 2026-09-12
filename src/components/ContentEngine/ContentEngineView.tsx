@@ -82,15 +82,15 @@ export const ContentEngineView: React.FC = () => {
   const { user } = useAuth();
   const userId = user?.uid;
 
-  const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings());
+  const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId));
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || DEFAULT_VITAL50_PROJECT.id);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [projectBeingEdited, setProjectBeingEdited] = useState<ProjectSettings | null>(null);
 
   // Content Projects (Historical & Active)
-  const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects());
+  const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects(userId));
   const [activeContentProject, setActiveContentProject] = useState<CentralContentProject | null>(() => {
-    const list = loadAllContentProjects();
+    const list = loadAllContentProjects(userId);
     return list.length > 0 ? list[0] : null;
   });
 
@@ -111,6 +111,12 @@ export const ContentEngineView: React.FC = () => {
   useEffect(() => {
     async function loadData() {
       if (!userId) return;
+      const localProjects = loadAllProjectSettings(userId);
+      const localContent = loadAllContentProjects(userId);
+      setProjects(localProjects);
+      setSelectedProjectId(localProjects[0]?.id || DEFAULT_VITAL50_PROJECT.id);
+      setContentProjects(localContent);
+      setActiveContentProject(localContent[0] || null);
       try {
         await FirestoreContentService.syncLocalDataToFirestore(userId);
         const [firestoreProjects, firestoreContent] = await Promise.all([
@@ -125,16 +131,8 @@ export const ContentEngineView: React.FC = () => {
           }
         }
 
-        if (firestoreContent && firestoreContent.length > 0) {
-          setContentProjects(firestoreContent);
-          setActiveContentProject((prev) => {
-            if (prev) {
-              const matched = firestoreContent.find((p) => p.id === prev.id);
-              return matched || firestoreContent[0];
-            }
-            return firestoreContent[0];
-          });
-        }
+        setContentProjects(firestoreContent || []);
+        setActiveContentProject(firestoreContent?.[0] || null);
       } catch (err) {
         console.warn('Could not load content from Firestore, keeping local fallback:', err);
       }
@@ -147,7 +145,7 @@ export const ContentEngineView: React.FC = () => {
   // Persist whenever activeContentProject changes
   const handleUpdateActiveProject = async (updated: CentralContentProject) => {
     setActiveContentProject(updated);
-    saveOrUpdateContentProject(updated);
+    saveOrUpdateContentProject(updated, userId);
     setContentProjects((prev) => {
       const idx = prev.findIndex((p) => p.id === updated.id);
       if (idx >= 0) {
@@ -174,7 +172,7 @@ export const ContentEngineView: React.FC = () => {
       : [...projects, updatedSettings];
     setProjects(nextProjects);
     setSelectedProjectId(updatedSettings.id);
-    saveAllProjectSettings(nextProjects);
+    saveAllProjectSettings(nextProjects, userId);
 
     if (userId) {
       try {
@@ -364,8 +362,8 @@ export const ContentEngineView: React.FC = () => {
   };
 
   const handleDeleteProject = async (id: string) => {
-    deleteLocalContentProject(id);
-    const remaining = loadAllContentProjects();
+    deleteLocalContentProject(id, userId);
+    const remaining = loadAllContentProjects(userId);
     setContentProjects(remaining);
     if (activeContentProject?.id === id) {
       setActiveContentProject(remaining.length > 0 ? remaining[0] : null);

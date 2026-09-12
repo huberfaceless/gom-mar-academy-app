@@ -50,7 +50,7 @@ export class FirestoreContentService {
 
   static async getProjectSettings(userId?: string): Promise<ProjectSettings[]> {
     if (!userId || !isFirestoreOperational()) {
-      return loadAllProjectSettings();
+      return loadAllProjectSettings(userId);
     }
 
     try {
@@ -68,7 +68,7 @@ export class FirestoreContentService {
       return snapshot.docs.map((d) => ({ ...(d.data() as ProjectSettings), id: d.id }));
     } catch (err) {
       handleFirestoreError(err);
-      return loadAllProjectSettings();
+      return loadAllProjectSettings(userId);
     }
   }
 
@@ -76,14 +76,14 @@ export class FirestoreContentService {
     if (!userId) return;
     
     // Always save locally first
-    const current = loadAllProjectSettings();
+    const current = loadAllProjectSettings(userId);
     const idx = current.findIndex(p => p.id === settings.id);
     if (idx >= 0) {
       current[idx] = settings;
     } else {
       current.push(settings);
     }
-    saveAllProjectSettings(current);
+    saveAllProjectSettings(current, userId);
 
     if (!isFirestoreOperational()) return;
 
@@ -106,24 +106,24 @@ export class FirestoreContentService {
 
   static async getContentProjects(userId?: string): Promise<CentralContentProject[]> {
     if (!userId || !isFirestoreOperational()) {
-      return loadAllContentProjects();
+      return loadAllContentProjects(userId);
     }
 
     try {
       const q = query(collection(db, COLLECTION_CONTENT_PROJECTS), where('userId', '==', userId));
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
       const list = snapshot.docs.map((d) => ({ ...(d.data() as CentralContentProject), id: d.id }));
-      saveAllContentProjects(list);
+      saveAllContentProjects(list, userId);
       return list;
     } catch (err) {
       handleFirestoreError(err);
-      return loadAllContentProjects();
+      return loadAllContentProjects(userId);
     }
   }
 
   static async getContentProjectById(userId: string | undefined, contentProjectId: string): Promise<CentralContentProject | null> {
     if (!userId || !isFirestoreOperational()) {
-      const list = loadAllContentProjects();
+      const list = loadAllContentProjects(userId);
       return list.find((p) => p.id === contentProjectId) || null;
     }
 
@@ -136,7 +136,7 @@ export class FirestoreContentService {
       return null;
     } catch (err) {
       handleFirestoreError(err);
-      const list = loadAllContentProjects();
+      const list = loadAllContentProjects(userId);
       return list.find((p) => p.id === contentProjectId) || null;
     }
   }
@@ -149,14 +149,14 @@ export class FirestoreContentService {
     };
 
     // Always update local cache for responsiveness
-    const current = loadAllContentProjects();
+    const current = loadAllContentProjects(userId);
     const idx = current.findIndex((p) => p.id === project.id);
     if (idx >= 0) {
       current[idx] = dataToSave;
     } else {
       current.unshift(dataToSave);
     }
-    saveAllContentProjects(current);
+    saveAllContentProjects(current, userId);
 
     if (userId && isFirestoreOperational()) {
       try {
@@ -170,8 +170,8 @@ export class FirestoreContentService {
   }
 
   static async deleteContentProject(userId: string | undefined, contentProjectId: string): Promise<void> {
-    const current = loadAllContentProjects().filter((p) => p.id !== contentProjectId);
-    saveAllContentProjects(current);
+    const current = loadAllContentProjects(userId).filter((p) => p.id !== contentProjectId);
+    saveAllContentProjects(current, userId);
 
     if (userId && isFirestoreOperational()) {
       try {
@@ -188,7 +188,7 @@ export class FirestoreContentService {
 
   static async getPublishingJobs(userId?: string, contentProjectId?: string): Promise<PublishingJob[]> {
     if (!userId || !isFirestoreOperational()) {
-      let localList = loadAllPublishingJobs();
+      let localList = loadAllPublishingJobs(userId);
       if (contentProjectId) {
         localList = localList.filter((j) => j.contentProjectId === contentProjectId);
       }
@@ -202,11 +202,11 @@ export class FirestoreContentService {
       if (contentProjectId) {
         list = list.filter((j) => j.contentProjectId === contentProjectId);
       }
-      saveAllPublishingJobs(list);
+      saveAllPublishingJobs(list, userId);
       return list.sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
     } catch (err) {
       handleFirestoreError(err);
-      let localList = loadAllPublishingJobs();
+      let localList = loadAllPublishingJobs(userId);
       if (contentProjectId) {
         localList = localList.filter((j) => j.contentProjectId === contentProjectId);
       }
@@ -221,14 +221,14 @@ export class FirestoreContentService {
       updatedAt: new Date().toISOString(),
     };
 
-    const current = loadAllPublishingJobs();
+    const current = loadAllPublishingJobs(userId);
     const idx = current.findIndex((j) => j.id === job.id);
     if (idx >= 0) {
       current[idx] = dataToSave;
     } else {
       current.unshift(dataToSave);
     }
-    saveAllPublishingJobs(current);
+    saveAllPublishingJobs(current, userId);
 
     if (isFirestoreOperational()) {
       try {
@@ -248,7 +248,7 @@ export class FirestoreContentService {
     lastError?: string,
     extraFields?: Partial<PublishingJob>
   ): Promise<void> {
-    const current = loadAllPublishingJobs();
+    const current = loadAllPublishingJobs(userId);
     const idx = current.findIndex((j) => j.id === jobId);
     if (idx >= 0) {
       current[idx] = {
@@ -258,7 +258,7 @@ export class FirestoreContentService {
         lastError: lastError !== undefined ? lastError : current[idx].lastError,
         ...extraFields,
       };
-      saveAllPublishingJobs(current);
+      saveAllPublishingJobs(current, userId);
     }
 
     if (isFirestoreOperational()) {
@@ -280,8 +280,8 @@ export class FirestoreContentService {
   }
 
   static async deletePublishingJob(userId: string, jobId: string): Promise<void> {
-    const current = loadAllPublishingJobs().filter((j) => j.id !== jobId);
-    saveAllPublishingJobs(current);
+    const current = loadAllPublishingJobs(userId).filter((j) => j.id !== jobId);
+    saveAllPublishingJobs(current, userId);
 
     if (isFirestoreOperational()) {
       try {
@@ -297,17 +297,17 @@ export class FirestoreContentService {
   // ==========================================
 
   static async getSchedulerJobs(userId?: string): Promise<SchedulerJob[]> {
-    if (!userId || !isFirestoreOperational()) return loadAllSchedulerJobs();
+    if (!userId || !isFirestoreOperational()) return loadAllSchedulerJobs(userId);
 
     try {
       const q = query(collection(db, COLLECTION_SCHEDULER_JOBS), where('userId', '==', userId));
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
       const list = snapshot.docs.map((d) => ({ ...(d.data() as SchedulerJob), id: d.id }));
-      saveAllSchedulerJobs(list);
+      saveAllSchedulerJobs(list, userId);
       return list;
     } catch (err) {
       handleFirestoreError(err);
-      return loadAllSchedulerJobs();
+      return loadAllSchedulerJobs(userId);
     }
   }
 
@@ -318,14 +318,14 @@ export class FirestoreContentService {
       updatedAt: new Date().toISOString(),
     };
 
-    const current = loadAllSchedulerJobs();
+    const current = loadAllSchedulerJobs(userId);
     const idx = current.findIndex((j) => j.id === job.id);
     if (idx >= 0) {
       current[idx] = dataToSave;
     } else {
       current.unshift(dataToSave);
     }
-    saveAllSchedulerJobs(current);
+    saveAllSchedulerJobs(current, userId);
 
     if (isFirestoreOperational()) {
       try {
@@ -344,7 +344,7 @@ export class FirestoreContentService {
     status: SchedulerJob['status'],
     lastError?: string
   ): Promise<void> {
-    const current = loadAllSchedulerJobs();
+    const current = loadAllSchedulerJobs(userId);
     const idx = current.findIndex((j) => j.id === jobId);
     if (idx >= 0) {
       current[idx] = {
@@ -353,7 +353,7 @@ export class FirestoreContentService {
         updatedAt: new Date().toISOString(),
         lastError: lastError !== undefined ? lastError : current[idx].lastError,
       };
-      saveAllSchedulerJobs(current);
+      saveAllSchedulerJobs(current, userId);
     }
 
     if (isFirestoreOperational()) {
@@ -381,9 +381,9 @@ export class FirestoreContentService {
     if (!userId || !isFirestoreOperational()) return;
 
     try {
-      const localProjects = loadAllContentProjects();
+      const localProjects = loadAllContentProjects(userId);
       for (const p of localProjects) {
-        if (!p.userId || p.userId !== userId) {
+        if (!p.userId) {
           await this.saveContentProject(userId, { ...p, userId });
         }
       }
