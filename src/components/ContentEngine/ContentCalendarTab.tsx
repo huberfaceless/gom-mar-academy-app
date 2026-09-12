@@ -247,6 +247,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         title: project.youtubeVideo.title,
         description: project.youtubeVideo.description,
         tags: project.youtubeVideo.keywords,
+        metadata: {
+          videoId: project.youtubeVideo.videoId || getYouTubeVideoId(project.youtubeVideo.videoUrl),
+        },
       },
     });
   }
@@ -278,8 +281,23 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     return true;
   });
 
-  const supportsPublishingQueue = (item: typeof items[0]): boolean =>
-    item.platform === 'PINTEREST' && item.contentType === 'PIN';
+  const getYouTubeVideoId = (url?: string): string | undefined => {
+    if (!url) return undefined;
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname === 'youtu.be') return parsed.pathname.slice(1) || undefined;
+      return parsed.searchParams.get('v') || undefined;
+    } catch {
+      return undefined;
+    }
+  };
+
+  const supportsPublishingQueue = (item: typeof items[0]): boolean => {
+    if (item.platform === 'PINTEREST' && item.contentType === 'PIN') return true;
+    return item.platform === 'YOUTUBE'
+      && item.contentType === 'VIDEO'
+      && typeof item.payloadData?.metadata?.videoId === 'string';
+  };
 
   // Enqueue a specific item into the Firestore publishing queue
   const handleEnqueueItem = async (item: typeof items[0]) => {
@@ -312,6 +330,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       onUpdateProject({
         ...project,
         pinterestPins: project.pinterestPins.map(pin => pin.id === item.id ? { ...pin, status: 'scheduled' } : pin),
+        youtubeVideo: item.id === 'yt_video_main' && project.youtubeVideo
+          ? { ...project.youtubeVideo, status: 'scheduled' }
+          : project.youtubeVideo,
       });
       await loadJobs();
 
@@ -665,7 +686,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
                 {!queueSupported ? (
                   <span className="px-3 py-1.5 bg-slate-100 text-slate-500 text-xs font-bold rounded-xl border border-slate-200">
-                    Automatisierung folgt
+                    {item.type === 'youtube_video' ? 'Zuerst Video hochladen' : 'Automatisierung folgt'}
                   </span>
                 ) : !matchingJob ? (
                   <button
@@ -847,7 +868,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         )}
                       </td>
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
-                        {(job.platform !== 'PINTEREST' || job.contentType !== 'PIN') ? (
+                        {job.platform === 'YOUTUBE' && job.contentType === 'VIDEO' ? (
+                          <span className="text-[10px] font-bold text-red-300">Automatisch geplant</span>
+                        ) : (job.platform !== 'PINTEREST' || job.contentType !== 'PIN') ? (
                           <span className="text-[10px] font-bold text-slate-400">Nicht unterstützt</span>
                         ) : job.status === 'FAILED' ? (
                           <button
