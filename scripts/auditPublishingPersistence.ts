@@ -91,4 +91,12 @@ assert.doesNotMatch(calendar, /In Queue|Publishing Queue|>Queue<|in Queue einrei
 assert.match(calendar, /Content-Planung & Veröffentlichungswarteschlange/,
   'Die Veröffentlichungswarteschlange muss vollständig deutsch beschriftet sein.');
 
+
+assert.doesNotMatch(calendar, /\{(?:job|log|matchingJob)\.status\}|\$\{result\.status\}/,
+  'Technische Statuswerte dürfen nicht direkt in der Oberfläche erscheinen.');
+assert.match(calendar, /getStatusLabel\(job\.status\)/,
+  'Auftragsstatus müssen vor der Anzeige deutsch übersetzt werden.');
+assert.match(calendar, /getTriggerLabel\(log\.triggeredBy\)/,
+  'Technische Auslöser müssen vor der Anzeige deutsch übersetzt werden.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
