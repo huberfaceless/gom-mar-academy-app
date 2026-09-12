@@ -135,7 +135,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       }, setYouTubeUploadProgress);
       setYouTubeUploadedUrl(result.videoUrl);
       setYouTubeUploadProgress(100);
-      onChangeVideo({ ...video, status: 'PUBLISHED', videoUrl: result.videoUrl });
+      onChangeVideo({ ...video, status: 'approved', videoId: result.videoId, videoUrl: result.videoUrl });
     } catch (error: unknown) {
       setYouTubeUploadError(error instanceof Error ? error.message : 'Der YouTube-Upload ist fehlgeschlagen.');
       setYouTubeUploadProgress(null);
