@@ -98,21 +98,21 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       .catch((error: unknown) => setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Status konnte nicht geladen werden.'));
     const params = new URLSearchParams(window.location.search);
     if (params.get('youtube') === 'connected') {
-      setYoutubeConnectionError(null);
+      setYouTubeConnectionError(null);
       window.history.replaceState({}, '', window.location.pathname);
     } else if (params.get('youtube') === 'error') {
-      setYoutubeConnectionError('Die YouTube-Verbindung konnte nicht abgeschlossen werden.');
+      setYouTubeConnectionError('Die YouTube-Verbindung konnte nicht abgeschlossen werden.');
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
 
   const handleConnectYouTube = async () => {
     setIsConnectingYouTube(true);
-    setYoutubeConnectionError(null);
+    setYouTubeConnectionError(null);
     try {
       await youtubeService.startConnection();
     } catch (error: unknown) {
-      setYoutubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht gestartet werden.');
+      setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht gestartet werden.');
       setIsConnectingYouTube(false);
     }
   };
