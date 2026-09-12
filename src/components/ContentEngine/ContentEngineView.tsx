@@ -55,6 +55,29 @@ const SUGGESTED_TOPICS_VITAL50 = [
   'Stoffwechsel ankurbeln ab 50: 3 einfache Gewohnheiten für mehr Energie',
 ];
 
+const SUGGESTED_TOPICS_ONLINE_BUSINESS = [
+  'Online Geld verdienen ab 50: 5 seriöse Möglichkeiten für Anfänger',
+  'Affiliate Marketing ohne eigenes Produkt: Einfacher Einstieg Schritt für Schritt',
+  'Nebenbei ein digitales Einkommen aufbauen – ohne das eigene Gesicht zu zeigen',
+  'Die 7 häufigsten Anfängerfehler beim Online-Geldverdienen',
+  'Mit wenig Zeit ein automatisiertes Online-Business aufbauen',
+];
+
+const createOnlineBusinessProject = (): ProjectSettings => ({
+  id: `proj_online_business_${Date.now()}`,
+  name: 'GOM-MAR Online Business',
+  websiteUrl: 'https://geldfluss.gomo-marketing.at/',
+  targetAudience: 'Menschen über 50, die sich als Anfänger seriös ein zusätzliches Online-Einkommen aufbauen möchten',
+  coreTopics: ['Online Geld verdienen', 'Affiliate Marketing', 'Digitale Produkte', 'Faceless Content', 'Automatisierung'],
+  language: 'de',
+  defaultCta: 'Entdecke jetzt den einfachen nächsten Schritt für dein Online-Einkommen.',
+  defaultTargetUrl: 'https://geldfluss.gomo-marketing.at/',
+  brandVoice: 'Einfach erklärt, ehrlich, motivierend, anfängerfreundlich und ohne unrealistische Einkommensversprechen',
+  pinterestBoardDefault: 'Online Geld verdienen ab 50',
+  youtubeChannelName: 'GOM-MAR Online Business',
+  createdAt: new Date().toISOString(),
+});
+
 export const ContentEngineView: React.FC = () => {
   const { user } = useAuth();
   const userId = user?.uid;
@@ -62,6 +85,7 @@ export const ContentEngineView: React.FC = () => {
   const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings());
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || DEFAULT_VITAL50_PROJECT.id);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [projectBeingEdited, setProjectBeingEdited] = useState<ProjectSettings | null>(null);
 
   // Content Projects (Historical & Active)
   const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects());
@@ -144,8 +168,12 @@ export const ContentEngineView: React.FC = () => {
   };
 
   const handleSaveProjectSettings = async (updatedSettings: ProjectSettings) => {
-    const nextProjects = projects.map((p) => (p.id === updatedSettings.id ? updatedSettings : p));
+    const exists = projects.some((p) => p.id === updatedSettings.id);
+    const nextProjects = exists
+      ? projects.map((p) => (p.id === updatedSettings.id ? updatedSettings : p))
+      : [...projects, updatedSettings];
     setProjects(nextProjects);
+    setSelectedProjectId(updatedSettings.id);
     saveAllProjectSettings(nextProjects);
 
     if (userId) {
@@ -389,11 +417,25 @@ export const ContentEngineView: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => setIsSettingsModalOpen(true)}
+            onClick={() => {
+              setProjectBeingEdited(activeProjectSettings);
+              setIsSettingsModalOpen(true);
+            }}
             className="p-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl shadow-xs transition-colors"
             title="Projekt-Einstellungen bearbeiten"
           >
             <Settings className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setProjectBeingEdited(createOnlineBusinessProject());
+              setIsSettingsModalOpen(true);
+            }}
+            className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-600 rounded-xl shadow-xs transition-colors"
+            title="Neues Content-Projekt anlegen"
+          >
+            <Plus className="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -453,7 +495,9 @@ export const ContentEngineView: React.FC = () => {
               Themen-Inspiration für {activeProjectSettings.name}:
             </p>
             <div className="flex flex-wrap gap-2">
-              {SUGGESTED_TOPICS_VITAL50.map((topic, i) => (
+              {(activeProjectSettings.id === DEFAULT_VITAL50_PROJECT.id
+                ? SUGGESTED_TOPICS_VITAL50
+                : SUGGESTED_TOPICS_ONLINE_BUSINESS).map((topic, i) => (
                 <button
                   key={i}
                   type="button"
@@ -681,7 +725,7 @@ export const ContentEngineView: React.FC = () => {
       <ProjectSettingsModal
         isOpen={isSettingsModalOpen}
         onClose={() => setIsSettingsModalOpen(false)}
-        project={activeProjectSettings}
+        project={projectBeingEdited || activeProjectSettings}
         onSave={handleSaveProjectSettings}
       />
     </div>
