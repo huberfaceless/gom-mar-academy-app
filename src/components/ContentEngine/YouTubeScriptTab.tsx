@@ -33,6 +33,7 @@ import {
   downloadShortsCoverAsImage 
 } from '../../utils/shortsCoverRenderer';
 import { YouTubeTeleprompterModal } from './YouTubeTeleprompterModal';
+import { youtubeService, YouTubeConnectionStatus } from '../../services/youtubeService';
 
 interface YouTubeScriptTabProps {
   video?: YouTubeVideoData;
@@ -87,6 +88,34 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
   // Teleprompter Modal
   const [isTeleprompterOpen, setIsTeleprompterOpen] = useState<boolean>(false);
+  const [youtubeConnection, setYouTubeConnection] = useState<YouTubeConnectionStatus | null>(null);
+  const [youtubeConnectionError, setYouTubeConnectionError] = useState<string | null>(null);
+  const [isConnectingYouTube, setIsConnectingYouTube] = useState(false);
+
+  useEffect(() => {
+    youtubeService.getConnectionStatus()
+      .then(setYouTubeConnection)
+      .catch((error: unknown) => setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Status konnte nicht geladen werden.'));
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('youtube') === 'connected') {
+      setYoutubeConnectionError(null);
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (params.get('youtube') === 'error') {
+      setYoutubeConnectionError('Die YouTube-Verbindung konnte nicht abgeschlossen werden.');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
+  const handleConnectYouTube = async () => {
+    setIsConnectingYouTube(true);
+    setYoutubeConnectionError(null);
+    try {
+      await youtubeService.startConnection();
+    } catch (error: unknown) {
+      setYoutubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht gestartet werden.');
+      setIsConnectingYouTube(false);
+    }
+  };
 
   // Render 16:9 Thumbnail Canvas whenever video or thumbnail options change
   useEffect(() => {
@@ -168,6 +197,15 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+          <button
+            type="button"
+            onClick={handleConnectYouTube}
+            disabled={isConnectingYouTube || youtubeConnection?.connected === true}
+            className={`px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer disabled:cursor-default ${youtubeConnection?.connected ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-600 hover:bg-red-700 text-white'}`}
+          >
+            {youtubeConnection?.connected ? <CheckCircle2 className="w-4 h-4" /> : <Youtube className="w-4 h-4" />}
+            <span>{youtubeConnection?.connected ? 'YouTube verbunden' : isConnectingYouTube ? 'Weiterleitung…' : 'YouTube verbinden'}</span>
+          </button>
           {/* SubTab Toggle */}
           <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
             <button
@@ -213,6 +251,12 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
           </button>
         </div>
       </div>
+
+      {youtubeConnectionError && (
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-medium text-rose-800">
+          {youtubeConnectionError}
+        </div>
+      )}
 
       {activeSubTab === 'video' ? (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
