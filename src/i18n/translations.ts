@@ -135,7 +135,7 @@ const de = {
   'gate.mentor': 'Frag GOM-MAR KI: intelligenter Mentor für Content, Hooks und Skripte rund um die Uhr',
   'gate.register': '🚀 Jetzt in 30 Sek. kostenlos registrieren',
   'gate.login': 'Bereits registriert? Hier direkt anmelden',
-  'gate.landing': 'Informationsseite & VSL-Video ansehen',
+  'gate.landing': 'Academy kennenlernen & Einführungsvideo ansehen',
   'gate.free': '100 % kostenfreie Erstregistrierung • Keine Kreditkarte erforderlich',
 };
 
@@ -276,7 +276,7 @@ const en: Record<TranslationKey, string> = {
   'gate.mentor': 'Ask GOM-MAR AI: an intelligent mentor for content, hooks, and scripts around the clock',
   'gate.register': '🚀 Register for free in 30 seconds',
   'gate.login': 'Already registered? Log in here',
-  'gate.landing': 'View information page & VSL video',
+  'gate.landing': 'Discover the Academy & watch the introduction',
   'gate.free': '100% free initial registration • No credit card required',
 };
 
@@ -415,7 +415,7 @@ const pl: Record<TranslationKey, string> = {
   'gate.mentor': 'Zapytaj GOM-MAR AI: inteligentny mentor treści, hooków i skryptów dostępny przez całą dobę',
   'gate.register': '🚀 Zarejestruj się bezpłatnie w 30 sekund',
   'gate.login': 'Masz już konto? Zaloguj się tutaj',
-  'gate.landing': 'Zobacz stronę informacyjną i film VSL',
+  'gate.landing': 'Poznaj Academy i obejrzyj film wprowadzający',
   'gate.free': 'Pierwsza rejestracja w 100% bezpłatna • Karta kredytowa nie jest wymagana',
 };
 
