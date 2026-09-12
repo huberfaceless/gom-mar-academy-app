@@ -166,7 +166,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
               <Pin className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold">Pinterest Publishing Hub</h3>
+              <h3 className="text-base font-bold">Pinterest-Veröffentlichung</h3>
               <p className="text-xs text-rose-100">Pin #{pin.angle.toUpperCase()} direkt auf Pinterest veröffentlichen</p>
             </div>
           </div>
@@ -222,7 +222,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
                   type="button"
                   onClick={() => handleConnectToken(true)}
                   className="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-xl transition-colors shrink-0"
-                  title="Testet den Workflow ohne echten API-Key"
+                  title="Testet den Ablauf ohne echten API-Schlüssel"
                 >
                   Demo-Modus
                 </button>
@@ -291,7 +291,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200 items-center">
             {previewDataUrl && (
               <div className="sm:col-span-4 aspect-[2/3] w-28 mx-auto sm:mx-0 rounded-lg overflow-hidden border border-slate-300 shadow-xs">
-                <img src={previewDataUrl} alt="Pin Preview" className="w-full h-full object-cover" />
+                <img src={previewDataUrl} alt="Pin-Vorschau" className="w-full h-full object-cover" />
               </div>
             )}
             <div className={previewDataUrl ? 'sm:col-span-8 space-y-1.5' : 'sm:col-span-12 space-y-1.5'}>
