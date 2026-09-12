@@ -4,6 +4,7 @@ const STORAGE_KEY_PROJECT_SETTINGS = 'gommar_content_projects_settings_v1';
 const STORAGE_KEY_CONTENT_PROJECTS = 'gommar_content_projects_list_v1';
 const STORAGE_KEY_PUBLISHING_JOBS = 'gommar_publishing_jobs_list_v1';
 const STORAGE_KEY_SCHEDULER_JOBS = 'gommar_scheduler_jobs_list_v1';
+const STORAGE_KEY_LEGACY_MIGRATION = 'gommar_content_storage_legacy_migrated_v1';
 
 export const DEFAULT_VITAL50_PROJECT: ProjectSettings = {
   id: 'proj_vital50',
@@ -62,6 +63,8 @@ function mergeById<T extends { id: string }>(legacy: T[], scoped: T[]): T[] {
 
 export function migrateLegacyContentStorage(userId: string): void {
   if (!userId) return;
+  const migrationMarker = scopedKey(STORAGE_KEY_LEGACY_MIGRATION, userId);
+  if (safeGetItem(migrationMarker) === 'done') return;
 
   const legacyContent = readArray<CentralContentProject>(STORAGE_KEY_CONTENT_PROJECTS)
     .filter(project => project.userId === userId);
@@ -86,6 +89,7 @@ export function migrateLegacyContentStorage(userId: string): void {
   if (legacyScheduler.length > 0) {
     saveAllSchedulerJobs(mergeById(legacyScheduler, readArray<import('../types/contentEngine').SchedulerJob>(scopedKey(STORAGE_KEY_SCHEDULER_JOBS, userId))), userId);
   }
+  safeSetItem(migrationMarker, 'done');
 }
 
 export function loadAllProjectSettings(userId?: string): ProjectSettings[] {

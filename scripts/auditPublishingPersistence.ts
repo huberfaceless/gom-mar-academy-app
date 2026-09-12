@@ -37,6 +37,10 @@ assert.match(storage, /migrateLegacyContentStorage/,
   'Bestehende nutzerzugeordnete Browserdaten müssen kontrolliert übernommen werden.');
 assert.match(storage, /project\.userId === userId/,
   'Die Altdatenmigration darf nur Content-Projekte des angemeldeten Nutzers übernehmen.');
+assert.match(storage, /STORAGE_KEY_LEGACY_MIGRATION/,
+  'Die Altdatenmigration benötigt eine nutzerbezogene Einmal-Markierung.');
+assert.match(storage, /safeGetItem\(migrationMarker\) === ['"]done['"]/,
+  'Bereits migrierte Altbestände dürfen gelöschte Queue-Jobs nicht erneut herstellen.');
 assert.doesNotMatch(contentEngine, /saveOrUpdateContentProject\(updated\);/,
   'Content-Projekte dürfen nicht in einem kontounabhängigen Cache gespeichert werden.');
 assert.match(contentEngine, /saveOrUpdateContentProject\(updated, userId\)/,
