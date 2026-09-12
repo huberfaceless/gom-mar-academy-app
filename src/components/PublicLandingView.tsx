@@ -132,21 +132,6 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
               Sichere dir deinen persönlichen Zugang zur <strong className="text-white">GOM-MAR Academy</strong>. Erhalte Schritt-für-Schritt Videos, automatisierte E-Mail-Funnel und die besten KI-Vorlagen für deinen Erfolg.
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  const elem = document.getElementById('register-form');
-                  if (elem) {
-                    elem.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <span>🚀 Direkt zum kostenlosen Anmeldeformular</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
           </div>
 
           {/* Academy introduction video */}
