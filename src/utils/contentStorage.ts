@@ -2,6 +2,8 @@ import { ProjectSettings, CentralContentProject } from '../types/contentEngine';
 
 const STORAGE_KEY_PROJECT_SETTINGS = 'gommar_content_projects_settings_v1';
 const STORAGE_KEY_CONTENT_PROJECTS = 'gommar_content_projects_list_v1';
+const STORAGE_KEY_PUBLISHING_JOBS = 'gommar_publishing_jobs_list_v1';
+const STORAGE_KEY_SCHEDULER_JOBS = 'gommar_scheduler_jobs_list_v1';
 
 export const DEFAULT_VITAL50_PROJECT: ProjectSettings = {
   id: 'proj_vital50',
@@ -40,6 +42,50 @@ function safeSetItem(key: string, value: string): void {
     }
   } catch {}
   memoryStore[key] = value;
+}
+
+function readArray<T>(key: string): T[] {
+  try {
+    const raw = safeGetItem(key);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function mergeById<T extends { id: string }>(legacy: T[], scoped: T[]): T[] {
+  const merged = new Map(legacy.map(item => [item.id, item]));
+  for (const item of scoped) merged.set(item.id, item);
+  return [...merged.values()];
+}
+
+export function migrateLegacyContentStorage(userId: string): void {
+  if (!userId) return;
+
+  const legacyContent = readArray<CentralContentProject>(STORAGE_KEY_CONTENT_PROJECTS)
+    .filter(project => project.userId === userId);
+  const referencedSettingsIds = new Set(legacyContent.map(project => project.projectSettings?.id).filter(Boolean));
+  const legacySettings = readArray<ProjectSettings>(STORAGE_KEY_PROJECT_SETTINGS)
+    .filter(settings => settings.userId === userId || referencedSettingsIds.has(settings.id))
+    .map(settings => ({ ...settings, userId }));
+  const legacyPublishing = readArray<import('../types/contentEngine').PublishingJob>(STORAGE_KEY_PUBLISHING_JOBS)
+    .filter(job => job.userId === userId);
+  const legacyScheduler = readArray<import('../types/contentEngine').SchedulerJob>(STORAGE_KEY_SCHEDULER_JOBS)
+    .filter(job => job.userId === userId);
+
+  if (legacySettings.length > 0) {
+    saveAllProjectSettings(mergeById(legacySettings, readArray<ProjectSettings>(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId))), userId);
+  }
+  if (legacyContent.length > 0) {
+    saveAllContentProjects(mergeById(legacyContent, readArray<CentralContentProject>(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId))), userId);
+  }
+  if (legacyPublishing.length > 0) {
+    saveAllPublishingJobs(mergeById(legacyPublishing, readArray<import('../types/contentEngine').PublishingJob>(scopedKey(STORAGE_KEY_PUBLISHING_JOBS, userId))), userId);
+  }
+  if (legacyScheduler.length > 0) {
+    saveAllSchedulerJobs(mergeById(legacyScheduler, readArray<import('../types/contentEngine').SchedulerJob>(scopedKey(STORAGE_KEY_SCHEDULER_JOBS, userId))), userId);
+  }
 }
 
 export function loadAllProjectSettings(userId?: string): ProjectSettings[] {
@@ -104,9 +150,6 @@ export function deleteContentProject(id: string, userId?: string): void {
   const current = loadAllContentProjects(userId).filter((p) => p.id !== id);
   saveAllContentProjects(current, userId);
 }
-
-const STORAGE_KEY_PUBLISHING_JOBS = 'gommar_publishing_jobs_list_v1';
-const STORAGE_KEY_SCHEDULER_JOBS = 'gommar_scheduler_jobs_list_v1';
 
 export function loadAllPublishingJobs(userId?: string): import('../types/contentEngine').PublishingJob[] {
   try {

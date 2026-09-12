@@ -31,6 +31,10 @@ assert.match(storage, /scopedKey/,
   'Lokale Content-Daten müssen einen nutzerspezifischen Schlüssel verwenden.');
 assert.match(storage, /`\$\{baseKey\}:\$\{userId\}`/,
   'Der lokale Schlüssel muss die Firebase-Benutzerkennung enthalten.');
+assert.match(storage, /migrateLegacyContentStorage/,
+  'Bestehende nutzerzugeordnete Browserdaten müssen kontrolliert übernommen werden.');
+assert.match(storage, /project\.userId === userId/,
+  'Die Altdatenmigration darf nur Content-Projekte des angemeldeten Nutzers übernehmen.');
 assert.doesNotMatch(contentEngine, /saveOrUpdateContentProject\(updated\);/,
   'Content-Projekte dürfen nicht in einem kontounabhängigen Cache gespeichert werden.');
 assert.match(contentEngine, /saveOrUpdateContentProject\(updated, userId\)/,

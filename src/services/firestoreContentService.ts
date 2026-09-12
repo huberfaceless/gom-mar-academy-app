@@ -26,7 +26,8 @@ import {
   saveAllPublishingJobs,
   loadAllSchedulerJobs,
   saveAllSchedulerJobs,
-  DEFAULT_VITAL50_PROJECT 
+  DEFAULT_VITAL50_PROJECT,
+  migrateLegacyContentStorage,
 } from '../utils/contentStorage';
 
 const COLLECTION_PROJECTS = 'projects';
@@ -378,13 +379,21 @@ export class FirestoreContentService {
   // ==========================================
 
   static async syncLocalDataToFirestore(userId: string): Promise<void> {
-    if (!userId || !isFirestoreOperational()) return;
+    if (!userId) return;
+    migrateLegacyContentStorage(userId);
+    if (!isFirestoreOperational()) return;
 
     try {
+      const localSettings = loadAllProjectSettings(userId);
+      for (const settings of localSettings) {
+        if (settings.userId === userId) {
+          await this.saveProjectSettings(userId, settings);
+        }
+      }
       const localProjects = loadAllContentProjects(userId);
       for (const p of localProjects) {
-        if (!p.userId) {
-          await this.saveContentProject(userId, { ...p, userId });
+        if (p.userId === userId) {
+          await this.saveContentProject(userId, p);
         }
       }
     } catch (err) {
