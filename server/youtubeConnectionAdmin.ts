@@ -155,6 +155,44 @@ export const createYouTubeUploadSession = async (
   return uploadUrl;
 };
 
+
+export const publishExistingYouTubeVideo = async (
+  projectId: string,
+  userId: string,
+  videoId: string,
+): Promise<{ videoId: string; videoUrl: string }> => {
+  if (!/^[A-Za-z0-9_-]{6,20}$/.test(videoId)) {
+    throw new Error('Die gespeicherte YouTube-Video-ID ist ungültig.');
+  }
+
+  const document = await loadYouTubeConnectionDocument(projectId, userId);
+  const accessToken = await createYouTubeAccessToken(document);
+  const response = await fetch('https://www.googleapis.com/youtube/v3/videos?part=status', {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify({
+      id: videoId,
+      status: {
+        privacyStatus: 'public',
+        selfDeclaredMadeForKids: false,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({})) as { error?: { message?: string } };
+    throw new Error(data.error?.message || 'Das geplante YouTube-Video konnte nicht veröffentlicht werden.');
+  }
+
+  return {
+       videoId,
+    videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
+  };
+};
+
 export const decryptYouTubeRefreshToken = (document: FirestoreDocument): string => {
   const { encryptionSecret } = getOAuthConfig();
   const encrypted = document.fields?.encryptedRefreshToken?.stringValue || '';

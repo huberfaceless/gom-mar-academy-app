@@ -13,6 +13,7 @@ import {
   saveServerPublishingJob,
   syncServerPublishingOutcome,
 } from '../../server/publishingQueueAdmin.js';
+import { publishExistingYouTubeVideo } from '../../server/youtubeConnectionAdmin.js';
 
 
 export interface SchedulerExecutionResult {
@@ -196,6 +197,35 @@ export class ServerSchedulerWorker {
           pinterestToken,
           triggeredBy,
           false,
+          async (youtubeJob) => {
+            const videoId = youtubeJob.payload?.metadata?.videoId;
+            if (typeof videoId !== 'string' || !videoId) {
+              return {
+                success: false,
+                status: 'FAILED',
+                error: 'Die YouTube-Video-ID fehlt.',
+              };
+            }
+            try {
+              const published = await publishExistingYouTubeVideo(
+                process.env.FIREBASE_PROJECT_ID || 'gom-mar-akademie',
+                youtubeJob.userId,
+                videoId,
+              );
+              return {
+                success: true,
+                status: 'PUBLISHED',
+                externalId: published.videoId,
+                publishedUrl: published.videoUrl,
+              };
+            } catch (error) {
+              return {
+                success: false,
+                status: 'FAILED',
+                error: error instanceof Error ? error.message : 'Die YouTube-Veröffentlichung ist fehlgeschlagen.',
+              };
+            }
+          },
         );
         await saveServerPublishingJob(finalizedJob, claimResult.updateTime);
         await syncServerPublishingOutcome(finalizedJob);

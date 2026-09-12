@@ -161,6 +161,7 @@ export interface YouTubeVideoData {
   };
   status: ContentStatus;
   scheduledDate?: string;
+  videoId?: string;
   videoUrl?: string;
 }
 
