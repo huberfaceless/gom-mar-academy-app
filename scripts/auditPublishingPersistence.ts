@@ -54,8 +54,8 @@ assert.match(calendar, /authenticatedFetch\(['"]\/api\/admin\/scheduler\/run-tic
   'Die Adminoberfläche muss den manuellen Scheduler mit Firebase-Authentifizierung auslösen.');
 assert.doesNotMatch(calendar, /fetch\(['"]\/api\/scheduler\/run-tick['"]/,
   'Die Adminoberfläche darf den geheimnisgeschützten Server-Endpunkt nicht direkt aufrufen.');
-assert.match(publishing, /params\.platform !== ['"]PINTEREST['"] \|\| params\.contentType !== ['"]PIN['"]/,
-  'Nicht implementierte Publisher dürfen keine neuen Queue-Jobs annehmen.');
+assert.match(publishing, /isUploadedYouTubeVideo/,
+  'Nur bereits hochgeladene YouTube-Langvideos dürfen neue Warteschlangenaufträge anlegen.');
 assert.match(publishing, /result\.status === ['"]NOT_IMPLEMENTED['"]/,
   'Nicht implementierte Veröffentlichungen dürfen nicht wiederholt werden.');
 assert.match(publishing, /Dieser Inhalt befindet sich bereits in der Publishing Queue/,
@@ -107,5 +107,21 @@ assert.match(youtubeScript, /flex flex-wrap items-center gap-2\.5 w-full min-w-0
   'Die YouTube-Aktionsleiste muss innerhalb des Containers umbrechen können.');
 assert.doesNotMatch(youtubeScript, /lg:flex-row items-start lg:items-center justify-between/,
   'Der YouTube-Kopfbereich darf nicht erneut in eine überlaufende starre Desktop-Zeile wechseln.');
+
+
+const youtubeView = readFileSync('src/components/ContentEngine/YouTubeScriptTab.tsx', 'utf8');
+const youtubeAdmin = readFileSync('server/youtubeConnectionAdmin.ts', 'utf8');
+assert.match(youtubeView, /videoId: result\.videoId/,
+  'Die YouTube-Video-ID muss nach dem nicht gelisteten Upload dauerhaft dem Content-Projekt zugeordnet werden.');
+assert.match(calendar, /Zuerst Video hochladen/,
+  'Nicht hochgeladene YouTube-Videos müssen in der Inhaltsplanung verständlich blockiert werden.');
+assert.match(calendar, /project\.youtubeVideo\.videoId \|\| getYouTubeVideoId/,
+  'Bestehende nicht gelistete YouTube-Videos müssen anhand ihrer gespeicherten URL planbar bleiben.');
+assert.match(worker, /publishExistingYouTubeVideo/,
+  'Der Server-Scheduler muss geplante YouTube-Langvideos veröffentlichen können.');
+assert.match(youtubeAdmin, /privacyStatus: 'public'/,
+  'Die geplante YouTube-Veröffentlichung muss den Sichtbarkeitsstatus serverseitig auf öffentlich setzen.');
+assert.match(publishing, /params\.platform === 'YOUTUBE'[\s\S]*params\.contentType === 'VIDEO'[\s\S]*videoId/,
+  'Die Warteschlange darf YouTube nur für hochgeladene Langvideos öffnen.');
 
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
