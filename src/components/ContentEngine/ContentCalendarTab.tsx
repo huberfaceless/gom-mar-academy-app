@@ -51,8 +51,8 @@ const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; b
   needs_review: { label: 'Prüfung nötig', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
   APPROVED: { label: 'Freigegeben ✅', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
   approved: { label: 'Freigegeben ✅', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
-  SCHEDULED: { label: 'In Queue 📅', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
-  scheduled: { label: 'In Queue 📅', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
+  SCHEDULED: { label: 'In Warteschlange 📅', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
+  scheduled: { label: 'In Warteschlange 📅', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
   PUBLISHING: { label: 'Wird veröffentlicht...', bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200' },
   publishing: { label: 'Wird veröffentlicht...', bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200' },
   PUBLISHED: { label: 'Veröffentlicht 🚀', bg: 'bg-teal-50', text: 'text-teal-700', border: 'border-teal-200' },
@@ -262,7 +262,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const handleEnqueueItem = async (item: typeof items[0]) => {
     if (!user?.uid) {
       setActionNotice({
-        text: 'Bitte melde dich an, um Inhalte in der Firestore Publishing Queue zu planen.',
+        text: 'Bitte melde dich an, um Inhalte in der Firestore-Veröffentlichungswarteschlange zu planen.',
         type: 'warning',
       });
       return;
@@ -293,12 +293,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       await loadJobs();
 
       setActionNotice({
-        text: `Job für "${item.title}" erfolgreich in Firestore Publishing Queue eingereiht (Job ID: ${publishingJob.id.slice(-6)}).`,
+        text: `Job für "${item.title}" erfolgreich in die Firestore-Veröffentlichungswarteschlange eingereiht (Job ID: ${publishingJob.id.slice(-6)}).`,
         type: 'success',
       });
     } catch (err: any) {
       setActionNotice({
-        text: `Fehler beim Einreihen in die Queue: ${err.message}`,
+        text: `Fehler beim Einreihen in die Warteschlange: ${err.message}`,
         type: 'warning',
       });
     }
@@ -474,7 +474,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       await FirestoreContentService.deletePublishingJob(user.uid, jobId);
       await loadJobs();
       setActionNotice({
-        text: 'Job aus der Publishing Queue entfernt.',
+        text: 'Auftrag aus der Veröffentlichungswarteschlange entfernt.',
         type: 'info',
       });
     } catch (err) {
@@ -493,7 +493,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
               <CalendarIcon className="w-3 h-3" />
-              Content-Planung & Publishing Queue
+              Content-Planung & Veröffentlichungswarteschlange
             </span>
             <span className="text-xs text-slate-500">Gesamtes Set ({items.length} Assets)</span>
           </div>
@@ -507,7 +507,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             className="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 transition-all cursor-pointer"
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>Alle freigeben & in Queue einreihen</span>
+            <span>Alle freigeben & in Warteschlange einreihen</span>
           </button>
         </div>
       </div>
@@ -600,7 +600,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     {matchingJob && (
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1">
                         <Zap className="w-2.5 h-2.5" />
-                        Queue Job: #{matchingJob.id.slice(-5)} ({matchingJob.status})
+                        Warteschlangenauftrag: #{matchingJob.id.slice(-5)} ({matchingJob.status})
                       </span>
                     )}
                   </div>
@@ -636,7 +636,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   <option value="GENERATING">KI Generiert</option>
                   <option value="NEEDS_REVIEW">Prüfung nötig</option>
                   <option value="APPROVED">Freigegeben ✅</option>
-                  <option value="SCHEDULED" disabled={!queueSupported}>In Queue 📅</option>
+                  <option value="SCHEDULED" disabled={!queueSupported}>In Warteschlange 📅</option>
                   <option value="PUBLISHED">Veröffentlicht 🚀</option>
                 </select>
 
@@ -649,10 +649,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     type="button"
                     onClick={() => handleEnqueueItem(item)}
                     className="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
-                    title="In Firestore Publishing Queue einreihen"
+                    title="In die Firestore-Veröffentlichungswarteschlange einreihen"
                   >
                     <Clock className="w-3.5 h-3.5 text-purple-400" />
-                    <span>Queue</span>
+                    <span>Warteschlange</span>
                   </button>
                 ) : (
                   <button
@@ -686,7 +686,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
-                  <span>Firestore Publishing Queue & Server Scheduler</span>
+                  <span>Firestore-Veröffentlichungswarteschlange & Server-Scheduler</span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] bg-purple-500/20 text-purple-300 border border-purple-500/40">
                     {publishingJobs.length} Jobs
                   </span>
@@ -735,9 +735,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         {publishingJobs.length === 0 ? (
           <div className="p-8 text-center bg-slate-950/60 rounded-2xl border border-slate-800/80 text-xs text-slate-400 space-y-2">
             <Clock className="w-8 h-8 text-slate-600 mx-auto" />
-            <p className="font-semibold text-slate-300">Aktuell befinden sich keine Jobs in der Publishing Queue.</p>
+            <p className="font-semibold text-slate-300">Aktuell befinden sich keine Aufträge in der Veröffentlichungswarteschlange.</p>
             <p className="text-[11px] text-slate-500 max-w-md mx-auto">
-              Klicke oben bei einem Asset auf <strong>„Queue“</strong> oder auf <strong>„Alle freigeben & in Queue einreihen“</strong>, um Veröffentlichungs- und Scheduler-Jobs in Firestore zu erstellen.
+              Klicke oben bei einem Asset auf <strong>„Warteschlange“</strong> oder auf <strong>„Alle freigeben & in Warteschlange einreihen“</strong>, um Veröffentlichungs- und Scheduler-Jobs in Firestore zu erstellen.
             </p>
           </div>
         ) : (
