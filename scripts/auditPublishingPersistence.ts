@@ -85,4 +85,10 @@ assert.match(contentEngine, /suggestedTopics\.map\(\(topic, i\)/,
 assert.match(calendar, /Der Job konnte nicht gelöscht werden/,
   'Fehler beim Löschen eines Queue-Jobs müssen sichtbar angezeigt werden.');
 
+
+assert.doesNotMatch(calendar, /In Queue|Publishing Queue|>Queue<|in Queue einreihen|Queue Job:/,
+  'Die deutsche Oberfläche darf die englische Bezeichnung „Queue“ nicht anzeigen.');
+assert.match(calendar, /Content-Planung & Veröffentlichungswarteschlange/,
+  'Die Veröffentlichungswarteschlange muss vollständig deutsch beschriftet sein.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
