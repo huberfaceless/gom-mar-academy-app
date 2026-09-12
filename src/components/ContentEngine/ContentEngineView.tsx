@@ -63,6 +63,45 @@ const SUGGESTED_TOPICS_ONLINE_BUSINESS = [
   'Mit wenig Zeit ein automatisiertes Online-Business aufbauen',
 ];
 
+const getSuggestedTopics = (project: ProjectSettings): string[] => {
+  if (project.id === DEFAULT_VITAL50_PROJECT.id) {
+    return SUGGESTED_TOPICS_VITAL50;
+  }
+
+  const normalizedCoreTopics = project.coreTopics.join(' ').toLocaleLowerCase('de');
+  const isOnlineBusinessProject = [
+    'online geld',
+    'affiliate',
+    'digital',
+    'faceless',
+    'automatisierung',
+  ].some((keyword) => normalizedCoreTopics.includes(keyword));
+
+  if (isOnlineBusinessProject) {
+    return SUGGESTED_TOPICS_ONLINE_BUSINESS;
+  }
+
+  const coreTopics = [...new Set(project.coreTopics.map((topic) => topic.trim()).filter(Boolean))];
+  if (coreTopics.length === 0) {
+    return [
+      `${project.name}: Ein verständlicher Einstieg für Anfänger`,
+      `${project.name}: Die 5 häufigsten Fehler und wie du sie vermeidest`,
+      `${project.name} Schritt für Schritt: Ein praktischer Leitfaden`,
+      `Was bei ${project.name} wirklich funktioniert – Chancen und Grenzen`,
+      `${project.name}: 7 konkrete Tipps für bessere Ergebnisse`,
+    ];
+  }
+
+  const topicAt = (index: number) => coreTopics[index % coreTopics.length];
+  return [
+    `${topicAt(0)}: Ein verständlicher Einstieg für Anfänger`,
+    `${topicAt(1)}: Die 5 häufigsten Fehler und wie du sie vermeidest`,
+    `${topicAt(2)} Schritt für Schritt: Ein praktischer Leitfaden`,
+    `Was bei ${topicAt(3)} wirklich funktioniert – Chancen und Grenzen`,
+    `${topicAt(4)}: 7 konkrete Tipps für bessere Ergebnisse`,
+  ];
+};
+
 const createOnlineBusinessProject = (): ProjectSettings => ({
   id: `proj_online_business_${Date.now()}`,
   name: 'GOM-MAR Online Business',
@@ -142,6 +181,7 @@ export const ContentEngineView: React.FC = () => {
   }, [userId]);
 
   const activeProjectSettings = projects.find((p) => p.id === selectedProjectId) || DEFAULT_VITAL50_PROJECT;
+  const suggestedTopics = getSuggestedTopics(activeProjectSettings);
 
   // Persist whenever activeContentProject changes
   const handleUpdateActiveProject = async (updated: CentralContentProject): Promise<boolean> => {
@@ -485,7 +525,7 @@ export const ContentEngineView: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
-              placeholder="z.B. Bauchfett verlieren ab 50: Warum Diäten scheitern und was wirklich hilft..."
+              placeholder={`z. B. ${suggestedTopics[0]}...`}
               value={topicInput}
               onChange={(e) => setTopicInput(e.target.value)}
               className="flex-1 px-4 py-3.5 bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl text-white placeholder:text-slate-400 text-sm font-medium focus:outline-hidden focus:border-emerald-400 focus:bg-white/15 transition-all"
@@ -520,9 +560,7 @@ export const ContentEngineView: React.FC = () => {
               Themen-Inspiration für {activeProjectSettings.name}:
             </p>
             <div className="flex flex-wrap gap-2">
-              {(activeProjectSettings.id === DEFAULT_VITAL50_PROJECT.id
-                ? SUGGESTED_TOPICS_VITAL50
-                : SUGGESTED_TOPICS_ONLINE_BUSINESS).map((topic, i) => (
+              {suggestedTopics.map((topic, i) => (
                 <button
                   key={i}
                   type="button"
