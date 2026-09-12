@@ -125,11 +125,11 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
             </div>
 
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
-              So baust du dir ohne Vorkenntnisse ein profitables <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Faceless Online-Business</span> auf
+              So baust du dir ohne Vorkenntnisse Schritt für Schritt ein eigenes <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Faceless Online-Business</span> auf
             </h1>
 
             <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
-              Sichere dir deinen persönlichen Zugang zur <strong className="text-white">GOM-MAR Academy</strong>. Erhalte Schritt-für-Schritt Videos, automatisierte E-Mail-Funnel und die besten KI-Vorlagen für deinen Erfolg.
+              Sichere dir deinen persönlichen Zugang zur <strong className="text-white">GOM-MAR Academy</strong>. Entdecke verständliche Lernvideos, praktische E-Mail-Funnel und KI-Vorlagen für deine eigene Umsetzung.
             </p>
 
           </div>
@@ -277,7 +277,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 pt-2 border-t border-slate-800/80">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                Sichere Firebase Authentifizierung • 100% DSGVO-konform
+                Sichere Firebase-Authentifizierung • Datenschutzbewusst umgesetzt
               </span>
             </div>
 
