@@ -28,6 +28,8 @@ function sanitizeLogText(text?: string): string | undefined {
  * Operates on real UTC timestamps, guarantees idempotency, enforces max attempts with exponential backoff,
  * records detailed execution audit logs without sensitive tokens, and executes independently of browser presence.
  */
+export type YouTubeVideoPublisher = (job: PublishingJob) => Promise<PublishResult>;
+
 export class PublishingService {
 
   // ==========================================
@@ -280,16 +282,29 @@ export class PublishingService {
   }
 
   /**
-   * Publishes a longform YouTube video.
-   * In this phase: strictly returns NOT_IMPLEMENTED (NO fake publishing!).
+   * Publishes a previously uploaded, unlisted YouTube video through the server callback.
    */
-  static async publishVideo(job: PublishingJob): Promise<PublishResult> {
+  static async publishVideo(
+    job: PublishingJob,
+    youtubeVideoPublisher?: YouTubeVideoPublisher,
+  ): Promise<PublishResult> {
     console.info(`[PublishingService] publishVideo invoked for job ${job.id}`);
-    return {
-      success: false,
-      status: 'NOT_IMPLEMENTED',
-      error: 'YouTube Video Upload API ist in dieser Entwicklungsphase noch nicht angebunden.',
-    };
+    const videoId = job.payload?.metadata?.videoId;
+    if (typeof videoId !== 'string' || !videoId) {
+      return {
+        success: false,
+        status: 'FAILED',
+        error: 'Vor der Planung muss das fertige Video als „Nicht gelistet“ zu YouTube hochgeladen werden.',
+      };
+    }
+    if (!youtubeVideoPublisher) {
+      return {
+        success: false,
+        status: 'FAILED',
+        error: 'Die geplante YouTube-Veröffentlichung kann nur durch den Server-Scheduler ausgeführt werden.',
+      };
+    }
+    return youtubeVideoPublisher(job);
   }
 
   /**
@@ -324,7 +339,12 @@ export class PublishingService {
       payload: PublishingJob['payload'];
     }
   ): Promise<{ publishingJob: PublishingJob; schedulerJob: SchedulerJob }> {
-    if (params.platform !== 'PINTEREST' || params.contentType !== 'PIN') {
+    const isPinterestPin = params.platform === 'PINTEREST' && params.contentType === 'PIN';
+    const isUploadedYouTubeVideo = params.platform === 'YOUTUBE'
+      && params.contentType === 'VIDEO'
+      && typeof params.payload?.metadata?.videoId === 'string'
+      && params.payload.metadata.videoId.length > 0;
+    if (!isPinterestPin && !isUploadedYouTubeVideo) {
       throw new Error('Für diesen Inhalt ist die automatische Veröffentlichung noch nicht verfügbar.');
     }
 
@@ -385,6 +405,7 @@ export class PublishingService {
     pinterestToken?: string,
     triggeredBy: 'SCHEDULER_CRON' | 'MANUAL_RUN' | 'API_TRIGGER' = 'MANUAL_RUN',
     persistWithClient: boolean = true,
+    youtubeVideoPublisher?: YouTubeVideoPublisher,
   ): Promise<{ job: PublishingJob; result: PublishResult }> {
     const startedAt = new Date().toISOString();
 
@@ -428,7 +449,7 @@ export class PublishingService {
         if (job.contentType === 'SHORT') {
           result = await this.publishShort(job);
         } else {
-          result = await this.publishVideo(job);
+          result = await this.publishVideo(job, youtubeVideoPublisher);
         }
         break;
       default:
