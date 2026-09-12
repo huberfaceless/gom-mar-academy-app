@@ -324,6 +324,19 @@ export class PublishingService {
       payload: PublishingJob['payload'];
     }
   ): Promise<{ publishingJob: PublishingJob; schedulerJob: SchedulerJob }> {
+    if (params.platform !== 'PINTEREST' || params.contentType !== 'PIN') {
+      throw new Error('Für diesen Inhalt ist die automatische Veröffentlichung noch nicht verfügbar.');
+    }
+
+    const existingJobs = await FirestoreContentService.getPublishingJobs(userId, params.contentProjectId);
+    const existingJob = existingJobs.find(job =>
+      job.contentId === params.contentId
+      && !['FAILED', 'CANCELLED'].includes(job.status),
+    );
+    if (existingJob) {
+      throw new Error('Dieser Inhalt befindet sich bereits in der Publishing Queue.');
+    }
+
     const jobId = `pub_job_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const schedulerJobId = `sched_job_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const now = new Date().toISOString();
@@ -436,7 +449,7 @@ export class PublishingService {
     if (isSuccess) {
       finalStatus = 'PUBLISHED';
     } else {
-      const isFatal = currentAttempts >= maxAttempts;
+      const isFatal = currentAttempts >= maxAttempts || result.status === 'NOT_IMPLEMENTED';
       if (isFatal) {
         finalStatus = 'FAILED';
       } else {

@@ -49,5 +49,15 @@ assert.match(calendar, /authenticatedFetch\(['"]\/api\/admin\/scheduler\/run-tic
   'Die Adminoberfläche muss den manuellen Scheduler mit Firebase-Authentifizierung auslösen.');
 assert.doesNotMatch(calendar, /fetch\(['"]\/api\/scheduler\/run-tick['"]/,
   'Die Adminoberfläche darf den geheimnisgeschützten Server-Endpunkt nicht direkt aufrufen.');
+assert.match(publishing, /params\.platform !== ['"]PINTEREST['"] \|\| params\.contentType !== ['"]PIN['"]/,
+  'Nicht implementierte Publisher dürfen keine neuen Queue-Jobs annehmen.');
+assert.match(publishing, /result\.status === ['"]NOT_IMPLEMENTED['"]/,
+  'Nicht implementierte Veröffentlichungen dürfen nicht wiederholt werden.');
+assert.match(publishing, /Dieser Inhalt befindet sich bereits in der Publishing Queue/,
+  'Ein Inhalt darf nicht mehrfach gleichzeitig eingereiht werden.');
+assert.match(calendar, /items\.filter\(supportsPublishingQueue\)/,
+  'Die Sammelaktion darf nur unterstützte Inhalte einreihen.');
+assert.doesNotMatch(calendar, /handleStatusChange\(item\.id, ['"]scheduled['"]\)/,
+  'Das Einreihen darf nicht über eine Statusänderung unbemerkt einen zweiten Job erzeugen.');
 
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
