@@ -275,7 +275,7 @@ export const ContentEngineView: React.FC = () => {
       handleUpdateActiveProject(newProject);
       setActiveTab('brief');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen des Content Briefs.');
+      setErrorMsg(err.message || 'Fehler beim Erstellen des Inhaltsbriefings.');
     } finally {
       setIsGeneratingBrief(false);
     }
@@ -327,7 +327,7 @@ export const ContentEngineView: React.FC = () => {
       });
       setActiveTab('pinterest');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen der Pinterest Pins.');
+      setErrorMsg(err.message || 'Fehler beim Erstellen der Pinterest-Pins.');
     } finally {
       setIsGeneratingPinterest(false);
     }
@@ -361,7 +361,7 @@ export const ContentEngineView: React.FC = () => {
       });
       setActiveTab('youtube');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen des YouTube Skripts.');
+      setErrorMsg(err.message || 'Fehler beim Erstellen des YouTube-Skripts.');
     } finally {
       setIsGeneratingYouTube(false);
     }
@@ -409,7 +409,7 @@ export const ContentEngineView: React.FC = () => {
       handleUpdateActiveProject(fullProject);
       setActiveTab('brief');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler bei der 1-Click Generierung.');
+      setErrorMsg(err.message || 'Fehler bei der Ein-Klick-Erstellung.');
     } finally {
       setIsGeneratingAll(false);
     }
@@ -443,14 +443,14 @@ export const ContentEngineView: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                AI Content Engine Hub
+                KI-Inhaltszentrale
               </h1>
               <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
                 Phase 1 & 2 Aktiv
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              1 Thema → Content Brief → Blogartikel + 5 Pinterest Pins + YouTube Skript & Shorts → Kalender
+              1 Thema → Inhaltsbriefing → Blogartikel + 5 Pinterest-Pins + YouTube-Skript und Kurzvideos → Kalender
             </p>
           </div>
         </div>
@@ -491,7 +491,7 @@ export const ContentEngineView: React.FC = () => {
               setIsSettingsModalOpen(true);
             }}
             className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-600 rounded-xl shadow-xs transition-colors"
-            title="Neues Content-Projekt anlegen"
+            title="Neues Inhaltsprojekt anlegen"
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -510,7 +510,7 @@ export const ContentEngineView: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
             <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-400">
-              Neuer Content-Workflow
+              Neuer Inhaltsablauf
             </span>
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-0.5">
               Welches Thema möchtest du heute erobern?
@@ -609,7 +609,7 @@ export const ContentEngineView: React.FC = () => {
                 }`}
               >
                 <FileText className="w-4 h-4" />
-                <span>1. Content Brief</span>
+                <span>1. Inhaltsbriefing</span>
                 {activeContentProject.contentBrief && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
@@ -651,7 +651,7 @@ export const ContentEngineView: React.FC = () => {
                 }`}
               >
                 <Youtube className="w-4 h-4" />
-                <span>4. YouTube & Shorts</span>
+                <span>4. YouTube und Kurzvideos</span>
                 {activeContentProject.youtubeVideo && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
@@ -723,7 +723,7 @@ export const ContentEngineView: React.FC = () => {
               <div className="p-12 text-center bg-white rounded-2xl border border-slate-200">
                 <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <h3 className="text-base font-bold text-slate-700">Noch kein Blogartikel generiert</h3>
-                <p className="text-xs text-slate-500 mt-1 mb-4">Erstelle den vollständigen 1.500-Wörter-Artikel basierend auf dem Content Brief.</p>
+                <p className="text-xs text-slate-500 mt-1 mb-4">Erstelle den vollständigen 1.500-Wörter-Artikel basierend auf dem Inhaltsbriefing.</p>
                 <button
                   type="button"
                   onClick={handleGenerateBlog}
