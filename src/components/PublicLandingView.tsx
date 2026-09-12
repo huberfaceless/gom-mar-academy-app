@@ -8,7 +8,6 @@ import {
   Lock, 
   User as UserIcon, 
   Tv, 
-  Play, 
   LogIn,
   AlertCircle
 } from 'lucide-react';
@@ -35,9 +34,6 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
   const [selectedNiche, setSelectedNiche] = useState<string>('Faceless Content & Reels');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [localError, setLocalError] = useState<string>('');
-
-  // VSL video playback state
-  const [isPlayingVsl, setIsPlayingVsl] = useState<boolean>(false);
 
   // Auth modal toggle for direct login
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
@@ -153,47 +149,26 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
             </div>
           </div>
 
-          {/* VSL Teaser Video Player Box */}
-          <div className="relative aspect-video max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 group">
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10 pointer-events-none" />
-
-            <div className="relative z-20 flex items-center justify-between text-xs text-slate-300">
-              <span className="px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700 font-bold text-emerald-400 flex items-center gap-1.5">
-                <Tv className="w-3.5 h-3.5" />
-                GOM-MAR Masterclass VSL Video
-              </span>
-              <span className="font-mono text-slate-400">Dauer: 6:45 Min</span>
+          {/* Academy introduction video */}
+          <div className="max-w-sm mx-auto space-y-3 text-center">
+            <div className="flex items-center justify-center gap-2 text-sm font-bold text-emerald-400">
+              <Tv className="w-4 h-4" />
+              <span>GOM-MAR Academy in 55 Sekunden</span>
             </div>
-
-            <div className="relative z-20 text-center my-auto space-y-3">
-              {!isPlayingVsl ? (
-                <button
-                  onClick={() => setIsPlayingVsl(true)}
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center mx-auto shadow-2xl shadow-emerald-500/40 hover:scale-110 transition-transform duration-300 cursor-pointer"
-                >
-                  <Play className="w-8 h-8 sm:w-10 sm:h-10 ml-1 fill-current" />
-                </button>
-              ) : (
-                <div className="bg-slate-950/90 backdrop-blur p-4 rounded-2xl border border-slate-800 max-w-md mx-auto text-left space-y-2">
-                  <p className="text-xs font-bold text-emerald-400 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    VSL Vorschau aktiv (Sprachausgabe)
-                  </p>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    "In dieser Academy mit 99 Etappen lernst du Schritt für Schritt, wie du eine automatisierte Kampagne mit E-Mail-Marketing aufbaust..."
-                  </p>
-                </div>
-              )}
-
-              <p className="text-sm font-bold text-white">
-                Klicke auf Play, um das Einführungsvideo für die Academy zu sehen
-              </p>
+            <div className="relative aspect-[9/16] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10">
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src="https://www.youtube-nocookie.com/embed/O1xpglmywtw?rel=0"
+                title="Einführung in die GOM-MAR Academy"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
             </div>
-
-            <div className="relative z-20 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-              <span>✅ 100% Kostenlos für Einsteiger</span>
-              <span>🔥 Über 1.200 aktive Absolventen</span>
-            </div>
+            <p className="text-xs text-slate-400">
+              Ton einschalten und die Academy kurz kennenlernen.
+            </p>
           </div>
 
           {/* REAL FIREBASE REGISTRATION CARD */}
