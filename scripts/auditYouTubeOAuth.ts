@@ -25,5 +25,8 @@ assert.match(storage, /privacyStatus: 'unlisted'/, 'Neue YouTube-Videos müssen 
 assert.match(storage, /uploadType=resumable/, 'Große Videos müssen über eine resumierbare YouTube-Sitzung hochgeladen werden.');
 assert.match(view, /Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen\?/, 'Der Upload muss bewusst bestätigt werden.');
 assert.doesNotMatch(service, /refresh_token|client_secret/i, 'YouTube-Geheimnisse dürfen nicht in den Browser gelangen.');
+assert.match(server, /app\.put\([\s\S]*?'\/api\/youtube\/uploads\/content'[\s\S]*?requireAcademyAdmin[\s\S]*?express\.raw\(\{ type: 'video\/\*', limit: '30mb' \}\)/, 'Videodaten müssen admin-geschützt und größenbegrenzt über die Academy übertragen werden.');
+assert.match(server, /allowedHosts = new Set\(\['www\.googleapis\.com', 'upload\.youtube\.com'\]\)/, 'Der Upload-Proxy muss fremde Zieladressen gegen SSRF sperren.');
+assert.match(service, /request\.open\('PUT', '\/api\/youtube\/uploads\/content'\)/, 'Der Browser muss Videodaten über den geschützten Academy-Endpunkt übertragen.');
 
 console.log('YouTube OAuth geprüft: PRO-geschützt, sitzungsgebunden und verschlüsselt gespeichert.');
