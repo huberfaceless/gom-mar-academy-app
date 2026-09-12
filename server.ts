@@ -316,6 +316,39 @@ async function startServer() {
     }
   });
 
+  app.put(
+    '/api/youtube/uploads/content',
+    requireVerifiedMember,
+    requireAcademyAdmin,
+    express.raw({ type: 'video/*', limit: '30mb' }),
+    async (req, res) => {
+      try {
+        const suppliedUploadUrl = typeof req.headers['x-youtube-upload-url'] === 'string'
+          ? req.headers['x-youtube-upload-url']
+          : '';
+        const uploadUrl = new URL(suppliedUploadUrl);
+        const allowedHosts = new Set(['www.googleapis.com', 'upload.youtube.com']);
+        if (uploadUrl.protocol !== 'https:' || !allowedHosts.has(uploadUrl.hostname) || !uploadUrl.pathname.startsWith('/upload/youtube/v3/videos')) {
+          throw new Error('Die YouTube-Upload-Adresse ist ungültig.');
+        }
+        if (!Buffer.isBuffer(req.body) || req.body.length === 0) throw new Error('Die Videodatei fehlt.');
+        const contentType = typeof req.headers['content-type'] === 'string' ? req.headers['content-type'] : 'video/mp4';
+        const uploadResponse = await fetch(uploadUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': contentType,
+            'Content-Length': String(req.body.length),
+          },
+          body: req.body,
+        });
+        const responseBody = await uploadResponse.text();
+        res.status(uploadResponse.status).type('application/json').send(responseBody);
+      } catch (error: unknown) {
+        res.status(503).json({ error: error instanceof Error ? error.message : 'Die Videodatei konnte nicht an YouTube übertragen werden.' });
+      }
+    },
+  );
+
   app.get('/api/crm/contacts', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;

@@ -299,7 +299,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         <div className="rounded-3xl border border-red-200 bg-white p-5 shadow-xs space-y-3">
           <div>
             <h3 className="text-sm font-extrabold text-slate-900">Fertiges Video hochladen</h3>
-            <p className="mt-1 text-xs text-slate-500">Titel, Beschreibung und Tags werden aus diesem Skript übernommen. Das Video bleibt zunächst „Nicht gelistet“.</p>
+            <p className="mt-1 text-xs text-slate-500">Titel, Beschreibung und Tags werden aus diesem Skript übernommen. Das Video bleibt zunächst „Nicht gelistet“ (maximal 30 MB).</p>
           </div>
           <input
             type="file"
