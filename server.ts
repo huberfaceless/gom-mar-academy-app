@@ -1922,6 +1922,23 @@ Antworte mit einem reinen JSON-Objekt:
     }
   });
 
+  // Authenticated Academy-admin trigger used by the Content Engine UI.
+  // The scheduler secret remains reserved for server-to-server calls.
+  app.post(
+    '/api/admin/scheduler/run-tick',
+    requireVerifiedMember,
+    requireAcademyAdmin,
+    async (_req, res) => {
+      try {
+        const outcome = await ServerSchedulerWorker.runTick('MANUAL_RUN');
+        res.json({ success: true, outcome });
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Fehler beim manuellen Scheduler-Durchlauf.';
+        res.status(500).json({ error: message });
+      }
+    },
+  );
+
   // Manual immediate execution endpoint for a specific job
   app.post('/api/publishing/run-now', requireSchedulerSecret, async (req, res) => {
     try {
