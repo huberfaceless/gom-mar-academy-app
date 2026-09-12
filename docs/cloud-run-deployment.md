@@ -120,3 +120,11 @@ Nach dem Speichern der fünf Variablen wird unter `Actions → Projektpruefung �
 ## Kontrolle
 
 Der Deployment-Job übergibt den exakten Git-Commit als `APP_COMMIT_SHA`. Anschließend ruft er `/api/health` auf und akzeptiert die Bereitstellung nur, wenn Cloud Run genau diesen Commit meldet. Der explizit geordnete `gcloud run deploy`-Befehl setzt zuerst `--container=app-container` und danach `--source`, `--update-env-vars` und `--clear-base-image`. Damit übernimmt die erste Migration den bestehenden AI-Studio-Containernamen und beendet anschließend die frühere Basisbildverwaltung, damit der Dockerfile-Container ohne veraltete Quellen-Markierungen übernommen wird. Bestehende Cloud-Run-Umgebungsvariablen und Secret-Manager-Zuordnungen werden durch die Merge-Strategie beibehalten.
+## YouTube OAuth
+
+Für die serverseitige YouTube-Verbindung benötigt der Cloud-Run-Dienst folgende Laufzeitwerte. Geheimnisse dürfen ausschließlich über Secret Manager eingebunden werden und gehören weder ins Repository noch in öffentliche Build-Logs.
+
+- `YOUTUBE_OAUTH_CLIENT_ID`: OAuth-Client-ID der Webanwendung
+- `YOUTUBE_OAUTH_CLIENT_SECRET`: Clientsicherheitsschlüssel aus Secret Manager
+- `YOUTUBE_TOKEN_ENCRYPTION_KEY`: separates, zufälliges Geheimnis mit mindestens 32 Bytes aus Secret Manager
+- `YOUTUBE_OAUTH_REDIRECT_URI`: optional; Standard ist `https://academy.gomo-marketing.at/api/youtube/oauth/callback`
