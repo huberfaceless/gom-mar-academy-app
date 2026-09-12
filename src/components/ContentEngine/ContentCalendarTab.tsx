@@ -62,6 +62,29 @@ const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; b
   CANCELLED: { label: 'Abgebrochen', bg: 'bg-slate-100', text: 'text-slate-500', border: 'border-slate-300' },
 };
 
+const getStatusLabel = (status: string): string => {
+  const normalizedStatus = status.toUpperCase();
+  const configuredStatus = STATUS_CONFIG[status] || STATUS_CONFIG[normalizedStatus];
+  if (configuredStatus) return configuredStatus.label;
+
+  const additionalLabels: Record<string, string> = {
+    NOT_IMPLEMENTED: 'Nicht unterstützt',
+    SUCCESS: 'Erfolgreich',
+    PENDING: 'Ausstehend',
+    PROCESSING: 'In Bearbeitung',
+  };
+  return additionalLabels[normalizedStatus] || 'Unbekannter Status';
+};
+
+const getTriggerLabel = (trigger: string): string => {
+  const labels: Record<string, string> = {
+    manual: 'Manuell',
+    scheduler: 'Automatischer Scheduler',
+    retry: 'Erneuter Versuch',
+  };
+  return labels[trigger.toLowerCase()] || 'System';
+};
+
 export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   project,
   onUpdateProject,
@@ -121,7 +144,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       if (data.success && data.outcome) {
         const out = data.outcome;
         setActionNotice({
-          text: `Server-Scheduler Durchlauf abgeschlossen: ${out.jobsChecked} geprüft, ${out.jobsProcessed} verarbeitet, ${out.publishedCount} erfolgreich, ${out.failedCount} fehlgeschlagen, ${out.skippedCount} übersprungen/wartend.`,
+          text: `Durchlauf der Server-Zeitsteuerung abgeschlossen: ${out.jobsChecked} geprüft, ${out.jobsProcessed} verarbeitet, ${out.publishedCount} erfolgreich, ${out.failedCount} fehlgeschlagen, ${out.skippedCount} übersprungen/wartend.`,
           type: 'success',
         });
       } else {
@@ -132,7 +155,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       }
     } catch (err: any) {
       setActionNotice({
-        text: `Fehler beim Auslösen des Server-Scheduler Sweeps: ${err.message}`,
+        text: `Fehler beim Auslösen des Durchlaufs der Server-Zeitsteuerung: ${err.message}`,
         type: 'warning',
       });
     } finally {
@@ -191,7 +214,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       targetUrl: pin.targetUrl,
       status: pin.status || 'ai_generated',
       scheduledDate: pin.scheduledDate || new Date(Date.now() + (idx + 1) * 86400000).toISOString().split('T')[0],
-      platformLabel: `Pinterest (${pin.board || 'Default'})`,
+      platformLabel: `Pinterest (${pin.board || 'Standard'})`,
       icon: Pin,
       color: 'text-rose-600 bg-rose-50 border-rose-200',
       payloadData: {
@@ -217,7 +240,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       targetUrl: project.projectSettings.websiteUrl,
       status: project.youtubeVideo.status || 'ai_generated',
       scheduledDate: project.youtubeVideo.scheduledDate || new Date(Date.now() + 2 * 86400000).toISOString().split('T')[0],
-      platformLabel: 'YouTube Longform',
+      platformLabel: 'YouTube-Langvideo',
       icon: Youtube,
       color: 'text-red-600 bg-red-50 border-red-200',
       payloadData: {
@@ -234,7 +257,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       type: 'youtube_short',
       platform: 'YOUTUBE',
       contentType: 'SHORT',
-      title: `Short #${short.shortNumber || idx + 1}: ${short.title}`,
+      title: `Kurzvideo #${short.shortNumber || idx + 1}: ${short.title}`,
       targetUrl: project.projectSettings.websiteUrl,
       status: short.status || 'ai_generated',
       scheduledDate: short.scheduledDate || new Date(Date.now() + (idx + 3) * 86400000).toISOString().split('T')[0],
@@ -293,7 +316,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       await loadJobs();
 
       setActionNotice({
-        text: `Job für "${item.title}" erfolgreich in die Firestore-Veröffentlichungswarteschlange eingereiht (Job ID: ${publishingJob.id.slice(-6)}).`,
+        text: `Auftrag für "${item.title}" erfolgreich in die Firestore-Veröffentlichungswarteschlange eingereiht (Auftrags-ID: ${publishingJob.id.slice(-6)}).`,
         type: 'success',
       });
     } catch (err: any) {
@@ -430,13 +453,13 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         });
       } else {
         setActionNotice({
-          text: `Ergebnis: ${result.status} – ${result.error || 'Nicht erfolgreich'}`,
+          text: `Ergebnis: ${getStatusLabel(result.status)} – ${result.error || 'Nicht erfolgreich'}`,
           type: result.status === 'NOT_IMPLEMENTED' ? 'info' : 'warning',
         });
       }
     } catch (err: any) {
       setActionNotice({
-        text: `Fehler bei der Job-Ausführung: ${err.message}`,
+        text: `Fehler bei der Auftragsausführung: ${err.message}`,
         type: 'warning',
       });
     } finally {
@@ -454,12 +477,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       const { result } = await PublishingService.retryJob(user.uid, job);
       await loadJobs();
       setActionNotice({
-        text: `Retry ausgeführt: ${result.status} – ${result.error || 'Erfolgreich'}`,
+        text: `Erneuter Versuch ausgeführt: ${getStatusLabel(result.status)} – ${result.error || 'Erfolgreich'}`,
         type: result.success ? 'success' : 'info',
       });
     } catch (err: any) {
       setActionNotice({
-        text: `Fehler beim Retry: ${err.message}`,
+        text: `Fehler beim erneuten Versuch: ${err.message}`,
         type: 'warning',
       });
     } finally {
@@ -479,7 +502,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       });
     } catch (err) {
       setActionNotice({
-        text: err instanceof Error ? err.message : 'Der Job konnte nicht gelöscht werden.',
+        text: err instanceof Error ? err.message : 'Der Auftrag konnte nicht gelöscht werden.',
         type: 'warning',
       });
     }
@@ -600,7 +623,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     {matchingJob && (
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1">
                         <Zap className="w-2.5 h-2.5" />
-                        Warteschlangenauftrag: #{matchingJob.id.slice(-5)} ({matchingJob.status})
+                        Warteschlangenauftrag: #{matchingJob.id.slice(-5)} ({getStatusLabel(matchingJob.status)})
                       </span>
                     )}
                   </div>
@@ -686,7 +709,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
-                  <span>Firestore-Veröffentlichungswarteschlange & Server-Scheduler</span>
+                  <span>Firestore-Veröffentlichungswarteschlange und Server-Zeitsteuerung</span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] bg-purple-500/20 text-purple-300 border border-purple-500/40">
                     {publishingJobs.length} Jobs
                   </span>
@@ -714,10 +737,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
               onClick={handleTriggerServerSweep}
               disabled={isTriggeringSweep}
               className="px-3 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-900/30 cursor-pointer disabled:opacity-50"
-              title="Führt sofort einen Server-Scheduler Check aus"
+              title="Führt sofort eine Prüfung der Server-Zeitsteuerung aus"
             >
               {isTriggeringSweep ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5 text-amber-300" />}
-              <span>Scheduler Sweep auslösen</span>
+              <span>Scheduler-Durchlauf auslösen</span>
             </button>
 
             <button
@@ -737,7 +760,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             <Clock className="w-8 h-8 text-slate-600 mx-auto" />
             <p className="font-semibold text-slate-300">Aktuell befinden sich keine Aufträge in der Veröffentlichungswarteschlange.</p>
             <p className="text-[11px] text-slate-500 max-w-md mx-auto">
-              Klicke oben bei einem Asset auf <strong>„Warteschlange“</strong> oder auf <strong>„Alle freigeben & in Warteschlange einreihen“</strong>, um Veröffentlichungs- und Scheduler-Jobs in Firestore zu erstellen.
+              Klicke oben bei einem Inhalt auf <strong>„Warteschlange“</strong> oder auf <strong>„Alle freigeben & in Warteschlange einreihen“</strong>, um Veröffentlichungs- und Scheduler-Aufträge in Firestore zu erstellen.
             </p>
           </div>
         ) : (
@@ -776,7 +799,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                               onClick={() => setSelectedLogJob(job)}
                               className="text-[10px] text-purple-400 hover:text-purple-300 underline cursor-pointer"
                             >
-                              ({job.executionLogs?.length} Audit-Logs)
+                              ({job.executionLogs?.length} Ausführungsprotokolle)
                             </button>
                           )}
                         </div>
@@ -792,7 +815,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                       </td>
                       <td className="py-3 pr-2 whitespace-nowrap">
                         <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border ${statusConf.bg} ${statusConf.text} ${statusConf.border}`}>
-                          {job.status}
+                          {getStatusLabel(job.status)}
                         </span>
                         {job.lastError && (
                           <div className="text-[10px] text-rose-400 truncate max-w-xs mt-0.5" title={job.lastError}>
@@ -819,7 +842,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         </span>
                         {job.nextAttemptAt && job.status !== 'PUBLISHED' && (
                           <div className="text-[9px] text-amber-400">
-                            Retry: {new Date(job.nextAttemptAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}
+                            Nächster Versuch: {new Date(job.nextAttemptAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}
                           </div>
                         )}
                       </td>
@@ -832,10 +855,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                             disabled={isRunning}
                             onClick={() => handleRetryJob(job)}
                             className="px-2.5 py-1 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-white rounded-lg text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer"
-                            title="Retry mit Zurücksetzen der Zähler"
+                            title="Erneut versuchen und Zähler zurücksetzen"
                           >
                             {isRunning ? <Loader2 className="w-3 h-3 animate-spin" /> : <RotateCcw className="w-3 h-3" />}
-                            <span>Retry</span>
+                            <span>Erneut versuchen</span>
                           </button>
                         ) : (
                           <button
@@ -871,7 +894,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800/80 flex items-start gap-2.5 text-[11px] text-slate-400">
           <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
           <div>
-            <strong className="text-slate-200">Server-Autopilot aktiv:</strong> Der Backend-Scheduler prüft minütlich alle fälligen Firestore-Jobs (<code className="text-purple-300">status == 'SCHEDULED' && scheduledAt &lt;= now()</code>). Er läuft unabhängig vom Browser und beachtet Idempotency &amp; exponentielles Backoff.
+            <strong className="text-slate-200">Server-Autopilot aktiv:</strong> Die serverseitige Zeitsteuerung prüft minütlich alle fälligen Firestore-Aufträge mit dem Status „In Warteschlange“. Er läuft unabhängig vom Browser, verhindert Doppelverarbeitung und verlängert die Wartezeit nach Fehlern schrittweise.
           </div>
         </div>
       </div>
@@ -888,7 +911,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     {selectedLogJob.platform}
                   </span>
                 </h3>
-                <p className="text-xs text-slate-400">Job: {selectedLogJob.payload?.title || selectedLogJob.id}</p>
+                <p className="text-xs text-slate-400">Auftrag: {selectedLogJob.payload?.title || selectedLogJob.id}</p>
               </div>
               <button
                 type="button"
@@ -912,16 +935,16 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         log.status === 'PUBLISHED' ? 'bg-teal-500/20 text-teal-300' :
                         log.status === 'FAILED' ? 'bg-rose-500/20 text-rose-300' : 'bg-purple-500/20 text-purple-300'
                       }`}>
-                        {log.status} (Versuch {log.attempts}/{log.maxAttempts})
+                        {getStatusLabel(log.status)} (Versuch {log.attempts}/{log.maxAttempts})
                       </span>
                       <span className="text-[10px] text-slate-400 font-mono">
-                        Trigger: {log.triggeredBy} • {new Date(log.completedAt).toLocaleString('de-DE')}
+                        Ausgelöst durch: {getTriggerLabel(log.triggeredBy)} • {new Date(log.completedAt).toLocaleString('de-DE')}
                       </span>
                     </div>
 
                     {log.externalId && (
                       <div className="text-[11px] text-teal-400">
-                        External ID: <span className="font-mono">{log.externalId}</span>
+                        Externe ID: <span className="font-mono">{log.externalId}</span>
                       </div>
                     )}
 
