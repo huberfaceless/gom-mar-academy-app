@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Save, Plus, Trash2, Globe, Sparkles, Building2 } from 'lucide-react';
 import { ProjectSettings } from '../../types/contentEngine';
 
@@ -17,6 +17,13 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<ProjectSettings>({ ...project });
   const [newTopic, setNewTopic] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({ ...project, coreTopics: [...project.coreTopics] });
+      setNewTopic('');
+    }
+  }, [isOpen, project]);
 
   if (!isOpen) return null;
 

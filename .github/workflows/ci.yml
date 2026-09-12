@@ -70,6 +70,9 @@ jobs:
       - name: YouTube-OAuth-Verbindung pruefen
         run: bun run audit:youtube-oauth
 
+      - name: Content-Projekte pruefen
+        run: bun run audit:content-projects
+
       - name: Produktions-Build erstellen
         run: bun run build
 

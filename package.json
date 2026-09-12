@@ -19,7 +19,8 @@
     "audit:curriculum-admin": "tsx scripts/auditCurriculumAdmin.ts",
     "audit:crm-persistence": "tsx scripts/auditCrmPersistence.ts",
     "audit:public-i18n": "tsx scripts/auditPublicLocalization.ts",
-    "audit:youtube-oauth": "tsx scripts/auditYouTubeOAuth.ts"
+    "audit:youtube-oauth": "tsx scripts/auditYouTubeOAuth.ts",
+    "audit:content-projects": "tsx scripts/auditContentEngineProjects.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

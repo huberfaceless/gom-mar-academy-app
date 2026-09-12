@@ -1269,9 +1269,9 @@ Antworte ausschließlich im folgenden validen JSON-Format:
 
       const prompt = `Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel auf Deutsch basierend auf folgendem Content Brief:
 Thema: ${topic}
-Projekt: ${projectSettings?.name || 'Vital50'}
-Zielgruppe: ${brief.targetAudience || projectSettings?.targetAudience || 'Menschen 50+'}
-Brand Voice: ${projectSettings?.brandVoice || 'Einfühlsam, wissenschaftlich fundiert, motivierend, seriös'}
+Projekt: ${projectSettings?.name || 'Content-Projekt'}
+Zielgruppe: ${brief.targetAudience || projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
+Brand Voice: ${projectSettings?.brandVoice || 'Klar, glaubwürdig, hilfreich und motivierend'}
 Haupt-Keyword: ${brief.mainKeyword}
 Neben-Keywords: ${(brief.secondaryKeywords || []).join(', ')}
 H1 Titel: ${brief.h1 || brief.suggestedTitle}
@@ -1330,10 +1330,10 @@ Antworte im JSON-Format:
       }
 
       const prompt = `Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
-Projekt: ${projectSettings?.name || 'Vital50'}
-Zielgruppe: ${projectSettings?.targetAudience || 'Menschen 50+'}
+Projekt: ${projectSettings?.name || 'Content-Projekt'}
+Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
-Standard-Board: ${projectSettings?.pinterestBoardDefault || 'Gesundheit & Ernährung 50+'}
+Standard-Board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}
 
 WICHTIG: Die 5 Pins MÜSSEN 5 völlig unterschiedliche psychologische Angles (Blickwinkel) nutzen, NICHT nur denselben Text umformulieren:
 1. Angle: Problem (Der Schmerzpunkt / Die Hürde im Alltag)
@@ -1347,8 +1347,8 @@ Jeder Pin benötigt:
 - description: SEO-optimierte Pin-Beschreibung mit Keywords & Hashtags (max 400 Zeichen)
 - keywords: 3-5 relevante Suchbegriffe
 - targetUrl: ${projectSettings?.defaultTargetUrl || ''}
-- board: ${projectSettings?.pinterestBoardDefault || 'Vitalität 50+'}
-- imagePrompt: Präziser Prompt für ein fotorealistisches 1080x1620 Pinterest-Bild im Stil der Marke ${projectSettings?.name || 'Vital50'} (z.B. warme Töne, aktive fitte Best Ager, frisches gesundes Essen, heller Hintergrund, keine kitschigen Grafiken)
+- board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}
+- imagePrompt: Präziser Prompt für ein hochwertiges 1080x1620 Pinterest-Bild, passend zum Thema, zur Zielgruppe und zur Tonalität der Marke ${projectSettings?.name || 'Content-Projekt'}; keine unpassenden Standardmotive und keine kitschigen Grafiken
 - templateStyle: "vital50_clean" | "vital50_bold" | "vital50_list" | "vital50_quote"
 
 Antworte im JSON-Format:
@@ -1448,8 +1448,8 @@ Antworte im JSON-Format:
       const prompt = `Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
 "${topic}"
 
-Projekt: ${projectSettings?.name || 'Vital50'}
-Zielgruppe: ${projectSettings?.targetAudience || 'Menschen 50+'}
+Projekt: ${projectSettings?.name || 'Content-Projekt'}
+Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 Brand Voice: ${projectSettings?.brandVoice || 'Klar, motivierend, seriös'}
 CTA: ${brief?.cta || projectSettings?.defaultCta || 'Kanal abonnieren & Link in der Beschreibung anklicken'}
 Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
@@ -1530,8 +1530,8 @@ Antworte im JSON-Format:
       }
 
       const prompt = `Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
-Projekt: ${projectSettings?.name || 'Vital50'}
-Zielgruppe: ${projectSettings?.targetAudience || 'Menschen 50+'}
+Projekt: ${projectSettings?.name || 'Content-Projekt'}
+Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 
 Jeder Short muss haben:
 - shortNumber (1, 2, 3)

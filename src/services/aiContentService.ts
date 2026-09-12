@@ -116,7 +116,7 @@ export class AIContentService {
       description: p.description || '',
       keywords: Array.isArray(p.keywords) ? p.keywords : [],
       targetUrl: p.targetUrl || projectSettings.defaultTargetUrl,
-      board: p.board || projectSettings.pinterestBoardDefault || 'Vital50',
+      board: p.board || projectSettings.pinterestBoardDefault || projectSettings.name,
       imagePrompt: p.imagePrompt || `Fotorealistisches 1080x1620 Pinterest-Bild zum Thema ${topic}`,
       templateStyle: p.templateStyle || 'vital50_clean',
       status: 'ai_generated',
