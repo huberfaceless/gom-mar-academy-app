@@ -34,6 +34,12 @@ const COLLECTION_PROJECTS = 'projects';
 const COLLECTION_CONTENT_PROJECTS = 'contentProjects';
 const COLLECTION_PUBLISHING_JOBS = 'publishingJobs';
 const COLLECTION_SCHEDULER_JOBS = 'schedulerJobs';
+const FIRESTORE_WRITE_TIMEOUT_MS = 8000;
+
+function rethrowFirestoreWriteError(err: unknown): never {
+  handleFirestoreError(err);
+  throw new Error('Die Änderung wurde lokal gesichert, aber von der Cloud nicht bestätigt. Bitte erneut versuchen.');
+}
 
 async function firestoreWithTimeout<T>(promise: Promise<T>, timeoutMs: number = 2000): Promise<T> {
   let timeoutHandle: NodeJS.Timeout;
@@ -95,9 +101,9 @@ export class FirestoreContentService {
         userId,
         updatedAt: new Date().toISOString(),
       };
-      await firestoreWithTimeout(setDoc(docRef, dataToSave, { merge: true }), 1500);
+      await firestoreWithTimeout(setDoc(docRef, dataToSave, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
     } catch (err) {
-      handleFirestoreError(err);
+      rethrowFirestoreWriteError(err);
     }
   }
 
@@ -163,24 +169,24 @@ export class FirestoreContentService {
       try {
         const docRef = doc(db, COLLECTION_CONTENT_PROJECTS, project.id);
         const serialized = JSON.parse(JSON.stringify(dataToSave));
-        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), 1500);
+        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
   }
 
   static async deleteContentProject(userId: string | undefined, contentProjectId: string): Promise<void> {
-    const current = loadAllContentProjects(userId).filter((p) => p.id !== contentProjectId);
-    saveAllContentProjects(current, userId);
-
     if (userId && isFirestoreOperational()) {
       try {
-        await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_CONTENT_PROJECTS, contentProjectId)), 1500);
+        await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_CONTENT_PROJECTS, contentProjectId)), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
+
+    const current = loadAllContentProjects(userId).filter((p) => p.id !== contentProjectId);
+    saveAllContentProjects(current, userId);
   }
 
   // ==========================================
@@ -235,9 +241,9 @@ export class FirestoreContentService {
       try {
         const docRef = doc(db, COLLECTION_PUBLISHING_JOBS, job.id);
         const serialized = JSON.parse(JSON.stringify(dataToSave));
-        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), 1500);
+        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
   }
@@ -273,24 +279,23 @@ export class FirestoreContentService {
         if (lastError !== undefined) {
           updateData.lastError = lastError;
         }
-        await firestoreWithTimeout(updateDoc(docRef, updateData), 1500);
+        await firestoreWithTimeout(updateDoc(docRef, updateData), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
   }
 
   static async deletePublishingJob(userId: string, jobId: string): Promise<void> {
-    const current = loadAllPublishingJobs(userId).filter((j) => j.id !== jobId);
-    saveAllPublishingJobs(current, userId);
-
     if (isFirestoreOperational()) {
       try {
-        await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_PUBLISHING_JOBS, jobId)), 1500);
+        await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_PUBLISHING_JOBS, jobId)), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
+    const current = loadAllPublishingJobs(userId).filter((j) => j.id !== jobId);
+    saveAllPublishingJobs(current, userId);
   }
 
   // ==========================================
@@ -332,9 +337,9 @@ export class FirestoreContentService {
       try {
         const docRef = doc(db, COLLECTION_SCHEDULER_JOBS, job.id);
         const serialized = JSON.parse(JSON.stringify(dataToSave));
-        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), 1500);
+        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
   }
@@ -367,9 +372,9 @@ export class FirestoreContentService {
         if (lastError !== undefined) {
           updateData.lastError = lastError;
         }
-        await firestoreWithTimeout(updateDoc(docRef, updateData), 1500);
+        await firestoreWithTimeout(updateDoc(docRef, updateData), FIRESTORE_WRITE_TIMEOUT_MS);
       } catch (err) {
-        handleFirestoreError(err);
+        rethrowFirestoreWriteError(err);
       }
     }
   }
