@@ -20,5 +20,10 @@ assert.match(view, /YouTube verbinden/, 'Die Content Engine muss die YouTube-Ver
 const emptyState = view.slice(view.indexOf('if (!video)'), view.indexOf('// Word count'));
 assert.match(emptyState, /youtubeConnectionButton/, 'Die YouTube-Verbindung muss auch ohne generiertes Skript sichtbar sein.');
 assert.match(hub, /!activeContentProject[\s\S]*?<YouTubeScriptTab/, 'Die YouTube-Verbindung muss auch ohne Content-Projekt erreichbar sein.');
+assert.match(server, /app\.post\('\/api\/youtube\/uploads', requireVerifiedMember, requireAcademyAdmin/, 'YouTube-Uploads müssen auf Administratoren begrenzt sein.');
+assert.match(storage, /privacyStatus: 'unlisted'/, 'Neue YouTube-Videos müssen standardmäßig nicht gelistet sein.');
+assert.match(storage, /uploadType=resumable/, 'Große Videos müssen über eine resumierbare YouTube-Sitzung hochgeladen werden.');
+assert.match(view, /Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen\?/, 'Der Upload muss bewusst bestätigt werden.');
+assert.doesNotMatch(service, /refresh_token|client_secret/i, 'YouTube-Geheimnisse dürfen nicht in den Browser gelangen.');
 
 console.log('YouTube OAuth geprüft: PRO-geschützt, sitzungsgebunden und verschlüsselt gespeichert.');

@@ -91,6 +91,10 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const [youtubeConnection, setYouTubeConnection] = useState<YouTubeConnectionStatus | null>(null);
   const [youtubeConnectionError, setYouTubeConnectionError] = useState<string | null>(null);
   const [isConnectingYouTube, setIsConnectingYouTube] = useState(false);
+  const [youtubeFile, setYouTubeFile] = useState<File | null>(null);
+  const [youtubeUploadProgress, setYouTubeUploadProgress] = useState<number | null>(null);
+  const [youtubeUploadError, setYouTubeUploadError] = useState<string | null>(null);
+  const [youtubeUploadedUrl, setYouTubeUploadedUrl] = useState<string | null>(null);
 
   useEffect(() => {
     youtubeService.getConnectionStatus()
@@ -114,6 +118,27 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     } catch (error: unknown) {
       setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht gestartet werden.');
       setIsConnectingYouTube(false);
+    }
+  };
+
+  const handleUploadYouTube = async () => {
+    if (!video || !youtubeFile || youtubeConnection?.connected !== true) return;
+    if (!window.confirm('Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen?')) return;
+    setYouTubeUploadError(null);
+    setYouTubeUploadedUrl(null);
+    setYouTubeUploadProgress(0);
+    try {
+      const result = await youtubeService.uploadUnlistedVideo(youtubeFile, {
+        title: video.title,
+        description: video.description,
+        tags: video.keywords,
+      }, setYouTubeUploadProgress);
+      setYouTubeUploadedUrl(result.videoUrl);
+      setYouTubeUploadProgress(100);
+      onChangeVideo({ ...video, status: 'PUBLISHED', videoUrl: result.videoUrl });
+    } catch (error: unknown) {
+      setYouTubeUploadError(error instanceof Error ? error.message : 'Der YouTube-Upload ist fehlgeschlagen.');
+      setYouTubeUploadProgress(null);
     }
   };
 
@@ -267,6 +292,36 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       {youtubeConnectionError && (
         <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-medium text-rose-800">
           {youtubeConnectionError}
+        </div>
+      )}
+
+      {youtubeConnection?.connected && (
+        <div className="rounded-3xl border border-red-200 bg-white p-5 shadow-xs space-y-3">
+          <div>
+            <h3 className="text-sm font-extrabold text-slate-900">Fertiges Video hochladen</h3>
+            <p className="mt-1 text-xs text-slate-500">Titel, Beschreibung und Tags werden aus diesem Skript übernommen. Das Video bleibt zunächst „Nicht gelistet“.</p>
+          </div>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={(event) => setYouTubeFile(event.target.files?.[0] || null)}
+            disabled={youtubeUploadProgress !== null && youtubeUploadProgress < 100}
+            className="block w-full text-xs text-slate-600 file:mr-3 file:rounded-xl file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:font-bold file:text-slate-800"
+          />
+          <button
+            type="button"
+            onClick={handleUploadYouTube}
+            disabled={!youtubeFile || (youtubeUploadProgress !== null && youtubeUploadProgress < 100)}
+            className="rounded-xl bg-red-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {youtubeUploadProgress !== null && youtubeUploadProgress < 100 ? `Upload läuft: ${youtubeUploadProgress} %` : 'Als „Nicht gelistet“ hochladen'}
+          </button>
+          {youtubeUploadError && <p role="alert" className="text-xs font-semibold text-red-700">{youtubeUploadError}</p>}
+          {youtubeUploadedUrl && (
+            <a href={youtubeUploadedUrl} target="_blank" rel="noreferrer" className="block text-xs font-bold text-emerald-700 underline">
+              Hochgeladenes Video auf YouTube öffnen
+            </a>
+          )}
         </div>
       )}
 
