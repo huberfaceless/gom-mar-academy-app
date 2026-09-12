@@ -16,5 +16,7 @@ assert.match(storage, /academyYouTubeConnections/, 'YouTube-Verbindungen müssen
 assert.doesNotMatch(service, /client_secret|refresh_token/i, 'OAuth-Geheimnisse dürfen nicht in den Browser gelangen.');
 assert.match(service, /authenticatedFetch\('\/api\/youtube\/oauth\/start'/, 'Der Browser muss den geschützten OAuth-Startpunkt verwenden.');
 assert.match(view, /YouTube verbinden/, 'Die Content Engine muss die YouTube-Verbindung anbieten.');
+const emptyState = view.slice(view.indexOf('if (!video)'), view.indexOf('// Word count'));
+assert.match(emptyState, /youtubeConnectionButton/, 'Die YouTube-Verbindung muss auch ohne generiertes Skript sichtbar sein.');
 
 console.log('YouTube OAuth geprüft: PRO-geschützt, sitzungsgebunden und verschlüsselt gespeichert.');
