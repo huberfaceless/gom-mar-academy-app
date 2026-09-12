@@ -99,4 +99,13 @@ assert.match(calendar, /getStatusLabel\(job\.status\)/,
 assert.match(calendar, /getTriggerLabel\(log\.triggeredBy\)/,
   'Technische Auslöser müssen vor der Anzeige deutsch übersetzt werden.');
 
+
+const youtubeScript = readFileSync('src/components/ContentEngine/YouTubeScriptTab.tsx', 'utf8');
+assert.match(youtubeScript, /flex flex-col items-start gap-4/,
+  'Der YouTube-Kopfbereich muss Überschrift und Aktionsleiste überlaufsicher untereinander anordnen.');
+assert.match(youtubeScript, /flex flex-wrap items-center gap-2\.5 w-full min-w-0/,
+  'Die YouTube-Aktionsleiste muss innerhalb des Containers umbrechen können.');
+assert.doesNotMatch(youtubeScript, /lg:flex-row items-start lg:items-center justify-between/,
+  'Der YouTube-Kopfbereich darf nicht erneut in eine überlaufende starre Desktop-Zeile wechseln.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
