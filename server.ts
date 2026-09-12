@@ -14,7 +14,7 @@ import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, sy
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
-import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
+import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -283,6 +283,36 @@ async function startServer() {
       res.json({ success: true });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht getrennt werden.' });
+    }
+  });
+
+  app.post('/api/youtube/uploads', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const title = typeof req.body?.title === 'string' ? req.body.title.trim() : '';
+      const description = typeof req.body?.description === 'string' ? req.body.description.trim() : '';
+      const tags = Array.isArray(req.body?.tags)
+        ? req.body.tags.filter((tag: unknown): tag is string => typeof tag === 'string').map((tag: string) => tag.trim()).filter(Boolean)
+        : [];
+      const contentType = typeof req.body?.contentType === 'string' ? req.body.contentType.trim() : '';
+      const contentLength = Number(req.body?.contentLength);
+      if (!title || title.length > 100) throw new Error('Der YouTube-Titel muss 1 bis 100 Zeichen lang sein.');
+      if (description.length > 5000) throw new Error('Die YouTube-Beschreibung darf höchstens 5.000 Zeichen enthalten.');
+      if (!contentType.startsWith('video/')) throw new Error('Es muss eine gültige Videodatei ausgewählt werden.');
+      if (!Number.isSafeInteger(contentLength) || contentLength <= 0 || contentLength > 256 * 1024 * 1024 * 1024) {
+        throw new Error('Die Größe der Videodatei ist ungültig.');
+      }
+      const uploadUrl = await createYouTubeUploadSession(FIREBASE_PROJECT_ID, userId, {
+        title,
+        description,
+        tags: tags.slice(0, 30),
+        contentType,
+        contentLength,
+      });
+      res.json({ uploadUrl, privacyStatus: 'unlisted' });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Der YouTube-Upload konnte nicht gestartet werden.' });
     }
   });
 
