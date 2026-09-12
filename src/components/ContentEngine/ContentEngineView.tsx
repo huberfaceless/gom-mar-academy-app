@@ -478,6 +478,16 @@ export const ContentEngineView: React.FC = () => {
       </div>
 
       {/* Progress & Navigation Tabs */}
+      {!activeContentProject && (
+        <YouTubeScriptTab
+          onChangeVideo={() => undefined}
+          onChangeShorts={() => undefined}
+          onGoToCalendar={() => undefined}
+          topic=""
+          projectSettings={activeProjectSettings}
+        />
+      )}
+
       {activeContentProject && (
         <div className="space-y-4">
           <div className="bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-2">
