@@ -106,6 +106,7 @@ export const ContentEngineView: React.FC = () => {
   const [isGeneratingPinterest, setIsGeneratingPinterest] = useState(false);
   const [isGeneratingYouTube, setIsGeneratingYouTube] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [saveNotice, setSaveNotice] = useState<string | null>(null);
 
   // Load from Firestore on mount or when user changes
   useEffect(() => {
@@ -143,7 +144,7 @@ export const ContentEngineView: React.FC = () => {
   const activeProjectSettings = projects.find((p) => p.id === selectedProjectId) || DEFAULT_VITAL50_PROJECT;
 
   // Persist whenever activeContentProject changes
-  const handleUpdateActiveProject = async (updated: CentralContentProject) => {
+  const handleUpdateActiveProject = async (updated: CentralContentProject): Promise<boolean> => {
     setActiveContentProject(updated);
     saveOrUpdateContentProject(updated, userId);
     setContentProjects((prev) => {
@@ -162,11 +163,15 @@ export const ContentEngineView: React.FC = () => {
       } catch (err) {
         console.error('Error saving updated content project to Firestore:', err);
         setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
+        return false;
       }
     }
+    return true;
   };
 
   const handleSaveProjectSettings = async (updatedSettings: ProjectSettings) => {
+    setErrorMsg(null);
+    setSaveNotice(null);
     const exists = projects.some((p) => p.id === updatedSettings.id);
     const nextProjects = exists
       ? projects.map((p) => (p.id === updatedSettings.id ? updatedSettings : p))
@@ -175,20 +180,27 @@ export const ContentEngineView: React.FC = () => {
     setSelectedProjectId(updatedSettings.id);
     saveAllProjectSettings(nextProjects, userId);
 
+    let settingsSaved = true;
     if (userId) {
       try {
         await FirestoreContentService.saveProjectSettings(userId, updatedSettings);
       } catch (err) {
         console.error('Error saving project settings to Firestore:', err);
         setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
+        settingsSaved = false;
       }
     }
 
+    let contentSaved = true;
     if (activeContentProject && activeContentProject.projectSettings.id === updatedSettings.id) {
-      handleUpdateActiveProject({
+      contentSaved = await handleUpdateActiveProject({
         ...activeContentProject,
         projectSettings: updatedSettings,
       });
+    }
+
+    if (settingsSaved && contentSaved) {
+      setSaveNotice(`Projekt „${updatedSettings.name}“ wurde erfolgreich gespeichert.`);
     }
   };
 
@@ -404,7 +416,7 @@ export const ContentEngineView: React.FC = () => {
         </div>
 
         {/* Project Selector & Settings */}
-        <div className="flex items-center gap-2.5 shrink-0 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full md:w-auto">
           <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
             <Building2 className="w-4 h-4 text-emerald-600" />
             <select
@@ -426,10 +438,11 @@ export const ContentEngineView: React.FC = () => {
               setProjectBeingEdited(activeProjectSettings);
               setIsSettingsModalOpen(true);
             }}
-            className="p-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl shadow-xs transition-colors"
+            className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl shadow-xs transition-colors inline-flex items-center gap-2 text-xs font-bold"
             title="Projekt-Einstellungen bearbeiten"
           >
             <Settings className="w-4 h-4" />
+            <span>Projekt bearbeiten</span>
           </button>
           <button
             type="button"
@@ -444,6 +457,13 @@ export const ContentEngineView: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {saveNotice && (
+        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm font-semibold text-emerald-800 flex items-center gap-2">
+          <CloudCheck className="w-4 h-4 shrink-0" />
+          <span>{saveNotice}</span>
+        </div>
+      )}
 
       {/* Main Topic Input & Generation Console */}
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-6 sm:p-7 rounded-3xl shadow-xl border border-slate-800 space-y-5">
