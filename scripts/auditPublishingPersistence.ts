@@ -70,6 +70,12 @@ assert.match(firestoreContent, /FIRESTORE_WRITE_TIMEOUT_MS = 8000/,
   'Cloud-Schreibvorgänge benötigen ein realistisches Zeitfenster für eine bestätigte Antwort.');
 assert.match(contentEngine, /setErrorMsg\(err instanceof Error \? err\.message/,
   'Fehler beim Speichern von Content-Projekten müssen sichtbar angezeigt werden.');
+assert.match(contentEngine, />Projekt bearbeiten<\/span>/,
+  'Die Bearbeitung bestehender Projekte muss eine eindeutig beschriftete Aktion besitzen.');
+assert.match(contentEngine, /Projekt „\$\{updatedSettings\.name\}“ wurde erfolgreich gespeichert\./,
+  'Erfolgreich gespeicherte Projekte müssen sichtbar bestätigt werden.');
+assert.match(contentEngine, /contentSaved = await handleUpdateActiveProject/,
+  'Die Speicherbestätigung darf erst nach dem zugehörigen Content-Projekt erscheinen.');
 assert.match(calendar, /Der Job konnte nicht gelöscht werden/,
   'Fehler beim Löschen eines Queue-Jobs müssen sichtbar angezeigt werden.');
 
