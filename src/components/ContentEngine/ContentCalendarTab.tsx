@@ -112,8 +112,11 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     setIsTriggeringSweep(true);
     setActionNotice(null);
     try {
-      const res = await fetch('/api/scheduler/run-tick', { method: 'POST' });
+      const res = await authenticatedFetch('/api/admin/scheduler/run-tick', { method: 'POST' });
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || `Der Server antwortete mit HTTP ${res.status}.`);
+      }
       await loadJobs();
       if (data.success && data.outcome) {
         const out = data.outcome;
@@ -123,8 +126,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         });
       } else {
         setActionNotice({
-          text: 'Server-Scheduler Sweep wurde ausgeführt.',
-          type: 'info',
+          text: data.error || 'Der Server-Scheduler konnte nicht ausgeführt werden.',
+          type: 'warning',
         });
       }
     } catch (err: any) {

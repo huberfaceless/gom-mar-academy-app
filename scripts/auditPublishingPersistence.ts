@@ -6,6 +6,8 @@ const publishing = readFileSync('src/services/publishingService.ts', 'utf8');
 const admin = readFileSync('server/publishingQueueAdmin.ts', 'utf8');
 const storage = readFileSync('src/utils/contentStorage.ts', 'utf8');
 const contentEngine = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', 'utf8');
+const calendar = readFileSync('src/components/ContentEngine/ContentCalendarTab.tsx', 'utf8');
+const server = readFileSync('server.ts', 'utf8');
 
 assert.doesNotMatch(worker, /firebase\/firestore|contentStorage/,
   'Der Server-Scheduler darf weder Browser-Firestore noch lokalen Browser-Speicher verwenden.');
@@ -39,5 +41,13 @@ assert.doesNotMatch(contentEngine, /saveOrUpdateContentProject\(updated\);/,
   'Content-Projekte dürfen nicht in einem kontounabhängigen Cache gespeichert werden.');
 assert.match(contentEngine, /saveOrUpdateContentProject\(updated, userId\)/,
   'Content-Projekte müssen mit der aktuellen Firebase-Benutzerkennung gespeichert werden.');
+assert.match(server, /['"]\/api\/admin\/scheduler\/run-tick['"][\s\S]*requireVerifiedMember,[\s\S]*requireAcademyAdmin/,
+  'Der manuelle Scheduler-Endpunkt muss eine bestätigte Admin-Anmeldung verlangen.');
+assert.match(server, /['"]\/api\/internal\/scheduler\/run['"][\s\S]*requireSchedulerSecret/,
+  'Der interne Scheduler-Endpunkt muss weiterhin mit dem Scheduler-Secret geschützt sein.');
+assert.match(calendar, /authenticatedFetch\(['"]\/api\/admin\/scheduler\/run-tick['"]/,
+  'Die Adminoberfläche muss den manuellen Scheduler mit Firebase-Authentifizierung auslösen.');
+assert.doesNotMatch(calendar, /fetch\(['"]\/api\/scheduler\/run-tick['"]/,
+  'Die Adminoberfläche darf den geheimnisgeschützten Server-Endpunkt nicht direkt aufrufen.');
 
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
