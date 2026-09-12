@@ -1,4 +1,5 @@
 import { authenticatedFetch } from './authenticatedFetch';
+import { auth } from '../firebase/config';
 
 export type YouTubeConnectionStatus = {
   connected: boolean;
@@ -35,6 +36,9 @@ export const youtubeService = {
     metadata: { title: string; description: string; tags: string[] },
     onProgress: YouTubeUploadProgress,
   ): Promise<{ videoId: string; videoUrl: string }> {
+    if (file.size > 30 * 1024 * 1024) {
+      throw new Error('Das Video darf in dieser ersten Upload-Version höchstens 30 MB groß sein.');
+    }
     const sessionResponse = await authenticatedFetch('/api/youtube/uploads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -50,22 +54,27 @@ export const youtubeService = {
     }
 
     return new Promise((resolve, reject) => {
-      const request = new XMLHttpRequest();
-      request.open('PUT', session.uploadUrl);
-      request.setRequestHeader('Content-Type', file.type || 'video/mp4');
-      request.upload.onprogress = (event) => {
-        if (event.lengthComputable) onProgress(Math.round((event.loaded / event.total) * 100));
-      };
-      request.onerror = () => reject(new Error('Die Verbindung zu YouTube wurde während des Uploads unterbrochen.'));
-      request.onload = () => {
-        const data = JSON.parse(request.responseText || '{}') as { id?: string; error?: { message?: string } };
-        if (request.status < 200 || request.status >= 300 || !data.id) {
-          reject(new Error(data.error?.message || `YouTube hat den Upload abgelehnt (HTTP ${request.status}).`));
-          return;
-        }
-        resolve({ videoId: data.id, videoUrl: `https://www.youtube.com/watch?v=${data.id}` });
-      };
-      request.send(file);
+      auth.currentUser?.getIdToken().then((idToken) => {
+        const request = new XMLHttpRequest();
+        request.open('PUT', '/api/youtube/uploads/content');
+        request.setRequestHeader('Authorization', `Bearer ${idToken}`);
+        request.setRequestHeader('Content-Type', file.type || 'video/mp4');
+        request.setRequestHeader('X-YouTube-Upload-Url', session.uploadUrl);
+        request.upload.onprogress = (event) => {
+          if (event.lengthComputable) onProgress(Math.round((event.loaded / event.total) * 100));
+        };
+        request.onerror = () => reject(new Error('Die Verbindung zur Academy wurde während des Uploads unterbrochen.'));
+        request.onload = () => {
+          const data = JSON.parse(request.responseText || '{}') as { id?: string; error?: { message?: string } | string };
+          if (request.status < 200 || request.status >= 300 || !data.id) {
+            const message = typeof data.error === 'string' ? data.error : data.error?.message;
+            reject(new Error(message || `YouTube hat den Upload abgelehnt (HTTP ${request.status}).`));
+            return;
+          }
+          resolve({ videoId: data.id, videoUrl: `https://www.youtube.com/watch?v=${data.id}` });
+        };
+        request.send(file);
+      }).catch(() => reject(new Error('Die Academy-Anmeldung konnte für den Upload nicht bestätigt werden.')));
     });
   },
 };
