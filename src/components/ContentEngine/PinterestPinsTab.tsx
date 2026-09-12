@@ -217,10 +217,10 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
             type="button"
             onClick={handleDownloadCsv}
             className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors"
-            title="Exportiert CSV für Pinterest Business Bulk Create"
+            title="Exportiert eine CSV-Datei für die Pinterest-Massenerstellung"
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-            <span>CSV Bulk Export</span>
+            <span>CSV-Massenexport</span>
           </button>
 
           <button
@@ -332,7 +332,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               className="px-3.5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
             >
               <Download className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{isDownloadingSingle ? 'Download...' : 'HD PNG (1080×1620)'}</span>
+              <span>{isDownloadingSingle ? 'Herunterladen...' : 'HD PNG (1080×1620)'}</span>
             </button>
 
             <button
@@ -382,7 +382,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
           {/* Header & Quick Action */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
             <div>
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Aktiver Pin-Editor</span>
+              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Aktive Pin-Bearbeitung</span>
               <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
                 <span>{ANGLE_BADGES[activePin.angle]?.icon || '📌'}</span>
                 <span>{activePin.angleLabel}</span>
