@@ -470,12 +470,19 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   // Delete job from queue
   const handleDeleteJob = async (jobId: string) => {
     if (!user?.uid) return;
-    await FirestoreContentService.deletePublishingJob(user.uid, jobId);
-    await loadJobs();
-    setActionNotice({
-      text: 'Job aus der Publishing Queue entfernt.',
-      type: 'info',
-    });
+    try {
+      await FirestoreContentService.deletePublishingJob(user.uid, jobId);
+      await loadJobs();
+      setActionNotice({
+        text: 'Job aus der Publishing Queue entfernt.',
+        type: 'info',
+      });
+    } catch (err) {
+      setActionNotice({
+        text: err instanceof Error ? err.message : 'Der Job konnte nicht gelöscht werden.',
+        type: 'warning',
+      });
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ const storage = readFileSync('src/utils/contentStorage.ts', 'utf8');
 const contentEngine = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', 'utf8');
 const calendar = readFileSync('src/components/ContentEngine/ContentCalendarTab.tsx', 'utf8');
 const server = readFileSync('server.ts', 'utf8');
+const firestoreContent = readFileSync('src/services/firestoreContentService.ts', 'utf8');
 
 assert.doesNotMatch(worker, /firebase\/firestore|contentStorage/,
   'Der Server-Scheduler darf weder Browser-Firestore noch lokalen Browser-Speicher verwenden.');
@@ -63,5 +64,13 @@ assert.match(calendar, /items\.filter\(supportsPublishingQueue\)/,
   'Die Sammelaktion darf nur unterstützte Inhalte einreihen.');
 assert.doesNotMatch(calendar, /handleStatusChange\(item\.id, ['"]scheduled['"]\)/,
   'Das Einreihen darf nicht über eine Statusänderung unbemerkt einen zweiten Job erzeugen.');
+assert.match(firestoreContent, /function rethrowFirestoreWriteError\(err: unknown\): never/,
+  'Fehler bei Firestore-Schreibvorgängen müssen an die Oberfläche weitergegeben werden.');
+assert.match(firestoreContent, /FIRESTORE_WRITE_TIMEOUT_MS = 8000/,
+  'Cloud-Schreibvorgänge benötigen ein realistisches Zeitfenster für eine bestätigte Antwort.');
+assert.match(contentEngine, /setErrorMsg\(err instanceof Error \? err\.message/,
+  'Fehler beim Speichern von Content-Projekten müssen sichtbar angezeigt werden.');
+assert.match(calendar, /Der Job konnte nicht gelöscht werden/,
+  'Fehler beim Löschen eines Queue-Jobs müssen sichtbar angezeigt werden.');
 
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');

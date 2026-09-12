@@ -161,6 +161,7 @@ export const ContentEngineView: React.FC = () => {
         await FirestoreContentService.saveContentProject(userId, updated);
       } catch (err) {
         console.error('Error saving updated content project to Firestore:', err);
+        setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
       }
     }
   };
@@ -179,6 +180,7 @@ export const ContentEngineView: React.FC = () => {
         await FirestoreContentService.saveProjectSettings(userId, updatedSettings);
       } catch (err) {
         console.error('Error saving project settings to Firestore:', err);
+        setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
       }
     }
 
@@ -362,14 +364,19 @@ export const ContentEngineView: React.FC = () => {
   };
 
   const handleDeleteProject = async (id: string) => {
-    deleteLocalContentProject(id, userId);
-    const remaining = loadAllContentProjects(userId);
-    setContentProjects(remaining);
-    if (activeContentProject?.id === id) {
-      setActiveContentProject(remaining.length > 0 ? remaining[0] : null);
-    }
-    if (userId) {
-      await FirestoreContentService.deleteContentProject(userId, id);
+    try {
+      if (userId) {
+        await FirestoreContentService.deleteContentProject(userId, id);
+      } else {
+        deleteLocalContentProject(id, userId);
+      }
+      const remaining = loadAllContentProjects(userId);
+      setContentProjects(remaining);
+      if (activeContentProject?.id === id) {
+        setActiveContentProject(remaining.length > 0 ? remaining[0] : null);
+      }
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Das Projekt konnte nicht gelöscht werden.');
     }
   };
 
