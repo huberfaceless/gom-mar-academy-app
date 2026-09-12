@@ -281,7 +281,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     return true;
   });
 
-  const getYouTubeVideoId = (url?: string): string | undefined => {
+  function getYouTubeVideoId(url?: string): string | undefined {
     if (!url) return undefined;
     try {
       const parsed = new URL(url);
@@ -290,7 +290,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     } catch {
       return undefined;
     }
-  };
+  }
 
   const supportsPublishingQueue = (item: typeof items[0]): boolean => {
     if (item.platform === 'PINTEREST' && item.contentType === 'PIN') return true;
