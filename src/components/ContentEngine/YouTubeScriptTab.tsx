@@ -227,8 +227,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Header Bar */}
-      <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-        <div>
+      <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col items-start gap-4">
+        <div className="w-full min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-red-100 text-red-800 border border-red-200 flex items-center gap-1">
               <Youtube className="w-3.5 h-3.5 text-red-600" />
@@ -241,10 +241,10 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
           </h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 w-full min-w-0">
           {youtubeConnectionButton}
           {/* SubTab Toggle */}
-          <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
+          <div className="flex flex-wrap max-w-full bg-slate-100 p-1 rounded-2xl border border-slate-200">
             <button
               type="button"
               onClick={() => setActiveSubTab('video')}
