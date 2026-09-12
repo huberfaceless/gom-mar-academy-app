@@ -117,6 +117,18 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     }
   };
 
+  const youtubeConnectionButton = (
+    <button
+      type="button"
+      onClick={handleConnectYouTube}
+      disabled={isConnectingYouTube || youtubeConnection?.connected === true}
+      className={`px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer disabled:cursor-default ${youtubeConnection?.connected ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-600 hover:bg-red-700 text-white'}`}
+    >
+      {youtubeConnection?.connected ? <CheckCircle2 className="w-4 h-4" /> : <Youtube className="w-4 h-4" />}
+      <span>{youtubeConnection?.connected ? 'YouTube verbunden' : isConnectingYouTube ? 'Weiterleitung…' : 'YouTube verbinden'}</span>
+    </button>
+  );
+
   // Render 16:9 Thumbnail Canvas whenever video or thumbnail options change
   useEffect(() => {
     if (!thumbnailCanvasRef.current || !video) return;
@@ -165,6 +177,14 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         <Youtube className="w-12 h-12 text-slate-300 mx-auto mb-3" />
         <h3 className="text-base font-bold text-slate-700">Noch kein YouTube Skript generiert</h3>
         <p className="text-xs text-slate-500 mt-1">Erstelle zuerst ein Content-Projekt, um das Faceless-Video-Skript und 3 Shorts zu erzeugen.</p>
+        <div className="mt-5 flex justify-center">
+          {youtubeConnectionButton}
+        </div>
+        {youtubeConnectionError && (
+          <p className="mt-3 text-xs font-semibold text-red-700" role="alert">
+            {youtubeConnectionError}
+          </p>
+        )}
       </div>
     );
   }
@@ -197,15 +217,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-          <button
-            type="button"
-            onClick={handleConnectYouTube}
-            disabled={isConnectingYouTube || youtubeConnection?.connected === true}
-            className={`px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer disabled:cursor-default ${youtubeConnection?.connected ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-600 hover:bg-red-700 text-white'}`}
-          >
-            {youtubeConnection?.connected ? <CheckCircle2 className="w-4 h-4" /> : <Youtube className="w-4 h-4" />}
-            <span>{youtubeConnection?.connected ? 'YouTube verbunden' : isConnectingYouTube ? 'Weiterleitung…' : 'YouTube verbinden'}</span>
-          </button>
+          {youtubeConnectionButton}
           {/* SubTab Toggle */}
           <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
             <button
