@@ -17,6 +17,14 @@ type FirestoreDocument = {
   };
 };
 
+type YouTubeUploadMetadata = {
+  title: string;
+  description: string;
+  tags: string[];
+  contentType: string;
+  contentLength: number;
+};
+
 export type YouTubeConnectionStatus = {
   connected: boolean;
   connectedAt: string | null;
@@ -82,6 +90,69 @@ const encryptRefreshToken = (refreshToken: string, secret: string) => {
     encryptionIv: iv.toString('base64url'),
     encryptionTag: cipher.getAuthTag().toString('base64url'),
   };
+};
+
+const loadYouTubeConnectionDocument = async (projectId: string, userId: string): Promise<FirestoreDocument> => {
+  const response = await fetch(documentUrl(projectId, userId), {
+    headers: { Authorization: `Bearer ${await getAccessToken()}` },
+  });
+  if (response.status === 404) throw new Error('YouTube ist noch nicht verbunden.');
+  if (!response.ok) throw new Error('Die YouTube-Verbindung konnte nicht geladen werden.');
+  return response.json() as Promise<FirestoreDocument>;
+};
+
+const createYouTubeAccessToken = async (document: FirestoreDocument): Promise<string> => {
+  const { clientId, clientSecret } = getOAuthConfig();
+  const response = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: decryptYouTubeRefreshToken(document),
+      grant_type: 'refresh_token',
+    }),
+  });
+  const data = await response.json().catch(() => ({})) as { access_token?: string; error_description?: string };
+  if (!response.ok || !data.access_token) {
+    throw new Error(data.error_description || 'Der YouTube-Zugriff konnte nicht erneuert werden.');
+  }
+  return data.access_token;
+};
+
+export const createYouTubeUploadSession = async (
+  projectId: string,
+  userId: string,
+  metadata: YouTubeUploadMetadata,
+): Promise<string> => {
+  const document = await loadYouTubeConnectionDocument(projectId, userId);
+  const accessToken = await createYouTubeAccessToken(document);
+  const response = await fetch('https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+      'X-Upload-Content-Type': metadata.contentType,
+      'X-Upload-Content-Length': String(metadata.contentLength),
+    },
+    body: JSON.stringify({
+      snippet: {
+        title: metadata.title,
+        description: metadata.description,
+        tags: metadata.tags,
+      },
+      status: {
+        privacyStatus: 'unlisted',
+        selfDeclaredMadeForKids: false,
+      },
+    }),
+  });
+  const uploadUrl = response.headers.get('location');
+  if (!response.ok || !uploadUrl) {
+    const data = await response.json().catch(() => ({})) as { error?: { message?: string } };
+    throw new Error(data.error?.message || 'YouTube konnte keine sichere Upload-Sitzung starten.');
+  }
+  return uploadUrl;
 };
 
 export const decryptYouTubeRefreshToken = (document: FirestoreDocument): string => {
@@ -164,12 +235,15 @@ export const loadYouTubeConnectionStatus = async (
   projectId: string,
   userId: string,
 ): Promise<YouTubeConnectionStatus> => {
-  const response = await fetch(documentUrl(projectId, userId), {
-    headers: { Authorization: `Bearer ${await getAccessToken()}` },
-  });
-  if (response.status === 404) return { connected: false, connectedAt: null };
-  if (!response.ok) throw new Error('Der YouTube-Verbindungsstatus konnte nicht geladen werden.');
-  const document = await response.json() as FirestoreDocument;
+  let document: FirestoreDocument;
+  try {
+    document = await loadYouTubeConnectionDocument(projectId, userId);
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === 'YouTube ist noch nicht verbunden.') {
+      return { connected: false, connectedAt: null };
+    }
+    throw error;
+  }
   return {
     connected: Boolean(document.fields?.encryptedRefreshToken?.stringValue),
     connectedAt: document.fields?.connectedAt?.timestampValue || null,
