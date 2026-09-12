@@ -14,6 +14,7 @@ import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, sy
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
+import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -223,6 +224,66 @@ async function startServer() {
       commit: process.env.APP_COMMIT_SHA || null,
       emailDeliveryConfigured: Boolean(process.env.SENDGRID_API_KEY?.trim() && process.env.SENDGRID_FROM_EMAIL?.trim()),
     });
+  });
+
+  app.get('/api/youtube/status', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      res.setHeader('Cache-Control', 'no-store');
+      res.json(await loadYouTubeConnectionStatus(FIREBASE_PROJECT_ID, userId));
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'YouTube-Status konnte nicht geladen werden.' });
+    }
+  });
+
+  app.post('/api/youtube/oauth/start', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const { authorizationUrl, nonce } = createYouTubeAuthorizationUrl(userId);
+      res.setHeader('Set-Cookie', `youtube_oauth_state=${encodeURIComponent(nonce)}; Path=/api/youtube/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);
+      res.json({ authorizationUrl });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht gestartet werden.' });
+    }
+  });
+
+  app.get('/api/youtube/oauth/callback', async (req, res) => {
+    const code = typeof req.query.code === 'string' ? req.query.code : '';
+    const state = typeof req.query.state === 'string' ? req.query.state : '';
+    const oauthError = typeof req.query.error === 'string' ? req.query.error : '';
+    const cookieNonce = req.headers.cookie
+      ?.split(';')
+      .map((part) => part.trim())
+      .find((part) => part.startsWith('youtube_oauth_state='))
+      ?.slice('youtube_oauth_state='.length) || '';
+    res.setHeader('Set-Cookie', 'youtube_oauth_state=; Path=/api/youtube/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+    if (oauthError || !code || !state) {
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?youtube=error`);
+      return;
+    }
+    try {
+      await completeYouTubeAuthorization(FIREBASE_PROJECT_ID, code, state, decodeURIComponent(cookieNonce));
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?youtube=connected`);
+    } catch (error: unknown) {
+      console.warn('YouTube OAuth konnte nicht abgeschlossen werden.', {
+        action: 'academy.youtube.oauth.failed',
+        message: error instanceof Error ? error.message : 'Unbekannter Fehler',
+      });
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?youtube=error`);
+    }
+  });
+
+  app.delete('/api/youtube/connection', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      await deleteYouTubeConnection(FIREBASE_PROJECT_ID, userId);
+      res.json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht getrennt werden.' });
+    }
   });
 
   app.get('/api/crm/contacts', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
