@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (email: string, password: string, displayName?: string): Promise<void> => {
     setError(null);
     try {
-      const registeredUser = await registerWithEmail(email, password, displayName);
+      const registeredUser = await registerWithEmail(email, password, displayName, language);
 
       // Commit the authenticated user before sending email. This guarantees that
       // registration always advances to the verification screen, even if email

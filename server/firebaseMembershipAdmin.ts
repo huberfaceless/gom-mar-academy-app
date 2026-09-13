@@ -1,6 +1,7 @@
 import { GoogleAuth } from 'google-auth-library';
 
 export type AcademyTier = 'FREE' | 'PRO' | 'PREMIUM';
+export type MemberLanguage = 'de' | 'en' | 'pl';
 
 type FirebaseAccount = {
   localId?: string;
@@ -26,6 +27,7 @@ export type FirebaseMember = {
   disabled: boolean;
   tier: AcademyTier;
   role: 'member' | 'admin';
+  language: MemberLanguage;
   createdAt?: string;
   lastSignInAt?: string;
 };
@@ -38,6 +40,11 @@ const googleAuth = new GoogleAuth({
 const normalizeTier = (value: unknown): AcademyTier => {
   if (value === 'PRO' || value === 'PREMIUM') return value;
   return 'FREE';
+};
+
+const normalizeLanguage = (value: unknown): MemberLanguage => {
+  if (value === 'en' || value === 'pl') return value;
+  return 'de';
 };
 
 const parseClaims = (customAttributes?: string): Record<string, unknown> => {
@@ -62,6 +69,11 @@ export const buildTierCustomAttributes = (
     previousTier: normalizeTier(existingClaims.academyTier),
   };
 };
+
+export const buildLanguageCustomAttributes = (
+  customAttributes: string | undefined,
+  language: MemberLanguage,
+): string => JSON.stringify({ ...parseClaims(customAttributes), academyLanguage: language });
 
 const getAccessToken = async (): Promise<string> => {
   const client = await googleAuth.getClient();
@@ -115,6 +127,7 @@ const toFirebaseMember = (account: FirebaseAccount): FirebaseMember | null => {
     disabled: account.disabled === true,
     tier: isAdmin ? 'PREMIUM' : normalizeTier(claims.academyTier),
     role: isAdmin ? 'admin' : 'member',
+    language: normalizeLanguage(claims.academyLanguage),
     createdAt: account.createdAt,
     lastSignInAt: account.lastLoginAt,
   };
@@ -185,4 +198,57 @@ export const updateFirebaseMemberTier = async (
   if (!member) throw new Error('Firebase-Mitglied konnte nicht aktualisiert werden.');
 
   return { member, previousTier };
+};
+
+const lookupFirebaseAccount = async (projectId: string, uid: string): Promise<FirebaseAccount> => {
+  const lookup = await firebaseAdminRequest<FirebaseAccountsResponse>(projectId, 'accounts:lookup', {
+    method: 'POST',
+    body: JSON.stringify({ localId: [uid] }),
+  });
+  const account = lookup.users?.[0];
+  if (!account?.localId) throw new Error('Firebase-Mitglied wurde nicht gefunden.');
+  return account;
+};
+
+export const updateFirebaseMemberLanguage = async (
+  projectId: string,
+  uid: string,
+  language: MemberLanguage,
+): Promise<FirebaseMember> => {
+  const account = await lookupFirebaseAccount(projectId, uid);
+  const customAttributes = buildLanguageCustomAttributes(account.customAttributes, language);
+  const updated = await firebaseAdminRequest<FirebaseAccount>(projectId, 'accounts:update', {
+    method: 'POST',
+    body: JSON.stringify({ localId: uid, customAttributes }),
+  });
+  const member = toFirebaseMember({ ...account, ...updated, customAttributes });
+  if (!member) throw new Error('Mitgliedssprache konnte nicht aktualisiert werden.');
+  return member;
+};
+
+export const updateFirebaseMemberEmail = async (
+  projectId: string,
+  uid: string,
+  email: string,
+): Promise<FirebaseMember> => {
+  const account = await lookupFirebaseAccount(projectId, uid);
+  const updated = await firebaseAdminRequest<FirebaseAccount>(projectId, 'accounts:update', {
+    method: 'POST',
+    body: JSON.stringify({ localId: uid, email, emailVerified: false }),
+  });
+  const member = toFirebaseMember({ ...account, ...updated, email, emailVerified: false });
+  if (!member) throw new Error('E-Mail-Adresse konnte nicht aktualisiert werden.');
+  return member;
+};
+
+export const deleteUnverifiedFirebaseMember = async (projectId: string, uid: string): Promise<void> => {
+  const account = await lookupFirebaseAccount(projectId, uid);
+  const member = toFirebaseMember(account);
+  if (!member) throw new Error('Firebase-Mitglied wurde nicht gefunden.');
+  if (member.role === 'admin') throw new Error('Administratorkonten können hier nicht gelöscht werden.');
+  if (member.emailVerified) throw new Error('Bestätigte Mitglieder können hier nicht gelöscht werden.');
+  await firebaseAdminRequest<Record<string, never>>(projectId, 'accounts:delete', {
+    method: 'POST',
+    body: JSON.stringify({ localId: uid }),
+  });
 };
