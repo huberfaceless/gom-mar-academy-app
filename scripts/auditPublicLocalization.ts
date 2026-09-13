@@ -7,6 +7,7 @@ const footer = readFileSync('src/components/Footer.tsx', 'utf8');
 const header = readFileSync('src/components/Header.tsx', 'utf8');
 const authModal = readFileSync('src/components/AuthModal.tsx', 'utf8');
 const publicLanding = readFileSync('src/components/PublicLandingView.tsx', 'utf8');
+const visitorGate = readFileSync('src/components/VisitorAccessGateModal.tsx', 'utf8');
 const localizationHook = readFileSync('src/i18n/useLocalizedAcademyStages.ts', 'utf8');
 const viteConfig = readFileSync('vite.config.ts', 'utf8');
 
@@ -43,6 +44,11 @@ assert.match(publicLanding, /\['de', 'Deutsch'\]/, 'Im öffentlichen Kontoformul
 assert.match(publicLanding, /\['en', 'English'\]/, 'Im öffentlichen Kontoformular fehlt Englisch.');
 assert.match(publicLanding, /\['pl', 'Polski'\]/, 'Im öffentlichen Kontoformular fehlt Polnisch.');
 assert.match(publicLanding, /onClick=\{\(\) => setLanguage\(code\)\}/, 'Die Sprachauswahl im öffentlichen Kontoformular muss die Academy-Sprache ändern.');
+assert.match(visitorGate, /const \{ language, setLanguage, t \} = useLanguage\(\)/, 'Die Besucher-Vorschau muss auf die aktive Sprache reagieren.');
+assert.match(visitorGate, /\['de', 'Deutsch'\]/, 'In der Besucher-Vorschau fehlt Deutsch.');
+assert.match(visitorGate, /\['en', 'English'\]/, 'In der Besucher-Vorschau fehlt Englisch.');
+assert.match(visitorGate, /\['pl', 'Polski'\]/, 'In der Besucher-Vorschau fehlt Polnisch.');
+assert.match(visitorGate, /onClick=\{\(\) => setLanguage\(code\)\}/, 'Die Sprachauswahl der Besucher-Vorschau muss die Academy-Sprache ändern.');
 
 for (const language of ['de', 'en', 'pl']) {
   assert.match(
