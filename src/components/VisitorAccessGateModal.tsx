@@ -13,7 +13,7 @@ export const VisitorAccessGateModal: React.FC<VisitorAccessGateModalProps> = ({
   onOpenLoginModal,
   onOpenLandingView,
 }) => {
-  const { t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn">
       <div className="bg-slate-900 border-2 border-emerald-500/50 rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 relative shadow-2xl shadow-emerald-500/10 text-center">
@@ -39,6 +39,28 @@ export const VisitorAccessGateModal: React.FC<VisitorAccessGateModalProps> = ({
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md mx-auto">
             {t('gate.description')}
           </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2" aria-label="Sprache / Language / Język">
+          {([
+            ['de', 'Deutsch'],
+            ['en', 'English'],
+            ['pl', 'Polski'],
+          ] as const).map(([code, label]) => (
+            <button
+              key={code}
+              type="button"
+              onClick={() => setLanguage(code)}
+              aria-pressed={language === code}
+              className={`rounded-xl border px-2 py-2 text-xs font-bold transition-colors ${
+                language === code
+                  ? 'border-emerald-400 bg-emerald-500 text-slate-950'
+                  : 'border-slate-700 bg-slate-950 text-slate-300 hover:border-emerald-400 hover:text-white'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* Value Highlights */}
