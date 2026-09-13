@@ -7,6 +7,7 @@ const service = readFileSync('src/services/youtubeService.ts', 'utf8');
 const view = readFileSync('src/components/ContentEngine/YouTubeScriptTab.tsx', 'utf8');
 const hub = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', 'utf8');
 const legal = readFileSync('src/components/LegalModal.tsx', 'utf8');
+const publicPrivacy = readFileSync('public/privacy/index.html', 'utf8');
 
 assert.match(server, /app\.post\('\/api\/youtube\/oauth\/start', requireVerifiedMember, requireProMember/, 'YouTube OAuth muss eine bestätigte PRO-Anmeldung verlangen.');
 assert.match(server, /app\.get\('\/api\/youtube\/oauth\/callback'/, 'Der YouTube OAuth Callback fehlt.');
@@ -51,5 +52,16 @@ assert.match(legal, /Verbindung trennen/,
   'Die Datenschutzerklärung muss Widerruf und Trennung der YouTube-Verbindung erklären.');
 assert.match(legal, /security\.google\.com\/settings\/security\/permissions/,
   'Die Datenschutzerklärung muss auf den Widerruf im Google-Konto verweisen.');
+
+assert.match(publicPrivacy, /<title>Datenschutzerklärung \| GOM-MAR Academy<\/title>/,
+  'Unter /privacy muss eine eigenständige öffentliche Datenschutzseite bereitstehen.');
+assert.match(publicPrivacy, /YouTube-Verbindung und YouTube API Services/,
+  'Die öffentliche Datenschutzseite muss die YouTube-API-Nutzung beschreiben.');
+assert.match(publicPrivacy, /Google API Services User Data Policy/,
+  'Die öffentliche Datenschutzseite muss die Google-API-Nutzerdatenrichtlinie verlinken.');
+assert.match(publicPrivacy, /Limited Use/,
+  'Die öffentliche Datenschutzseite muss die eingeschränkte Nutzung zusichern.');
+assert.doesNotMatch(publicPrivacy, /<script/i,
+  'Die öffentliche Datenschutzseite muss ohne JavaScript vollständig lesbar sein.');
 
 console.log('YouTube OAuth geprüft: PRO-geschützt, sitzungsgebunden und verschlüsselt gespeichert.');
