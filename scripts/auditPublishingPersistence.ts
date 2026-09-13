@@ -162,4 +162,7 @@ assert.match(publishing, /publishShort[\s\S]*return this\.publishVideo\(job, you
 assert.doesNotMatch(publishing, /YouTube Shorts Upload API ist in dieser Entwicklungsphase noch nicht angebunden/,
   'Kurzvideos dürfen nicht mehr als nicht implementiert abgewiesen werden.');
 
+assert.match(calendar, /job\.platform === 'YOUTUBE' && \(job\.contentType === 'VIDEO' \|\| job\.contentType === 'SHORT'\)/,
+  'Lang- und Kurzvideo-Aufträge müssen in der Warteschlange als automatisch geplant angezeigt werden.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');

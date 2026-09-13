@@ -912,7 +912,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         )}
                       </td>
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
-                        {job.platform === 'YOUTUBE' && job.contentType === 'VIDEO' ? (
+                        {job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
                           <span className="text-[10px] font-bold text-red-300">Automatisch geplant</span>
                         ) : (job.platform !== 'PINTEREST' || job.contentType !== 'PIN') ? (
                           <span className="text-[10px] font-bold text-slate-400">Nicht unterstützt</span>
