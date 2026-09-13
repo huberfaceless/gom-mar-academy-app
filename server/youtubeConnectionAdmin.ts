@@ -1,7 +1,10 @@
 import { GoogleAuth } from 'google-auth-library';
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
-const YOUTUBE_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
+const YOUTUBE_SCOPE = [
+  'https://www.googleapis.com/auth/youtube.upload',
+  'https://www.googleapis.com/auth/youtube.force-ssl',
+].join(' ');
 const OAUTH_STATE_VALIDITY_MS = 10 * 60 * 1000;
 const googleAuth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
 const databaseId = process.env.FIREBASE_DATABASE_ID || '(default)';

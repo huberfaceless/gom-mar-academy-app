@@ -10,7 +10,9 @@ const hub = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', '
 assert.match(server, /app\.post\('\/api\/youtube\/oauth\/start', requireVerifiedMember, requireProMember/, 'YouTube OAuth muss eine bestätigte PRO-Anmeldung verlangen.');
 assert.match(server, /app\.get\('\/api\/youtube\/oauth\/callback'/, 'Der YouTube OAuth Callback fehlt.');
 assert.match(server, /HttpOnly; Secure; SameSite=Lax/, 'Der OAuth-Status muss an eine sichere Browsersitzung gebunden sein.');
-assert.match(storage, /https:\/\/www\.googleapis\.com\/auth\/youtube\.upload/, 'Es darf nur der erforderliche YouTube-Upload-Scope angefordert werden.');
+assert.match(storage, /https:\/\/www\.googleapis\.com\/auth\/youtube\.upload/, 'Der YouTube-Upload-Scope muss angefordert werden.');
+assert.match(storage, /https:\/\/www\.googleapis\.com\/auth\/youtube\.force-ssl/, 'Die Freigabe geplanter Videos muss den von videos.update unterstützten YouTube-Scope anfordern.');
+assert.match(storage, /prompt: 'consent'/, 'Die erneute YouTube-Verbindung muss die zusätzliche Berechtigung ausdrücklich bestätigen lassen.');
 assert.match(storage, /createHmac\('sha256'/, 'Der OAuth-Status muss kryptografisch signiert sein.');
 assert.match(storage, /createCipheriv\('aes-256-gcm'/, 'YouTube Refresh Tokens müssen verschlüsselt gespeichert werden.');
 assert.match(storage, /academyYouTubeConnections/, 'YouTube-Verbindungen müssen serverseitig gespeichert werden.');
