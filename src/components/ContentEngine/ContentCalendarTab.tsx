@@ -485,6 +485,13 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   // Trigger manual publish execution for a job
   const handleExecuteJob = async (job: PublishingJob) => {
     if (!user?.uid) return;
+    if (job.platform === 'YOUTUBE') {
+      setActionNotice({
+        text: 'YouTube-Videos werden ausschließlich zum geplanten Zeitpunkt durch den Server veröffentlicht.',
+        type: 'info',
+      });
+      return;
+    }
     setActiveJobRunningId(job.id);
     setActionNotice(null);
 
@@ -724,6 +731,11 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     <Clock className="w-3.5 h-3.5 text-purple-400" />
                     <span>Warteschlange</span>
                   </button>
+                ) : item.platform === 'YOUTUBE' ? (
+                  <span className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-bold rounded-xl border border-purple-200 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Automatische Veröffentlichung geplant</span>
+                  </span>
                 ) : (
                   <button
                     type="button"
