@@ -5,8 +5,12 @@ import dotenv from 'dotenv';
 import { verify as verifySignature } from 'crypto';
 import {
   AcademyTier,
+  MemberLanguage,
+  deleteUnverifiedFirebaseMember,
   getFirebaseMember,
   listFirebaseMembers,
+  updateFirebaseMemberEmail,
+  updateFirebaseMemberLanguage,
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
@@ -137,7 +141,7 @@ async function startServer() {
   app.use(express.json({ limit: '1mb' }));
   app.use(express.urlencoded({ extended: false, limit: '16kb' }));
 
-  const requireVerifiedMember = async (req: Request, res: Response, next: NextFunction) => {
+  const requireAuthenticatedMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const authHeader = req.headers.authorization;
       const idToken = authHeader?.startsWith('Bearer ') ? authHeader.substring(7).trim() : '';
@@ -145,19 +149,21 @@ async function startServer() {
         res.status(401).json({ error: 'Eine Firebase-Anmeldung ist erforderlich.' });
         return;
       }
-
-      const firebaseUser = await verifyFirebaseIdToken(idToken);
-      if (firebaseUser.email_verified !== true) {
-        res.status(403).json({ error: 'Die E-Mail-Adresse muss zuerst bestätigt werden.' });
-        return;
-      }
-
-      (req as FirebaseRequest).firebaseUser = firebaseUser;
+      (req as FirebaseRequest).firebaseUser = await verifyFirebaseIdToken(idToken);
       next();
     } catch {
       res.status(401).json({ error: 'Die Firebase-Anmeldung ist ungültig oder abgelaufen.' });
     }
   };
+
+  const requireVerifiedMember = [requireAuthenticatedMember, (req: Request, res: Response, next: NextFunction) => {
+      const firebaseUser = (req as FirebaseRequest).firebaseUser;
+      if (!firebaseUser || firebaseUser.email_verified !== true) {
+        res.status(403).json({ error: 'Die E-Mail-Adresse muss zuerst bestätigt werden.' });
+        return;
+      }
+      next();
+  }];
 
   const requireProMember = (req: Request, res: Response, next: NextFunction) => {
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
@@ -211,6 +217,21 @@ async function startServer() {
         'User-Agent': 'aistudio-build',
       },
     },
+  });
+
+  app.post('/api/member/language', requireAuthenticatedMember, async (req, res) => {
+    const member = (req as FirebaseRequest).firebaseUser;
+    const language = req.body?.language as MemberLanguage | undefined;
+    if (!member?.sub || (language !== 'de' && language !== 'en' && language !== 'pl')) {
+      res.status(400).json({ error: 'Die Mitgliedssprache ist ungültig.' });
+      return;
+    }
+    try {
+      const updatedMember = await updateFirebaseMemberLanguage(FIREBASE_PROJECT_ID, member.sub, language);
+      res.json({ success: true, member: updatedMember });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Mitgliedssprache konnte nicht gespeichert werden.' });
+    }
   });
 
   // Health check
@@ -905,6 +926,63 @@ async function startServer() {
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Mitglieder konnten nicht geladen werden.';
       res.status(503).json({ error: message });
+    }
+  });
+
+  app.post('/api/admin/members/:uid/language', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const uid = req.params.uid?.trim();
+    const language = req.body?.language as MemberLanguage | undefined;
+    if (!uid || uid.length > 128 || (language !== 'de' && language !== 'en' && language !== 'pl')) {
+      res.status(400).json({ error: 'Mitglied oder Sprache ist ungültig.' });
+      return;
+    }
+    try {
+      const member = await updateFirebaseMemberLanguage(FIREBASE_PROJECT_ID, uid, language);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ success: true, member, message: 'Mitgliedssprache gespeichert.' });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Mitgliedssprache konnte nicht gespeichert werden.' });
+    }
+  });
+
+  app.patch('/api/admin/members/:uid/email', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const uid = req.params.uid?.trim();
+    const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+    if (!uid || uid.length > 128 || !EMAIL_ADDRESS_PATTERN.test(email) || email.length > 320) {
+      res.status(400).json({ error: 'Mitglied oder E-Mail-Adresse ist ungültig.' });
+      return;
+    }
+    try {
+      const existing = await getFirebaseMember(FIREBASE_PROJECT_ID, uid);
+      if (!existing) {
+        res.status(404).json({ error: 'Firebase-Mitglied wurde nicht gefunden.' });
+        return;
+      }
+      if (existing.role === 'admin') {
+        res.status(403).json({ error: 'Die E-Mail-Adresse eines Administratorkontos kann hier nicht geändert werden.' });
+        return;
+      }
+      const member = await updateFirebaseMemberEmail(FIREBASE_PROJECT_ID, uid, email);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ success: true, member, message: 'E-Mail-Adresse geändert. Sie muss erneut bestätigt werden.' });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'E-Mail-Adresse konnte nicht geändert werden.' });
+    }
+  });
+
+  app.delete('/api/admin/members/:uid', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const uid = req.params.uid?.trim();
+    if (!uid || uid.length > 128) {
+      res.status(400).json({ error: 'Ungültige Firebase-Benutzerkennung.' });
+      return;
+    }
+    try {
+      await deleteUnverifiedFirebaseMember(FIREBASE_PROJECT_ID, uid);
+      res.json({ success: true, message: 'Nicht bestätigtes Mitglied gelöscht.' });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Mitglied konnte nicht gelöscht werden.';
+      const status = message.includes('nicht gefunden') ? 404 : message.includes('nicht gelöscht') ? 403 : 503;
+      res.status(status).json({ error: message });
     }
   });
 

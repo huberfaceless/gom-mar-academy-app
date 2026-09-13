@@ -37,6 +37,7 @@ type FirebaseMember = {
   disabled: boolean;
   tier: AcademyTier;
   role: 'member' | 'admin';
+  language: 'de' | 'en' | 'pl';
   createdAt?: string;
   lastSignInAt?: string;
 };
@@ -72,6 +73,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [membersLoaded, setMembersLoaded] = useState(false);
   const [membersError, setMembersError] = useState('');
   const [updatingMemberUid, setUpdatingMemberUid] = useState<string | null>(null);
+  const [memberLanguage, setMemberLanguage] = useState<'de' | 'en' | 'pl'>('de');
   const [emailingMember, setEmailingMember] = useState<FirebaseMember | null>(null);
   const [memberEmailSubject, setMemberEmailSubject] = useState('');
   const [memberEmailBody, setMemberEmailBody] = useState('');
@@ -222,6 +224,75 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     }
   };
 
+  const replaceMember = (member: FirebaseMember) => {
+    setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? member : item));
+  };
+
+  const handleMemberLanguageChange = async (member: FirebaseMember, nextLanguage: 'de' | 'en' | 'pl') => {
+    if (nextLanguage === member.language) return;
+    setUpdatingMemberUid(member.uid);
+    setMembersError('');
+    try {
+      const response = await authenticatedRequest(`/api/admin/members/${encodeURIComponent(member.uid)}/language`, {
+        method: 'POST',
+        body: JSON.stringify({ language: nextLanguage }),
+      });
+      const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
+      if (!response.ok || !result.member) throw new Error(result.error || 'Mitgliedssprache konnte nicht gespeichert werden.');
+      replaceMember(result.member);
+      setSaveSuccessMsg(result.message || 'Mitgliedssprache gespeichert.');
+      window.setTimeout(() => setSaveSuccessMsg(''), 5000);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'Mitgliedssprache konnte nicht gespeichert werden.');
+    } finally {
+      setUpdatingMemberUid(null);
+    }
+  };
+
+  const handleEditMemberEmail = async (member: FirebaseMember) => {
+    if (member.role === 'admin') return;
+    const enteredEmail = window.prompt('Neue E-Mail-Adresse eingeben:', member.email);
+    if (enteredEmail === null || enteredEmail.trim().toLowerCase() === member.email.toLowerCase()) return;
+    const email = enteredEmail.trim().toLowerCase();
+    if (!window.confirm(`E-Mail-Adresse wirklich auf ${email} ändern? Die Adresse muss danach erneut bestätigt werden.`)) return;
+    setUpdatingMemberUid(member.uid);
+    setMembersError('');
+    try {
+      const response = await authenticatedRequest(`/api/admin/members/${encodeURIComponent(member.uid)}/email`, {
+        method: 'PATCH',
+        body: JSON.stringify({ email }),
+      });
+      const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
+      if (!response.ok || !result.member) throw new Error(result.error || 'E-Mail-Adresse konnte nicht geändert werden.');
+      replaceMember(result.member);
+      setSaveSuccessMsg(result.message || 'E-Mail-Adresse geändert.');
+      window.setTimeout(() => setSaveSuccessMsg(''), 5000);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'E-Mail-Adresse konnte nicht geändert werden.');
+    } finally {
+      setUpdatingMemberUid(null);
+    }
+  };
+
+  const handleDeleteUnverifiedMember = async (member: FirebaseMember) => {
+    if (member.emailVerified || member.role === 'admin') return;
+    if (!window.confirm(`Nicht bestätigtes Konto ${member.email || member.displayName} dauerhaft löschen?`)) return;
+    setUpdatingMemberUid(member.uid);
+    setMembersError('');
+    try {
+      const response = await authenticatedRequest(`/api/admin/members/${encodeURIComponent(member.uid)}`, { method: 'DELETE' });
+      const result = await response.json() as { error?: string; message?: string };
+      if (!response.ok) throw new Error(result.error || 'Mitglied konnte nicht gelöscht werden.');
+      setFirebaseMembers((current) => current.filter((item) => item.uid !== member.uid));
+      setSaveSuccessMsg(result.message || 'Nicht bestätigtes Mitglied gelöscht.');
+      window.setTimeout(() => setSaveSuccessMsg(''), 5000);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'Mitglied konnte nicht gelöscht werden.');
+    } finally {
+      setUpdatingMemberUid(null);
+    }
+  };
+
   // Filtered Students
   const filteredStudents = students.filter((student) => {
     const duplicatesFirebaseMember = membersLoaded && firebaseMembers.some(
@@ -240,7 +311,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     const matchesSearch = !search
       || member.displayName.toLowerCase().includes(search)
       || member.email.toLowerCase().includes(search);
-    return matchesSearch && (tierFilter === 'all' || member.tier === tierFilter);
+    return member.language === memberLanguage && matchesSearch && (tierFilter === 'all' || member.tier === tierFilter);
   });
 
   // Calculate Metrics
@@ -521,6 +592,27 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               </div>
             )}
 
+            <div className="grid grid-cols-1 gap-2 border-b border-slate-200 p-4 sm:grid-cols-3">
+              {([
+                ['de', 'Deutsche Mitglieder'],
+                ['en', 'Englische Mitglieder'],
+                ['pl', 'Polnische Mitglieder'],
+              ] as const).map(([code, label]) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setMemberLanguage(code)}
+                  className={`rounded-xl border px-3 py-2.5 text-xs font-black transition-colors ${
+                    memberLanguage === code
+                      ? 'border-indigo-700 bg-indigo-700 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300'
+                  }`}
+                >
+                  {label} ({firebaseMembers.filter((member) => member.language === code).length})
+                </button>
+              ))}
+            </div>
+
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="border-b border-slate-200 bg-slate-50 font-extrabold uppercase tracking-wider text-slate-600">
@@ -528,19 +620,35 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     <th className="px-4 py-3.5">Firebase-Mitglied</th>
                     <th className="px-4 py-3.5">E-Mail</th>
                     <th className="px-4 py-3.5">Kontostatus</th>
+                    <th className="px-4 py-3.5">Sprache</th>
                     <th className="px-4 py-3.5">Zugriffstarif</th>
+                    <th className="px-4 py-3.5">Aktionen</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
                   {membersLoading && !membersLoaded ? (
-                    <tr><td colSpan={4} className="px-4 py-8 text-center text-slate-500">Firebase-Mitglieder werden geladen …</td></tr>
+                    <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">Firebase-Mitglieder werden geladen …</td></tr>
                   ) : filteredFirebaseMembers.length === 0 ? (
-                    <tr><td colSpan={4} className="px-4 py-8 text-center text-slate-400">Keine Firebase-Mitglieder für diesen Filter gefunden.</td></tr>
+                    <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-400">Keine Firebase-Mitglieder für diesen Sprachbereich und Filter gefunden.</td></tr>
                   ) : filteredFirebaseMembers.map((member) => (
                     <tr key={member.uid} className="hover:bg-slate-50/80">
                       <td className="px-4 py-3.5">
                         <p className="font-bold text-slate-900">{member.displayName}</p>
                         <p className="font-mono text-[10px] text-slate-400">{member.uid}</p>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <label className="sr-only" htmlFor={`language-${member.uid}`}>Sprache für {member.email || member.displayName}</label>
+                        <select
+                          id={`language-${member.uid}`}
+                          value={member.language}
+                          onChange={(event) => void handleMemberLanguageChange(member, event.target.value as 'de' | 'en' | 'pl')}
+                          disabled={updatingMemberUid === member.uid}
+                          className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-800 focus:border-indigo-500 focus:outline-none disabled:opacity-60"
+                        >
+                          <option value="de">Deutsch</option>
+                          <option value="en">Englisch</option>
+                          <option value="pl">Polnisch</option>
+                        </select>
                       </td>
                       <td className="px-4 py-3.5">
                         <p>{member.email || 'Keine E-Mail hinterlegt'}</p>
@@ -585,6 +693,28 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           <option value="PRO">PRO</option>
                           <option value="PREMIUM">PREMIUM</option>
                         </select>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <div className="flex min-w-36 flex-col gap-2">
+                          <button
+                            type="button"
+                            onClick={() => void handleEditMemberEmail(member)}
+                            disabled={member.role === 'admin' || updatingMemberUid === member.uid}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 px-2.5 py-1.5 text-[11px] font-bold text-indigo-700 disabled:cursor-not-allowed disabled:text-slate-400"
+                          >
+                            <Edit3 className="h-3.5 w-3.5" /> E-Mail bearbeiten
+                          </button>
+                          {!member.emailVerified && member.role !== 'admin' && (
+                            <button
+                              type="button"
+                              onClick={() => void handleDeleteUnverifiedMember(member)}
+                              disabled={updatingMemberUid === member.uid}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 px-2.5 py-1.5 text-[11px] font-bold text-rose-700 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" /> Nicht bestätigtes Konto löschen
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))}

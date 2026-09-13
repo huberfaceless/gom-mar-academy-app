@@ -71,7 +71,8 @@ export function getFirebaseAuthErrorMessage(error: unknown, language: LanguageCo
 export async function registerWithEmail(
   email: string,
   password: string,
-  displayName?: string
+  displayName?: string,
+  language: LanguageCode = 'de',
 ): Promise<User> {
   const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
   const user = userCredential.user;
@@ -86,6 +87,20 @@ export async function registerWithEmail(
     }
   }
 
+  try {
+    const idToken = await user.getIdToken();
+    const response = await fetch('/api/member/language', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ language }),
+    });
+    if (!response.ok) throw new Error('Die Mitgliedssprache konnte nicht gespeichert werden.');
+  } catch (languageError) {
+    console.error('Could not persist registration language:', languageError);
+  }
 
   return user;
 }
