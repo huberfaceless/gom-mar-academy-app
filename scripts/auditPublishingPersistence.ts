@@ -133,4 +133,9 @@ assert.doesNotMatch(calendar, /T09:00:00\.000Z/,
 assert.match(calendar, /hour: '2-digit'[\s\S]*minute: '2-digit'/,
   'Die Warteschlange muss neben dem Datum auch die geplante Uhrzeit anzeigen.');
 
+assert.match(calendar, /if \(job\.platform === 'YOUTUBE'\)[\s\S]*ausschließlich zum geplanten Zeitpunkt durch den Server/,
+  'YouTube-Aufträge müssen gegen eine Ausführung im Browser geschützt sein.');
+assert.match(calendar, /item\.platform === 'YOUTUBE'[\s\S]*Automatische Veröffentlichung geplant/,
+  'Geplante YouTube-Videos dürfen in der Inhaltskarte keine manuelle Ausführung anbieten.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
