@@ -29,7 +29,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onSuccess
 }) => {
   const { login, register, resetPassword, error, clearError } = useAuth();
-  const { t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   const [mode, setMode] = useState<AuthModalMode>(initialMode);
   const [name, setName] = useState<string>('');
@@ -153,6 +153,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             {mode === 'register' && t('auth.registerSubtitle')}
             {mode === 'forgot_password' && t('auth.resetSubtitle')}
           </p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2" aria-label="Sprache / Language / Język">
+          {([
+            ['de', 'Deutsch'],
+            ['en', 'English'],
+            ['pl', 'Polski'],
+          ] as const).map(([code, label]) => (
+            <button
+              key={code}
+              type="button"
+              onClick={() => setLanguage(code)}
+              aria-pressed={language === code}
+              className={`rounded-xl border px-2 py-2 text-xs font-bold transition-colors ${
+                language === code
+                  ? 'border-indigo-600 bg-indigo-600 text-white'
+                  : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:text-indigo-700'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* Mode Switcher Tabs (Login / Register) */}
