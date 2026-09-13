@@ -308,16 +308,14 @@ export class PublishingService {
   }
 
   /**
-   * Publishes a YouTube Short.
-   * In this phase: strictly returns NOT_IMPLEMENTED (NO fake publishing!).
+   * Publishes a previously uploaded YouTube Short through the same server callback.
    */
-  static async publishShort(job: PublishingJob): Promise<PublishResult> {
+  static async publishShort(
+    job: PublishingJob,
+    youtubeVideoPublisher?: YouTubeVideoPublisher,
+  ): Promise<PublishResult> {
     console.info(`[PublishingService] publishShort invoked for job ${job.id}`);
-    return {
-      success: false,
-      status: 'NOT_IMPLEMENTED',
-      error: 'YouTube Shorts Upload API ist in dieser Entwicklungsphase noch nicht angebunden.',
-    };
+    return this.publishVideo(job, youtubeVideoPublisher);
   }
 
   // ==========================================
@@ -341,7 +339,7 @@ export class PublishingService {
   ): Promise<{ publishingJob: PublishingJob; schedulerJob: SchedulerJob }> {
     const isPinterestPin = params.platform === 'PINTEREST' && params.contentType === 'PIN';
     const isUploadedYouTubeVideo = params.platform === 'YOUTUBE'
-      && params.contentType === 'VIDEO'
+      && (params.contentType === 'VIDEO' || params.contentType === 'SHORT')
       && typeof params.payload?.metadata?.videoId === 'string'
       && params.payload.metadata.videoId.length > 0;
     if (!isPinterestPin && !isUploadedYouTubeVideo) {
@@ -447,7 +445,7 @@ export class PublishingService {
         break;
       case 'YOUTUBE':
         if (job.contentType === 'SHORT') {
-          result = await this.publishShort(job);
+          result = await this.publishShort(job, youtubeVideoPublisher);
         } else {
           result = await this.publishVideo(job, youtubeVideoPublisher);
         }
@@ -617,6 +615,7 @@ export class PublishingService {
             return {
               ...short,
               status: contentStatus,
+              videoUrl: job.publishedUrl || short.videoUrl,
             };
           }
           return short;
