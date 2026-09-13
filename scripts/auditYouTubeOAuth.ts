@@ -31,4 +31,13 @@ assert.match(server, /app\.put\([\s\S]*?'\/api\/youtube\/uploads\/content'[\s\S]
 assert.match(server, /allowedHosts = new Set\(\['www\.googleapis\.com', 'upload\.youtube\.com'\]\)/, 'Der Upload-Proxy muss fremde Zieladressen gegen SSRF sperren.');
 assert.match(service, /request\.open\('PUT', '\/api\/youtube\/uploads\/content'\)/, 'Der Browser muss Videodaten über den geschützten Academy-Endpunkt übertragen.');
 
+assert.match(view, /youtubeService\.disconnect\(\)/,
+  'Die Oberfläche muss die vorhandene geschützte Trennfunktion aufrufen.');
+assert.match(view, /YouTube-Verbindung wirklich trennen\?/,
+  'Das Trennen der YouTube-Verbindung muss bewusst bestätigt werden.');
+assert.match(view, /Verbindung trennen/,
+  'Im verbundenen Zustand muss eine sichtbare Trennschaltfläche vorhanden sein.');
+assert.match(view, /setYouTubeConnection\(\{ connected: false, connectedAt: null \}\)/,
+  'Nach dem Trennen muss die Oberfläche sofort wieder eine neue Verbindung ermöglichen.');
+
 console.log('YouTube OAuth geprüft: PRO-geschützt, sitzungsgebunden und verschlüsselt gespeichert.');
