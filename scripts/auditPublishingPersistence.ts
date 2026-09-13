@@ -124,4 +124,13 @@ assert.match(youtubeAdmin, /privacyStatus: 'public'/,
 assert.match(publishing, /params\.platform === 'YOUTUBE'[\s\S]*params\.contentType === 'VIDEO'[\s\S]*videoId/,
   'Die Warteschlange darf YouTube nur für hochgeladene Langvideos öffnen.');
 
+assert.match(calendar, /type="datetime-local"/,
+  'Die Inhaltsplanung muss Datum und Uhrzeit gemeinsam erfassen.');
+assert.match(calendar, /toScheduledIso\(item\.scheduledDate\)/,
+  'Der gewählte lokale Veröffentlichungszeitpunkt muss für Firestore in UTC umgewandelt werden.');
+assert.doesNotMatch(calendar, /T09:00:00\.000Z/,
+  'Die Veröffentlichungszeit darf nicht mehr fest auf 09:00 Uhr UTC gesetzt sein.');
+assert.match(calendar, /hour: '2-digit'[\s\S]*minute: '2-digit'/,
+  'Die Warteschlange muss neben dem Datum auch die geplante Uhrzeit anzeigen.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');

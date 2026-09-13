@@ -36,6 +36,31 @@ import { PublishingService } from '../../services/publishingService';
 import { useAuth } from '../../context/AuthContext';
 import { pinterestService } from '../../services/pinterestService';
 
+const formatLocalDateTime = (value?: string, fallbackDays = 0): string => {
+  if (value && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value) && !/[zZ]|[+-]\d{2}:\d{2}$/.test(value)) {
+    return value.slice(0, 16);
+  }
+
+  const date = value ? new Date(value) : new Date(Date.now() + fallbackDays * 86400000);
+  if (Number.isNaN(date.getTime())) return '';
+
+  if (!value || /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    date.setHours(9, 0, 0, 0);
+  }
+
+  const pad = (part: number) => String(part).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
+const toScheduledIso = (localDateTime?: string): string => {
+  if (!localDateTime) return new Date().toISOString();
+  const date = new Date(localDateTime);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error('Bitte wähle ein gültiges Datum und eine gültige Uhrzeit.');
+  }
+  return date.toISOString();
+};
+
 interface ContentCalendarTabProps {
   project: CentralContentProject;
   onUpdateProject: (updated: CentralContentProject) => void;
@@ -192,7 +217,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       title: `Blog: ${project.blogArticle.title}`,
       targetUrl: project.projectSettings.websiteUrl,
       status: project.blogArticle.status || 'ai_generated',
-      scheduledDate: project.calendarItems.find((c) => c.channel === 'blog')?.scheduledDate || new Date().toISOString().split('T')[0],
+      scheduledDate: formatLocalDateTime(project.calendarItems.find((c) => c.channel === 'blog')?.scheduledDate),
       platformLabel: 'WordPress / Blog',
       icon: FileText,
       color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
@@ -213,7 +238,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       title: `Pin #${idx + 1} (${pin.angle.toUpperCase()}): ${pin.title}`,
       targetUrl: pin.targetUrl,
       status: pin.status || 'ai_generated',
-      scheduledDate: pin.scheduledDate || new Date(Date.now() + (idx + 1) * 86400000).toISOString().split('T')[0],
+      scheduledDate: formatLocalDateTime(pin.scheduledDate, idx + 1),
       platformLabel: `Pinterest (${pin.board || 'Standard'})`,
       icon: Pin,
       color: 'text-rose-600 bg-rose-50 border-rose-200',
@@ -239,7 +264,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       title: `YouTube Video: ${project.youtubeVideo.title}`,
       targetUrl: project.projectSettings.websiteUrl,
       status: project.youtubeVideo.status || 'ai_generated',
-      scheduledDate: project.youtubeVideo.scheduledDate || new Date(Date.now() + 2 * 86400000).toISOString().split('T')[0],
+      scheduledDate: formatLocalDateTime(project.youtubeVideo.scheduledDate, 2),
       platformLabel: 'YouTube-Langvideo',
       icon: Youtube,
       color: 'text-red-600 bg-red-50 border-red-200',
@@ -263,7 +288,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       title: `Kurzvideo #${short.shortNumber || idx + 1}: ${short.title}`,
       targetUrl: project.projectSettings.websiteUrl,
       status: short.status || 'ai_generated',
-      scheduledDate: short.scheduledDate || new Date(Date.now() + (idx + 3) * 86400000).toISOString().split('T')[0],
+      scheduledDate: formatLocalDateTime(short.scheduledDate, idx + 3),
       platformLabel: 'YouTube Shorts (9:16)',
       icon: Smartphone,
       color: 'text-red-500 bg-red-50 border-red-200',
@@ -323,7 +348,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         contentId: item.id,
         platform: item.platform,
         contentType: item.contentType,
-        scheduledAt: item.scheduledDate ? `${item.scheduledDate}T09:00:00.000Z` : new Date().toISOString(),
+        scheduledAt: toScheduledIso(item.scheduledDate),
         payload: item.payloadData,
       });
 
@@ -373,7 +398,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             contentId: item.id,
             platform: item.platform,
             contentType: item.contentType,
-            scheduledAt: item.scheduledDate ? `${item.scheduledDate}T09:00:00.000Z` : new Date().toISOString(),
+            scheduledAt: toScheduledIso(item.scheduledDate),
             payload: item.payloadData,
           });
           queuedCount++;
@@ -664,7 +689,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
                   <CalendarIcon className="w-3.5 h-3.5 text-slate-400" />
                   <input
-                    type="date"
+                    type="datetime-local"
+                    step="60"
                     value={item.scheduledDate}
                     onChange={(e) => handleDateChange(item.id, e.target.value)}
                     className="bg-transparent text-xs font-semibold text-slate-700 outline-hidden cursor-pointer"
