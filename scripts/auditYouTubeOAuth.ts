@@ -6,6 +6,7 @@ const storage = readFileSync('server/youtubeConnectionAdmin.ts', 'utf8');
 const service = readFileSync('src/services/youtubeService.ts', 'utf8');
 const view = readFileSync('src/components/ContentEngine/YouTubeScriptTab.tsx', 'utf8');
 const hub = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', 'utf8');
+const legal = readFileSync('src/components/LegalModal.tsx', 'utf8');
 
 assert.match(server, /app\.post\('\/api\/youtube\/oauth\/start', requireVerifiedMember, requireProMember/, 'YouTube OAuth muss eine bestätigte PRO-Anmeldung verlangen.');
 assert.match(server, /app\.get\('\/api\/youtube\/oauth\/callback'/, 'Der YouTube OAuth Callback fehlt.');
@@ -39,5 +40,16 @@ assert.match(view, /Verbindung trennen/,
   'Im verbundenen Zustand muss eine sichtbare Trennschaltfläche vorhanden sein.');
 assert.match(view, /setYouTubeConnection\(\{ connected: false, connectedAt: null \}\)/,
   'Nach dem Trennen muss die Oberfläche sofort wieder eine neue Verbindung ermöglichen.');
+
+assert.match(legal, /YouTube-Verbindung und YouTube API Services/,
+  'Die Datenschutzerklärung muss die YouTube-API-Datenverarbeitung gesondert beschreiben.');
+assert.match(legal, /Google API Services User Data Policy/,
+  'Die Datenschutzerklärung muss auf die Google-API-Nutzerdatenrichtlinie verweisen.');
+assert.match(legal, /Limited Use/,
+  'Die Datenschutzerklärung muss die eingeschränkte Nutzung von Google-Nutzerdaten zusichern.');
+assert.match(legal, /Verbindung trennen/,
+  'Die Datenschutzerklärung muss Widerruf und Trennung der YouTube-Verbindung erklären.');
+assert.match(legal, /security\.google\.com\/settings\/security\/permissions/,
+  'Die Datenschutzerklärung muss auf den Widerruf im Google-Konto verweisen.');
 
 console.log('YouTube OAuth geprüft: PRO-geschützt, sitzungsgebunden und verschlüsselt gespeichert.');
