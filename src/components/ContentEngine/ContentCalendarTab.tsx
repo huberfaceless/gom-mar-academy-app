@@ -295,6 +295,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       payloadData: {
         title: short.title,
         description: short.description,
+        metadata: {
+          videoId: short.videoId || getYouTubeVideoId(short.videoUrl),
+        },
       },
     });
   });
@@ -320,7 +323,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const supportsPublishingQueue = (item: typeof items[0]): boolean => {
     if (item.platform === 'PINTEREST' && item.contentType === 'PIN') return true;
     return item.platform === 'YOUTUBE'
-      && item.contentType === 'VIDEO'
+      && (item.contentType === 'VIDEO' || item.contentType === 'SHORT')
       && typeof item.payloadData?.metadata?.videoId === 'string';
   };
 
@@ -358,6 +361,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         youtubeVideo: item.id === 'yt_video_main' && project.youtubeVideo
           ? { ...project.youtubeVideo, status: 'scheduled' }
           : project.youtubeVideo,
+        youtubeShorts: project.youtubeShorts?.map((short, idx) => (
+          (short.id || `short_${idx}`) === item.id ? { ...short, status: 'scheduled' } : short
+        )),
       });
       await loadJobs();
 
@@ -719,7 +725,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
                 {!queueSupported ? (
                   <span className="px-3 py-1.5 bg-slate-100 text-slate-500 text-xs font-bold rounded-xl border border-slate-200">
-                    {item.type === 'youtube_video' ? 'Zuerst Video hochladen' : 'Automatisierung folgt'}
+                    {item.platform === 'YOUTUBE' ? 'Zuerst Video hochladen' : 'Automatisierung folgt'}
                   </span>
                 ) : !matchingJob ? (
                   <button

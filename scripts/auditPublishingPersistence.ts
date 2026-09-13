@@ -147,4 +147,19 @@ assert.match(firestoreContent, /saveSchedulerJob[\s\S]*await firestoreWithTimeou
 assert.doesNotMatch(firestoreContent, /savePublishingJob[\s\S]*if \(isFirestoreOperational\(\)\)[\s\S]*saveSchedulerJob/,
   'Kritische Veröffentlichungsaufträge dürfen nicht von der optionalen Firestore-Verfügbarkeitsmarkierung abhängen.');
 
+assert.match(youtubeView, /handleUploadShort/,
+  'Jedes YouTube-Kurzvideo muss eine eigene Upload-Funktion besitzen.');
+assert.match(youtubeView, /videoId: result\.videoId, videoUrl: result\.videoUrl/,
+  'Video-ID und Link müssen dauerhaft am hochgeladenen Kurzvideo gespeichert werden.');
+assert.match(calendar, /short\.videoId \|\| getYouTubeVideoId\(short\.videoUrl\)/,
+  'Hochgeladene Kurzvideos müssen ihre Video-ID an die Warteschlange übergeben.');
+assert.match(calendar, /item\.contentType === 'VIDEO' \|\| item\.contentType === 'SHORT'/,
+  'Lang- und Kurzvideos dürfen erst nach einem erfolgreichen Upload eingeplant werden.');
+assert.match(publishing, /params\.contentType === 'VIDEO' \|\| params\.contentType === 'SHORT'/,
+  'Die Warteschlange muss hochgeladene Lang- und Kurzvideos akzeptieren.');
+assert.match(publishing, /publishShort[\s\S]*return this\.publishVideo\(job, youtubeVideoPublisher\)/,
+  'Der Server-Scheduler muss hochgeladene Kurzvideos über den geprüften YouTube-Publisher veröffentlichen.');
+assert.doesNotMatch(publishing, /YouTube Shorts Upload API ist in dieser Entwicklungsphase noch nicht angebunden/,
+  'Kurzvideos dürfen nicht mehr als nicht implementiert abgewiesen werden.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');

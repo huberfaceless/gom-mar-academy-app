@@ -175,6 +175,8 @@ export interface YouTubeShort {
   cta: string;
   status: ContentStatus;
   scheduledDate?: string;
+  videoId?: string;
+  videoUrl?: string;
 }
 
 export interface CalendarItem {
