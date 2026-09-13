@@ -97,6 +97,9 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const [youtubeUploadProgress, setYouTubeUploadProgress] = useState<number | null>(null);
   const [youtubeUploadError, setYouTubeUploadError] = useState<string | null>(null);
   const [youtubeUploadedUrl, setYouTubeUploadedUrl] = useState<string | null>(null);
+  const [shortFiles, setShortFiles] = useState<Record<string, File | null>>({});
+  const [shortUploadProgress, setShortUploadProgress] = useState<Record<string, number | null>>({});
+  const [shortUploadErrors, setShortUploadErrors] = useState<Record<string, string | null>>({});
 
   useEffect(() => {
     youtubeService.getConnectionStatus()
@@ -155,6 +158,36 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     } catch (error: unknown) {
       setYouTubeUploadError(error instanceof Error ? error.message : 'Der YouTube-Upload ist fehlgeschlagen.');
       setYouTubeUploadProgress(null);
+    }
+  };
+
+  const handleUploadShort = async (short: YouTubeShort, idx: number) => {
+    const shortKey = short.id || `short_${idx}`;
+    const file = shortFiles[shortKey];
+    if (!file || youtubeConnection?.connected !== true) return;
+    if (!window.confirm(`Kurzvideo #${short.shortNumber || idx + 1} jetzt als „Nicht gelistet“ zu YouTube hochladen?`)) return;
+    setShortUploadErrors((current) => ({ ...current, [shortKey]: null }));
+    setShortUploadProgress((current) => ({ ...current, [shortKey]: 0 }));
+    try {
+      const result = await youtubeService.uploadUnlistedVideo(file, {
+        title: short.title,
+        description: short.description,
+        tags: [],
+      }, (percent) => setShortUploadProgress((current) => ({ ...current, [shortKey]: percent })));
+      const updatedShorts = shorts.map((candidate, candidateIdx) => (
+        (candidate.id || `short_${candidateIdx}`) === shortKey
+          ? { ...candidate, status: 'approved' as const, videoId: result.videoId, videoUrl: result.videoUrl }
+          : candidate
+      ));
+      onChangeShorts(updatedShorts);
+      setShortUploadProgress((current) => ({ ...current, [shortKey]: 100 }));
+      setShortFiles((current) => ({ ...current, [shortKey]: null }));
+    } catch (error: unknown) {
+      setShortUploadErrors((current) => ({
+        ...current,
+        [shortKey]: error instanceof Error ? error.message : 'Der Kurzvideo-Upload ist fehlgeschlagen.',
+      }));
+      setShortUploadProgress((current) => ({ ...current, [shortKey]: null }));
     }
   };
 
@@ -754,6 +787,52 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   />
                 </div>
               </div>
+
+              {youtubeConnection?.connected && (
+                <div className="p-3 rounded-2xl border border-red-100 bg-red-50/40 space-y-2">
+                  <label className="block text-[10px] font-black uppercase tracking-wider text-red-800">
+                    Fertiges Kurzvideo hochladen
+                  </label>
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={(event) => {
+                      const shortKey = short.id || `short_${idx}`;
+                      setShortFiles((current) => ({ ...current, [shortKey]: event.target.files?.[0] || null }));
+                    }}
+                    disabled={shortUploadProgress[short.id || `short_${idx}`] !== null
+                      && shortUploadProgress[short.id || `short_${idx}`] !== undefined
+                      && shortUploadProgress[short.id || `short_${idx}`] < 100}
+                    className="block w-full text-xs text-slate-600 file:mr-2 file:rounded-lg file:border-0 file:bg-white file:px-3 file:py-2 file:text-xs file:font-bold file:text-slate-800"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleUploadShort(short, idx)}
+                    disabled={!shortFiles[short.id || `short_${idx}`] || (
+                      shortUploadProgress[short.id || `short_${idx}`] !== null
+                      && shortUploadProgress[short.id || `short_${idx}`] !== undefined
+                      && shortUploadProgress[short.id || `short_${idx}`] < 100
+                    )}
+                    className="w-full py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer disabled:opacity-50"
+                  >
+                    {shortUploadProgress[short.id || `short_${idx}`] !== null
+                      && shortUploadProgress[short.id || `short_${idx}`] !== undefined
+                      && shortUploadProgress[short.id || `short_${idx}`] < 100
+                      ? `Hochladen läuft: ${shortUploadProgress[short.id || `short_${idx}`]} %`
+                      : 'Als „Nicht gelistet“ hochladen'}
+                  </button>
+                  {shortUploadErrors[short.id || `short_${idx}`] && (
+                    <p role="alert" className="text-xs font-semibold text-red-700">
+                      {shortUploadErrors[short.id || `short_${idx}`]}
+                    </p>
+                  )}
+                  {short.videoUrl && (
+                    <a href={short.videoUrl} target="_blank" rel="noreferrer" className="block text-xs font-bold text-emerald-700 underline">
+                      Hochgeladenes Kurzvideo auf YouTube öffnen
+                    </a>
+                  )}
+                </div>
+              )}
 
               {/* Action: Download 1080x1920 Cover Card */}
               <div className="pt-3 border-t border-slate-100">
