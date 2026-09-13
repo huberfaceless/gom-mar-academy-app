@@ -20,7 +20,8 @@ import {
   Play,
   Share2,
   ExternalLink,
-  HelpCircle
+  HelpCircle,
+  Unplug
 } from 'lucide-react';
 import { YouTubeVideoData, YouTubeShort, ProjectSettings } from '../../types/contentEngine';
 import { 
@@ -91,6 +92,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const [youtubeConnection, setYouTubeConnection] = useState<YouTubeConnectionStatus | null>(null);
   const [youtubeConnectionError, setYouTubeConnectionError] = useState<string | null>(null);
   const [isConnectingYouTube, setIsConnectingYouTube] = useState(false);
+  const [isDisconnectingYouTube, setIsDisconnectingYouTube] = useState(false);
   const [youtubeFile, setYouTubeFile] = useState<File | null>(null);
   const [youtubeUploadProgress, setYouTubeUploadProgress] = useState<number | null>(null);
   const [youtubeUploadError, setYouTubeUploadError] = useState<string | null>(null);
@@ -121,6 +123,20 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     }
   };
 
+  const handleDisconnectYouTube = async () => {
+    if (!window.confirm('YouTube-Verbindung wirklich trennen? Geplante Veröffentlichungen können erst nach einer erneuten Verbindung ausgeführt werden.')) return;
+    setIsDisconnectingYouTube(true);
+    setYouTubeConnectionError(null);
+    try {
+      await youtubeService.disconnect();
+      setYouTubeConnection({ connected: false, connectedAt: null });
+    } catch (error: unknown) {
+      setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht getrennt werden.');
+    } finally {
+      setIsDisconnectingYouTube(false);
+    }
+  };
+
   const handleUploadYouTube = async () => {
     if (!video || !youtubeFile || youtubeConnection?.connected !== true) return;
     if (!window.confirm('Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen?')) return;
@@ -142,15 +158,31 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     }
   };
 
-  const youtubeConnectionButton = (
+  const youtubeConnectionButton = youtubeConnection?.connected ? (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-200">
+        <CheckCircle2 className="w-4 h-4" />
+        <span>YouTube verbunden</span>
+      </span>
+      <button
+        type="button"
+        onClick={handleDisconnectYouTube}
+        disabled={isDisconnectingYouTube}
+        className="px-3 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
+      >
+        <Unplug className="w-4 h-4" />
+        <span>{isDisconnectingYouTube ? 'Verbindung wird getrennt…' : 'Verbindung trennen'}</span>
+      </button>
+    </div>
+  ) : (
     <button
       type="button"
       onClick={handleConnectYouTube}
-      disabled={isConnectingYouTube || youtubeConnection?.connected === true}
-      className={`px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer disabled:cursor-default ${youtubeConnection?.connected ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-600 hover:bg-red-700 text-white'}`}
+      disabled={isConnectingYouTube}
+      className="px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer bg-red-600 hover:bg-red-700 text-white disabled:opacity-50"
     >
-      {youtubeConnection?.connected ? <CheckCircle2 className="w-4 h-4" /> : <Youtube className="w-4 h-4" />}
-      <span>{youtubeConnection?.connected ? 'YouTube verbunden' : isConnectingYouTube ? 'Weiterleitung…' : 'YouTube verbinden'}</span>
+      <Youtube className="w-4 h-4" />
+      <span>{isConnectingYouTube ? 'Weiterleitung…' : 'YouTube verbinden'}</span>
     </button>
   );
 
