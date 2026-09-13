@@ -226,7 +226,24 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-sm">4. Deine Rechte als Betroffener</h4>
+                <h4 className="font-bold text-slate-900 text-sm">4. YouTube-Verbindung und YouTube API Services</h4>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Die optionale YouTube-Verbindung nutzt die <strong>YouTube API Services</strong> und Google OAuth. Nach deiner ausdrücklichen Zustimmung erhält die GOM-MAR Academy Berechtigungen, Videos in deinem YouTube-Konto hochzuladen und den Sichtbarkeitsstatus eines von der Academy hochgeladenen Videos zum geplanten Zeitpunkt zu ändern.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-600 text-xs">
+                  <li><strong>Verarbeitete Daten:</strong> Google-/YouTube-Konto-Zuordnung, verschlüsselte OAuth-Zugangsdaten, Verbindungszeitpunkt, YouTube-Video-ID, Videolink, Upload-, Planungs- und Veröffentlichungsstatus.</li>
+                  <li><strong>Zweck:</strong> Authentifizierung, Upload als „Nicht gelistet“, zeitgesteuerte Veröffentlichung sowie Anzeige des Veröffentlichungsstatus.</li>
+                  <li><strong>Speicherung und Schutz:</strong> OAuth-Aktualisierungstokens werden verschlüsselt und serverseitig gespeichert. Zugangsdaten werden nicht an andere Nutzer oder unbeteiligte Dritte weitergegeben und nicht für Werbung verwendet.</li>
+                  <li><strong>Speicherdauer:</strong> Verbindungsdaten werden nur so lange gespeichert, wie sie für die YouTube-Funktion erforderlich sind oder bis du die Verbindung trennst beziehungsweise ihre Löschung verlangst. Gesetzliche Aufbewahrungspflichten bleiben unberührt.</li>
+                  <li><strong>Widerruf und Löschung:</strong> Du kannst die Verbindung in der Academy über „Verbindung trennen“ entfernen und den Zugriff zusätzlich in den <a href="https://security.google.com/settings/security/permissions" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Sicherheitseinstellungen deines Google-Kontos</a> widerrufen. Löschanfragen kannst du an <strong>huber@gomo-marketing.at</strong> richten.</li>
+                </ul>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Die Nutzung und Übertragung von Daten aus Google APIs erfolgt gemäß der <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Google API Services User Data Policy</a>, einschließlich der Anforderungen zur eingeschränkten Nutzung („Limited Use“). Ergänzend gelten die <a href="https://www.youtube.com/t/terms" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">YouTube-Nutzungsbedingungen</a> und die <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Datenschutzerklärung von Google</a>.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm">5. Deine Rechte als Betroffener</h4>
                 <p className="text-slate-600 text-xs leading-relaxed">
                   Du hast jederzeit das Recht auf <strong>Auskunft (Art. 15 DSGVO)</strong>, <strong>Berichtigung (Art. 16 DSGVO)</strong>, <strong>Löschung (Art. 17 DSGVO)</strong>, Einschränkung der Verarbeitung (Art. 18 DSGVO), Datenübertragbarkeit (Art. 20 DSGVO) sowie das Recht auf <strong>Widerspruch (Art. 21 DSGVO)</strong>. Kontaktiere uns dazu einfach unter <strong>huber@gomo-marketing.at</strong>.
                 </p>
@@ -338,7 +355,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         {/* Footer Bottom Bar */}
         <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
           <span className="text-[11px] text-slate-500 font-medium">
-            Stand: August 2026 • GOM-MAR Academy
+            Stand: September 2026 • GOM-MAR Academy
           </span>
 
           <button
