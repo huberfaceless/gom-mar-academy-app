@@ -138,4 +138,13 @@ assert.match(calendar, /if \(job\.platform === 'YOUTUBE'\)[\s\S]*ausschließlich
 assert.match(calendar, /item\.platform === 'YOUTUBE'[\s\S]*Automatische Veröffentlichung geplant/,
   'Geplante YouTube-Videos dürfen in der Inhaltskarte keine manuelle Ausführung anbieten.');
 
+assert.doesNotMatch(firestore, /if \(!userId \|\| !isFirestoreOperational\(\)\) \{[\s\S]*loadAllPublishingJobs/,
+  'Angemeldete Benutzer dürfen die Veröffentlichungswarteschlange nicht unbemerkt nur lokal laden.');
+assert.match(firestore, /savePublishingJob[\s\S]*await firestoreWithTimeout\(setDoc[\s\S]*const current = loadAllPublishingJobs/,
+  'Veröffentlichungsaufträge müssen vor der lokalen Spiegelung von Firestore bestätigt werden.');
+assert.match(firestore, /saveSchedulerJob[\s\S]*await firestoreWithTimeout\(setDoc[\s\S]*const current = loadAllSchedulerJobs/,
+  'Scheduler-Aufträge müssen vor der lokalen Spiegelung von Firestore bestätigt werden.');
+assert.doesNotMatch(firestore, /savePublishingJob[\s\S]*if \(isFirestoreOperational\(\)\)[\s\S]*saveSchedulerJob/,
+  'Kritische Veröffentlichungsaufträge dürfen nicht von der optionalen Firestore-Verfügbarkeitsmarkierung abhängen.');
+
 console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
