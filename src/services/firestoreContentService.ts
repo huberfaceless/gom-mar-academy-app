@@ -194,13 +194,7 @@ export class FirestoreContentService {
   // ==========================================
 
   static async getPublishingJobs(userId?: string, contentProjectId?: string): Promise<PublishingJob[]> {
-    if (!userId || !isFirestoreOperational()) {
-      let localList = loadAllPublishingJobs(userId);
-      if (contentProjectId) {
-        localList = localList.filter((j) => j.contentProjectId === contentProjectId);
-      }
-      return localList.sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
-    }
+    if (!userId) return [];
 
     try {
       let q = query(collection(db, COLLECTION_PUBLISHING_JOBS), where('userId', '==', userId));
@@ -213,11 +207,7 @@ export class FirestoreContentService {
       return list.sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
     } catch (err) {
       handleFirestoreError(err);
-      let localList = loadAllPublishingJobs(userId);
-      if (contentProjectId) {
-        localList = localList.filter((j) => j.contentProjectId === contentProjectId);
-      }
-      return localList.sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
+      throw new Error('Die Veröffentlichungswarteschlange konnte nicht aus Firestore geladen werden.');
     }
   }
 
@@ -228,6 +218,14 @@ export class FirestoreContentService {
       updatedAt: new Date().toISOString(),
     };
 
+    try {
+      const docRef = doc(db, COLLECTION_PUBLISHING_JOBS, job.id);
+      const serialized = JSON.parse(JSON.stringify(dataToSave));
+      await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
+    } catch (err) {
+      rethrowFirestoreWriteError(err);
+    }
+
     const current = loadAllPublishingJobs(userId);
     const idx = current.findIndex((j) => j.id === job.id);
     if (idx >= 0) {
@@ -236,16 +234,6 @@ export class FirestoreContentService {
       current.unshift(dataToSave);
     }
     saveAllPublishingJobs(current, userId);
-
-    if (isFirestoreOperational()) {
-      try {
-        const docRef = doc(db, COLLECTION_PUBLISHING_JOBS, job.id);
-        const serialized = JSON.parse(JSON.stringify(dataToSave));
-        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
-      } catch (err) {
-        rethrowFirestoreWriteError(err);
-      }
-    }
   }
 
   static async updatePublishingJobStatus(
@@ -268,31 +256,27 @@ export class FirestoreContentService {
       saveAllPublishingJobs(current, userId);
     }
 
-    if (isFirestoreOperational()) {
-      try {
-        const docRef = doc(db, COLLECTION_PUBLISHING_JOBS, jobId);
-        const updateData: Record<string, any> = {
-          status,
-          updatedAt: new Date().toISOString(),
-          ...extraFields,
-        };
-        if (lastError !== undefined) {
-          updateData.lastError = lastError;
-        }
-        await firestoreWithTimeout(updateDoc(docRef, updateData), FIRESTORE_WRITE_TIMEOUT_MS);
-      } catch (err) {
-        rethrowFirestoreWriteError(err);
+    try {
+      const docRef = doc(db, COLLECTION_PUBLISHING_JOBS, jobId);
+      const updateData: Record<string, any> = {
+        status,
+        updatedAt: new Date().toISOString(),
+        ...extraFields,
+      };
+      if (lastError !== undefined) {
+        updateData.lastError = lastError;
       }
+      await firestoreWithTimeout(updateDoc(docRef, updateData), FIRESTORE_WRITE_TIMEOUT_MS);
+    } catch (err) {
+      rethrowFirestoreWriteError(err);
     }
   }
 
   static async deletePublishingJob(userId: string, jobId: string): Promise<void> {
-    if (isFirestoreOperational()) {
-      try {
-        await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_PUBLISHING_JOBS, jobId)), FIRESTORE_WRITE_TIMEOUT_MS);
-      } catch (err) {
-        rethrowFirestoreWriteError(err);
-      }
+    try {
+      await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_PUBLISHING_JOBS, jobId)), FIRESTORE_WRITE_TIMEOUT_MS);
+    } catch (err) {
+      rethrowFirestoreWriteError(err);
     }
     const current = loadAllPublishingJobs(userId).filter((j) => j.id !== jobId);
     saveAllPublishingJobs(current, userId);
@@ -303,7 +287,7 @@ export class FirestoreContentService {
   // ==========================================
 
   static async getSchedulerJobs(userId?: string): Promise<SchedulerJob[]> {
-    if (!userId || !isFirestoreOperational()) return loadAllSchedulerJobs(userId);
+    if (!userId) return [];
 
     try {
       const q = query(collection(db, COLLECTION_SCHEDULER_JOBS), where('userId', '==', userId));
@@ -313,7 +297,7 @@ export class FirestoreContentService {
       return list;
     } catch (err) {
       handleFirestoreError(err);
-      return loadAllSchedulerJobs(userId);
+      throw new Error('Die Scheduler-Aufträge konnten nicht aus Firestore geladen werden.');
     }
   }
 
@@ -324,6 +308,14 @@ export class FirestoreContentService {
       updatedAt: new Date().toISOString(),
     };
 
+    try {
+      const docRef = doc(db, COLLECTION_SCHEDULER_JOBS, job.id);
+      const serialized = JSON.parse(JSON.stringify(dataToSave));
+      await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
+    } catch (err) {
+      rethrowFirestoreWriteError(err);
+    }
+
     const current = loadAllSchedulerJobs(userId);
     const idx = current.findIndex((j) => j.id === job.id);
     if (idx >= 0) {
@@ -332,16 +324,6 @@ export class FirestoreContentService {
       current.unshift(dataToSave);
     }
     saveAllSchedulerJobs(current, userId);
-
-    if (isFirestoreOperational()) {
-      try {
-        const docRef = doc(db, COLLECTION_SCHEDULER_JOBS, job.id);
-        const serialized = JSON.parse(JSON.stringify(dataToSave));
-        await firestoreWithTimeout(setDoc(docRef, serialized, { merge: true }), FIRESTORE_WRITE_TIMEOUT_MS);
-      } catch (err) {
-        rethrowFirestoreWriteError(err);
-      }
-    }
   }
 
   static async updateSchedulerJobStatus(
@@ -362,20 +344,18 @@ export class FirestoreContentService {
       saveAllSchedulerJobs(current, userId);
     }
 
-    if (isFirestoreOperational()) {
-      try {
-        const docRef = doc(db, COLLECTION_SCHEDULER_JOBS, jobId);
-        const updateData: Record<string, any> = {
-          status,
-          updatedAt: new Date().toISOString(),
-        };
-        if (lastError !== undefined) {
-          updateData.lastError = lastError;
-        }
-        await firestoreWithTimeout(updateDoc(docRef, updateData), FIRESTORE_WRITE_TIMEOUT_MS);
-      } catch (err) {
-        rethrowFirestoreWriteError(err);
+    try {
+      const docRef = doc(db, COLLECTION_SCHEDULER_JOBS, jobId);
+      const updateData: Record<string, any> = {
+        status,
+        updatedAt: new Date().toISOString(),
+      };
+      if (lastError !== undefined) {
+        updateData.lastError = lastError;
       }
+      await firestoreWithTimeout(updateDoc(docRef, updateData), FIRESTORE_WRITE_TIMEOUT_MS);
+    } catch (err) {
+      rethrowFirestoreWriteError(err);
     }
   }
 
