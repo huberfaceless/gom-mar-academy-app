@@ -5,6 +5,7 @@ const dashboard = readFileSync('src/components/DashboardView.tsx', 'utf8');
 const academy = readFileSync('src/components/AcademyView.tsx', 'utf8');
 const footer = readFileSync('src/components/Footer.tsx', 'utf8');
 const header = readFileSync('src/components/Header.tsx', 'utf8');
+const authModal = readFileSync('src/components/AuthModal.tsx', 'utf8');
 const localizationHook = readFileSync('src/i18n/useLocalizedAcademyStages.ts', 'utf8');
 const viteConfig = readFileSync('vite.config.ts', 'utf8');
 
@@ -30,6 +31,11 @@ assert.match(footer, /onClick=\{\(\) => onNavigate\('academy'\)\}/, 'Der Footer 
 assert.match(footer, /onClick=\{\(\) => onNavigate\('email'\)\}/, 'Der Footer muss zum E-Mail-Bereich navigieren.');
 assert.match(footer, /onClick=\{\(\) => onNavigate\('toolbox'\)\}/, 'Der Footer muss zur Toolbox navigieren.');
 assert.match(footer, /onClick=\{onOpenFragGommar\}/, 'Der Footer muss den KI-Mentor öffnen.');
+assert.match(authModal, /const \{ language, setLanguage, t \} = useLanguage\(\)/, 'Das Kontoformular muss auf die aktive Sprache reagieren.');
+assert.match(authModal, /\['de', 'Deutsch'\]/, 'Im Kontoformular fehlt Deutsch.');
+assert.match(authModal, /\['en', 'English'\]/, 'Im Kontoformular fehlt Englisch.');
+assert.match(authModal, /\['pl', 'Polski'\]/, 'Im Kontoformular fehlt Polnisch.');
+assert.match(authModal, /onClick=\{\(\) => setLanguage\(code\)\}/, 'Die Sprachauswahl im Kontoformular muss die Academy-Sprache ändern.');
 
 for (const language of ['de', 'en', 'pl']) {
   assert.match(
