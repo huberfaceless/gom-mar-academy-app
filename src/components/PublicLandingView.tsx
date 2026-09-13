@@ -13,7 +13,71 @@ import {
 } from 'lucide-react';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { AuthModal } from './AuthModal';
+
+const registrationCopy = {
+  de: {
+    title: 'Kostenloses Konto erstellen',
+    subtitle: 'Erstelle deinen sicheren Zugang zur GOM-MAR Academy. Wir senden dir anschließend eine Bestätigungs-E-Mail zur Freischaltung.',
+    firstName: 'Vorname *',
+    firstNamePlaceholder: 'z. B. Sarah',
+    lastName: 'Nachname',
+    lastNamePlaceholder: 'z. B. Lindemann',
+    email: 'Deine E-Mail-Adresse *',
+    password: 'Passwort wählen * (mind. 6 Zeichen)',
+    passwordPlaceholder: 'Mindestens 6 Zeichen',
+    niche: 'Deine Wunsch-Nische',
+    submitting: 'Registrierung läuft...',
+    submit: '🚀 Kostenlos registrieren & Bestätigungslink anfordern',
+    security: 'Sichere Firebase-Authentifizierung • Datenschutzbewusst umgesetzt',
+    login: 'Du hast bereits ein Konto? Hier anmelden →',
+    firstNameError: 'Bitte gib deinen Vornamen ein.',
+    emailError: 'Bitte gib eine gültige E-Mail-Adresse ein.',
+    passwordError: 'Das Passwort muss mindestens 6 Zeichen lang sein.',
+    registrationError: 'Registrierung fehlgeschlagen.',
+  },
+  en: {
+    title: 'Create a free account',
+    subtitle: 'Create your secure access to the GOM-MAR Academy. We will then send you a confirmation email to activate your account.',
+    firstName: 'First name *',
+    firstNamePlaceholder: 'e.g. Sarah',
+    lastName: 'Last name',
+    lastNamePlaceholder: 'e.g. Lindemann',
+    email: 'Your email address *',
+    password: 'Choose a password * (at least 6 characters)',
+    passwordPlaceholder: 'At least 6 characters',
+    niche: 'Your preferred niche',
+    submitting: 'Registering...',
+    submit: '🚀 Register for free & request confirmation link',
+    security: 'Secure Firebase authentication • Implemented with privacy in mind',
+    login: 'Already have an account? Sign in here →',
+    firstNameError: 'Please enter your first name.',
+    emailError: 'Please enter a valid email address.',
+    passwordError: 'The password must be at least 6 characters long.',
+    registrationError: 'Registration failed.',
+  },
+  pl: {
+    title: 'Utwórz bezpłatne konto',
+    subtitle: 'Utwórz bezpieczny dostęp do GOM-MAR Academy. Następnie wyślemy Ci wiadomość e-mail z linkiem potwierdzającym.',
+    firstName: 'Imię *',
+    firstNamePlaceholder: 'np. Sarah',
+    lastName: 'Nazwisko',
+    lastNamePlaceholder: 'np. Lindemann',
+    email: 'Twój adres e-mail *',
+    password: 'Wybierz hasło * (min. 6 znaków)',
+    passwordPlaceholder: 'Co najmniej 6 znaków',
+    niche: 'Wybrana nisza',
+    submitting: 'Trwa rejestracja...',
+    submit: '🚀 Zarejestruj się bezpłatnie i poproś o link potwierdzający',
+    security: 'Bezpieczne uwierzytelnianie Firebase • Z poszanowaniem prywatności',
+    login: 'Masz już konto? Zaloguj się tutaj →',
+    firstNameError: 'Podaj swoje imię.',
+    emailError: 'Podaj prawidłowy adres e-mail.',
+    passwordError: 'Hasło musi mieć co najmniej 6 znaków.',
+    registrationError: 'Rejestracja nie powiodła się.',
+  },
+} as const;
 
 interface PublicLandingViewProps {
   onCancelToMemberArea?: () => void;
@@ -25,6 +89,8 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
   onOpenLegal,
 }) => {
   const { register, login, error: authError, clearError } = useAuth();
+  const { language, setLanguage } = useLanguage();
+  const copy = registrationCopy[language];
 
   // Form inputs
   const [firstName, setFirstName] = useState<string>('');
@@ -47,15 +113,15 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
     const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
 
     if (!firstName.trim()) {
-      setLocalError('Bitte gib deinen Vornamen ein.');
+      setLocalError(copy.firstNameError);
       return;
     }
     if (!trimmedEmail || !trimmedEmail.includes('@')) {
-      setLocalError('Bitte gib eine gültige E-Mail-Adresse ein.');
+      setLocalError(copy.emailError);
       return;
     }
     if (!password || password.length < 6) {
-      setLocalError('Das Passwort muss mindestens 6 Zeichen lang sein.');
+      setLocalError(copy.passwordError);
       return;
     }
 
@@ -64,7 +130,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
       await register(trimmedEmail, password, fullName || undefined);
       // Firebase state will automatically switch to AUTHENTICATED_NOT_VERIFIED and prompt email verification
     } catch (err: any) {
-      setLocalError(err?.message || 'Registrierung fehlgeschlagen.');
+      setLocalError(err?.message || copy.registrationError);
     } finally {
       setIsSubmitting(false);
     }
@@ -163,11 +229,33 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
             <div className="space-y-2 text-center">
               <h3 className="text-xl font-bold text-white flex items-center justify-center gap-2">
                 <Mail className="w-5 h-5 text-emerald-400" />
-                <span>Kostenloses Konto erstellen</span>
+                <span>{copy.title}</span>
               </h3>
               <p className="text-xs text-slate-300">
-                Erstelle deinen sicheren Zugang zur GOM-MAR Academy. Wir senden dir anschließend eine Bestätigungs-E-Mail zur Freischaltung.
+                {copy.subtitle}
               </p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2" aria-label="Sprache / Language / Język">
+              {([
+                ['de', 'Deutsch'],
+                ['en', 'English'],
+                ['pl', 'Polski'],
+              ] as const).map(([code, label]) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setLanguage(code)}
+                  aria-pressed={language === code}
+                  className={`rounded-xl border px-2 py-2 text-xs font-bold transition-colors ${
+                    language === code
+                      ? 'border-emerald-400 bg-emerald-500 text-slate-950'
+                      : 'border-slate-700 bg-slate-950 text-slate-300 hover:border-emerald-400 hover:text-white'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
 
             {(localError || authError) && (
@@ -181,14 +269,14 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-300 font-bold mb-1.5">
-                    Vorname *
+                    {copy.firstName}
                   </label>
                   <div className="relative">
                     <UserIcon className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
                     <input
                       type="text"
                       required
-                      placeholder="z.B. Sarah"
+                      placeholder={copy.firstNamePlaceholder}
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-emerald-400 transition-colors"
@@ -198,13 +286,13 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
 
                 <div>
                   <label className="block text-slate-300 font-bold mb-1.5">
-                    Nachname
+                    {copy.lastName}
                   </label>
                   <div className="relative">
                     <UserIcon className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
                     <input
                       type="text"
-                      placeholder="z.B. Lindemann"
+                      placeholder={copy.lastNamePlaceholder}
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-emerald-400 transition-colors"
@@ -215,7 +303,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
 
               <div>
                 <label className="block text-slate-300 font-bold mb-1.5">
-                  Deine E-Mail-Adresse *
+                  {copy.email}
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
@@ -232,7 +320,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
 
               <div>
                 <label className="block text-slate-300 font-bold mb-1.5">
-                  Passwort wählen * (mind. 6 Zeichen)
+                  {copy.password}
                 </label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
@@ -240,7 +328,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
                     type="password"
                     required
                     minLength={6}
-                    placeholder="Mindestens 6 Zeichen"
+                    placeholder={copy.passwordPlaceholder}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-emerald-400 transition-colors"
@@ -250,7 +338,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
 
               <div>
                 <label className="block text-slate-300 font-bold mb-1.5">
-                  Deine Wunsch-Nische
+                  {copy.niche}
                 </label>
                 <select
                   value={selectedNiche}
@@ -269,7 +357,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
                 disabled={isSubmitting}
                 className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
               >
-                <span>{isSubmitting ? 'Registrierung läuft...' : '🚀 Kostenlos registrieren & Bestätigungslink anfordern'}</span>
+                <span>{isSubmitting ? copy.submitting : copy.submit}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
@@ -277,7 +365,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
             <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 pt-2 border-t border-slate-800/80">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                Sichere Firebase-Authentifizierung • Datenschutzbewusst umgesetzt
+                {copy.security}
               </span>
             </div>
 
@@ -287,7 +375,7 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
                 onClick={() => setShowLoginModal(true)}
                 className="text-xs text-indigo-400 hover:text-indigo-300 font-bold transition-colors cursor-pointer"
               >
-                Du hast bereits ein Konto? Hier anmelden →
+                {copy.login}
               </button>
             </div>
           </div>
