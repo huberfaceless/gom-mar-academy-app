@@ -104,6 +104,7 @@ if (lessonCount === 0) {
 const lessonPlayer = fs.readFileSync('src/components/LessonVideoPlayer.tsx', 'utf8');
 const server = fs.readFileSync('server.ts', 'utf8');
 const serverCache = fs.readFileSync('server/lessonAudioCache.ts', 'utf8');
+const adminDashboard = fs.readFileSync('src/components/AdminDashboardView.tsx', 'utf8');
 const playerChecks: Array<[boolean, string]> = [
   [lessonPlayer.includes("audioPlayer: 'GOM-MAR Audio-Erklärung'"), 'Die deutsche Audio-Erklärung ist eindeutig gekennzeichnet.'],
   [lessonPlayer.includes("audioPlayer: 'GOM-MAR audio explanation'"), 'Die englische Audio-Erklärung ist eindeutig gekennzeichnet.'],
@@ -124,6 +125,10 @@ const playerChecks: Array<[boolean, string]> = [
   [server.includes("res.setHeader('X-Lesson-Audio-Cache', 'HIT')"), 'Cache-Treffer werden für die Produktionsprüfung gekennzeichnet.'],
   [serverCache.includes("createHash('sha256')"), 'Cache-Dateien werden anhand ihres vollständigen Audioinhalts versioniert.'],
   [serverCache.includes('devstorage.read_write'), 'Der Cache verwendet eine begrenzte Google-Cloud-Storage-Berechtigung.'],
+  [server.includes("app.post('/api/admin/academy/audio-cache/generate-german', requireVerifiedMember, requireAcademyAdmin"), 'Nur der bestätigte Admin kann deutsche Audios vorgenerieren.'],
+  [server.includes('LESSON_AUDIO_ADMIN_BATCH_SIZE = 2'), 'Die Vorgenerierung arbeitet in kurzen, ausfallsicheren Paketen.'],
+  [adminDashboard.includes("'Deutsche Audios vorbereiten'"), 'Die deutsche Vorgenerierung ist in der Admin-Lektionsverwaltung erreichbar.'],
+  [adminDashboard.includes('Audio ${audioBatchProgress.processed}/${audioBatchProgress.total}'), 'Der Admin sieht den Fortschritt der Audioerzeugung.'],
 ];
 
 for (const [passed, message] of playerChecks) {

@@ -84,6 +84,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [editingLesson, setEditingLesson] = useState<Lesson | null>(null);
   const [isCreatingLesson, setIsCreatingLesson] = useState<boolean>(false);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string>('');
+  const [audioBatchRunning, setAudioBatchRunning] = useState<boolean>(false);
+  const [audioBatchProgress, setAudioBatchProgress] = useState<{ processed: number; total: number; generated: number; cached: number } | null>(null);
 
   // Form State for Lesson Editor
   const [lessonFormData, setLessonFormData] = useState<Partial<Lesson>>({
@@ -134,6 +136,47 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       },
     });
   }, []);
+
+  const handleGenerateGermanAudio = async () => {
+    if (!window.confirm('Alle fehlenden deutschen Lektionsaudios jetzt mit ElevenLabs erzeugen? Dabei wird dein ElevenLabs-Guthaben verwendet.')) return;
+    setAudioBatchRunning(true);
+    setAudioBatchProgress({ processed: 0, total: totalLessons, generated: 0, cached: 0 });
+    let cursor: number | null = 0;
+    let generatedTotal = 0;
+    let cachedTotal = 0;
+
+    try {
+      while (cursor !== null) {
+        const response = await authenticatedRequest('/api/admin/academy/audio-cache/generate-german', {
+          method: 'POST',
+          body: JSON.stringify({ cursor }),
+        });
+        const result = await response.json() as {
+          error?: string;
+          processed?: number;
+          total?: number;
+          generated?: number;
+          cached?: number;
+          nextCursor?: number | null;
+        };
+        if (!response.ok) throw new Error(result.error || 'Die Audioerzeugung wurde unterbrochen.');
+        generatedTotal += result.generated || 0;
+        cachedTotal += result.cached || 0;
+        setAudioBatchProgress({
+          processed: result.processed || 0,
+          total: result.total || totalLessons,
+          generated: generatedTotal,
+          cached: cachedTotal,
+        });
+        cursor = result.nextCursor ?? null;
+      }
+      setSaveSuccessMsg(`Deutsche Audiolektionen vollständig vorbereitet: ${generatedTotal} neu erzeugt, ${cachedTotal} bereits vorhanden.`);
+    } catch (error: unknown) {
+      window.alert(error instanceof Error ? error.message : 'Die Audioerzeugung wurde unterbrochen.');
+    } finally {
+      setAudioBatchRunning(false);
+    }
+  };
 
   const loadFirebaseMembers = useCallback(async () => {
     setMembersLoading(true);
@@ -851,6 +894,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => void handleGenerateGermanAudio()}
+                disabled={audioBatchRunning}
+                className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:bg-violet-300 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer disabled:cursor-wait"
+              >
+                <Sparkles className={`w-4 h-4 ${audioBatchRunning ? 'animate-spin' : ''}`} />
+                <span>{audioBatchRunning && audioBatchProgress
+                  ? `Audio ${audioBatchProgress.processed}/${audioBatchProgress.total}`
+                  : 'Deutsche Audios vorbereiten'}</span>
+              </button>
+
               <button
                 onClick={handleOpenCreateLesson}
                 className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer"

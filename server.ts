@@ -66,6 +66,7 @@ const ELEVENLABS_MODEL_ID = 'eleven_multilingual_v2';
 const LESSON_AUDIO_BUCKET = process.env.LESSON_AUDIO_BUCKET?.trim() || '';
 const LESSON_AUDIO_WINDOW_MS = 60_000;
 const LESSON_AUDIO_LIMIT = 10;
+const LESSON_AUDIO_ADMIN_BATCH_SIZE = 2;
 const escapeHtml = (value: string): string => value
   .replaceAll('&', '&amp;')
   .replaceAll('<', '&lt;')
@@ -79,6 +80,40 @@ const ACADEMY_ADMIN_EMAILS = new Set(
     .filter(Boolean),
 );
 let firebaseCertificateCache: { certificates: FirebaseCertificates; expiresAt: number } | null = null;
+
+const buildLessonNarration = (lesson: Lesson, language: LanguageCode): string => {
+  const copy = {
+    de: { lesson: 'Lektion', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:' },
+    en: { lesson: 'Lesson', keyPoints: 'The key points are:', takeaway: 'Key takeaway:' },
+    pl: { lesson: 'Lekcja', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:' },
+  }[language];
+  return [
+    `${copy.lesson} ${lesson.id}: ${lesson.title}.`,
+    lesson.learnContent.summaryText,
+    copy.keyPoints,
+    `${lesson.learnContent.bulletPoints.join('. ')}.`,
+    copy.takeaway,
+    lesson.understandContent.coreTakeaway,
+  ].join(' ').slice(0, 4_500);
+};
+
+const generateElevenLabsAudio = async (narrationText: string, apiKey: string): Promise<Buffer> => {
+  const response = await fetch(
+    `${ELEVENLABS_API_URL}/${encodeURIComponent(ELEVENLABS_VOICE_ID)}?output_format=mp3_44100_128`,
+    {
+      method: 'POST',
+      headers: {
+        Accept: 'audio/mpeg',
+        'Content-Type': 'application/json',
+        'xi-api-key': apiKey,
+      },
+      body: JSON.stringify({ text: narrationText, model_id: ELEVENLABS_MODEL_ID }),
+      signal: AbortSignal.timeout(45_000),
+    },
+  );
+  if (!response.ok) throw new Error(`ElevenLabs antwortete mit Status ${response.status}.`);
+  return Buffer.from(await response.arrayBuffer());
+};
 
 const decodeJwtSegment = <T>(segment: string): T => JSON.parse(Buffer.from(segment, 'base64url').toString('utf8')) as T;
 
@@ -282,19 +317,7 @@ async function startServer() {
       return;
     }
 
-    const narrationCopy = {
-      de: { lesson: 'Lektion', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:' },
-      en: { lesson: 'Lesson', keyPoints: 'The key points are:', takeaway: 'Key takeaway:' },
-      pl: { lesson: 'Lekcja', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:' },
-    }[language];
-    const narrationText = [
-      `${narrationCopy.lesson} ${lesson.id}: ${lesson.title}.`,
-      lesson.learnContent.summaryText,
-      narrationCopy.keyPoints,
-      `${lesson.learnContent.bulletPoints.join('. ')}.`,
-      narrationCopy.takeaway,
-      lesson.understandContent.coreTakeaway,
-    ].join(' ').slice(0, 4_500);
+    const narrationText = buildLessonNarration(lesson, language);
     const cacheObjectName = lessonAudioObjectName(
       lesson.id,
       language,
@@ -320,24 +343,7 @@ async function startServer() {
         }
       }
 
-      const elevenLabsResponse = await fetch(
-        `${ELEVENLABS_API_URL}/${encodeURIComponent(ELEVENLABS_VOICE_ID)}?output_format=mp3_44100_128`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'audio/mpeg',
-            'Content-Type': 'application/json',
-            'xi-api-key': elevenLabsApiKey,
-          },
-          body: JSON.stringify({ text: narrationText, model_id: ELEVENLABS_MODEL_ID }),
-          signal: AbortSignal.timeout(45_000),
-        },
-      );
-      if (!elevenLabsResponse.ok) {
-        throw new Error(`ElevenLabs antwortete mit Status ${elevenLabsResponse.status}.`);
-      }
-
-      const audio = Buffer.from(await elevenLabsResponse.arrayBuffer());
+      const audio = await generateElevenLabsAudio(narrationText, elevenLabsApiKey);
       if (LESSON_AUDIO_BUCKET) {
         try {
           await saveLessonAudioToCache(LESSON_AUDIO_BUCKET, cacheObjectName, audio);
@@ -353,6 +359,59 @@ async function startServer() {
     } catch (error: unknown) {
       console.error('ElevenLabs-Lektionsaudio fehlgeschlagen:', error);
       res.status(503).json({ error: 'Die Audio-Erklärung konnte gerade nicht erzeugt werden.' });
+    }
+  });
+
+  app.post('/api/admin/academy/audio-cache/generate-german', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY?.trim();
+    if (!elevenLabsApiKey || !LESSON_AUDIO_BUCKET) {
+      res.status(503).json({ error: 'ElevenLabs oder der gemeinsame Audio-Cache ist nicht konfiguriert.' });
+      return;
+    }
+
+    const lessons = localizeAllAcademyStages(ACADEMY_STAGES, 'de').flatMap(stage => stage.lessons);
+    const requestedCursor = Number(req.body?.cursor ?? 0);
+    const cursor = Number.isInteger(requestedCursor) && requestedCursor >= 0 ? requestedCursor : 0;
+    const batch = lessons.slice(cursor, cursor + LESSON_AUDIO_ADMIN_BATCH_SIZE);
+    let generated = 0;
+    let cached = 0;
+
+    try {
+      for (const lesson of batch) {
+        const narrationText = buildLessonNarration(lesson, 'de');
+        const objectName = lessonAudioObjectName(
+          lesson.id,
+          'de',
+          ELEVENLABS_VOICE_ID,
+          ELEVENLABS_MODEL_ID,
+          narrationText,
+        );
+        const existingAudio = await loadLessonAudioFromCache(LESSON_AUDIO_BUCKET, objectName);
+        if (existingAudio) {
+          cached += 1;
+          continue;
+        }
+        const audio = await generateElevenLabsAudio(narrationText, elevenLabsApiKey);
+        await saveLessonAudioToCache(LESSON_AUDIO_BUCKET, objectName, audio);
+        generated += 1;
+      }
+
+      const processed = cursor + batch.length;
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({
+        success: true,
+        processed,
+        total: lessons.length,
+        generated,
+        cached,
+        nextCursor: processed < lessons.length ? processed : null,
+      });
+    } catch (error: unknown) {
+      console.error('Deutsche Lektionsaudios konnten nicht vorgeneriert werden:', error);
+      res.status(503).json({
+        error: error instanceof Error ? error.message : 'Deutsche Lektionsaudios konnten nicht vorgeneriert werden.',
+        cursor,
+      });
     }
   });
 
