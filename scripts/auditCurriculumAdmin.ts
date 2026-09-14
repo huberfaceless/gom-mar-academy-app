@@ -34,6 +34,10 @@ const checks: Array<[boolean, string]> = [
   [app.includes("activeView === 'academy'") && app.includes("onBackToAdmin={() => handleNavigate('admin')}"), 'Die Entwurfsvorschau führt zurück zur Admin-Zentrale.'],
   [academy.includes('isAcademyStageAccessible(requestedInitialStageId, stageAccessLimit)') && !academy.includes('unlockedStageIdSet'), 'Administratoren können Entwürfe unabhängig von der Mitglieder-Freischaltung direkt öffnen.'],
   [academy.includes("currentLesson.publicationStatus === 'draft'") && academy.includes('draftPreview'), 'Die vollständige Lektionsansicht kennzeichnet Admin-Entwürfe eindeutig.'],
+  [admin.includes('handleUploadLessonVideo') && admin.includes('youtubeService.uploadUnlistedVideo'), 'Der Admin kann ein MP4 direkt aus dem Lektionseditor zu YouTube hochladen.'],
+  [admin.includes('setLessonVideoUploadProgress') && admin.includes('Upload läuft:'), 'Der Lektionseditor zeigt den Upload-Fortschritt an.'],
+  [admin.includes("videoUrl: result.videoUrl") && admin.includes('speichere anschließend die Lektion'), 'Die hochgeladene YouTube-URL wird automatisch in die Lektion übernommen.'],
+  [admin.includes('youtubeService.getConnectionStatus()') && admin.includes('YouTube ist nicht verbunden'), 'Der Video-Upload prüft die bestehende YouTube-Verbindung.'],
 ];
 
 for (const [passed, message] of checks) {

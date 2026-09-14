@@ -21,13 +21,15 @@ import {
   UserCheck,
   Award,
   AlertTriangle,
-  RotateCcw
+  RotateCcw,
+  Upload
 } from 'lucide-react';
 import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types';
 import { auth } from '../firebase/config';
 import { useLanguage } from '../context/LanguageContext';
 import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { ACADEMY_STAGES } from '../data/academyData';
+import { youtubeService } from '../services/youtubeService';
 
 type FirebaseMember = {
   uid: string;
@@ -106,6 +108,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string>('');
   const [audioBatchRunning, setAudioBatchRunning] = useState<boolean>(false);
   const [audioBatchProgress, setAudioBatchProgress] = useState<{ processed: number; total: number; generated: number; cached: number } | null>(null);
+  const [lessonVideoFile, setLessonVideoFile] = useState<File | null>(null);
+  const [lessonVideoUploadProgress, setLessonVideoUploadProgress] = useState<number | null>(null);
+  const [lessonVideoUploadError, setLessonVideoUploadError] = useState<string>('');
 
   // Form State for Lesson Editor
   const [lessonFormData, setLessonFormData] = useState<Partial<Lesson>>({
@@ -394,6 +399,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     setEditingLesson(lesson);
     setIsCreatingLesson(false);
     setLessonFormData(JSON.parse(JSON.stringify(lesson)));
+    setLessonVideoFile(null);
+    setLessonVideoUploadProgress(null);
+    setLessonVideoUploadError('');
   };
 
   // Open Create New Lesson Modal
@@ -430,6 +438,46 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         placeholder: 'Deine Antwort oder Notiz hier eingeben...'
       }
     });
+    setLessonVideoFile(null);
+    setLessonVideoUploadProgress(null);
+    setLessonVideoUploadError('');
+  };
+
+  const handleUploadLessonVideo = async () => {
+    if (!lessonVideoFile || lessonVideoUploadProgress !== null) return;
+    const isMp4 = lessonVideoFile.type === 'video/mp4' || lessonVideoFile.name.toLowerCase().endsWith('.mp4');
+    if (!isMp4) {
+      setLessonVideoUploadError('Bitte eine MP4-Videodatei auswählen.');
+      return;
+    }
+    if (!lessonFormData.title?.trim()) {
+      setLessonVideoUploadError('Bitte vor dem Upload einen deutschen Lektions-Titel eintragen.');
+      return;
+    }
+    if (!window.confirm('Dieses Lektionsvideo jetzt als „Nicht gelistet“ zu YouTube hochladen?')) return;
+
+    setLessonVideoUploadError('');
+    setLessonVideoUploadProgress(0);
+    try {
+      const connection = await youtubeService.getConnectionStatus();
+      if (!connection.connected) {
+        throw new Error('YouTube ist nicht verbunden. Bitte die Verbindung zuerst in der Content Engine herstellen.');
+      }
+      const result = await youtubeService.uploadUnlistedVideo(lessonVideoFile, {
+        title: (lessonFormData.learnContent?.videoTitle || lessonFormData.title).trim(),
+        description: lessonFormData.description?.trim() || '',
+        tags: [],
+      }, setLessonVideoUploadProgress);
+      setLessonFormData((current) => ({
+        ...current,
+        learnContent: { ...current.learnContent!, videoUrl: result.videoUrl },
+      }));
+      setLessonVideoUploadProgress(100);
+      setLessonVideoFile(null);
+    } catch (error: unknown) {
+      setLessonVideoUploadError(error instanceof Error ? error.message : 'Das Lektionsvideo konnte nicht hochgeladen werden.');
+      setLessonVideoUploadProgress(null);
+    }
   };
 
   // Save Lesson changes
@@ -1144,6 +1192,35 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               </div>
 
               <div className="space-y-3 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
+                <div className="space-y-2 rounded-xl border border-indigo-200 bg-white p-3">
+                  <label className="block text-xs font-bold text-slate-700">MP4 direkt zu YouTube hochladen</label>
+                  <input
+                    type="file"
+                    accept="video/mp4,.mp4"
+                    onChange={(event) => {
+                      setLessonVideoFile(event.target.files?.[0] || null);
+                      setLessonVideoUploadError('');
+                      setLessonVideoUploadProgress(null);
+                    }}
+                    className="block w-full text-xs text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-indigo-100 file:px-3 file:py-2 file:text-xs file:font-bold file:text-indigo-700 hover:file:bg-indigo-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleUploadLessonVideo}
+                    disabled={!lessonVideoFile || lessonVideoUploadProgress !== null}
+                    className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-xs font-black text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <Upload className="h-4 w-4" />
+                    {lessonVideoUploadProgress !== null && lessonVideoUploadProgress < 100
+                      ? `Upload läuft: ${lessonVideoUploadProgress} %`
+                      : 'Als „Nicht gelistet“ hochladen'}
+                  </button>
+                  <p className="text-[11px] text-slate-500">MP4, maximal 30 MB. Nach dem Upload wird die YouTube-URL automatisch eingetragen; speichere anschließend die Lektion.</p>
+                  {lessonVideoUploadError && <p role="alert" className="text-xs font-semibold text-red-700">{lessonVideoUploadError}</p>}
+                  {lessonVideoUploadProgress === 100 && (
+                    <p className="text-xs font-semibold text-emerald-700">Upload abgeschlossen. Die Video-URL wurde eingetragen.</p>
+                  )}
+                </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">YouTube-Video-URL (optional)</label>
                   <input
