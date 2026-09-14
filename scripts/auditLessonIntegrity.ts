@@ -33,6 +33,7 @@ const riskyClaims: Array<[RegExp, string]> = [
   [/\b(?:steuernachzahlungen\s+für\s+immer\s+vermeiden|wasserdichte[nrsm]*\s+(?:agb|verträg\w*)|vermögen\s+vor\s+abmahnungen|aggressiv\s+zu\s+werben)\b/giu, 'Pauschales Rechts-, Steuer- oder Complianceversprechen'],
   [/\b(?:niemals\s+in\s+die\s+enge\s+getrieben|shitstorms?\s+im\s+keim\s+ersticken|in\s+60\s+minuten\s+rechtssicher|journalisten\s+den\s+wind\s+aus\s+den\s+segeln)\b/giu, 'Pauschales Medien-, Rechts- oder Krisenversprechen'],
   [/\b(?:rechtssichere\s+internationale\s+firmenstrukturen|höchster\s+vermögensschutz|beste\s+kombination\s+aus\s+eu-recht|unübertroffene\s+lebensqualität\s+und\s+steuerliche\s+freiheit)\b/giu, 'Pauschales internationales Steuer- oder Standortversprechen'],
+  [/\b(?:portfolio\s+verzehnfachen|nächsten\s+unicorn-?hit|maximalen\s+ertrag\s+beim\s+multimillionen-?exit|vorzeitige\s+gewinnauszahlung)\b/giu, 'Unbelegtes Startup-, Exit- oder Renditeversprechen'],
 ];
 
 const collectStrings = (value: unknown, result: string[] = []): string[] => {
