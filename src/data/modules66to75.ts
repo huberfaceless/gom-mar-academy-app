@@ -1098,39 +1098,39 @@ Wenn das Gehirn sich anstrengen muss, um eine Information zu verstehen, schaltet
   {
     id: 73,
     title: '73. High-Performance Biohacking & CEO-Energie-Management',
-    subtitle: 'Schlaf-Optimierung, Nootropika, HRV-Tracking, Kognitiver Peak & Burnout-Prävention',
+    subtitle: 'Schlafgewohnheiten, HRV-Tracking, Fokus-Routinen & verantwortungsvolle Regeneration',
     color: 'from-teal-600 via-emerald-600 to-cyan-700',
     badgeIcon: '⚡',
-    description: 'Dein Körper ist dein wichtigstes Unternehmens-Asset: Optimiere Schlafarchitektur (Tief- & REM-Schlaf), steigere deine Herzratenvariabilität (HRV) und halte deinen mentalen Fokus 10 Stunden täglich auf Spitzen-Niveau.',
+    description: 'Beobachte Schlaf, Erholung und Arbeitsrhythmus, um alltagstaugliche Routinen zu entwickeln. Wearable-Daten sind Orientierungshilfen und ersetzen weder Diagnose noch medizinische Beratung.',
     lessons: [
       {
         id: '73.1',
         stageId: 73,
         stageTitle: '73. Schlaf-Architektur & HRV-Tracking',
-        title: 'Die Schlaf-Formel: Tiefschlaf verdoppeln & Herzratenvariabilität (HRV) maximieren',
+        title: 'Schlafgewohnheiten und HRV verantwortungsvoll beobachten',
         durationMinutes: 32,
-        description: 'Oura Ring & Whoop Daten auswerten, Temperatur-Zyklen steuern, Licht-Timing (Morgensonne & Blaulichtfilter) und optimale Schlaf-Erholung.',
+        description: 'Oura- und Whoop-Daten als Trends auswerten sowie Licht, Temperatur und Abendroutine individuell und vorsichtig testen.',
         learnContent: {
           videoTitle: 'Masterclass: CEO-Biohacking & Kognitives Schlaf-Management',
           videoDuration: '32:15',
-          summaryText: 'Wer mit 5 Stunden schlechtem Schlaf Entscheidungen trifft, hat die kognitiven Fähigkeiten eines Betrunkenen. Lerne, wie du durch gezielte Lichtsteuerung, Magnesium-Komplexe und Raumkühlung deinen Tiefschlaf verdoppelst.',
+          summaryText: 'Zu wenig oder schlechter Schlaf kann Aufmerksamkeit und Entscheidungsfähigkeit beeinträchtigen. Du lernst, Schlafdaten als Trends zu lesen und risikoarme Änderungen an Licht, Raumtemperatur und Abendroutine zu testen. Nahrungsergänzungsmittel gehören vorab mit medizinischem Fachpersonal geklärt.',
           bulletPoints: [
-            'Die 90-Minuten Schlafzyklen: Warum Aufwachen am Ende eines Zyklus dich hellwach macht',
-            'Lichtbiologie: 10 Minuten Sonnenlicht direkt nach dem Aufstehen für den perfekten Cortisol-Peak',
-            'HRV (Herzratenvariabilität): Der unbestechliche Indikator für Nervensystem-Erholung und Stressresistenz',
-            'Die 3-2-1 Regel: 3 Stunden vor dem Schlafen kein Essen, 2 Stunden kein Wasser, 1 Stunde keine Bildschirme'
+            'Schlafzyklen variieren: Wearable-Schätzungen über mehrere Nächte statt einzelne Messwerte betrachten',
+            'Morgenlicht: Tageslicht nach dem Aufstehen als mögliche Unterstützung für einen regelmäßigen Rhythmus nutzen',
+            'HRV (Herzratenvariabilität): Persönliche Trends beobachten, statt Werte zwischen Personen zu vergleichen',
+            'Abendroutine: Essens-, Trink- und Bildschirmzeiten individuell testen, ohne starre Erfolgszusage'
           ],
           coreConcepts: [
             {
               iconName: 'moon',
-              title: 'DEEP SLEEP MULTIPLIER',
-              description: 'Verdopplung der körperlichen Regeneration und Gedächtniskonsolidierung.',
+              title: 'SCHLAF-TRENDS',
+              description: 'Mehrere Wochen beobachten, bevor du Zusammenhänge zwischen Routinen und Erholung ableitest.',
               highlight: true
             },
             {
               iconName: 'activity',
               title: 'HRV RECOVERY',
-              description: 'Hohe Herzratenvariabilität signalisiert maximale mentale Leistungsfähigkeit.'
+              description: 'HRV ist individuell und kann durch viele Faktoren beeinflusst werden; Trends sind keine medizinische Diagnose.'
             }
           ],
           resources: [
@@ -1160,7 +1160,7 @@ Spitzenunternehmer behandeln sich wie olympische Athleten.
 4. **22:00 Uhr (Abend)**: Blaulichtfilter-Brille, kühles Schlafzimmer (18 Grad) und Dunkelheit.`
         },
         understandContent: {
-          coreTakeaway: 'Wer seine Erholung meistert, trifft in 4 Stunden bessere Entscheidungen als andere in 12 Stunden Hektik.',
+          coreTakeaway: 'Konstante, individuell passende Schlaf- und Pausenroutinen können konzentriertes Arbeiten unterstützen; Ergebnisse unterscheiden sich.',
           keyPrinciples: [
             'Kein Koffein in den ersten 90 Minuten nach dem Aufwachen, um den Nachmittags-Crash zu verhindern',
             'Schlafzimmer vollkommen abdunkeln (Blackout-Vorhänge) und Temperatur auf 17-19°C absenken'
@@ -1414,36 +1414,36 @@ Reibungslose Supply Chains sind der geheime Wettbewerbsvorteil erfolgreicher E-C
     subtitle: 'Single Family Office, Familienstiftungen, Asset Allocation & Generationen-Wealth',
     color: 'from-amber-700 via-yellow-800 to-slate-900',
     badgeIcon: '🏛️',
-    description: 'Baue ein unvergängliches Vermächtnis auf: Erfahre, wie vermögende Dynastien ihr Vermögen über Single Family Offices, Familienstiftungen in Liechtenstein/Schweiz und krisensichere Asset-Allokationen über Generationen hinweg sichern.',
+    description: 'Lerne die Grundzüge von Family Offices, Familienstiftungen und diversifizierter Vermögensstrukturierung kennen. Rechts-, Steuer- und Anlagerisiken unterscheiden sich je nach Land und persönlicher Situation.',
     lessons: [
       {
         id: '75.1',
         stageId: 75,
         stageTitle: '75. Familienstiftungen & Vermögensschutz',
-        title: 'Die Familienstiftung: Vermögen dem Erbschaftssteuer- und Scheidungszugriff entziehen',
+        title: 'Die Familienstiftung: Chancen, Grenzen und rechtliche Pflichten',
         durationMinutes: 34,
-        description: 'Wie Familienstiftungen in Deutschland, Österreich und Liechtenstein funktionieren, warum das Stiftungsvermögen keinem Eigentümer mehr gehört und wie Nachkommen versorgt werden.',
+        description: 'Wie Familienstiftungen in Deutschland, Österreich und Liechtenstein grundsätzlich funktionieren, wem das Stiftungsvermögen rechtlich zugeordnet ist und wie Begünstigte versorgt werden können.',
         learnContent: {
           videoTitle: 'Masterclass: Familienstiftungen & Generationen-Vermögensschutz',
           videoDuration: '34:20',
-          summaryText: 'Ein Testament verhindert keinen Erbstreit und keine Erbschaftssteuer. Eine Familienstiftung trennt das Vermögen von deiner Person: Es gehört der Stiftung, schützt vor Pflichtteilsansprüchen und sichert deine Familie für hunderte von Jahren ab.',
+          summaryText: 'Eine Familienstiftung kann Vermögen langfristig nach einem festgelegten Zweck verwalten. Ob sie steuerlich oder erbrechtlich sinnvoll ist, hängt von Rechtsordnung, Ausgestaltung und Einzelfall ab; Pflichtteils-, Gläubiger- und Steuerfragen müssen Fachleute prüfen.',
           bulletPoints: [
             'Das Stiftungs-Prinzip: Vermögen wird verselbstständigt und dient ausschließlich dem Stiftungszweck (Familienversorgung)',
-            'Erbersatzsteuer: Alle 30 Jahre in Deutschland – wie man sie durch intelligente Gestaltungen minimiert',
-            'Liechtenstein-Stiftung: Keine Erbersatzsteuer, höchste Diskretion und erstklassiger Vermögensschutz',
+            'Erbersatzsteuer in Deutschland: Grundprinzip und mögliche Belastung in der langfristigen Planung berücksichtigen',
+            'Grenzüberschreitende Stiftungen: Steuerpflichten, Transparenzregeln und Anerkennung in allen betroffenen Ländern prüfen',
             'Destinatäre: Wie Kinder und Enkel monatliche Zuwendungen erhalten, ohne Zugriff auf das Stammvermögen zu haben'
           ],
           coreConcepts: [
             {
               iconName: 'shield',
               title: 'GENERATIONAL ASSET VAULT',
-              description: 'Vollständiger Schutz vor Zwangsvollstreckung, Scheidungen und Erbstreitigkeiten.',
+              description: 'Eine eigenständige Vermögensstruktur kann Risiken ordnen, bietet aber keinen pauschalen Schutz vor Ansprüchen.',
               highlight: true
             },
             {
               iconName: 'award',
               title: 'PURPOSE-DRIVEN LEGACY',
-              description: 'Feste Satzungsregeln stellen sicher, dass das Vermögen niemals verschwendet wird.'
+              description: 'Satzungsregeln geben den Zweck vor; Governance, Kontrolle und rechtliche Grenzen bleiben entscheidend.'
             }
           ],
           resources: [
@@ -1462,18 +1462,18 @@ Reibungslose Supply Chains sind der geheime Wettbewerbsvorteil erfolgreicher E-C
               actionUrl: 'settings'
             }
           ],
-          fullArticleGuide: `### Die Festung für dein Lebenswerk
+          fullArticleGuide: `### Langfristige Vermögensverwaltung mit klaren Regeln
 
-Eine Stiftung stirbt nicht, wird nicht geschieden und kann nicht erben-zerstritten werden.
+Eine Stiftung ist eine eigenständige Rechtsstruktur. Ihre Wirkung auf Nachfolge, Steuern und Haftung richtet sich nach dem anwendbaren Recht und der konkreten Gestaltung.
 
 #### Die Säulen einer Familienstiftung:
 1. **Der Stifter**: Du bringst Unternehmensanteile, Immobilien und Wertpapiere in die Stiftung ein.
-2. **Die Satzung**: Dein unumstößliches Gesetz, wie Erträge verwaltet und ausgeschüttet werden.
+2. **Die Satzung**: Legt im Rahmen des geltenden Rechts fest, wie Erträge verwaltet und ausgeschüttet werden.
 3. **Der Vorstand**: Verwaltet das Vermögen nach deinen Vorgaben.
 4. **Die Begünstigten (Destinatäre)**: Deine Kinder und Enkel, die regelmäßige Ausschüttungen erhalten.`
         },
         understandContent: {
-          coreTakeaway: 'Wer wahres generationenübergreifendes Vermögen aufbaut, sichert es rechtzeitig in Stiftungsstrukturen ab.',
+          coreTakeaway: 'Eine Familienstiftung ist eine mögliche, aber komplexe Nachfolgestruktur und sollte nur nach individueller Rechts- und Steuerberatung umgesetzt werden.',
           keyPrinciples: [
             'Die Stiftungssatzung muss mit höchster Sorgfalt formuliert werden, da nachträgliche Änderungen extrem schwierig sind',
             'Stiftungsvorstand mit vertrauenswürdigen Fachleuten und Familienmitgliedern besetzen'

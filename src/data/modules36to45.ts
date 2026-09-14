@@ -1106,11 +1106,11 @@ Entscheider kaufen nur von Menschen, die ihre branchenspezifischen Probleme im D
   },
   {
     id: 43,
-    title: '43. E-Mail Deliverability, Domain-Reputation & Spam-Befreiung',
-    subtitle: 'DKIM, SPF, DMARC, Warmup-Pipelines & Posteingangs-Garantie bei Gmail/Outlook',
+    title: '43. E-Mail-Zustellbarkeit & Domain-Reputation',
+    subtitle: 'DKIM, SPF, DMARC, Warmup-Prozesse & nachhaltige Absender-Reputation',
     color: 'from-cyan-600 via-teal-600 to-blue-700',
     badgeIcon: '📬',
-    description: 'Lande zu 99% im Hauptpostfach: Verhindere Spam-Ordner-Abstürze durch professionelle DNS-Authentifizierung (SPF, DKIM, DMARC, BIMI), automatisierte Domain-Warmup-Prozesse und E-Mail-Hygiene.',
+    description: 'Verbessere die Chance auf eine zuverlässige Zustellung durch saubere DNS-Authentifizierung (SPF, DKIM, DMARC, BIMI), kontrollierte Warmup-Prozesse und konsequente Listenhygiene. Eine Platzierung im Hauptpostfach kann kein Verfahren garantieren.',
     lessons: [
       {
         id: '43.1',
@@ -1122,7 +1122,7 @@ Entscheider kaufen nur von Menschen, die ihre branchenspezifischen Probleme im D
         learnContent: {
           videoTitle: 'Masterclass: E-Mail DNS-Authentifizierung & Server-Reputation',
           videoDuration: '28:30',
-          summaryText: 'Seit den strengen Richtlinien von Google und Yahoo werden ungesicherte E-Mails gnadenlos in den Spam-Ordner verschoben oder komplett geblockt. In dieser Lektion konfigurieren wir Schritt für Schritt deine DNS-Einträge für maximale Zustellbarkeit.',
+          summaryText: 'Google, Yahoo und andere Anbieter berücksichtigen technische Authentifizierung, Reputation und Empfängersignale bei der Zustellung. In dieser Lektion konfigurierst du deine DNS-Einträge und schaffst damit eine belastbare technische Grundlage.',
           bulletPoints: [
             'SPF (Sender Policy Framework): Autorisierung deiner Versand-Server im DNS',
             'DKIM (DomainKeys Identified Mail): Kryptografische Signatur gegen Manipulation',
@@ -1133,13 +1133,13 @@ Entscheider kaufen nur von Menschen, die ihre branchenspezifischen Probleme im D
             {
               iconName: 'shield-check',
               title: 'TRIPLE DNS AUTH',
-              description: 'SPF, DKIM und DMARC fehlerfrei eingerichtet garantieren 99%+ Zustellrate.',
+              description: 'SPF, DKIM und DMARC bestätigen die Absenderidentität und reduzieren vermeidbare Zustellprobleme.',
               highlight: true
             },
             {
               iconName: 'check-circle-2',
               title: 'BIMI LOGO VERIFICATION',
-              description: 'Verifiziertes Markenlogo im Posteingang erhöht die Öffnungsrate um bis zu 25%.'
+              description: 'BIMI kann bei unterstützenden Anbietern ein verifiziertes Markenlogo anzeigen; die Wirkung auf Öffnungsraten variiert.'
             }
           ],
           resources: [
@@ -1190,17 +1190,17 @@ E-Mail-Provider wie Google und Microsoft bewerten nicht nur deinen Text, sondern
         id: '43.2',
         stageId: 43,
         stageTitle: '43. Domain Warmup & Listenhygiene',
-        title: 'Domain-Warmup & Listenhygiene: Niemals wieder Spam-Ordner',
+        title: 'Domain-Warmup & Listenhygiene: Zustellrisiken reduzieren',
         durationMinutes: 29,
         description: 'Wie du neue Domains langsam hochfährst, inaktive Kontakte aussortierst und Spam-Fallen (Spamtraps) vermeidest.',
         learnContent: {
           videoTitle: 'Masterclass: Listenbereinigung & Automatisches Domain-Warmup',
           videoDuration: '29:40',
-          summaryText: 'Ein sauberer E-Mail-Verteiler mit 2.000 aktiven Kontakten ist wertvoller als eine veraltete Liste mit 20.000 Karteileichen. Lerne, wie du automatische Bereinigungs-Workflows erstellst und Absender-Scores über 95/100 hältst.',
+          summaryText: 'Eine kleinere, aktive und rechtmäßig aufgebaute Liste kann bessere Signale liefern als ein großer veralteter Verteiler. Lerne, wie du Bereinigungs-Workflows einrichtest und wichtige Reputationswerte beobachtest.',
           bulletPoints: [
             'Der 30-Tage Warmup-Plan: Tägliche Steigerung des Versandvolumens von 20 auf 2.000+ Mails',
             'Listen-Reaktivierungs-Kampagne: 90 Tage inaktive Abonnenten reaktivieren oder automatisch löschen',
-            'Spam-Trigger-Wörter vermeiden: Welche Begriffe in Betreffzeilen sofort Alarm schlagen',
+            'Inhalt und Kontext prüfen: Warum einzelne Wörter allein selten über die Zustellung entscheiden',
             'Bounce-Management: Hard Bounces sofort entfernen, um die Server-Reputation zu schützen'
           ],
           coreConcepts: [
@@ -1219,7 +1219,7 @@ E-Mail-Provider wie Google und Microsoft bewerten nicht nur deinen Text, sondern
           resources: [
             {
               title: 'Spam-Trigger-Wörterliste & Reaktivierungs-Sequenz',
-              subtitle: '100 verbotene Wörter & 3 E-Mail Vorlagen als PDF',
+              subtitle: 'Prüfliste für riskante Formulierungen & 3 E-Mail-Vorlagen als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
@@ -1240,10 +1240,10 @@ Wenn 50% deiner Liste deine E-Mails ignorieren, sinkt deine Zustellrate auch bei
 1. **Filterung**: Erstelle ein Segment für alle Kontakte ohne Öffnung in den letzten 90 Tagen.
 2. **Reaktivierungs-Mail**: Sende eine provokante Mail ("Soll ich dich austragen?").
 3. **Konsequente Löschung**: Wer nach 7 Tagen nicht reagiert, wird unwiderruflich archiviert.
-4. **Ergebnis**: Deine Öffnungsrate steigt sofort von 20% auf 45%+ an.`
+4. **Auswertung**: Vergleiche Zustell-, Öffnungs- und Abmelderaten vor und nach der Bereinigung; das Ergebnis hängt von Liste, Inhalt und Anbieter ab.`
         },
         understandContent: {
-          coreTakeaway: 'Eine kleinere, extrem engagierte Liste bringt mehr Umsatz als eine riesige, inaktive Liste.',
+          coreTakeaway: 'Eine kleinere, aktive Liste kann bessere Zustellsignale und aussagekräftigere Kennzahlen liefern als eine große, inaktive Liste.',
           keyPrinciples: [
             'Regelmäßiges Löschen inaktiver Kontakte spart monatliche Tool-Kosten und rettet die Zustellbarkeit',
             'Double-Opt-In ist der beste Schutz gegen gefälschte Adressen und Spamtraps'
