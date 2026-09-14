@@ -103,6 +103,7 @@ if (lessonCount === 0) {
 
 const lessonPlayer = fs.readFileSync('src/components/LessonVideoPlayer.tsx', 'utf8');
 const server = fs.readFileSync('server.ts', 'utf8');
+const serverCache = fs.readFileSync('server/lessonAudioCache.ts', 'utf8');
 const playerChecks: Array<[boolean, string]> = [
   [lessonPlayer.includes("audioPlayer: 'GOM-MAR Audio-Erklärung'"), 'Die deutsche Audio-Erklärung ist eindeutig gekennzeichnet.'],
   [lessonPlayer.includes("audioPlayer: 'GOM-MAR audio explanation'"), 'Die englische Audio-Erklärung ist eindeutig gekennzeichnet.'],
@@ -118,6 +119,11 @@ const playerChecks: Array<[boolean, string]> = [
   [server.includes("process.env.ELEVENLABS_API_KEY"), 'Der ElevenLabs-Schlüssel wird ausschließlich serverseitig gelesen.'],
   [server.includes("model_id: ELEVENLABS_MODEL_ID"), 'Das mehrsprachige ElevenLabs-Modell ist fest konfiguriert.'],
   [!lessonPlayer.includes('ELEVENLABS_API_KEY'), 'Der ElevenLabs-Schlüssel gelangt nicht in den Browser-Code.'],
+  [server.includes('loadLessonAudioFromCache(LESSON_AUDIO_BUCKET'), 'Vor der Erzeugung wird der gemeinsame Audio-Cache geprüft.'],
+  [server.includes('saveLessonAudioToCache(LESSON_AUDIO_BUCKET'), 'Neu erzeugtes Audio wird im gemeinsamen Cache gespeichert.'],
+  [server.includes("res.setHeader('X-Lesson-Audio-Cache', 'HIT')"), 'Cache-Treffer werden für die Produktionsprüfung gekennzeichnet.'],
+  [serverCache.includes("createHash('sha256')"), 'Cache-Dateien werden anhand ihres vollständigen Audioinhalts versioniert.'],
+  [serverCache.includes('devstorage.read_write'), 'Der Cache verwendet eine begrenzte Google-Cloud-Storage-Berechtigung.'],
 ];
 
 for (const [passed, message] of playerChecks) {

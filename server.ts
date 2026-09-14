@@ -16,6 +16,7 @@ import {
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
+import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
@@ -62,6 +63,7 @@ const EMAIL_SEND_LIMIT = 5;
 const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
 const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'jvw0xpI6PlgLKJlPLn5z';
 const ELEVENLABS_MODEL_ID = 'eleven_multilingual_v2';
+const LESSON_AUDIO_BUCKET = process.env.LESSON_AUDIO_BUCKET?.trim() || '';
 const LESSON_AUDIO_WINDOW_MS = 60_000;
 const LESSON_AUDIO_LIMIT = 10;
 const escapeHtml = (value: string): string => value
@@ -293,8 +295,31 @@ async function startServer() {
       narrationCopy.takeaway,
       lesson.understandContent.coreTakeaway,
     ].join(' ').slice(0, 4_500);
+    const cacheObjectName = lessonAudioObjectName(
+      lesson.id,
+      language,
+      ELEVENLABS_VOICE_ID,
+      ELEVENLABS_MODEL_ID,
+      narrationText,
+    );
 
     try {
+      if (LESSON_AUDIO_BUCKET) {
+        try {
+          const cachedAudio = await loadLessonAudioFromCache(LESSON_AUDIO_BUCKET, cacheObjectName);
+          if (cachedAudio) {
+            res.setHeader('Content-Type', 'audio/mpeg');
+            res.setHeader('Content-Length', String(cachedAudio.byteLength));
+            res.setHeader('Cache-Control', 'private, max-age=31536000, immutable');
+            res.setHeader('X-Lesson-Audio-Cache', 'HIT');
+            res.send(cachedAudio);
+            return;
+          }
+        } catch (error: unknown) {
+          console.error('Lektionsaudio-Cache konnte nicht gelesen werden:', error);
+        }
+      }
+
       const elevenLabsResponse = await fetch(
         `${ELEVENLABS_API_URL}/${encodeURIComponent(ELEVENLABS_VOICE_ID)}?output_format=mp3_44100_128`,
         {
@@ -313,9 +338,17 @@ async function startServer() {
       }
 
       const audio = Buffer.from(await elevenLabsResponse.arrayBuffer());
+      if (LESSON_AUDIO_BUCKET) {
+        try {
+          await saveLessonAudioToCache(LESSON_AUDIO_BUCKET, cacheObjectName, audio);
+        } catch (error: unknown) {
+          console.error('Lektionsaudio-Cache konnte nicht gespeichert werden:', error);
+        }
+      }
       res.setHeader('Content-Type', 'audio/mpeg');
       res.setHeader('Content-Length', String(audio.byteLength));
       res.setHeader('Cache-Control', 'private, max-age=31536000, immutable');
+      res.setHeader('X-Lesson-Audio-Cache', 'MISS');
       res.send(audio);
     } catch (error: unknown) {
       console.error('ElevenLabs-Lektionsaudio fehlgeschlagen:', error);
@@ -334,6 +367,7 @@ async function startServer() {
       commit: process.env.APP_COMMIT_SHA || null,
       emailDeliveryConfigured: Boolean(process.env.SENDGRID_API_KEY?.trim() && process.env.SENDGRID_FROM_EMAIL?.trim()),
       lessonVoiceConfigured: Boolean(process.env.ELEVENLABS_API_KEY?.trim()),
+      lessonAudioCacheConfigured: Boolean(LESSON_AUDIO_BUCKET),
     });
   });
 
