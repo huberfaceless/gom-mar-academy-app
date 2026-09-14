@@ -1852,17 +1852,17 @@ Die profitabelsten Marketer machen ihren Hauptgewinn nicht beim ersten Produkt, 
         id: '12.1',
         stageId: 12,
         stageTitle: '12. High-Converting Landingpages & No-Code Builder',
-        title: 'Die Anatomie einer 40%+ Opt-In Landingpage',
+        title: 'Die Anatomie einer klaren Opt-In-Landingpage',
         durationMinutes: 15,
-        description: 'Hero-Section, fesselnde Sub-Headline, minimalistisches Opt-In Formular & Vertrauens-Elemente für maximale Lead-Eingänge.',
+        description: 'Hero-Section, verständliche Sub-Headline, minimalistisches Opt-In-Formular und Vertrauenselemente für eine messbare Nutzerführung.',
         learnContent: {
-          videoTitle: 'Landingpage Aufbau für maximale Conversions',
+          videoTitle: 'Landingpage-Aufbau für nachvollziehbare Conversion-Tests',
           videoDuration: '12:00',
-          summaryText: 'Lerne den perfekten Vorlagen-Aufbau für Squeeze Pages und Opt-In Seiten, die Besucher sofort in Kontakte verwandeln.',
+          summaryText: 'Lerne einen übersichtlichen Vorlagen-Aufbau für Squeeze-Pages und Opt-In-Seiten. Die tatsächliche Eintragungsrate hängt unter anderem von Zielgruppe, Angebot, Traffic-Quelle und Testdauer ab.',
           bulletPoints: [
             'Glasklare Above-the-Fold Hero Section',
             'Fokus auf ein einziges Handlungs-Ziel (Keine Ablenkungen)',
-            'Mobile-First Layout für 80%+ Smartphone-Nutzer'
+            'Mobile-First-Layout passend zum gemessenen Geräteanteil deiner Besucher'
           ],
           fullArticleGuide: `### Der perfekte Landingpage-Aufbau
 
@@ -1878,7 +1878,7 @@ Eine erfolgreiche Opt-In Seite hat genau ein einziges Ziel: Die E-Mail-Adresse d
           ]
         },
         understandContent: {
-          coreTakeaway: 'Weniger Ablenkung bedeutet mehr Conversions – halte deine Opt-In Seite extrem fokussiert.',
+          coreTakeaway: 'Eine fokussierte Seite erleichtert die Orientierung; welche Variante besser konvertiert, zeigt erst ein sauberer Test.',
           keyPrinciples: ['Glasklarer Nutzen', 'Minimalistisches Formular']
         },
         actionTask: {
@@ -1963,7 +1963,7 @@ Jetzt fügen sich alle Bausteine deiner GOM-MAR Academy Ausbildung zu einem gesc
           instruction: 'Schließe das Landingpage-Modul ab & schalte deinen Master-Status frei:',
           inputType: 'checklist',
           checklistItems: [
-            'Ich kenne den Aufbau einer 40%+ Opt-In Landingpage',
+            'Ich kenne den Aufbau einer klaren und testbaren Opt-In-Landingpage',
             'Ich verstehe die Bedeutung von Mobile-First & Ladezeiten',
             'Ich habe meine Landingpage mit der E-Mail-Automation verbunden'
           ]
@@ -3882,7 +3882,7 @@ Ein einmaliger Produktverkauf deckt oft nur die Kundenakquisitionskosten (CAC). 
     subtitle: 'Autonome Lead-Qualifizierung, KI-Copywriting & Prozess-Automatisierung mit Make / Zapier',
     color: 'from-blue-600 via-indigo-600 to-violet-600',
     badgeIcon: '🤖',
-    description: 'Automatisiere 80% deiner operativen Aufgaben: Baue intelligente KI-Agenten, verbinde dein CRM nahtlos mit Webhooks und automatisiere die Content- und Lead-Erfassung.',
+    description: 'Identifiziere geeignete operative Aufgaben für die Automatisierung: Baue kontrollierte KI-Assistenten, verbinde dein CRM mit Webhooks und automatisiere klar abgegrenzte Content- und Lead-Prozesse.',
     lessons: [
       {
         id: '27.1',
@@ -3890,13 +3890,13 @@ Ein einmaliger Produktverkauf deckt oft nur die Kundenakquisitionskosten (CAC). 
         stageTitle: '27. KI-Workflows & Automation',
         title: 'Autonome KI-Lead-Qualifizierung & Chat-Assistenten',
         durationMinutes: 27,
-        description: 'Wie du Chatbots und Voice-Agenten einrichtest, die rund um die Uhr eingehende Anfragen qualifizieren und direkt Termine in deinen Kalender buchen.',
+        description: 'Wie du Chatbots und Voice-Agenten mit klaren Grenzen einrichtest, die Anfragen vorsortieren und bei geeigneten Fällen eine Terminbuchung anbieten.',
         learnContent: {
           videoTitle: 'Masterclass: Autonome KI-Assistenten im Vertrieb',
           videoDuration: '27:50',
-          summaryText: 'Geschwindigkeit ist im modernen Vertrieb der stärkste Conversion-Hebel. In dieser Masterclass lernst du, wie KI-Agenten Kundenanfragen in unter 60 Sekunden beantworten, qualifizieren und an dein CRM übergeben.',
+          summaryText: 'Eine zeitnahe Antwort kann im Vertrieb hilfreich sein. In dieser Masterclass lernst du, wie KI-Assistenten Anfragen zügig aufnehmen, anhand festgelegter Kriterien vorsortieren und dokumentiert an CRM oder Mitarbeitende übergeben.',
           bulletPoints: [
-            'Die 60-Sekunden Lead-Response Regel: Warum die Abschlusschance nach 5 Minuten um 80% sinkt',
+            'Reaktionszeit messen: Zusammenhang mit Erreichbarkeit, Terminbuchung und Abschlussquote im eigenen Funnel auswerten',
             'Prompt-Engineering für Vertriebs-Agenten: Tonalität, Leitfäden und Einwandbehandlung',
             'Automatischer Abgleich mit dem Mara CRM Kalender zur Vermeidung von Doppelbuchungen',
             'Fallback-Prozesse: Wann die KI menschliche Unterstützung anfordern muss'
@@ -3905,7 +3905,7 @@ Ein einmaliger Produktverkauf deckt oft nur die Kundenakquisitionskosten (CAC). 
             {
               iconName: 'bot',
               title: 'SPEED-TO-LEAD',
-              description: 'Reaktionszeiten unter 1 Minute verdoppeln die Termin-Erscheinungsrate messbar.',
+              description: 'Kurze Reaktionszeiten können die Kontaktaufnahme erleichtern; ihre Wirkung muss mit eigenen Daten geprüft werden.',
               highlight: true
             },
             {
@@ -3916,7 +3916,7 @@ Ein einmaliger Produktverkauf deckt oft nur die Kundenakquisitionskosten (CAC). 
             {
               iconName: 'calendar',
               title: 'AUTO-BOOKING',
-              description: 'Vollautomatisierte Terminvereinbarung ohne lästiges Hin- und Herschreiben.'
+              description: 'Terminangebote anhand verfügbarer Zeiten, mit Bestätigung und einer klaren Übergabe an Menschen bei Sonderfällen.'
             }
           ],
           resources: [
