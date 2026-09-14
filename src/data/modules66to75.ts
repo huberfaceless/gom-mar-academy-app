@@ -794,7 +794,7 @@ Steuersätze und Sonderregelungen ändern sich. Hole vor Gründung, Wegzug oder 
     subtitle: 'Deal-Flow, SAFE-Agreements, Wandelanleihen, Cap-Table-Modellierung & Startup-Beteiligungen',
     color: 'from-emerald-700 via-teal-800 to-zinc-900',
     badgeIcon: '🚀',
-    description: 'Investiere wie die Elite des Silicon Valley: Baue einen erstklassigen Angel-Deal-Flow auf, investiere Firmenüberschüsse über SAFE-Agreements in wachstumsstarke Startups und skaliere dein Vermögen über Equity-Upside.',
+    description: 'Lerne, wie Startup-Beteiligungen, SAFE-Vereinbarungen und Cap-Tables grundsätzlich funktionieren und welche hohen Verlust-, Liquiditäts- und Rechtsrisiken dabei zu beachten sind.',
     lessons: [
       {
         id: '71.1',
@@ -806,24 +806,24 @@ Steuersätze und Sonderregelungen ändern sich. Hole vor Gründung, Wegzug oder 
         learnContent: {
           videoTitle: 'Masterclass: Business Angel Investing & SAFE Agreements',
           videoDuration: '31:30',
-          summaryText: 'Ein erfolgreicher Angel-Deal kann dein gesamtes Portfolio verzehnfachen. Erfahre, wie du kleine Tickets (10.000€ bis 50.000€) in bahnbrechende Tech-Startups investierst, ohne dich in monatelangen Anwaltsverhandlungen zu verlieren.',
+          summaryText: 'Frühphasenbeteiligungen sind spekulativ, langfristig gebunden und können vollständig ausfallen. Du lernst Instrumente und Prüfschritte kennen, ohne daraus eine Anlageempfehlung oder Erfolgserwartung abzuleiten.',
           bulletPoints: [
-            'Das SAFE-Instrument (Simple Agreement for Future Equity): Schnelle Beteiligung ohne sofortige Unternehmensbewertung',
-            'Valuation Cap & Discount Rate: Wie du dir als Frühphasen-Investor günstige Einstiegskurse sicherst',
-            'Die Power-Law Verteilung: Warum 1 von 10 Investments für 90% der gesamten Portfoliorendite sorgt',
-            'Due Diligence für Startups: Gründer-Qualität, Marktgröße (TAM) und Product-Market-Fit Signale'
+            'SAFE-Instrumente: mögliche spätere Beteiligung, aber zunächst regelmäßig keine klassische Aktie und keine garantierte Umwandlung',
+            'Valuation Cap & Discount: wirtschaftliche Wirkung, Verwässerung und unterschiedliche Vertragsvarianten prüfen',
+            'Portfolioeffekte: Einzelne Erfolge können Verluste ausgleichen, Verteilung und Ergebnis sind jedoch nicht vorhersagbar',
+            'Due Diligence: Team, Marktannahmen, Produkt, Finanzen, Rechte und Interessenkonflikte untersuchen'
           ],
           coreConcepts: [
             {
               iconName: 'zap',
               title: 'SAFE AGREEMENTS',
-              description: 'Standardisierte 5-Seiten Verträge für blitzschnelle Startup-Investments.',
+              description: 'Vertragsinstrumente mit unterschiedlichen Rechten, Umwandlungsbedingungen und rechtsraumspezifischen Risiken.',
               highlight: true
             },
             {
               iconName: 'trending_up',
               title: 'POWER LAW DISTRIBUTION',
-              description: 'Breite Streuung auf 20+ Startups maximiert die Chance auf den nächsten Unicorn-Hit.'
+              description: 'Streuung kann Konzentrationsrisiken reduzieren, verhindert aber weder Verluste noch den vollständigen Ausfall eines Portfolios.'
             }
           ],
           resources: [
@@ -844,27 +844,29 @@ Steuersätze und Sonderregelungen ändern sich. Hole vor Gründung, Wegzug oder 
           ],
           fullArticleGuide: `### Die Strategie des erfolgreichen Angel-Investors
 
-Investiere niemals Geld, das du im operativen Business benötigst – Angel Investing ist illiquides Risikokapital mit gigantischer Hebelwirkung.
+Angel Investing ist illiquides Risikokapital. Investiertes Kapital kann langfristig gebunden sein und vollständig verloren gehen; selbst sorgfältige Prüfung macht Ergebnisse nicht planbar.
 
 #### Die 4 Kriterien für ein Angel-Investment:
-1. **Das Gründer-Team**: Haben die Gründer unbändige Umsetzungsstärke und tiefes Branchenwissen?
-2. **Der unfaire Vorteil**: Warum kann dieses Team gewinnen, wo andere scheitern?
-3. **Der Markt**: Ist der Zielmarkt mindestens 1 Milliarde Euro groß?
-4. **Die Traktion**: Gibt es erste zahlende Kunden oder exponentielles Nutzerwachstum?`
+1. **Team und Governance:** Erfahrung, Rollen, Referenzen, Beteiligungen und mögliche Interessenkonflikte prüfen.
+2. **Produkt und Wettbewerb:** Problem, Schutzrechte, Alternativen und belegbare Differenzierung untersuchen.
+3. **Marktannahmen:** Quellen, erreichbaren Teilmarkt und realistische Vertriebswege statt pauschaler Marktgrößen bewerten.
+4. **Finanzen und Recht:** Liquiditätsbedarf, Verbindlichkeiten, Vertragsrechte, regulatorische Fragen und mögliche Folgefinanzierungen prüfen.
+
+Diese Übersicht ersetzt weder Anlage-, Rechts- noch Steuerberatung. Prüfe Eignung und Tragbarkeit eines möglichen Totalverlusts individuell mit qualifizierten Fachpersonen.`
         },
         understandContent: {
-          coreTakeaway: 'Investiere in erstklassige Gründer zu fairen Valuation-Caps und lass die Zeit für dich arbeiten.',
+          coreTakeaway: 'Verstehe Instrument, Rechte, Kosten und mögliche Verlustszenarien vollständig, bevor du eine Beteiligung überhaupt erwägst.',
           keyPrinciples: [
-            'Niemals alles auf ein einziges Startup setzen – baue ein Portfolio von mindestens 15-20 Beteiligungen auf',
-            'Biete Gründern Mehrwert durch dein Marketing- und Vertriebs-Know-how (Smart Money)'
+            'Streuung reduziert nur bestimmte Risiken und muss zu Kapital, Erfahrung und Risikotragfähigkeit passen',
+            'Rolle, Einfluss und mögliche Interessenkonflikte gegenüber Gründern transparent vereinbaren'
           ]
         },
         actionTask: {
           instruction: 'Formuliere deine persönliche Angel-Investing-These:',
           inputType: 'checklist',
           checklistItems: [
-            'Ticketgröße (z. B. 15.000€ pro Deal) und Fokus-Branchen definiert',
-            'Standardisierte SAFE-Vertragsvorlage mit Valuation Cap vorbereitet',
+            'Maximal tragbaren Verlust und langfristigen Liquiditätsbedarf dokumentiert',
+            'SAFE- oder Beteiligungsvertrag fachlich prüfen lassen',
             'Profil auf Plattformen wie AngelList oder Leapfunder für Dealflow angelegt'
           ],
           toolboxCategory: 'crm'
@@ -874,30 +876,30 @@ Investiere niemals Geld, das du im operativen Business benötigst – Angel Inve
         id: '71.2',
         stageId: 71,
         stageTitle: '71. Cap-Table Modellierung & Exits',
-        title: 'Cap-Tables & Verwässerung: Vom Seed-Investment bis zum 100M€ Exit',
+        title: 'Cap-Tables & Verwässerung: Finanzierungs- und Exit-Szenarien',
         durationMinutes: 29,
         description: 'Wie Verwässerung in Series A/B/C Finanzierungsrunden berechnet wird, Liquidationspräferenzen funktionieren und Secondary-Verkäufe ablaufen.',
         learnContent: {
           videoTitle: 'Masterclass: Cap-Table Modellierung & Exit-Szenarien',
           videoDuration: '29:40',
-          summaryText: 'Ein 5%-Anteil nützt nichts, wenn spätere Investoren dich durch Verwässerung auf 0,2% reduzieren. Lerne, wie du Cap-Tables liest, Verwässerungsschutzklauseln verstehst und deine Anteile vor dem Börsengang gewinnbringend verkaufst.',
+          summaryText: 'Spätere Finanzierungsrunden, Optionspools und Vertragsklauseln können Anteil und Auszahlungsreihenfolge verändern. Cap-Table-Modelle zeigen Szenarien, garantieren aber weder Verkaufsmöglichkeit noch Erlös.',
           bulletPoints: [
             'Die Cap-Table Architektur: Stammaktien, Vorzugsaktien (Preferred Shares) und Optionspools (ESOP)',
             'Verwässerungs-Mathematik (Dilution): Wie sich dein prozentualer Anteil über mehrere Runden verändert',
-            'Liquidationspräferenzen: 1x Non-Participating vs. Participating – warum sie beim Verkauf über Leben und Tod entscheiden',
-            'Secondary Sales: Wie du deine Anteile in späteren Finanzierungsrunden an Groß-VCs vorab versilberst'
+            'Liquidationspräferenzen: Auszahlungsreihenfolge und mögliche Folgen für verschiedene Anteilsklassen modellieren',
+            'Secondary Sales: Zustimmung, Übertragungsbeschränkungen, Käufernachfrage, Steuern und Abschläge berücksichtigen'
           ],
           coreConcepts: [
             {
               iconName: 'pie-chart',
               title: 'CAP TABLE MODELING',
-              description: 'Exakte Berechnung des Erlöses bei verschiedenen Exit-Bewertungen.',
+              description: 'Szenariorechnung auf Basis von Annahmen; tatsächliche Erlöse können erheblich abweichen.',
               highlight: true
             },
             {
               iconName: 'dollar-sign',
               title: 'SECONDARY LIQUIDITY',
-              description: 'Vorzeitige Gewinnauszahlung bei Series-B/C Runden ohne auf den IPO zu warten.'
+              description: 'Ein möglicher Anteilsverkauf setzt Käufer, Zustimmung und passende Vertragsbedingungen voraus.'
             }
           ],
           resources: [
@@ -926,10 +928,10 @@ Verstehe die Spielregeln von Wagniskapitalgesellschaften (VCs), um als Business 
 - **Information Rights**: Recht auf vierteljährliche Finanzberichte und Kennzahlen des Startups.`
         },
         understandContent: {
-          coreTakeaway: 'Wer die Vertragsfeinheiten versteht, sichert sich den maximalen Ertrag beim Multimillionen-Exit.',
+          coreTakeaway: 'Cap-Tables und Vertragsklauseln helfen, mögliche Ergebnisse zu verstehen; sie sichern weder Exit noch Ertrag.',
           keyPrinciples: [
-            'Immer auf Pro-Rata Rechten für deine besten Gewinner-Startups bestehen',
-            'Niemals hochriskante nachrangige Darlehen ohne Wandlungsrecht vergeben'
+            'Pro-Rata-Rechte anhand von Kapitalbedarf, Verwässerung und Vertragsposition bewerten',
+            'Rang, Wandlungsmechanik und Ausfallrisiko jedes Darlehens fachlich prüfen'
           ]
         },
         actionTask: {
