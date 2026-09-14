@@ -21,6 +21,9 @@ const riskyClaims: Array<[RegExp, string]> = [
   [/\bkreditangebot\s+in\s+48\s+stunden\b/giu, 'Pauschales Finanzierungsversprechen'],
   [/\b(?:40\s*%\+\s*opt-in|abschlusschance[^.!?]{0,40}\b80\s*%\s+sinkt|reaktionszeiten[^.!?]{0,50}\bverdoppeln)\b/giu, 'Unbelegtes Conversion-Versprechen'],
   [/\b(?:täglicher\s+traffic\s+ohne\s+manuellen\s+aufwand|traffic-?wasserfall|nur\s+2\s+stunden\s+pro\s+monat)\b/giu, 'Unbelegtes Automatisierungs- oder Trafficversprechen'],
+  [/\b(?:98\s*%\s+(?:öffnungsrate|open\s+rate)|40\s*%\+\s+klickrate|unter\s+2\s+minuten[^.!?]{0,40}\b5x\s+mehr\s+deals)\b/giu, 'Unbelegtes Messenger-Erfolgsversprechen'],
+  [/\b(?:google-?monopolstellung|hunderttausende\s+kostenlose\s+besucher|in\s+3-6\s+monaten\s+auf\s+position\s+1)\b/giu, 'Unbelegtes SEO- oder Rankingversprechen'],
+  [/\b(?:wert\s+verdoppeln\s+und\s+für\s+7-figures\s+verkaufen|sofortige\s+25\s*%\s+umsatzsteigerung|bei\s+3x\s+ebit\s+kaufen\s+und\s+bei\s+6x\s+ebit\s+weiterverkaufen)\b/giu, 'Unbelegtes Unternehmenswert- oder Exitversprechen'],
 ];
 
 const collectStrings = (value: unknown, result: string[] = []): string[] => {
