@@ -1215,7 +1215,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       ? `Upload läuft: ${lessonVideoUploadProgress} %`
                       : 'Als „Nicht gelistet“ hochladen'}
                   </button>
-                  <p className="text-[11px] text-slate-500">MP4, maximal 30 MB. Nach dem Upload wird die YouTube-URL automatisch eingetragen; speichere anschließend die Lektion.</p>
+                  <p className="text-[11px] text-slate-500">Die MP4 wird in Abschnitten direkt zu YouTube übertragen. Nach dem Upload wird die YouTube-URL automatisch eingetragen; speichere anschließend die Lektion.</p>
                   {lessonVideoUploadError && <p role="alert" className="text-xs font-semibold text-red-700">{lessonVideoUploadError}</p>}
                   {lessonVideoUploadProgress === 100 && (
                     <p className="text-xs font-semibold text-emerald-700">Upload abgeschlossen. Die Video-URL wurde eingetragen.</p>
