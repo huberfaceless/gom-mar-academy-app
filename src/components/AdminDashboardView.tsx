@@ -42,6 +42,26 @@ type FirebaseMember = {
   lastSignInAt?: string;
 };
 
+const getYouTubeEmbedUrl = (value: string): string => {
+  try {
+    const url = new URL(value.trim());
+    if (url.protocol !== 'https:') return '';
+    const host = url.hostname.replace(/^www\./u, '');
+    const videoId = host === 'youtu.be'
+      ? url.pathname.slice(1).split('/')[0]
+      : host === 'youtube.com' && url.pathname === '/watch'
+        ? url.searchParams.get('v') || ''
+        : host === 'youtube.com' && url.pathname.startsWith('/embed/')
+          ? url.pathname.split('/')[2] || ''
+          : '';
+    return /^[a-zA-Z0-9_-]{11}$/u.test(videoId)
+      ? `https://www.youtube-nocookie.com/embed/${videoId}`
+      : '';
+  } catch {
+    return '';
+  }
+};
+
 interface AdminDashboardViewProps {
   user: UserProfile;
   stages: Stage[];
@@ -416,6 +436,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const handleSaveLesson = async () => {
     if (!lessonFormData.title?.trim() || !lessonFormData.id?.trim()) {
       alert('Bitte deutschen Titel und Lektions-ID angeben.');
+      return;
+    }
+    const videoUrl = lessonFormData.learnContent?.videoUrl?.trim() || '';
+    if (videoUrl && !getYouTubeEmbedUrl(videoUrl)) {
+      alert('Bitte eine vollständige HTTPS-YouTube-URL eintragen, zum Beispiel https://youtu.be/VIDEO-ID.');
       return;
     }
 
@@ -1116,6 +1141,34 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     placeholder="z.B. Praxis-Walkthrough & Aufbau"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-3 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">YouTube-Video-URL (optional)</label>
+                  <input
+                    type="url"
+                    value={lessonFormData.learnContent?.videoUrl || ''}
+                    onChange={(event) => setLessonFormData({
+                      ...lessonFormData,
+                      learnContent: { ...lessonFormData.learnContent!, videoUrl: event.target.value },
+                    })}
+                    className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-indigo-200 focus:outline-none focus:border-indigo-500"
+                    placeholder="https://youtu.be/VIDEO-ID"
+                  />
+                  <p className="mt-1 text-[11px] text-slate-500">Leer lassen, wenn stattdessen die Academy-Audio-Erklärung verwendet werden soll.</p>
+                </div>
+                {getYouTubeEmbedUrl(lessonFormData.learnContent?.videoUrl || '') && (
+                  <div className="aspect-video overflow-hidden rounded-xl border border-indigo-200 bg-slate-950">
+                    <iframe
+                      src={getYouTubeEmbedUrl(lessonFormData.learnContent?.videoUrl || '')}
+                      title="Vorschau des Lektionsvideos"
+                      className="h-full w-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Description */}
