@@ -872,15 +872,15 @@ Große Deals werden nicht im Warenkorb abgeschlossen, sondern durch Konsens im V
         id: '51.2',
         stageId: 51,
         stageTitle: '51. Direct Mail & Physische Türöffner',
-        title: 'Lumpy Mail & VIP Direct Outreach: Garantiert auf dem Schreibtisch des CEOs',
+        title: 'Lumpy Mail & Executive Outreach: Auffallen ohne Umgehungstaktiken',
         durationMinutes: 28,
-        description: 'Wie du mit dreidimensionalen Paketen, personalisierten Büchern und Video-Boxen Vorzimmerdamen umgehst.',
+        description: 'Wie du relevante physische Mailings respektvoll, transparent und im Einklang mit internen Annahmeregeln einsetzt.',
         learnContent: {
           videoTitle: 'Masterclass: Physisches Direct-Mailing & High-End Türöffner',
           videoDuration: '28:40',
-          summaryText: "Während das E-Mail-Postfach eines Geschäftsführers mit 200 Kaltnachrichten überquillt, erhält er kaum noch hochwertige physische Post. Erfahre, wie du 'Lumpy Mail' nutzt, um 80%+ Terminquoten bei Vorständen zu erzielen.",
+          summaryText: "Relevante physische Post kann im B2B-Outreach Aufmerksamkeit erzeugen. Plane kleine, messbare Tests, respektiere Annahme-, Datenschutz- und Compliance-Regeln und rechne nicht mit einer festen Antwort- oder Terminquote.",
           bulletPoints: [
-            "Das 'Lumpy Mail' Prinzip: Unerwartete physische Gegenstände, die Neugier erzwingen",
+            "Das 'Lumpy Mail' Prinzip: Ein relevanter, angemessener Inhalt, der Interesse wecken kann",
             'Video-Brochures: Edle Klappkarten mit integriertem LCD-Display, die beim Öffnen dein Video abspielen',
             "Das 'Zerschnittene Buch': Ein Buch mit persönlicher Widmung und einem Lesezeichen bei der Lösung",
             'Das telefonische Follow-up: Wie du nach der Zustellbestätigung den perfekten Übergang zum Gespräch machst'
@@ -889,7 +889,7 @@ Große Deals werden nicht im Warenkorb abgeschlossen, sondern durch Konsens im V
             {
               iconName: 'mail',
               title: 'LUMPY MAIL IMPACT',
-              description: 'Physische Pakete werden zu 100% vom Vorstand persönlich geöffnet.',
+              description: 'Ein passendes physisches Mailing kann Aufmerksamkeit erhalten, wird aber nicht zwingend persönlich geöffnet.',
               highlight: true
             },
             {
@@ -916,16 +916,16 @@ Große Deals werden nicht im Warenkorb abgeschlossen, sondern durch Konsens im V
           ],
           fullArticleGuide: `### Die Psychologie des physischen Türöffners
 
-Ein CEO delegiert Briefe, aber ein hochwertiges Paket öffnet er fast immer selbst.
+Physische Mailings können anders wahrgenommen werden als E-Mails. Zustellung, Öffnung und Reaktion hängen jedoch von Unternehmen, internen Regeln, Relevanz und Timing ab.
 
 #### Die Schritte einer VIP-Mailing Kampagne:
-- **Schritt 1 (Das Paket)**: Sende ein hochwertiges Paket mit einem iPad oder einer Videokarte an den Geschäftsführer.
+- **Schritt 1 (Das Mailing)**: Sende sachliche, relevante Unterlagen ohne unangemessene Geschenke und beachte die Annahmerichtlinien des Unternehmens.
 - **Schritt 2 (Das Tracking)**: Überwache die Sendungsverfolgung minutengenau.
-- **Schritt 3 (Der Call)**: Rufe 30 Minuten nach Zustellung an: "Guten Tag Herr [Name], mein Paket sollte gerade auf Ihrem Tisch gelandet sein..."
+- **Schritt 3 (Das Follow-up)**: Frage nach einem angemessenen Zeitraum höflich nach, ohne Zustellung an eine bestimmte Person zu behaupten.
 - **Schritt 4 (Der Termin)**: Vereinbare ein unverbindliches 15-minütiges Strategiegespräch.`
         },
         understandContent: {
-          coreTakeaway: 'Wer 100€ in ein geniales Türöffner-Paket investiert, gewinnt einen 50.000€ Kunden.',
+          coreTakeaway: 'Ein relevantes Mailing kann einen Gesprächsanlass schaffen; Erfolg, Termin und Auftragswert bleiben offen und müssen gemessen werden.',
           keyPrinciples: [
             'Niemals billigen Werbemüll verschicken – Qualität des Geschenks spiegelt Qualität deiner Dienstleistung wider',
             'Das Follow-up Telefonat innerhalb von 2 Stunden nach Zustellung ist Pflicht'
