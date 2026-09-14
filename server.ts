@@ -67,6 +67,7 @@ const LESSON_AUDIO_BUCKET = process.env.LESSON_AUDIO_BUCKET?.trim() || '';
 const LESSON_AUDIO_WINDOW_MS = 60_000;
 const LESSON_AUDIO_LIMIT = 10;
 const LESSON_AUDIO_ADMIN_BATCH_SIZE = 2;
+const SUPPORTED_LESSON_VIDEO_URL = /^https:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}(?:[?&][^\s]*)?$/u;
 const escapeHtml = (value: string): string => value
   .replaceAll('&', '&amp;')
   .replaceAll('<', '&lt;')
@@ -1191,6 +1192,11 @@ async function startServer() {
     const lesson = req.body?.lesson as Lesson | undefined;
     if (!lessonId || lessonId.length > 40 || !Number.isInteger(stageId) || stageId < 1 || (!deleted && lesson?.id !== lessonId)) {
       res.status(400).json({ error: 'Die Lektionsdaten sind ungültig.' });
+      return;
+    }
+    const videoUrl = lesson?.learnContent?.videoUrl?.trim() || '';
+    if (!deleted && videoUrl && !SUPPORTED_LESSON_VIDEO_URL.test(videoUrl)) {
+      res.status(400).json({ error: 'Als Lektionsvideo ist nur eine vollständige HTTPS-YouTube-URL erlaubt.' });
       return;
     }
     try {
