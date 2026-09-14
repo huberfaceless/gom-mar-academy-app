@@ -134,6 +134,10 @@ const playerChecks: Array<[boolean, string]> = [
   [server.includes('SUPPORTED_LESSON_VIDEO_URL.test(videoUrl)'), 'Der Server weist unsichere oder nicht unterstützte Video-URLs zurück.'],
   [!lessonPlayer.includes('setCustomVideoUrl'), 'Mitglieder können Lektionsvideos nicht nur lokal überschreiben.'],
   [lessonPlayer.includes('youtube-nocookie.com/embed'), 'Lektionsvideos verwenden den datensparsamen YouTube-Embed-Endpunkt.'],
+  [lessonPlayer.includes('{!customVideoUrl && <div className="bg-slate-900'), 'Audiokapitel werden bei eingebundenem Video nicht angezeigt.'],
+  [lessonPlayer.includes('fourChapterRatios = [0, 0.25, 0.55, 0.8]'), 'Audiokapitel richten sich nach der tatsächlichen Audiodauer.'],
+  [lessonPlayer.includes('handleChapterSelect(chap.ratio)'), 'Ein Kapitelauswahl lädt, positioniert und startet das Audio.'],
+  [lessonPlayer.includes("audio.addEventListener('loadedmetadata'"), 'Kapitel warten vor dem Sprung auf die echte MP3-Dauer.'],
 ];
 
 for (const [passed, message] of playerChecks) {
