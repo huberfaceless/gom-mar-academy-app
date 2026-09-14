@@ -53,7 +53,7 @@ for (const stage of ACADEMY_STAGES) {
         lessonId: lesson.id,
         lessonTitle: lesson.title,
         category: 'video',
-        detail: 'Keine Video-URL hinterlegt; die Lektion verwendet stattdessen die Browser-Audio-Erklärung.',
+        detail: 'Keine Video-URL hinterlegt; die Lektion verwendet stattdessen die ElevenLabs-Audio-Erklärung.',
       });
     } else if (!hasSupportedVideo) {
       findings.push({
@@ -102,14 +102,22 @@ if (lessonCount === 0) {
 }
 
 const lessonPlayer = fs.readFileSync('src/components/LessonVideoPlayer.tsx', 'utf8');
+const server = fs.readFileSync('server.ts', 'utf8');
 const playerChecks: Array<[boolean, string]> = [
   [lessonPlayer.includes("audioPlayer: 'GOM-MAR Audio-Erklärung'"), 'Die deutsche Audio-Erklärung ist eindeutig gekennzeichnet.'],
   [lessonPlayer.includes("audioPlayer: 'GOM-MAR audio explanation'"), 'Die englische Audio-Erklärung ist eindeutig gekennzeichnet.'],
   [lessonPlayer.includes("audioPlayer: 'Objaśnienie audio GOM-MAR'"), 'Die polnische Audio-Erklärung ist eindeutig gekennzeichnet.'],
   [lessonPlayer.includes("customVideoUrl ? copy.videoPlayer : copy.audioPlayer"), 'Die Video-Bezeichnung erscheint nur bei hinterlegter Video-URL.'],
-  [lessonPlayer.includes("customVideoUrl ? 'HD 1080p' : copy.browserVoice"), 'Eine Videoauflösung wird nur bei hinterlegtem Video angezeigt.'],
+  [lessonPlayer.includes("customVideoUrl ? 'HD 1080p' : copy.academyVoice"), 'Eine Videoauflösung wird nur bei hinterlegtem Video angezeigt.'],
+  [lessonPlayer.includes('authenticatedFetch('), 'Lektionsaudio wird ausschließlich authentifiziert geladen.'],
+  [lessonPlayer.includes("caches.open('gommar-lesson-audio-v1')"), 'Erzeugtes Lektionsaudio wird im Browser zwischengespeichert.'],
+  [!lessonPlayer.includes('speechSynthesis'), 'Die uneinheitliche Browser-Sprachausgabe wurde entfernt.'],
   [!lessonPlayer.includes('GOM-MAR Masterclass Player'), 'Der simulierte Player wird nicht mehr als Videoplayer bezeichnet.'],
   [!lessonPlayer.includes('Interaktive Video-Kapitel'), 'Kapitel der Audio-Erklärung werden nicht mehr als Videokapitel bezeichnet.'],
+  [server.includes("app.get('/api/academy/lessons/:lessonId/audio', requireVerifiedMember"), 'Der Audio-Endpunkt ist auf bestätigte Mitglieder begrenzt.'],
+  [server.includes("process.env.ELEVENLABS_API_KEY"), 'Der ElevenLabs-Schlüssel wird ausschließlich serverseitig gelesen.'],
+  [server.includes("model_id: ELEVENLABS_MODEL_ID"), 'Das mehrsprachige ElevenLabs-Modell ist fest konfiguriert.'],
+  [!lessonPlayer.includes('ELEVENLABS_API_KEY'), 'Der ElevenLabs-Schlüssel gelangt nicht in den Browser-Code.'],
 ];
 
 for (const [passed, message] of playerChecks) {
