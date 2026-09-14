@@ -38,7 +38,18 @@ const checks: Array<[boolean, string]> = [
   [admin.includes('setLessonVideoUploadProgress') && admin.includes('Upload läuft:'), 'Der Lektionseditor zeigt den Upload-Fortschritt an.'],
   [admin.includes("videoUrl: result.videoUrl") && admin.includes('speichere anschließend die Lektion'), 'Die hochgeladene YouTube-URL wird automatisch in die Lektion übernommen.'],
   [admin.includes('youtubeService.getConnectionStatus()') && admin.includes('YouTube ist nicht verbunden'), 'Der Video-Upload prüft die bestehende YouTube-Verbindung.'],
+  [admin.includes('in Abschnitten direkt zu YouTube übertragen'), 'Der Lektionseditor erklärt den direkten Upload größerer Videodateien.'],
 ];
+
+const youtubeService = fs.readFileSync('src/services/youtubeService.ts', 'utf8');
+if (!youtubeService.includes('YOUTUBE_UPLOAD_CHUNK_SIZE') || !youtubeService.includes("request.open('PUT', uploadUrl)")) {
+  throw new Error('Curriculum-Audit fehlgeschlagen: Größere Lektionsvideos werden nicht stückweise direkt zu YouTube übertragen.');
+}
+console.log('✓ Größere Lektionsvideos werden stückweise direkt zu YouTube übertragen.');
+if (youtubeService.includes('höchstens 30 MB groß')) {
+  throw new Error('Curriculum-Audit fehlgeschlagen: Die alte 30-MB-Grenze ist noch aktiv.');
+}
+console.log('✓ Die alte 30-MB-Grenze wurde entfernt.');
 
 for (const [passed, message] of checks) {
   if (!passed) throw new Error(`Curriculum-Audit fehlgeschlagen: ${message}`);
