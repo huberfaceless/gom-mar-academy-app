@@ -1103,40 +1103,40 @@ Ein verpasster Termin ist kein verlorener Kunde, wenn man innerhalb von 5 Minute
   },
   {
     id: 53,
-    title: '53. Micro-Acquisitions: Digitale Unternehmen kaufen & flippen',
+    title: '53. Micro-Acquisitions: Digitale Unternehmen prüfen und entwickeln',
     subtitle: 'Due Diligence, SaaS & Content-Sites kaufen, Restrukturierung & Value-Add',
     color: 'from-amber-700 via-orange-600 to-yellow-600',
     badgeIcon: '💰',
-    description: 'Kaufe dir den Weg zum Erfolg ab: Lerne, wie du unterbewertete Webseiten, SaaS-Tools oder E-Commerce Shops für 2x-3x Jahresgewinn kaufst, durch deine Marketing-Expertise verdoppelst und profitabel weiterverkaufst.',
+    description: 'Lerne, digitale Unternehmen strukturiert zu prüfen, Kaufpreis und Risiken einzuordnen und nach einer Übernahme belastbare Verbesserungen zu testen. Erwerb, Wertentwicklung und Weiterverkauf bleiben mit erheblichen Risiken verbunden.',
     lessons: [
       {
         id: '53.1',
         stageId: 53,
         stageTitle: '53. Micro-M&A & Deal-Sourcing',
-        title: 'Deal-Sourcing & Due Diligence: Versteckte Perlen auf Marktplätzen finden',
+        title: 'Deal-Sourcing & Due Diligence: Digitale Unternehmen sorgfältig prüfen',
         durationMinutes: 34,
-        description: 'Wie du auf Acquire.com, Flippa und über Makler profitable digitale Unternehmen findest und Bilanzen auf Herz und Nieren prüfst.',
+        description: 'Wie du Angebote auf Marktplätzen und über Makler findest und Umsatz, Kosten, Technik, Recht sowie Abhängigkeiten nachvollziehbar prüfst.',
         learnContent: {
           videoTitle: 'Masterclass: Digitale Firmenkäufe & Due Diligence Checkliste',
           videoDuration: '34:10',
-          summaryText: 'Ein Unternehmen von 0 auf 10.000€ Monatsumsatz aufzubauen ist schwer. Ein bestehendes 10k-Unternehmen zu kaufen und auf 30k zu skalieren, ist oft 5x schneller. Lerne, wie du Deals analysierst und Fallen vermeidest.',
+          summaryText: 'Der Kauf eines bestehenden Unternehmens kann Zugang zu Produkt, Kunden und Prozessen bieten, bringt aber finanzielle, technische und rechtliche Risiken mit sich. Lerne, Annahmen zu prüfen und unterschiedliche Entwicklungsszenarien zu modellieren.',
           bulletPoints: [
             'Die Marktplätze: Acquire.com (SaaS), Flippa, Empire Flippers und Direct-Outreach an Website-Inhaber',
             'Due Diligence Checkliste: Google Analytics Fake-Traffic entlarven, Churn prüfen, Code-Audit durchführen',
-            'Die Bewertungs-Formel: 2x bis 4x SDE (Seller’s Discretionary Earnings) richtig verhandeln',
-            'Asset Purchase Agreement (APA): Rechtssicherer Kaufvertrag ohne Alt-Haftungsrisiken'
+            'Bewertungsbandbreiten: SDE, Wachstum, Abhängigkeiten, Qualität und Marktvergleich gemeinsam beurteilen',
+            'Asset Purchase Agreement (APA): Vermögenswerte, übernommene Pflichten und verbleibende Haftungsrisiken rechtlich prüfen lassen'
           ],
           coreConcepts: [
             {
               iconName: 'search',
               title: 'BUY THEN BUILD',
-              description: 'Kauf von existierendem Traffic und Kundenstamm spart 2 Jahre Entwicklungszeit.',
+              description: 'Bestehende Assets können Aufbauzeit reduzieren; Integrationsaufwand, Kundenbindung und Datenqualität müssen geprüft werden.',
               highlight: true
             },
             {
               iconName: 'shield-check',
               title: 'DUE DILIGENCE AUDIT',
-              description: 'Lückenlose Prüfung aller Stripe-Zahlungsströme und Analytics-Daten.'
+              description: 'Zahlungsströme, Analytics-Daten und Quelldokumente abgleichen; vollständige Sicherheit bietet auch eine Due Diligence nicht.'
             }
           ],
           resources: [
@@ -1161,14 +1161,14 @@ Viele geniale Entwickler haben tolle Software gebaut, verstehen aber nichts von 
 
 #### Wo der Wertzuwachs entsteht:
 1. **Das ungeschliffene Juwel**: Ein Tool mit 2.000 monatlichen Nutzern, aber ohne E-Mail Marketing und mit schlechter Landingpage.
-2. **Der Kauf**: Du kaufst das Projekt für das 2,5-fache des Jahresgewinns.
-3. **Die Hebel**: Du baust einen VSL ein, erhöhst die Preise um 30% und startest Meta Ads.
-4. **Das Ergebnis**: Der Umsatz verdreifacht sich in 90 Tagen.`
+2. **Die Bewertung**: Leite eine Bandbreite aus Ertrag, Wachstum, Risiken und vergleichbaren Transaktionen ab.
+3. **Die Tests**: Prüfe Preis, Kommunikation und Akquisekanäle schrittweise mit klaren Kosten- und Abbruchkriterien.
+4. **Die Auswertung**: Vergleiche Umsatz, Deckungsbeitrag, Kundenbindung und Aufwand; eine Steigerung ist nicht garantiert.`
         },
         understandContent: {
-          coreTakeaway: 'Der Gewinn liegt im Einkauf und in der schnellen Anwendung deiner Marketing-Superkraft.',
+          coreTakeaway: 'Ein günstiger Kaufpreis ersetzt keine sorgfältige Prüfung, realistische Integrationsplanung und professionelle Beratung.',
           keyPrinciples: [
-            'Immer einen Asset Deal (Kauf von Code, Marke, Kunden) statt Share Deal machen, um alte Steuerschulden auszuschließen',
+            'Asset Deal und Share Deal anhand von Steuern, Haftung, Verträgen und Übertragbarkeit mit Fachleuten vergleichen',
             'Niemals ein Unternehmen kaufen, dessen Traffic nur von einer einzigen instabilen Quelle abhängt'
           ]
         },

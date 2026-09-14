@@ -24,6 +24,8 @@ const riskyClaims: Array<[RegExp, string]> = [
   [/\b(?:98\s*%\s+(?:öffnungsrate|open\s+rate)|40\s*%\+\s+klickrate|unter\s+2\s+minuten[^.!?]{0,40}\b5x\s+mehr\s+deals)\b/giu, 'Unbelegtes Messenger-Erfolgsversprechen'],
   [/\b(?:google-?monopolstellung|hunderttausende\s+kostenlose\s+besucher|in\s+3-6\s+monaten\s+auf\s+position\s+1)\b/giu, 'Unbelegtes SEO- oder Rankingversprechen'],
   [/\b(?:wert\s+verdoppeln\s+und\s+für\s+7-figures\s+verkaufen|sofortige\s+25\s*%\s+umsatzsteigerung|bei\s+3x\s+ebit\s+kaufen\s+und\s+bei\s+6x\s+ebit\s+weiterverkaufen)\b/giu, 'Unbelegtes Unternehmenswert- oder Exitversprechen'],
+  [/\b(?:auf\s+30k\s+zu\s+skalieren[^.!?]{0,30}\b5x\s+schneller|umsatz\s+verdreifacht\s+sich\s+in\s+90\s+tagen|zukauf\s+zu\s+verdoppeln[^.!?]{0,30}\b5x\s+schneller)\b/giu, 'Unbelegtes Akquisitions- oder Wachstumsversprechen'],
+  [/\b(?:15\.000\s*€\s+masterminds\s+ausverkaufen|500\.000\s*€\s+mastermind-?event|100\.000\s*€\s+boardroom)\b/giu, 'Unbelegtes Hochpreis- oder Ausverkaufsversprechen'],
 ];
 
 const collectStrings = (value: unknown, result: string[] = []): string[] => {

@@ -7,7 +7,7 @@ export const MODULES_66_TO_75: Stage[] = [
     subtitle: 'Unternehmensübernahmen, Rollup-Modelle, Financial Audits & Post-Merger-Integration',
     color: 'from-amber-700 via-yellow-700 to-zinc-900',
     badgeIcon: '🤝',
-    description: 'Skaliere nicht nur organisch, sondern durch gezielte Akquisitionen: Lerne, wie du profitable Konkurrenten kaufst, Synergien hebst und Firmen über Rollup-Modelle zu 8-stelligen Bewertungs-Multiples bündelst.',
+    description: 'Lerne Akquisitionen als mögliche Wachstumsstrategie kennen: Prüfe Zielunternehmen, Integrationsrisiken, Finanzierung und mögliche Synergien, ohne eine bestimmte Bewertung oder Wertsteigerung vorauszusetzen.',
     lessons: [
       {
         id: '66.1',
@@ -19,18 +19,18 @@ export const MODULES_66_TO_75: Stage[] = [
         learnContent: {
           videoTitle: 'Masterclass: M&A Deal-Sourcing & Bilanz-Due-Diligence',
           videoDuration: '34:20',
-          summaryText: 'Ein Unternehmen durch Zukauf zu verdoppeln geht 5x schneller als durch reines organisches Marketing. Erfahre, wie du Eigentümer wechselwilliger Agenturen und E-Com Marken direkt ansprichst und den echten Unternehmenswert ohne Schönfärberei ermittelst.',
+          summaryText: 'Ein Zukauf kann Wachstum beschleunigen, erhöht aber auch Kapitalbedarf, Integrationsaufwand und Haftungsrisiken. Erfahre, wie du potenzielle Verkäufer ansprichst und eine nachvollziehbare Bewertungsbandbreite statt eines vermeintlich exakten Unternehmenswerts ermittelst.',
           bulletPoints: [
             'Off-Market Sourcing: Direkte Ansprache von Gründern mit Nachfolgeproblemen oder Wachstums-Erschöpfung',
             'EBITDA-Normalisierung: Bereinigung von Geschäftsführer-Gehältern, privaten Spesen und Einmaleffekten',
-            'Der rechtssichere LOI: Exklusivitätsfristen, Earn-Out-Klauseln und Kaufpreis-Einbehalte (Escrow)',
+            'LOI-Grundlagen: Exklusivität, Earn-out und Escrow mit qualifizierter Rechtsberatung ausgestalten',
             'Die Due Diligence Matrix: Commercial, Financial, Legal, Tax und Tech Checklisten'
           ],
           coreConcepts: [
             {
               iconName: 'search',
               title: 'OFF-MARKET TARGETS',
-              description: 'Günstigere Bewertungen durch direkten Kontakt abseits von Auktionsverfahren.',
+              description: 'Direkter Kontakt kann den Prozess verändern; Preis, Informationslage und Wettbewerb bleiben einzelfallabhängig.',
               highlight: true
             },
             {
@@ -66,10 +66,10 @@ Wachstum durch Akquisition (Inorganisches Wachstum) ist das bevorzugte Werkzeug 
 4. **Das Closing**: Notartermin mit gestaffeltem Kaufpreis (Upfront Cash + Earn-Out nach Zielerreichung).`
         },
         understandContent: {
-          coreTakeaway: 'Der Gewinn liegt im Einkauf: Zahle nie mehr als das 3- bis 4-fache des bereinigten EBITDAs für Kleinunternehmen.',
+          coreTakeaway: 'Der Kaufpreis muss zu Ertragsqualität, Wachstum, Risiken, Finanzierung und Integrationsplan passen; eine pauschale Multiple-Grenze ist nicht belastbar.',
           keyPrinciples: [
-            'Immer einen Earn-Out von mindestens 30% vereinbaren, damit der Alt-Gründer für den reibungslosen Übergang haftet',
-            'Kundenkonzentration prüfen: Kein einzelner Kunde darf mehr als 15% des Gesamtumsatzes ausmachen'
+            'Earn-out-Anteil, Ziele, Messung und Haftung passend zum konkreten Deal verhandeln und rechtlich prüfen lassen',
+            'Kundenkonzentration prüfen und die akzeptable Grenze anhand Branche, Vertragslaufzeiten und Risikotragfähigkeit festlegen'
           ]
         },
         actionTask: {
