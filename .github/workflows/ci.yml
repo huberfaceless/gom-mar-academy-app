@@ -55,6 +55,9 @@ jobs:
       - name: Academy-Navigation pruefen
         run: bun run audit:academy-navigation
 
+      - name: Lektionsinhalte und Audioausgabe pruefen
+        run: bun run audit:lessons
+
       - name: Oeffentliche Lokalisierung pruefen
         run: bun run audit:public-i18n
 
