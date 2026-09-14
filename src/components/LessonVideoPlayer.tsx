@@ -32,9 +32,9 @@ interface LessonVideoPlayerProps {
 export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, niche }) => {
   const { language } = useLanguage();
   const copy = {
-    de: { chapters: ['Einführung & Überblick', 'Kern-Prinzipien & Methodik', 'Praxisbeispiel & Anwendung', 'Zusammenfassung & Umsetzung'], lesson: 'Lektion', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:', chapterReached: 'Kapitel erreicht.', changeUrl: 'Video-URL ändern', embed: '🎥 YouTube Video einbetten', addUrl: 'Füge einen YouTube-Link oder Video-Embed ein für Lektion', save: 'Speichern', reset: 'Zurücksetzen', parts: ['Teil 1: Einführung & Ausrichtung', 'Teil 2: Die 3 Kern-Prinzipien', 'Teil 3: Konkretes Praxisbeispiel'], playHint: 'Klicke Play, um das Video mit Audio-Erklärung zu starten', back10: '10s zurück', interactive: 'Interaktive Video-Kapitel', chapterHint: 'Klicke ein Kapitel, um direkt dorthin zu springen' },
-    en: { chapters: ['Introduction & overview', 'Core principles & method', 'Practical example & application', 'Summary & implementation'], lesson: 'Lesson', keyPoints: 'The key points are:', takeaway: 'Key takeaway:', chapterReached: 'Chapter reached.', changeUrl: 'Change video URL', embed: '🎥 Embed YouTube video', addUrl: 'Add a YouTube link or video embed for lesson', save: 'Save', reset: 'Reset', parts: ['Part 1: Introduction & direction', 'Part 2: The 3 core principles', 'Part 3: Practical example'], playHint: 'Press Play to start the video with audio narration', back10: 'Back 10s', interactive: 'Interactive video chapters', chapterHint: 'Select a chapter to jump straight to it' },
-    pl: { chapters: ['Wprowadzenie i przegląd', 'Główne zasady i metoda', 'Przykład i zastosowanie', 'Podsumowanie i wdrożenie'], lesson: 'Lekcja', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:', chapterReached: 'Rozdział rozpoczęty.', changeUrl: 'Zmień adres wideo', embed: '🎥 Osadź wideo YouTube', addUrl: 'Dodaj link YouTube lub osadzone wideo dla lekcji', save: 'Zapisz', reset: 'Resetuj', parts: ['Część 1: Wprowadzenie i kierunek', 'Część 2: 3 główne zasady', 'Część 3: Praktyczny przykład'], playHint: 'Naciśnij Play, aby uruchomić wideo z narracją', back10: 'Cofnij 10 s', interactive: 'Interaktywne rozdziały wideo', chapterHint: 'Wybierz rozdział, aby od razu do niego przejść' },
+    de: { chapters: ['Einführung & Überblick', 'Kern-Prinzipien & Methodik', 'Praxisbeispiel & Anwendung', 'Zusammenfassung & Umsetzung'], lesson: 'Lektion', stage: 'Etappe', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:', chapterReached: 'Audio-Kapitel erreicht.', changeUrl: 'Video-URL ändern', embed: '🎥 YouTube-Video einbetten', addUrl: 'Füge einen YouTube-Link oder Video-Embed ein für Lektion', save: 'Speichern', reset: 'Zurücksetzen', parts: ['Teil 1: Einführung & Ausrichtung', 'Teil 2: Die 3 Kern-Prinzipien', 'Teil 3: Konkretes Praxisbeispiel', 'Teil 4: Fazit & Deine Aufgabe'], playHint: 'Klicke auf Play, um die Audio-Erklärung zu starten', back10: '10 Sekunden zurück', forward10: '10 Sekunden vor', audioPlayer: 'GOM-MAR Audio-Erklärung', videoPlayer: 'YouTube-Videoplayer', browserVoice: 'Browser-Sprachausgabe', audioExplanation: 'Audio-Erklärung', speechOutput: 'Sprachausgabe', interactive: 'Audio-Kapitel', chapterHint: 'Wähle ein Kapitel, um die Audio-Erklärung dort fortzusetzen', textToggle: 'Textanzeige umschalten', fullscreen: 'Vollbild umschalten' },
+    en: { chapters: ['Introduction & overview', 'Core principles & method', 'Practical example & application', 'Summary & implementation'], lesson: 'Lesson', stage: 'Stage', keyPoints: 'The key points are:', takeaway: 'Key takeaway:', chapterReached: 'Audio chapter reached.', changeUrl: 'Change video URL', embed: '🎥 Embed YouTube video', addUrl: 'Add a YouTube link or video embed for lesson', save: 'Save', reset: 'Reset', parts: ['Part 1: Introduction & direction', 'Part 2: The 3 core principles', 'Part 3: Practical example', 'Part 4: Conclusion & your task'], playHint: 'Press Play to start the audio explanation', back10: 'Back 10 seconds', forward10: 'Forward 10 seconds', audioPlayer: 'GOM-MAR audio explanation', videoPlayer: 'YouTube video player', browserVoice: 'Browser speech output', audioExplanation: 'Audio explanation', speechOutput: 'Speech output', interactive: 'Audio chapters', chapterHint: 'Select a chapter to continue the audio explanation there', textToggle: 'Toggle text display', fullscreen: 'Toggle fullscreen' },
+    pl: { chapters: ['Wprowadzenie i przegląd', 'Główne zasady i metoda', 'Przykład i zastosowanie', 'Podsumowanie i wdrożenie'], lesson: 'Lekcja', stage: 'Etap', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:', chapterReached: 'Rozdział audio rozpoczęty.', changeUrl: 'Zmień adres wideo', embed: '🎥 Osadź wideo YouTube', addUrl: 'Dodaj link YouTube lub osadzone wideo dla lekcji', save: 'Zapisz', reset: 'Resetuj', parts: ['Część 1: Wprowadzenie i kierunek', 'Część 2: 3 główne zasady', 'Część 3: Praktyczny przykład', 'Część 4: Podsumowanie i Twoje zadanie'], playHint: 'Naciśnij Play, aby uruchomić objaśnienie audio', back10: 'Cofnij o 10 sekund', forward10: 'Przewiń o 10 sekund', audioPlayer: 'Objaśnienie audio GOM-MAR', videoPlayer: 'Odtwarzacz wideo YouTube', browserVoice: 'Synteza mowy przeglądarki', audioExplanation: 'Objaśnienie audio', speechOutput: 'Synteza mowy', interactive: 'Rozdziały audio', chapterHint: 'Wybierz rozdział, aby kontynuować od niego objaśnienie audio', textToggle: 'Przełącz wyświetlanie tekstu', fullscreen: 'Przełącz pełny ekran' },
   }[language];
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -73,7 +73,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
     return { ...chap, seconds: sec };
   });
 
-  // Timer loop for video playback simulation
+  // Timer loop for the browser-generated audio explanation
   useEffect(() => {
     let timer: any;
     if (isPlaying) {
@@ -190,15 +190,15 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
 
   return (
     <div ref={containerRef} className="space-y-4">
-      {/* Top Video Header Control Bar */}
+      {/* Media header */}
       <div className="flex items-center justify-between gap-3 text-xs bg-slate-900 border border-slate-800 p-3 rounded-2xl">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-extrabold text-white uppercase tracking-wider">
-            {customVideoUrl ? 'YouTube Video Player' : 'GOM-MAR Masterclass Player'}
+            {customVideoUrl ? copy.videoPlayer : copy.audioPlayer}
           </span>
           <span className="text-slate-500">•</span>
-          <span className="text-slate-400 font-mono">HD 1080p</span>
+          <span className="text-slate-400 font-mono">{customVideoUrl ? 'HD 1080p' : copy.browserVoice}</span>
         </div>
 
         <button
@@ -261,7 +261,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
           />
         </div>
       ) : (
-        /* Interactive Masterclass Video Stage */
+        /* Browser-generated audio explanation */
         <div className="relative aspect-video bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-8 group select-none">
           {/* Background Animated Wave Pattern */}
           <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
@@ -269,15 +269,15 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
           {/* Top Stage Bar */}
           <div className="relative z-10 flex items-center justify-between">
             <div className="flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-800 text-xs text-slate-300">
-              <Tv className="w-4 h-4 text-emerald-400" />
-              <span className="font-extrabold text-white">Etappe {lesson.stageId}</span>
+              <Volume2 className="w-4 h-4 text-emerald-400" />
+              <span className="font-extrabold text-white">{copy.stage} {lesson.stageId}</span>
               <span className="text-slate-500">•</span>
               <span className="text-emerald-400 font-semibold">{copy.lesson} {lesson.id}</span>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[11px] font-bold">
-                {lesson.learnContent.videoTitle || 'GOM-MAR Masterclass'}
+                {copy.audioExplanation}: {lesson.learnContent.videoTitle || lesson.title}
               </span>
             </div>
           </div>
@@ -332,7 +332,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
               <div className="space-y-3 animate-fadeIn">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold">
                   <ShieldCheck className="w-4 h-4 text-amber-400" />
-                  <span>Teil 4: Fazit & Deine Aufgabe</span>
+                  <span>{copy.parts[3]}</span>
                 </div>
                 <div className="bg-amber-950/40 border border-amber-500/30 p-4 rounded-2xl text-xs sm:text-sm text-amber-100 font-bold">
                   "{lesson.understandContent.coreTakeaway}"
@@ -344,7 +344,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             {showCaptions && (
               <div className="inline-block bg-slate-950/90 backdrop-blur-md border border-slate-800/80 px-4 py-2 rounded-2xl text-xs text-emerald-300 font-medium shadow-xl">
                 🎙️ {isPlaying ? (
-                  <span>Sprachausgabe: "{lesson.learnContent.summaryText.slice(0, 110)}..."</span>
+                  <span>{copy.speechOutput}: "{lesson.learnContent.summaryText.slice(0, 110)}..."</span>
                 ) : (
                   <span>{copy.playHint}</span>
                 )}
@@ -362,7 +362,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             </button>
           )}
 
-          {/* Bottom Video Controls Bar */}
+          {/* Audio controls */}
           <div className="relative z-10 bg-slate-950/90 backdrop-blur-md border border-slate-800 p-3.5 rounded-2xl space-y-2.5">
             {/* Scrubber Progress Bar */}
             <div
@@ -401,7 +401,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
                 <button
                   onClick={() => handleSeek(currentTime + 10)}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
-                  title="10s vor"
+                  title={copy.forward10}
                 >
                   <FastForward className="w-4 h-4" />
                 </button>
@@ -433,7 +433,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
                   className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                     showCaptions ? 'bg-emerald-500/20 text-emerald-400' : 'hover:bg-slate-800 text-slate-500'
                   }`}
-                  title="Untertitel umschalten"
+                  title={copy.textToggle}
                 >
                   <Subtitles className="w-4 h-4" />
                 </button>
@@ -453,6 +453,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
                 <button
                   onClick={toggleFullscreen}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  title={copy.fullscreen}
                 >
                   <Maximize2 className="w-4 h-4" />
                 </button>
@@ -462,7 +463,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
         </div>
       )}
 
-      {/* Interactive Video Chapters List */}
+      {/* Audio chapters */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between text-xs">
           <p className="font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
