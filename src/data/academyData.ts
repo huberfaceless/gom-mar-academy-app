@@ -256,19 +256,19 @@ Wissen ohne Handlung bringt 0€. Lerne jeweils nur den nächsten Schritt und se
         stageTitle: '2. Deine Richtung',
         title: 'Nische finden',
         durationMinutes: 12,
-        description: 'Finde eine hochrentable Nische in den Top-3 Märkten: Gesundheit, Finanzen oder Beziehungen.',
+        description: 'Finde eine tragfähige Nische in etablierten Märkten und prüfe ihre tatsächliche Nachfrage.',
         learnContent: {
           videoTitle: 'Die Profitabilitäts-Formel für deine Nische',
           videoDuration: '10:15',
-          summaryText: 'Ein Produkt verkauft sich nur, wenn Menschen bereits aktiv nach Lösungen suchen und Geld ausgeben. Die Top-3 Evergreen-Märkte haben immer zahlungsbereite Kunden.',
+          summaryText: 'Bestehende Nachfrage ist ein wichtiges Signal, aber noch kein Verkaufsversprechen. Prüfe Zielgruppe, Problem, Wettbewerb und Zahlungsbereitschaft mit echten Daten.',
           bulletPoints: [
             '1. Finanzen & Nebeneinkommen (Online Geld verdienen, Sparen, Investieren)',
             '2. Gesundheit & Fitness (Abnehmen, Muskelaufbau, Vitalität, Schlaf)',
             '3. Beziehungen & Persönlichkeit (Dating, Partnerschaft, Selbstbewusstsein)'
           ],
-          fullArticleGuide: `### Die 3 Megamärkte für garantierte Nachfrage
+          fullArticleGuide: `### Drei große Märkte mit anhaltender Nachfrage
 
-Eine "Nische" ist ein gezielter Ausschnitt eines Gesamtmarktes. Wenn du versuchst, ein Thema zu besetzen, nach dem niemand sucht, wirst du scheitern. Gehe dorthin, wo bereits Geld ausgegeben wird!
+Eine "Nische" ist ein gezielter Ausschnitt eines Gesamtmarktes. Ein Thema ohne erkennbare Nachfrage ist schwerer zu vermarkten. Nutze bestehende Ausgaben deshalb als Ausgangspunkt und validiere deine konkrete Idee zusätzlich.
 
 #### Die Top 3 Evergreen-Märkte:
 
@@ -624,11 +624,11 @@ Bevor du Besucher auf deine Seite schickst, musst du sicherstellen, dass das Sys
 3. **E-Mail Auslieferungs-Check**: Prüfe dein Postfach. Kommt die Willkommens-E-Mail innerhalb von 1–3 Minuten an? Funktionsfähig sind auch die enthaltenen Links?
 4. **Affiliate-Tracking Check**: Klicke in der E-Mail auf deinen Partnerlink und prüfe in deiner Adresszeile, ob deine Affiliate-ID übergeben wird.`,
           practicalExamples: [
-            'Merke: Ein 5-minütiger Test spart Ärger und garantiert, dass jeder zukünftige Besucher sauber verarbeitet wird.'
+            'Merke: Ein 5-minütiger Test reduziert vermeidbare Fehler. Wiederhole die Prüfung regelmäßig und überwache die Verarbeitung weiterhin.'
           ]
         },
         understandContent: {
-          coreTakeaway: 'Ein funktionierendes System gibt dir 100% Selbstbewusstsein für die Traffic-Phase.',
+          coreTakeaway: 'Ein sorgfältig getestetes System gibt dir mehr Sicherheit für die Traffic-Phase.',
           keyPrinciples: ['Einmal sauber aufbauen = jahrelang nutzen', 'Fehler beim Testen finden, nicht beim Kunden']
         },
         actionTask: {
@@ -1327,32 +1327,32 @@ Halte das Rad am Laufen, bleibe fokussiert und genieße deinen Weg zu mehr finan
         id: '8.1',
         stageId: 8,
         stageTitle: '8. Bonus & Mastermind',
-        title: 'Die 10x Skalierungs-Formel',
+        title: 'Kontrolliert skalieren mit Re-Investment',
         durationMinutes: 14,
         description: 'Vom organischen Nebeneinkommen zum skalierbaren Business mit bezahltem Traffic & Re-Investment.',
         learnContent: {
-          videoTitle: 'Skalieren ohne Risiko: Der Re-Investment Kreislauf',
+          videoTitle: 'Verantwortungsvoll skalieren: Der Re-Investment-Kreislauf',
           videoDuration: '11:20',
-          summaryText: 'Sobald deine ersten organischen Verkäufe erzielt wurden, investierst du einen Teil der Einnahmen gezielt in bezahlte Werbeanzeigen (Meta Ads, Google Search) oder Kooperationen.',
+          summaryText: 'Wenn dein organisches System wiederholt Verkäufe erzielt, kannst du einen begrenzten und für dich tragbaren Teil der Einnahmen in getestete Werbeanzeigen oder Kooperationen investieren.',
           bulletPoints: [
-            'Re-Investiere 30-50% deiner ersten Einnahmen',
-            'Skaliere Gewinne mit gezielten Meta & Google Ads',
+            'Lege ein tragbares Testbudget und eine klare Verlustgrenze fest',
+            'Skaliere nur Kampagnen mit nachvollziehbar positiven Messwerten',
             'Automatisiere Content mit fortgeschrittenen KI-Pipelines'
           ],
-          fullArticleGuide: `### Die 10x Skalierungs-Formel für fortgeschrittene Marketer
+          fullArticleGuide: `### Kontrollierte Skalierung für fortgeschrittene Marketer
 
-Sobald dein organisches System kontinuierlich Leads und Verkäufe generiert, hast du ein bewiesenes Angebot. Nun geht es darum, die Schlagzahl zu erhöhen.
+Wenn dein organisches System wiederholt Leads und Verkäufe generiert, liegen erste belastbare Signale vor. Beginne mit kleinen Tests, definiere eine Verlustgrenze und erhöhe das Budget nur anhand nachvollziehbarer Ergebnisse.
 
 #### Die 3 Säulen der Skalierung:
 1. **Bezahlter Traffic (Paid Ads):** Nutze Facebook, Instagram oder TikTok Ads, um zielgerichtet exakt deine Wunschkunden auf deine Opt-In Seite zu leiten.
 2. **Höhere Conversions:** Optimiere deine Headlines, E-Mail Betreffzeilen und Buttons A/B-Test-basiert.
 3. **Erweiterter Customer Lifetime Value:** Biete Folgeprodukte, Software-Abonnements oder VIP-Kurse im E-Mail Funnel an.`,
           practicalExamples: [
-            'Beispiel: Du investierst 50€ in Meta Ads, gewinnst 25 Leads und erzielst daraus 2 Verkäufe à 60€ Provision = 120€ Umsatz (70€ Reingewinn).'
+            'Rechenbeispiel, keine Ergebnisprognose: Ein Testbudget von 50€ führt zu 25 Leads und zwei Provisionen à 60€. Das wären 120€ Umsatz und 70€ vor weiteren Kosten; reale Ergebnisse können deutlich abweichen.'
           ]
         },
         understandContent: {
-          coreTakeaway: 'Skalierung bedeutet: Reinvestieren von Gewinnen in Systeme, die berechenbar mehr Ertrag bringen.',
+          coreTakeaway: 'Skalierung bedeutet, ein begrenztes Budget kontrolliert einzusetzen, Ergebnisse zu messen und bei ungünstigen Werten rechtzeitig zu stoppen.',
           keyPrinciples: ['Zahlen kennen (CAC & CLV)', 'Schrittweise testen & skalieren']
         },
         actionTask: {
@@ -5025,13 +5025,13 @@ Auf der Bühne verkaufst du nicht durch Druck, sondern durch Inspiration und die
         id: '34.1',
         stageId: 34,
         stageTitle: '34. Lizenz-Architektur & White-Label',
-        title: 'Die White-Label & Lizenz-Formel: Systeme gewinnbringend vermieten',
+        title: 'White-Label- und Lizenzmodelle verantwortungsvoll gestalten',
         durationMinutes: 30,
-        description: 'Wie du deine Workflows, Templates und Software-Setups in ein schlüsselfertiges Lizenz-Paket für andere Dienstleister und Agenturen verwandelst.',
+        description: 'Prüfe, ob sich deine Workflows, Vorlagen und Software-Setups für ein klar geregeltes Lizenzangebot eignen.',
         learnContent: {
           videoTitle: 'Masterclass: Das Lizenzierungs- & White-Label-Modell',
           videoDuration: '30:25',
-          summaryText: 'Warum jedes Projekt selbst umsetzen, wenn hunderte Agenturen für dein erprobtes System Lizenzgebühren zahlen wollen? Lerne, wie du IP-Rechte schützt, Lizenzpakete schnürst und monatliche wiederkehrende Lizenzerträge generierst.',
+          summaryText: 'Ein erprobtes System kann sich für eine Lizenzierung eignen. Prüfe Eigentumsrechte, Übertragbarkeit, Partnerqualität, Supportaufwand und wirtschaftliche Tragfähigkeit, bevor du ein Angebot erstellst.',
           bulletPoints: [
             'Die 3 Lizenz-Modelle: Exklusiv-Lizenz (Territorium), Franchise-Lizenz (Systempartnerschaft) und White-Label (Rebranding)',
             'IP-Schutz & Marken-Asset-Absicherung: Was darf der Lizenznehmer verändern und was bleibt geschützt?',
@@ -5073,9 +5073,9 @@ Auf der Bühne verkaufst du nicht durch Druck, sondern durch Inspiration und die
               actionUrl: 'settings'
             }
           ],
-          fullArticleGuide: `### Die Architektur der System-Lizenzierung
+          fullArticleGuide: `### Die Architektur einer verantwortungsvollen System-Lizenzierung
 
-Ein Lizenzmodell ist die profitabelste Art der Skalierung, da die operative Umsetzung komplett vom Lizenznehmer getragen wird.
+Ein Lizenzmodell kann zusätzliche Erlöse ermöglichen, verursacht aber weiterhin Aufwand für Rechteprüfung, Dokumentation, Schulung, Support und Qualitätssicherung. Nachfrage und Einnahmen sind nicht sicher.
 
 #### Die 4 Säulen des erfolgreichen Lizenz-Ökosystems:
 1. **Das Standard Operating Package (SOP-Vault)**: Alle Vorlagen, Skripte, Funnels und E-Mail-Sequenzen in einem zentralen Vault.
@@ -5084,7 +5084,7 @@ Ein Lizenzmodell ist die profitabelste Art der Skalierung, da die operative Umse
 4. **Zentrales CRM- & Tool-Routing**: Lizenzpartner nutzen deine Software-Infrastruktur gegen monatliche Software-Gebühren.`
         },
         understandContent: {
-          coreTakeaway: 'Verkaufe nicht deine Zeit für Ergebnisse – verkaufe die Lizenz zu dem System, das die Ergebnisse garantiert.',
+          coreTakeaway: 'Lizenziere nur klar dokumentierte Systeme und verspreche weder dem Partner noch dessen Kunden bestimmte Ergebnisse.',
           keyPrinciples: [
             'Niemals ein System lizenzieren, das nicht mindestens 20 Mal erfolgreich in der Praxis getestet wurde',
             'Klare vertragliche Regelungen für Kündigung, Gebietsschutz und Wettbewerbsverbote vereinbaren'

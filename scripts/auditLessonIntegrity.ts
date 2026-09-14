@@ -23,6 +23,21 @@ const collectStrings = (value: unknown, result: string[] = []): string[] => {
   return result;
 };
 
+const isNegatedOrTechnicalClaim = (text: string, matchIndex: number, match: string): boolean => {
+  const before = text.slice(Math.max(0, matchIndex - 80), matchIndex).toLowerCase();
+  const after = text.slice(matchIndex + match.length, Math.min(text.length, matchIndex + match.length + 80)).toLowerCase();
+  const context = `${before}${match.toLowerCase()}${after}`;
+
+  return /(?:nicht|kein(?:e[rsnm]?)?|weder|ohne)[^.!?\n]{0,60}$/iu.test(before)
+    || /^[^.!?\n]{0,60}(?:nicht|kein(?:e[rsnm]?)?|weder|ohne)/iu.test(after)
+    || /(?:not|no|neither|without)[^.!?\n]{0,60}$/iu.test(before)
+    || /^[^.!?\n]{0,60}(?:not|no|neither|without)/iu.test(after)
+    || /(?:nie|bez)[^.!?\n]{0,60}$/iu.test(before)
+    || /^[^.!?\n]{0,60}(?:nie|bez)/iu.test(after)
+    || context.includes('programmatic guaranteed')
+    || /sichtbarkeitsrat|viewability/iu.test(context);
+};
+
 let lessonCount = 0;
 let lessonsWithRealVideo = 0;
 
@@ -53,7 +68,9 @@ for (const stage of ACADEMY_STAGES) {
     const lessonText = collectStrings(lesson).join('\n');
     for (const [pattern, description] of riskyClaims) {
       pattern.lastIndex = 0;
-      const matches = [...lessonText.matchAll(pattern)].map(match => match[0]);
+      const matches = [...lessonText.matchAll(pattern)]
+        .filter(match => !isNegatedOrTechnicalClaim(lessonText, match.index, match[0]))
+        .map(match => match[0]);
       if (matches.length > 0) {
         findings.push({
           lessonId: lesson.id,

@@ -399,24 +399,24 @@ Behörden sind die sichersten Zahler der Welt – keine Ausfallrisiken, planbare
         id: '68.2',
         stageId: 68,
         stageTitle: '68. Rahmenverträge & Kommunal-Funnels',
-        title: 'Kommunale Rahmenvereinbarungen: 4 Jahre garantierte Abrufbudgets',
+        title: 'Kommunale Rahmenvereinbarungen: Abrufe ohne garantierte Menge',
         durationMinutes: 30,
-        description: 'Wie du Rahmenverträge mit Landkreisen schließt und Folgeprojekte ohne erneutes Ausschreibungsverfahren abrufst.',
+        description: 'Wie Rahmenvereinbarungen und spätere Einzelabrufe funktionieren und welche Vergabe- und Vertragsbedingungen zu beachten sind.',
         learnContent: {
           videoTitle: 'Masterclass: Mehrjährige Rahmenverträge mit öffentlichen Trägern',
           videoDuration: '30:15',
-          summaryText: 'Ein Rahmenvertrag ist wie ein Abonnement mit dem Staat: Einmal gewonnen, rufen Fachabteilungen über 4 Jahre hinweg Dienstleistungen flexibel ab. Erfahre, wie du diese Verträge maximierst.',
+          summaryText: 'Eine Rahmenvereinbarung legt Bedingungen für mögliche spätere Einzelaufträge fest. Laufzeit, Höchstwert, Abrufverfahren und tatsächliches Volumen ergeben sich aus Vergabeunterlagen und Vertrag; ein Mindestabruf besteht nur, wenn er ausdrücklich vereinbart wurde.',
           bulletPoints: [
             'Rahmenvereinbarung nach VgV: Festlegung von Stundensätzen und maximalen Gesamtabrufvolumina',
             'Mini-Wettbewerbe im Rahmenvertrag: Wie du Zweitangebote gegen andere Rahmenvertragspartner gewinnst',
             'Rechnungswesen: Elektronische Rechnungsstellung nach XRechnung-Standard über ZUGFeRD',
-            'Verlängerungs-Optionen: Strategien zur automatischen Fortführung erfolgreicher Kooperationen'
+            'Laufzeit und Optionen: Voraussetzungen, Fristen und erneute Vergabepflichten rechtzeitig prüfen'
           ],
           coreConcepts: [
             {
               iconName: 'repeat',
               title: 'MULTI-YEAR RETENTION',
-              description: '4 Jahre garantierte Projektpipeline ohne fortlaufende Neukunden-Kosten.',
+              description: 'Mehrjährige Vertragsbeziehungen können Planung erleichtern, garantieren aber keine Einzelaufträge.',
               highlight: true
             },
             {
@@ -443,14 +443,14 @@ Behörden sind die sichersten Zahler der Welt – keine Ausfallrisiken, planbare
           ],
           fullArticleGuide: `### Die Skalierung durch behördliche Rahmenverträge
 
-Wenn eine Stadt deine Zuverlässigkeit schätzt, wirst du für Folgeprojekte ohne Ausschreibung direkt angefragt.
+Ein Folgeauftrag darf nur nach den Bedingungen der Rahmenvereinbarung und des anwendbaren Vergaberechts erteilt werden. Gute Leistung kann die Zusammenarbeit stärken, ersetzt aber keine rechtlichen Voraussetzungen.
 
 #### Best Practices im Behörden-Management:
 - **Pünktliche Meilensteine**: Behörden schätzen Planbarkeit mehr als impulsive Änderungen.
 - **Transparente Dokumentation**: Ausführliche Statusberichte schaffen Vertrauen beim Rechnungsprüfungsamt.`
         },
         understandContent: {
-          coreTakeaway: 'Ein gewonnener kommunaler Rahmenvertrag ist das sicherste Fundament für 7-stellige Jahresumsätze.',
+          coreTakeaway: 'Eine Rahmenvereinbarung eröffnet die Möglichkeit späterer Abrufe, garantiert jedoch weder Menge, Umsatz noch Fortsetzung.',
           keyPrinciples: [
             'Rechnungen immer mit korrekter Leitweg-ID einreichen, um Zahlungsverzögerungen zu vermeiden',
             'Regelmäßige Quartals-Reviews mit dem behördlichen Projektleiter durchführen'
