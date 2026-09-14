@@ -2105,42 +2105,44 @@ Du besitzt jetzt alle Werkzeuge, Strategien und Systeme, um nachhaltig digitale 
   {
     id: 14,
     title: '14. Legal, Compliance & DSGVO',
-    subtitle: 'Rechtssicherheit für Online Marketer & Gründer',
+    subtitle: 'Rechtliche Grundlagen für Online-Marketing & Gründung',
     color: 'from-slate-600 to-cyan-800',
     badgeIcon: 'gavel',
-    description: 'Mache dein Online Business 100% rechtssicher: DSGVO-konformes Impressum, Datenschutzerklärung, Double-Opt-In (DOI) & Gewerbeanmeldung.',
+    description: 'Lerne wichtige Grundlagen zu Datenschutz, Anbieterkennzeichnung, Einwilligungen und Gewerbeanmeldung kennen. Die konkreten Pflichten hängen von Land, Geschäftsmodell und Einzelfall ab.',
     lessons: [
       {
         id: '14.1',
         stageId: 14,
         stageTitle: '14. Legal, Compliance & DSGVO',
-        title: 'DSGVO & E-Mail-Marketing Rechtssicherheit',
+        title: 'DSGVO & E-Mail-Marketing: Grundlagen',
         durationMinutes: 14,
-        description: 'Double-Opt-In (DOI) Pflicht, Datenschutz-Einbindung auf Landingpages & rechtssichere E-Mail-Kommunikation.',
+        description: 'Einwilligungen nachvollziehbar einholen, Datenschutzinformationen bereitstellen und Abmeldungen zuverlässig umsetzen.',
         learnContent: {
-          videoTitle: 'Rechtssicheres E-Mail Marketing nach DSGVO',
+          videoTitle: 'Datenschutzbewusstes E-Mail-Marketing',
           videoDuration: '11:10',
-          summaryText: 'Wer E-Mail-Adressen sammelt, muss das rechtssichere Double-Opt-In (DOI) Verfahren nutzen und einen Datenschutz-Link bereitstellen.',
+          summaryText: 'Beim Sammeln und Verwenden von E-Mail-Adressen brauchst du eine passende Rechtsgrundlage, transparente Informationen und einen dokumentierbaren Prozess. Double-Opt-In ist ein verbreitetes Verfahren zum Nachweis einer Einwilligung.',
           bulletPoints: [
-            'Automatischer Versand der DOI-Bestätigungsmail mit Einmal-Link',
-            'Einbindung von Datenschutzerklärung & Checkbox im Opt-In Formular',
-            'Jederzeitige Abmeldemöglichkeit (Unsubscribe-Link) in jeder Mail'
+            'Einwilligungstext, Zeitpunkt und Bestätigung nachvollziehbar dokumentieren',
+            'Datenschutzinformationen am Formular gut erreichbar verlinken',
+            'Einfache Abmeldemöglichkeit in Marketing-E-Mails bereitstellen'
           ],
-          fullArticleGuide: `### Die 3 Säulen rechtssicheren E-Mail Marketings
+          fullArticleGuide: `### Drei Grundlagen für datenschutzbewusstes E-Mail-Marketing
 
 Datenschutz ist im europäischen Raum keine Hürde, sondern stärkt das Vertrauen deiner Kontakte.
 
-#### Die wichtigsten Vorgaben:
-1. **Double-Opt-In (DOI):** Jeder Lead muss seine E-Mail-Adresse durch Klick auf einen Bestätigungslink verifizieren.
-2. **Abmelde-Link:** Jede Nachricht benötigt am Ende einen gut sichtbaren Unsubscribe-Button.
-3. **Einwilligung:** Im Anmeldeformular muss klar angegeben werden, wofür die E-Mail-Adresse genutzt wird.`,
+#### Praktische Orientierung:
+1. **Nachweisbare Einwilligung:** Double-Opt-In hilft dabei, Anmeldung und Bestätigung zu dokumentieren. Ob und wie es einzusetzen ist, hängt vom Rechtsraum und Anwendungsfall ab.
+2. **Transparenz und Abmeldung:** Erkläre verständlich, welche Inhalte versendet werden, und ermögliche eine einfache Abmeldung.
+3. **Datensparsamkeit:** Erhebe nur benötigte Daten, sichere sie angemessen und prüfe eingesetzte Auftragsverarbeiter.
+
+Diese Übersicht ersetzt keine Rechtsberatung. Prüfe die Anforderungen für dein Land und Geschäftsmodell im Zweifel mit einer qualifizierten Fachperson.`,
           practicalExamples: [
-            'Alle Formulare in der GOM-MAR Toolbox sind automatisch DSGVO-konform mit DOI und Datenschutz-Links ausgestattet.'
+            'Prüfe bei jedem Formular Einwilligungstext, Datenschutz-Link, DOI-Protokollierung und Abmeldeprozess vor dem Einsatz.'
           ]
         },
         understandContent: {
-          coreTakeaway: 'Transparenz schafft Vertrauen – DSGVO-Konformität schützt dein Business und stärkt die Kundenbindung.',
-          keyPrinciples: ['DOI Pflicht beachten', 'Keine Mails ohne Abmelde-Link']
+          coreTakeaway: 'Transparente Informationen und dokumentierte Prozesse reduzieren Datenschutzrisiken; eine Einzelfallprüfung bleibt erforderlich.',
+          keyPrinciples: ['Einwilligungen dokumentieren', 'Abmeldung einfach ermöglichen']
         },
         actionTask: {
           instruction: 'Überprüfe deine DOI-Einstellungen im GOM-MAR E-Mail Editor:',
@@ -2153,31 +2155,33 @@ Datenschutz ist im europäischen Raum keine Hürde, sondern stärkt das Vertraue
         id: '14.2',
         stageId: 14,
         stageTitle: '14. Legal, Compliance & DSGVO',
-        title: 'Impressum, AGB & Abmahnfallen vermeiden',
+        title: 'Impressum, AGB & Verbraucherinformationen',
         durationMinutes: 13,
-        description: 'So erstellst du ein abmahnsicheres Impressum, AGB und Widerrufsbelehrungen für deine Landingpages & Social Media Profile.',
+        description: 'Grundlagen zu Anbieterkennzeichnung, AGB, Widerruf und Werbekennzeichnung für Websites und Social-Media-Profile.',
         learnContent: {
-          videoTitle: 'Impressumspflicht & Abmahn-Prävention',
+          videoTitle: 'Anbieterkennzeichnung & Verbraucherinformationen',
           videoDuration: '10:20',
-          summaryText: 'Jede geschäftliche Webseite und jedes Social-Media Profil im deutschsprachigen Raum benötigt ein leicht erreichbares Impressum (2-Klick-Regel).',
+          summaryText: 'Für geschäftliche Online-Angebote können Informations- und Kennzeichnungspflichten gelten. Umfang und Platzierung richten sich nach Rechtsraum, Anbieter und Angebot.',
           bulletPoints: [
-            'Pflichtangaben im Impressum: Name, Ladungsfähige Adresse, Kontakt (E-Mail/Tel)',
-            'Transparenter Werbe-Hinweis bei Affiliate-Links (*Werbung / Affiliate Link)',
-            'Nutze kostenlose Generatoren für Datenschutz & Impressum'
+            'Erforderliche Anbieterangaben für den eigenen Rechtsraum prüfen',
+            'Kommerzielle Inhalte und Affiliate-Links klar und verständlich kennzeichnen',
+            'AGB, Widerruf und Datenschutz passend zum tatsächlichen Angebot prüfen lassen'
           ],
-          fullArticleGuide: `### Das perfekte Impressum für Online Marketer
+          fullArticleGuide: `### Anbieterinformationen sorgfältig umsetzen
 
-Fehlende oder unvollständige Impressumsangaben sind die häufigste Ursache für vermeidbare Abmahnungen.
+Unvollständige Anbieter- oder Verbraucherinformationen können rechtliche Risiken verursachen. Allgemeine Vorlagen und Generatoren sind ein Ausgangspunkt, berücksichtigen aber nicht automatisch dein konkretes Geschäftsmodell.
 
-#### Die 2-Klick-Regel:
-Dein Impressum und deine Datenschutzerklärung müssen von jeder Unterseite deiner Website aus mit maximal 2 Klicks erreichbar sein. Ideal ist ein Footer-Link auf deiner Landingpage.`,
+#### Praktische Prüfung:
+Verlinke Anbieter- und Datenschutzinformationen dauerhaft, gut auffindbar und verständlich. Prüfe zusätzlich, ob für dein Angebot AGB, Widerrufsinformationen, Preisangaben oder besondere Branchenhinweise erforderlich sind.
+
+Die Anforderungen unterscheiden sich je nach Land und Angebot. Lass die konkrete Umsetzung bei Unsicherheit rechtlich prüfen.`,
           practicalExamples: [
             'Verlinke dein Impressum und deine Datenschutzerklärung direkt im Footer deiner Landingpage im Generator.'
           ]
         },
         understandContent: {
-          coreTakeaway: 'Ein vollständiges Impressum schützt dich vor rechtlichen Risiken und wirkt hochprofessionell.',
-          keyPrinciples: ['2-Klick-Erreichbarkeit', 'Transparente Kennzeichnung']
+          coreTakeaway: 'Gut auffindbare und passende Anbieterinformationen schaffen Transparenz; Vorlagen ersetzen keine Einzelfallprüfung.',
+          keyPrinciples: ['Angaben aktuell halten', 'Werbung transparent kennzeichnen']
         },
         actionTask: {
           instruction: 'Binde dein Impressum im Landingpage Generator ein:',
@@ -2192,39 +2196,41 @@ Dein Impressum und deine Datenschutzerklärung müssen von jeder Unterseite dein
         stageTitle: '14. Legal, Compliance & DSGVO',
         title: 'Gewerbeanmeldung, Steuern & EÜR für Einsteiger',
         durationMinutes: 15,
-        description: 'Der einfache Leitfaden für Gewerbeanmeldung, Kleinunternehmerregelung (§ 19 UStG) & geordnete Belegbuchhaltung.',
+        description: 'Orientierung zu Gewerbeanmeldung, umsatzsteuerlichen Regelungen und geordneter Belegbuchhaltung.',
         learnContent: {
           videoTitle: 'Gewerbe & Steuern einfach erklärt',
           videoDuration: '12:00',
-          summaryText: 'Sobald du die Absicht hast, dauerhaft Gewinne zu erzielen, meldest du ein Gewerbe an. Lerne die Vorteile der Kleinunternehmerregelung kennen.',
+          summaryText: 'Ob, wann und wo eine Tätigkeit anzumelden ist, hängt unter anderem von Land, Tätigkeit und Rechtsform ab. Informiere dich frühzeitig bei den zuständigen Stellen.',
           bulletPoints: [
-            'Gewerbeanmeldung beim örtlichen Gewerbeamt (Kosten ca. 15–40€)',
-            'Kleinunternehmerregelung (§ 19 UStG): Keine Umsatzsteuer auf Rechnungen bis 22.000€/Jahr',
-            'Einfache Einnahmen-Überschuss-Rechnung (EÜR) für deine Steuererklärung'
+            'Zuständige Behörde und erforderliche Anmeldung am Unternehmenssitz klären',
+            'Aktuelle Umsatzsteuerregeln und Schwellenwerte für dein Land prüfen',
+            'Einnahmen, Ausgaben und Belege von Beginn an nachvollziehbar erfassen'
           ],
-          fullArticleGuide: `### Gewerbe & Steuern ohne Stress
+          fullArticleGuide: `### Gewerbe & Steuern strukturiert vorbereiten
 
-Die Gewerbeanmeldung ist ein unkomplizierter Verwaltungsakt, der meist online erledigt werden kann.
+Anmeldung, Steuern und Buchführung unterscheiden sich nach Land, Tätigkeit, Umsatz und Rechtsform. Veraltete Schwellenwerte oder pauschale Tätigkeitsbeschreibungen können zu Fehlern führen.
 
-#### Schritt-für-Schritt Fahrplan:
-1. **Gewerbeanmeldung:** Online beim Gewerbeamt ausfüllen (Tätigkeit z.B. „Online Marketing & digitale Dienstleistungen“).
-2. **Fragebogen zur steuerlichen Erfassung:** Beim Finanzamt einreichen & ggf. Kleinunternehmerregelung wählen.
-3. **Belege sammeln:** Speichere alle Einnahmen und Ausgaben geordnet im Ordner.`,
+#### Sinnvolle Vorbereitung:
+1. **Tätigkeit einordnen:** Kläre mit der zuständigen Behörde, welche Anmeldung und Tätigkeitsbeschreibung erforderlich sind.
+2. **Steuerliche Erfassung:** Prüfe mit Finanzverwaltung oder Steuerberatung die geltenden Umsatzsteuer- und Erklärungspflichten.
+3. **Belege organisieren:** Erfasse Einnahmen und Ausgaben vollständig und beachte Aufbewahrungsfristen.
+
+Diese Lektion bietet allgemeine Orientierung und ersetzt keine Rechts- oder Steuerberatung.`,
           practicalExamples: [
-            'Nutze ein simples Excel-Sheet oder Lexoffice für deine wöchentliche Belegübersicht.'
+            'Nutze eine für dein Land und deine Anforderungen geeignete Buchhaltungslösung und stimme den Prozess bei Bedarf mit einer Steuerberatung ab.'
           ]
         },
         understandContent: {
-          coreTakeaway: 'Gewerbe & Buchhaltung sind einfach, wenn man von Anfang an Ordnung hält.',
-          keyPrinciples: ['Belege sofort ablegen', 'Kleinunternehmerregelung nutzen']
+          coreTakeaway: 'Frühe Klärung und saubere Belege erleichtern die laufende Buchhaltung; konkrete Pflichten müssen individuell geprüft werden.',
+          keyPrinciples: ['Pflichten früh klären', 'Belege vollständig erfassen']
         },
         actionTask: {
-          instruction: 'Schließe das Legal & Compliance Modul ab & sichere dir deinen Rechts-Check Status:',
+          instruction: 'Schließe das Legal-&-Compliance-Modul mit einer persönlichen Prüfliste ab:',
           inputType: 'checklist',
           checklistItems: [
-            'Ich kenne die Pflichten von Double-Opt-In (DOI)',
-            'Ich verstehe die Anforderungen an Impressum & Datenschutz',
-            'Ich kenne die Schritte zur einfachen Gewerbeanmeldung'
+            'Ich habe Einwilligungs-, Datenschutz- und Abmeldeprozesse geprüft',
+            'Ich habe die Anbieter- und Verbraucherinformationen für mein Angebot geprüft',
+            'Ich kenne die zuständigen Stellen und nächsten Schritte für meine Anmeldung'
           ]
         }
       }
