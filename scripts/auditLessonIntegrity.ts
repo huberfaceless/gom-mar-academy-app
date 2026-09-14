@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { ACADEMY_STAGES } from '../src/data/academyData';
 
 type Finding = {
@@ -52,7 +53,7 @@ for (const stage of ACADEMY_STAGES) {
         lessonId: lesson.id,
         lessonTitle: lesson.title,
         category: 'video',
-        detail: 'Keine Video-URL hinterlegt; der aktuelle Player verwendet die simulierte Wiedergabe.',
+        detail: 'Keine Video-URL hinterlegt; die Lektion verwendet stattdessen die Browser-Audio-Erklärung.',
       });
     } else if (!hasSupportedVideo) {
       findings.push({
@@ -98,4 +99,20 @@ for (const finding of findings) {
 
 if (lessonCount === 0) {
   throw new Error('Lektionsaudit fehlgeschlagen: Es wurden keine Lektionen gefunden.');
+}
+
+const lessonPlayer = fs.readFileSync('src/components/LessonVideoPlayer.tsx', 'utf8');
+const playerChecks: Array<[boolean, string]> = [
+  [lessonPlayer.includes("audioPlayer: 'GOM-MAR Audio-Erklärung'"), 'Die deutsche Audio-Erklärung ist eindeutig gekennzeichnet.'],
+  [lessonPlayer.includes("audioPlayer: 'GOM-MAR audio explanation'"), 'Die englische Audio-Erklärung ist eindeutig gekennzeichnet.'],
+  [lessonPlayer.includes("audioPlayer: 'Objaśnienie audio GOM-MAR'"), 'Die polnische Audio-Erklärung ist eindeutig gekennzeichnet.'],
+  [lessonPlayer.includes("customVideoUrl ? copy.videoPlayer : copy.audioPlayer"), 'Die Video-Bezeichnung erscheint nur bei hinterlegter Video-URL.'],
+  [lessonPlayer.includes("customVideoUrl ? 'HD 1080p' : copy.browserVoice"), 'Eine Videoauflösung wird nur bei hinterlegtem Video angezeigt.'],
+  [!lessonPlayer.includes('GOM-MAR Masterclass Player'), 'Der simulierte Player wird nicht mehr als Videoplayer bezeichnet.'],
+  [!lessonPlayer.includes('Interaktive Video-Kapitel'), 'Kapitel der Audio-Erklärung werden nicht mehr als Videokapitel bezeichnet.'],
+];
+
+for (const [passed, message] of playerChecks) {
+  if (!passed) throw new Error(`Lektionsaudit fehlgeschlagen: ${message}`);
+  console.log(`✓ ${message}`);
 }
