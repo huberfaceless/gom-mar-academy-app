@@ -317,23 +317,23 @@ Wenn ein Funnel profitabel ist, ist die richtige Skalierungs-Strategie der Hebel
   },
   {
     id: 48,
-    title: '48. SEO & Topical Authority: Organische Google Position 1',
+    title: '48. SEO & Topical Authority: Organische Sichtbarkeit entwickeln',
     subtitle: 'Topical Clustering, Semantisches SEO, E-E-A-T & KI-Content-Pipelines',
     color: 'from-emerald-600 via-teal-600 to-green-700',
     badgeIcon: '🌱',
-    description: 'Erschaffe eine unzerstörbare organische Google-Monopolstellung: Baue Topical Clusters auf, erfülle E-E-A-T Richtlinien meisterhaft und generiere monatlich hunderttausende kostenlose Besucher ohne einen Cent Ad-Spend.',
+    description: 'Baue hilfreiche Themen-Cluster auf, berücksichtige E-E-A-T-Signale und entwickle organische Sichtbarkeit schrittweise. Rankings und Besucherzahlen bleiben von Wettbewerb, Qualität, Technik und Suchsystemen abhängig.',
     lessons: [
       {
         id: '48.1',
         stageId: 48,
         stageTitle: '48. Topical Authority & Silo-Struktur',
-        title: 'Topical Authority: Wie Google Webseiten als ultimative Branchen-Instanz anerkennt',
+        title: 'Topical Authority: Themen strukturiert und hilfreich abdecken',
         durationMinutes: 33,
-        description: 'Warum einzelne Blogbeiträge nicht mehr ranken und wie du mit Pillar-Pages und Silo-Clustern die gesamte Nische abdeckst.',
+        description: 'Wie Pillar-Pages, Themen-Cluster und interne Links Suchmaschinen und Nutzern helfen können, Zusammenhänge zu verstehen.',
         learnContent: {
           videoTitle: 'Masterclass: Semantisches SEO & Topical Authority Architecture',
           videoDuration: '33:40',
-          summaryText: 'Google rankt keine einzelnen Keywords mehr, sondern bewertet, ob eine Domain das Gesamtthema lückenlos und kompetent abdeckt. Lerne, wie du Themen-Cluster planst, die dich in 3-6 Monaten auf Position 1 katapultieren.',
+          summaryText: 'Suchsysteme bewerten viele Signale auf Seiten- und Website-Ebene. Lerne, Themen-Cluster an Nutzerfragen auszurichten und ihre Wirkung über einen angemessenen Zeitraum zu messen, ohne eine Position oder Frist vorauszusetzen.',
           bulletPoints: [
             'Das Pillar-Cluster-Modell: 1 umfassende Kernseite (Pillar Page) verlinkt auf 15-20 spezifische Sub-Artikel (Cluster)',
             'Semantische Entitäten: Wie Google Begriffe in Wissensgraphen (Knowledge Graphs) verknüpft',
@@ -380,7 +380,7 @@ Wer nur über 'Fitness Tipps' schreibt, wird nicht ranken. Wer aber Ernährung, 
 4. **Die Verlinkung**: Jeder Cluster-Artikel verlinkt zurück auf die Pillar-Page mit optimiertem Ankertext.`
         },
         understandContent: {
-          coreTakeaway: 'Wer das Thema am vollständigsten und verständlichsten erklärt, gewinnt das Google-Ranking.',
+          coreTakeaway: 'Hilfreiche, gut strukturierte Inhalte verbessern die Grundlage für organische Sichtbarkeit; ein bestimmtes Ranking lässt sich nicht zusagen.',
           keyPrinciples: [
             'Keine Keyword-Cannibalization: Jedes Keyword darf nur genau einer URL zugeordnet sein',
             'Interne Links sind der stärkste und günstigste Rankinghebel'
@@ -1187,30 +1187,30 @@ Viele geniale Entwickler haben tolle Software gebaut, verstehen aber nichts von 
         id: '53.2',
         stageId: 53,
         stageTitle: '53. Post-Merger Optimization & Flip',
-        title: 'Die 90-Tage Turnaround-Formel: Wert verdoppeln und für 7-Figures verkaufen',
+        title: 'Der 90-Tage-Turnaround: Werttreiber prüfen und priorisieren',
         durationMinutes: 31,
-        description: 'Die 5 Sofort-Hebel nach der Übernahme: Preiserhöhung, Churn-Stopp, E-Mail Flow Aktivierung und erneuter Verkauf.',
+        description: 'Wie du nach einer Übernahme Preise, Kundenbindung, E-Mail-Prozesse und Reporting prüfst und Verbesserungen kontrolliert priorisierst.',
         learnContent: {
           videoTitle: 'Masterclass: 90-Tage Skalierung & Unternehmens-Flipping',
           videoDuration: '31:30',
-          summaryText: 'Nach dem Kauf beginnt die Wertsteigerung. Erfahre, wie du in den ersten 90 Tagen nach der Übernahme den Cashflow maximierst, saubere Buchhaltung etablierst und die Firma mit hohem Multiple weiterverkaufst.',
+          summaryText: 'Nach dem Kauf beginnt die Integrations- und Prüfphase. Erfahre, wie du in den ersten 90 Tagen Cashflow-Risiken analysierst, sauberes Reporting etablierst und belastbare Verbesserungsmaßnahmen testest. Wertsteigerung und späterer Verkauf bleiben unsicher.',
           bulletPoints: [
             'Tag 1-30: Preisanpassung für Neukunden und Reaktivierung der inaktiven E-Mail-Liste',
             'Tag 31-60: Implementierung eines modernen Checkouts und Upsell-Funnels',
-            'Tag 61-90: Etablierung eines automatisierten Ad-Funnels für planbares Neukundenwachstum',
-            'Der Exit-Pitch: Wie du die gesteigerten Zahlen für institutionelle Käufer aufbereitest'
+            'Tag 61-90: begrenzte Tests neuer Akquisekanäle mit klaren Kosten- und Abbruchkriterien',
+            'Investor-Reporting: geprüfte Kennzahlen, Risiken und Entwicklung nachvollziehbar aufbereiten'
           ],
           coreConcepts: [
             {
               iconName: 'trending_up',
               title: 'PRICE LIFT LEVER',
-              description: 'Sofortige 25% Umsatzsteigerung durch zeitgemäße Bepreisung nach der Übernahme.',
+              description: 'Preisanpassungen zunächst testen und dabei Nachfrage, Kündigungen und Deckungsbeitrag gemeinsam beobachten.',
               highlight: true
             },
             {
               iconName: 'dollar-sign',
               title: 'MULTIPLE EXPANSION',
-              description: 'Unternehmen bei 3x EBIT kaufen und bei 6x EBIT weiterverkaufen.'
+              description: 'Kauf- und Verkaufsmultiples hängen von Qualität, Wachstum, Risiko, Finanzierung und Marktumfeld ab.'
             }
           ],
           resources: [
@@ -1240,7 +1240,7 @@ Wie ein Immobilien-Entwickler ein altes Haus renoviert, modernisierst du digital
 - **Hebel 4**: Neue Traffic-Kanäle (YouTube/Pinterest/Meta) erschließen.`
         },
         understandContent: {
-          coreTakeaway: 'Kleine Marketing-Verbesserungen an bestehenden Assets erzeugen massive Hebelwirkungen.',
+          coreTakeaway: 'Gezielte Verbesserungen können den Unternehmenswert beeinflussen; Umfang, Dauer und Ergebnis sind nicht vorhersehbar.',
           keyPrinciples: [
             'Bestehende Kunden vor radikalen Änderungen behutsam informieren',
             'Alle Kennzahlen von Tag 1 an sauber für die Due Diligence des nächsten Käufers dokumentieren'
