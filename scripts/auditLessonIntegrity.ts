@@ -29,6 +29,7 @@ const riskyClaims: Array<[RegExp, string]> = [
   [/\b(?:für\s+ein\s+10x\s+multiple|kosten\s+sparen\s+20-30\s*%|in\s+24\s+monaten\s+einen\s+8-stelligen\s+unternehmenswert)\b/giu, 'Unbelegtes Rollup- oder Bewertungsversprechen'],
   [/\b(?:in\s+30\s+sekunden\s+von\s+panik|250\s*%\s+dopamin|5x\s+h(?:ö|oe)here\s+produktivit(?:ä|ae)t|flow\s+state\s+on\s+demand)\b/giu, 'Unbelegtes Gesundheits- oder Leistungsversprechen'],
   [/\b(?:ab\s+einem\s+liquiden\s+vermögen\s+von\s+10\s+millionen|automatischer\s+schutz\s+gegen\s+währungskrisen|für\s+immer\s+reich\s+bleiben)\b/giu, 'Pauschales Anlage- oder Vermögensversprechen'],
+  [/\b(?:100\s*%\s+rechtssicher|rechtssichere\s+e-mail-kommunikation|abmahnsicheres\s+impressum)\b/giu, 'Pauschales Rechts- oder Complianceversprechen'],
 ];
 
 const collectStrings = (value: unknown, result: string[] = []): string[] => {
