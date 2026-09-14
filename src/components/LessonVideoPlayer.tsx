@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Lesson } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { authenticatedFetch } from '../services/authenticatedFetch';
 import { 
   Play, 
   Pause, 
@@ -32,9 +33,9 @@ interface LessonVideoPlayerProps {
 export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, niche }) => {
   const { language } = useLanguage();
   const copy = {
-    de: { chapters: ['Einführung & Überblick', 'Kern-Prinzipien & Methodik', 'Praxisbeispiel & Anwendung', 'Zusammenfassung & Umsetzung'], lesson: 'Lektion', stage: 'Etappe', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:', chapterReached: 'Audio-Kapitel erreicht.', changeUrl: 'Video-URL ändern', embed: '🎥 YouTube-Video einbetten', addUrl: 'Füge einen YouTube-Link oder Video-Embed ein für Lektion', save: 'Speichern', reset: 'Zurücksetzen', parts: ['Teil 1: Einführung & Ausrichtung', 'Teil 2: Die 3 Kern-Prinzipien', 'Teil 3: Konkretes Praxisbeispiel', 'Teil 4: Fazit & Deine Aufgabe'], playHint: 'Klicke auf Play, um die Audio-Erklärung zu starten', back10: '10 Sekunden zurück', forward10: '10 Sekunden vor', audioPlayer: 'GOM-MAR Audio-Erklärung', videoPlayer: 'YouTube-Videoplayer', browserVoice: 'Browser-Sprachausgabe', audioExplanation: 'Audio-Erklärung', speechOutput: 'Sprachausgabe', interactive: 'Audio-Kapitel', chapterHint: 'Wähle ein Kapitel, um die Audio-Erklärung dort fortzusetzen', textToggle: 'Textanzeige umschalten', fullscreen: 'Vollbild umschalten' },
-    en: { chapters: ['Introduction & overview', 'Core principles & method', 'Practical example & application', 'Summary & implementation'], lesson: 'Lesson', stage: 'Stage', keyPoints: 'The key points are:', takeaway: 'Key takeaway:', chapterReached: 'Audio chapter reached.', changeUrl: 'Change video URL', embed: '🎥 Embed YouTube video', addUrl: 'Add a YouTube link or video embed for lesson', save: 'Save', reset: 'Reset', parts: ['Part 1: Introduction & direction', 'Part 2: The 3 core principles', 'Part 3: Practical example', 'Part 4: Conclusion & your task'], playHint: 'Press Play to start the audio explanation', back10: 'Back 10 seconds', forward10: 'Forward 10 seconds', audioPlayer: 'GOM-MAR audio explanation', videoPlayer: 'YouTube video player', browserVoice: 'Browser speech output', audioExplanation: 'Audio explanation', speechOutput: 'Speech output', interactive: 'Audio chapters', chapterHint: 'Select a chapter to continue the audio explanation there', textToggle: 'Toggle text display', fullscreen: 'Toggle fullscreen' },
-    pl: { chapters: ['Wprowadzenie i przegląd', 'Główne zasady i metoda', 'Przykład i zastosowanie', 'Podsumowanie i wdrożenie'], lesson: 'Lekcja', stage: 'Etap', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:', chapterReached: 'Rozdział audio rozpoczęty.', changeUrl: 'Zmień adres wideo', embed: '🎥 Osadź wideo YouTube', addUrl: 'Dodaj link YouTube lub osadzone wideo dla lekcji', save: 'Zapisz', reset: 'Resetuj', parts: ['Część 1: Wprowadzenie i kierunek', 'Część 2: 3 główne zasady', 'Część 3: Praktyczny przykład', 'Część 4: Podsumowanie i Twoje zadanie'], playHint: 'Naciśnij Play, aby uruchomić objaśnienie audio', back10: 'Cofnij o 10 sekund', forward10: 'Przewiń o 10 sekund', audioPlayer: 'Objaśnienie audio GOM-MAR', videoPlayer: 'Odtwarzacz wideo YouTube', browserVoice: 'Synteza mowy przeglądarki', audioExplanation: 'Objaśnienie audio', speechOutput: 'Synteza mowy', interactive: 'Rozdziały audio', chapterHint: 'Wybierz rozdział, aby kontynuować od niego objaśnienie audio', textToggle: 'Przełącz wyświetlanie tekstu', fullscreen: 'Przełącz pełny ekran' },
+    de: { chapters: ['Einführung & Überblick', 'Kern-Prinzipien & Methodik', 'Praxisbeispiel & Anwendung', 'Zusammenfassung & Umsetzung'], lesson: 'Lektion', stage: 'Etappe', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:', chapterReached: 'Audio-Kapitel erreicht.', changeUrl: 'Video-URL ändern', embed: '🎥 YouTube-Video einbetten', addUrl: 'Füge einen YouTube-Link oder Video-Embed ein für Lektion', save: 'Speichern', reset: 'Zurücksetzen', parts: ['Teil 1: Einführung & Ausrichtung', 'Teil 2: Die 3 Kern-Prinzipien', 'Teil 3: Konkretes Praxisbeispiel', 'Teil 4: Fazit & Deine Aufgabe'], playHint: 'Klicke auf Play, um die Audio-Erklärung zu starten', loading: 'Deine Academy-Stimme wird geladen …', audioError: 'Die Audio-Erklärung konnte nicht geladen werden. Bitte versuche es erneut.', back10: '10 Sekunden zurück', forward10: '10 Sekunden vor', audioPlayer: 'GOM-MAR Audio-Erklärung', videoPlayer: 'YouTube-Videoplayer', academyVoice: 'Einheitliche Academy-Stimme', audioExplanation: 'Audio-Erklärung', speechOutput: 'Sprachausgabe', interactive: 'Audio-Kapitel', chapterHint: 'Wähle ein Kapitel, um die Audio-Erklärung dort fortzusetzen', textToggle: 'Textanzeige umschalten', fullscreen: 'Vollbild umschalten' },
+    en: { chapters: ['Introduction & overview', 'Core principles & method', 'Practical example & application', 'Summary & implementation'], lesson: 'Lesson', stage: 'Stage', keyPoints: 'The key points are:', takeaway: 'Key takeaway:', chapterReached: 'Audio chapter reached.', changeUrl: 'Change video URL', embed: '🎥 Embed YouTube video', addUrl: 'Add a YouTube link or video embed for lesson', save: 'Save', reset: 'Reset', parts: ['Part 1: Introduction & direction', 'Part 2: The 3 core principles', 'Part 3: Practical example', 'Part 4: Conclusion & your task'], playHint: 'Press Play to start the audio explanation', loading: 'Your Academy voice is loading …', audioError: 'The audio explanation could not be loaded. Please try again.', back10: 'Back 10 seconds', forward10: 'Forward 10 seconds', audioPlayer: 'GOM-MAR audio explanation', videoPlayer: 'YouTube video player', academyVoice: 'Consistent Academy voice', audioExplanation: 'Audio explanation', speechOutput: 'Speech output', interactive: 'Audio chapters', chapterHint: 'Select a chapter to continue the audio explanation there', textToggle: 'Toggle text display', fullscreen: 'Toggle fullscreen' },
+    pl: { chapters: ['Wprowadzenie i przegląd', 'Główne zasady i metoda', 'Przykład i zastosowanie', 'Podsumowanie i wdrożenie'], lesson: 'Lekcja', stage: 'Etap', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:', chapterReached: 'Rozdział audio rozpoczęty.', changeUrl: 'Zmień adres wideo', embed: '🎥 Osadź wideo YouTube', addUrl: 'Dodaj link YouTube lub osadzone wideo dla lekcji', save: 'Zapisz', reset: 'Resetuj', parts: ['Część 1: Wprowadzenie i kierunek', 'Część 2: 3 główne zasady', 'Część 3: Praktyczny przykład', 'Część 4: Podsumowanie i Twoje zadanie'], playHint: 'Naciśnij Play, aby uruchomić objaśnienie audio', loading: 'Trwa ładowanie głosu Academy …', audioError: 'Nie udało się załadować objaśnienia audio. Spróbuj ponownie.', back10: 'Cofnij o 10 sekund', forward10: 'Przewiń o 10 sekund', audioPlayer: 'Objaśnienie audio GOM-MAR', videoPlayer: 'Odtwarzacz wideo YouTube', academyVoice: 'Spójny głos Academy', audioExplanation: 'Objaśnienie audio', speechOutput: 'Odtwarzanie głosu', interactive: 'Rozdziały audio', chapterHint: 'Wybierz rozdział, aby kontynuować od niego objaśnienie audio', textToggle: 'Przełącz wyświetlanie tekstu', fullscreen: 'Przełącz pełny ekran' },
   }[language];
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -46,8 +47,13 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
   const [isEditingUrl, setIsEditingUrl] = useState<boolean>(false);
   const [tempUrlInput, setTempUrlInput] = useState<string>('');
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [audioUrl, setAudioUrl] = useState<string>('');
+  const [audioLoading, setAudioLoading] = useState<boolean>(false);
+  const [audioError, setAudioError] = useState<string>('');
+  const [audioDuration, setAudioDuration] = useState<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Parse total duration in seconds from string "7:45" or fallback to 480 seconds (8 min)
   const parseDurationSeconds = (durStr?: string): number => {
@@ -59,7 +65,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
     return 480;
   };
 
-  const totalDurationSeconds = parseDurationSeconds(lesson.learnContent.videoDuration);
+  const totalDurationSeconds = audioDuration || parseDurationSeconds(lesson.learnContent.videoDuration);
 
   // Parse chapters time into seconds
   const chaptersWithSeconds = (lesson.learnContent.videoChapters || [
@@ -73,30 +79,19 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
     return { ...chap, seconds: sec };
   });
 
-  // Timer loop for the browser-generated audio explanation
   useEffect(() => {
-    let timer: any;
-    if (isPlaying) {
-      timer = setInterval(() => {
-        setCurrentTime((prev) => {
-          if (prev >= totalDurationSeconds) {
-            setIsPlaying(false);
-            if ('speechSynthesis' in window) {
-              window.speechSynthesis.cancel();
-            }
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000 / playbackSpeed);
-    } else {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.pause();
-      }
-    }
+    return () => {
+      if (audioUrl) URL.revokeObjectURL(audioUrl);
+    };
+  }, [audioUrl]);
 
-    return () => clearInterval(timer);
-  }, [isPlaying, playbackSpeed, totalDurationSeconds]);
+  useEffect(() => {
+    setAudioUrl('');
+    setAudioDuration(null);
+    setAudioError('');
+    setCurrentTime(0);
+    setIsPlaying(false);
+  }, [lesson.id, language]);
 
   // Update active slide based on current time position
   useEffect(() => {
@@ -107,51 +102,53 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
     else setActiveSlide(3);
   }, [currentTime, totalDurationSeconds]);
 
-  // Handle German Voice Speech Narration via Web Speech API
-  const speakNarration = (text: string) => {
-    if (!('speechSynthesis' in window) || isMuted) return;
+  const audioCacheKey = `/__academy-audio__/v1/${language}/${encodeURIComponent(lesson.id)}`;
 
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = language === 'de' ? 'de-DE' : language === 'pl' ? 'pl-PL' : 'en-US';
-    utterance.rate = playbackSpeed;
-
-    // Try to pick a natural German voice if available
-    const voices = window.speechSynthesis.getVoices();
-    const localizedVoice = voices.find((v) => v.lang.toLowerCase().startsWith(language));
-    if (localizedVoice) utterance.voice = localizedVoice;
-
-    window.speechSynthesis.speak(utterance);
+  const loadAudio = async (): Promise<string> => {
+    if (audioUrl) return audioUrl;
+    setAudioLoading(true);
+    setAudioError('');
+    try {
+      const cache = 'caches' in window ? await caches.open('gommar-lesson-audio-v1') : null;
+      const cachedResponse = await cache?.match(audioCacheKey);
+      const response = cachedResponse || await authenticatedFetch(
+        `/api/academy/lessons/${encodeURIComponent(lesson.id)}/audio?language=${language}`,
+      );
+      if (!response.ok) throw new Error(copy.audioError);
+      if (!cachedResponse) await cache?.put(audioCacheKey, response.clone());
+      const url = URL.createObjectURL(await response.blob());
+      setAudioUrl(url);
+      return url;
+    } catch {
+      setAudioError(copy.audioError);
+      throw new Error(copy.audioError);
+    } finally {
+      setAudioLoading(false);
+    }
   };
 
-  const handlePlayToggle = () => {
-    if (!isPlaying) {
-      setIsPlaying(true);
-      if ('speechSynthesis' in window) {
-        if (window.speechSynthesis.paused) {
-          window.speechSynthesis.resume();
-        } else {
-          // Construct narration text for current lesson
-          const narrationText = `${copy.lesson} ${lesson.id}: ${lesson.title}. ${lesson.learnContent.summaryText} ${copy.keyPoints} ${lesson.learnContent.bulletPoints.join('. ')}. ${copy.takeaway} ${lesson.understandContent.coreTakeaway}`;
-          speakNarration(narrationText);
-        }
+  const handlePlayToggle = async () => {
+    const audio = audioRef.current;
+    if (!audio || audioLoading) return;
+    if (isPlaying) {
+      audio.pause();
+      return;
+    }
+    try {
+      if (!audioUrl) {
+        audio.src = await loadAudio();
+        audio.load();
       }
-    } else {
+      await audio.play();
+    } catch {
       setIsPlaying(false);
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.pause();
-      }
     }
   };
 
   const handleSeek = (newTimeSec: number) => {
     const clamped = Math.max(0, Math.min(newTimeSec, totalDurationSeconds));
     setCurrentTime(clamped);
-    if (isPlaying && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const textToSpeak = `${copy.chapterReached} ${lesson.title}. ${lesson.learnContent.summaryText}`;
-      speakNarration(textToSpeak);
-    }
+    if (audioRef.current && audioUrl) audioRef.current.currentTime = clamped;
   };
 
   const formatTime = (seconds: number) => {
@@ -198,7 +195,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             {customVideoUrl ? copy.videoPlayer : copy.audioPlayer}
           </span>
           <span className="text-slate-500">•</span>
-          <span className="text-slate-400 font-mono">{customVideoUrl ? 'HD 1080p' : copy.browserVoice}</span>
+          <span className="text-slate-400 font-mono">{customVideoUrl ? 'HD 1080p' : copy.academyVoice}</span>
         </div>
 
         <button
@@ -261,8 +258,19 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
           />
         </div>
       ) : (
-        /* Browser-generated audio explanation */
+        /* ElevenLabs audio explanation */
         <div className="relative aspect-video bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-8 group select-none">
+          <audio
+            ref={audioRef}
+            src={audioUrl || undefined}
+            preload="metadata"
+            muted={isMuted}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnded={() => setIsPlaying(false)}
+            onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
+            onLoadedMetadata={(event) => setAudioDuration(event.currentTarget.duration)}
+          />
           {/* Background Animated Wave Pattern */}
           <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
@@ -343,8 +351,10 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             {/* Subtitles Overlay Bar */}
             {showCaptions && (
               <div className="inline-block bg-slate-950/90 backdrop-blur-md border border-slate-800/80 px-4 py-2 rounded-2xl text-xs text-emerald-300 font-medium shadow-xl">
-                🎙️ {isPlaying ? (
+                🎙️ {audioLoading ? <span>{copy.loading}</span> : isPlaying ? (
                   <span>{copy.speechOutput}: "{lesson.learnContent.summaryText.slice(0, 110)}..."</span>
+                ) : audioError ? (
+                  <span className="text-red-300">{audioError}</span>
                 ) : (
                   <span>{copy.playHint}</span>
                 )}
@@ -421,6 +431,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
                     const speeds = [1, 1.25, 1.5, 2];
                     const nextIdx = (speeds.indexOf(playbackSpeed) + 1) % speeds.length;
                     setPlaybackSpeed(speeds[nextIdx]);
+                    if (audioRef.current) audioRef.current.playbackRate = speeds[nextIdx];
                   }}
                   className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-[11px] font-bold transition-colors cursor-pointer"
                 >
@@ -442,7 +453,6 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
                 <button
                   onClick={() => {
                     setIsMuted(!isMuted);
-                    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                   }}
                   className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
                 >
