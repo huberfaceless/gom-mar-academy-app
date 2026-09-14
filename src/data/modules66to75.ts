@@ -89,13 +89,13 @@ Wachstum durch Akquisition (Inorganisches Wachstum) ist das bevorzugte Werkzeug 
         stageTitle: '66. Rollup & Post-Merger Synergien',
         title: 'Das Rollup-Modell: Multiple Expansion & Zentralisierte Shared Services',
         durationMinutes: 31,
-        description: 'Wie du 5 kleine Agenturen zum 3x Multiple kaufst und als Gruppe für ein 10x Multiple an Private Equity weiterveräußerst.',
+        description: 'Wie Rollups grundsätzlich funktionieren und wie du Integrationsaufwand, mögliche Synergien sowie unterschiedliche Bewertungsszenarien realistisch modellierst.',
         learnContent: {
           videoTitle: 'Masterclass: Rollup-Strategien & Post-Merger Wertsteigerung',
           videoDuration: '31:40',
-          summaryText: 'Ein 1-Millionen-Business wird mit 3x bewertet, ein 20-Millionen-Konglomerat mit 10x. Das ist das Geheimnis der Multiple-Expansion. Lerne, wie du übernommene Firmen in eine gemeinsame Holding integrierst.',
+          summaryText: 'Größe allein bestimmt kein Bewertungsmultiple. Qualität, Wachstum, Risiken, Marktumfeld und Integrationsfähigkeit beeinflussen die Bewertung. Lerne, wie du übernommene Firmen schrittweise in eine gemeinsame Struktur integrierst.',
           bulletPoints: [
-            'Multiple Arbitrage: Ausnutzung des Bewertungsunterschieds zwischen kleinen und großen Unternehmensgrößen',
+            'Bewertungsszenarien: mögliche Unterschiede nach Größe, Qualität, Wachstum und Risiko analysieren',
             'Shared Services Hub: Zusammenlegung von Buchhaltung, HR, IT und Legal in einer zentralen Management-Einheit',
             'Cross-Selling Potenziale: Die Angebote der gekauften Firmen sofort an die bestehenden Kunden der Gruppe verkaufen',
             'Kulturelle Integration: Wie du Schlüsselmitarbeiter bindest und Kündigungswellen nach dem Buyout verhinderst'
@@ -104,13 +104,13 @@ Wachstum durch Akquisition (Inorganisches Wachstum) ist das bevorzugte Werkzeug 
             {
               iconName: 'layers',
               title: 'MULTIPLE EXPANSION',
-              description: 'Gewinnvervielfachung durch reine Bündelung kleinerer Firmen zu einer Markengruppe.',
+              description: 'Eine größere Gruppe kann anders bewertet werden; Synergien, Kosten und Integrationsrisiken bestimmen das tatsächliche Ergebnis.',
               highlight: true
             },
             {
               iconName: 'zap',
               title: 'SHARED SERVICES',
-              description: 'Gemeinsame Backoffice-Kosten sparen 20-30% der operativen Ausgaben.'
+              description: 'Gemeinsame Dienste können Kosten senken, verursachen aber zunächst Umstellungs- und Integrationsaufwand.'
             }
           ],
           resources: [
@@ -131,7 +131,7 @@ Wachstum durch Akquisition (Inorganisches Wachstum) ist das bevorzugte Werkzeug 
           ],
           fullArticleGuide: `### Die Architektur eines erfolgreichen Rollups
 
-Durch die Zusammenlegung von Marketing, CRM und Verwaltung werden übernommene Firmen sofort hochprofitabel.
+Die Zusammenlegung von Marketing, CRM und Verwaltung kann Vorteile schaffen, birgt aber Daten-, Prozess-, Personal- und Kundenrisiken. Wirkung und Tempo unterscheiden sich je nach Unternehmen.
 
 #### Der 100-Tage Integrationsplan:
 - **Tag 1-30**: CRM- und Finanzsysteme vereinheitlichen.
@@ -139,7 +139,7 @@ Durch die Zusammenlegung von Marketing, CRM und Verwaltung werden übernommene F
 - **Tag 61-100**: Cross-Selling Kampagnen an alle gemeinsamen Kundenlisten ausrollen.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Zukäufe meisterhaft integriert, baut in 24 Monaten einen 8-stelligen Unternehmenswert auf.',
+          coreTakeaway: 'Ein Rollup schafft nur dann nachhaltigen Wert, wenn Integration, Finanzierung und operative Qualität funktionieren; Zeitraum und Bewertung sind nicht garantiert.',
           keyPrinciples: [
             'Zentralisiere nur die administrativen Funktionen – bewahre die kundennahe Identität der Marke',
             'Retention-Boni für die Top-Performenden Mitarbeiter der Zielgesellschaft einplanen'
@@ -1180,37 +1180,37 @@ Spitzenunternehmer behandeln sich wie olympische Athleten.
       {
         id: '73.2',
         stageId: 73,
-        stageTitle: '73. Kognitiver Peak & Nootropika',
-        title: 'Nootropika, Flow-State Trigger & Stressresistenz unter Höchstdruck',
+        stageTitle: '73. Fokus-Routinen & verantwortungsvolle Stressregulation',
+        title: 'Fokus-Routinen, Atemübungen und sichere Grenzen',
         durationMinutes: 30,
-        description: 'L-Theanin, Lion’s Mane, Alpha-GPC, Kälte-Exposition und Atemprotokolle (Physiological Sigh) für sofortigen Flow-State.',
+        description: 'Arbeitsumgebung, Pausen und Atemübungen vorsichtig testen sowie Nahrungsergänzung und Kälte-Exposition nur nach individueller medizinischer Abklärung erwägen.',
         learnContent: {
-          videoTitle: 'Masterclass: Kognitive Peak-Performance & Flow-State Biohacking',
+          videoTitle: 'Masterclass: Fokus-Routinen & verantwortungsvolle Stressregulation',
           videoDuration: '30:30',
-          summaryText: 'Unternehmer stehen täglich unter extremem Entscheidungsdruck. Lerne evidenzbasierte Biohacking-Tools kennen, um dein Nervensystem in 30 Sekunden von Panik auf laserfokussierte Gelassenheit umzuschalten.',
+          summaryText: 'Anhaltender Entscheidungsdruck kann Konzentration und Wohlbefinden beeinträchtigen. Lerne risikoarme Fokus- und Pausenroutinen kennen. Atemübungen sind keine Behandlung; bei Panik, Beschwerden oder Erkrankungen ist professionelle medizinische Hilfe erforderlich.',
           bulletPoints: [
-            'Der "Physiological Sigh" (Physiologischer Seufzer): Zweimal tief durch die Nase einatmen, lang durch den Mund ausatmen für sofortigen Pulsabfall',
-            'Flow-State Trigger: 90-Minuten Ultradian-Rhythmen mit binauralen Beats (40Hz Gamma-Wellen)',
-            'Evidenzbasierte Nootropika: L-Theanin in Kombination mit Kaffee für zitterfreien Fokus',
-            'Kälte-Thermogenese: 2 Minuten kaltes Wasser für 250% Dopamin-Anstieg über Stunden'
+            'Ruhiges Atmen: Wirkung und Verträglichkeit individuell beobachten und bei Schwindel oder Unwohlsein abbrechen',
+            'Fokusblöcke: Arbeitsdauer und Pausen an Aufgabe, Belastung und persönliche Konzentration anpassen',
+            'Nahrungsergänzungsmittel: mögliche Wechselwirkungen, Nebenwirkungen und individuelle Risiken ärztlich oder pharmazeutisch klären',
+            'Kälte-Exposition: nicht als Leistungsversprechen behandeln und bei Herz-Kreislauf-Risiken nur nach medizinischer Freigabe nutzen'
           ],
           coreConcepts: [
             {
               iconName: 'zap',
               title: 'PHYSIOLOGICAL SIGH',
-              description: 'Sofortige Senkung des Stresspegels in unter 30 Sekunden wissenschaftlich belegt.',
+              description: 'Eine kurze Atemübung kann manchen Menschen beim Beruhigen helfen; Wirkung und Verträglichkeit unterscheiden sich.',
               highlight: true
             },
             {
               iconName: 'battery-charging',
-              title: 'FLOW STATE ON DEMAND',
-              description: 'Störungsfreie 90-Minuten Arbeitsblöcke für 5x höhere Produktivität.'
+              title: 'FOKUSBLOCK MIT PAUSE',
+              description: 'Eine klar abgegrenzte Aufgabe bearbeiten und Dauer sowie Pausen an die eigene Belastbarkeit anpassen.'
             }
           ],
           resources: [
             {
-              title: 'Nootropika & Flow-State Supplement Leitfaden',
-              subtitle: 'Evidenzbasierte Dosierungen & Studienübersicht als PDF',
+              title: 'Fokus-Routinen & Sicherheitsleitfaden',
+              subtitle: 'Arbeitsblöcke, Pausen und Hinweise zur medizinischen Abklärung als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
@@ -1225,7 +1225,7 @@ Spitzenunternehmer behandeln sich wie olympische Athleten.
           ],
           fullArticleGuide: `### Die Chemie des mentalen Fokus
 
-Fokus ist keine Willenskraft-Frage, sondern das Resultat des richtigen Neurotransmitter-Cocktails (Dopamin + Acetylcholin + Noradrenalin).
+Fokus wird von Schlaf, Stress, Gesundheit, Umgebung, Aufgabe und individuellen Voraussetzungen beeinflusst. Eine einzelne Technik oder Substanz erzeugt ihn nicht zuverlässig.
 
 #### Die 3 Flow-Regeln:
 - **Single-Tasking**: Niemals zwischen E-Mails, WhatsApp und Konzeptarbeit hin- und herspringen.
@@ -1233,10 +1233,10 @@ Fokus ist keine Willenskraft-Frage, sondern das Resultat des richtigen Neurotran
 - **Klares Endziel**: Vor dem Arbeitsblock genau ein einziges messbares Ergebnis definieren.`
         },
         understandContent: {
-          coreTakeaway: 'Wer seinen Geist biologisch unterstützt, arbeitet mit müheloser Leichtigkeit auf Weltklasse-Niveau.',
+          coreTakeaway: 'Klare Aufgaben, störungsarme Arbeitsphasen und passende Pausen können Konzentration unterstützen; medizinische Beschwerden gehören fachlich abgeklärt.',
           keyPrinciples: [
             'Niemals länger als 90 Minuten ohne 5-minütige Augen- und Bewegungspause arbeiten',
-            'Bei akuter Überlastung sofort 3 Runden physiologische Seufzer durchführen'
+            'Bei akuter Überlastung Arbeit unterbrechen, Unterstützung suchen und bei starken oder anhaltenden Beschwerden professionelle Hilfe nutzen'
           ]
         },
         actionTask: {
@@ -1494,30 +1494,30 @@ Eine Stiftung ist eine eigenständige Rechtsstruktur. Ihre Wirkung auf Nachfolge
         id: '75.2',
         stageId: 75,
         stageTitle: '75. Single Family Office & Allokation',
-        title: 'Das Single Family Office: Asset Allocation nach dem Vorbild der Milliardäre',
+        title: 'Das Single Family Office: Aufgaben, Kosten und individuelle Allokation',
         durationMinutes: 32,
-        description: 'Wie du dein eigenes Family Office aufbaust: Das "All-Weather" Portfolio aus Private Equity, Immobilien, Edelmetallen und liquiden Aktien.',
+        description: 'Wie du Nutzen, Kosten und Governance eines Family Office prüfst und eine individuelle Vermögensallokation mit qualifizierten Fachleuten entwickelst.',
         learnContent: {
           videoTitle: 'Masterclass: Single Family Office Setup & All-Weather Allokation',
           videoDuration: '32:30',
-          summaryText: 'Ab einem liquiden Vermögen von 10 Millionen Euro lohnt sich ein eigenes Single Family Office. Lerne, wie du Vermögensverwalter steuerst, Risiken über 5 Anlageklassen diversifizierst und Kaufkraft über Generationen erhältst.',
+          summaryText: 'Ob sich ein eigenes oder gemeinschaftliches Family Office eignet, hängt von Vermögen, Komplexität, Familie, Kosten und gewünschter Kontrolle ab. Lerne, Dienstleister zu prüfen und Risiken transparent zu dokumentieren; Kapitalerhalt ist nicht garantiert.',
           bulletPoints: [
-            'Die 5-Säulen-Allokation: 35% Private Equity / eigene Firmen, 30% Ertrags-Immobilien, 20% liquide Weltaktien, 10% Gold/Rohstoffe, 5% Cash',
-            'Das Ray Dalio All-Weather Prinzip: Krisensicherheit in Inflation, Deflation, Wachstum und Rezession',
+            'Allokationsbeispiel: Anlageklassen, Liquiditätsbedarf, Zeithorizont, Kosten und Risikotragfähigkeit gemeinsam betrachten',
+            'All-Weather-Ansätze: Annahmen, historische Grenzen und mögliche Verluste in unterschiedlichen Marktphasen prüfen',
             'Governance & Familienverfassung: Werte, Bildung und Regeln für die nächste Generation festlegen',
-            'Kostenkontrolle: Warum Bankberater Gebühren fressen und wie du Direktinvestments ohne Zwischenhändler tätigst'
+            'Kostenkontrolle: Gebühren, Interessenkonflikte, Verwahrung, Steuern und Risiken direkter Anlagen vergleichen'
           ],
           coreConcepts: [
             {
               iconName: 'pie-chart',
               title: 'ALL-WEATHER WEALTH',
-              description: 'Automatischer Schutz gegen Währungskrisen, Inflation und Börsencrashs.',
+              description: 'Diversifikation kann Risiken verteilen, schützt aber nicht automatisch vor Verlusten, Inflation oder Währungsschwankungen.',
               highlight: true
             },
             {
               iconName: 'lock',
               title: 'DIRECT INVESTING',
-              description: 'Direktbeteiligungen an Unternehmen und Immobilien ohne Bankgebühren.'
+              description: 'Direktanlagen können bestimmte Gebühren vermeiden, bringen jedoch Prüfungskosten, Illiquidität und Konzentrationsrisiken mit sich.'
             }
           ],
           resources: [
@@ -1538,7 +1538,7 @@ Eine Stiftung ist eine eigenständige Rechtsstruktur. Ihre Wirkung auf Nachfolge
           ],
           fullArticleGuide: `### Die Führung eines Single Family Offices
 
-Ein Family Office dient nicht dazu, reich zu werden – es dient dazu, für immer reich zu bleiben.
+Ein Family Office koordiniert komplexe Vermögens-, Steuer-, Rechts- und Familienfragen. Auch professionelle Verwaltung kann Verluste oder Fehlentscheidungen nicht ausschließen.
 
 #### Die Kernaufgaben des Family Offices:
 - **Vermögensverwaltung**: Disziplinierte Reallokation einmal pro Jahr zur Wiederherstellung der Zielquoten.
@@ -1546,10 +1546,10 @@ Ein Family Office dient nicht dazu, reich zu werden – es dient dazu, für imme
 - **Family Governance**: Vorbereitung der Kinder auf die verantwortungsvolle Verwaltung des Vermögens.`
         },
         understandContent: {
-          coreTakeaway: 'Wahrer Reichtum ist kein Kontostand, sondern die Freiheit und Sicherheit für kommende Generationen.',
+          coreTakeaway: 'Eine passende Governance kann langfristige Entscheidungen strukturieren; Sicherheit und Kaufkrafterhalt bleiben dennoch unsicher.',
           keyPrinciples: [
-            'Niemals mehr als 30% des Gesamtvermögens in einer einzigen Anlageklasse halten',
-            'Mindestens 2 Jahre Lebenshaltungskosten in hochliquiden Tagesgeldern oder kurzlaufenden Staatsanleihen parken'
+            'Konzentrationsgrenzen individuell anhand von Zielen, Verpflichtungen und Risikotragfähigkeit festlegen',
+            'Liquiditätsreserve anhand persönlicher Ausgaben, Verpflichtungen, Anlagehorizont und Beratung bestimmen'
           ]
         },
         actionTask: {
