@@ -16,7 +16,6 @@ import {
   Rewind, 
   FastForward, 
   Subtitles, 
-  Link2, 
   Check, 
   ChevronRight, 
   Zap, 
@@ -43,9 +42,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [showCaptions, setShowCaptions] = useState<boolean>(true);
   const [activeSlide, setActiveSlide] = useState<number>(0);
-  const [customVideoUrl, setCustomVideoUrl] = useState<string>(lesson.learnContent.videoUrl || '');
-  const [isEditingUrl, setIsEditingUrl] = useState<boolean>(false);
-  const [tempUrlInput, setTempUrlInput] = useState<string>('');
+  const customVideoUrl = lesson.learnContent.videoUrl?.trim() || '';
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [audioLoading, setAudioLoading] = useState<boolean>(false);
@@ -159,21 +156,22 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
 
   // Convert YouTube link to embed URL if applicable
   const getEmbedUrl = (url: string) => {
-    if (!url) return '';
-    if (url.includes('youtube.com/watch?v=')) {
-      const id = url.split('v=')[1]?.split('&')[0];
-      return `https://www.youtube.com/embed/${id}?autoplay=1`;
+    try {
+      const parsed = new URL(url);
+      const host = parsed.hostname.replace(/^www\./u, '');
+      const id = host === 'youtu.be'
+        ? parsed.pathname.slice(1).split('/')[0]
+        : host === 'youtube.com' && parsed.pathname === '/watch'
+          ? parsed.searchParams.get('v') || ''
+          : host === 'youtube.com' && parsed.pathname.startsWith('/embed/')
+            ? parsed.pathname.split('/')[2] || ''
+            : '';
+      return /^[a-zA-Z0-9_-]{11}$/u.test(id)
+        ? `https://www.youtube-nocookie.com/embed/${id}`
+        : '';
+    } catch {
+      return '';
     }
-    if (url.includes('youtu.be/')) {
-      const id = url.split('youtu.be/')[1]?.split('?')[0];
-      return `https://www.youtube.com/embed/${id}?autoplay=1`;
-    }
-    return url;
-  };
-
-  const handleSaveCustomUrl = () => {
-    setCustomVideoUrl(tempUrlInput.trim());
-    setIsEditingUrl(false);
   };
 
   const toggleFullscreen = () => {
@@ -198,53 +196,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
           <span className="text-slate-400 font-mono">{customVideoUrl ? 'HD 1080p' : copy.academyVoice}</span>
         </div>
 
-        <button
-          onClick={() => {
-            setTempUrlInput(customVideoUrl);
-            setIsEditingUrl(!isEditingUrl);
-          }}
-          className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
-        >
-          <Link2 className="w-3.5 h-3.5 text-emerald-400" />
-          <span>{customVideoUrl ? copy.changeUrl : copy.embed}</span>
-        </button>
       </div>
-
-      {/* URL Edit Drawer */}
-      {isEditingUrl && (
-        <div className="p-4 rounded-2xl bg-slate-900 border border-emerald-500/40 text-xs space-y-3 animate-fadeIn">
-          <p className="font-bold text-emerald-300">
-            {copy.addUrl} {lesson.id}:
-          </p>
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={tempUrlInput}
-              onChange={(e) => setTempUrlInput(e.target.value)}
-              placeholder="https://www.youtube.com/watch?v=..."
-              className="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-emerald-400"
-            />
-            <button
-              onClick={handleSaveCustomUrl}
-              className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <Check className="w-4 h-4" />
-              <span>{copy.save}</span>
-            </button>
-            {customVideoUrl && (
-              <button
-                onClick={() => {
-                  setCustomVideoUrl('');
-                  setIsEditingUrl(false);
-                }}
-                className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
-              >
-                {copy.reset}
-              </button>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Embedded YouTube / External Player if custom URL exists */}
       {customVideoUrl ? (

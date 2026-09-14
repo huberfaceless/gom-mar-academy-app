@@ -129,6 +129,11 @@ const playerChecks: Array<[boolean, string]> = [
   [server.includes('LESSON_AUDIO_ADMIN_BATCH_SIZE = 2'), 'Die Vorgenerierung arbeitet in kurzen, ausfallsicheren Paketen.'],
   [adminDashboard.includes("'Deutsche Audios vorbereiten'"), 'Die deutsche Vorgenerierung ist in der Admin-Lektionsverwaltung erreichbar.'],
   [adminDashboard.includes('Audio ${audioBatchProgress.processed}/${audioBatchProgress.total}'), 'Der Admin sieht den Fortschritt der Audioerzeugung.'],
+  [adminDashboard.includes('YouTube-Video-URL (optional)'), 'Die Video-URL wird dauerhaft in der Admin-Lektionsverwaltung gepflegt.'],
+  [adminDashboard.includes('Vorschau des Lektionsvideos'), 'Der Admin kann ein Lektionsvideo vor dem Speichern prüfen.'],
+  [server.includes('SUPPORTED_LESSON_VIDEO_URL.test(videoUrl)'), 'Der Server weist unsichere oder nicht unterstützte Video-URLs zurück.'],
+  [!lessonPlayer.includes('setCustomVideoUrl'), 'Mitglieder können Lektionsvideos nicht nur lokal überschreiben.'],
+  [lessonPlayer.includes('youtube-nocookie.com/embed'), 'Lektionsvideos verwenden den datensparsamen YouTube-Embed-Endpunkt.'],
 ];
 
 for (const [passed, message] of playerChecks) {
