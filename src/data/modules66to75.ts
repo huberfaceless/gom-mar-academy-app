@@ -630,46 +630,46 @@ Vorlagen müssen an Ereignis, Rechtsraum und Betroffene angepasst werden. Diese 
   },
   {
     id: 70,
-    title: '70. Internationales Steuerrecht & Holding-Strukturen',
-    subtitle: 'Wegzugsbesteuerung, DBA, Substanz-Anforderungen, Dubai/Zypern/USA & Stiftungen',
+    title: '70. Internationales Steuerrecht & Auslandsstrukturen',
+    subtitle: 'Wegzugsbesteuerung, DBA, Substanz-Anforderungen & Standortprüfung',
     color: 'from-amber-600 via-yellow-600 to-zinc-900',
     badgeIcon: '🌍',
-    description: 'Das Regelwerk für globale Steuerintelligenz: Verstehe Doppelbesteuerungsabkommen (DBA), meistere die deutsche Wegzugsbesteuerung (§ 6 AStG) und baue rechtssichere internationale Firmenstrukturen mit echter Substanz auf.',
+    description: 'Lerne zentrale Prüffragen zu Doppelbesteuerungsabkommen, Wegzugsbesteuerung, Geschäftsleitung und wirtschaftlicher Substanz kennen. Die Regeln hängen von beteiligten Ländern, Personen und Strukturen ab.',
     lessons: [
       {
         id: '70.1',
         stageId: 70,
         stageTitle: '70. Wegzugsbesteuerung & Substanz-Regeln',
-        title: 'Wegzugsbesteuerung (§ 6 AStG) & Reale Substanz im Ausland',
+        title: 'Wegzugsbesteuerung & wirtschaftliche Substanz im Ausland',
         durationMinutes: 35,
-        description: 'Wie die fiktive Veräußerung beim Verlassen Deutschlands funktioniert und wie du Holdingstrukturen ohne Scheinfirmen-Vorwurf aufsetzt.',
+        description: 'Welche persönlichen und gesellschaftsrechtlichen Faktoren bei einem Wegzug oder einer Auslandsgesellschaft fachlich geprüft werden sollten.',
         learnContent: {
-          videoTitle: 'Masterclass: Internationales Steuerrecht & Substanz-Architektur',
+          videoTitle: 'Internationales Steuerrecht & Substanz-Anforderungen',
           videoDuration: '35:20',
-          summaryText: 'Wer einfach nach Dubai oder Zypern zieht, ohne seine deutschen Firmenanteile zu regeln, tappt in die Wegzugsbesteuerungsfalle. Lerne, wie du Wohnsitzverlagerungen und Auslandsgesellschaften rechtssicher gestaltest.',
+          summaryText: 'Ein Wegzug oder eine Auslandsgesellschaft kann in mehreren Staaten Steuer-, Melde- und Dokumentationspflichten auslösen. Beteiligungen, Ansässigkeit und Geschäftsleitung müssen vor einer Umsetzung individuell geprüft werden.',
           bulletPoints: [
-            '§ 6 AStG Wegzugsbesteuerung: Fiktiver Exit nach 7 Jahren unbeschränkter Steuerpflicht in Deutschland',
-            'Substanz-Anforderungen: Warum ein Briefkasten nicht reicht – Büro, Mitarbeiter und Geschäftsführer vor Ort',
-            'Ort der tatsächlichen Geschäftsleitung (§ 10 AO): Wo Entscheidungen getroffen werden, fallen Steuern an',
-            'Hinzurechnungsbesteuerung (AStG): Wie passive Einkünfte im Niedrigsteuerland zurückgerechnet werden'
+            'Wegzugsbesteuerung: persönliche Steuerpflicht, Beteiligungen, Bewertungsstichtag und mögliche Zahlungsregeln prüfen',
+            'Wirtschaftliche Substanz: tatsächliche Tätigkeit, Personal, Räume, Leitung und Entscheidungsabläufe dokumentieren',
+            'Ort der Geschäftsleitung: tatsächliche Leitungsentscheidungen und mögliche Mehrfachansässigkeit untersuchen',
+            'Hinzurechnungsbesteuerung: Beteiligung, Beherrschung, Einkunftsart und Steuerbelastung fachlich bewerten'
           ],
           coreConcepts: [
             {
               iconName: 'shield',
               title: 'REAL SUBSTANCE',
-              description: 'Echte Büros und Geschäftsführer schützen vor Steuerstrafverfahren.',
+              description: 'Tatsächliche Geschäftstätigkeit und Entscheidungsstrukturen müssen zur gewählten Gestaltung passen und belegbar sein.',
               highlight: true
             },
             {
               iconName: 'file-text',
-              title: 'EXIT TAX MITIGATION',
-              description: 'Holding-Modelle und Ratenzahlungskonzepte vor dem Wegzug aufsetzen.'
+              title: 'WEGZUGSPRÜFUNG',
+              description: 'Steuerfolgen, Bewertung, Liquidität und mögliche gesetzliche Zahlungsregelungen vor Entscheidungen prüfen.'
             }
           ],
           resources: [
             {
               title: 'International Tax & Substance Master-Guide',
-              subtitle: 'Rechtlicher Leitfaden zu DBA & Außensteuergesetz als PDF',
+              subtitle: 'Allgemeine Prüfübersicht zu DBA und Außensteuerrecht als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
@@ -684,18 +684,20 @@ Vorlagen müssen an Ereignis, Rechtsraum und Betroffene angepasst werden. Diese 
           ],
           fullArticleGuide: `### Die Spielregeln des internationalen Steuerrechts
 
-Steueroptimierung ist legal und erstrebenswert, muss aber mit absoluter handwerklicher Präzision umgesetzt werden.
+Grenzüberschreitende Sachverhalte können gleichzeitig Steuerrecht, Gesellschaftsrecht, Sozialversicherung und Meldepflichten mehrerer Länder betreffen.
 
-#### Die Säulen einer legalen Auslandsstruktur:
-1. **Wohnsitz**: Vollständige Aufgabe des inländischen Wohnsitzes (keine Schlüsselgewalt, kein gewöhnlicher Aufenthalt).
-2. **Geschäftsführung**: Ein angestellter Geschäftsführer vor Ort leitet die operativen Geschäfte im Ausland.
-3. **Reale Wertschöpfung**: Server, Verträge und Mitarbeiter befinden sich am Sitz der Gesellschaft.`
+#### Zentrale Prüffelder:
+1. **Persönliche Ansässigkeit:** Wohnsitze, gewöhnlicher Aufenthalt, Lebensmittelpunkt und anwendbare Abkommen vollständig erfassen.
+2. **Geschäftsleitung:** Dokumentieren, wer wesentliche Entscheidungen tatsächlich trifft und von welchem Ort aus dies geschieht.
+3. **Wirtschaftliche Tätigkeit:** Personal, Räume, Verträge, Risiken und Wertschöpfung müssen die tatsächlichen Verhältnisse widerspiegeln.
+
+Einzelne Merkmale wie Büro, Server oder lokaler Geschäftsführer garantieren keine bestimmte steuerliche Behandlung. Diese Lektion ersetzt keine internationale Rechts- oder Steuerberatung.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Steuern international optimieren will, muss bereit sein, echte Substanz im Ausland aufzubauen.',
+          coreTakeaway: 'Grenzüberschreitende Strukturen müssen wirtschaftlich begründet, tatsächlich gelebt und in allen betroffenen Ländern geprüft werden.',
           keyPrinciples: [
-            'Niemals auf dubiose "Briefkasten-Agenturen" vertrauen – das Finanzamt prüft Telefonrechnungen und Mietverträge',
-            'Immer ein verbindliches Gutachten eines spezialisierten Fachberaters für internationales Steuerrecht einholen'
+            'Anbieter und Gestaltungen sorgfältig prüfen und keine künstliche Substanz vortäuschen',
+            'Vor einer Umsetzung qualifizierte Beratung in allen betroffenen Rechtsräumen einholen'
           ]
         },
         actionTask: {
@@ -703,8 +705,8 @@ Steueroptimierung ist legal und erstrebenswert, muss aber mit absoluter handwerk
           inputType: 'checklist',
           checklistItems: [
             'Wegzugs-Status und Firmenanteile mit internationalem Steuerberater auditiert',
-            'Mietvertrag für ein dediziertes Büro und lokale Mitarbeiter-Verträge dokumentiert',
-            'Tätigkeitsberichte und Protokolle der Geschäftsführungs-Sitzungen vor Ort archiviert'
+            'Tatsächliche Tätigkeit, Ressourcen und lokale Anforderungen dokumentiert',
+            'Entscheidungswege und Geschäftsleitungsprozesse wahrheitsgemäß dokumentiert'
           ],
           toolboxCategory: 'settings'
         }
@@ -713,30 +715,30 @@ Steueroptimierung ist legal und erstrebenswert, muss aber mit absoluter handwerk
         id: '70.2',
         stageId: 70,
         stageTitle: '70. Globale Holding-Standorte',
-        title: 'Standortvergleich: Zypern (Non-Dom), VAE (Freezone), USA (LLC) & Liechtenstein',
+        title: 'Standortprüfung: Zypern, VAE, USA & Liechtenstein',
         durationMinutes: 32,
-        description: 'Vorteile, Nachteile und Kombinationsmöglichkeiten der beliebtesten Steuerstandorte für Digitalunternehmer.',
+        description: 'Prüfkriterien für ausgewählte Standorte, ohne pauschale Empfehlung oder Zusage einer bestimmten Steuerwirkung.',
         learnContent: {
           videoTitle: 'Masterclass: Globale Firmenstandorte & Holding-Jurisdiktionen',
           videoDuration: '32:45',
-          summaryText: 'Nicht jedes Land passt zu jedem Geschäftsmodell. Erfahre, wann sich eine US-LLC für Software eignet, warum Zypern das Non-Dom Paradigma in Europa ist und wie VAE-Freezones mit 0% Steuern funktionieren.',
+          summaryText: 'Eine ausländische Gesellschaft oder ein besonderer Steuerstatus wirkt nicht isoliert. Entscheidend sind aktuelle Regeln, persönliche Ansässigkeit, Geschäftsleitung, Tätigkeit, Kunden und Abkommen zwischen den beteiligten Staaten.',
           bulletPoints: [
-            'Zypern Non-Dom: 60-Tage-Regel, 0% Steuer auf Dividenden und Zinserträge für 17 Jahre',
-            'VAE Freezone (Dubai): 0% bis 9% Corporate Tax, keine Einkommensteuer, erstklassige Banken',
-            'US-LLC: Pass-Through-Besteuerung für Nicht-US-Bürger bei rein digitalen Dienstleistungen',
-            'Liechtenstein & Schweiz: Stiftungskonzepte und Holding-Privilegien für langfristigen Vermögensschutz'
+            'Zypern: Voraussetzungen für Ansässigkeit, Non-Dom-Status, Abgaben und laufende Pflichten aktuell prüfen',
+            'VAE: Körperschaftsteuer, Freezone-Bedingungen, persönliche Ansässigkeit und Bankanforderungen unterscheiden',
+            'USA: Bundes- und Bundesstaatenregeln, Quellensteuer, Meldepflichten und Behandlung im Wohnsitzstaat prüfen',
+            'Liechtenstein & Schweiz: Aufsicht, Kosten, Steuerfolgen, Begünstigte und grenzüberschreitende Anerkennung untersuchen'
           ],
           coreConcepts: [
             {
               iconName: 'globe',
               title: 'CYPRUS NON-DOM',
-              description: 'Rechtssichere Dividendenbefreiung innerhalb der Europäischen Union.',
+              description: 'Mögliche Regelungen und Voraussetzungen anhand der aktuellen persönlichen Situation prüfen.',
               highlight: true
             },
             {
               iconName: 'lock',
-              title: 'SWISS/LIECHTENSTEIN TRUST',
-              description: 'Höchster Vermögensschutz und Diskretion für Generationen.'
+              title: 'STIFTUNGS- UND HOLDINGMODELLE',
+              description: 'Zweck, Kontrolle, Transparenzpflichten, Kosten und steuerliche Anerkennung sorgfältig abwägen.'
             }
           ],
           resources: [
@@ -757,22 +759,24 @@ Steueroptimierung ist legal und erstrebenswert, muss aber mit absoluter handwerk
           ],
           fullArticleGuide: `### Die Wahl der richtigen Jurisdiktion
 
-Die optimale Struktur hängt von deinem Kundenkreis (B2B vs. B2C) und deinem Lebensmittelpunkt ab.
+Eine geeignete Struktur hängt nicht nur vom Steuersatz ab, sondern auch von tatsächlicher Tätigkeit, Lebensmittelpunkt, Regulierung, Kosten und Verwaltungsaufwand.
 
-#### Der 3-Länder-Check:
-- **Verkauf an US-Kunden**: Eine US-Corporation oder LLC schafft maximales Kundenvertrauen.
-- **Wohnsitz in Europa**: Zypern bietet die beste Kombination aus EU-Recht und niedriger Steuerlast.
-- **Asien & Naher Osten**: Dubai bietet unübertroffene Lebensqualität und steuerliche Freiheit.`
+#### Standortvergleich:
+- **Markt und Kunden:** Prüfe, ob eine lokale Gesellschaft geschäftlich erforderlich ist und welche Steuer- oder Registrierungspflichten Verkäufe auslösen.
+- **Wohn- und Leitungsort:** Beziehe persönliche Ansässigkeit und den tatsächlichen Ort der Geschäftsleitung ein.
+- **Gesamtkosten und Pflichten:** Vergleiche Steuern, Sozialversicherung, Buchhaltung, Audit, Bankzugang und Substanzkosten.
+
+Steuersätze und Sonderregelungen ändern sich. Hole vor Gründung, Wegzug oder Umstrukturierung aktuelle Beratung in allen betroffenen Ländern ein.`
         },
         understandContent: {
-          coreTakeaway: 'Die beste Struktur kombiniert operatives Ansehen beim Kunden mit minimaler Steuerlast auf Konzernebene.',
+          coreTakeaway: 'Ein Standort ist nur geeignet, wenn wirtschaftlicher Zweck, tatsächliche Umsetzung, Gesamtkosten und rechtliche Pflichten zusammenpassen.',
           keyPrinciples: [
-            'Geschäftskonten immer bei erstklassigen Tier-1 Banken führen',
+            'Banken nach Regulierung, Einlagenschutz, Kosten und betrieblicher Eignung auswählen',
             'Internationale Verrechnungspreise (Transfer Pricing) marktgerecht dokumentieren'
           ]
         },
         actionTask: {
-          instruction: 'Wähle die passende Rechtsform für deine internationale Expansion:',
+          instruction: 'Bereite eine fachliche Standort- und Strukturprüfung vor:',
           inputType: 'checklist',
           checklistItems: [
             'Steuer- und Kosten-Nutzen-Rechnung für den Zielstandort aufgestellt',
