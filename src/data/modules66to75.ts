@@ -949,40 +949,40 @@ Verstehe die Spielregeln von Wagniskapitalgesellschaften (VCs), um als Business 
   },
   {
     id: 72,
-    title: '72. Neuro-Marketing & Biometrische Conversion-Optimierung',
-    subtitle: 'Eye-Tracking, EEG-Aufmerksamkeit, F-Muster-Scans & Subliminale Farbreize',
+    title: '72. Nutzerorientiertes Design & visuelle Aufmerksamkeit',
+    subtitle: 'Eye-Tracking, Lesemuster, Kontrast & verständliche Gestaltung',
     color: 'from-fuchsia-600 via-pink-600 to-rose-700',
     badgeIcon: '🧠',
-    description: 'Optimiere deine Funnels auf biologischer Ebene: Nutze wissenschaftliche Erkenntnisse aus Eye-Tracking-Studien, Heatmaps, kognitiver Last (Cognitive Load) und emotionaler Pupillenerweiterung für Rekord-Conversion-Rates.',
+    description: 'Nutze Eye-Tracking-Erkenntnisse, Heatmaps und Gestaltungsprinzipien als Hypothesen für verständliche und barrierearme Seiten. Die Wirkung muss mit echten Nutzern und eigenen Daten geprüft werden.',
     lessons: [
       {
         id: '72.1',
         stageId: 72,
-        stageTitle: '72. Eye-Tracking & Das F-Shape Scanning',
-        title: 'Eye-Tracking & Das F-Muster: Wie das menschliche Auge Webseiten scannt',
+        stageTitle: '72. Eye-Tracking & Lesemuster',
+        title: 'Eye-Tracking & Lesemuster: Aufmerksamkeit untersuchen',
         durationMinutes: 30,
-        description: 'Blickverlaufs-Analysen: Warum Nutzer Webseiten in Millisekunden nach dem F- und Z-Muster scannen und wo deine wichtigsten Verkaufsargumente stehen müssen.',
+        description: 'Wie Blickverlaufsstudien und Heatmaps mögliche Orientierungsmuster zeigen und warum Layout, Aufgabe, Gerät und Zielgruppe berücksichtigt werden müssen.',
         learnContent: {
-          videoTitle: 'Masterclass: Biometrisches Neuro-Marketing & Eye-Tracking Analyse',
+          videoTitle: 'Eye-Tracking, Heatmaps & visuelle Hierarchie',
           videoDuration: '30:30',
-          summaryText: 'Niemand liest eine Website von oben links nach unten rechts durch. Das Gehirn springt in 200 Millisekunden zu Kontrastpunkten, Gesichtern und visuellen Ankern. Lerne, wie du den Blickverlauf des Kunden exakt steuerst.',
+          summaryText: 'Menschen betrachten Seiten abhängig von Inhalt, Aufgabe, Vorwissen und Gerät unterschiedlich. Eye-Tracking kann Hinweise auf Aufmerksamkeit liefern, erlaubt aber weder Gedankenlesen noch eine exakte Steuerung von Verhalten.',
           bulletPoints: [
-            'Das F-Shape Scanning: Wie Überschriften, Aufzählungspunkte und erste Satzwörter die Aufmerksamkeit fesseln',
-            'Der \'Gaze Cueing\' Effekt: Wenn die Person im Bild auf den Kaufen-Button blickt, schauen 78% der Nutzer automatisch dorthin',
-            'Kognitive Reibung (Cognitive Load): Warum unruhige Layouts und schlechte Kontraste Kaufabbrüche erzwingen',
-            'Visuelle Hierarchie: Größe, Kontrast und Weißraum als unsichtbare Pfadfinder für den Kunden'
+            'F- und Z-Muster als beobachtete Tendenzen, nicht als allgemeingültige Regeln verwenden',
+            'Gaze Cueing als mögliche Aufmerksamkeitsstütze im konkreten Layout testen',
+            'Unruhige Layouts und schwache Kontraste können Orientierung und Lesbarkeit erschweren',
+            'Größe, Kontrast und Weißraum für eine nachvollziehbare Informationshierarchie einsetzen'
           ],
           coreConcepts: [
             {
               iconName: 'eye',
               title: 'GAZE CUEING',
-              description: 'Blickrichtung von Gesichtern lenkt die Aufmerksamkeit direkt auf den CTA.',
+              description: 'Die Blickrichtung abgebildeter Personen kann Aufmerksamkeit beeinflussen; Stärke und Nutzen variieren nach Kontext.',
               highlight: true
             },
             {
               iconName: 'layers',
               title: 'F-PATTERN LAYOUT',
-              description: 'Wichtigste Kaufargumente stets am linken Rand und in Zwischenüberschriften platzieren.'
+              description: 'Lesemuster als Ausgangshypothese verwenden und mit Zielgruppe, Inhalt und Gerät überprüfen.'
             }
           ],
           resources: [
@@ -1003,28 +1003,28 @@ Verstehe die Spielregeln von Wagniskapitalgesellschaften (VCs), um als Business 
           ],
           fullArticleGuide: `### Die Biologie der visuellen Wahrnehmung
 
-Das menschliche Sehzentrum priorisiert Bewegung, Gesichter und starke Farbkontraste.
+Bewegung, Gesichter und starke Kontraste können Aufmerksamkeit anziehen. Zu viele Reize können jedoch vom Inhalt ablenken oder die Nutzung erschweren.
 
 #### Die 4 visuellen Anker für deinen Funnel:
-1. **Der Hero-Blickfang**: Das Produktbild muss in den ersten 50 Millisekunden erfassbar sein.
-2. **Die Blickführung**: Nutze subtile Pfeile, Zeigegesten oder Linien, die zum Anmeldeformular weisen.
-3. **Chunking**: Teile Textblöcke in mundgerechte Häppchen von maximal 2-3 Zeilen auf.
-4. **Der Button-Kontrast**: Der CTA-Button muss die einzige Stelle mit dieser Signalfarbe auf der gesamten Seite sein.`
+1. **Klarer Einstieg:** Kommuniziere früh, worum es auf der Seite geht und welche Handlung möglich ist.
+2. **Blickführung:** Nutze visuelle Hinweise sparsam und ohne irreführenden Druck.
+3. **Struktur:** Gliedere Inhalte in verständliche Abschnitte; geeignete Absatzlängen hängen von Inhalt und Bildschirm ab.
+4. **Kontrast:** Mache interaktive Elemente gut erkennbar und prüfe Text sowie Bedienelemente nach relevanten WCAG-Kriterien.`
         },
         understandContent: {
-          coreTakeaway: 'Wer die Augen des Kunden steuert, steuert seine Gedanken und seine Kaufentscheidung.',
+          coreTakeaway: 'Gestaltung kann Orientierung unterstützen, kontrolliert aber weder Gedanken noch Kaufentscheidungen.',
           keyPrinciples: [
-            'Niemals Personen abbilden, die gelangweilt vom Angebot wegschauen',
-            'Wichtige Schlüsselwörter in Bulletpoints immer fett hervorheben'
+            'Bilder nach Relevanz, Verständlichkeit und Wirkung im Gesamtkontext auswählen',
+            'Hervorhebungen sparsam und konsistent für die inhaltliche Orientierung einsetzen'
           ]
         },
         actionTask: {
           instruction: 'Optimiere deine Verkaufsseite nach Eye-Tracking Prinzipien:',
           inputType: 'checklist',
           checklistItems: [
-            'Hero-Bild auf Gaze-Cueing (Blickrichtung zum Formular) angepasst',
-            'Textabsätze auf maximal 3 Zeilen gekürzt und F-Muster-Struktur etabliert',
-            'CTA-Farbe auf maximalen Komplementärkontrast zum Hintergrund umgestellt'
+            'Hero-Bereich auf klare Aussage und verständliche Handlung geprüft',
+            'Textstruktur auf mehreren Bildschirmgrößen und mit echten Nutzern geprüft',
+            'Text- und Bedienelementkontraste mit einem WCAG-Prüfwerkzeug kontrolliert'
           ],
           toolboxCategory: 'landingpage'
         }
@@ -1032,62 +1032,64 @@ Das menschliche Sehzentrum priorisiert Bewegung, Gesichter und starke Farbkontra
       {
         id: '72.2',
         stageId: 72,
-        stageTitle: '72. Farbpsychologie & Biometrische Reize',
-        title: 'Farbpsychologie & Kognitive Leichtigkeit: Kaufimpulse im Unterbewusstsein auslösen',
+        stageTitle: '72. Farbe, Typografie & kognitive Leichtigkeit',
+        title: 'Farbe, Typografie & kognitive Leichtigkeit verantwortungsvoll einsetzen',
         durationMinutes: 28,
-        description: 'Wie Farbtemperaturen, Typografie und Mikro-Animationen das Belohnungszentrum (Nucleus Accumbens) aktivieren.',
+        description: 'Wie Farbe, Typografie und Mikro-Feedback Orientierung, Lesbarkeit und wahrgenommene Bedienbarkeit unterstützen können.',
         learnContent: {
           videoTitle: 'Masterclass: Farbpsychologie, Typografie & Kognitive Leichtigkeit',
           videoDuration: '28:40',
-          summaryText: 'Farben sind keine Dekoration, sondern biologische Signale. Blau erzeugt Vertrauen, Grün signalisiert Sicherheit, Orange weckt Kaufdringlichkeit. Lerne, wie du harmonische Farbwelten für maximale Konversionskraft zusammenstellst.',
+          summaryText: 'Farben werden je nach Kultur, Kontext und Person unterschiedlich wahrgenommen. Nutze sie für Hierarchie, Marke und Bedienbarkeit und überprüfe die Wirkung statt universelle Emotionen oder Kaufimpulse vorauszusetzen.',
           bulletPoints: [
-            'Die 60-30-10 Farbregel: 60% neutrale Dominanzfarbe, 30% Sekundärfarbe, 10% scharfe Akzentfarbe für Aktionen',
-            'Fluency-Effekt: Warum leicht lesbare Schriftarten (Sans-Serif) unbewusst als glaubwürdiger und wahrer eingestuft werden',
-            'Der Kontrast-Quotient: WCAG AAA-Standards für ermüdungsfreies Lesen auf mobilen OLED-Displays',
-            'Mikro-Feedback: Sofortige visuelle Bestätigung beim Klick für Dopamin-Ausschüttung im Gehirn'
+            'Die 60-30-10-Regel als optionale gestalterische Ausgangsbasis statt feste Erfolgsformel',
+            'Gut lesbare Typografie reduziert vermeidbare Anstrengung, macht Aussagen aber nicht glaubwürdiger oder wahrer',
+            'Kontraste anhand passender WCAG-Anforderungen und konkreter Nutzungssituationen prüfen',
+            'Mikro-Feedback als verständliche Bestätigung einer Aktion einsetzen und reduzierte Bewegung berücksichtigen'
           ],
           coreConcepts: [
             {
               iconName: 'sun',
               title: '60-30-10 COLOR RULE',
-              description: 'Perfekte visuelle Balance lenkt das Auge ohne sensorische Reizüberflutung.',
+              description: 'Eine mögliche Methode zur Farbverteilung, die an Inhalt, Marke und Barrierefreiheit angepasst werden muss.',
               highlight: true
             },
             {
               iconName: 'zap',
               title: 'COGNITIVE FLUENCY',
-              description: 'Müheloses Lesen führt direkt zu höherer Akzeptanz von Preis und Angebot.'
+              description: 'Klare Sprache und lesbare Typografie können das Verständnis unterstützen; Zustimmung oder Kauf folgen daraus nicht automatisch.'
             }
           ],
           resources: [
             {
-              title: 'Neuro-Farbpaletten & Kontrast-Toolkit',
-              subtitle: '10 erprobte High-Converting Farbkombinationen als PDF',
+              title: 'Farbpaletten & Kontrast-Toolkit',
+              subtitle: '10 Beispielkombinationen zur individuellen Prüfung als PDF',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
             },
             {
-              title: 'Mara Landingpage Neuro-Styler',
-              subtitle: 'Farbharmonie und Typografie-Hierarchie mit 1 Klick anwenden',
+              title: 'Mara Landingpage Design-Styler',
+              subtitle: 'Farb- und Typografie-Hierarchie als prüfbaren Entwurf anwenden',
               type: 'tool',
               iconName: 'layout',
               actionUrl: 'landingpage'
             }
           ],
-          fullArticleGuide: `### Die Psychophysik der Conversion-Rate
+          fullArticleGuide: `### Verständliche visuelle Gestaltung
 
-Wenn das Gehirn sich anstrengen muss, um eine Information zu verstehen, schaltet es auf Abwehr.
+Unklare Gestaltung kann Verständnis und Bedienung erschweren. Welche Ausführung funktioniert, hängt von Inhalt, Zielgruppe, Gerät und Nutzungssituation ab.
 
 #### Die Gestaltungsgesetze:
 - **Gesetz der Nähe**: Elemente, die zusammengehören (z. B. Label und Inputfeld), müssen nah beieinander stehen.
-- **Gesetz der Ähnlichkeit**: Alle interaktiven Links und Buttons müssen dieselbe visuelle Sprache sprechen.`
+- **Gesetz der Ähnlichkeit**: Eine konsistente visuelle Sprache kann helfen, Links und Bedienelemente wiederzuerkennen.
+
+Diese Prinzipien sind Gestaltungsheuristiken und keine Garantie für Verhalten oder Conversion. Prüfe Varianten mit Barrierefreiheitstests, Nutzungsbeobachtung und aussagekräftigen eigenen Daten.`
         },
         understandContent: {
-          coreTakeaway: 'Kognitive Leichtigkeit erzeugt ein Wohlgefühl – und wer sich wohlfühlt, kauft.',
+          coreTakeaway: 'Verständliche und zugängliche Gestaltung unterstützt die Nutzung, garantiert aber keine Zustimmung oder Conversion.',
           keyPrinciples: [
-            'Niemals hellgrauen Text auf weißem Grund verwenden – Kontrastverlust senkt die Conversion um bis zu 25%',
-            'Verwende maximal 2 Schriftarten auf einer Landingpage (eine für Headlines, eine für Fließtext)'
+            'Ausreichenden Kontrast nach den relevanten WCAG-Kriterien prüfen',
+            'Wenige, gut lesbare Schriftstile konsistent einsetzen und auf verschiedenen Geräten testen'
           ]
         },
         actionTask: {
