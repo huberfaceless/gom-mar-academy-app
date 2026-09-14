@@ -944,8 +944,8 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
   },
   {
     id: 82,
-    title: '82. High-End Event-Funnels & Ultra-VIP Masterminds',
-    subtitle: '10k€-25k€ Ticketpreise, Luxus-Locations, Bewerbungs-Funnels & Vor-Ort Closing',
+    title: '82. Hochwertige Event-Funnels & Masterminds',
+    subtitle: 'Preisgestaltung, passende Locations, faire Bewerbungsprozesse & optionale Folgeangebote',
     color: 'from-amber-600 via-yellow-700 to-stone-900',
     badgeIcon: '✨',
     description: 'Plane hochwertige Masterminds und Events mit transparenter Preisgestaltung: Entwickle faire Bewerbungsprozesse, wähle passende Locations und biete geeigneten Teilnehmern freiwillige, klar definierte Folgeprogramme an.',
@@ -954,7 +954,7 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
         id: '82.1',
         stageId: 82,
         stageTitle: '82. VIP-Event Bewerbungs-Funnels',
-        title: 'Der Ultra-VIP Event-Funnel: 15.000€ Masterminds ausverkaufen',
+        title: 'Der Mastermind-Event-Funnel: Nachfrage und Kapazität realistisch planen',
         durationMinutes: 33,
         description: 'Wie du echte Kapazitätsgrenzen, transparente Bewerbungsverfahren und persönliche Gespräche nutzt, um eine fachlich passende Teilnehmergruppe zusammenzustellen.',
         learnContent: {
@@ -965,19 +965,19 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
             'Echte Exklusivität: Begrenzte Betreuungskapazität und nachvollziehbare Auswahlkriterien transparent erklären',
             'Der 4-stufige Eignungscheck: Ziele, Entwicklungsstand, Beitrag zur Gruppe und realistische Erwartungen',
             "Der Peer-Group-Nutzen: Wie moderierter Erfahrungsaustausch messbaren Wert schaffen kann",
-            'Concierge-Onboarding: Persönlicher Fahrer, 5-Sterne Hotel-Suiten und maßgeschneiderte VIP-Geschenkboxen vorab'
+            'Teilnehmerbetreuung: Anreise, Unterkunft und Zusatzleistungen transparent kalkulieren und passend zum Angebot gestalten'
           ],
           coreConcepts: [
             {
               iconName: 'award',
               title: 'PEER-GROUP GRAVITY',
-              description: 'Kunden zahlen nicht für den Vortrag, sondern für die Exklusivität des Raumes.',
+              description: 'Der Nutzen entsteht aus Inhalt, Moderation, Teilnehmergruppe und konkreter Umsetzbarkeit – nicht allein aus Exklusivität.',
               highlight: true
             },
             {
               iconName: 'user-check',
               title: 'APPLICATION FILTER',
-              description: 'Strenge Auswahl erhöht die Attraktivität und verhindert unpassende Teilnehmer.'
+              description: 'Nachvollziehbare Kriterien helfen beiden Seiten, Eignung und Erwartungen fair zu prüfen.'
             }
           ],
           resources: [
@@ -996,7 +996,7 @@ Mit PMP-Deals sicherst du dir Top-Platzierungen zu Großkunden-Konditionen.
               actionUrl: 'crm'
             }
           ],
-          fullArticleGuide: `### Die Anatomie eines 500.000€ Mastermind-Events
+          fullArticleGuide: `### Die wirtschaftliche Planung eines Mastermind-Events
 
 Ein Event mit 20 Teilnehmern zu je 15.000€ hätte 300.000€ Bruttoticketerlös; Gewinn und Folgeumsatz hängen jedoch von Auslastung, Steuern, Rückerstattungen, Vertriebs- und Durchführungskosten sowie tatsächlicher Nachfrage ab.
 
@@ -1007,7 +1007,7 @@ Ein Event mit 20 Teilnehmern zu je 15.000€ hätte 300.000€ Bruttoticketerlö
 4. **15-Minuten Auswahl-Calls**: Prüfung der Teilnehmerharmonie und finale Zusage.`
         },
         understandContent: {
-          coreTakeaway: 'Der Wert eines VIP-Events bemisst sich an den Personen, die im Raum sitzen.',
+          coreTakeaway: 'Der Wert eines Events hängt von Inhalt, Betreuung, Teilnehmergruppe, Umsetzung und transparentem Preis-Leistungs-Verhältnis ab.',
           keyPrinciples: [
             'Niemals Personen zulassen, die nur zum Verkaufen kommen – das vergiftet die Atmosphäre',
             'Alle Details (Catering, Shuttles, Aktivitäten) lückenlos durchplanen'
@@ -1028,7 +1028,7 @@ Ein Event mit 20 Teilnehmern zu je 15.000€ hätte 300.000€ Bruttoticketerlö
         id: '82.2',
         stageId: 82,
         stageTitle: '82. Vor-Ort Back-End Closing',
-        title: 'Vor-Ort Monetarisierung: Das 100.000€ Boardroom-Back-End Angebot',
+        title: 'Optionale Folgeangebote nach einem Event fair präsentieren',
         durationMinutes: 31,
         description: 'Wie du geeigneten Teilnehmern am Ende eines Events optionale, klar definierte Beratungsangebote präsentierst und ausreichend Entscheidungszeit einräumst.',
         learnContent: {
@@ -1037,15 +1037,15 @@ Ein Event mit 20 Teilnehmern zu je 15.000€ hätte 300.000€ Bruttoticketerlö
           summaryText: 'Ticket- und Folgeangebote müssen jeweils eigenständig wirtschaftlich und wertvoll sein. Ein optionales Beratungsprogramm darf nur geeigneten Teilnehmern mit transparentem Leistungsumfang, Gesamtpreis, Vertragsbedingungen und angemessener Entscheidungszeit angeboten werden.',
           bulletPoints: [
             'Der sachliche Rückblick: Ergebnisse prüfen und erst danach mögliche nächste Schritte ohne emotionalen Entscheidungsdruck besprechen',
-            'Das "Natural Extension" Angebot: "Wir haben diesen Plan geschmiedet – wollen wir ihn im nächsten Jahr gemeinsam exekutieren?"',
-            'Keine Pitch-Folien: Das Angebot wird im persönlichen Gespräch oder beim gemeinsamen Dinner unterbreitet',
+            'Mögliche Fortsetzung: Ziele, Leistungsumfang und Alternativen sachlich besprechen',
+            'Angebot schriftlich bereitstellen, damit Umfang, Gesamtpreis und Bedingungen in Ruhe geprüft werden können',
             'Realistische Angebotsauswertung: Interesse, Eignung, Abschlussquote, Storno und Kundenerfolg getrennt messen'
           ],
           coreConcepts: [
             {
               iconName: 'star',
               title: 'NATURAL EXTENSION',
-              description: 'Folgeangebote fühlen sich wie der logische nächste Schritt an, nicht wie ein Verkauf.',
+              description: 'Eine Fortsetzung ist nur sinnvoll, wenn Bedarf, Eignung, Leistung und Preis nachvollziehbar zusammenpassen.',
               highlight: true
             },
             {
@@ -1072,22 +1072,22 @@ Ein Event mit 20 Teilnehmern zu je 15.000€ hätte 300.000€ Bruttoticketerlö
           ],
           fullArticleGuide: `### Die Kunst des Vor-Ort Back-End Verkaufs
 
-Wer eine außergewöhnliche Event-Erfahrung liefert, hat sich das Vertrauen für jahrelange Partnerschaften verdient.
+Eine gute Event-Erfahrung verpflichtet niemanden zu einer weiteren Zusammenarbeit. Folgeangebote müssen freiwillig, transparent und eigenständig wertvoll sein.
 
 #### Die Struktur des Abschluss-Dinners:
 - **Rückblick**: Würdigung der Durchbrüche jedes einzelnen Teilnehmers.
 - **Die Ausblick-Frage**: "Wer von euch möchte, dass mein Team und ich euch bei der Umsetzung dieses Plans zur Seite stehen?"
-- **Exklusives Kontingent**: Maximal 5 Plätze für die Jahres-Master-Group.`
+- **Entscheidungsphase**: Schriftliche Unterlagen, angemessene Prüfzeit und ein klarer Weg für Zu- oder Absage.`
         },
         understandContent: {
-          coreTakeaway: 'Ein erstklassiges Live-Event ist die vertrauensvollste Verkaufsbühne der Welt.',
+          coreTakeaway: 'Ein Live-Event darf Vertrauen nicht als Verkaufsdruck nutzen; ein Folgeangebot braucht eine eigenständige, informierte Entscheidung.',
           keyPrinciples: [
             'Niemals aggressive Verkaufsdruck-Methoden anwenden – das zerstört den Status sofort',
             'Vertrag, Zahlungsplan, Kündigungs- und Rücktrittsbedingungen transparent bereitstellen und angemessene Prüfzeit ermöglichen'
           ]
         },
         actionTask: {
-          instruction: 'Entwirf dein 100.000€ Jahres-Beiratsangebot:',
+          instruction: 'Entwirf ein transparentes optionales Jahres-Beratungsangebot:',
           inputType: 'checklist',
           checklistItems: [
             'Leistungsumfang (z. B. monatliche Strategie-Calls, 4 Boardroom-Treffen) definiert',
