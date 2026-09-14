@@ -64,16 +64,18 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
 
   const totalDurationSeconds = audioDuration || parseDurationSeconds(lesson.learnContent.videoDuration);
 
-  // Parse chapters time into seconds
-  const chaptersWithSeconds = (lesson.learnContent.videoChapters || [
+  const audioChapters = lesson.learnContent.videoChapters || [
     { time: '0:00', title: `01. ${copy.chapters[0]}` },
     { time: '2:15', title: `02. ${copy.chapters[1]}` },
     { time: '4:30', title: `03. ${copy.chapters[2]}` },
     { time: '6:50', title: `04. ${copy.chapters[3]}` },
-  ]).map((chap) => {
-    const parts = chap.time.split(':');
-    const sec = parts.length === 2 ? parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10) : 0;
-    return { ...chap, seconds: sec };
+  ];
+  const chaptersWithSeconds = audioChapters.map((chap, index) => {
+    const fourChapterRatios = [0, 0.25, 0.55, 0.8];
+    const ratio = audioChapters.length === 4
+      ? fourChapterRatios[index]
+      : index / Math.max(1, audioChapters.length);
+    return { ...chap, ratio, seconds: Math.floor(totalDurationSeconds * ratio) };
   });
 
   useEffect(() => {
@@ -124,18 +126,40 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
     }
   };
 
-  const handlePlayToggle = async () => {
+  const prepareAudio = async (): Promise<HTMLAudioElement> => {
     const audio = audioRef.current;
-    if (!audio || audioLoading) return;
+    if (!audio) throw new Error(copy.audioError);
+    if (!audioUrl) {
+      audio.src = await loadAudio();
+      audio.load();
+    }
+    if (audio.readyState < 1) {
+      await new Promise<void>((resolve, reject) => {
+        const handleLoaded = () => {
+          audio.removeEventListener('error', handleError);
+          resolve();
+        };
+        const handleError = () => {
+          audio.removeEventListener('loadedmetadata', handleLoaded);
+          reject(new Error(copy.audioError));
+        };
+        audio.addEventListener('loadedmetadata', handleLoaded, { once: true });
+        audio.addEventListener('error', handleError, { once: true });
+      });
+    }
+    return audio;
+  };
+
+  const handlePlayToggle = async () => {
+    if (audioLoading) return;
+    const currentAudio = audioRef.current;
+    if (!currentAudio) return;
     if (isPlaying) {
-      audio.pause();
+      currentAudio.pause();
       return;
     }
     try {
-      if (!audioUrl) {
-        audio.src = await loadAudio();
-        audio.load();
-      }
+      const audio = await prepareAudio();
       await audio.play();
     } catch {
       setIsPlaying(false);
@@ -146,6 +170,19 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
     const clamped = Math.max(0, Math.min(newTimeSec, totalDurationSeconds));
     setCurrentTime(clamped);
     if (audioRef.current && audioUrl) audioRef.current.currentTime = clamped;
+  };
+
+  const handleChapterSelect = async (ratio: number) => {
+    if (audioLoading) return;
+    try {
+      const audio = await prepareAudio();
+      const targetTime = Math.max(0, Math.min(audio.duration * ratio, audio.duration));
+      audio.currentTime = targetTime;
+      setCurrentTime(targetTime);
+      await audio.play();
+    } catch {
+      setIsPlaying(false);
+    }
   };
 
   const formatTime = (seconds: number) => {
@@ -426,7 +463,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
       )}
 
       {/* Audio chapters */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      {!customVideoUrl && <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between text-xs">
           <p className="font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
             <Clock className="w-4 h-4 text-emerald-400" />
@@ -441,7 +478,8 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             return (
               <button
                 key={idx}
-                onClick={() => handleSeek(chap.seconds)}
+                onClick={() => void handleChapterSelect(chap.ratio)}
+                disabled={audioLoading}
                 className={`p-3 rounded-xl border text-left text-xs transition-all flex items-center justify-between gap-2 cursor-pointer ${
                   isChapActive
                     ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300 font-bold'
@@ -453,13 +491,13 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
                   <span className="font-medium text-white">{chap.title}</span>
                 </div>
                 <span className="font-mono text-[11px] text-emerald-400 shrink-0 font-bold">
-                  {chap.time}
+                  {formatTime(chap.seconds)}
                 </span>
               </button>
             );
           })}
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
