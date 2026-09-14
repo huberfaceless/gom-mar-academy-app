@@ -4209,11 +4209,11 @@ Wenn du als Gründer alle Verkaufsgespräche selbst führst, ist deine monatlich
   },
   {
     id: 29,
-    title: '29. Finanzen, Cashflow-Management & Rechtssichere Skalierung',
-    subtitle: 'Steueroptimierung, Liquiditätsplanung, Verträge & DSGVO-Wachstumssicherheit',
+    title: '29. Finanzen, Cashflow-Management & rechtliche Grundlagen',
+    subtitle: 'Liquiditätsplanung, Verträge & Datenschutz strukturiert prüfen',
     color: 'from-slate-700 via-zinc-700 to-stone-800',
     badgeIcon: '⚖️',
-    description: 'Sichere dein Unternehmenswachstum rechtlich und finanziell ab: Beherrsche das 4-Konten-Modell, optimiere deinen Cashflow und schütze dein Business mit wasserdichten AGB, Verträgen und DSGVO-Standards.',
+    description: 'Strukturiere Liquiditätsplanung und Rücklagen und lerne wichtige Grundlagen zu Verträgen, Verbraucherrechten und Datenschutz kennen. Die konkrete Umsetzung hängt von Land, Unternehmen und Einzelfall ab.',
     lessons: [
       {
         id: '29.1',
@@ -4221,15 +4221,15 @@ Wenn du als Gründer alle Verkaufsgespräche selbst führst, ist deine monatlich
         stageTitle: '29. Finanzen & Cashflow',
         title: 'Cashflow-Architektur: Das 4-Konten-System & Liquiditätssteuerung',
         durationMinutes: 28,
-        description: 'Wie du deine Unternehmensfinanzen strukturierst, um Steuernachzahlungen für immer zu vermeiden und stets liquide für Wachstumsinvestitionen zu bleiben.',
+        description: 'Wie getrennte Budgets und regelmäßige Liquiditätsplanung dabei helfen können, Rücklagen aufzubauen und finanzielle Engpässe früher zu erkennen.',
         learnContent: {
           videoTitle: 'Masterclass: Cashflow-Management & Profit First',
           videoDuration: '28:15',
           summaryText: 'Umsatz ist Eitelkeit, Gewinn ist Vernunft, aber Cashflow ist die Realität. In dieser Lektion erfährst du, wie du das bewährte Profit-First-System in deinem digitalen Business implementierst.',
           bulletPoints: [
             'Das 4-Konten-Modell: Einnahmen, Steuerrücklagen (Festgeld/Tagesgeld), Betriebskosten (OpEx) und Unternehmergewinn',
-            'Die Liquiditäts-Reserve: Warum du mindestens 3 Monate Fixkosten als Puffer vorhalten musst',
-            'Automatisierte Überweisungs-Routinen zum 1. und 15. jedes Monats',
+            'Eine Liquiditätsreserve passend zu Fixkosten, Schwankungen und Geschäftsrisiko planen',
+            'Regelmäßige Überweisungs- und Kontrollroutinen für Rücklagen einrichten',
             'Deckungsbeitrags-Rechnung: Welche Produkte und Kanäle werfen echten Nettogewinn ab?'
           ],
           coreConcepts: [
@@ -4242,7 +4242,7 @@ Wenn du als Gründer alle Verkaufsgespräche selbst führst, ist deine monatlich
             {
               iconName: 'wallet',
               title: '4-KONTEN SYSTEM',
-              description: 'Einnahmen, Steuern (40%), OpEx (30%) und Gewinn (30%) strikt trennen.'
+              description: 'Einnahmen, Steuerrücklagen, Betriebsausgaben und Gewinn organisatorisch trennen; geeignete Anteile individuell bestimmen.'
             },
             {
               iconName: 'pie-chart',
@@ -4272,12 +4272,14 @@ Viele wachsende Unternehmen scheitern nicht an mangelnder Nachfrage, sondern an 
 
 #### Die 4 Konten im Detail:
 1. **Konto 1: Einnahmen-Sammelbecken**: Hier laufen alle Stripe-, PayPal- und Banküberweisungen ein.
-2. **Konto 2: Steuer-Rücklage (40-45%)**: Unantastbar für Umsatzsteuer und Ertragssteuern.
+2. **Konto 2: Steuer-Rücklage**: Die passende Höhe anhand deiner Steuerart, Prognose und fachlichen Beratung bestimmen.
 3. **Konto 3: Betriebsausgaben (OpEx)**: Software, Werbebudget, VAs und Freelancer.
-4. **Konto 4: Unternehmerlohn & Gewinn**: Dein monatliches Geschäftsführer-Gehalt plus Quartalsgewinn.`
+4. **Konto 4: Unternehmerlohn & Gewinn**: Entnahmen, Vergütung und Gewinnverwendung getrennt planen.
+
+Das Vier-Konten-Modell ist eine Organisationshilfe, keine allgemeingültige Verteilungsregel. Steuern, Rücklagenbedarf und zulässige Entnahmen hängen von Land, Rechtsform und persönlicher Situation ab. Diese Übersicht ersetzt keine Steuer- oder Finanzberatung.`
         },
         understandContent: {
-          coreTakeaway: 'Betrachte Steuerrücklagen niemals als dein Geld – trenne sie sofort am Tag des Geldeingangs.',
+          coreTakeaway: 'Plane Steuerrücklagen getrennt und aktualisiere ihre Höhe anhand realer Zahlen und der für dich geltenden Vorgaben.',
           keyPrinciples: [
             'Ausgaben wachsen mit den Einnahmen, wenn sie nicht durch feste Kontolimits gebremst werden',
             'Monatliche Fixkosten schlank halten und regelmäßig auf ungenutzte Abos prüfen'
@@ -4287,8 +4289,8 @@ Viele wachsende Unternehmen scheitern nicht an mangelnder Nachfrage, sondern an 
           instruction: 'Implementiere dein Cashflow- und Kontenmodell:',
           inputType: 'checklist',
           checklistItems: [
-            '4 getrennte Unterkonten bei der Geschäftsbank eingerichtet',
-            'Feste prozentuale Verteilungsregel für Geldeingänge definiert',
+            'Geeignete Konten- oder Budgetstruktur für mein Unternehmen festgelegt',
+            'Vorläufige Verteilungsregel anhand meiner Zahlen definiert und zur regelmäßigen Prüfung vorgemerkt',
             'Monatliche Fixkosten-Tabelle mit allen laufenden Tools & Abos bereinigt'
           ],
           toolboxCategory: 'content'
@@ -4298,36 +4300,36 @@ Viele wachsende Unternehmen scheitern nicht an mangelnder Nachfrage, sondern an 
         id: '29.2',
         stageId: 29,
         stageTitle: '29. Recht & DSGVO',
-        title: 'Rechtssicherheit: Verträge, AGB, Widerruf & DSGVO-Compliance',
+        title: 'Verträge, AGB, Widerruf & Datenschutz: Grundlagen',
         durationMinutes: 26,
-        description: 'Schütze deine Marke und dein Vermögen vor Abmahnungen: Rechtssichere Verträge, B2B-Widerrufsausschluss und korrekte Cookie-Einbindungen.',
+        description: 'Grundlagen zu klaren Verträgen, AGB, Verbraucherrechten, Cookie-Einbindungen und Datenschutzprozessen.',
         learnContent: {
-          videoTitle: 'Masterclass: Rechtssichere Skalierung & Vertragsgestaltung',
+          videoTitle: 'Vertragsgestaltung & Datenschutz strukturiert prüfen',
           videoDuration: '26:50',
-          summaryText: 'Ein rechtliches Fundament gibt dir die Freiheit, aggressiv zu werben und zu wachsen. Lerne, wie du B2B-Kaufverträge gestaltest, Haftungsrisiken minimierst und deinen Funnel DSGVO-konform machst.',
+          summaryText: 'Klare Vereinbarungen und dokumentierte Datenschutzprozesse können Risiken reduzieren. Welche Regeln gelten, hängt unter anderem von Rechtsraum, Kundengruppe und Angebot ab.',
           bulletPoints: [
-            'B2B vs. B2C: Warum B2B-Verträge kein gesetzliches 14-Tage-Widerrufsrecht haben und wie du das vertraglich absicherst',
-            'Digitale Signatur-Prozesse: Verträge per DocuSign / SignWell in unter 2 Minuten abschließen',
-            'AGB-Essentials für Agenturen, Coaches und Plattformbetreiber',
-            'DSGVO-Checkliste: Cookie-Banner, AVV-Verträge mit US-Dienstleistern und datenschutzkonforme E-Mail-Double-Opt-Ins'
+            'B2B und B2C unterscheiden und anwendbare Informations- und Widerrufsregeln prüfen',
+            'Geeignete elektronische Signatur- und Dokumentationsprozesse auswählen',
+            'Vertrags- und AGB-Inhalte passend zu Leistung, Haftung und Zahlungsbedingungen gestalten',
+            'Datenschutz-Checkliste für Cookies, Auftragsverarbeitung, Drittlandtransfers und E-Mail-Einwilligungen führen'
           ],
           coreConcepts: [
             {
               iconName: 'shield',
-              title: 'B2B VERTRAGSSCHUTZ',
-              description: 'Klare Zahlungsbedingungen, Zahlungsziele und Haftungsausschlüsse.',
+              title: 'KLARE B2B-VEREINBARUNGEN',
+              description: 'Leistung, Zahlungsbedingungen, Zuständigkeiten und angemessene Haftungsregelungen verständlich festhalten.',
               highlight: true
             },
             {
               iconName: 'lock',
-              title: 'DSGVO KONFORMITÄT',
-              description: 'Lückenloses Double-Opt-In und rechtssichere Auftragsverarbeitungsverträge (AVV).'
+              title: 'DATENSCHUTZ-PROZESSE',
+              description: 'Rechtsgrundlagen, Einwilligungen, Auftragsverarbeitung und Betroffenenrechte dokumentieren und regelmäßig prüfen.'
             }
           ],
           resources: [
             {
               title: 'B2B Dienstleistungsvertrag Muster',
-              subtitle: 'Rechtlich geprüfte Vertragsvorlage als PDF',
+              subtitle: 'Arbeitsvorlage zur individuellen fachlichen Prüfung',
               type: 'pdf',
               iconName: 'file-text',
               actionUrl: 'tools'
@@ -4340,30 +4342,32 @@ Viele wachsende Unternehmen scheitern nicht an mangelnder Nachfrage, sondern an 
               actionUrl: 'tools'
             }
           ],
-          fullArticleGuide: `### Das juristische Schutzschild deines Wachstums
+          fullArticleGuide: `### Rechtliche Grundlagen als laufender Prüfprozess
 
-Rechtssicherheit ist keine Bürokratie, sondern Risikomanagement zur Sicherung deines Unternehmenswertes.
+Verträge und Datenschutz sind Bestandteile des Risikomanagements. Allgemeine Muster können bei der Vorbereitung helfen, ersetzen aber keine Prüfung des konkreten Angebots.
 
 #### Die wichtigsten Compliance-Bausteine:
-1. **Kaufbestätigung & AGB**: Die Einbindung der AGB mit Checkbox vor der Bezahlung ist im deutschen und europäischen Recht Pflicht.
-2. **Double-Opt-In Protokollierung**: Jeder Newsletter-Kontakt muss mit Timestamp und IP-Hash nachweisbar sein.
-3. **Mitarbeiter-Vertraulichkeit**: NDAs (Geheimhaltungsvereinbarungen) für alle VAs und Freelancer vor Projektstart.
-4. **Marken- & Urheberrecht**: Überprüfung von Markennamen beim DPMA/EUIPO vor großen Ad-Launches.`
+1. **Vertrag & AGB**: Prüfe, welche Informationen wirksam einbezogen werden müssen und wie Zustimmung oder Kenntnisnahme dokumentiert wird.
+2. **Einwilligungen & Nachweise**: Dokumentiere die jeweils erforderliche Rechtsgrundlage datensparsam; Double-Opt-In kann beim Nachweis von E-Mail-Einwilligungen helfen.
+3. **Vertraulichkeit**: Entscheide anhand der verarbeiteten Informationen, welche Vertraulichkeits- und Datenschutzvereinbarungen mit Mitarbeitenden oder Dienstleistern nötig sind.
+4. **Marken- & Urheberrecht**: Recherchiere zuständige Register und bestehende Rechte, bevor du einen Namen oder fremde Inhalte geschäftlich nutzt.
+
+Die Anforderungen unterscheiden sich nach Land, Vertragspartner und Angebot. Lass Vorlagen und Prozesse bei Unsicherheit von einer qualifizierten Rechtsberatung prüfen.`
         },
         understandContent: {
           coreTakeaway: 'Ein klarer Vertrag schützt beide Seiten und schafft von Tag 1 an professionelle Klarheit.',
           keyPrinciples: [
-            'Niemals ein Projekt ohne unterschriebenen Vertrag und geleistete Anzahlung starten',
-            'Double-Opt-In Nachweise im E-Mail System revisionssicher archivieren'
+            'Leistungsumfang, Vergütung und Verantwortlichkeiten vor Projektbeginn nachvollziehbar vereinbaren',
+            'Einwilligungs- und Abmeldenachweise angemessen, sicher und nur so lange wie erforderlich aufbewahren'
           ]
         },
         actionTask: {
-          instruction: 'Überprüfe und härte deine rechtlichen Vorlagen:',
+          instruction: 'Überprüfe deine rechtlichen Vorlagen und Prozesse:',
           inputType: 'checklist',
           checklistItems: [
-            'B2B-Vertragsvorlage und AGB für das Kernangebot finalisiert',
+            'Vertragsvorlage und AGB auf Kundengruppe, Angebot und Rechtsraum abgestimmt',
             'Impressum und Datenschutzerklärung auf allen Funnels aktualisiert',
-            'Double-Opt-In Bestätigungsmails im E-Mail Tool auf Rechtskonformität geprüft'
+            'Einwilligungs-, Bestätigungs- und Abmeldeprozesse fachlich geprüft'
           ],
           toolboxCategory: 'email'
         }
