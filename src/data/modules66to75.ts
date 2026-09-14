@@ -472,39 +472,39 @@ Ein Folgeauftrag darf nur nach den Bedingungen der Rahmenvereinbarung und des an
   {
     id: 69,
     title: '69. Executive Media Training & Krisen-PR',
-    subtitle: 'Live-Interviews, TV-Talkshows, Investigativ-Journalisten & Krisen-Kommunikation',
+    subtitle: 'Live-Interviews, kritische Fragen & verantwortungsvolle Krisenkommunikation',
     color: 'from-red-800 via-rose-900 to-zinc-900',
     badgeIcon: '🎙️',
-    description: 'Bestehe im Kreuzfeuer der Medien: Lerne die Interview-Techniken von Spitzenpolitikern und DAX-Vorständen kennen, lenke kritische Reporterfragen souverän um (Bridging) und meistere Live-TV-Auftritte ohne Wackeln.',
+    description: 'Bereite Mediengespräche strukturiert vor, beantworte kritische Fragen transparent und entwickle einen verantwortungsvollen Ablauf für Krisenkommunikation.',
     lessons: [
       {
         id: '69.1',
         stageId: 69,
         stageTitle: '69. Bridging-Techniken & Interview-Führung',
-        title: "Die 'Bridging'-Methode: Kritische Journalistenfragen meisterhaft umlenken",
+        title: "Die 'Bridging'-Methode: Kritische Fragen klar beantworten",
         durationMinutes: 33,
-        description: 'Wie du die Gesprächskontrolle behältst, Fangfragen entlarvst und deine 3 Kernbotschaften in jedem Interview platzierst.',
+        description: 'Wie du Fragen direkt beantwortest, Unsicherheit offen benennst und anschließend verständlich zu deinen Kernbotschaften überleitest.',
         learnContent: {
-          videoTitle: 'Masterclass: Executive Media Training & Krisen-Interview Führung',
+          videoTitle: 'Executive Media Training & verantwortungsvolle Interviewführung',
           videoDuration: '33:15',
-          summaryText: 'Ein ungeübter Gründer verliert im Interview sofort die Kontrolle. Lerne, wie du kritische Angriffe mit der "Block & Bridge" Technik neutralisierst und das Gespräch elegant auf deine Erfolgsgeschichte lenkst.',
+          summaryText: 'Gute Vorbereitung hilft, auch unter Zeitdruck ruhig und präzise zu antworten. Bridging ist sinnvoll, wenn zuerst die gestellte Frage beantwortet und der Übergang nicht zur Ablenkung genutzt wird.',
           bulletPoints: [
             'Die 3 Message-Pillars: Deine Botschaft in maximal 3 einfachen, einprägsamen Sätzen',
-            'Block & Bridge Formeln: "Das ist ein wichtiger Punkt, aber die entscheidende Frage, vor der unsere Branche steht, lautet..."',
-            'Die Soundbite-Formel: Wie du druckreife Zitate lieferst, die Zeitungen als Überschrift drucken müssen',
-            "Körpersprache im Studio: Blickkontakt, Handhaltung im 'Merkel-Dreieck' und kontrollierte Stimmlage"
+            'Answer & Bridge: Frage wahrheitsgemäß beantworten und anschließend den relevanten Kontext ergänzen',
+            'Prägnante Aussagen: Kurze, verständliche Sätze ohne Garantie auf Auswahl oder unveränderte Wiedergabe',
+            'Körpersprache im Studio: aufrechte Haltung, natürlicher Blickkontakt und ruhige Stimmlage'
           ],
           coreConcepts: [
             {
               iconName: 'mic',
               title: 'BLOCK & BRIDGE',
-              description: 'Elegante Umleitung feindseliger Fragen auf die eigene Kernbotschaft.',
+              description: 'Nach einer direkten Antwort nachvollziehbar zu relevantem Kontext überleiten.',
               highlight: true
             },
             {
               iconName: 'zap',
               title: 'SOUNDBITE DESIGN',
-              description: 'Prägnante Zitate, die Journalisten ungekürzt übernehmen müssen.'
+              description: 'Prägnante, belegbare Aussagen formulieren; Auswahl und Bearbeitung liegen bei der Redaktion.'
             }
           ],
           resources: [
@@ -525,26 +525,26 @@ Ein Folgeauftrag darf nur nach den Bedingungen der Rahmenvereinbarung und des an
           ],
           fullArticleGuide: `### Die Kunst der medialen Souveränität
 
-Journalisten suchen nach Konflikten und Zitaten. Du suchst nach Positionierung und Vertrauen.
+Medien und Gesprächssituationen unterscheiden sich. Deine Aufgabe ist es, wahrheitsgemäß, nachvollziehbar und respektvoll zu kommunizieren.
 
 #### Die goldenen Regeln des Medieninterviews:
-1. **Es gibt kein 'Off the Record'**: Gehe immer davon aus, dass jedes Wort aufgezeichnet wird.
-2. **Keine Wiederholung negativer Worte**: Wiederhole niemals die negative Formulierung des Reporters.
-3. **Die 3-Sekunden Pause**: Antworte niemals hastig; nimm dir 3 Sekunden Bedenkzeit vor jeder Antwort.`
+1. **Vertraulichkeit klären:** Vereinbare vorab ausdrücklich, ob Teile eines Gesprächs nicht zur Veröffentlichung bestimmt sind; Regeln und journalistische Praxis können variieren.
+2. **Frage zuerst beantworten:** Korrigiere falsche Voraussetzungen ruhig und weiche berechtigten Fragen nicht aus.
+3. **Bedenkzeit nutzen:** Eine kurze Pause kann helfen. Wenn Fakten fehlen, sage das offen und biete eine verlässliche Nachreichung an.`
         },
         understandContent: {
-          coreTakeaway: 'Wer die Kunst des Bridgings beherrscht, kann vor laufender Kamera niemals in die Enge getrieben werden.',
+          coreTakeaway: 'Sorgfältige Vorbereitung und ehrliche Antworten erhöhen die Verständlichkeit, können Verlauf und Veröffentlichung aber nicht kontrollieren.',
           keyPrinciples: [
-            'Niemals in die Defensive geraten oder sich rechtfertigen – bleibe ruhig und lösungsorientiert',
-            'Stets die Autorisierung des schriftlichen Interviewtextes vor dem Druck vereinbaren'
+            'Ruhig bleiben, die konkrete Frage beantworten und Fehler bei Bedarf korrigieren',
+            'Zitate oder Textfreigaben nur anfragen, wenn das journalistische Format und die Redaktion dies vorsehen'
           ]
         },
         actionTask: {
           instruction: 'Definiere deine 3 Kernbotschaften für Medienauftritte:',
           inputType: 'checklist',
           checklistItems: [
-            '3 unverrückbare Kernbotschaften (Message Pillars) formuliert',
-            '5 Bridging-Übergangssätze für kritische Fragen auswendig gelernt',
+            '3 belegbare Kernbotschaften mit passenden Nachweisen formuliert',
+            '5 direkte Antworten auf erwartbare kritische Fragen vorbereitet',
             'Video-Probeinterview mit 3 harten Fangfragen aufgenommen und analysiert'
           ],
           toolboxCategory: 'content'
@@ -554,30 +554,30 @@ Journalisten suchen nach Konflikten und Zitaten. Du suchst nach Positionierung u
         id: '69.2',
         stageId: 69,
         stageTitle: '69. Presse-Statements & Shitstorm-Drahtseilakt',
-        title: 'Krisen-Pressestatements: In 60 Minuten rechtssicher und deeskalierend reagieren',
+        title: 'Krisen-Pressestatements: Sorgfältig und angemessen reagieren',
         durationMinutes: 29,
-        description: 'Wie du in Akutfällen Pressemitteilungen formulierst, die rechtliche Risiken minimieren und die Wut der Öffentlichkeit ersticken.',
+        description: 'Wie du in Akutfällen Fakten sicherst, Zuständigkeiten klärst und ein sachliches erstes Statement vorbereitest.',
         learnContent: {
           videoTitle: 'Masterclass: Krisen-Pressemitteilungen & Ad-hoc Kommunikation',
           videoDuration: '29:40',
-          summaryText: 'Schweigen wird in der Krise als Schuldeingeständnis gewertet. Lerne, wie du mit der "Empathie - Aktion - Transparenz" Formel Statements verfasst, die juristisch abgesichert sind und Shitstorms im Keim ersticken.',
+          summaryText: 'In einer Krise müssen Schnelligkeit, Faktenlage, Betroffenenschutz und rechtliche Risiken abgewogen werden. Ein erstes Statement sollte nur bestätigte Informationen enthalten und nächste Schritte transparent benennen.',
           bulletPoints: [
-            'Die 1-Stunden Reaktions-Matrix: Erstes Holding-Statement innerhalb von 60 Minuten veröffentlichen',
-            'Die \'E-A-T\' Krisen-Formel: Empathie zeigen, sofortige Prüfmaßnahmen ankündigen, Transparenz zusichern',
-            'Zusammenarbeit mit Medienanwälten: Vorab-Freigabe zur Vermeidung von Schadensersatzansprüchen',
-            'Gegendarstellungsansprüche: Wie du falsche Verdachtsberichterstattung per einstweiliger Verfügung stoppst'
+            'Reaktionsstufen: Dringlichkeit bewerten und erst nach einer belastbaren Mindestprüfung kommunizieren',
+            'Empathie, Maßnahmen und Transparenz nur konkret und ohne unhaltbare Zusagen formulieren',
+            'Rechts- und Kommunikationsberatung bei möglichen Haftungs-, Persönlichkeits- oder Strafrechtsfragen einbeziehen',
+            'Mögliche Reaktionen auf falsche Berichte im jeweiligen Rechtsraum fachlich prüfen lassen'
           ],
           coreConcepts: [
             {
               iconName: 'shield',
               title: 'HOLDING STATEMENT',
-              description: 'Schnelle Erst-Reaktion nimmt Journalisten den Wind aus den Segeln.',
+              description: 'Eine kurze Erstinformation kann den bekannten Stand und die nächsten Prüfschritte erläutern.',
               highlight: true
             },
             {
               iconName: 'alert-triangle',
-              title: 'LEGAL CLEARANCE',
-              description: 'Rechtssichere Formulierungen verhindern teure Schuldanerkenntnisse.'
+              title: 'FACHLICHE PRÜFUNG',
+              description: 'Sensible Aussagen vor Veröffentlichung rechtlich und inhaltlich prüfen lassen.'
             }
           ],
           resources: [
@@ -596,21 +596,23 @@ Journalisten suchen nach Konflikten und Zitaten. Du suchst nach Positionierung u
               actionUrl: 'tools'
             }
           ],
-          fullArticleGuide: `### Die Anatomie eines perfekten Krisen-Statements
+          fullArticleGuide: `### Aufbau eines ersten Krisen-Statements
 
-Ein gutes Statement beruhigt die Emotionen und zeigt volle Handlungsfähigkeit des Unternehmens.
+Ein erstes Statement soll den bestätigten Kenntnisstand verständlich wiedergeben. Es kann Reaktionen nicht zuverlässig steuern und darf Ermittlungen, Betroffene oder rechtliche Positionen nicht gefährden.
 
 #### Die 4 Absätze eines Krisen-Statements:
-- **Absatz 1 (Bedauern & Empathie)**: "Wir nehmen die geäußerten Vorwürfe außerordentlich ernst..."
-- **Absatz 2 (Sofortmaßnahme)**: "Wir haben unverzüglich eine interne Untersuchung eingeleitet..."
-- **Absatz 3 (Fakten)**: Sachliche Klarstellung ohne Aggressivität.
-- **Absatz 4 (Ausblick)**: "Wir werden die Ergebnisse transparent veröffentlichen."`
+- **Absatz 1 (Betroffene & Kontext):** Sachlich benennen, was bekannt ist, und angemessene Anteilnahme ausdrücken.
+- **Absatz 2 (Maßnahmen):** Nur tatsächlich eingeleitete Prüf- oder Schutzmaßnahmen nennen.
+- **Absatz 3 (Fakten):** Bestätigte Tatsachen von offenen Fragen und vorläufigen Annahmen trennen.
+- **Absatz 4 (Ausblick):** Einen realistischen nächsten Informationszeitpunkt oder Kommunikationsweg nennen.
+
+Vorlagen müssen an Ereignis, Rechtsraum und Betroffene angepasst werden. Diese Lektion ersetzt keine Rechts- oder Krisenberatung.`
         },
         understandContent: {
-          coreTakeaway: 'Wer schnell und menschlich reagiert, verwandelt eine Krise in einen Beweis für Führungsstärke.',
+          coreTakeaway: 'Eine angemessene Reaktion verbindet Empathie mit geprüften Fakten; Schnelligkeit allein garantiert keine Deeskalation.',
           keyPrinciples: [
             'Niemals Schuldige im eigenen Team öffentlich an den Pranger stellen – Führung übernimmt die Verantwortung',
-            'Immer nur eine einzige Person als offiziellen Pressesprecher autorisieren'
+            'Klare Sprecherrollen, Vertretung und interne Informationswege festlegen'
           ]
         },
         actionTask: {
@@ -619,7 +621,7 @@ Ein gutes Statement beruhigt die Emotionen und zeigt volle Handlungsfähigkeit d
           checklistItems: [
             'Krisen-Holding-Statement für Notfälle vorformuliert',
             'Kontaktliste von Krisen-PR-Beratern und Medienanwälten hinterlegt',
-            'Interne Anweisung: Mitarbeiter dürfen keine Presseanfragen eigenständig beantworten'
+            'Interne Regel für die Weiterleitung und koordinierte Beantwortung von Presseanfragen festgelegt'
           ],
           toolboxCategory: 'settings'
         }
