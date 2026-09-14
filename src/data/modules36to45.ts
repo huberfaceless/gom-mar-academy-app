@@ -559,24 +559,24 @@ Pinterest-Nutzer befinden sich in einer aktiven Planungs- und Kaufstimmung.
         id: '39.2',
         stageId: 39,
         stageTitle: '39. Pinterest Automation & Funnel',
-        title: 'Pinterest-to-Blog Automation: Täglicher Traffic ohne manuellen Aufwand',
+        title: 'Pinterest-to-Blog-Automation: Veröffentlichungen planbar vorbereiten',
         durationMinutes: 26,
         description: 'Wie du Tailwind oder Make.com nutzt, um Pin-Veröffentlichungen 3 Monate im Voraus zu planen und auf Landingpages umzuleiten.',
         learnContent: {
           videoTitle: 'Masterclass: Pinterest Automatisierungs-Pipelines',
           videoDuration: '26:20',
-          summaryText: 'Einmal eingerichtet, läuft Pinterest nahezu vollautomatisch. Erfahre, wie du Blogbeiträge und Lead-Magnete per KI in dutzende Pin-Variationen verwandelst und automatisiert ausspielst.',
+          summaryText: 'Planungstools können wiederkehrende Veröffentlichungsschritte vereinfachen. Erfahre, wie du Blogbeiträge und Lead-Magnete in mehrere geprüfte Pin-Varianten überführst, vorausplanst und regelmäßig auswertest.',
           bulletPoints: [
-            'Batch-Erstellung: 30 Pins in 30 Minuten mit KI-Templates generieren',
-            'Smart-Looping & Veröffentlichungs-Intervalle zur Vermeidung von Spam-Filtern',
-            'Direct-to-Funnel vs. Blog-Umweg: Welche Route für welche Nische die höchsten E-Mail Eintragungen bringt',
-            'Pinterest Ads Booster: Wie du die besten 5% der organischen Pins mit 5€/Tag eskalierst'
+            'Batch-Erstellung: mehrere Entwürfe mit Vorlagen vorbereiten und jeden Pin vor der Planung prüfen',
+            'Veröffentlichungsintervalle so wählen, dass Inhalte aktuell, abwechslungsreich und plattformkonform bleiben',
+            'Direct-to-Funnel vs. Blog-Route: Eintragungsraten je nach Nische und Nutzerabsicht vergleichen',
+            'Bezahlte Tests: organische Signale als Ausgangspunkt nutzen und Budgetgrenzen vorab festlegen'
           ],
           coreConcepts: [
             {
               iconName: 'repeat',
               title: 'AUTO-SCHEDULING',
-              description: 'Vollautomatische Verteilung von Pins über die aktivsten Tageszeiten.',
+              description: 'Vorausgeplante Verteilung mit regelmäßiger Kontrolle von Links, Inhalten und Ergebnissen.',
               highlight: true
             },
             {
@@ -603,7 +603,7 @@ Pinterest-Nutzer befinden sich in einer aktiven Planungs- und Kaufstimmung.
           ],
           fullArticleGuide: `### Die Pinterest Automatisierungs-Formel
 
-Mit der richtigen Vorlagen-Pipeline benötigst du nur 2 Stunden pro Monat für deinen gesamten Pinterest-Kanal.
+Eine Vorlagen-Pipeline kann Produktions- und Planungszeit reduzieren. Der tatsächliche Aufwand hängt von Umfang, Qualitätsprüfung, Aktualisierungen und Ergebnisauswertung ab.
 
 #### Der monatliche Workflow:
 1. **Woche 1**: Schreibe oder generiere 4 hochwertige Ratgeber-Artikel für deinen Blog.
@@ -612,7 +612,7 @@ Mit der richtigen Vorlagen-Pipeline benötigst du nur 2 Stunden pro Monat für d
 4. **Woche 4**: Analysiere im Mara CRM, welche Pins die meisten Leads generiert haben.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Pins automatisiert, baut sich einen stetig wachsenden Traffic-Wasserfall auf.',
+          coreTakeaway: 'Automatisierte Planung schafft Kontinuität, garantiert aber weder Reichweite noch Traffic; Ergebnisse müssen laufend geprüft werden.',
           keyPrinciples: [
             'Immer frische URLs und Bilder verwenden, um im Algorithmus bevorzugt zu werden',
             'Landingpages müssen extrem schnell laden (unter 1,5 Sekunden auf Mobilgeräten)'
