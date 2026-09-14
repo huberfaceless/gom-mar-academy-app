@@ -4,10 +4,10 @@ export const MODULES_76_TO_85: Stage[] = [
   {
     id: 76,
     title: '76. Enterprise SaaS Architektur & Multi-Tenancy',
-    subtitle: 'Microservices, Multi-Tenant Datenbanken, SOC-2 Compliance & SLA-Garantien',
+    subtitle: 'Microservices, Multi-Tenant Datenbanken, SOC-2 Compliance & belastbare SLAs',
     color: 'from-blue-700 via-indigo-800 to-slate-900',
     badgeIcon: '☁️',
-    description: 'Transformiere dein Business in ein skalierbares Softwareunternehmen: Lerne, wie du hochverfügbare Multi-Tenant SaaS-Plattformen entwickelst, 99.99% Verfügbarkeits-SLAs garantierst und SOC-2/ISO-27001 Sicherheitsaudits für Großkunden bestehst.',
+    description: 'Lerne, wie du hochverfügbare Multi-Tenant-SaaS-Plattformen entwickelst, realistische Verfügbarkeitsziele definierst und dich strukturiert auf SOC-2- oder ISO-27001-Prüfungen vorbereitest.',
     lessons: [
       {
         id: '76.1',
@@ -92,11 +92,11 @@ Skalierbarkeit und Sicherheit sind die Fundamente für 6-stellige Enterprise-Ver
         learnContent: {
           videoTitle: 'Masterclass: SOC-2 Zertifizierung & Enterprise Vendor Risk Management',
           videoDuration: '32:40',
-          summaryText: 'Ein 100.000€ Jahresvertrag scheitert fast immer am Vendor-Security-Fragebogen der IT-Sicherheitsabteilung. Erfahre, wie du SOC-2 Type II Audits automatisierst und SLAs mit 99.99% Uptime anbietest.',
+          summaryText: 'Enterprise-Kunden prüfen Anbieter häufig mit Sicherheitsfragebögen und Nachweisen. Erfahre, wie Tools die Beweissammlung unterstützen und wie du ein SLA nur auf Basis gemessener Verfügbarkeit, belastbarer Architektur und passender Vertragsregeln festlegst.',
           bulletPoints: [
             'Die Trust Services Criteria: Sicherheit, Verfügbarkeit, Vertraulichkeit, Integrität und Datenschutz',
-            'Automatisierte Compliance-Plattformen: Vanta & Drata zur lückenlosen Beweissammlung',
-            'Incident Response & Disaster Recovery: Notfallpläne mit maximal 15 Minuten RTO (Recovery Time Objective)',
+            'Compliance-Plattformen: Vanta & Drata zur unterstützten, nachvollziehbaren Beweissammlung',
+            'Incident Response & Disaster Recovery: realistische RTO- und RPO-Ziele anhand der Architektur festlegen',
             'SLA-Vertragsstrafen: Wie du Service-Credits staffelst, ohne dein Unternehmen finanziell zu gefährden'
           ],
           coreConcepts: [
@@ -109,7 +109,7 @@ Skalierbarkeit und Sicherheit sind die Fundamente für 6-stellige Enterprise-Ver
             {
               iconName: 'activity',
               title: '99.99% SLA UPTIME',
-              description: 'Maximal 52 Minuten ungeplante Ausfallzeit pro Jahr durch Multi-Region Redundanz.'
+              description: 'Ein ambitioniertes Vertragsziel, das Messmethode, Ausnahmen, Redundanz und realistische Service-Credits benötigt.'
             }
           ],
           resources: [
@@ -130,7 +130,7 @@ Skalierbarkeit und Sicherheit sind die Fundamente für 6-stellige Enterprise-Ver
           ],
           fullArticleGuide: `### Wie du Enterprise Vendor Audits meisterst
 
-Konzernkunden haben strikte Vorgaben. Wenn du die Antworten parat hast, überspringst du monatelange Verhandlungsschleifen.
+Konzernkunden haben strikte Vorgaben. Vollständige, belegbare Antworten können die Sicherheitsprüfung beschleunigen, ersetzen sie aber nicht.
 
 #### Die wichtigsten Compliance-Bausteine:
 - **End-to-End Verschlüsselung**: AES-256 at Rest und TLS 1.3 in Transit.
@@ -138,7 +138,7 @@ Konzernkunden haben strikte Vorgaben. Wenn du die Antworten parat hast, überspr
 - **Penetration Test Report**: Jährlich aktualisierter Bericht eines unabhängigen Prüfinstituts.`
         },
         understandContent: {
-          coreTakeaway: 'Compliance ist kein lästiger Papierkram, sondern der stärkste Hebel für 6-stellige ACVs (Annual Contract Values).',
+          coreTakeaway: 'Nachvollziehbare Sicherheitsprozesse können Enterprise-Prüfungen erleichtern; Zertifizierung, Vertrag und Umsatz sind jedoch nicht garantiert.',
           keyPrinciples: [
             'Single Sign-On (SAML/Okta) immer als teures Add-on oder nur im Enterprise-Plan anbieten',
             'Audits durch automatisierte Tools ganzjährig aktuell halten'
@@ -333,12 +333,12 @@ Mit Multi-Agent-Systemen baust du virtuelle Teams, die rund um die Uhr arbeiten.
         learnContent: {
           videoTitle: 'Masterclass: Internationale Markenanmeldung & Markenschutz',
           videoDuration: '31:20',
-          summaryText: 'Ein erfolgreicher Markenname ohne Markeneintragung ist eine tickende Zeitbombe. Lerne, wie du Wort- und Bildmarken in Deutschland, der EU und weltweit schützt und Konkurrenten per Unterlassungserklärung stoppen kannst.',
+          summaryText: 'Eine Markenanmeldung kann den Schutz eines Namens oder Zeichens stärken. Lerne, wie du Wort- und Bildmarken recherchierst, passende Schutzgebiete und Klassen auswählst und bei Konflikten fachlichen Rechtsrat einholst.',
           bulletPoints: [
-            'Wortmarke vs. Wort-Bildmarke: Warum reine Wortmarken den stärksten rechtlichen Schutz bieten',
+            'Wortmarke vs. Wort-Bildmarke: Schutzumfang und Eintragungsfähigkeit im Einzelfall vergleichen',
             'Die Nizza-Klassifikation: Strategische Auswahl relevanter Klassen für Software (9), Beratung (35) und Bildung (41)',
             'Kollisions-Recherche: Ähnliche Marken in TMview und DPMA-Register vor der Anmeldung aufspüren',
-            'Das WIPO Madrid System: Mit einer einzigen Basisanmeldung weltweit in über 120 Ländern Schutz beantragen'
+            'Das WIPO Madrid System: Auf Basis einer Anmeldung Schutz in ausgewählten Mitgliedsstaaten beantragen'
           ],
           coreConcepts: [
             {
@@ -371,7 +371,7 @@ Mit Multi-Agent-Systemen baust du virtuelle Teams, die rund um die Uhr arbeiten.
           ],
           fullArticleGuide: `### Die Absicherung deiner wichtigsten Vermögenswerte
 
-Eine eingetragene Marke erhöht den Wert deines Unternehmens beim Verkauf um bis zu 40%.
+Eine eingetragene Marke kann ein wichtiger immaterieller Vermögenswert sein. Ihr wirtschaftlicher Wert hängt unter anderem von Bekanntheit, Nutzung, Schutzumfang und Durchsetzbarkeit ab.
 
 #### Der 4-Stufen Markenschutz-Prozess:
 1. **Identitäts- & Ähnlichkeitsrecherche**: Keine Verwechslungsgefahr mit bestehenden Marken im selben Markt.
@@ -380,7 +380,7 @@ Eine eingetragene Marke erhöht den Wert deines Unternehmens beim Verkauf um bis
 4. **Widerspruchsfrist überwachen**: 3 Monate nach Veröffentlichung auf Einwände Dritter achten.`
         },
         understandContent: {
-          coreTakeaway: 'Wer frühzeitig Wortmarken anmeldet, sichert sich uneinholbare Monopolrechte auf seine Begriffe.',
+          coreTakeaway: 'Eine eingetragene Marke kann Schutz für bestimmte Waren, Dienstleistungen und Gebiete geben; ältere Rechte, Benutzung, Durchsetzung und Einzelfallprüfung bleiben relevant.',
           keyPrinciples: [
             'Niemals rein beschreibende Begriffe (z. B. "Bester Marketing Kurs") anmelden – sie werden wegen fehlender Unterscheidungskraft abgewiesen',
             'Eine Markenüberwachung (Monitoring) einrichten, um neue ähnliche Anmeldungen sofort anzufechten'
@@ -723,8 +723,8 @@ Venture Debt ist der Treibstoff für Firmen, die bereits über verlässliche Uni
           summaryText: 'Feste monatliche Kreditraten können in schwachen Monaten das Genick brechen. Revenue-Based Financing passt die Rückzahlung dynamisch an: In starken Monaten zahlst du mehr, in schwachen weniger. Erfahre, wie du diese Flexibilität nutzt.',
           bulletPoints: [
             'Revenue-Based Financing (RBF): Rückzahlung von 5-10% der täglichen/monatlichen Umsatzerlöse bis zur Erreichung eines Caps (z. B. 1.15x)',
-            'Keine persönlichen Bürgschaften: Bonitätsprüfung erfolgt vollautomatisiert über API-Anbindung an Stripe und Bankkonten',
-            'Mezzanine-Kapital: Nachrangdarlehen, die das Rating bei Hausbanken verbessern und Eigenkapitalquoten stärken',
+            'Sicherheiten und Bürgschaften: Anforderungen unterscheiden sich je nach Anbieter, Bonität und Vertragsmodell',
+            'Mezzanine-Kapital: Nachrangige Instrumente, deren bilanzielle und ratingbezogene Wirkung Fachleute im Einzelfall prüfen müssen',
             'Stille Beteiligungen: Gewinnabhängige Vergütung ohne Mitspracherechte im Tagesgeschäft'
           ],
           coreConcepts: [
@@ -737,7 +737,7 @@ Venture Debt ist der Treibstoff für Firmen, die bereits über verlässliche Uni
             {
               iconName: 'layers',
               title: 'MEZZANINE BUFFER',
-              description: 'Wirtschaftliches Eigenkapital verbessert deine Kreditwürdigkeit bei Banken massiv.'
+              description: 'Nachrangigkeit kann die Finanzierungsstruktur beeinflussen; Bilanzierung und Bankbewertung sind einzelfallabhängig.'
             }
           ],
           resources: [
@@ -762,11 +762,11 @@ RBF ist ideal für SaaS- und E-Commerce-Unternehmen mit wiederkehrenden, verifiz
 
 #### Die Funktionsweise in 3 Schritten:
 1. **API-Connect**: Verknüpfe dein Stripe-, Shopify- und Bankkonto.
-2. **Kreditangebot in 48 Stunden**: Erhalte ein Angebot über 100.000€ bis 2.000.000€ ohne Businessplan-Präsentation.
+2. **Individuelle Prüfung**: Anbieter bewerten Umsatz-, Bank- und Unternehmensdaten nach eigenen Kriterien; Bearbeitungszeit, Betrag, Sicherheiten und Zusage sind nicht garantiert.
 3. **Automatischer Einzug**: Die RBF-Plattform zieht täglich automatisch den vereinbarten Prozentsatz (z. B. 6%) deines Umsatzes ein.`
         },
         understandContent: {
-          coreTakeaway: 'Umsatzbasierte Finanzierung schützt vor Liquiditätsengpässen in saisonalen Flauten.',
+          coreTakeaway: 'Umsatzbasierte Rückzahlungen können saisonale Schwankungen abfedern, verursachen aber Kosten und verhindern Liquiditätsengpässe nicht automatisch.',
           keyPrinciples: [
             'Den effektiven Jahreszins (APR) genau prüfen – RBF ist bei extrem schnellem Wachstum teurer als klassische Kredite',
             'Niemals mehrere RBF-Anbieter gleichzeitig stapeln (Stacking), um Überschuldung zu vermeiden'
