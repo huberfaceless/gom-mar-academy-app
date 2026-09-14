@@ -19,6 +19,9 @@ import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsA
 import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
+import { ACADEMY_STAGES } from './src/data/academyData.js';
+import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
+import { LanguageCode } from './src/i18n/translations.js';
 import { Lesson } from './src/types.js';
 
 dotenv.config();
@@ -56,6 +59,11 @@ const ACADEMY_PUBLIC_URL = 'https://academy.gomo-marketing.at';
 const EMAIL_ADDRESS_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_SEND_WINDOW_MS = 60_000;
 const EMAIL_SEND_LIMIT = 5;
+const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1/text-to-speech';
+const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'jvw0xpI6PlgLKJlPLn5z';
+const ELEVENLABS_MODEL_ID = 'eleven_multilingual_v2';
+const LESSON_AUDIO_WINDOW_MS = 60_000;
+const LESSON_AUDIO_LIMIT = 10;
 const escapeHtml = (value: string): string => value
   .replaceAll('&', '&amp;')
   .replaceAll('<', '&lt;')
@@ -137,6 +145,7 @@ async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
   const recentEmailSends = new Map<string, number[]>();
+  const recentLessonAudioRequests = new Map<string, number[]>();
 
   app.use(express.json({ limit: '1mb' }));
   app.use(express.urlencoded({ extended: false, limit: '16kb' }));
@@ -234,6 +243,86 @@ async function startServer() {
     }
   });
 
+  app.get('/api/academy/lessons/:lessonId/audio', requireVerifiedMember, async (req, res) => {
+    const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY?.trim();
+    if (!elevenLabsApiKey) {
+      res.status(503).json({ error: 'Die einheitliche Academy-Stimme ist noch nicht konfiguriert.' });
+      return;
+    }
+
+    const language = req.query.language as LanguageCode | undefined;
+    if (language !== 'de' && language !== 'en' && language !== 'pl') {
+      res.status(400).json({ error: 'Die gewünschte Audiosprache ist ungültig.' });
+      return;
+    }
+
+    const memberId = (req as FirebaseRequest).firebaseUser?.sub;
+    if (!memberId) {
+      res.status(401).json({ error: 'Die Firebase-Benutzerkennung fehlt.' });
+      return;
+    }
+
+    const now = Date.now();
+    const recentRequests = (recentLessonAudioRequests.get(memberId) || [])
+      .filter(timestamp => timestamp > now - LESSON_AUDIO_WINDOW_MS);
+    if (recentRequests.length >= LESSON_AUDIO_LIMIT) {
+      res.setHeader('Retry-After', '60');
+      res.status(429).json({ error: 'Zu viele Audio-Anfragen. Bitte versuche es in einer Minute erneut.' });
+      return;
+    }
+    recentLessonAudioRequests.set(memberId, [...recentRequests, now]);
+
+    const lesson = localizeAllAcademyStages(ACADEMY_STAGES, language)
+      .flatMap(stage => stage.lessons)
+      .find(candidate => candidate.id === req.params.lessonId);
+    if (!lesson) {
+      res.status(404).json({ error: 'Die angeforderte Lektion wurde nicht gefunden.' });
+      return;
+    }
+
+    const narrationCopy = {
+      de: { lesson: 'Lektion', keyPoints: 'Die wichtigsten Punkte sind:', takeaway: 'Merk-Satz:' },
+      en: { lesson: 'Lesson', keyPoints: 'The key points are:', takeaway: 'Key takeaway:' },
+      pl: { lesson: 'Lekcja', keyPoints: 'Najważniejsze punkty:', takeaway: 'Kluczowa myśl:' },
+    }[language];
+    const narrationText = [
+      `${narrationCopy.lesson} ${lesson.id}: ${lesson.title}.`,
+      lesson.learnContent.summaryText,
+      narrationCopy.keyPoints,
+      `${lesson.learnContent.bulletPoints.join('. ')}.`,
+      narrationCopy.takeaway,
+      lesson.understandContent.coreTakeaway,
+    ].join(' ').slice(0, 4_500);
+
+    try {
+      const elevenLabsResponse = await fetch(
+        `${ELEVENLABS_API_URL}/${encodeURIComponent(ELEVENLABS_VOICE_ID)}?output_format=mp3_44100_128`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'audio/mpeg',
+            'Content-Type': 'application/json',
+            'xi-api-key': elevenLabsApiKey,
+          },
+          body: JSON.stringify({ text: narrationText, model_id: ELEVENLABS_MODEL_ID }),
+          signal: AbortSignal.timeout(45_000),
+        },
+      );
+      if (!elevenLabsResponse.ok) {
+        throw new Error(`ElevenLabs antwortete mit Status ${elevenLabsResponse.status}.`);
+      }
+
+      const audio = Buffer.from(await elevenLabsResponse.arrayBuffer());
+      res.setHeader('Content-Type', 'audio/mpeg');
+      res.setHeader('Content-Length', String(audio.byteLength));
+      res.setHeader('Cache-Control', 'private, max-age=31536000, immutable');
+      res.send(audio);
+    } catch (error: unknown) {
+      console.error('ElevenLabs-Lektionsaudio fehlgeschlagen:', error);
+      res.status(503).json({ error: 'Die Audio-Erklärung konnte gerade nicht erzeugt werden.' });
+    }
+  });
+
   // Health check
   app.get('/api/health', (_req, res) => {
     res.setHeader('Cache-Control', 'no-store');
@@ -244,6 +333,7 @@ async function startServer() {
       revision: process.env.K_REVISION || null,
       commit: process.env.APP_COMMIT_SHA || null,
       emailDeliveryConfigured: Boolean(process.env.SENDGRID_API_KEY?.trim() && process.env.SENDGRID_FROM_EMAIL?.trim()),
+      lessonVoiceConfigured: Boolean(process.env.ELEVENLABS_API_KEY?.trim()),
     });
   });
 
