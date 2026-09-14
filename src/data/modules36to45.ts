@@ -1264,11 +1264,11 @@ Wenn 50% deiner Liste deine E-Mails ignorieren, sinkt deine Zustellrate auch bei
   },
   {
     id: 44,
-    title: '44. WhatsApp & SMS Messenger Marketing: 98% Öffnungsraten',
+    title: '44. WhatsApp- & SMS-Messenger-Marketing',
     subtitle: 'WhatsApp Business API, Chatbots, Broadcast-Funnels & SMS-Flash-Sales',
     color: 'from-emerald-600 via-green-600 to-teal-700',
     badgeIcon: '💬',
-    description: 'Erreiche deine Kunden dort, wo sie täglich 50+ Mal hinschauen: WhatsApp und SMS erzielen 98% Öffnungsraten und 40%+ Klickraten. Lerne die datenschutzkonforme Einrichtung und automatisierte Chat-Funnels.',
+    description: 'Lerne, WhatsApp und SMS mit dokumentierter Einwilligung, angemessener Frequenz und klaren Abmeldemöglichkeiten einzusetzen. Öffnungs-, Klick- und Abschlussraten hängen von Zielgruppe, Anlass und Nachricht ab.',
     lessons: [
       {
         id: '44.1',
@@ -1280,7 +1280,7 @@ Wenn 50% deiner Liste deine E-Mails ignorieren, sinkt deine Zustellrate auch bei
         learnContent: {
           videoTitle: 'Masterclass: WhatsApp Marketing & DSGVO-Opt-In',
           videoDuration: '29:20',
-          summaryText: 'WhatsApp ist der persönlichste Kommunikationskanal. Wer hier mit Erlaubnis des Nutzers sendet, erzielt Conversion-Raten, von denen klassische E-Mail-Marketer nur träumen können. Lerne das offizielle API-Setup kennen.',
+          summaryText: 'WhatsApp ist ein direkter Kommunikationskanal mit hohen Anforderungen an Einwilligung und Relevanz. Lerne das offizielle API-Setup kennen und miss die Ergebnisse deiner Nachrichten, statt feste Conversion-Raten vorauszusetzen.',
           bulletPoints: [
             'WhatsApp Business App vs. WhatsApp Cloud API: Warum du für Automatisierung die API benötigst',
             'Das 2-Schritt Opt-In: Datenschutzkonforme Telefonnummern-Erfassung mit Checkbox auf Landingpages',
@@ -1290,8 +1290,8 @@ Wenn 50% deiner Liste deine E-Mails ignorieren, sinkt deine Zustellrate auch bei
           coreConcepts: [
             {
               iconName: 'message-circle',
-              title: '98% OPEN RATE',
-              description: 'WhatsApp-Nachrichten werden im Durchschnitt innerhalb von 3 Minuten geöffnet.',
+              title: 'MESSBARE INTERAKTION',
+              description: 'Öffnungen, Antworten, Abmeldungen und Conversions im eigenen Verteiler getrennt auswerten.',
               highlight: true
             },
             {
@@ -1321,7 +1321,7 @@ Wenn 50% deiner Liste deine E-Mails ignorieren, sinkt deine Zustellrate auch bei
 WhatsApp ist kein Spam-Kanal, sondern eine VIP-Direktverbindung zu deinen treuesten Kunden.
 
 #### Die 4 Einsatzbereiche für WhatsApp im Funnel:
-1. **Webinar- & Termin-Erinnerungen**: Steigert die Show-Up Rate um bis zu 40%.
+1. **Webinar- & Termin-Erinnerungen**: Wirkung auf Teilnahme und Abmeldungen mit einer Kontrollgruppe messen.
 2. **Warenkorb-Abbrecher**: Schnelle Rückfragen klären und Kaufabschlüsse retten.
 3. **VIP Flash-Sales**: Zeitlich limitierte Angebote exklusiv für den Messenger-Verteiler.
 4. **Onboarding-Begleitung**: Sprachnachrichten und Checklisten für Neukunden.`
@@ -1350,15 +1350,15 @@ WhatsApp ist kein Spam-Kanal, sondern eine VIP-Direktverbindung zu deinen treues
         stageTitle: '44. Messenger Chatbots & SMS-Sales',
         title: 'Automatisierte WhatsApp Chatbots & SMS-Flash-Sales',
         durationMinutes: 30,
-        description: 'Wie interaktive Chatbots Fragen beantworten, Angebote unterbreiten und SMS-Erinnerungen Verkaufsspitzen erzeugen.',
+        description: 'Wie interaktive Chatbots häufige Fragen beantworten, passende Informationen bereitstellen und bei Bedarf an Mitarbeitende übergeben.',
         learnContent: {
           videoTitle: 'Masterclass: WhatsApp Chatbots & SMS-Erinnerungs-Systeme',
           videoDuration: '30:35',
-          summaryText: 'Ein Chatbot auf WhatsApp antwortet in Sekundenbruchteilen auf Produktfragen und führt Interessenten interaktiv durch den Kaufprozess. In Kombination mit SMS-Flash-Sales baust du eine unschlagbare Conversion-Maschine.',
+          summaryText: 'Ein Chatbot kann häufige Produktfragen zeitnah beantworten und Interessenten durch klar definierte Schritte führen. Für Sonderfälle, sensible Anliegen und Kaufentscheidungen braucht es transparente Grenzen und eine menschliche Übergabe.',
           bulletPoints: [
             'Entscheidungsbaum-Bots: "Tippe 1 für Termin, 2 für Produktinfo, 3 für Support"',
             'KI-gestützte Messenger-Agenten: Beantwortung komplexer Kundenfragen mit hinterlegter Wissensdatenbank',
-            'SMS-Flash-Sales: 160-Zeichen Kurznachrichten mit extrem hoher Klickdringlichkeit bei Sonderaktionen',
+            'SMS-Aktionen: kurze, eindeutige Nachrichten mit Einwilligung, Abmeldehinweis und zurückhaltender Frequenz',
             'Synchronisation mit Mara CRM: Alle Chatverläufe zentral im Kundenprofil einsehbar'
           ],
           coreConcepts: [
@@ -1371,7 +1371,7 @@ WhatsApp ist kein Spam-Kanal, sondern eine VIP-Direktverbindung zu deinen treues
             {
               iconName: 'zap',
               title: 'SMS FLASH SALE',
-              description: 'Sekundenschnelle Verkaufsspitzen bei limitierten Rabattaktionen.'
+              description: 'Zeitlich begrenzte Aktionen, deren Klick-, Kauf- und Abmelderaten gemeinsam bewertet werden.'
             }
           ],
           resources: [
@@ -1392,7 +1392,7 @@ WhatsApp ist kein Spam-Kanal, sondern eine VIP-Direktverbindung zu deinen treues
           ],
           fullArticleGuide: `### Die Praxis der interaktiven Chatbots
 
-Ein Chatbot spart deinem Team hunderte Stunden Supportzeit und erhöht gleichzeitig die Verkaufsgeschwindigkeit.
+Ein Chatbot kann wiederkehrende Anfragen vorsortieren. Die tatsächliche Zeitersparnis und Servicequalität müssen im laufenden Betrieb gemessen werden.
 
 #### Die wichtigsten 3 Chatbot-Flows:
 1. **Der Lead-Magnet Flow**: Der Nutzer sendet ein Codewort (z. B. "GUIDE") und erhält sofort das PDF im Chat.
@@ -1400,7 +1400,7 @@ Ein Chatbot spart deinem Team hunderte Stunden Supportzeit und erhöht gleichzei
 3. **Der Termin-Flow**: Direkte Auswahl freier Kalenderslots ohne Verlassen von WhatsApp.`
         },
         understandContent: {
-          coreTakeaway: 'Wer Kundenfragen in unter 2 Minuten im Chat beantwortet, schließt 5x mehr Deals ab.',
+          coreTakeaway: 'Zeitnahe, hilfreiche Antworten können den Vertriebsprozess unterstützen; eine bestimmte Abschlusssteigerung ist nicht garantiert.',
           keyPrinciples: [
             'Immer die Möglichkeit bieten, mit einem echten Mitarbeiter zu sprechen',
             'SMS-Texte kurz, prägnant und mit direktem Short-Link halten'
