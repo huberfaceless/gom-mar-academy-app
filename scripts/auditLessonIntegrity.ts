@@ -15,6 +15,10 @@ const riskyClaims: Array<[RegExp, string]> = [
   [/\bgwarantowan(?:y|a|e)\b|\bbez\s+ryzyka\b/giu, 'Obietnica gwarancji lub braku ryzyka'],
   [/\b\d+(?:[.,]\d+)?\s*%\s*(?:rendite|return|zwrot)\b/giu, 'Konkretes Renditeversprechen'],
   [/\b(?:verdien(?:e|st)|earn|zar[oó]b)\w*\s+[^.!?]{0,40}\b\d+[\d.,]*\s*(?:€|eur|\$|usd)\b/giu, 'Konkretes Einkommensversprechen'],
+  [/\b(?:niemals\s+wieder\s+spam-?ordner|posteingangs-?garantie|\d+\s*%\s+im\s+hauptpostfach)\b/giu, 'Unbelegtes Zustellversprechen'],
+  [/\b(?:tiefschlaf\s+verdoppeln|deep\s+sleep\s+multiplier|hrv\s+maximieren)\b/giu, 'Unbelegtes Gesundheitsversprechen'],
+  [/\b(?:vollständiger\s+schutz\s+vor\s+zwangsvollstreckung|für\s+hunderte\s+von\s+jahren\s+ab|uneinholbare\s+monopolrechte)\b/giu, 'Pauschales Rechts- oder Vermögensschutzversprechen'],
+  [/\bkreditangebot\s+in\s+48\s+stunden\b/giu, 'Pauschales Finanzierungsversprechen'],
 ];
 
 const collectStrings = (value: unknown, result: string[] = []): string[] => {
