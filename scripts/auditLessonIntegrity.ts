@@ -26,6 +26,9 @@ const riskyClaims: Array<[RegExp, string]> = [
   [/\b(?:wert\s+verdoppeln\s+und\s+für\s+7-figures\s+verkaufen|sofortige\s+25\s*%\s+umsatzsteigerung|bei\s+3x\s+ebit\s+kaufen\s+und\s+bei\s+6x\s+ebit\s+weiterverkaufen)\b/giu, 'Unbelegtes Unternehmenswert- oder Exitversprechen'],
   [/\b(?:auf\s+30k\s+zu\s+skalieren[^.!?]{0,30}\b5x\s+schneller|umsatz\s+verdreifacht\s+sich\s+in\s+90\s+tagen|zukauf\s+zu\s+verdoppeln[^.!?]{0,30}\b5x\s+schneller)\b/giu, 'Unbelegtes Akquisitions- oder Wachstumsversprechen'],
   [/\b(?:15\.000\s*€\s+masterminds\s+ausverkaufen|500\.000\s*€\s+mastermind-?event|100\.000\s*€\s+boardroom)\b/giu, 'Unbelegtes Hochpreis- oder Ausverkaufsversprechen'],
+  [/\b(?:für\s+ein\s+10x\s+multiple|kosten\s+sparen\s+20-30\s*%|in\s+24\s+monaten\s+einen\s+8-stelligen\s+unternehmenswert)\b/giu, 'Unbelegtes Rollup- oder Bewertungsversprechen'],
+  [/\b(?:in\s+30\s+sekunden\s+von\s+panik|250\s*%\s+dopamin|5x\s+h(?:ö|oe)here\s+produktivit(?:ä|ae)t|flow\s+state\s+on\s+demand)\b/giu, 'Unbelegtes Gesundheits- oder Leistungsversprechen'],
+  [/\b(?:ab\s+einem\s+liquiden\s+vermögen\s+von\s+10\s+millionen|automatischer\s+schutz\s+gegen\s+währungskrisen|für\s+immer\s+reich\s+bleiben)\b/giu, 'Pauschales Anlage- oder Vermögensversprechen'],
 ];
 
 const collectStrings = (value: unknown, result: string[] = []): string[] => {
