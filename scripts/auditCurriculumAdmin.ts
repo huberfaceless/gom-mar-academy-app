@@ -38,17 +38,17 @@ const checks: Array<[boolean, string]> = [
   [admin.includes('setLessonVideoUploadProgress') && admin.includes('Upload läuft:'), 'Der Lektionseditor zeigt den Upload-Fortschritt an.'],
   [admin.includes("videoUrl: result.videoUrl") && admin.includes('speichere anschließend die Lektion'), 'Die hochgeladene YouTube-URL wird automatisch in die Lektion übernommen.'],
   [admin.includes('youtubeService.getConnectionStatus()') && admin.includes('YouTube ist nicht verbunden'), 'Der Video-Upload prüft die bestehende YouTube-Verbindung.'],
-  [admin.includes('in Abschnitten direkt zu YouTube übertragen'), 'Der Lektionseditor erklärt den direkten Upload größerer Videodateien.'],
+  [admin.includes('in Abschnitten über die geschützte Academy-Verbindung zu YouTube übertragen'), 'Der Lektionseditor erklärt den geschützten Upload größerer Videodateien.'],
   [admin.includes('handleRemoveLessonVideo') && admin.includes('Video aus Lektion entfernen'), 'Der Admin kann ein Video eindeutig aus einer Lektion entfernen.'],
   [admin.includes("videoUrl: ''") && admin.includes('Klicke jetzt auf „Lektion speichern“'), 'Das Entfernen leert nur die Video-URL und verlangt anschließend das Speichern der Lektion.'],
   [admin.includes('Das Video bleibt auf YouTube gespeichert.'), 'Der Editor erklärt, dass das Entfernen aus der Lektion das YouTube-Video nicht löscht.'],
 ];
 
 const youtubeService = fs.readFileSync('src/services/youtubeService.ts', 'utf8');
-if (!youtubeService.includes('YOUTUBE_UPLOAD_CHUNK_SIZE') || !youtubeService.includes("request.open('PUT', uploadUrl)")) {
-  throw new Error('Curriculum-Audit fehlgeschlagen: Größere Lektionsvideos werden nicht stückweise direkt zu YouTube übertragen.');
+if (!youtubeService.includes('YOUTUBE_UPLOAD_CHUNK_SIZE') || !youtubeService.includes("request.open('PUT', '/api/youtube/uploads/content')")) {
+  throw new Error('Curriculum-Audit fehlgeschlagen: Größere Lektionsvideos werden nicht stückweise über den geschützten Academy-Endpunkt übertragen.');
 }
-console.log('✓ Größere Lektionsvideos werden stückweise direkt zu YouTube übertragen.');
+console.log('✓ Größere Lektionsvideos werden stückweise über den geschützten Academy-Endpunkt übertragen.');
 if (youtubeService.includes('höchstens 30 MB groß')) {
   throw new Error('Curriculum-Audit fehlgeschlagen: Die alte 30-MB-Grenze ist noch aktiv.');
 }
