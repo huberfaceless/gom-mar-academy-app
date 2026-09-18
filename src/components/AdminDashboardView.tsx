@@ -111,6 +111,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [lessonVideoFile, setLessonVideoFile] = useState<File | null>(null);
   const [lessonVideoUploadProgress, setLessonVideoUploadProgress] = useState<number | null>(null);
   const [lessonVideoUploadError, setLessonVideoUploadError] = useState<string>('');
+  const [lessonVideoRemoved, setLessonVideoRemoved] = useState<boolean>(false);
 
   // Form State for Lesson Editor
   const [lessonFormData, setLessonFormData] = useState<Partial<Lesson>>({
@@ -402,6 +403,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     setLessonVideoFile(null);
     setLessonVideoUploadProgress(null);
     setLessonVideoUploadError('');
+    setLessonVideoRemoved(false);
   };
 
   // Open Create New Lesson Modal
@@ -441,6 +443,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     setLessonVideoFile(null);
     setLessonVideoUploadProgress(null);
     setLessonVideoUploadError('');
+    setLessonVideoRemoved(false);
   };
 
   const handleUploadLessonVideo = async () => {
@@ -472,12 +475,27 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         ...current,
         learnContent: { ...current.learnContent!, videoUrl: result.videoUrl },
       }));
+      setLessonVideoRemoved(false);
       setLessonVideoUploadProgress(100);
       setLessonVideoFile(null);
     } catch (error: unknown) {
       setLessonVideoUploadError(error instanceof Error ? error.message : 'Das Lektionsvideo konnte nicht hochgeladen werden.');
       setLessonVideoUploadProgress(null);
     }
+  };
+
+  const handleRemoveLessonVideo = () => {
+    if (lessonVideoUploadProgress !== null && lessonVideoUploadProgress < 100) return;
+    if (!window.confirm('Video aus dieser Lektion entfernen? Das Video bleibt auf YouTube gespeichert.')) return;
+
+    setLessonFormData((current) => ({
+      ...current,
+      learnContent: { ...current.learnContent!, videoUrl: '' },
+    }));
+    setLessonVideoFile(null);
+    setLessonVideoUploadProgress(null);
+    setLessonVideoUploadError('');
+    setLessonVideoRemoved(true);
   };
 
   // Save Lesson changes
@@ -1226,14 +1244,33 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <input
                     type="url"
                     value={lessonFormData.learnContent?.videoUrl || ''}
-                    onChange={(event) => setLessonFormData({
-                      ...lessonFormData,
-                      learnContent: { ...lessonFormData.learnContent!, videoUrl: event.target.value },
-                    })}
+                    onChange={(event) => {
+                      setLessonFormData({
+                        ...lessonFormData,
+                        learnContent: { ...lessonFormData.learnContent!, videoUrl: event.target.value },
+                      });
+                      setLessonVideoRemoved(false);
+                    }}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-indigo-200 focus:outline-none focus:border-indigo-500"
                     placeholder="https://youtu.be/VIDEO-ID"
                   />
                   <p className="mt-1 text-[11px] text-slate-500">Leer lassen, wenn stattdessen die Academy-Audio-Erklärung verwendet werden soll.</p>
+                  {(lessonFormData.learnContent?.videoUrl || '').trim() && (
+                    <button
+                      type="button"
+                      onClick={handleRemoveLessonVideo}
+                      disabled={lessonVideoUploadProgress !== null && lessonVideoUploadProgress < 100}
+                      className="mt-3 inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-xs font-black text-red-700 transition-colors hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      Video aus Lektion entfernen
+                    </button>
+                  )}
+                  {lessonVideoRemoved && (
+                    <p role="status" className="mt-2 text-xs font-semibold text-amber-700">
+                      Video aus dem Formular entfernt. Klicke jetzt auf „Lektion speichern“, um die Änderung zu übernehmen.
+                    </p>
+                  )}
                 </div>
                 {getYouTubeEmbedUrl(lessonFormData.learnContent?.videoUrl || '') && (
                   <div className="aspect-video overflow-hidden rounded-xl border border-indigo-200 bg-slate-950">

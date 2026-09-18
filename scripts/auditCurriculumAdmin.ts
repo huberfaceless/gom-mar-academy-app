@@ -39,6 +39,9 @@ const checks: Array<[boolean, string]> = [
   [admin.includes("videoUrl: result.videoUrl") && admin.includes('speichere anschließend die Lektion'), 'Die hochgeladene YouTube-URL wird automatisch in die Lektion übernommen.'],
   [admin.includes('youtubeService.getConnectionStatus()') && admin.includes('YouTube ist nicht verbunden'), 'Der Video-Upload prüft die bestehende YouTube-Verbindung.'],
   [admin.includes('in Abschnitten direkt zu YouTube übertragen'), 'Der Lektionseditor erklärt den direkten Upload größerer Videodateien.'],
+  [admin.includes('handleRemoveLessonVideo') && admin.includes('Video aus Lektion entfernen'), 'Der Admin kann ein Video eindeutig aus einer Lektion entfernen.'],
+  [admin.includes("videoUrl: ''") && admin.includes('Klicke jetzt auf „Lektion speichern“'), 'Das Entfernen leert nur die Video-URL und verlangt anschließend das Speichern der Lektion.'],
+  [admin.includes('Das Video bleibt auf YouTube gespeichert.'), 'Der Editor erklärt, dass das Entfernen aus der Lektion das YouTube-Video nicht löscht.'],
 ];
 
 const youtubeService = fs.readFileSync('src/services/youtubeService.ts', 'utf8');
