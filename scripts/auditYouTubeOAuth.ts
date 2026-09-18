@@ -30,9 +30,13 @@ assert.match(storage, /uploadType=resumable/, 'Große Videos müssen über eine 
 assert.match(view, /Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen\?/, 'Der Upload muss bewusst bestätigt werden.');
 assert.doesNotMatch(service, /refresh_token|client_secret/i, 'YouTube-Geheimnisse dürfen nicht in den Browser gelangen.');
 assert.match(service, /YOUTUBE_UPLOAD_CHUNK_SIZE = 8 \* 1024 \* 1024/, 'Große Videodateien müssen in begrenzten Abschnitten übertragen werden.');
-assert.match(service, /request\.open\('PUT', uploadUrl\)/, 'Videodaten müssen direkt an die serverseitig erzeugte YouTube-Upload-Sitzung übertragen werden.');
+assert.match(service, /request\.open\('PUT', '\/api\/youtube\/uploads\/content'\)/, 'Videoabschnitte müssen über den geschützten Academy-Endpunkt übertragen werden.');
 assert.match(service, /Content-Range/, 'Jeder Videoabschnitt muss seinen bestätigbaren Byte-Bereich angeben.');
-assert.doesNotMatch(service, /X-YouTube-Upload-Url/, 'Die kurzlebige YouTube-Upload-Adresse darf nicht mehr an einen Video-Proxy weitergereicht werden.');
+assert.match(service, /YOUTUBE_UPLOAD_MAX_RETRIES = 3/, 'Kurzzeitige Upload-Unterbrechungen müssen automatisch wiederholt werden.');
+assert.match(service, /X-YouTube-Upload-Url/, 'Die kurzlebige YouTube-Upload-Adresse muss ausschließlich an den geschützten Video-Endpunkt übergeben werden.');
+assert.match(server, /'Content-Range': contentRange/, 'Der geschützte Video-Endpunkt muss den Byte-Bereich an YouTube weitergeben.');
+assert.match(server, /res\.setHeader\('Range', acknowledgedRange\)/, 'YouTubes bestätigter Upload-Fortschritt muss an den Browser zurückgegeben werden.');
+assert.doesNotMatch(view, /maximal 30 MB/, 'Die entfernte 30-MB-Grenze darf nicht mehr angezeigt werden.');
 
 assert.match(view, /youtubeService\.disconnect\(\)/,
   'Die Oberfläche muss die vorhandene geschützte Trennfunktion aufrufen.');

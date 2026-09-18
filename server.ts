@@ -538,15 +538,20 @@ async function startServer() {
         }
         if (!Buffer.isBuffer(req.body) || req.body.length === 0) throw new Error('Die Videodatei fehlt.');
         const contentType = typeof req.headers['content-type'] === 'string' ? req.headers['content-type'] : 'video/mp4';
+        const contentRange = typeof req.headers['content-range'] === 'string' ? req.headers['content-range'] : '';
+        if (!/^bytes \d+-\d+\/\d+$/u.test(contentRange)) throw new Error('Der Byte-Bereich des Videoabschnitts ist ungültig.');
         const uploadResponse = await fetch(uploadUrl, {
           method: 'PUT',
           headers: {
             'Content-Type': contentType,
             'Content-Length': String(req.body.length),
+            'Content-Range': contentRange,
           },
           body: req.body,
         });
         const responseBody = await uploadResponse.text();
+        const acknowledgedRange = uploadResponse.headers.get('range');
+        if (acknowledgedRange) res.setHeader('Range', acknowledgedRange);
         res.status(uploadResponse.status).type('application/json').send(responseBody);
       } catch (error: unknown) {
         res.status(503).json({ error: error instanceof Error ? error.message : 'Die Videodatei konnte nicht an YouTube übertragen werden.' });

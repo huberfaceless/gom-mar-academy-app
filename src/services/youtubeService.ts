@@ -1,4 +1,5 @@
 import { authenticatedFetch } from './authenticatedFetch';
+import { auth } from '../firebase/config';
 
 export type YouTubeConnectionStatus = {
   connected: boolean;
@@ -8,39 +9,79 @@ export type YouTubeConnectionStatus = {
 export type YouTubeUploadProgress = (percent: number) => void;
 
 const YOUTUBE_UPLOAD_CHUNK_SIZE = 8 * 1024 * 1024;
+const YOUTUBE_UPLOAD_MAX_RETRIES = 3;
 
-const uploadYouTubeChunk = (
+class RetryableYouTubeUploadError extends Error {}
+
+const wait = (milliseconds: number): Promise<void> => new Promise((resolve) => {
+  window.setTimeout(resolve, milliseconds);
+});
+
+const uploadYouTubeChunkOnce = async (
   uploadUrl: string,
   file: File,
   start: number,
   onProgress: YouTubeUploadProgress,
-): Promise<{ videoId?: string; nextOffset: number }> => new Promise((resolve, reject) => {
+): Promise<{ videoId?: string; nextOffset: number }> => {
+  const currentUser = auth.currentUser;
+  if (!currentUser || !currentUser.emailVerified) {
+    throw new Error('Eine bestätigte Anmeldung ist erforderlich.');
+  }
+  const idToken = await currentUser.getIdToken();
   const end = Math.min(start + YOUTUBE_UPLOAD_CHUNK_SIZE, file.size) - 1;
-  const request = new XMLHttpRequest();
-  request.open('PUT', uploadUrl);
-  request.setRequestHeader('Content-Type', file.type || 'video/mp4');
-  request.setRequestHeader('Content-Range', `bytes ${start}-${end}/${file.size}`);
-  request.upload.onprogress = (event) => {
-    if (event.lengthComputable) onProgress(Math.min(99, Math.round(((start + event.loaded) / file.size) * 100)));
-  };
-  request.onerror = () => reject(new Error('Die direkte Verbindung zu YouTube wurde während des Uploads unterbrochen. Bitte den Upload erneut starten.'));
-  request.onload = () => {
-    if (request.status === 308) {
-      const acknowledgedRange = request.getResponseHeader('Range');
-      const acknowledgedEnd = acknowledgedRange?.match(/bytes=0-(\d+)/u)?.[1];
-      resolve({ nextOffset: acknowledgedEnd ? Number(acknowledgedEnd) + 1 : end + 1 });
-      return;
+  return new Promise((resolve, reject) => {
+    const request = new XMLHttpRequest();
+    request.open('PUT', '/api/youtube/uploads/content');
+    request.setRequestHeader('Authorization', `Bearer ${idToken}`);
+    request.setRequestHeader('X-YouTube-Upload-Url', uploadUrl);
+    request.setRequestHeader('Content-Type', file.type || 'video/mp4');
+    request.setRequestHeader('Content-Range', `bytes ${start}-${end}/${file.size}`);
+    request.upload.onprogress = (event) => {
+      if (event.lengthComputable) onProgress(Math.min(99, Math.round(((start + event.loaded) / file.size) * 100)));
+    };
+    request.onerror = () => reject(new RetryableYouTubeUploadError('Die Upload-Verbindung wurde kurzzeitig unterbrochen.'));
+    request.onload = () => {
+      if (request.status === 308) {
+        const acknowledgedRange = request.getResponseHeader('Range');
+        const acknowledgedEnd = acknowledgedRange?.match(/bytes=0-(\d+)/u)?.[1];
+        resolve({ nextOffset: acknowledgedEnd ? Number(acknowledgedEnd) + 1 : end + 1 });
+        return;
+      }
+      const data = JSON.parse(request.responseText || '{}') as { id?: string; error?: { message?: string } | string };
+      if (request.status >= 500) {
+        const message = typeof data.error === 'string' ? data.error : data.error?.message;
+        reject(new RetryableYouTubeUploadError(message || `YouTube ist vorübergehend nicht erreichbar (HTTP ${request.status}).`));
+        return;
+      }
+      if (request.status < 200 || request.status >= 300 || !data.id) {
+        const message = typeof data.error === 'string' ? data.error : data.error?.message;
+        reject(new Error(message || `YouTube hat den Upload abgelehnt (HTTP ${request.status}).`));
+        return;
+      }
+      resolve({ videoId: data.id, nextOffset: file.size });
+    };
+    request.send(file.slice(start, end + 1, file.type || 'video/mp4'));
+  });
+};
+
+const uploadYouTubeChunk = async (
+  uploadUrl: string,
+  file: File,
+  start: number,
+  onProgress: YouTubeUploadProgress,
+): Promise<{ videoId?: string; nextOffset: number }> => {
+  for (let attempt = 0; attempt <= YOUTUBE_UPLOAD_MAX_RETRIES; attempt += 1) {
+    try {
+      return await uploadYouTubeChunkOnce(uploadUrl, file, start, onProgress);
+    } catch (error: unknown) {
+      if (!(error instanceof RetryableYouTubeUploadError) || attempt === YOUTUBE_UPLOAD_MAX_RETRIES) {
+        throw error;
+      }
+      await wait(1000 * (2 ** attempt));
     }
-    const data = JSON.parse(request.responseText || '{}') as { id?: string; error?: { message?: string } | string };
-    if (request.status < 200 || request.status >= 300 || !data.id) {
-      const message = typeof data.error === 'string' ? data.error : data.error?.message;
-      reject(new Error(message || `YouTube hat den Upload abgelehnt (HTTP ${request.status}).`));
-      return;
-    }
-    resolve({ videoId: data.id, nextOffset: file.size });
-  };
-  request.send(file.slice(start, end + 1, file.type || 'video/mp4'));
-});
+  }
+  throw new Error('Der YouTube-Upload konnte nicht fortgesetzt werden.');
+};
 
 export const youtubeService = {
   async getConnectionStatus(): Promise<YouTubeConnectionStatus> {
