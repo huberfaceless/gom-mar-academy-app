@@ -9,6 +9,10 @@ const contentEngine = readFileSync('src/components/ContentEngine/ContentEngineVi
 const calendar = readFileSync('src/components/ContentEngine/ContentCalendarTab.tsx', 'utf8');
 const server = readFileSync('server.ts', 'utf8');
 const firestoreContent = readFileSync('src/services/firestoreContentService.ts', 'utf8');
+const publishingJobsReadMethod = firestoreContent.slice(
+  firestoreContent.indexOf('static async getPublishingJobs'),
+  firestoreContent.indexOf('static async savePublishingJob'),
+);
 
 assert.doesNotMatch(worker, /firebase\/firestore|contentStorage/,
   'Der Server-Scheduler darf weder Browser-Firestore noch lokalen Browser-Speicher verwenden.');
@@ -82,7 +86,7 @@ assert.match(contentEngine, /const suggestedTopics = getSuggestedTopics\(activeP
   'Die sichtbaren Inspirationen müssen beim Projektwechsel neu bestimmt werden.');
 assert.match(contentEngine, /suggestedTopics\.map\(\(topic, i\)/,
   'Die Oberfläche muss die projektspezifischen Themen-Inspirationen anzeigen.');
-assert.match(calendar, /Der Job konnte nicht gelöscht werden/,
+assert.match(calendar, /text: err instanceof Error \? err\.message : 'Der Auftrag konnte nicht gelöscht werden\.'/,
   'Fehler beim Löschen eines Queue-Jobs müssen sichtbar angezeigt werden.');
 
 
@@ -138,7 +142,7 @@ assert.match(calendar, /if \(job\.platform === 'YOUTUBE'\)[\s\S]*ausschließlich
 assert.match(calendar, /item\.platform === 'YOUTUBE'[\s\S]*Automatische Veröffentlichung geplant/,
   'Geplante YouTube-Videos dürfen in der Inhaltskarte keine manuelle Ausführung anbieten.');
 
-assert.doesNotMatch(firestoreContent, /if \(!userId \|\| !isFirestoreOperational\(\)\) \{[\s\S]*loadAllPublishingJobs/,
+assert.doesNotMatch(publishingJobsReadMethod, /isFirestoreOperational|loadAllPublishingJobs/,
   'Angemeldete Benutzer dürfen die Veröffentlichungswarteschlange nicht unbemerkt nur lokal laden.');
 assert.match(firestoreContent, /savePublishingJob[\s\S]*await firestoreWithTimeout\(setDoc[\s\S]*const current = loadAllPublishingJobs/,
   'Veröffentlichungsaufträge müssen vor der lokalen Spiegelung von Firestore bestätigt werden.');
