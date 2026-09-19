@@ -6,7 +6,7 @@ import { verify as verifySignature } from 'crypto';
 import {
   AcademyTier,
   MemberLanguage,
-  deleteUnverifiedFirebaseMember,
+  deleteFirebaseMember,
   getFirebaseMember,
   listFirebaseMembers,
   updateFirebaseMemberEmail,
@@ -17,7 +17,7 @@ import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverr
 import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
-import { confirmEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
+import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
@@ -1166,8 +1166,24 @@ async function startServer() {
       return;
     }
     try {
-      await deleteUnverifiedFirebaseMember(FIREBASE_PROJECT_ID, uid);
-      res.json({ success: true, message: 'Nicht bestätigtes Mitglied gelöscht.' });
+      const adminUserId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!adminUserId) {
+        res.status(401).json({ error: 'Administrator konnte nicht bestätigt werden.' });
+        return;
+      }
+      const existing = await getFirebaseMember(FIREBASE_PROJECT_ID, uid);
+      if (!existing) {
+        res.status(404).json({ error: 'Firebase-Mitglied wurde nicht gefunden.' });
+        return;
+      }
+      if (existing.role === 'admin') {
+        res.status(403).json({ error: 'Administratorkonten können hier nicht gelöscht werden.' });
+        return;
+      }
+      await deleteCrmContact(FIREBASE_PROJECT_ID, adminUserId, memberContactId(uid));
+      await deleteEmailConsent(FIREBASE_PROJECT_ID, uid);
+      await deleteFirebaseMember(FIREBASE_PROJECT_ID, uid);
+      res.json({ success: true, message: 'Mitgliedskonto und E-Mail-Adresse dauerhaft gelöscht.' });
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Mitglied konnte nicht gelöscht werden.';
       const status = message.includes('nicht gefunden') ? 404 : message.includes('nicht gelöscht') ? 403 : 503;
