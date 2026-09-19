@@ -20,6 +20,7 @@ import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
+import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -186,7 +187,7 @@ async function startServer() {
   const recentEmailSends = new Map<string, number[]>();
   const recentLessonAudioRequests = new Map<string, number[]>();
 
-  app.use(express.json({ limit: '1mb' }));
+  app.use(express.json({ limit: '8mb' }));
   app.use(express.urlencoded({ extended: false, limit: '16kb' }));
 
   const requireAuthenticatedMember = async (req: Request, res: Response, next: NextFunction) => {
@@ -1881,6 +1882,78 @@ Antworte im JSON-Format:
       console.error('Error in /api/content-engine/shorts:', err);
       const message = err instanceof Error ? err.message : 'Fehler beim Erstellen der YouTube Shorts.';
       res.status(500).json({ error: message });
+    }
+  });
+
+  app.post('/api/instagram/oauth/start', requireVerifiedMember, requireProMember, async (req, res) => {
+    const userId = (req as FirebaseRequest).firebaseUser?.sub;
+    if (!userId) return void res.status(401).json({ error: 'Nicht angemeldet.' });
+    try {
+      const { authorizationUrl, nonce } = createInstagramAuthorizationUrl(userId);
+      res.setHeader('Set-Cookie', `instagram_oauth_state=${encodeURIComponent(nonce)}; Path=/api/instagram/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);
+      res.json({ authorizationUrl });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Instagram-Verbindung konnte nicht gestartet werden.' });
+    }
+  });
+
+  app.get('/api/instagram/oauth/callback', async (req, res) => {
+    const code = typeof req.query.code === 'string' ? req.query.code : '';
+    const state = typeof req.query.state === 'string' ? req.query.state : '';
+    const oauthError = typeof req.query.error === 'string' ? req.query.error : '';
+    const cookieNonce = (req.headers.cookie || '')
+      .split(';')
+      .map((part) => part.trim())
+      .find((part) => part.startsWith('instagram_oauth_state='))
+      ?.slice('instagram_oauth_state='.length) || '';
+    res.setHeader('Set-Cookie', 'instagram_oauth_state=; Path=/api/instagram/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+    if (oauthError || !code || !state) return void res.redirect(`${ACADEMY_PUBLIC_URL}/?instagram=error`);
+    try {
+      await completeInstagramAuthorization(FIREBASE_PROJECT_ID, code, state, decodeURIComponent(cookieNonce));
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?instagram=connected`);
+    } catch (error: unknown) {
+      console.warn('Instagram OAuth konnte nicht abgeschlossen werden.', {
+        action: 'academy.instagram.oauth.failed',
+        message: error instanceof Error ? error.message : 'unknown',
+      });
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?instagram=error`);
+    }
+  });
+
+  app.get('/api/instagram/connection/status', requireVerifiedMember, requireProMember, async (req, res) => {
+    const userId = (req as FirebaseRequest).firebaseUser?.sub;
+    if (!userId) return void res.status(401).json({ error: 'Nicht angemeldet.' });
+    try {
+      res.json(await loadInstagramConnectionStatus(FIREBASE_PROJECT_ID, userId));
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Instagram-Status konnte nicht geladen werden.' });
+    }
+  });
+
+  app.delete('/api/instagram/connection', requireVerifiedMember, requireProMember, async (req, res) => {
+    const userId = (req as FirebaseRequest).firebaseUser?.sub;
+    if (!userId) return void res.status(401).json({ error: 'Nicht angemeldet.' });
+    try {
+      await deleteInstagramConnection(FIREBASE_PROJECT_ID, userId);
+      res.json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Instagram konnte nicht getrennt werden.' });
+    }
+  });
+
+  app.post('/api/instagram/publish-image', requireVerifiedMember, requireProMember, async (req, res) => {
+    const userId = (req as FirebaseRequest).firebaseUser?.sub;
+    if (!userId) return void res.status(401).json({ error: 'Nicht angemeldet.' });
+    const caption = typeof req.body?.caption === 'string' ? req.body.caption.trim() : '';
+    const imageBase64 = typeof req.body?.imageBase64 === 'string' ? req.body.imageBase64 : '';
+    if (!caption) return void res.status(400).json({ error: 'Bitte füge eine Instagram-Beschreibung hinzu.' });
+    if (!imageBase64) return void res.status(400).json({ error: 'Die Instagram-Grafik fehlt.' });
+    if (imageBase64.length > 7_500_000) return void res.status(413).json({ error: 'Die Instagram-Grafik ist zu groß.' });
+    try {
+      const publishedMedia = await publishInstagramImage(FIREBASE_PROJECT_ID, userId, { caption, imageBase64 });
+      res.json({ success: true, publishedMedia });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Instagram-Beitrag konnte nicht veröffentlicht werden.' });
     }
   });
 
