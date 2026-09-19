@@ -14,6 +14,7 @@ import {
   syncServerPublishingOutcome,
 } from '../../server/publishingQueueAdmin.js';
 import { publishExistingYouTubeVideo } from '../../server/youtubeConnectionAdmin.js';
+import { loadPinterestAccessToken } from '../../server/pinterestConnectionAdmin.js';
 
 
 export interface SchedulerExecutionResult {
@@ -189,8 +190,18 @@ export class ServerSchedulerWorker {
         const claimedJob = claimResult.job;
         result.jobsProcessed++;
 
-        // Pass payload Pinterest token if present, or let service look up stored config
-        const pinterestToken = claimedJob.payload?.accessToken;
+        let pinterestToken: string | undefined;
+        if (claimedJob.platform === 'PINTEREST') {
+          try {
+            pinterestToken = await loadPinterestAccessToken(
+              process.env.FIREBASE_PROJECT_ID || 'gom-mar-akademie',
+              claimedJob.userId,
+            );
+          } catch (error: unknown) {
+            pinterestToken = undefined;
+            console.warn(`[ServerSchedulerWorker] Pinterest connection unavailable for job ${jobId}:`, error instanceof Error ? error.message : 'unknown');
+          }
+        }
         const { job: finalizedJob, result: pubResult } = await PublishingService.processJob(
           claimedJob.userId,
           claimedJob,

@@ -27,7 +27,7 @@ export const pinterestService = {
    */
   saveAccountConfig(config: PinterestAccountConfig): void {
     try {
-      localStorage.setItem(PINTEREST_STORAGE_KEY, JSON.stringify(config));
+      localStorage.setItem(PINTEREST_STORAGE_KEY, JSON.stringify({ ...config, accessToken: '' }));
     } catch (e) {
       console.error('Failed to save pinterest account config:', e);
     }
@@ -36,9 +36,9 @@ export const pinterestService = {
   /**
    * Test connection with Pinterest
    */
-  async testConnection(accessToken: string): Promise<{ success: boolean; user?: Record<string, unknown>; error?: string }> {
+  async connect(accessToken: string): Promise<{ success: boolean; user?: Record<string, unknown>; error?: string }> {
     try {
-      const res = await authenticatedFetch('/api/pinterest/test-connection', {
+      const res = await authenticatedFetch('/api/pinterest/connect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accessToken }),
@@ -54,15 +54,26 @@ export const pinterestService = {
     }
   },
 
+  async getConnectionStatus(): Promise<{ connected: boolean; username?: string; connectedAt?: string | null }> {
+    const res = await authenticatedFetch('/api/pinterest/connection/status');
+    if (!res.ok) return { connected: false };
+    return res.json();
+  },
+
+  async disconnect(): Promise<boolean> {
+    const res = await authenticatedFetch('/api/pinterest/connection', { method: 'DELETE' });
+    return res.ok;
+  },
+
   /**
    * Get user's Pinterest boards
    */
-  async getBoards(accessToken: string): Promise<{ success: boolean; boards: PinterestBoard[]; error?: string }> {
+  async getBoards(): Promise<{ success: boolean; boards: PinterestBoard[]; error?: string }> {
     try {
       const res = await authenticatedFetch('/api/pinterest/boards', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accessToken }),
+        body: JSON.stringify({}),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -78,12 +89,12 @@ export const pinterestService = {
   /**
    * Create new Pinterest Board
    */
-  async createBoard(accessToken: string, name: string, description?: string): Promise<{ success: boolean; board?: PinterestBoard; error?: string }> {
+  async createBoard(name: string, description?: string): Promise<{ success: boolean; board?: PinterestBoard; error?: string }> {
     try {
       const res = await authenticatedFetch('/api/pinterest/create-board', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accessToken, name, description }),
+        body: JSON.stringify({ name, description }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -100,7 +111,6 @@ export const pinterestService = {
    * Publish Pin to Pinterest
    */
   async publishPin(
-    accessToken: string,
     pinData: PinterestPin,
     boardId: string,
     imageBase64?: string
@@ -110,7 +120,6 @@ export const pinterestService = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          accessToken,
           boardId,
           pinData: {
             ...pinData,

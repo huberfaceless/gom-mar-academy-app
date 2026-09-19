@@ -63,13 +63,26 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
       })
       .catch((e) => console.error('Preview canvas error:', e));
 
-    // Load boards
-    loadBoards(tokenInput);
+    void pinterestService.getConnectionStatus().then((status) => {
+      const storedConfig = pinterestService.loadAccountConfig();
+      const legacyToken = storedConfig.accessToken || '';
+      setTokenInput(legacyToken);
+      const safeConfig: PinterestAccountConfig = {
+        ...storedConfig,
+        accessToken: '',
+        isConnected: status.connected,
+        username: status.username || storedConfig.username,
+        lastConnectedAt: status.connectedAt || undefined,
+      };
+      setAccountConfig(safeConfig);
+      pinterestService.saveAccountConfig(safeConfig);
+      if (status.connected) void loadBoards();
+    });
   }, [isOpen, pin, projectSettings]);
 
-  const loadBoards = async (token: string) => {
+  const loadBoards = async () => {
     setIsLoadingBoards(true);
-    const res = await pinterestService.getBoards(token);
+    const res = await pinterestService.getBoards();
     setIsLoadingBoards(false);
     if (res.success && res.boards.length > 0) {
       setBoards(res.boards);
@@ -79,17 +92,17 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
     }
   };
 
-  const handleConnectToken = async (useDemo: boolean = false) => {
-    const tokenToUse = useDemo ? 'demo_vital50' : tokenInput;
+  const handleConnectToken = async () => {
+    const tokenToUse = tokenInput;
     setIsTestingToken(true);
     setConnectionError(null);
 
-    const res = await pinterestService.testConnection(tokenToUse);
+    const res = await pinterestService.connect(tokenToUse);
     setIsTestingToken(false);
 
     if (res.success && res.user) {
       const updatedConfig: PinterestAccountConfig = {
-        accessToken: tokenToUse,
+        accessToken: '',
         isConnected: true,
         username: (res.user.username as string) || 'vital50_official',
         accountType: (res.user.account_type as string) || 'BUSINESS',
@@ -98,7 +111,8 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
       };
       setAccountConfig(updatedConfig);
       pinterestService.saveAccountConfig(updatedConfig);
-      loadBoards(tokenToUse);
+      setTokenInput('');
+      void loadBoards();
     } else {
       setConnectionError(res.error || 'Verbindung zu Pinterest fehlgeschlagen.');
     }
@@ -107,7 +121,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
   const handleCreateBoard = async () => {
     if (!newBoardName.trim()) return;
     setIsSubmittingBoard(true);
-    const res = await pinterestService.createBoard(tokenInput, newBoardName.trim());
+    const res = await pinterestService.createBoard(newBoardName.trim());
     setIsSubmittingBoard(false);
 
     if (res.success && res.board) {
@@ -131,7 +145,6 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
     setPublishSuccess(null);
 
     const res = await pinterestService.publishPin(
-      tokenInput,
       pin,
       selectedBoardId,
       previewDataUrl || undefined
@@ -211,20 +224,12 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
               <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
                 <button
                   type="button"
-                  onClick={() => handleConnectToken(false)}
+                  onClick={handleConnectToken}
                   disabled={isTestingToken || !tokenInput}
                   className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-50 flex items-center gap-1.5 shrink-0"
                 >
                   {isTestingToken ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Key className="w-3.5 h-3.5" />}
                   <span>Verbinden</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleConnectToken(true)}
-                  className="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-xl transition-colors shrink-0"
-                  title="Testet den Ablauf ohne echten API-Schlüssel"
-                >
-                  Demo-Modus
                 </button>
               </div>
             </div>
