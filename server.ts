@@ -19,6 +19,7 @@ import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsA
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
+import { deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus, savePinterestConnection } from './server/pinterestConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -1883,8 +1884,8 @@ Antworte im JSON-Format:
     }
   });
 
-  // 📌 Pinterest API Integration: 1. Test Connection
-  app.post('/api/pinterest/test-connection', requireVerifiedMember, requireProMember, async (req, res) => {
+  // 📌 Pinterest API Integration: securely persist the verified connection for the scheduler.
+  app.post('/api/pinterest/connect', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const { accessToken } = req.body;
       if (!accessToken || typeof accessToken !== 'string') {
@@ -1892,18 +1893,8 @@ Antworte im JSON-Format:
         return;
       }
 
-      // If simulated or demo token
       if (accessToken.trim().toLowerCase() === 'demo' || accessToken.trim().startsWith('demo_')) {
-        res.json({
-          success: true,
-          user: {
-            username: 'vital50_official',
-            account_type: 'BUSINESS',
-            profile_image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
-            website_url: 'https://vital50.gomo-marketing.at/',
-            isDemo: true,
-          },
-        });
+        res.status(400).json({ error: 'Für die automatische Veröffentlichung ist ein echter Pinterest Access Token erforderlich.' });
         return;
       }
 
@@ -1924,7 +1915,13 @@ Antworte im JSON-Format:
         return;
       }
 
-      const userData = await response.json();
+      const userData = await response.json() as { username?: string };
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) {
+        res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+        return;
+      }
+      await savePinterestConnection(FIREBASE_PROJECT_ID, userId, accessToken.trim(), userData.username || 'Pinterest');
       res.json({ success: true, user: userData });
     } catch (err: unknown) {
       console.error('Error in /api/pinterest/test-connection:', err);
@@ -1933,37 +1930,33 @@ Antworte im JSON-Format:
     }
   });
 
+  app.get('/api/pinterest/connection/status', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      res.json(await loadPinterestConnectionStatus(FIREBASE_PROJECT_ID, userId));
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Pinterest-Status konnte nicht geladen werden.' });
+    }
+  });
+
+  app.delete('/api/pinterest/connection', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      await deletePinterestConnection(FIREBASE_PROJECT_ID, userId);
+      res.json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Pinterest konnte nicht getrennt werden.' });
+    }
+  });
+
   // 📌 Pinterest API: 2. Get User Boards
   app.post('/api/pinterest/boards', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
-      const { accessToken } = req.body;
-      if (!accessToken) {
-        // Fallback default Vital50 boards for seamless UI
-        res.json({
-          success: true,
-          boards: [
-            { id: 'board_vital50_1', name: 'Gesundheit & Vitalität 50+', privacy: 'PUBLIC', pin_count: 14 },
-            { id: 'board_vital50_2', name: 'Ernährung & Stoffwechsel ab 50', privacy: 'PUBLIC', pin_count: 28 },
-            { id: 'board_vital50_3', name: 'Bauchfett & Intervallfasten', privacy: 'PUBLIC', pin_count: 19 },
-            { id: 'board_vital50_4', name: 'Gelenke & Schmerzfrei bewegen', privacy: 'PUBLIC', pin_count: 9 },
-            { id: 'board_vital50_5', name: 'Anti-Aging & Zellgesundheit', privacy: 'PUBLIC', pin_count: 12 },
-          ],
-        });
-        return;
-      }
-
-      if (accessToken.trim().toLowerCase() === 'demo' || accessToken.trim().startsWith('demo_')) {
-        res.json({
-          success: true,
-          boards: [
-            { id: 'demo_board_1', name: 'Vital50 - Ratgeber & Tipps', privacy: 'PUBLIC', pin_count: 24 },
-            { id: 'demo_board_2', name: 'Gesunde Ernährung 50+', privacy: 'PUBLIC', pin_count: 35 },
-            { id: 'demo_board_3', name: 'Stoffwechsel aktivieren', privacy: 'PUBLIC', pin_count: 18 },
-            { id: 'demo_board_4', name: 'Bauchfett loswerden', privacy: 'PUBLIC', pin_count: 12 },
-          ],
-        });
-        return;
-      }
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
 
       const response = await fetch('https://api.pinterest.com/v5/boards?page_size=50', {
         headers: {
@@ -1991,24 +1984,15 @@ Antworte im JSON-Format:
   // 📌 Pinterest API: 3. Create New Board
   app.post('/api/pinterest/create-board', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
-      const { accessToken, name, description, privacy } = req.body;
+      const { name, description, privacy } = req.body;
       if (!name) {
         res.status(400).json({ error: 'Board-Name ist erforderlich.' });
         return;
       }
 
-      if (!accessToken || accessToken.trim().toLowerCase() === 'demo' || accessToken.trim().startsWith('demo_')) {
-        res.json({
-          success: true,
-          board: {
-            id: `board_${Date.now()}`,
-            name,
-            description: description || 'Erstellt über Vital50 Content Engine',
-            privacy: privacy || 'PUBLIC',
-          },
-        });
-        return;
-      }
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
 
       const response = await fetch('https://api.pinterest.com/v5/boards', {
         method: 'POST',
@@ -2042,7 +2026,7 @@ Antworte im JSON-Format:
   // 📌 Pinterest API: 4. Publish Real Pin (Single or Scheduled)
   app.post('/api/pinterest/publish-pin', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
-      const { accessToken, pinData, boardId } = req.body;
+      const { pinData, boardId } = req.body;
 
       if (!pinData || !pinData.title) {
         res.status(400).json({ error: 'Pin-Daten sind unvollständig.' });
@@ -2054,14 +2038,9 @@ Antworte im JSON-Format:
         return;
       }
 
-      // Verify real access token
-      if (!accessToken || accessToken.trim().length === 0 || accessToken.trim().toLowerCase() === 'demo' || accessToken.trim().startsWith('demo_')) {
-        res.status(400).json({ 
-          error: 'Pinterest ist nicht verbunden. Bitte hinterlege einen gültigen Pinterest API Access Token in den Einstellungen.',
-          status: 'NOT_CONNECTED'
-        });
-        return;
-      }
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
 
       // Genuine Pinterest API v5 Pin Creation
       const payload: Record<string, unknown> = {
