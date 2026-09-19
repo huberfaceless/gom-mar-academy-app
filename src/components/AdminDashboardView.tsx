@@ -343,9 +343,15 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     }
   };
 
-  const handleDeleteUnverifiedMember = async (member: FirebaseMember) => {
-    if (member.emailVerified || member.role === 'admin') return;
-    if (!window.confirm(`Nicht bestätigtes Konto ${member.email || member.displayName} dauerhaft löschen?`)) return;
+  const handleDeleteMember = async (member: FirebaseMember) => {
+    if (member.role === 'admin') return;
+    const memberLabel = member.email || member.displayName;
+    if (!window.confirm(`Konto ${memberLabel} dauerhaft löschen? Der Academy-Zugang und die gespeicherte E-Mail-Adresse werden unwiderruflich entfernt.`)) return;
+    const confirmation = window.prompt(`Zur Bestätigung bitte exakt eingeben:\n${memberLabel}`);
+    if (confirmation !== memberLabel) {
+      if (confirmation !== null) setMembersError('Löschen abgebrochen: Die Bestätigung stimmt nicht überein.');
+      return;
+    }
     setUpdatingMemberUid(member.uid);
     setMembersError('');
     try {
@@ -353,7 +359,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       const result = await response.json() as { error?: string; message?: string };
       if (!response.ok) throw new Error(result.error || 'Mitglied konnte nicht gelöscht werden.');
       setFirebaseMembers((current) => current.filter((item) => item.uid !== member.uid));
-      setSaveSuccessMsg(result.message || 'Nicht bestätigtes Mitglied gelöscht.');
+      setSaveSuccessMsg(result.message || 'Mitgliedskonto und E-Mail-Adresse dauerhaft gelöscht.');
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
       setMembersError(error instanceof Error ? error.message : 'Mitglied konnte nicht gelöscht werden.');
@@ -838,14 +844,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           >
                             <Edit3 className="h-3.5 w-3.5" /> E-Mail bearbeiten
                           </button>
-                          {!member.emailVerified && member.role !== 'admin' && (
+                          {member.role !== 'admin' && (
                             <button
                               type="button"
-                              onClick={() => void handleDeleteUnverifiedMember(member)}
+                              onClick={() => void handleDeleteMember(member)}
                               disabled={updatingMemberUid === member.uid}
                               className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 px-2.5 py-1.5 text-[11px] font-bold text-rose-700 disabled:cursor-not-allowed disabled:opacity-60"
                             >
-                              <Trash2 className="h-3.5 w-3.5" /> Nicht bestätigtes Konto löschen
+                              <Trash2 className="h-3.5 w-3.5" /> Konto und E-Mail löschen
                             </button>
                           )}
                         </div>
@@ -1254,7 +1260,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-indigo-200 focus:outline-none focus:border-indigo-500"
                     placeholder="https://youtu.be/VIDEO-ID"
                   />
-                  <p className="mt-1 text-[11px] text-slate-500">Leer lassen, wenn stattdessen die Academy-Audio-Erklärung verwendet werden soll.</p>
+                  <p className="mt-1 text-[11px] text-slate-500">Das Video wird zusätzlich eingefügt. Text und Academy-Audio-Erklärung bleiben erhalten.</p>
                   {(lessonFormData.learnContent?.videoUrl || '').trim() && (
                     <button
                       type="button"

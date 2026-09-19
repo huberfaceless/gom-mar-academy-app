@@ -98,6 +98,16 @@ const writeConsentDocument = async (projectId: string, userId: string, fields: R
   if (!response.ok) throw new Error('Die E-Mail-Einwilligung konnte nicht gespeichert werden.');
 };
 
+export const deleteEmailConsent = async (projectId: string, userId: string): Promise<void> => {
+  const response = await fetch(documentUrl(projectId, userId), {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${await getAccessToken()}` },
+  });
+  if (!response.ok && response.status !== 404) {
+    throw new Error('Die gespeicherte E-Mail-Einwilligung konnte nicht gelöscht werden.');
+  }
+};
+
 export const requestEmailConsent = async (
   projectId: string,
   userId: string,

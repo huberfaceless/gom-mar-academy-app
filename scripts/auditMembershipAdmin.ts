@@ -35,12 +35,15 @@ assert.match(auth, /registerWithEmail[\s\S]*language: LanguageCode = 'de'/, 'Die
 assert.match(auth, /\/api\/member\/language/, 'Die Registrierung muss die Mitgliedssprache serverseitig speichern.');
 assert.match(server, /app\.post\('\/api\/admin\/members\/:uid\/language', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedssprachen ändern.');
 assert.match(server, /app\.patch\('\/api\/admin\/members\/:uid\/email', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedsadressen ändern.');
-assert.match(server, /app\.delete\('\/api\/admin\/members\/:uid', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen nicht bestätigte Konten löschen.');
+assert.match(server, /app\.delete\('\/api\/admin\/members\/:uid', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedskonten löschen.');
 assert.match(server, /existing\.role === 'admin'/, 'Administratorkonten müssen vor Adressänderungen geschützt sein.');
+assert.match(server, /deleteEmailConsent\(FIREBASE_PROJECT_ID, uid\)/, 'Beim Löschen wird die gespeicherte E-Mail-Einwilligung entfernt.');
+assert.match(server, /deleteCrmContact\(FIREBASE_PROJECT_ID, adminUserId, memberContactId\(uid\)\)/, 'Beim Löschen wird der synchronisierte CRM-Kontakt entfernt.');
 assert.match(admin, /Deutsche Mitglieder/, 'Der deutsche Mitgliederbereich fehlt.');
 assert.match(admin, /Englische Mitglieder/, 'Der englische Mitgliederbereich fehlt.');
 assert.match(admin, /Polnische Mitglieder/, 'Der polnische Mitgliederbereich fehlt.');
-assert.match(admin, /Nicht bestätigtes Konto löschen/, 'Die sichere Löschaktion für nicht bestätigte Konten fehlt.');
+assert.match(admin, /Konto und E-Mail löschen/, 'Die Löschaktion für Mitgliedskonten fehlt.');
+assert.match(admin, /window\.prompt\(`Zur Bestätigung bitte exakt eingeben:/, 'Die dauerhafte Löschung verlangt eine zweite exakte Bestätigung.');
 
 for (const view of ['email', 'toolbox']) {
   assert.equal(canAccessView(view, 'FREE', 'member'), false, `FREE darf keinen Zugriff auf ${view} erhalten`);
