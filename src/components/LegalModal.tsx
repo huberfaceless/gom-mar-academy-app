@@ -258,7 +258,22 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-sm">6. Deine Rechte als Betroffener</h4>
+                <h4 className="font-bold text-slate-900 text-sm">6. Instagram-Verbindung</h4>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Die optionale Instagram-Verbindung nutzt Instagram Business Login und die Instagram API von Meta. Nach deiner ausdrücklichen Zustimmung kann die Academy von dir geprüfte Grafiken und Beschreibungen in deinem professionellen Instagram-Konto veröffentlichen.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-600 text-xs">
+                  <li><strong>Verarbeitete Daten:</strong> Instagram-Konto-ID, Benutzername, Kontotyp, verschlüsselte OAuth-Zugangsdaten, Verbindungszeitpunkt sowie die von dir zur Veröffentlichung ausgewählten Medien und Texte.</li>
+                  <li><strong>Speicherung und Schutz:</strong> Zugriffstokens werden verschlüsselt und serverseitig gespeichert, automatisch erneuert und nicht für Werbung oder Profilbildung verwendet.</li>
+                  <li><strong>Widerruf und Löschung:</strong> Du kannst die Verbindung jederzeit über „Verbindung trennen“ entfernen. Löschanfragen kannst du an <strong>huber@gomo-marketing.at</strong> richten.</li>
+                </ul>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Ergänzend gelten die <a href="https://help.instagram.com/581066165581870" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Datenschutzrichtlinie von Instagram</a> und die <a href="https://help.instagram.com/581066165581870" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Bedingungen von Meta</a>.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm">7. Deine Rechte als Betroffener</h4>
                 <p className="text-slate-600 text-xs leading-relaxed">
                   Du hast jederzeit das Recht auf <strong>Auskunft (Art. 15 DSGVO)</strong>, <strong>Berichtigung (Art. 16 DSGVO)</strong>, <strong>Löschung (Art. 17 DSGVO)</strong>, Einschränkung der Verarbeitung (Art. 18 DSGVO), Datenübertragbarkeit (Art. 20 DSGVO) sowie das Recht auf <strong>Widerspruch (Art. 21 DSGVO)</strong>. Kontaktiere uns dazu einfach unter <strong>huber@gomo-marketing.at</strong>.
                 </p>
