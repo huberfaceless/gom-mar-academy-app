@@ -19,7 +19,7 @@ import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsA
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
-import { deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus, savePinterestConnection } from './server/pinterestConnectionAdmin.js';
+import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -1884,49 +1884,38 @@ Antworte im JSON-Format:
     }
   });
 
-  // 📌 Pinterest API Integration: securely persist the verified connection for the scheduler.
-  app.post('/api/pinterest/connect', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/pinterest/oauth/start', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
-      const { accessToken } = req.body;
-      if (!accessToken || typeof accessToken !== 'string') {
-        res.status(400).json({ error: 'Pinterest Access Token ist erforderlich.' });
-        return;
-      }
-
-      if (accessToken.trim().toLowerCase() === 'demo' || accessToken.trim().startsWith('demo_')) {
-        res.status(400).json({ error: 'Für die automatische Veröffentlichung ist ein echter Pinterest Access Token erforderlich.' });
-        return;
-      }
-
-      // Genuine Pinterest API v5 call
-      const response = await fetch('https://api.pinterest.com/v5/user_account', {
-        headers: {
-          Authorization: `Bearer ${accessToken.trim()}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        res.status(response.status).json({
-          error: errData.message || `Pinterest API Fehler (HTTP ${response.status}). Bitte überprüfe deinen Access Token.`,
-          details: errData,
-        });
-        return;
-      }
-
-      const userData = await response.json() as { username?: string };
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
-      if (!userId) {
-        res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-        return;
-      }
-      await savePinterestConnection(FIREBASE_PROJECT_ID, userId, accessToken.trim(), userData.username || 'Pinterest');
-      res.json({ success: true, user: userData });
-    } catch (err: unknown) {
-      console.error('Error in /api/pinterest/test-connection:', err);
-      const message = err instanceof Error ? err.message : 'Fehler bei der Pinterest-Verbindung.';
-      res.status(500).json({ error: message });
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      const { authorizationUrl, nonce } = createPinterestAuthorizationUrl(userId);
+      res.setHeader('Set-Cookie', `pinterest_oauth_state=${encodeURIComponent(nonce)}; Path=/api/pinterest/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);
+      res.json({ authorizationUrl });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Pinterest-Verbindung konnte nicht gestartet werden.' });
+    }
+  });
+
+  app.get('/api/pinterest/oauth/callback', async (req, res) => {
+    const code = typeof req.query.code === 'string' ? req.query.code : '';
+    const state = typeof req.query.state === 'string' ? req.query.state : '';
+    const oauthError = typeof req.query.error === 'string' ? req.query.error : '';
+    const cookieNonce = req.headers.cookie
+      ?.split(';')
+      .map((part) => part.trim())
+      .find((part) => part.startsWith('pinterest_oauth_state='))
+      ?.slice('pinterest_oauth_state='.length) || '';
+    res.setHeader('Set-Cookie', 'pinterest_oauth_state=; Path=/api/pinterest/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+    if (oauthError || !code || !state) return void res.redirect(`${ACADEMY_PUBLIC_URL}/?pinterest=error`);
+    try {
+      await completePinterestAuthorization(FIREBASE_PROJECT_ID, code, state, decodeURIComponent(cookieNonce));
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?pinterest=connected`);
+    } catch (error: unknown) {
+      console.warn('Pinterest OAuth konnte nicht abgeschlossen werden.', {
+        action: 'academy.pinterest.oauth.failed',
+        message: error instanceof Error ? error.message : 'Unbekannter Fehler',
+      });
+      res.redirect(`${ACADEMY_PUBLIC_URL}/?pinterest=error`);
     }
   });
 

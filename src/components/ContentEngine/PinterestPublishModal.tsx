@@ -34,7 +34,6 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
   onPinPublished,
 }) => {
   const [accountConfig, setAccountConfig] = useState<PinterestAccountConfig>(pinterestService.loadAccountConfig());
-  const [tokenInput, setTokenInput] = useState<string>(accountConfig.accessToken || '');
   const [isTestingToken, setIsTestingToken] = useState<boolean>(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [boards, setBoards] = useState<PinterestBoard[]>([]);
@@ -65,13 +64,10 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
 
     void pinterestService.getConnectionStatus().then((status) => {
       const storedConfig = pinterestService.loadAccountConfig();
-      const legacyToken = storedConfig.accessToken || '';
-      setTokenInput(legacyToken);
       const safeConfig: PinterestAccountConfig = {
         ...storedConfig,
         accessToken: '',
         isConnected: status.connected,
-        username: status.username || storedConfig.username,
         lastConnectedAt: status.connectedAt || undefined,
       };
       setAccountConfig(safeConfig);
@@ -92,30 +88,29 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
     }
   };
 
-  const handleConnectToken = async () => {
-    const tokenToUse = tokenInput;
+  const handleConnectPinterest = async () => {
     setIsTestingToken(true);
     setConnectionError(null);
-
-    const res = await pinterestService.connect(tokenToUse);
-    setIsTestingToken(false);
-
-    if (res.success && res.user) {
-      const updatedConfig: PinterestAccountConfig = {
-        accessToken: '',
-        isConnected: true,
-        username: (res.user.username as string) || 'vital50_official',
-        accountType: (res.user.account_type as string) || 'BUSINESS',
-        profileImage: (res.user.profile_image as string) || '',
-        lastConnectedAt: new Date().toISOString(),
-      };
-      setAccountConfig(updatedConfig);
-      pinterestService.saveAccountConfig(updatedConfig);
-      setTokenInput('');
-      void loadBoards();
-    } else {
-      setConnectionError(res.error || 'Verbindung zu Pinterest fehlgeschlagen.');
+    try {
+      await pinterestService.startOAuth();
+    } catch (error: unknown) {
+      setIsTestingToken(false);
+      setConnectionError(error instanceof Error ? error.message : 'Verbindung zu Pinterest fehlgeschlagen.');
     }
+  };
+
+  const handleDisconnectPinterest = async () => {
+    if (!window.confirm('Pinterest-Verbindung wirklich trennen?')) return;
+    setIsTestingToken(true);
+    setConnectionError(null);
+    const success = await pinterestService.disconnect();
+    setIsTestingToken(false);
+    if (!success) return void setConnectionError('Pinterest-Verbindung konnte nicht getrennt werden.');
+    const safeConfig: PinterestAccountConfig = { accessToken: '', isConnected: false };
+    setAccountConfig(safeConfig);
+    pinterestService.saveAccountConfig(safeConfig);
+    setBoards([]);
+    setSelectedBoardId('');
   };
 
   const handleCreateBoard = async () => {
@@ -204,7 +199,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
               {accountConfig.isConnected ? (
                 <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full border border-emerald-200 flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  Verbunden (@{accountConfig.username || 'vital50'})
+                  Verbunden
                 </span>
               ) : (
                 <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200">
@@ -213,23 +208,19 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-2">
-              <input
-                type="text"
-                placeholder="Pinterest Personal Access Token eingeben..."
-                value={tokenInput}
-                onChange={(e) => setTokenInput(e.target.value)}
-                className="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:border-rose-500 outline-hidden"
-              />
-              <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <p className="flex-1 text-xs text-slate-600">
+                Die Verbindung wird sicher über Pinterest hergestellt und automatisch erneuert.
+              </p>
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   type="button"
-                  onClick={handleConnectToken}
-                  disabled={isTestingToken || !tokenInput}
+                  onClick={accountConfig.isConnected ? handleDisconnectPinterest : handleConnectPinterest}
+                  disabled={isTestingToken}
                   className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-50 flex items-center gap-1.5 shrink-0"
                 >
                   {isTestingToken ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Key className="w-3.5 h-3.5" />}
-                  <span>Verbinden</span>
+                  <span>{accountConfig.isConnected ? 'Verbindung trennen' : 'Mit Pinterest verbinden'}</span>
                 </button>
               </div>
             </div>

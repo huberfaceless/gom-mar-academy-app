@@ -243,7 +243,22 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-sm">5. Deine Rechte als Betroffener</h4>
+                <h4 className="font-bold text-slate-900 text-sm">5. Pinterest-Verbindung</h4>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Die optionale Pinterest-Verbindung nutzt Pinterest OAuth und die Pinterest API. Nach deiner ausdrücklichen Zustimmung kann die Academy deine Boards anzeigen, Boards erstellen und die von dir ausgewählten oder geplanten Pins veröffentlichen.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-slate-600 text-xs">
+                  <li><strong>Verarbeitete Daten:</strong> verschlüsselte OAuth-Zugangsdaten, Verbindungszeitpunkt, Board- und Pin-Daten sowie Veröffentlichungsstatus.</li>
+                  <li><strong>Speicherung:</strong> OAuth-Aktualisierungstokens werden verschlüsselt und serverseitig gespeichert und nicht für Werbung oder Profilbildung verwendet.</li>
+                  <li><strong>Widerruf und Löschung:</strong> Du kannst die Verbindung jederzeit über „Verbindung trennen“ entfernen. Löschanfragen kannst du an <strong>huber@gomo-marketing.at</strong> richten.</li>
+                </ul>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Ergänzend gelten die <a href="https://policy.pinterest.com/de/terms-of-service" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Pinterest-Nutzungsbedingungen</a> und die <a href="https://policy.pinterest.com/de/privacy-policy" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline font-semibold">Pinterest-Datenschutzerklärung</a>.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm">6. Deine Rechte als Betroffener</h4>
                 <p className="text-slate-600 text-xs leading-relaxed">
                   Du hast jederzeit das Recht auf <strong>Auskunft (Art. 15 DSGVO)</strong>, <strong>Berichtigung (Art. 16 DSGVO)</strong>, <strong>Löschung (Art. 17 DSGVO)</strong>, Einschränkung der Verarbeitung (Art. 18 DSGVO), Datenübertragbarkeit (Art. 20 DSGVO) sowie das Recht auf <strong>Widerspruch (Art. 21 DSGVO)</strong>. Kontaktiere uns dazu einfach unter <strong>huber@gomo-marketing.at</strong>.
                 </p>
