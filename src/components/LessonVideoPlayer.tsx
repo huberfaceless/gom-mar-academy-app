@@ -236,7 +236,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
       </div>
 
       {/* Embedded YouTube / External Player if custom URL exists */}
-      {customVideoUrl ? (
+      {customVideoUrl && (
         <div className="relative aspect-video bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
           <iframe
             src={getEmbedUrl(customVideoUrl)}
@@ -246,9 +246,19 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             allowFullScreen
           />
         </div>
-      ) : (
-        /* ElevenLabs audio explanation */
-        <div className="relative aspect-video bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-8 group select-none">
+      )}
+
+      {customVideoUrl && (
+        <div className="flex items-center gap-2 text-xs bg-slate-900 border border-slate-800 p-3 rounded-2xl">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-extrabold text-white uppercase tracking-wider">{copy.audioPlayer}</span>
+          <span className="text-slate-500">•</span>
+          <span className="text-slate-400 font-mono">{copy.academyVoice}</span>
+        </div>
+      )}
+
+      {/* ElevenLabs audio explanation remains available alongside an optional video. */}
+      <div className="relative aspect-video bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-8 group select-none">
           <audio
             ref={audioRef}
             src={audioUrl || undefined}
@@ -459,11 +469,10 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
               </div>
             </div>
           </div>
-        </div>
-      )}
+      </div>
 
       {/* Audio chapters */}
-      {!customVideoUrl && <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between text-xs">
           <p className="font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
             <Clock className="w-4 h-4 text-emerald-400" />
@@ -497,7 +506,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({ lesson, ni
             );
           })}
         </div>
-      </div>}
+      </div>
     </div>
   );
 };
