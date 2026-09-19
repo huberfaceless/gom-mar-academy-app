@@ -33,28 +33,14 @@ export const pinterestService = {
     }
   },
 
-  /**
-   * Test connection with Pinterest
-   */
-  async connect(accessToken: string): Promise<{ success: boolean; user?: Record<string, unknown>; error?: string }> {
-    try {
-      const res = await authenticatedFetch('/api/pinterest/connect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accessToken }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        return { success: false, error: data.error || 'Verbindung fehlgeschlagen.' };
-      }
-      return { success: true, user: data.user };
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Netzwerkfehler bei Pinterest-Verbindung.';
-      return { success: false, error: msg };
-    }
+  async startOAuth(): Promise<void> {
+    const res = await authenticatedFetch('/api/pinterest/oauth/start', { method: 'POST' });
+    const data = await res.json();
+    if (!res.ok || !data.authorizationUrl) throw new Error(data.error || 'Pinterest-Verbindung konnte nicht gestartet werden.');
+    window.location.assign(data.authorizationUrl);
   },
 
-  async getConnectionStatus(): Promise<{ connected: boolean; username?: string; connectedAt?: string | null }> {
+  async getConnectionStatus(): Promise<{ connected: boolean; connectedAt?: string | null }> {
     const res = await authenticatedFetch('/api/pinterest/connection/status');
     if (!res.ok) return { connected: false };
     return res.json();
