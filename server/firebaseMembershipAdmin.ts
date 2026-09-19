@@ -241,12 +241,11 @@ export const updateFirebaseMemberEmail = async (
   return member;
 };
 
-export const deleteUnverifiedFirebaseMember = async (projectId: string, uid: string): Promise<void> => {
+export const deleteFirebaseMember = async (projectId: string, uid: string): Promise<void> => {
   const account = await lookupFirebaseAccount(projectId, uid);
   const member = toFirebaseMember(account);
   if (!member) throw new Error('Firebase-Mitglied wurde nicht gefunden.');
   if (member.role === 'admin') throw new Error('Administratorkonten können hier nicht gelöscht werden.');
-  if (member.emailVerified) throw new Error('Bestätigte Mitglieder können hier nicht gelöscht werden.');
   await firebaseAdminRequest<Record<string, never>>(projectId, 'accounts:delete', {
     method: 'POST',
     body: JSON.stringify({ localId: uid }),
