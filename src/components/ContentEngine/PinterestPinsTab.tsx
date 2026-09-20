@@ -22,8 +22,7 @@ import {
   Globe,
   Sliders,
   Type,
-  LayoutTemplate,
-  Instagram
+  LayoutTemplate
 } from 'lucide-react';
 import { 
   PinterestPin, 
@@ -41,13 +40,11 @@ import {
 } from '../../utils/pinterestCanvasRenderer';
 import { PinterestPublishModal } from './PinterestPublishModal';
 import { PinterestImagePickerModal } from './PinterestImagePickerModal';
-import { InstagramPublishModal } from './InstagramPublishModal';
 
 interface PinterestPinsTabProps {
   pins: PinterestPin[];
   onChange: (updatedPins: PinterestPin[]) => void;
-  onGenerateYouTube: () => void;
-  isGeneratingYouTube: boolean;
+  onOpenInstagram: () => void;
   topic: string;
   projectSettings?: ProjectSettings;
 }
@@ -94,8 +91,7 @@ const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
 export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
   pins,
   onChange,
-  onGenerateYouTube,
-  isGeneratingYouTube,
+  onOpenInstagram,
   topic,
   projectSettings = DEFAULT_PROJECT_SETTINGS,
 }) => {
@@ -106,7 +102,6 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
   
   // Modals
   const [isPublishModalOpen, setIsPublishModalOpen] = useState<boolean>(false);
-  const [isInstagramModalOpen, setIsInstagramModalOpen] = useState<boolean>(false);
   const [isImagePickerOpen, setIsImagePickerOpen] = useState<boolean>(false);
 
   // Canvas ref for live rendering
@@ -239,12 +234,11 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
 
           <button
             type="button"
-            onClick={onGenerateYouTube}
-            disabled={isGeneratingYouTube}
+            onClick={onOpenInstagram}
             className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 disabled:opacity-50 transition-all"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>{isGeneratingYouTube ? 'Generiere YouTube...' : 'Weiter: YouTube Skript'}</span>
+            <span>Weiter: Instagram</span>
           </button>
         </div>
       </div>
@@ -327,7 +321,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
           </div>
 
           {/* Canvas Actions Bar */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
               type="button"
               onClick={handleDownloadCurrentPin}
@@ -347,14 +341,6 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               <span>Auf Pinterest posten 🚀</span>
             </button>
 
-            <button
-              type="button"
-              onClick={() => setIsInstagramModalOpen(true)}
-              className="px-3.5 py-2.5 bg-linear-to-r from-fuchsia-600 to-rose-600 hover:from-fuchsia-700 hover:to-rose-700 text-white rounded-xl text-xs font-bold shadow-md flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-            >
-              <Instagram className="w-3.5 h-3.5" />
-              <span>Auf Instagram posten</span>
-            </button>
           </div>
 
           {/* Background Image Quick Selector */}
@@ -610,12 +596,6 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
         onPinPublished={(updated) => handleUpdateActivePin(updated)}
       />
 
-      <InstagramPublishModal
-        pin={activePin}
-        projectSettings={projectSettings}
-        isOpen={isInstagramModalOpen}
-        onClose={() => setIsInstagramModalOpen(false)}
-      />
 
       {/* Pinterest Background Image Picker Modal */}
       <PinterestImagePickerModal
