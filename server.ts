@@ -22,6 +22,7 @@ import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscrib
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
+import { summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -45,6 +46,7 @@ type FirebaseTokenPayload = {
 };
 
 type FirebaseRequest = Request & { firebaseUser?: FirebaseTokenPayload };
+type RawBodyRequest = Request & { rawBody?: Buffer };
 type FirebaseCertificates = Record<string, string>;
 
 type SendEmailRequest = {
@@ -187,8 +189,52 @@ async function startServer() {
   const recentEmailSends = new Map<string, number[]>();
   const recentLessonAudioRequests = new Map<string, number[]>();
 
-  app.use(express.json({ limit: '8mb' }));
+  app.use(express.json({
+    limit: '8mb',
+    verify: (req, _res, buffer) => {
+      (req as RawBodyRequest).rawBody = Buffer.from(buffer);
+    },
+  }));
   app.use(express.urlencoded({ extended: false, limit: '16kb' }));
+
+  app.get('/api/whatsapp/webhook', (req, res) => {
+    const verificationToken = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN?.trim();
+    if (!verificationToken) {
+      res.status(503).send('WhatsApp-Webhook ist noch nicht konfiguriert.');
+      return;
+    }
+
+    const challenge = verifyWhatsAppWebhookChallenge(req.query, verificationToken);
+    if (challenge === null) {
+      res.status(403).send('WhatsApp-Webhook-Verifizierung abgelehnt.');
+      return;
+    }
+
+    res.status(200).type('text/plain').send(challenge);
+  });
+
+  app.post('/api/whatsapp/webhook', (req, res) => {
+    const appSecret = process.env.WHATSAPP_APP_SECRET?.trim();
+    const rawBody = (req as RawBodyRequest).rawBody;
+    if (!appSecret) {
+      res.status(503).json({ error: 'WhatsApp-Webhook ist noch nicht vollständig konfiguriert.' });
+      return;
+    }
+    if (!rawBody || !verifyWhatsAppWebhookSignature(rawBody, req.header('x-hub-signature-256'), appSecret)) {
+      res.status(401).json({ error: 'Ungültige WhatsApp-Webhook-Signatur.' });
+      return;
+    }
+
+    const payload = req.body as WhatsAppWebhookPayload;
+    const summary = summarizeWhatsAppWebhook(payload);
+    if (summary.object !== 'whatsapp_business_account') {
+      res.status(400).json({ error: 'Unerwarteter WhatsApp-Webhook-Typ.' });
+      return;
+    }
+
+    console.info('WhatsApp-Webhook empfangen', summary);
+    res.sendStatus(200);
+  });
 
   const requireAuthenticatedMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
