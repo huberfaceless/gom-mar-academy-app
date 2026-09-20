@@ -20,7 +20,7 @@ import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
-import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, publishInstagramImage } from './server/instagramConnectionAdmin.js';
+import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -1917,6 +1917,18 @@ Antworte im JSON-Format:
         message: error instanceof Error ? error.message : 'unknown',
       });
       res.redirect(`${ACADEMY_PUBLIC_URL}/?instagram=error`);
+    }
+  });
+
+  app.get('/api/instagram/media/:token', async (req, res) => {
+    try {
+      const media = await loadInstagramMedia(req.params.token);
+      res.setHeader('Content-Type', media.contentType);
+      res.setHeader('Cache-Control', 'public, max-age=600, immutable');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.send(media.image);
+    } catch {
+      res.status(404).send('Instagram-Grafik nicht verfügbar.');
     }
   });
 

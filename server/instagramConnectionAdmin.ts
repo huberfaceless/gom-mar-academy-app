@@ -9,6 +9,7 @@ const databaseId = process.env.FIREBASE_DATABASE_ID || '(default)';
 const instagramScopes = 'instagram_business_basic,instagram_business_content_publish';
 const oauthStateMaxAgeMs = 10 * 60 * 1000;
 const tokenRefreshAgeMs = 45 * 24 * 60 * 60 * 1000;
+const instagramMediaUrlMaxAgeMs = 15 * 60 * 1000;
 
 type FirestoreDocument = {
   fields?: Record<string, { stringValue?: string; timestampValue?: string }>;
@@ -89,6 +90,52 @@ const decrypt = (encrypted: string, iv: string, tag: string) => {
 };
 
 const stateSignature = (payload: string) => createHmac('sha256', getEncryptionSecret()).update(payload).digest('base64url');
+
+const mediaSignature = (payload: string) => createHmac('sha256', getEncryptionSecret())
+  .update(`instagram-media:${payload}`)
+  .digest('base64url');
+
+const getMediaBucket = (projectId: string) => process.env.INSTAGRAM_MEDIA_BUCKET?.trim()
+  || process.env.LESSON_AUDIO_BUCKET?.trim()
+  || process.env.FIREBASE_STORAGE_BUCKET?.trim()
+  || process.env.VITE_FIREBASE_STORAGE_BUCKET?.trim()
+  || `${projectId}.firebasestorage.app`;
+
+const createMediaToken = (bucket: string, objectName: string, contentType: string) => {
+  const payload = Buffer.from(JSON.stringify({ bucket, objectName, contentType, createdAt: Date.now() })).toString('base64url');
+  return `${payload}.${mediaSignature(payload)}`;
+};
+
+const validateMediaToken = (token: string) => {
+  const [payload, signature] = token.split('.');
+  if (!payload || !signature) throw new Error('Der Instagram-Bildzugriff ist ungültig.');
+  const expected = mediaSignature(payload);
+  const actualBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expected);
+  if (actualBuffer.length !== expectedBuffer.length || !timingSafeEqual(actualBuffer, expectedBuffer)) {
+    throw new Error('Der Instagram-Bildzugriff konnte nicht verifiziert werden.');
+  }
+  const decoded = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as {
+    bucket?: string;
+    objectName?: string;
+    contentType?: string;
+    createdAt?: number;
+  };
+  if (
+    !decoded.bucket
+    || !decoded.objectName?.startsWith('instagram/')
+    || !['image/png', 'image/jpeg'].includes(decoded.contentType || '')
+    || !decoded.createdAt
+    || Date.now() - decoded.createdAt > instagramMediaUrlMaxAgeMs
+  ) {
+    throw new Error('Der Instagram-Bildzugriff ist abgelaufen.');
+  }
+  return {
+    bucket: decoded.bucket,
+    objectName: decoded.objectName,
+    contentType: decoded.contentType as 'image/png' | 'image/jpeg',
+  };
+};
 
 const createState = (userId: string, nonce: string) => {
   const payload = Buffer.from(JSON.stringify({ userId, nonce, createdAt: Date.now() })).toString('base64url');
@@ -233,12 +280,9 @@ export const deleteInstagramConnection = async (projectId: string, userId: strin
 const uploadInstagramImage = async (projectId: string, userId: string, imageBase64: string) => {
   const match = imageBase64.match(/^data:(image\/(?:png|jpeg));base64,(.+)$/s);
   if (!match) throw new Error('Für Instagram wird eine PNG- oder JPEG-Grafik benötigt.');
-  const bucket = process.env.FIREBASE_STORAGE_BUCKET?.trim()
-    || process.env.VITE_FIREBASE_STORAGE_BUCKET?.trim()
-    || `${projectId}.firebasestorage.app`;
+  const bucket = getMediaBucket(projectId);
   const extension = match[1] === 'image/png' ? 'png' : 'jpg';
   const objectName = `instagram/${userId}/${Date.now()}-${randomUUID()}.${extension}`;
-  const downloadToken = randomUUID();
   const uploadUrl = `https://storage.googleapis.com/upload/storage/v1/b/${encodeURIComponent(bucket)}/o?uploadType=media&name=${encodeURIComponent(objectName)}`;
   const response = await fetch(uploadUrl, {
     method: 'POST',
@@ -248,17 +292,19 @@ const uploadInstagramImage = async (projectId: string, userId: string, imageBase
     },
     body: Buffer.from(match[2], 'base64'),
   });
-  if (!response.ok) throw new Error('Die Instagram-Grafik konnte nicht sicher bereitgestellt werden.');
-  const metadataResponse = await fetch(
-    `https://storage.googleapis.com/storage/v1/b/${encodeURIComponent(bucket)}/o/${encodeURIComponent(objectName)}`,
-    {
-      method: 'PATCH',
-      headers: { Authorization: `Bearer ${await getGoogleAccessToken()}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ metadata: { firebaseStorageDownloadTokens: downloadToken } }),
-    },
+  if (!response.ok) throw new Error(`Die Instagram-Grafik konnte nicht sicher bereitgestellt werden (Speicherstatus ${response.status}).`);
+  const mediaToken = createMediaToken(bucket, objectName, match[1]);
+  return `https://academy.gomo-marketing.at/api/instagram/media/${encodeURIComponent(mediaToken)}`;
+};
+
+export const loadInstagramMedia = async (token: string) => {
+  const media = validateMediaToken(token);
+  const response = await fetch(
+    `https://storage.googleapis.com/storage/v1/b/${encodeURIComponent(media.bucket)}/o/${encodeURIComponent(media.objectName)}?alt=media`,
+    { headers: { Authorization: `Bearer ${await getGoogleAccessToken()}` } },
   );
-  if (!metadataResponse.ok) throw new Error('Der sichere Instagram-Bildzugriff konnte nicht eingerichtet werden.');
-  return `https://firebasestorage.googleapis.com/v0/b/${encodeURIComponent(bucket)}/o/${encodeURIComponent(objectName)}?alt=media&token=${downloadToken}`;
+  if (!response.ok) throw new Error('Die Instagram-Grafik ist nicht mehr verfügbar.');
+  return { contentType: media.contentType, image: Buffer.from(await response.arrayBuffer()) };
 };
 
 export const publishInstagramImage = async (projectId: string, userId: string, input: { caption: string; imageBase64?: string; imageUrl?: string }) => {
