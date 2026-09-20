@@ -28,6 +28,8 @@ assert.match(connection, /status_code === 'ERROR'/, 'Fehler bei der Instagram-Me
 assert.match(client, /authenticatedFetch\('\/api\/instagram\/oauth\/start'/, 'Der Browser muss den geschützten OAuth-Start verwenden.');
 assert.doesNotMatch(client, /client_secret|access_token/i, 'Instagram-Geheimnisse dürfen nicht in den Browser gelangen.');
 assert.match(modal, /Instagram verbinden/, 'Die Oberfläche muss eine Instagram-Verbindung anbieten.');
+assert.match(modal, /width: 1080, height: 1350/, 'Instagram-Grafiken müssen im Feed-Format 4:5 erstellt werden.');
+assert.match(modal, /aspect-\[4\/5\]/, 'Die Instagram-Vorschau muss das Feed-Format 4:5 zeigen.');
 assert.match(pins, /Auf Instagram posten/, 'Generierte Grafiken müssen an Instagram übergeben werden können.');
 assert.match(legal, /Instagram-Verbindung/, 'Die interne Datenschutzerklärung muss Instagram erläutern.');
 assert.match(publicPrivacy, /Instagram-Verbindung/, 'Die öffentliche Datenschutzerklärung muss Instagram erläutern.');

@@ -39,7 +39,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
     setError(null);
     setPublished(null);
     const canvas = document.createElement('canvas');
-    void renderPinToCanvas(canvas, pin, projectSettings)
+    void renderPinToCanvas(canvas, pin, projectSettings, { width: 1080, height: 1350 })
       .then(() => setPreviewDataUrl(canvas.toDataURL('image/png', 0.92)))
       .catch(() => setError('Die Instagram-Grafik konnte nicht erstellt werden.'));
     void instagramService.getConnectionStatus()
@@ -111,7 +111,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
             {previewDataUrl ? (
               <img src={previewDataUrl} alt="Instagram-Beitragsvorschau" className="w-full rounded-2xl border border-slate-200 shadow-md" />
             ) : (
-              <div className="aspect-[2/3] rounded-2xl bg-slate-100 flex items-center justify-center">
+              <div className="aspect-[4/5] rounded-2xl bg-slate-100 flex items-center justify-center">
                 <Loader2 className="w-7 h-7 animate-spin text-slate-400" />
               </div>
             )}
