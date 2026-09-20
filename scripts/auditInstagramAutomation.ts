@@ -22,6 +22,9 @@ assert.match(connection, /ig_exchange_token/, 'Kurzlebige Instagram-Tokens müss
 assert.match(connection, /ig_refresh_token/, 'Instagram-Tokens müssen automatisch erneuert werden.');
 assert.match(connection, /instagram_business_content_publish/, 'Die Veröffentlichungsberechtigung fehlt.');
 assert.match(connection, /media_publish/, 'Die echte Instagram-Veröffentlichung fehlt.');
+assert.match(connection, /waitForInstagramMedia/, 'Vor der Veröffentlichung muss die Instagram-Medienverarbeitung abgewartet werden.');
+assert.match(connection, /status_code === 'FINISHED'/, 'Instagram darf erst nach vollständig verarbeiteter Grafik veröffentlichen.');
+assert.match(connection, /status_code === 'ERROR'/, 'Fehler bei der Instagram-Medienverarbeitung müssen erkannt werden.');
 assert.match(client, /authenticatedFetch\('\/api\/instagram\/oauth\/start'/, 'Der Browser muss den geschützten OAuth-Start verwenden.');
 assert.doesNotMatch(client, /client_secret|access_token/i, 'Instagram-Geheimnisse dürfen nicht in den Browser gelangen.');
 assert.match(modal, /Instagram verbinden/, 'Die Oberfläche muss eine Instagram-Verbindung anbieten.');

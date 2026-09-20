@@ -10,6 +10,8 @@ const instagramScopes = 'instagram_business_basic,instagram_business_content_pub
 const oauthStateMaxAgeMs = 10 * 60 * 1000;
 const tokenRefreshAgeMs = 45 * 24 * 60 * 60 * 1000;
 const instagramMediaUrlMaxAgeMs = 15 * 60 * 1000;
+const instagramMediaProcessingAttempts = 20;
+const instagramMediaProcessingDelayMs = 1_000;
 
 type FirestoreDocument = {
   fields?: Record<string, { stringValue?: string; timestampValue?: string }>;
@@ -29,6 +31,12 @@ type InstagramProfile = {
   username?: string;
   account_type?: string;
   error?: { message?: string };
+};
+
+type InstagramMediaContainerStatus = {
+  id?: string;
+  status_code?: 'EXPIRED' | 'ERROR' | 'FINISHED' | 'IN_PROGRESS' | 'PUBLISHED';
+  status?: string;
 };
 
 const getAppId = () => {
@@ -163,6 +171,22 @@ const requestJson = async <T>(url: string, init?: RequestInit): Promise<T> => {
   const data = await response.json().catch(() => ({})) as T & { error?: { message?: string }; error_message?: string };
   if (!response.ok) throw new Error(data.error?.message || data.error_message || `Instagram API Fehler (HTTP ${response.status}).`);
   return data;
+};
+
+const wait = (milliseconds: number) => new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
+
+const waitForInstagramMedia = async (containerId: string, accessToken: string) => {
+  for (let attempt = 1; attempt <= instagramMediaProcessingAttempts; attempt += 1) {
+    const media = await requestJson<InstagramMediaContainerStatus>(
+      `${graphBase()}/${encodeURIComponent(containerId)}?${new URLSearchParams({ fields: 'id,status_code,status', access_token: accessToken })}`,
+    );
+    if (media.status_code === 'FINISHED' || media.status_code === 'PUBLISHED') return;
+    if (media.status_code === 'ERROR' || media.status_code === 'EXPIRED') {
+      throw new Error(media.status || 'Instagram konnte die Grafik nicht verarbeiten.');
+    }
+    if (attempt < instagramMediaProcessingAttempts) await wait(instagramMediaProcessingDelayMs);
+  }
+  throw new Error('Instagram verarbeitet die Grafik noch. Bitte versuche die Veröffentlichung erneut.');
 };
 
 const saveConnection = async (projectId: string, userId: string, accessToken: string, profile: InstagramProfile, connectedAt?: string) => {
@@ -320,6 +344,7 @@ export const publishInstagramImage = async (projectId: string, userId: string, i
     body: new URLSearchParams({ image_url: imageUrl, caption: input.caption.slice(0, 2200), access_token: connection.accessToken }).toString(),
   });
   if (!container.id) throw new Error('Instagram hat keinen Mediencontainer erstellt.');
+  await waitForInstagramMedia(container.id, connection.accessToken);
   const published = await requestJson<{ id?: string }>(`${graphBase()}/${encodeURIComponent(connection.instagramUserId)}/media_publish`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
