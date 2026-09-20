@@ -18,7 +18,8 @@ import {
   Trash2,
   ExternalLink,
   BookOpen,
-  CloudCheck
+  CloudCheck,
+  Instagram
 } from 'lucide-react';
 import { 
   ProjectSettings, 
@@ -44,6 +45,7 @@ import { ProjectSettingsModal } from './ProjectSettingsModal';
 import { BriefEditorTab } from './BriefEditorTab';
 import { BlogEditorTab } from './BlogEditorTab';
 import { PinterestPinsTab } from './PinterestPinsTab';
+import { InstagramPostsTab } from './InstagramPostsTab';
 import { YouTubeScriptTab } from './YouTubeScriptTab';
 import { ContentCalendarTab } from './ContentCalendarTab';
 
@@ -136,7 +138,7 @@ export const ContentEngineView: React.FC = () => {
   // Generator State
   const [topicInput, setTopicInput] = useState('');
   const [customAngleInput, setCustomAngleInput] = useState('');
-  const [activeTab, setActiveTab] = useState<'brief' | 'blog' | 'pinterest' | 'youtube' | 'calendar'>('brief');
+  const [activeTab, setActiveTab] = useState<'brief' | 'blog' | 'pinterest' | 'instagram' | 'youtube' | 'calendar'>('brief');
 
   // Loading States
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
@@ -643,6 +645,20 @@ export const ContentEngineView: React.FC = () => {
 
               <button
                 type="button"
+                onClick={() => setActiveTab('instagram')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                  activeTab === 'instagram'
+                    ? 'bg-fuchsia-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <Instagram className="w-4 h-4" />
+                <span>4. Instagram Beiträge (5)</span>
+                {activeContentProject.pinterestPins?.length > 0 && <span className="text-[10px] opacity-80">({activeContentProject.pinterestPins.length})</span>}
+              </button>
+
+              <button
+                type="button"
                 onClick={() => setActiveTab('youtube')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'youtube'
@@ -651,7 +667,7 @@ export const ContentEngineView: React.FC = () => {
                 }`}
               >
                 <Youtube className="w-4 h-4" />
-                <span>4. YouTube und Kurzvideos</span>
+                <span>5. YouTube und Kurzvideos</span>
                 {activeContentProject.youtubeVideo && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
@@ -665,7 +681,7 @@ export const ContentEngineView: React.FC = () => {
                 }`}
               >
                 <Calendar className="w-4 h-4" />
-                <span>5. Kalender & Freigabe</span>
+                <span>6. Kalender & Freigabe</span>
               </button>
             </div>
 
@@ -746,10 +762,19 @@ export const ContentEngineView: React.FC = () => {
                   pinterestPins: updatedPins,
                 });
               }}
-              onGenerateYouTube={handleGenerateYouTube}
-              isGeneratingYouTube={isGeneratingYouTube}
+              onOpenInstagram={() => setActiveTab('instagram')}
               topic={activeContentProject.topic}
               projectSettings={activeContentProject.projectSettings || activeProjectSettings}
+            />
+          )}
+
+          {activeTab === 'instagram' && (
+            <InstagramPostsTab
+              pins={activeContentProject.pinterestPins || []}
+              topic={activeContentProject.topic}
+              projectSettings={activeContentProject.projectSettings || activeProjectSettings}
+              onGenerateYouTube={handleGenerateYouTube}
+              isGeneratingYouTube={isGeneratingYouTube}
             />
           )}
 

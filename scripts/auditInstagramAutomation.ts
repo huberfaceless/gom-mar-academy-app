@@ -5,6 +5,7 @@ const server = readFileSync('server.ts', 'utf8');
 const connection = readFileSync('server/instagramConnectionAdmin.ts', 'utf8');
 const client = readFileSync('src/services/instagramService.ts', 'utf8');
 const modal = readFileSync('src/components/ContentEngine/InstagramPublishModal.tsx', 'utf8');
+const instagramTab = readFileSync('src/components/ContentEngine/InstagramPostsTab.tsx', 'utf8');
 const pins = readFileSync('src/components/ContentEngine/PinterestPinsTab.tsx', 'utf8');
 const legal = readFileSync('src/components/LegalModal.tsx', 'utf8');
 const publicPrivacy = readFileSync('public/privacy/index.html', 'utf8');
@@ -30,7 +31,9 @@ assert.doesNotMatch(client, /client_secret|access_token/i, 'Instagram-Geheimniss
 assert.match(modal, /Instagram verbinden/, 'Die Oberfläche muss eine Instagram-Verbindung anbieten.');
 assert.match(modal, /width: 1080, height: 1350/, 'Instagram-Grafiken müssen im Feed-Format 4:5 erstellt werden.');
 assert.match(modal, /aspect-\[4\/5\]/, 'Die Instagram-Vorschau muss das Feed-Format 4:5 zeigen.');
-assert.match(pins, /Auf Instagram posten/, 'Generierte Grafiken müssen an Instagram übergeben werden können.');
+assert.doesNotMatch(pins, /Auf Instagram posten/, 'Pinterest- und Instagram-Veröffentlichung müssen getrennte Bereiche haben.');
+assert.match(instagramTab, /Auf Instagram veröffentlichen/, 'Der getrennte Instagram-Bereich muss eine Veröffentlichung anbieten.');
+assert.match(instagramTab, /width: 1080, height: 1350/, 'Der Instagram-Bereich muss im Format 4:5 rendern.');
 assert.match(legal, /Instagram-Verbindung/, 'Die interne Datenschutzerklärung muss Instagram erläutern.');
 assert.match(publicPrivacy, /Instagram-Verbindung/, 'Die öffentliche Datenschutzerklärung muss Instagram erläutern.');
 
