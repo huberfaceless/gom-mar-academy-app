@@ -23,8 +23,8 @@ export type ContentStatus =
   | 'failed'
   | 'cancelled';
 
-export type PublishPlatform = 'BLOG' | 'PINTEREST' | 'YOUTUBE';
-export type PublishContentType = 'ARTICLE' | 'PIN' | 'VIDEO' | 'SHORT';
+export type PublishPlatform = 'BLOG' | 'PINTEREST' | 'INSTAGRAM' | 'YOUTUBE';
+export type PublishContentType = 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' | 'SHORT';
 
 export type SchedulerJobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
@@ -181,7 +181,7 @@ export interface YouTubeShort {
 
 export interface CalendarItem {
   id: string;
-  channel: 'blog' | 'pinterest' | 'youtube' | 'shorts';
+  channel: 'blog' | 'pinterest' | 'instagram' | 'youtube' | 'shorts';
   title: string;
   scheduledDate: string;
   status: ContentStatus;

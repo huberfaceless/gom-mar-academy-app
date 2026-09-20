@@ -29,6 +29,7 @@ function sanitizeLogText(text?: string): string | undefined {
  * records detailed execution audit logs without sensitive tokens, and executes independently of browser presence.
  */
 export type YouTubeVideoPublisher = (job: PublishingJob) => Promise<PublishResult>;
+export type InstagramImagePublisher = (job: PublishingJob) => Promise<PublishResult>;
 
 export class PublishingService {
 
@@ -338,11 +339,15 @@ export class PublishingService {
     }
   ): Promise<{ publishingJob: PublishingJob; schedulerJob: SchedulerJob }> {
     const isPinterestPin = params.platform === 'PINTEREST' && params.contentType === 'PIN';
+    const isInstagramPost = params.platform === 'INSTAGRAM'
+      && params.contentType === 'INSTAGRAM_POST'
+      && typeof params.payload?.imageBase64 === 'string'
+      && params.payload.imageBase64.length > 0;
     const isUploadedYouTubeVideo = params.platform === 'YOUTUBE'
       && (params.contentType === 'VIDEO' || params.contentType === 'SHORT')
       && typeof params.payload?.metadata?.videoId === 'string'
       && params.payload.metadata.videoId.length > 0;
-    if (!isPinterestPin && !isUploadedYouTubeVideo) {
+    if (!isPinterestPin && !isInstagramPost && !isUploadedYouTubeVideo) {
       throw new Error('Für diesen Inhalt ist die automatische Veröffentlichung noch nicht verfügbar.');
     }
 
@@ -404,6 +409,7 @@ export class PublishingService {
     triggeredBy: 'SCHEDULER_CRON' | 'MANUAL_RUN' | 'API_TRIGGER' = 'MANUAL_RUN',
     persistWithClient: boolean = true,
     youtubeVideoPublisher?: YouTubeVideoPublisher,
+    instagramImagePublisher?: InstagramImagePublisher,
   ): Promise<{ job: PublishingJob; result: PublishResult }> {
     const startedAt = new Date().toISOString();
 
@@ -442,6 +448,15 @@ export class PublishingService {
         break;
       case 'BLOG':
         result = await this.publishArticle(job);
+        break;
+      case 'INSTAGRAM':
+        result = instagramImagePublisher
+          ? await instagramImagePublisher(job)
+          : {
+              success: false,
+              status: 'NOT_IMPLEMENTED',
+              error: 'Die Instagram-Veröffentlichung ist nur über den Server-Scheduler verfügbar.',
+            };
         break;
       case 'YOUTUBE':
         if (job.contentType === 'SHORT') {
@@ -549,7 +564,9 @@ export class PublishingService {
   static async retryJob(
     userId: string,
     job: PublishingJob,
-    pinterestToken?: string
+    pinterestToken?: string,
+    youtubeVideoPublisher?: YouTubeVideoPublisher,
+    instagramImagePublisher?: InstagramImagePublisher,
   ): Promise<{ job: PublishingJob; result: PublishResult }> {
     const resetJob: PublishingJob = {
       ...job,
@@ -560,7 +577,15 @@ export class PublishingService {
       updatedAt: new Date().toISOString(),
     };
     await FirestoreContentService.savePublishingJob(userId, resetJob);
-    return this.processJob(userId, resetJob, pinterestToken, 'MANUAL_RUN');
+    return this.processJob(
+      userId,
+      resetJob,
+      pinterestToken,
+      'MANUAL_RUN',
+      true,
+      youtubeVideoPublisher,
+      instagramImagePublisher,
+    );
   }
 
   /**

@@ -6,6 +6,7 @@ import {
   Clock, 
   FileText, 
   Pin, 
+  Instagram,
   Youtube, 
   Smartphone, 
   Filter, 
@@ -35,6 +36,26 @@ import { FirestoreContentService } from '../../services/firestoreContentService'
 import { PublishingService } from '../../services/publishingService';
 import { useAuth } from '../../context/AuthContext';
 import { pinterestService } from '../../services/pinterestService';
+import { instagramService } from '../../services/instagramService';
+import { renderPinToCanvas } from '../../utils/pinterestCanvasRenderer';
+
+const buildInstagramCaption = (description?: string, keywords: string[] = []): string => {
+  const hashtags = keywords
+    .map((keyword) => keyword.replace(/[^\p{L}\p{N}_]/gu, ''))
+    .filter(Boolean)
+    .map((keyword) => `#${keyword}`)
+    .join(' ');
+  return [description?.trim(), hashtags].filter(Boolean).join('\n\n').slice(0, 2200);
+};
+
+const renderInstagramImage = async (
+  pin: CentralContentProject['pinterestPins'][number],
+  projectSettings: CentralContentProject['projectSettings'],
+): Promise<string> => {
+  const canvas = document.createElement('canvas');
+  await renderPinToCanvas(canvas, pin, projectSettings, { width: 1080, height: 1350 });
+  return canvas.toDataURL('image/jpeg', 0.82);
+};
 
 const formatLocalDateTime = (value?: string, fallbackDays = 0): string => {
   if (value && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value) && !/[zZ]|[+-]\d{2}:\d{2}$/.test(value)) {
@@ -117,7 +138,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const { user } = useAuth();
   const userId = user?.uid || 'local_user';
 
-  const [platformFilter, setPlatformFilter] = useState<'all' | 'blog' | 'pinterest' | 'youtube'>('all');
+  const [platformFilter, setPlatformFilter] = useState<'all' | 'blog' | 'pinterest' | 'instagram' | 'youtube'>('all');
   const [publishingJobs, setPublishingJobs] = useState<PublishingJob[]>([]);
   const [schedulerJobs, setSchedulerJobs] = useState<SchedulerJob[]>([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState<boolean>(false);
@@ -195,9 +216,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   // Unified items list
   const items: Array<{
     id: string;
-    type: 'blog' | 'pinterest' | 'youtube_video' | 'youtube_short';
-    platform: 'BLOG' | 'PINTEREST' | 'YOUTUBE';
-    contentType: 'ARTICLE' | 'PIN' | 'VIDEO' | 'SHORT';
+    type: 'blog' | 'pinterest' | 'instagram' | 'youtube_video' | 'youtube_short';
+    platform: 'BLOG' | 'PINTEREST' | 'INSTAGRAM' | 'YOUTUBE';
+    contentType: 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' | 'SHORT';
     title: string;
     targetUrl?: string;
     status: ContentStatus;
@@ -255,6 +276,32 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     });
   });
 
+  (project.pinterestPins || []).forEach((pin, idx) => {
+    const sourceId = pin.id || `pin_${idx}`;
+    const instagramId = `instagram_${sourceId}`;
+    const calendarItem = project.calendarItems.find((item) => item.id === instagramId);
+    items.push({
+      id: instagramId,
+      type: 'instagram',
+      platform: 'INSTAGRAM',
+      contentType: 'INSTAGRAM_POST',
+      title: `Instagram-Beitrag #${idx + 1}: ${pin.title}`,
+      targetUrl: pin.targetUrl,
+      status: calendarItem?.status || 'ai_generated',
+      scheduledDate: formatLocalDateTime(calendarItem?.scheduledDate, idx + 1),
+      platformLabel: 'Instagram Feed (4:5)',
+      icon: Instagram,
+      color: 'text-fuchsia-600 bg-fuchsia-50 border-fuchsia-200',
+      payloadData: {
+        title: pin.title,
+        description: buildInstagramCaption(pin.description, pin.keywords),
+        targetUrl: pin.targetUrl,
+        tags: pin.keywords,
+        metadata: { sourcePinId: sourceId, sourcePinIndex: idx },
+      },
+    });
+  });
+
   if (project.youtubeVideo) {
     items.push({
       id: 'yt_video_main',
@@ -305,6 +352,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const filteredItems = items.filter((item) => {
     if (platformFilter === 'blog') return item.type === 'blog';
     if (platformFilter === 'pinterest') return item.type === 'pinterest';
+    if (platformFilter === 'instagram') return item.type === 'instagram';
     if (platformFilter === 'youtube') return item.type.startsWith('youtube');
     return true;
   });
@@ -322,9 +370,21 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   const supportsPublishingQueue = (item: typeof items[0]): boolean => {
     if (item.platform === 'PINTEREST' && item.contentType === 'PIN') return true;
+    if (item.platform === 'INSTAGRAM' && item.contentType === 'INSTAGRAM_POST') return true;
     return item.platform === 'YOUTUBE'
       && (item.contentType === 'VIDEO' || item.contentType === 'SHORT')
       && typeof item.payloadData?.metadata?.videoId === 'string';
+  };
+
+  const preparePayload = async (item: typeof items[0]): Promise<PublishingJob['payload']> => {
+    if (item.platform !== 'INSTAGRAM') return item.payloadData;
+    const sourceIndex = item.payloadData?.metadata?.sourcePinIndex;
+    const sourcePin = typeof sourceIndex === 'number' ? project.pinterestPins[sourceIndex] : undefined;
+    if (!sourcePin) throw new Error('Die zugehörige Instagram-Grafik wurde nicht gefunden.');
+    return {
+      ...item.payloadData,
+      imageBase64: await renderInstagramImage(sourcePin, project.projectSettings),
+    };
   };
 
   // Enqueue a specific item into the Firestore publishing queue
@@ -352,11 +412,22 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         platform: item.platform,
         contentType: item.contentType,
         scheduledAt: toScheduledIso(item.scheduledDate),
-        payload: item.payloadData,
+        payload: await preparePayload(item),
       });
 
+      const updatedCalendarItems = project.calendarItems.some(calendarItem => calendarItem.id === item.id)
+        ? project.calendarItems.map(calendarItem => calendarItem.id === item.id ? { ...calendarItem, status: 'scheduled' as ContentStatus } : calendarItem)
+        : [...project.calendarItems, {
+            id: item.id,
+            channel: item.platform === 'INSTAGRAM' ? 'instagram' as const : item.type === 'blog' ? 'blog' as const : item.type === 'pinterest' ? 'pinterest' as const : item.type === 'youtube_short' ? 'shorts' as const : 'youtube' as const,
+            title: item.title,
+            scheduledDate: item.scheduledDate || formatLocalDateTime(),
+            status: 'scheduled' as ContentStatus,
+            publishingJobId: publishingJob.id,
+          }];
       onUpdateProject({
         ...project,
+        calendarItems: updatedCalendarItems,
         pinterestPins: project.pinterestPins.map(pin => pin.id === item.id ? { ...pin, status: 'scheduled' } : pin),
         youtubeVideo: item.id === 'yt_video_main' && project.youtubeVideo
           ? { ...project.youtubeVideo, status: 'scheduled' }
@@ -405,7 +476,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             platform: item.platform,
             contentType: item.contentType,
             scheduledAt: toScheduledIso(item.scheduledDate),
-            payload: item.payloadData,
+            payload: await preparePayload(item),
           });
           queuedCount++;
         } catch (e) {
@@ -415,7 +486,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       }
       await loadJobs();
       setActionNotice({
-        text: `${items.length} Inhalte freigegeben: ${queuedCount} Pinterest-Pins eingereiht, ${items.length - supportedItems.length} noch nicht automatisierbare Blog-/YouTube-Inhalte nicht eingereiht${failedCount > 0 ? `, ${failedCount} Pinterest-Aufträge fehlgeschlagen` : ''}.`,
+        text: `${items.length} Inhalte freigegeben: ${queuedCount} unterstützte Inhalte eingereiht, ${items.length - supportedItems.length} noch nicht automatisierbare Inhalte nicht eingereiht${failedCount > 0 ? `, ${failedCount} Aufträge fehlgeschlagen` : ''}.`,
         type: failedCount > 0 ? 'warning' : 'success',
       });
     }
@@ -434,6 +505,20 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           title: updated.blogArticle.title,
           scheduledDate: newDate,
           status: updated.blogArticle.status || 'ai_generated',
+        });
+      }
+    } else if (itemId.startsWith('instagram_')) {
+      const existingIndex = updated.calendarItems.findIndex((item) => item.id === itemId);
+      if (existingIndex >= 0) {
+        updated.calendarItems[existingIndex].scheduledDate = newDate;
+      } else {
+        const selectedItem = items.find((item) => item.id === itemId);
+        updated.calendarItems.push({
+          id: itemId,
+          channel: 'instagram',
+          title: selectedItem?.title || 'Instagram-Beitrag',
+          scheduledDate: newDate,
+          status: selectedItem?.status || 'ai_generated',
         });
       }
     } else if (itemId === 'yt_video_main' && updated.youtubeVideo) {
@@ -464,6 +549,20 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     const updated = { ...project };
     if (itemId === 'blog_main' && updated.blogArticle) {
       updated.blogArticle.status = newStatus;
+    } else if (itemId.startsWith('instagram_')) {
+      const existingIndex = updated.calendarItems.findIndex((item) => item.id === itemId);
+      if (existingIndex >= 0) {
+        updated.calendarItems[existingIndex].status = newStatus;
+      } else {
+        const selectedItem = items.find((item) => item.id === itemId);
+        updated.calendarItems.push({
+          id: itemId,
+          channel: 'instagram',
+          title: selectedItem?.title || 'Instagram-Beitrag',
+          scheduledDate: selectedItem?.scheduledDate || formatLocalDateTime(),
+          status: newStatus,
+        });
+      }
     } else if (itemId === 'yt_video_main' && updated.youtubeVideo) {
       updated.youtubeVideo.status = newStatus;
     } else if (itemId.startsWith('pin_') || updated.pinterestPins.some((p) => p.id === itemId)) {
@@ -502,7 +601,27 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     setActionNotice(null);
 
     try {
-      const { job: updatedJob, result } = await PublishingService.processJob(user.uid, job);
+      const { result } = await PublishingService.processJob(
+        user.uid,
+        job,
+        undefined,
+        'MANUAL_RUN',
+        true,
+        undefined,
+        async (instagramJob) => {
+          const imageBase64 = instagramJob.payload?.imageBase64;
+          if (!imageBase64) return { success: false, status: 'FAILED', error: 'Die Instagram-Grafik fehlt.' };
+          try {
+            const published = await instagramService.publishImage({
+              caption: instagramJob.payload?.description || instagramJob.payload?.title || '',
+              imageBase64,
+            });
+            return { success: true, status: 'PUBLISHED', externalId: published.id, publishedUrl: published.url };
+          } catch (error) {
+            return { success: false, status: 'FAILED', error: error instanceof Error ? error.message : 'Instagram-Veröffentlichung fehlgeschlagen.' };
+          }
+        },
+      );
       await loadJobs();
 
       if (result.success) {
@@ -533,7 +652,25 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     setActionNotice(null);
 
     try {
-      const { result } = await PublishingService.retryJob(user.uid, job);
+      const { result } = await PublishingService.retryJob(
+        user.uid,
+        job,
+        undefined,
+        undefined,
+        async (instagramJob) => {
+          const imageBase64 = instagramJob.payload?.imageBase64;
+          if (!imageBase64) return { success: false, status: 'FAILED', error: 'Die Instagram-Grafik fehlt.' };
+          try {
+            const published = await instagramService.publishImage({
+              caption: instagramJob.payload?.description || instagramJob.payload?.title || '',
+              imageBase64,
+            });
+            return { success: true, status: 'PUBLISHED', externalId: published.id, publishedUrl: published.url };
+          } catch (error) {
+            return { success: false, status: 'FAILED', error: error instanceof Error ? error.message : 'Instagram-Veröffentlichung fehlgeschlagen.' };
+          }
+        },
+      );
       await loadJobs();
       setActionNotice({
         text: `Erneuter Versuch ausgeführt: ${getStatusLabel(result.status)} – ${result.error || 'Erfolgreich'}`,
@@ -644,6 +781,15 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         </button>
         <button
           type="button"
+          onClick={() => setPlatformFilter('instagram')}
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+            platformFilter === 'instagram' ? 'bg-fuchsia-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+          }`}
+        >
+          Instagram ({project.pinterestPins?.length || 0})
+        </button>
+        <button
+          type="button"
           onClick={() => setPlatformFilter('youtube')}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             platformFilter === 'youtube' ? 'bg-red-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
@@ -737,7 +883,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     <Clock className="w-3.5 h-3.5 text-purple-400" />
                     <span>Warteschlange</span>
                   </button>
-                ) : item.platform === 'YOUTUBE' ? (
+                ) : item.platform === 'YOUTUBE' || item.platform === 'INSTAGRAM' ? (
                   <span className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-bold rounded-xl border border-purple-200 flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5" />
                     <span>Automatische Veröffentlichung geplant</span>
@@ -914,7 +1060,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
                         {job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
                           <span className="text-[10px] font-bold text-red-300">Automatisch geplant</span>
-                        ) : (job.platform !== 'PINTEREST' || job.contentType !== 'PIN') ? (
+                        ) : !(
+                          (job.platform === 'PINTEREST' && job.contentType === 'PIN')
+                          || (job.platform === 'INSTAGRAM' && job.contentType === 'INSTAGRAM_POST')
+                        ) ? (
                           <span className="text-[10px] font-bold text-slate-400">Nicht unterstützt</span>
                         ) : job.status === 'FAILED' ? (
                           <button

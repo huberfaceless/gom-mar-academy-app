@@ -15,6 +15,7 @@ import {
 } from '../../server/publishingQueueAdmin.js';
 import { publishExistingYouTubeVideo } from '../../server/youtubeConnectionAdmin.js';
 import { loadPinterestAccessToken } from '../../server/pinterestConnectionAdmin.js';
+import { publishInstagramImage } from '../../server/instagramConnectionAdmin.js';
 
 
 export interface SchedulerExecutionResult {
@@ -234,6 +235,38 @@ export class ServerSchedulerWorker {
                 success: false,
                 status: 'FAILED',
                 error: error instanceof Error ? error.message : 'Die YouTube-Veröffentlichung ist fehlgeschlagen.',
+              };
+            }
+          },
+          async (instagramJob) => {
+            const imageBase64 = instagramJob.payload?.imageBase64;
+            if (typeof imageBase64 !== 'string' || !imageBase64) {
+              return {
+                success: false,
+                status: 'FAILED',
+                error: 'Die Instagram-Grafik fehlt.',
+              };
+            }
+            try {
+              const published = await publishInstagramImage(
+                process.env.FIREBASE_PROJECT_ID || 'gom-mar-akademie',
+                instagramJob.userId,
+                {
+                  caption: instagramJob.payload?.description || instagramJob.payload?.title || '',
+                  imageBase64,
+                },
+              );
+              return {
+                success: true,
+                status: 'PUBLISHED',
+                externalId: published.id,
+                publishedUrl: published.url,
+              };
+            } catch (error) {
+              return {
+                success: false,
+                status: 'FAILED',
+                error: error instanceof Error ? error.message : 'Die Instagram-Veröffentlichung ist fehlgeschlagen.',
               };
             }
           },
