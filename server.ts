@@ -236,7 +236,7 @@ async function startServer() {
 
     const deliveryStatuses = extractWhatsAppDeliveryStatuses(payload);
     if (deliveryStatuses.length > 0) {
-      console.info('WhatsApp-Zustellstatus', deliveryStatuses);
+      console.info('WhatsApp-Zustellstatus', JSON.stringify(deliveryStatuses));
     }
 
     res.sendStatus(200);
