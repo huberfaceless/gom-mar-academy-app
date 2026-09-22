@@ -68,3 +68,89 @@ export const summarizeWhatsAppWebhook = (payload: WhatsAppWebhookPayload) => {
     fields: [...fields],
   };
 };
+
+type WhatsAppDeliveryError = {
+  code?: number | string;
+  title?: string;
+  message?: string;
+  details?: string;
+};
+
+export type WhatsAppDeliveryStatus = {
+  messageId?: string;
+  status?: string;
+  timestamp?: string;
+  conversationOriginType?: string;
+  pricingCategory?: string;
+  billable?: boolean;
+  errors: WhatsAppDeliveryError[];
+};
+
+const MAX_DELIVERY_STATUSES = 20;
+const MAX_ERRORS_PER_STATUS = 10;
+const MAX_LOG_STRING_LENGTH = 500;
+
+const asRecord = (value: unknown): Record<string, unknown> | null => (
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null
+);
+
+const sanitizedString = (value: unknown): string | undefined => (
+  typeof value === 'string'
+    ? value.slice(0, MAX_LOG_STRING_LENGTH)
+    : undefined
+);
+
+export const extractWhatsAppDeliveryStatuses = (
+  payload: WhatsAppWebhookPayload,
+): WhatsAppDeliveryStatus[] => {
+  const result: WhatsAppDeliveryStatus[] = [];
+  const entries = Array.isArray(payload.entry) ? payload.entry : [];
+
+  for (const entry of entries) {
+    for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
+      const statuses = Array.isArray(change.value?.statuses) ? change.value.statuses : [];
+
+      for (const rawStatus of statuses) {
+        if (result.length >= MAX_DELIVERY_STATUSES) return result;
+
+        const status = asRecord(rawStatus);
+        if (!status) continue;
+
+        const conversation = asRecord(status.conversation);
+        const origin = asRecord(conversation?.origin);
+        const pricing = asRecord(status.pricing);
+        const rawErrors = Array.isArray(status.errors) ? status.errors : [];
+        const errors = rawErrors.slice(0, MAX_ERRORS_PER_STATUS).flatMap((rawError) => {
+          const error = asRecord(rawError);
+          if (!error) return [];
+
+          const errorData = asRecord(error.error_data);
+          const code = typeof error.code === 'number' || typeof error.code === 'string'
+            ? error.code
+            : undefined;
+
+          return [{
+            code,
+            title: sanitizedString(error.title),
+            message: sanitizedString(error.message),
+            details: sanitizedString(errorData?.details),
+          }];
+        });
+
+        result.push({
+          messageId: sanitizedString(status.id),
+          status: sanitizedString(status.status),
+          timestamp: sanitizedString(status.timestamp),
+          conversationOriginType: sanitizedString(origin?.type),
+          pricingCategory: sanitizedString(pricing?.category),
+          billable: typeof pricing?.billable === 'boolean' ? pricing.billable : undefined,
+          errors,
+        });
+      }
+    }
+  }
+
+  return result;
+};

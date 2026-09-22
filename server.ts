@@ -22,7 +22,7 @@ import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscrib
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
-import { summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
+import { extractWhatsAppDeliveryStatuses, summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -233,6 +233,12 @@ async function startServer() {
     }
 
     console.info('WhatsApp-Webhook empfangen', summary);
+
+    const deliveryStatuses = extractWhatsAppDeliveryStatuses(payload);
+    if (deliveryStatuses.length > 0) {
+      console.info('WhatsApp-Zustellstatus', deliveryStatuses);
+    }
+
     res.sendStatus(200);
   });
 
