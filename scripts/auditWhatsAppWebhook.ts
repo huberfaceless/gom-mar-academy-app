@@ -1,6 +1,7 @@
 import { createHmac } from 'crypto';
 import assert from 'node:assert/strict';
 import {
+  extractWhatsAppDeliveryStatuses,
   summarizeWhatsAppWebhook,
   verifyWhatsAppWebhookChallenge,
   verifyWhatsAppWebhookSignature,
@@ -41,5 +42,49 @@ assert.deepEqual(summarizeWhatsAppWebhook({
   statusCount: 1,
   fields: ['messages'],
 });
+
+
+const recipientId = '436604805584';
+const deliveryStatuses = extractWhatsAppDeliveryStatuses({
+  object: 'whatsapp_business_account',
+  entry: [{
+    changes: [{
+      field: 'messages',
+      value: {
+        statuses: [{
+          id: 'wamid.test',
+          status: 'failed',
+          timestamp: '1789981200',
+          recipient_id: recipientId,
+          conversation: { origin: { type: 'marketing' } },
+          pricing: { billable: false, category: 'marketing' },
+          errors: [{
+            code: 131049,
+            title: 'This message was not delivered',
+            message: 'This message was not delivered',
+            error_data: { details: 'Message not delivered to maintain healthy ecosystem engagement.' },
+          }],
+        }],
+      },
+    }],
+  }],
+});
+
+assert.deepEqual(deliveryStatuses, [{
+  messageId: 'wamid.test',
+  status: 'failed',
+  timestamp: '1789981200',
+  conversationOriginType: 'marketing',
+  pricingCategory: 'marketing',
+  billable: false,
+  errors: [{
+    code: 131049,
+    title: 'This message was not delivered',
+    message: 'This message was not delivered',
+    details: 'Message not delivered to maintain healthy ecosystem engagement.',
+  }],
+}]);
+assert.equal(JSON.stringify(deliveryStatuses).includes(recipientId), false);
+assert.equal(JSON.stringify(deliveryStatuses).includes('recipient_id'), false);
 
 console.log('WhatsApp-Webhook-Audit erfolgreich.');
