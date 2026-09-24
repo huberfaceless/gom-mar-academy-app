@@ -11,6 +11,7 @@ import {
   sendPasswordReset,
   getFirebaseAuthErrorMessage
 } from '../firebase/auth';
+import { saveWhatsAppProfile } from '../services/whatsappProfileService';
 
 export type AuthStateType = 
   | 'LOADING' 
@@ -26,7 +27,7 @@ interface AuthContextType {
   authState: AuthStateType;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, displayName?: string) => Promise<void>;
+  register: (email: string, password: string, displayName?: string, phoneNumber?: string, whatsappConsent?: boolean) => Promise<void>;
   logout: () => Promise<void>;
   sendVerificationEmail: () => Promise<void>;
   refreshVerificationStatus: () => Promise<boolean>;
@@ -80,7 +81,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const register = async (email: string, password: string, displayName?: string): Promise<void> => {
+  const register = async (
+    email: string,
+    password: string,
+    displayName?: string,
+    phoneNumber = '',
+    whatsappConsent = false,
+  ): Promise<void> => {
     setError(null);
     try {
       const registeredUser = await registerWithEmail(email, password, displayName, language);
@@ -89,6 +96,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // registration always advances to the verification screen, even if email
       // delivery is temporarily unavailable.
       setUser(registeredUser);
+
+      if (phoneNumber.trim()) {
+        try {
+          await saveWhatsAppProfile(phoneNumber, whatsappConsent, displayName || '');
+        } catch (profileError) {
+          console.warn('Could not save WhatsApp profile during registration:', profileError);
+        }
+      }
 
       try {
         await firebaseSendVerification(registeredUser, language);

@@ -7,7 +7,8 @@ import {
   ArrowRight, 
   CheckCircle2, 
   AlertCircle, 
-  ShieldCheck
+  ShieldCheck,
+  Phone
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -35,6 +36,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [whatsappConsent, setWhatsappConsent] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>('');
   const [resetSuccessMsg, setResetSuccessMsg] = useState<string>('');
@@ -79,10 +82,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         setFormError(t('auth.validation.password'));
         return;
       }
+      if (phoneNumber.trim()) {
+        const phoneDigits = phoneNumber.replace(/\D/g, '').replace(/^00/, '');
+        if ((!phoneNumber.trim().startsWith('+') && !phoneNumber.trim().startsWith('00')) || phoneDigits.length < 8 || phoneDigits.length > 15) {
+          setFormError(language === 'de' ? 'Bitte gib die Telefonnummer mit Ländervorwahl ein, zum Beispiel +43.' : language === 'pl' ? 'Podaj numer telefonu z kodem kraju, na przykład +48.' : 'Enter the phone number with country code, for example +43.');
+          return;
+        }
+      }
 
       setIsSubmitting(true);
       try {
-        await register(trimmedEmail, password, name.trim());
+        await register(trimmedEmail, password, name.trim(), phoneNumber.trim(), whatsappConsent);
         if (onSuccess) onSuccess();
         onClose();
       } catch (err: unknown) {
@@ -223,6 +233,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="space-y-4 text-left">
           {mode === 'register' && (
+            <>
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
                 {t('auth.name')}
@@ -239,6 +250,41 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 />
               </div>
             </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                {language === 'de' ? 'Telefonnummer (freiwillig)' : language === 'pl' ? 'Numer telefonu (opcjonalnie)' : 'Phone number (optional)'}
+              </label>
+              <div className="relative">
+                <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                    if (!e.target.value.trim()) setWhatsappConsent(false);
+                  }}
+                  placeholder="+43 660 1234567"
+                  autoComplete="tel"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white"
+                />
+              </div>
+              <p className="mt-1 text-[11px] text-slate-500">
+                {language === 'de' ? 'Damit eingehende WhatsApp-Nachrichten deinem Academy-Konto zugeordnet werden können.' : language === 'pl' ? 'Umożliwia przypisanie przychodzących wiadomości WhatsApp do konta Academy.' : 'Used to assign incoming WhatsApp messages to your Academy account.'}
+              </p>
+            </div>
+            <label className={`flex items-start gap-2 rounded-xl border p-3 text-xs ${phoneNumber.trim() ? 'border-slate-200 bg-slate-50 text-slate-700' : 'border-slate-100 bg-slate-50 text-slate-400'}`}>
+              <input
+                type="checkbox"
+                checked={whatsappConsent}
+                disabled={!phoneNumber.trim()}
+                onChange={(e) => setWhatsappConsent(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600"
+              />
+              <span>
+                {language === 'de' ? 'Ich möchte freiwillig wichtige Academy-Informationen und Angebote per WhatsApp erhalten. Die Einwilligung kann jederzeit widerrufen werden.' : language === 'pl' ? 'Dobrowolnie zgadzam się na otrzymywanie przez WhatsApp ważnych informacji i ofert Academy. Zgodę można w każdej chwili wycofać.' : 'I voluntarily agree to receive important Academy information and offers via WhatsApp. I can withdraw consent at any time.'}
+              </span>
+            </label>
+            </>
           )}
 
           <div>

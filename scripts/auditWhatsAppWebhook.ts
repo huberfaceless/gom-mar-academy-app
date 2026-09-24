@@ -7,6 +7,13 @@ import {
   verifyWhatsAppWebhookChallenge,
   verifyWhatsAppWebhookSignature,
 } from '../server/whatsappWebhook.js';
+import { normalizeWhatsAppPhone } from '../server/whatsappMemberProfileAdmin.js';
+
+assert.equal(normalizeWhatsAppPhone('+43 660 1234567'), '+436601234567');
+assert.equal(normalizeWhatsAppPhone('0048 600 123 456'), '+48600123456');
+assert.equal(normalizeWhatsAppPhone(''), '');
+assert.throws(() => normalizeWhatsAppPhone('0660 1234567'), /Ländervorwahl/);
+assert.throws(() => normalizeWhatsAppPhone('+43 12'), /gültige Telefonnummer/);
 
 const token = 'test-verification-token';
 assert.equal(verifyWhatsAppWebhookChallenge({

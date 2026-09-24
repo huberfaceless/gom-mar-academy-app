@@ -10,6 +10,12 @@ type WhatsAppInboxMessage = {
   type: string;
   text: string;
   receivedAt: string;
+  member?: {
+    userId: string;
+    displayName: string;
+    email: string;
+    whatsappConsentGranted: boolean;
+  };
 };
 
 const messageDate = (timestamp: string): Date => {
@@ -104,13 +110,22 @@ export const WhatsAppInboxView: React.FC = () => {
             <article key={message.messageId} className="p-4 sm:p-5">
               <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <div className="font-bold text-slate-900">
-                  {message.senderName?.trim() || 'Unbekannter Kontakt'}
+                  {message.member?.displayName || message.senderName?.trim() || 'Unbekannter Kontakt'}
                   <span className="ml-2 font-medium text-slate-500">+{message.senderPhone}</span>
                 </div>
                 <time className="text-xs font-medium text-slate-500" dateTime={messageDate(message.timestamp).toISOString()}>
                   {formatMessageDate(message.timestamp)}
                 </time>
               </div>
+              {message.member && (
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                  <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 font-bold text-indigo-700">Academy-Mitglied</span>
+                  <span className="font-medium text-slate-600">{message.member.email}</span>
+                  <span className={`rounded-full border px-2.5 py-1 font-bold ${message.member.whatsappConsentGranted ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'}`}>
+                    {message.member.whatsappConsentGranted ? 'WhatsApp-Einwilligung aktiv' : 'Keine Versand-Einwilligung'}
+                  </span>
+                </div>
+              )}
               <p className="mt-3 whitespace-pre-wrap break-words rounded-xl bg-slate-50 p-3 text-sm leading-relaxed text-slate-800">
                 {message.text || `[${message.type}]`}
               </p>

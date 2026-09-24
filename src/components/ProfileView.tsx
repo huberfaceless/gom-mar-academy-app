@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { UserProfile, AcademyTier } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
-import { User, Crown, Check, ShieldCheck, Mail, Sparkles, BookOpen, Layers, Edit2, Save } from 'lucide-react';
+import { User, Crown, Check, ShieldCheck, Mail, MessageCircle, Sparkles, BookOpen, Layers, Edit2, Save } from 'lucide-react';
 import { loadEmailConsent, saveEmailConsent } from '../services/emailConsentService';
+import { loadWhatsAppProfile, saveWhatsAppProfile } from '../services/whatsappProfileService';
 
 const profileCopy: Record<LanguageCode, Record<string, string>> = {
   de: {
@@ -47,6 +48,12 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   const [emailConsentSaving, setEmailConsentSaving] = useState(false);
   const [emailConsentMessage, setEmailConsentMessage] = useState('');
   const [emailConsentError, setEmailConsentError] = useState('');
+  const [whatsappPhone, setWhatsappPhone] = useState('');
+  const [whatsappConsent, setWhatsappConsent] = useState(false);
+  const [whatsappLoading, setWhatsappLoading] = useState(true);
+  const [whatsappSaving, setWhatsappSaving] = useState(false);
+  const [whatsappMessage, setWhatsappMessage] = useState('');
+  const [whatsappError, setWhatsappError] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -66,6 +73,23 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
     return () => { cancelled = true; };
   }, [copy.emailConsentLoadError]);
 
+  useEffect(() => {
+    let cancelled = false;
+    void loadWhatsAppProfile()
+      .then((profile) => {
+        if (cancelled) return;
+        setWhatsappPhone(profile.phoneNumber);
+        setWhatsappConsent(profile.consentGranted);
+      })
+      .catch(() => {
+        if (!cancelled) setWhatsappError(language === 'de' ? 'Das WhatsApp-Profil konnte nicht geladen werden.' : language === 'pl' ? 'Nie udało się wczytać profilu WhatsApp.' : 'The WhatsApp profile could not be loaded.');
+      })
+      .finally(() => {
+        if (!cancelled) setWhatsappLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [language]);
+
   const handleEmailConsentChange = async () => {
     const nextGranted = !emailConsentGranted;
     const confirmed = window.confirm(nextGranted ? copy.emailConsentConfirmGrant : copy.emailConsentConfirmWithdraw);
@@ -83,6 +107,22 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       setEmailConsentError(copy.emailConsentSaveError);
     } finally {
       setEmailConsentSaving(false);
+    }
+  };
+
+  const handleWhatsAppSave = async () => {
+    setWhatsappSaving(true);
+    setWhatsappError('');
+    setWhatsappMessage('');
+    try {
+      const profile = await saveWhatsAppProfile(whatsappPhone, whatsappPhone.trim() ? whatsappConsent : false, user.name);
+      setWhatsappPhone(profile.phoneNumber);
+      setWhatsappConsent(profile.consentGranted);
+      setWhatsappMessage(language === 'de' ? 'WhatsApp-Einstellungen gespeichert.' : language === 'pl' ? 'Ustawienia WhatsApp zostały zapisane.' : 'WhatsApp settings saved.');
+    } catch (error: unknown) {
+      setWhatsappError(error instanceof Error ? error.message : 'WhatsApp-Einstellungen konnten nicht gespeichert werden.');
+    } finally {
+      setWhatsappSaving(false);
     }
   };
 
@@ -212,6 +252,59 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         </div>
         {emailConsentMessage && <p className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-800">{emailConsentMessage}</p>}
         {emailConsentError && <p role="alert" className="mt-3 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-800">{emailConsentError}</p>}
+      </section>
+
+      <section className="rounded-3xl border border-emerald-200 bg-white p-6 shadow-sm" aria-labelledby="whatsapp-profile-title">
+        <div className="space-y-4">
+          <div>
+            <h3 id="whatsapp-profile-title" className="flex items-center gap-2 text-base font-bold text-slate-950">
+              <MessageCircle className="h-5 w-5 text-emerald-600" />
+              WhatsApp
+            </h3>
+            <p className="mt-2 max-w-2xl text-xs leading-relaxed text-slate-600">
+              {language === 'de' ? 'Die freiwillige Telefonnummer ermöglicht die Zuordnung eingehender Nachrichten zu deinem Academy-Konto.' : language === 'pl' ? 'Opcjonalny numer telefonu umożliwia przypisanie przychodzących wiadomości do konta Academy.' : 'The optional phone number lets incoming messages be assigned to your Academy account.'}
+            </p>
+          </div>
+          <div className="max-w-md">
+            <label className="mb-1 block text-xs font-bold text-slate-700">
+              {language === 'de' ? 'Telefonnummer (freiwillig)' : language === 'pl' ? 'Numer telefonu (opcjonalnie)' : 'Phone number (optional)'}
+            </label>
+            <input
+              type="tel"
+              value={whatsappPhone}
+              disabled={whatsappLoading || whatsappSaving}
+              onChange={(event) => {
+                setWhatsappPhone(event.target.value);
+                if (!event.target.value.trim()) setWhatsappConsent(false);
+              }}
+              placeholder="+43 660 1234567"
+              autoComplete="tel"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:bg-white focus:outline-none disabled:opacity-60"
+            />
+          </div>
+          <label className={`flex max-w-2xl items-start gap-2 rounded-xl border p-3 text-xs ${whatsappPhone.trim() ? 'border-emerald-200 bg-emerald-50/50 text-slate-700' : 'border-slate-100 bg-slate-50 text-slate-400'}`}>
+            <input
+              type="checkbox"
+              checked={whatsappConsent}
+              disabled={!whatsappPhone.trim() || whatsappLoading || whatsappSaving}
+              onChange={(event) => setWhatsappConsent(event.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-emerald-600"
+            />
+            <span>
+              {language === 'de' ? 'Ich möchte freiwillig wichtige Academy-Informationen und Angebote per WhatsApp erhalten. Diese Einwilligung kann ich jederzeit hier widerrufen.' : language === 'pl' ? 'Dobrowolnie zgadzam się na otrzymywanie przez WhatsApp ważnych informacji i ofert Academy. Zgodę mogę tutaj w każdej chwili wycofać.' : 'I voluntarily agree to receive important Academy information and offers via WhatsApp. I can withdraw this consent here at any time.'}
+            </span>
+          </label>
+          <button
+            type="button"
+            onClick={() => void handleWhatsAppSave()}
+            disabled={whatsappLoading || whatsappSaving}
+            className="rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {whatsappSaving ? '…' : language === 'de' ? 'WhatsApp-Einstellungen speichern' : language === 'pl' ? 'Zapisz ustawienia WhatsApp' : 'Save WhatsApp settings'}
+          </button>
+          {whatsappMessage && <p className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-800">{whatsappMessage}</p>}
+          {whatsappError && <p role="alert" className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-800">{whatsappError}</p>}
+        </div>
       </section>
 
       {/* Member Key Metrics Summary */}
