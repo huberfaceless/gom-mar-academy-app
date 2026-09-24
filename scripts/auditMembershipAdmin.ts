@@ -43,6 +43,9 @@ assert.match(admin, /Deutsche Mitglieder/, 'Der deutsche Mitgliederbereich fehlt
 assert.match(admin, /Englische Mitglieder/, 'Der englische Mitgliederbereich fehlt.');
 assert.match(admin, /Polnische Mitglieder/, 'Der polnische Mitgliederbereich fehlt.');
 assert.match(admin, /Konto und E-Mail löschen/, 'Die Löschaktion für Mitgliedskonten fehlt.');
+assert.doesNotMatch(admin, /students: StudentRecord\[\]/, 'Die Admin-Mitgliederliste darf keine lokale Browserliste mehr erhalten.');
+assert.doesNotMatch(admin, /membersLoaded \? firebaseMembers : students/, 'Mitgliederzahlen dürfen nicht auf veraltete lokale Daten zurückfallen.');
+assert.match(admin, /const totalStudents = firebaseMembers\.length/, 'Firebase muss die einzige Quelle der Mitgliederzahlen sein.');
 assert.match(admin, /window\.prompt\(`Zur Bestätigung bitte exakt eingeben:/, 'Die dauerhafte Löschung verlangt eine zweite exakte Bestätigung.');
 
 assert.equal(isMembershipResolvedForUser('admin-uid', 'admin-uid'), true);
