@@ -49,3 +49,9 @@ export const getAcademyStageLimit = (
 ): number => (role === 'admin' || TIER_RANK[tier] >= TIER_RANK.PRO
   ? totalStages
   : Math.min(2, totalStages));
+
+
+export const isMembershipResolvedForUser = (
+  authenticatedUid?: string | null,
+  resolvedUid?: string | null,
+): boolean => !authenticatedUid || authenticatedUid === resolvedUid;
