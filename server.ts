@@ -24,6 +24,7 @@ import { completeInstagramAuthorization, createInstagramAuthorizationUrl, delete
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
+import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -345,6 +346,38 @@ async function startServer() {
       res.json({ success: true, member: updatedMember });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Mitgliedssprache konnte nicht gespeichert werden.' });
+    }
+  });
+
+  app.get('/api/member/whatsapp-profile', requireAuthenticatedMember, async (req, res) => {
+    try {
+      const member = (req as FirebaseRequest).firebaseUser;
+      if (!member?.sub) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const profile = await loadWhatsAppMemberProfile(FIREBASE_PROJECT_ID, member.sub);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ profile: { phoneNumber: profile.phoneNumber, consentGranted: profile.consentGranted, updatedAt: profile.updatedAt } });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'WhatsApp-Profil konnte nicht geladen werden.' });
+    }
+  });
+
+  app.put('/api/member/whatsapp-profile', requireAuthenticatedMember, async (req, res) => {
+    try {
+      const member = (req as FirebaseRequest).firebaseUser;
+      if (!member?.sub || !member.email) {
+        res.status(400).json({ error: 'Firebase-Mitgliedsdaten fehlen.' });
+        return;
+      }
+      const profile = await saveWhatsAppMemberProfile(FIREBASE_PROJECT_ID, member.sub, {
+        email: member.email,
+        displayName: typeof req.body?.displayName === 'string' ? req.body.displayName : '',
+        phoneNumber: req.body?.phoneNumber,
+        consentGranted: req.body?.consentGranted,
+      });
+      res.json({ profile: { phoneNumber: profile.phoneNumber, consentGranted: profile.consentGranted, updatedAt: profile.updatedAt } });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'WhatsApp-Profil konnte nicht gespeichert werden.';
+      res.status(/Telefonnummer|Ländervorwahl|zugeordnet/.test(message) ? 400 : 503).json({ error: message });
     }
   });
 
@@ -1176,9 +1209,25 @@ async function startServer() {
   app.get('/api/admin/whatsapp/messages', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const requestedLimit = typeof req.query.limit === 'string' ? Number(req.query.limit) : 100;
-      const messages = await listWhatsAppInboxMessages(FIREBASE_PROJECT_ID, requestedLimit);
+      const [messages, profiles] = await Promise.all([
+        listWhatsAppInboxMessages(FIREBASE_PROJECT_ID, requestedLimit),
+        listWhatsAppMemberProfiles(FIREBASE_PROJECT_ID),
+      ]);
+      const profilesByPhone = new Map(profiles.filter(profile => profile.phoneDigits).map(profile => [profile.phoneDigits, profile]));
+      const assignedMessages = messages.map(message => {
+        const member = profilesByPhone.get(message.senderPhone.replace(/\D/g, ''));
+        return member ? {
+          ...message,
+          member: {
+            userId: member.userId,
+            displayName: member.displayName,
+            email: member.email,
+            whatsappConsentGranted: member.consentGranted,
+          },
+        } : message;
+      });
       res.setHeader('Cache-Control', 'no-store');
-      res.json({ success: true, messages });
+      res.json({ success: true, messages: assignedMessages });
     } catch (error: unknown) {
       res.status(503).json({
         error: error instanceof Error ? error.message : 'Der WhatsApp-Posteingang konnte nicht geladen werden.',
@@ -1262,6 +1311,7 @@ async function startServer() {
       }
       await deleteCrmContact(FIREBASE_PROJECT_ID, adminUserId, memberContactId(uid));
       await deleteEmailConsent(FIREBASE_PROJECT_ID, uid);
+      await deleteWhatsAppMemberProfile(FIREBASE_PROJECT_ID, uid);
       await deleteFirebaseMember(FIREBASE_PROJECT_ID, uid);
       res.json({ success: true, message: 'Mitgliedskonto und E-Mail-Adresse dauerhaft gelöscht.' });
     } catch (error: unknown) {
