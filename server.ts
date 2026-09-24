@@ -1294,6 +1294,50 @@ async function startServer() {
     }
   });
 
+  app.patch('/api/admin/members/:uid/whatsapp', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const uid = req.params.uid?.trim();
+    const phoneNumber = typeof req.body?.phoneNumber === 'string' ? req.body.phoneNumber.trim() : '';
+    if (!uid || uid.length > 128) {
+      res.status(400).json({ error: 'Mitglied ist ungültig.' });
+      return;
+    }
+    try {
+      const member = await getFirebaseMember(FIREBASE_PROJECT_ID, uid);
+      if (!member) {
+        res.status(404).json({ error: 'Firebase-Mitglied wurde nicht gefunden.' });
+        return;
+      }
+      if (!phoneNumber) {
+        await deleteWhatsAppMemberProfile(FIREBASE_PROJECT_ID, uid);
+        res.json({
+          success: true,
+          whatsappPhoneNumber: '',
+          whatsappConsentGranted: false,
+          message: 'WhatsApp-Nummer entfernt.',
+        });
+        return;
+      }
+      const existingProfile = await loadWhatsAppMemberProfile(FIREBASE_PROJECT_ID, uid);
+      const profile = await saveWhatsAppMemberProfile(FIREBASE_PROJECT_ID, uid, {
+        email: member.email,
+        displayName: member.displayName,
+        phoneNumber,
+        consentGranted: existingProfile.phoneNumber === phoneNumber && existingProfile.consentGranted,
+      });
+      res.json({
+        success: true,
+        whatsappPhoneNumber: profile.phoneNumber,
+        whatsappConsentGranted: profile.consentGranted,
+        message: existingProfile.phoneNumber === profile.phoneNumber
+          ? 'WhatsApp-Nummer gespeichert.'
+          : 'WhatsApp-Nummer geändert. Eine neue Versand-Einwilligung ist erforderlich.',
+      });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'WhatsApp-Nummer konnte nicht gespeichert werden.';
+      res.status(/Telefonnummer|Ländervorwahl|zugeordnet|ungültig/.test(message) ? 400 : 503).json({ error: message });
+    }
+  });
+
   app.post('/api/admin/members/:uid/language', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     const uid = req.params.uid?.trim();
     const language = req.body?.language as MemberLanguage | undefined;
