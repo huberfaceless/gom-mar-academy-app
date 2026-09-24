@@ -1271,9 +1271,23 @@ async function startServer() {
   app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const pageToken = typeof req.query.pageToken === 'string' ? req.query.pageToken : undefined;
-      const result = await listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken);
+      const [result, whatsappProfiles] = await Promise.all([
+        listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken),
+        listWhatsAppMemberProfiles(FIREBASE_PROJECT_ID),
+      ]);
+      const whatsappProfilesByUserId = new Map(
+        whatsappProfiles.map((profile) => [profile.userId, profile]),
+      );
+      const members = result.members.map((member) => {
+        const whatsappProfile = whatsappProfilesByUserId.get(member.uid);
+        return {
+          ...member,
+          whatsappPhoneNumber: whatsappProfile?.phoneNumber || '',
+          whatsappConsentGranted: whatsappProfile?.consentGranted === true,
+        };
+      });
       res.setHeader('Cache-Control', 'no-store');
-      res.json({ success: true, ...result });
+      res.json({ success: true, members, nextPageToken: result.nextPageToken });
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Mitglieder konnten nicht geladen werden.';
       res.status(503).json({ error: message });
