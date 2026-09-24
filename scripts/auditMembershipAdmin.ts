@@ -34,6 +34,8 @@ const auth = fs.readFileSync(new URL('../src/firebase/auth.ts', import.meta.url)
 assert.match(auth, /registerWithEmail[\s\S]*language: LanguageCode = 'de'/, 'Die Registrierung muss die gewählte Sprache übernehmen.');
 assert.match(auth, /\/api\/member\/language/, 'Die Registrierung muss die Mitgliedssprache serverseitig speichern.');
 assert.match(server, /app\.post\('\/api\/admin\/members\/:uid\/language', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedssprachen ändern.');
+assert.match(server, /whatsappProfilesByUserId/, 'Die Mitgliederliste muss gespeicherte WhatsApp-Profile zuordnen.');
+assert.match(server, /whatsappPhoneNumber: whatsappProfile\?\.phoneNumber/, 'Die Mitglieder-API muss die hinterlegte Telefonnummer liefern.');
 assert.match(server, /app\.patch\('\/api\/admin\/members\/:uid\/email', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedsadressen ändern.');
 assert.match(server, /app\.delete\('\/api\/admin\/members\/:uid', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedskonten löschen.');
 assert.match(server, /existing\.role === 'admin'/, 'Administratorkonten müssen vor Adressänderungen geschützt sein.');
@@ -43,6 +45,8 @@ assert.match(admin, /Deutsche Mitglieder/, 'Der deutsche Mitgliederbereich fehlt
 assert.match(admin, /Englische Mitglieder/, 'Der englische Mitgliederbereich fehlt.');
 assert.match(admin, /Polnische Mitglieder/, 'Der polnische Mitgliederbereich fehlt.');
 assert.match(admin, /Konto und E-Mail löschen/, 'Die Löschaktion für Mitgliedskonten fehlt.');
+assert.match(admin, />WhatsApp</, 'Die Mitgliederverwaltung muss eine WhatsApp-Spalte anzeigen.');
+assert.match(admin, /member\.whatsappPhoneNumber/, 'Die hinterlegte Telefonnummer muss beim Mitglied angezeigt werden.');
 assert.doesNotMatch(admin, /students: StudentRecord\[\]/, 'Die Admin-Mitgliederliste darf keine lokale Browserliste mehr erhalten.');
 assert.doesNotMatch(admin, /membersLoaded \? firebaseMembers : students/, 'Mitgliederzahlen dürfen nicht auf veraltete lokale Daten zurückfallen.');
 assert.match(admin, /const totalStudents = firebaseMembers\.length/, 'Firebase muss die einzige Quelle der Mitgliederzahlen sein.');
