@@ -25,6 +25,7 @@ import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouT
 import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
+import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -1232,6 +1233,38 @@ async function startServer() {
       res.status(503).json({
         error: error instanceof Error ? error.message : 'Der WhatsApp-Posteingang konnte nicht geladen werden.',
       });
+    }
+  });
+
+  app.post('/api/admin/whatsapp/reply', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    try {
+      const replyToMessageId = typeof req.body?.messageId === 'string' ? req.body.messageId.trim() : '';
+      const messages = await listWhatsAppInboxMessages(FIREBASE_PROJECT_ID, 200);
+      const sourceMessage = messages.find(message => message.messageId === replyToMessageId);
+      if (!sourceMessage) {
+        res.status(404).json({ error: 'Die ursprüngliche WhatsApp-Nachricht wurde nicht gefunden.' });
+        return;
+      }
+      const sourceTimestamp = Number(sourceMessage.timestamp) * 1000;
+      if (!Number.isFinite(sourceTimestamp) || Date.now() - sourceTimestamp >= 24 * 60 * 60 * 1000) {
+        res.status(409).json({ error: 'Das 24-Stunden-Antwortfenster ist abgelaufen. Verwende eine genehmigte Nachrichtenvorlage.' });
+        return;
+      }
+      const reply = prepareWhatsAppReply(sourceMessage.senderPhone, req.body?.text, sourceMessage.messageId);
+      const result = await sendWhatsAppReply(reply);
+      const actor = (req as FirebaseRequest).firebaseUser;
+      console.info('WhatsApp-Antwort gesendet', {
+        action: 'academy.whatsapp.reply.sent',
+        actorUid: actor?.sub,
+        sourceMessageId: sourceMessage.messageId,
+        messageId: result.messageId,
+        timestamp: new Date().toISOString(),
+      });
+      res.status(201).json({ success: true, messageId: result.messageId });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Die WhatsApp-Antwort konnte nicht gesendet werden.';
+      const status = /ungültig|zwischen|fehlt/.test(message) ? 400 : 502;
+      res.status(status).json({ error: message });
     }
   });
 

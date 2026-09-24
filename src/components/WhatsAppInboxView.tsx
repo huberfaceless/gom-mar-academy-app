@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AlertTriangle, Loader2, MessageCircle, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Loader2, MessageCircle, RefreshCw, Send } from 'lucide-react';
 import { auth } from '../firebase/config';
 
 type WhatsAppInboxMessage = {
@@ -32,10 +32,46 @@ const formatMessageDate = (timestamp: string): string =>
     timeZone: 'Europe/Vienna',
   }).format(messageDate(timestamp));
 
+const isReplyWindowOpen = (timestamp: string): boolean =>
+  Date.now() - messageDate(timestamp).getTime() < 24 * 60 * 60 * 1000;
+
 export const WhatsAppInboxView: React.FC = () => {
   const [messages, setMessages] = useState<WhatsAppInboxMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [replyText, setReplyText] = useState<Record<string, string>>({});
+  const [replyingTo, setReplyingTo] = useState('');
+  const [replyResult, setReplyResult] = useState<Record<string, string>>({});
+
+  const sendReply = async (message: WhatsAppInboxMessage) => {
+    const text = replyText[message.messageId]?.trim() || '';
+    if (!text) return;
+    setReplyingTo(message.messageId);
+    setReplyResult((current) => ({ ...current, [message.messageId]: '' }));
+    try {
+      const currentUser = auth.currentUser;
+      if (!currentUser) throw new Error('Die Firebase-Anmeldung ist abgelaufen. Bitte erneut anmelden.');
+      const response = await fetch('/api/admin/whatsapp/reply', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${await currentUser.getIdToken()}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ messageId: message.messageId, text }),
+      });
+      const result = await response.json().catch(() => ({})) as { error?: string };
+      if (!response.ok) throw new Error(result.error || 'Die WhatsApp-Antwort konnte nicht gesendet werden.');
+      setReplyText((current) => ({ ...current, [message.messageId]: '' }));
+      setReplyResult((current) => ({ ...current, [message.messageId]: 'Antwort erfolgreich gesendet.' }));
+    } catch (replyError: unknown) {
+      setReplyResult((current) => ({
+        ...current,
+        [message.messageId]: replyError instanceof Error ? replyError.message : 'Die WhatsApp-Antwort konnte nicht gesendet werden.',
+      }));
+    } finally {
+      setReplyingTo('');
+    }
+  };
 
   const loadMessages = useCallback(async () => {
     setLoading(true);
@@ -131,6 +167,33 @@ export const WhatsAppInboxView: React.FC = () => {
               </p>
               <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                 {message.type}
+              </div>
+              <div className="mt-4 space-y-2 rounded-xl border border-emerald-100 bg-emerald-50/40 p-3">
+                <label className="block text-xs font-bold text-slate-700" htmlFor={`reply-${message.messageId}`}>Antworten</label>
+                <textarea
+                  id={`reply-${message.messageId}`}
+                  value={replyText[message.messageId] || ''}
+                  onChange={(event) => setReplyText((current) => ({ ...current, [message.messageId]: event.target.value }))}
+                  maxLength={4096}
+                  rows={3}
+                  disabled={!isReplyWindowOpen(message.timestamp)}
+                  placeholder={isReplyWindowOpen(message.timestamp) ? 'WhatsApp-Antwort eingeben …' : 'Das 24-Stunden-Antwortfenster ist abgelaufen.'}
+                  className="w-full resize-y rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => void sendReply(message)}
+                  disabled={!isReplyWindowOpen(message.timestamp) || replyingTo === message.messageId || !(replyText[message.messageId]?.trim())}
+                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {replyingTo === message.messageId ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  Antwort senden
+                </button>
+                {replyResult[message.messageId] && (
+                  <p className={`text-xs font-semibold ${replyResult[message.messageId] === 'Antwort erfolgreich gesendet.' ? 'text-emerald-700' : 'text-rose-700'}`}>
+                    {replyResult[message.messageId]}
+                  </p>
+                )}
               </div>
             </article>
           ))}
