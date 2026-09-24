@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { buildLanguageCustomAttributes, buildTierCustomAttributes } from '../server/firebaseMembershipAdmin';
 import fs from 'node:fs';
-import { canAccessView, requiredTierForView } from '../src/utils/membershipAccess';
+import { canAccessView, isMembershipResolvedForUser, requiredTierForView } from '../src/utils/membershipAccess';
 
 const existingClaims = JSON.stringify({
   academyTier: 'FREE',
@@ -44,6 +44,16 @@ assert.match(admin, /Englische Mitglieder/, 'Der englische Mitgliederbereich feh
 assert.match(admin, /Polnische Mitglieder/, 'Der polnische Mitgliederbereich fehlt.');
 assert.match(admin, /Konto und E-Mail löschen/, 'Die Löschaktion für Mitgliedskonten fehlt.');
 assert.match(admin, /window\.prompt\(`Zur Bestätigung bitte exakt eingeben:/, 'Die dauerhafte Löschung verlangt eine zweite exakte Bestätigung.');
+
+assert.equal(isMembershipResolvedForUser('admin-uid', 'admin-uid'), true);
+assert.equal(isMembershipResolvedForUser('new-member-uid', 'admin-uid'), false, 'Beim Kontowechsel darf die alte Adminrolle nicht gerendert werden.');
+assert.equal(isMembershipResolvedForUser('new-member-uid', null), false, 'Neue Mitglieder müssen bis zur Rollenauflösung gesperrt bleiben.');
+assert.equal(isMembershipResolvedForUser(null, null), true);
+
+const app = fs.readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8');
+assert.match(app, /setResolvedMembershipUid\(null\)/, 'Beim Kontowechsel muss die zuvor aufgelöste Rolle verworfen werden.');
+assert.match(app, /tier: 'FREE',[\s\S]*role: 'member'/, 'Vor dem Laden neuer Claims muss das Konto auf Mitglied zurückgesetzt werden.');
+assert.match(app, /authLoading \|\| isMembershipResolving/, 'Die Oberfläche darf erst nach sicherer Rollenauflösung gerendert werden.');
 
 for (const view of ['email', 'toolbox']) {
   assert.equal(canAccessView(view, 'FREE', 'member'), false, `FREE darf keinen Zugriff auf ${view} erhalten`);
