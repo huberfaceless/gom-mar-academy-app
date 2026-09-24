@@ -8,12 +8,20 @@ import {
   verifyWhatsAppWebhookSignature,
 } from '../server/whatsappWebhook.js';
 import { normalizeWhatsAppPhone } from '../server/whatsappMemberProfileAdmin.js';
+import { prepareWhatsAppReply } from '../server/whatsappCloudApi.js';
 
 assert.equal(normalizeWhatsAppPhone('+43 660 1234567'), '+436601234567');
 assert.equal(normalizeWhatsAppPhone('0048 600 123 456'), '+48600123456');
 assert.equal(normalizeWhatsAppPhone(''), '');
 assert.throws(() => normalizeWhatsAppPhone('0660 1234567'), /Ländervorwahl/);
 assert.throws(() => normalizeWhatsAppPhone('+43 12'), /gültige Telefonnummer/);
+assert.deepEqual(prepareWhatsAppReply('+43 660 1234567', ' Hallo! ', 'wamid.source'), {
+  recipientPhone: '436601234567',
+  text: 'Hallo!',
+  replyToMessageId: 'wamid.source',
+});
+assert.throws(() => prepareWhatsAppReply('123', 'Hallo', 'wamid.source'), /Empfängernummer/);
+assert.throws(() => prepareWhatsAppReply('+436601234567', '', 'wamid.source'), /Antwort/);
 
 const token = 'test-verification-token';
 assert.equal(verifyWhatsAppWebhookChallenge({
