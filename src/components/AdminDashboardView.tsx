@@ -44,6 +44,8 @@ type FirebaseMember = {
   language: 'de' | 'en' | 'pl';
   createdAt?: string;
   lastSignInAt?: string;
+  whatsappPhoneNumber?: string;
+  whatsappConsentGranted?: boolean;
 };
 
 const getYouTubeEmbedUrl = (value: string): string => {
@@ -254,7 +256,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       );
       const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
       if (!response.ok || !result.member) throw new Error(result.error || 'Tarif konnte nicht gespeichert werden.');
-      setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? result.member! : item));
+      setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? { ...item, ...result.member! } : item));
       setSaveSuccessMsg(result.message || 'Tarif erfolgreich gespeichert.');
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
@@ -294,7 +296,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   };
 
   const replaceMember = (member: FirebaseMember) => {
-    setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? member : item));
+    setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? { ...item, ...member } : item));
   };
 
   const handleMemberLanguageChange = async (member: FirebaseMember, nextLanguage: 'de' | 'en' | 'pl') => {
@@ -752,18 +754,19 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 <thead className="border-b border-slate-200 bg-slate-50 font-extrabold uppercase tracking-wider text-slate-600">
                   <tr>
                     <th className="px-4 py-3.5">Firebase-Mitglied</th>
-                    <th className="px-4 py-3.5">E-Mail</th>
-                    <th className="px-4 py-3.5">Kontostatus</th>
                     <th className="px-4 py-3.5">Sprache</th>
+                    <th className="px-4 py-3.5">E-Mail</th>
+                    <th className="px-4 py-3.5">WhatsApp</th>
+                    <th className="px-4 py-3.5">Kontostatus</th>
                     <th className="px-4 py-3.5">Zugriffstarif</th>
                     <th className="px-4 py-3.5">Aktionen</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
                   {membersLoading && !membersLoaded ? (
-                    <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">Firebase-Mitglieder werden geladen …</td></tr>
+                    <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">Firebase-Mitglieder werden geladen …</td></tr>
                   ) : filteredFirebaseMembers.length === 0 ? (
-                    <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-400">Keine Firebase-Mitglieder für diesen Sprachbereich und Filter gefunden.</td></tr>
+                    <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-400">Keine Firebase-Mitglieder für diesen Sprachbereich und Filter gefunden.</td></tr>
                   ) : filteredFirebaseMembers.map((member) => (
                     <tr key={member.uid} className="hover:bg-slate-50/80">
                       <td className="px-4 py-3.5">
@@ -803,6 +806,18 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           <Mail className="h-3.5 w-3.5" />
                           E-Mail schreiben
                         </button>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        {member.whatsappPhoneNumber ? (
+                          <>
+                            <p className="font-bold text-slate-900">{member.whatsappPhoneNumber}</p>
+                            <span className={member.whatsappConsentGranted ? 'text-emerald-700' : 'text-amber-700'}>
+                              {member.whatsappConsentGranted ? 'Einwilligung aktiv' : 'Keine Versand-Einwilligung'}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-slate-400">Nicht hinterlegt</span>
+                        )}
                       </td>
                       <td className="px-4 py-3.5">
                         <span className={`inline-flex rounded-lg border px-2.5 py-1 text-[11px] font-black ${
