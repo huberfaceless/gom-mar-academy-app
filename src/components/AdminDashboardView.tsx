@@ -345,6 +345,45 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     }
   };
 
+  const handleEditMemberWhatsApp = async (member: FirebaseMember) => {
+    if (member.role === 'admin') return;
+    const enteredPhone = window.prompt(
+      'WhatsApp-Nummer mit Ländervorwahl eingeben. Zum Entfernen das Feld leer lassen:',
+      member.whatsappPhoneNumber || '',
+    );
+    if (enteredPhone === null || enteredPhone.trim() === (member.whatsappPhoneNumber || '')) return;
+    const phoneNumber = enteredPhone.trim();
+    const action = phoneNumber ? `auf ${phoneNumber} ändern` : 'vollständig entfernen';
+    if (!window.confirm(`WhatsApp-Nummer für ${member.email || member.displayName} wirklich ${action}?`)) return;
+
+    setUpdatingMemberUid(member.uid);
+    setMembersError('');
+    try {
+      const response = await authenticatedRequest(
+        `/api/admin/members/${encodeURIComponent(member.uid)}/whatsapp`,
+        { method: 'PATCH', body: JSON.stringify({ phoneNumber }) },
+      );
+      const result = await response.json() as {
+        error?: string;
+        message?: string;
+        whatsappPhoneNumber?: string;
+        whatsappConsentGranted?: boolean;
+      };
+      if (!response.ok) throw new Error(result.error || 'WhatsApp-Nummer konnte nicht gespeichert werden.');
+      setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? {
+        ...item,
+        whatsappPhoneNumber: result.whatsappPhoneNumber || '',
+        whatsappConsentGranted: result.whatsappConsentGranted === true,
+      } : item));
+      setSaveSuccessMsg(result.message || 'WhatsApp-Nummer gespeichert.');
+      window.setTimeout(() => setSaveSuccessMsg(''), 5000);
+    } catch (error: unknown) {
+      setMembersError(error instanceof Error ? error.message : 'WhatsApp-Nummer konnte nicht gespeichert werden.');
+    } finally {
+      setUpdatingMemberUid(null);
+    }
+  };
+
   const handleDeleteMember = async (member: FirebaseMember) => {
     if (member.role === 'admin') return;
     const memberLabel = member.email || member.displayName;
@@ -853,6 +892,16 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           >
                             <Edit3 className="h-3.5 w-3.5" /> E-Mail bearbeiten
                           </button>
+                          {member.role !== 'admin' && (
+                            <button
+                              type="button"
+                              onClick={() => void handleEditMemberWhatsApp(member)}
+                              disabled={updatingMemberUid === member.uid}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 px-2.5 py-1.5 text-[11px] font-bold text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <MessageCircle className="h-3.5 w-3.5" /> WhatsApp bearbeiten
+                            </button>
+                          )}
                           {member.role !== 'admin' && (
                             <button
                               type="button"
