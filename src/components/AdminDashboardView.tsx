@@ -69,7 +69,6 @@ const getYouTubeEmbedUrl = (value: string): string => {
 interface AdminDashboardViewProps {
   user: UserProfile;
   stages: Stage[];
-  students: StudentRecord[];
   onUpdateStages: (stages: Stage[]) => Promise<void>;
   onResetStages: () => Promise<void>;
   onRestoreLesson: (lessonId: string) => Promise<void>;
@@ -79,7 +78,6 @@ interface AdminDashboardViewProps {
 export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   user,
   stages,
-  students,
   onUpdateStages,
   onResetStages,
   onRestoreLesson,
@@ -370,19 +368,6 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     }
   };
 
-  // Filtered Students
-  const filteredStudents = students.filter((student) => {
-    const duplicatesFirebaseMember = membersLoaded && firebaseMembers.some(
-      (member) => member.email.toLowerCase() === student.email.toLowerCase(),
-    );
-    if (duplicatesFirebaseMember) return false;
-    const matchesSearch = 
-      student.name.toLowerCase().includes(studentSearch.toLowerCase()) ||
-      student.email.toLowerCase().includes(studentSearch.toLowerCase()) ||
-      student.niche.toLowerCase().includes(studentSearch.toLowerCase());
-    const matchesTier = tierFilter === 'all' || student.tier === tierFilter;
-    return matchesSearch && matchesTier;
-  });
   const filteredFirebaseMembers = firebaseMembers.filter((member) => {
     const search = studentSearch.trim().toLowerCase();
     const matchesSearch = !search
@@ -391,17 +376,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     return member.language === memberLanguage && matchesSearch && (tierFilter === 'all' || member.tier === tierFilter);
   });
 
-  // Calculate Metrics
-  const authoritativeStudents = membersLoaded ? firebaseMembers : students;
-  const totalStudents = authoritativeStudents.length;
-  const proStudents = authoritativeStudents.filter(s => s.tier === 'PRO').length;
-  const premiumStudents = authoritativeStudents.filter(s => s.tier === 'PREMIUM').length;
-  const freeStudents = authoritativeStudents.filter(s => s.tier === 'FREE').length;
-  const totalLessons = stages.reduce((acc, s) => acc + s.lessons.length, 0);
-  const progressStudents = membersLoaded ? filteredStudents : students;
-  const avgProgress = progressStudents.length > 0
-    ? Math.round(progressStudents.reduce((acc, student) => acc + student.progressPercent, 0) / progressStudents.length)
-    : 0;
+  // Firebase Authentication is the sole source of truth for the member directory.
+  const totalStudents = firebaseMembers.length;
+  const proStudents = firebaseMembers.filter((member) => member.tier === 'PRO').length;
+  const premiumStudents = firebaseMembers.filter((member) => member.tier === 'PREMIUM').length;
+  const freeStudents = firebaseMembers.filter((member) => member.tier === 'FREE').length;
+  const totalLessons = stages.reduce((acc, stage) => acc + stage.lessons.length, 0);
 
   // Open Lesson in Editor
   const handleOpenEditLesson = (lesson: Lesson) => {
