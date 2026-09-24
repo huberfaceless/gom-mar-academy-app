@@ -552,7 +552,6 @@ export default function App() {
             <AdminDashboardView
               user={user}
               stages={stages}
-              students={students}
               onUpdateStages={handleUpdateStages}
               onResetStages={handleResetStages}
               onRestoreLesson={handleRestoreLesson}
