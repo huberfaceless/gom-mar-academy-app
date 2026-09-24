@@ -34,6 +34,7 @@ import {
   getAcademyStageLimit,
   requiredTierForView,
   resolveMembershipClaims,
+  isMembershipResolvedForUser,
 } from './utils/membershipAccess';
 import { loadEmailCampaigns, saveEmailCampaigns } from './services/emailCampaignsService';
 
@@ -66,6 +67,7 @@ export default function App() {
     const loaded = loadUserProfile();
     return { ...loaded, tier: 'FREE', role: 'member' };
   });
+  const [resolvedMembershipUid, setResolvedMembershipUid] = useState<string | null>(null);
 
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [campaignsError, setCampaignsError] = useState<string | null>(null);
@@ -178,6 +180,20 @@ export default function App() {
     let cancelled = false;
 
     if (firebaseUser) {
+      setResolvedMembershipUid(null);
+      setActiveView((currentView) => (
+        currentView === 'admin' || currentView === 'contentEngine' ? 'dashboard' : currentView
+      ));
+      setUser((prev) => ({
+        ...prev,
+        email: firebaseUser.email || '',
+        name: firebaseUser.displayName || 'GOM-MAR Mitglied',
+        isRegistered: true,
+        emailVerified: firebaseUser.emailVerified,
+        tier: 'FREE',
+        role: 'member',
+      }));
+
       void firebaseUser.getIdTokenResult().then((tokenResult) => {
         if (cancelled) return;
         const membership = resolveMembershipClaims(tokenResult.claims, firebaseUser.email);
@@ -194,6 +210,7 @@ export default function App() {
           saveUserProfile(updated);
           return updated;
         });
+        setResolvedMembershipUid(firebaseUser.uid);
       }).catch(() => {
         if (cancelled) return;
         setUser((prev) => {
@@ -209,8 +226,13 @@ export default function App() {
           saveUserProfile(updated);
           return updated;
         });
+        setResolvedMembershipUid(firebaseUser.uid);
       });
     } else {
+      setResolvedMembershipUid(null);
+      setActiveView((currentView) => (
+        currentView === 'admin' || currentView === 'contentEngine' ? 'dashboard' : currentView
+      ));
       setUser((prev) => {
         const updated: UserProfile = {
           ...prev,
@@ -429,9 +451,10 @@ export default function App() {
   // Check if visitor is unauthenticated
   const isNotAuthenticated = !firebaseUser;
   const isEmailNotVerified = Boolean(firebaseUser && !firebaseUser.emailVerified);
+  const isMembershipResolving = !isMembershipResolvedForUser(firebaseUser?.uid, resolvedMembershipUid);
 
-  // If Auth state is still initializing
-  if (authLoading) {
+  // Never render account-specific navigation while the current Firebase role is unresolved.
+  if (authLoading || isMembershipResolving) {
     return (
       <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 space-y-4">
         <div className="w-16 h-16 rounded-2xl bg-white border border-slate-700 p-1 shadow-xl overflow-hidden flex items-center justify-center animate-pulse">
