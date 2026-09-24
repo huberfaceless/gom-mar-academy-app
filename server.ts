@@ -22,7 +22,8 @@ import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscrib
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
-import { extractWhatsAppDeliveryStatuses, summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
+import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
+import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -213,7 +214,7 @@ async function startServer() {
     res.status(200).type('text/plain').send(challenge);
   });
 
-  app.post('/api/whatsapp/webhook', (req, res) => {
+  app.post('/api/whatsapp/webhook', async (req, res) => {
     const appSecret = process.env.WHATSAPP_APP_SECRET?.trim();
     const rawBody = (req as RawBodyRequest).rawBody;
     if (!appSecret) {
@@ -237,6 +238,18 @@ async function startServer() {
     const deliveryStatuses = extractWhatsAppDeliveryStatuses(payload);
     if (deliveryStatuses.length > 0) {
       console.info('WhatsApp-Zustellstatus', JSON.stringify(deliveryStatuses));
+    }
+
+    const inboundMessages = extractWhatsAppInboundMessages(payload);
+    if (inboundMessages.length > 0) {
+      try {
+        await saveWhatsAppInboundMessages(FIREBASE_PROJECT_ID, inboundMessages);
+        console.info('WhatsApp-Nachrichten gespeichert', { count: inboundMessages.length });
+      } catch (error: unknown) {
+        console.error(error instanceof Error ? error.message : 'WhatsApp-Nachrichten konnten nicht gespeichert werden.');
+        res.sendStatus(500);
+        return;
+      }
     }
 
     res.sendStatus(200);
@@ -1157,6 +1170,19 @@ async function startServer() {
       }
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Das Mitglied konnte nicht kontaktiert werden.' });
+    }
+  });
+
+  app.get('/api/admin/whatsapp/messages', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    try {
+      const requestedLimit = typeof req.query.limit === 'string' ? Number(req.query.limit) : 100;
+      const messages = await listWhatsAppInboxMessages(FIREBASE_PROJECT_ID, requestedLimit);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ success: true, messages });
+    } catch (error: unknown) {
+      res.status(503).json({
+        error: error instanceof Error ? error.message : 'Der WhatsApp-Posteingang konnte nicht geladen werden.',
+      });
     }
   });
 

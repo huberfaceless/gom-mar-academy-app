@@ -5,7 +5,9 @@ type WhatsAppWebhookEntry = {
   changes?: Array<{
     field?: unknown;
     value?: {
+      contacts?: unknown[];
       messages?: unknown[];
+      metadata?: unknown;
       statuses?: unknown[];
     };
   }>;
@@ -89,6 +91,8 @@ export type WhatsAppDeliveryStatus = {
 const MAX_DELIVERY_STATUSES = 20;
 const MAX_ERRORS_PER_STATUS = 10;
 const MAX_LOG_STRING_LENGTH = 500;
+const MAX_INBOUND_MESSAGES = 50;
+const MAX_MESSAGE_TEXT_LENGTH = 4_096;
 
 const asRecord = (value: unknown): Record<string, unknown> | null => (
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -101,6 +105,96 @@ const sanitizedString = (value: unknown): string | undefined => (
     ? value.slice(0, MAX_LOG_STRING_LENGTH)
     : undefined
 );
+
+const sanitizedMessageText = (value: unknown): string | undefined => (
+  typeof value === 'string'
+    ? value.slice(0, MAX_MESSAGE_TEXT_LENGTH)
+    : undefined
+);
+
+export type WhatsAppInboundMessage = {
+  messageId: string;
+  senderPhone: string;
+  senderName?: string;
+  timestamp: string;
+  type: string;
+  text: string;
+};
+
+const inboundMessageText = (message: Record<string, unknown>, type: string): string => {
+  const text = asRecord(message.text);
+  if (type === 'text') return sanitizedMessageText(text?.body) || '';
+
+  const button = asRecord(message.button);
+  if (type === 'button') return sanitizedMessageText(button?.text) || '[Schaltfläche]';
+
+  const interactive = asRecord(message.interactive);
+  const buttonReply = asRecord(interactive?.button_reply);
+  const listReply = asRecord(interactive?.list_reply);
+  if (type === 'interactive') {
+    return sanitizedMessageText(buttonReply?.title)
+      || sanitizedMessageText(listReply?.title)
+      || '[Interaktive Antwort]';
+  }
+
+  const media = asRecord(message[type]);
+  const caption = sanitizedMessageText(media?.caption);
+  const labels: Record<string, string> = {
+    audio: 'Audio',
+    document: 'Dokument',
+    image: 'Bild',
+    location: 'Standort',
+    reaction: 'Reaktion',
+    sticker: 'Sticker',
+    video: 'Video',
+  };
+  return caption || `[${labels[type] || 'Nicht unterstützte Nachricht'}]`;
+};
+
+export const extractWhatsAppInboundMessages = (
+  payload: WhatsAppWebhookPayload,
+): WhatsAppInboundMessage[] => {
+  const result: WhatsAppInboundMessage[] = [];
+  const entries = Array.isArray(payload.entry) ? payload.entry : [];
+
+  for (const entry of entries) {
+    for (const change of Array.isArray(entry.changes) ? entry.changes : []) {
+      const contacts = Array.isArray(change.value?.contacts) ? change.value.contacts : [];
+      const contactNames = new Map<string, string>();
+      for (const rawContact of contacts) {
+        const contact = asRecord(rawContact);
+        const profile = asRecord(contact?.profile);
+        const phone = sanitizedString(contact?.wa_id);
+        const name = sanitizedString(profile?.name);
+        if (phone && name) contactNames.set(phone, name.slice(0, 200));
+      }
+
+      const messages = Array.isArray(change.value?.messages) ? change.value.messages : [];
+      for (const rawMessage of messages) {
+        if (result.length >= MAX_INBOUND_MESSAGES) return result;
+        const message = asRecord(rawMessage);
+        if (!message) continue;
+
+        const messageId = sanitizedString(message.id);
+        const senderPhone = sanitizedString(message.from);
+        const timestamp = sanitizedString(message.timestamp);
+        const type = sanitizedString(message.type)?.slice(0, 32) || 'unknown';
+        if (!messageId || !senderPhone || !timestamp) continue;
+
+        result.push({
+          messageId,
+          senderPhone: senderPhone.slice(0, 32),
+          senderName: contactNames.get(senderPhone),
+          timestamp,
+          type,
+          text: inboundMessageText(message, type),
+        });
+      }
+    }
+  }
+
+  return result;
+};
 
 export const extractWhatsAppDeliveryStatuses = (
   payload: WhatsAppWebhookPayload,

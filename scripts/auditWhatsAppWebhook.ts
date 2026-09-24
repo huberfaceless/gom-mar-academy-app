@@ -2,6 +2,7 @@ import { createHmac } from 'crypto';
 import assert from 'node:assert/strict';
 import {
   extractWhatsAppDeliveryStatuses,
+  extractWhatsAppInboundMessages,
   summarizeWhatsAppWebhook,
   verifyWhatsAppWebhookChallenge,
   verifyWhatsAppWebhookSignature,
@@ -86,5 +87,35 @@ assert.deepEqual(deliveryStatuses, [{
 }]);
 assert.equal(JSON.stringify(deliveryStatuses).includes(recipientId), false);
 assert.equal(JSON.stringify(deliveryStatuses).includes('recipient_id'), false);
+
+const inboundMessages = extractWhatsAppInboundMessages({
+  object: 'whatsapp_business_account',
+  entry: [{
+    changes: [{
+      field: 'messages',
+      value: {
+        contacts: [{ wa_id: '436601234567', profile: { name: 'Test Kontakt' } }],
+        messages: [{
+          id: 'wamid.inbound-test',
+          from: '436601234567',
+          timestamp: '1790266850',
+          type: 'text',
+          text: { body: 'Hallo Academy' },
+        }],
+      },
+    }],
+  }],
+});
+
+assert.deepEqual(inboundMessages, [{
+  messageId: 'wamid.inbound-test',
+  senderPhone: '436601234567',
+  senderName: 'Test Kontakt',
+  timestamp: '1790266850',
+  type: 'text',
+  text: 'Hallo Academy',
+}]);
+assert.equal(JSON.stringify(inboundMessages).includes('profile'), false);
+assert.equal(JSON.stringify(inboundMessages).includes('metadata'), false);
 
 console.log('WhatsApp-Webhook-Audit erfolgreich.');
