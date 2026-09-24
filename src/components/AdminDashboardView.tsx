@@ -22,7 +22,8 @@ import {
   Award,
   AlertTriangle,
   RotateCcw,
-  Upload
+  Upload,
+  MessageCircle
 } from 'lucide-react';
 import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types';
 import { auth } from '../firebase/config';
@@ -30,6 +31,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { ACADEMY_STAGES } from '../data/academyData';
 import { youtubeService } from '../services/youtubeService';
+import { WhatsAppInboxView } from './WhatsAppInboxView';
 
 type FirebaseMember = {
   uid: string;
@@ -84,7 +86,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   onNavigate
 }) => {
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'students' | 'curriculum' | 'stats'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'curriculum' | 'whatsapp'>('students');
   
   // Search & Filter state for Students
   const [studentSearch, setStudentSearch] = useState<string>('');
@@ -690,6 +692,18 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             <BookOpen className="w-4 h-4" />
             <span>Lehrplan und Lektionsverwaltung ({totalLessons})</span>
           </button>
+
+          <button
+            onClick={() => setActiveTab('whatsapp')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
+              activeTab === 'whatsapp'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30'
+                : 'bg-slate-800/60 text-slate-300 hover:bg-slate-800 hover:text-white'
+            }`}
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>WhatsApp</span>
+          </button>
         </div>
       </div>
 
@@ -956,6 +970,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600 shadow-xs">
             Mitglieder und Zugriffstarife werden ausschließlich aus Firebase geladen. Lernfortschritte werden hier erst angezeigt, sobald eine serverseitige Fortschrittssynchronisierung eingerichtet ist.
           </div>
+        </div>
+      )}
+
+      {activeTab === 'whatsapp' && (
+        <div className="space-y-6 animate-fadeIn">
+          <WhatsAppInboxView />
         </div>
       )}
 
