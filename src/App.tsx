@@ -24,7 +24,7 @@ import { LegalModal, LegalDocType } from './components/LegalModal';
 import { useAuth } from './context/AuthContext';
 import { EmailVerificationView } from './components/EmailVerificationView';
 import { AuthModal } from './components/AuthModal';
-import { Loader2 } from 'lucide-react';
+import { CheckCircle2, Loader2, X } from 'lucide-react';
 import gommarLogo from './assets/images/gommar_logo.jpg';
 import { useLanguage } from './context/LanguageContext';
 import { unlockNextAcademyStage } from './utils/academyProgress';
@@ -68,6 +68,7 @@ export default function App() {
     return { ...loaded, tier: 'FREE', role: 'member' };
   });
   const [resolvedMembershipUid, setResolvedMembershipUid] = useState<string | null>(null);
+  const [checkoutNotice, setCheckoutNotice] = useState<'success' | 'processing' | null>(null);
 
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [campaignsError, setCampaignsError] = useState<string | null>(null);
@@ -211,6 +212,9 @@ export default function App() {
         }
         if (cancelled) return;
         const membership = resolveMembershipClaims(tokenResult.claims, firebaseUser.email);
+        if (checkoutCompleted) {
+          setCheckoutNotice(membership.tier === 'FREE' ? 'processing' : 'success');
+        }
         setUser((prev) => {
           const updated: UserProfile = {
             ...prev,
@@ -545,6 +549,34 @@ export default function App() {
 
         {/* Content View Area */}
         <main id="active-view-content" className="flex-1 scroll-mt-24 p-4 lg:p-8 w-full min-w-0">
+          {checkoutNotice && (
+            <div
+              role="status"
+              className="mb-6 flex items-start justify-between gap-4 rounded-2xl border border-emerald-300 bg-emerald-50 px-5 py-4 text-emerald-950 shadow-sm"
+            >
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+                <div>
+                  <p className="font-black">
+                    {language === 'de' ? 'Zahlung erfolgreich' : language === 'pl' ? 'Płatność zakończona pomyślnie' : 'Payment successful'}
+                  </p>
+                  <p className="mt-1 text-sm text-emerald-800">
+                    {checkoutNotice === 'success'
+                      ? language === 'de' ? 'Deine PRO-Mitgliedschaft wurde freigeschaltet.' : language === 'pl' ? 'Twoje członkostwo PRO zostało aktywowane.' : 'Your PRO membership has been activated.'
+                      : language === 'de' ? 'Deine PRO-Mitgliedschaft wird gerade freigeschaltet. Bitte lade die Seite in Kürze neu.' : language === 'pl' ? 'Twoje członkostwo PRO jest właśnie aktywowane. Odśwież stronę za chwilę.' : 'Your PRO membership is being activated. Please refresh the page shortly.'}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCheckoutNotice(null)}
+                className="rounded-lg p-1 text-emerald-700 transition-colors hover:bg-emerald-100 hover:text-emerald-950"
+                aria-label={language === 'de' ? 'Bestätigung schließen' : language === 'pl' ? 'Zamknij potwierdzenie' : 'Close confirmation'}
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+          )}
           <Suspense fallback={<ViewLoadingFallback />}>
           {activeView === 'dashboard' && (
             <DashboardView
