@@ -6,6 +6,7 @@ import {
   completedCheckoutSessionMemberId,
   deletedSubscriptionMemberId,
   STRIPE_MANAGED_PAYMENTS_API_VERSION,
+  updatedSubscriptionCancellation,
   verifyStripeWebhook,
 } from '../server/stripeManagedPayments.js';
 
@@ -53,6 +54,31 @@ assert.equal(deletedSubscriptionMemberId({
   },
 }), 'firebase-user');
 assert.equal(deletedSubscriptionMemberId(event), null);
+assert.deepEqual(updatedSubscriptionCancellation({
+  id: 'evt_subscription_updated',
+  type: 'customer.subscription.updated',
+  data: {
+    object: {
+      id: 'sub_updated',
+      customer: 'cus_member',
+      status: 'active',
+      cancel_at_period_end: true,
+      current_period_end: 1_792_886_400,
+      metadata: { firebase_uid: 'firebase-user' },
+    },
+  },
+}), { userId: 'firebase-user', cancellationAt: '2026-10-25T00:00:00.000Z' });
+assert.deepEqual(updatedSubscriptionCancellation({
+  id: 'evt_subscription_resumed',
+  type: 'customer.subscription.updated',
+  data: {
+    object: {
+      id: 'sub_updated',
+      cancel_at_period_end: false,
+      metadata: { firebase_uid: 'firebase-user' },
+    },
+  },
+}), { userId: 'firebase-user', cancellationAt: null });
 assert.equal(completedCheckoutMemberId({
   ...event,
   data: { object: { ...event.data.object, payment_status: 'unpaid' } },

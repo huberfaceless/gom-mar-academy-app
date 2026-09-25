@@ -26,8 +26,8 @@ import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summar
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
-import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, retrieveManagedSubscriptionCheckout, verifyStripeWebhook } from './server/stripeManagedPayments.js';
-import { cancelStripeMembership, loadStripeCustomerId, saveStripeMembership } from './server/stripeMembershipAdmin.js';
+import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
+import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -229,6 +229,22 @@ async function startServer() {
           eventId: event.id,
           subscriptionId: event.data.object.id,
           userId: canceledUserId,
+        });
+      }
+      const cancellationUpdate = updatedSubscriptionCancellation(event);
+      if (cancellationUpdate) {
+        await saveStripeCancellationStatus(
+          FIREBASE_PROJECT_ID,
+          cancellationUpdate.userId,
+          event.id,
+          event.data.object,
+          cancellationUpdate.cancellationAt,
+        );
+        console.info('Stripe-Kündigungsstatus aktualisiert', {
+          eventId: event.id,
+          subscriptionId: event.data.object.id,
+          userId: cancellationUpdate.userId,
+          cancellationAt: cancellationUpdate.cancellationAt,
         });
       }
       res.json({ received: true });
@@ -1403,19 +1419,27 @@ async function startServer() {
   app.get('/api/admin/members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const pageToken = typeof req.query.pageToken === 'string' ? req.query.pageToken : undefined;
-      const [result, whatsappProfiles] = await Promise.all([
+      const [result, whatsappProfiles, stripeMemberships] = await Promise.all([
         listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken),
         listWhatsAppMemberProfiles(FIREBASE_PROJECT_ID),
+        listStripeMemberships(FIREBASE_PROJECT_ID),
       ]);
       const whatsappProfilesByUserId = new Map(
         whatsappProfiles.map((profile) => [profile.userId, profile]),
       );
+      const stripeMembershipsByUserId = new Map(
+        stripeMemberships.map((membership) => [membership.userId, membership]),
+      );
       const members = result.members.map((member) => {
         const whatsappProfile = whatsappProfilesByUserId.get(member.uid);
+        const stripeMembership = stripeMembershipsByUserId.get(member.uid);
         return {
           ...member,
           whatsappPhoneNumber: whatsappProfile?.phoneNumber || '',
           whatsappConsentGranted: whatsappProfile?.consentGranted === true,
+          stripeCancellationAt: stripeMembership?.status === 'canceling'
+            ? stripeMembership.cancellationAt
+            : undefined,
         };
       });
       res.setHeader('Cache-Control', 'no-store');
