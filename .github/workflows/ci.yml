@@ -64,6 +64,9 @@ jobs:
       - name: Firebase-Tarifverwaltung pruefen
         run: bun run audit:membership-admin
 
+      - name: Stripe Managed Payments pruefen
+        run: bun run audit:stripe
+
       - name: Zentrale Lektionenverwaltung pruefen
         run: bun run audit:curriculum-admin
 

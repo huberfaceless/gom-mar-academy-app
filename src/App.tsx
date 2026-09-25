@@ -194,7 +194,21 @@ export default function App() {
         role: 'member',
       }));
 
-      void firebaseUser.getIdTokenResult().then((tokenResult) => {
+      const checkoutCompleted = new URLSearchParams(window.location.search).get('checkout') === 'success';
+      void (async () => {
+        let tokenResult = await firebaseUser.getIdTokenResult(checkoutCompleted);
+        if (checkoutCompleted) {
+          for (let attempt = 0; attempt < 5; attempt += 1) {
+            const membership = resolveMembershipClaims(tokenResult.claims, firebaseUser.email);
+            if (membership.tier !== 'FREE' || cancelled) break;
+            await new Promise(resolve => window.setTimeout(resolve, 1_500));
+            tokenResult = await firebaseUser.getIdTokenResult(true);
+          }
+          const url = new URL(window.location.href);
+          url.searchParams.delete('checkout');
+          url.searchParams.delete('session_id');
+          window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+        }
         if (cancelled) return;
         const membership = resolveMembershipClaims(tokenResult.claims, firebaseUser.email);
         setUser((prev) => {
@@ -211,7 +225,7 @@ export default function App() {
           return updated;
         });
         setResolvedMembershipUid(firebaseUser.uid);
-      }).catch(() => {
+      })().catch(() => {
         if (cancelled) return;
         setUser((prev) => {
           const updated: UserProfile = {
