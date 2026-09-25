@@ -26,6 +26,8 @@ import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summar
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
+import { completedCheckoutMemberId, createManagedSubscriptionCheckout, verifyStripeWebhook } from './server/stripeManagedPayments.js';
+import { loadStripeCustomerId, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -192,6 +194,36 @@ async function startServer() {
   const recentEmailSends = new Map<string, number[]>();
   const recentLessonAudioRequests = new Map<string, number[]>();
 
+  app.post('/api/stripe/webhook', express.raw({ type: 'application/json', limit: '1mb' }), async (req, res) => {
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
+    if (!webhookSecret) {
+      res.status(503).json({ error: 'Stripe-Webhook ist noch nicht konfiguriert.' });
+      return;
+    }
+    try {
+      const rawBody = Buffer.isBuffer(req.body) ? req.body : Buffer.from('');
+      const event = verifyStripeWebhook(rawBody, req.header('stripe-signature'), webhookSecret);
+      const userId = completedCheckoutMemberId(event);
+      if (userId) {
+        const member = await getFirebaseMember(FIREBASE_PROJECT_ID, userId);
+        if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
+        if (member.role !== 'admin') {
+          await updateFirebaseMemberTier(FIREBASE_PROJECT_ID, userId, 'PRO');
+        }
+        await saveStripeMembership(FIREBASE_PROJECT_ID, userId, event.id, event.data.object);
+        console.info('Stripe-PRO-Mitgliedschaft aktiviert', {
+          eventId: event.id,
+          checkoutSessionId: event.data.object.id,
+          userId,
+        });
+      }
+      res.json({ received: true });
+    } catch (error: unknown) {
+      console.error(error instanceof Error ? error.message : 'Stripe-Webhook konnte nicht verarbeitet werden.');
+      res.status(400).json({ error: 'Stripe-Webhook konnte nicht verarbeitet werden.' });
+    }
+  });
+
   app.use(express.json({
     limit: '8mb',
     verify: (req, _res, buffer) => {
@@ -323,6 +355,40 @@ async function startServer() {
 
     next();
   };
+
+  app.post('/api/payments/checkout/pro-monthly', requireVerifiedMember, async (req, res) => {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim();
+    const priceId = process.env.STRIPE_PRO_MONTHLY_PRICE_ID?.trim();
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    if (!stripeSecretKey || !priceId) {
+      res.status(503).json({ error: 'Stripe Checkout ist noch nicht vollständig konfiguriert.' });
+      return;
+    }
+    if (!firebaseUser?.email || firebaseUser.email_verified !== true) {
+      res.status(403).json({ error: 'Für Stripe Checkout ist eine bestätigte E-Mail-Adresse erforderlich.' });
+      return;
+    }
+    if (firebaseTierRank(firebaseUser) >= 1) {
+      res.status(409).json({ error: 'Für dieses Konto ist bereits ein PRO- oder PREMIUM-Tarif aktiv.' });
+      return;
+    }
+    try {
+      const customerId = await loadStripeCustomerId(FIREBASE_PROJECT_ID, firebaseUser.sub);
+      const session = await createManagedSubscriptionCheckout({
+        secretKey: stripeSecretKey,
+        priceId,
+        firebaseUid: firebaseUser.sub,
+        customerEmail: firebaseUser.email,
+        customerId,
+        applicationUrl: ACADEMY_PUBLIC_URL,
+      });
+      if (!session.url) throw new Error('Stripe hat keine Checkout-URL zurückgegeben.');
+      res.json({ sessionId: session.id, url: session.url });
+    } catch (error: unknown) {
+      console.error(error instanceof Error ? error.message : 'Stripe Checkout konnte nicht gestartet werden.');
+      res.status(502).json({ error: 'Stripe Checkout konnte nicht gestartet werden.' });
+    }
+  });
 
   // Initialize Gemini AI Client
   const apiKey = process.env.GEMINI_API_KEY || '';

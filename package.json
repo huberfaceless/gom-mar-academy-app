@@ -22,6 +22,7 @@
     "audit:youtube-oauth": "tsx scripts/auditYouTubeOAuth.ts",
     "audit:instagram": "tsx scripts/auditInstagramAutomation.ts",
     "audit:whatsapp": "tsx scripts/auditWhatsAppWebhook.ts",
+    "audit:stripe": "tsx scripts/auditStripeManagedPayments.ts",
     "audit:content-projects": "tsx scripts/auditContentEngineProjects.ts",
     "audit:publishing-persistence": "tsx scripts/auditPublishingPersistence.ts",
     "audit:lessons": "tsx scripts/auditLessonIntegrity.ts"
