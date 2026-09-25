@@ -26,7 +26,7 @@ import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summar
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
-import { completedCheckoutMemberId, createManagedSubscriptionCheckout, verifyStripeWebhook } from './server/stripeManagedPayments.js';
+import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, retrieveManagedSubscriptionCheckout, verifyStripeWebhook } from './server/stripeManagedPayments.js';
 import { loadStripeCustomerId, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -387,6 +387,29 @@ async function startServer() {
     } catch (error: unknown) {
       console.error(error instanceof Error ? error.message : 'Stripe Checkout konnte nicht gestartet werden.');
       res.status(502).json({ error: 'Stripe Checkout konnte nicht gestartet werden.' });
+    }
+  });
+
+  app.get('/api/payments/checkout/session/:sessionId', requireVerifiedMember, async (req, res) => {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim();
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    if (!stripeSecretKey) {
+      res.status(503).json({ error: 'Stripe Checkout ist noch nicht vollständig konfiguriert.' });
+      return;
+    }
+    try {
+      const session = await retrieveManagedSubscriptionCheckout(stripeSecretKey, req.params.sessionId);
+      const memberId = completedCheckoutSessionMemberId(session);
+      if (!firebaseUser || memberId !== firebaseUser.sub) {
+        res.status(403).json({ error: 'Diese Stripe-Zahlung gehört nicht zum angemeldeten Konto.' });
+        return;
+      }
+      const payerEmail = checkoutSessionPayerEmail(session);
+      if (!payerEmail) throw new Error('Stripe hat keine E-Mail-Adresse zur Zahlung zurückgegeben.');
+      res.json({ email: payerEmail, status: 'complete', tier: 'PRO' });
+    } catch (error: unknown) {
+      console.error(error instanceof Error ? error.message : 'Stripe-Zahlung konnte nicht bestätigt werden.');
+      res.status(502).json({ error: 'Stripe-Zahlung konnte nicht bestätigt werden.' });
     }
   });
 
