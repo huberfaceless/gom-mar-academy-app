@@ -190,12 +190,17 @@ export const updatedSubscriptionCancellation = (event: StripeWebhookEvent): {
   const subscription = event.data.object;
   const userId = subscription.metadata?.firebase_uid;
   if (!userId) return null;
-  const periodEnd = subscription.cancel_at || subscription.current_period_end;
-  const cancellationAt = subscription.cancel_at_period_end === true
-    && typeof periodEnd === 'number'
-    && Number.isFinite(periodEnd)
-    ? new Date(periodEnd * 1000).toISOString()
-    : null;
+  const cancellationTimestamp = typeof subscription.cancel_at === 'number'
+    && Number.isFinite(subscription.cancel_at)
+    ? subscription.cancel_at
+    : subscription.cancel_at_period_end === true
+      && typeof subscription.current_period_end === 'number'
+      && Number.isFinite(subscription.current_period_end)
+      ? subscription.current_period_end
+      : null;
+  const cancellationAt = cancellationTimestamp === null
+    ? null
+    : new Date(cancellationTimestamp * 1000).toISOString();
   return { userId, cancellationAt };
 };
 

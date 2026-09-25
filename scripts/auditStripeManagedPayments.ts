@@ -69,6 +69,18 @@ assert.deepEqual(updatedSubscriptionCancellation({
   },
 }), { userId: 'firebase-user', cancellationAt: '2026-10-25T00:00:00.000Z' });
 assert.deepEqual(updatedSubscriptionCancellation({
+  id: 'evt_subscription_scheduled',
+  type: 'customer.subscription.updated',
+  data: {
+    object: {
+      id: 'sub_updated',
+      cancel_at_period_end: false,
+      cancel_at: 1_792_886_400,
+      metadata: { firebase_uid: 'firebase-user' },
+    },
+  },
+}), { userId: 'firebase-user', cancellationAt: '2026-10-25T00:00:00.000Z' });
+assert.deepEqual(updatedSubscriptionCancellation({
   id: 'evt_subscription_resumed',
   type: 'customer.subscription.updated',
   data: {
