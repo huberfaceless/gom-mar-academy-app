@@ -56,3 +56,30 @@ export const saveStripeMembership = async (
   });
   if (!response.ok) throw new Error('Die Stripe-Mitgliedschaft konnte nicht gespeichert werden.');
 };
+
+export const cancelStripeMembership = async (
+  projectId: string,
+  userId: string,
+  eventId: string,
+  subscription: StripeCheckoutSession,
+): Promise<void> => {
+  const response = await fetch(documentUrl(projectId, userId), {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${await accessToken()}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      fields: {
+        userId: { stringValue: userId },
+        stripeCustomerId: { stringValue: subscription.customer || '' },
+        stripeSubscriptionId: { stringValue: subscription.id },
+        stripeEventId: { stringValue: eventId },
+        tier: { stringValue: 'FREE' },
+        status: { stringValue: 'canceled' },
+        updatedAt: { timestampValue: new Date().toISOString() },
+      },
+    }),
+  });
+  if (!response.ok) throw new Error('Die gekündigte Stripe-Mitgliedschaft konnte nicht gespeichert werden.');
+};

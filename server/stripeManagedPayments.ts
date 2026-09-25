@@ -10,7 +10,7 @@ type StripeApiError = {
 
 export type StripeCheckoutSession = {
   id: string;
-  url: string | null;
+  url?: string | null;
   customer?: string | null;
   subscription?: string | null;
   client_reference_id?: string | null;
@@ -20,6 +20,11 @@ export type StripeCheckoutSession = {
   metadata?: Record<string, string> | null;
   customer_email?: string | null;
   customer_details?: { email?: string | null } | null;
+};
+
+export type StripeBillingPortalSession = {
+  id: string;
+  url: string;
 };
 
 export type StripeWebhookEvent = {
@@ -117,6 +122,19 @@ export const createManagedSubscriptionCheckout = async (input: {
   );
 };
 
+export const createStripeBillingPortalSession = async (input: {
+  secretKey: string;
+  customerId: string;
+  returnUrl: string;
+}): Promise<StripeBillingPortalSession> => stripeRequest<StripeBillingPortalSession>(
+  input.secretKey,
+  '/billing_portal/sessions',
+  new URLSearchParams({
+    customer: input.customerId,
+    return_url: input.returnUrl,
+  }),
+);
+
 const secureHexEqual = (left: string, right: string): boolean => {
   if (!/^[a-f\d]{64}$/iu.test(left) || !/^[a-f\d]{64}$/iu.test(right)) return false;
   return timingSafeEqual(Buffer.from(left, 'hex'), Buffer.from(right, 'hex'));
@@ -154,6 +172,11 @@ export const completedCheckoutSessionMemberId = (session: StripeCheckoutSession)
 export const completedCheckoutMemberId = (event: StripeWebhookEvent): string | null => {
   if (event.type !== 'checkout.session.completed') return null;
   return completedCheckoutSessionMemberId(event.data.object);
+};
+
+export const deletedSubscriptionMemberId = (event: StripeWebhookEvent): string | null => {
+  if (event.type !== 'customer.subscription.deleted') return null;
+  return event.data.object.metadata?.firebase_uid || null;
 };
 
 export const checkoutSessionPayerEmail = (session: StripeCheckoutSession): string | null => {
