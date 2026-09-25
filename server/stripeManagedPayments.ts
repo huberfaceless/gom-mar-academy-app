@@ -20,6 +20,9 @@ export type StripeCheckoutSession = {
   metadata?: Record<string, string> | null;
   customer_email?: string | null;
   customer_details?: { email?: string | null } | null;
+  cancel_at_period_end?: boolean;
+  cancel_at?: number | null;
+  current_period_end?: number | null;
 };
 
 export type StripeBillingPortalSession = {
@@ -177,6 +180,23 @@ export const completedCheckoutMemberId = (event: StripeWebhookEvent): string | n
 export const deletedSubscriptionMemberId = (event: StripeWebhookEvent): string | null => {
   if (event.type !== 'customer.subscription.deleted') return null;
   return event.data.object.metadata?.firebase_uid || null;
+};
+
+export const updatedSubscriptionCancellation = (event: StripeWebhookEvent): {
+  userId: string;
+  cancellationAt: string | null;
+} | null => {
+  if (event.type !== 'customer.subscription.updated') return null;
+  const subscription = event.data.object;
+  const userId = subscription.metadata?.firebase_uid;
+  if (!userId) return null;
+  const periodEnd = subscription.cancel_at || subscription.current_period_end;
+  const cancellationAt = subscription.cancel_at_period_end === true
+    && typeof periodEnd === 'number'
+    && Number.isFinite(periodEnd)
+    ? new Date(periodEnd * 1000).toISOString()
+    : null;
+  return { userId, cancellationAt };
 };
 
 export const checkoutSessionPayerEmail = (session: StripeCheckoutSession): string | null => {

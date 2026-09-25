@@ -46,6 +46,7 @@ type FirebaseMember = {
   lastSignInAt?: string;
   whatsappPhoneNumber?: string;
   whatsappConsentGranted?: boolean;
+  stripeCancellationAt?: string;
 };
 
 const getYouTubeEmbedUrl = (value: string): string => {
@@ -881,6 +882,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           <option value="PRO">PRO</option>
                           <option value="PREMIUM">PREMIUM</option>
                         </select>
+                        {member.stripeCancellationAt && (
+                          <p className="mt-2 max-w-44 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold text-amber-800">
+                            Kündigung vorgemerkt bis {new Date(member.stripeCancellationAt).toLocaleDateString('de-AT')}
+                          </p>
+                        )}
                       </td>
                       <td className="px-4 py-3.5">
                         <div className="flex min-w-36 flex-col gap-2">

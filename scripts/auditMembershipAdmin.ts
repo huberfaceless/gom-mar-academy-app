@@ -36,6 +36,7 @@ assert.match(auth, /\/api\/member\/language/, 'Die Registrierung muss die Mitgli
 assert.match(server, /app\.post\('\/api\/admin\/members\/:uid\/language', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedssprachen ändern.');
 assert.match(server, /whatsappProfilesByUserId/, 'Die Mitgliederliste muss gespeicherte WhatsApp-Profile zuordnen.');
 assert.match(server, /whatsappPhoneNumber: whatsappProfile\?\.phoneNumber/, 'Die Mitglieder-API muss die hinterlegte Telefonnummer liefern.');
+assert.match(server, /stripeCancellationAt: stripeMembership\?\.status === 'canceling'/, 'Die Mitglieder-API muss vorgemerkte Stripe-Kündigungen liefern.');
 assert.match(server, /app\.patch\('\/api\/admin\/members\/:uid\/email', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen Mitgliedsadressen ändern.');
 assert.match(server, /app\.patch\('\/api\/admin\/members\/:uid\/whatsapp', requireVerifiedMember, requireAcademyAdmin/, 'Nur Administratoren dürfen WhatsApp-Nummern ändern.');
 assert.match(server, /deleteWhatsAppMemberProfile\(FIREBASE_PROJECT_ID, uid\)/, 'Eine leere Nummer muss das WhatsApp-Profil vollständig entfernen.');
@@ -50,6 +51,7 @@ assert.match(admin, /Konto und E-Mail löschen/, 'Die Löschaktion für Mitglied
 assert.match(admin, />WhatsApp</, 'Die Mitgliederverwaltung muss eine WhatsApp-Spalte anzeigen.');
 assert.match(admin, /member\.whatsappPhoneNumber/, 'Die hinterlegte Telefonnummer muss beim Mitglied angezeigt werden.');
 assert.match(admin, /WhatsApp bearbeiten/, 'Die Mitgliederverwaltung muss WhatsApp-Nummern bearbeiten oder entfernen können.');
+assert.match(admin, /Kündigung vorgemerkt bis/, 'Die Mitgliederverwaltung muss das Kündigungsdatum anzeigen.');
 assert.doesNotMatch(admin, /students: StudentRecord\[\]/, 'Die Admin-Mitgliederliste darf keine lokale Browserliste mehr erhalten.');
 assert.doesNotMatch(admin, /membersLoaded \? firebaseMembers : students/, 'Mitgliederzahlen dürfen nicht auf veraltete lokale Daten zurückfallen.');
 assert.match(admin, /const totalStudents = firebaseMembers\.length/, 'Firebase muss die einzige Quelle der Mitgliederzahlen sein.');
