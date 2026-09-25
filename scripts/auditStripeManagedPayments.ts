@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
 import {
+  checkoutSessionPayerEmail,
   completedCheckoutMemberId,
+  completedCheckoutSessionMemberId,
   STRIPE_MANAGED_PAYMENTS_API_VERSION,
   verifyStripeWebhook,
 } from '../server/stripeManagedPayments.js';
@@ -28,6 +30,12 @@ const secret = 'whsec_test';
 const signature = createHmac('sha256', secret).update(`${timestamp}.${payload}`).digest('hex');
 const event = verifyStripeWebhook(payload, `t=${timestamp},v1=${signature}`, secret, timestamp);
 assert.equal(completedCheckoutMemberId(event), 'firebase-user');
+assert.equal(completedCheckoutSessionMemberId(event.data.object), 'firebase-user');
+assert.equal(checkoutSessionPayerEmail({
+  ...event.data.object,
+  customer_details: { email: 'Member@Example.com' },
+}), 'member@example.com');
+assert.equal(checkoutSessionPayerEmail(event.data.object), null);
 assert.throws(() => verifyStripeWebhook(payload, `t=${timestamp},v1=${'0'.repeat(64)}`, secret, timestamp));
 assert.throws(() => verifyStripeWebhook(payload, `t=${timestamp - 301},v1=${signature}`, secret, timestamp));
 assert.equal(completedCheckoutMemberId({ ...event, type: 'invoice.paid' }), null);
