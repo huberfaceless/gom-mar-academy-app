@@ -26,8 +26,8 @@ import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summar
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
-import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, retrieveManagedSubscriptionCheckout, verifyStripeWebhook } from './server/stripeManagedPayments.js';
-import { loadStripeCustomerId, saveStripeMembership } from './server/stripeMembershipAdmin.js';
+import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, retrieveManagedSubscriptionCheckout, verifyStripeWebhook } from './server/stripeManagedPayments.js';
+import { cancelStripeMembership, loadStripeCustomerId, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
@@ -215,6 +215,20 @@ async function startServer() {
           eventId: event.id,
           checkoutSessionId: event.data.object.id,
           userId,
+        });
+      }
+      const canceledUserId = deletedSubscriptionMemberId(event);
+      if (canceledUserId) {
+        const member = await getFirebaseMember(FIREBASE_PROJECT_ID, canceledUserId);
+        if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
+        if (member.role !== 'admin') {
+          await updateFirebaseMemberTier(FIREBASE_PROJECT_ID, canceledUserId, 'FREE');
+        }
+        await cancelStripeMembership(FIREBASE_PROJECT_ID, canceledUserId, event.id, event.data.object);
+        console.info('Stripe-PRO-Mitgliedschaft beendet', {
+          eventId: event.id,
+          subscriptionId: event.data.object.id,
+          userId: canceledUserId,
         });
       }
       res.json({ received: true });
@@ -410,6 +424,35 @@ async function startServer() {
     } catch (error: unknown) {
       console.error(error instanceof Error ? error.message : 'Stripe-Zahlung konnte nicht bestätigt werden.');
       res.status(502).json({ error: 'Stripe-Zahlung konnte nicht bestätigt werden.' });
+    }
+  });
+
+  app.post('/api/payments/customer-portal', requireVerifiedMember, async (req, res) => {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim();
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    if (!stripeSecretKey) {
+      res.status(503).json({ error: 'Das Stripe-Kundenportal ist noch nicht vollständig konfiguriert.' });
+      return;
+    }
+    if (!firebaseUser) {
+      res.status(401).json({ error: 'Eine Anmeldung ist erforderlich.' });
+      return;
+    }
+    try {
+      const customerId = await loadStripeCustomerId(FIREBASE_PROJECT_ID, firebaseUser.sub);
+      if (!customerId) {
+        res.status(404).json({ error: 'Für dieses Konto wurde keine Stripe-Mitgliedschaft gefunden.' });
+        return;
+      }
+      const portal = await createStripeBillingPortalSession({
+        secretKey: stripeSecretKey,
+        customerId,
+        returnUrl: `${ACADEMY_PUBLIC_URL}/`,
+      });
+      res.json({ url: portal.url });
+    } catch (error: unknown) {
+      console.error(error instanceof Error ? error.message : 'Stripe-Kundenportal konnte nicht geöffnet werden.');
+      res.status(502).json({ error: 'Stripe-Kundenportal konnte nicht geöffnet werden.' });
     }
   });
 

@@ -4,6 +4,7 @@ import {
   checkoutSessionPayerEmail,
   completedCheckoutMemberId,
   completedCheckoutSessionMemberId,
+  deletedSubscriptionMemberId,
   STRIPE_MANAGED_PAYMENTS_API_VERSION,
   verifyStripeWebhook,
 } from '../server/stripeManagedPayments.js';
@@ -39,6 +40,19 @@ assert.equal(checkoutSessionPayerEmail(event.data.object), null);
 assert.throws(() => verifyStripeWebhook(payload, `t=${timestamp},v1=${'0'.repeat(64)}`, secret, timestamp));
 assert.throws(() => verifyStripeWebhook(payload, `t=${timestamp - 301},v1=${signature}`, secret, timestamp));
 assert.equal(completedCheckoutMemberId({ ...event, type: 'invoice.paid' }), null);
+assert.equal(deletedSubscriptionMemberId({
+  id: 'evt_subscription_deleted',
+  type: 'customer.subscription.deleted',
+  data: {
+    object: {
+      id: 'sub_deleted',
+      customer: 'cus_member',
+      status: 'canceled',
+      metadata: { firebase_uid: 'firebase-user' },
+    },
+  },
+}), 'firebase-user');
+assert.equal(deletedSubscriptionMemberId(event), null);
 assert.equal(completedCheckoutMemberId({
   ...event,
   data: { object: { ...event.data.object, payment_status: 'unpaid' } },

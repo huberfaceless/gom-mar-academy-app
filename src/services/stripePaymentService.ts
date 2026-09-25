@@ -27,3 +27,16 @@ export const loadCompletedProCheckout = async (sessionId: string): Promise<{ ema
   }
   return { email: result.email };
 };
+export const openStripeCustomerPortal = async (): Promise<void> => {
+  const currentUser = auth.currentUser;
+  if (!currentUser) throw new Error('Eine Anmeldung ist erforderlich.');
+  const response = await fetch('/api/payments/customer-portal', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${await currentUser.getIdToken()}` },
+  });
+  const result = await response.json().catch(() => ({})) as { url?: string; error?: string };
+  if (!response.ok || !result.url) {
+    throw new Error(result.error || 'Stripe-Kundenportal konnte nicht geöffnet werden.');
+  }
+  window.location.assign(result.url);
+};
