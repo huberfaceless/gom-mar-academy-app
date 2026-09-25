@@ -558,7 +558,11 @@ export default function App() {
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                 <div>
                   <p className="font-black">
-                    {language === 'de' ? 'Zahlung erfolgreich' : language === 'pl' ? 'Płatność zakończona pomyślnie' : 'Payment successful'}
+                    {language === 'de'
+                      ? `Zahlung für ${firebaseUser?.email || user.email} erfolgreich`
+                      : language === 'pl'
+                        ? `Płatność dla ${firebaseUser?.email || user.email} zakończona pomyślnie`
+                        : `Payment for ${firebaseUser?.email || user.email} successful`}
                   </p>
                   <p className="mt-1 text-sm text-emerald-800">
                     {checkoutNotice === 'success'
