@@ -37,6 +37,7 @@ import {
   isMembershipResolvedForUser,
 } from './utils/membershipAccess';
 import { loadEmailCampaigns, saveEmailCampaigns } from './services/emailCampaignsService';
+import { loadCompletedProCheckout } from './services/stripePaymentService';
 
 const DashboardView = lazy(() => import('./components/DashboardView').then((module) => ({ default: module.DashboardView })));
 const AcademyView = lazy(() => import('./components/AcademyView').then((module) => ({ default: module.AcademyView })));
@@ -68,7 +69,7 @@ export default function App() {
     return { ...loaded, tier: 'FREE', role: 'member' };
   });
   const [resolvedMembershipUid, setResolvedMembershipUid] = useState<string | null>(null);
-  const [checkoutNotice, setCheckoutNotice] = useState<'success' | 'processing' | null>(null);
+  const [checkoutNotice, setCheckoutNotice] = useState<{ status: 'success' | 'processing'; email: string } | null>(null);
 
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [campaignsError, setCampaignsError] = useState<string | null>(null);
@@ -196,7 +197,11 @@ export default function App() {
       }));
 
       const checkoutCompleted = new URLSearchParams(window.location.search).get('checkout') === 'success';
+      const checkoutSessionId = new URLSearchParams(window.location.search).get('session_id');
       void (async () => {
+        const completedCheckout = checkoutCompleted && checkoutSessionId
+          ? await loadCompletedProCheckout(checkoutSessionId).catch(() => null)
+          : null;
         let tokenResult = await firebaseUser.getIdTokenResult(checkoutCompleted);
         if (checkoutCompleted) {
           for (let attempt = 0; attempt < 5; attempt += 1) {
@@ -212,8 +217,11 @@ export default function App() {
         }
         if (cancelled) return;
         const membership = resolveMembershipClaims(tokenResult.claims, firebaseUser.email);
-        if (checkoutCompleted) {
-          setCheckoutNotice(membership.tier === 'FREE' ? 'processing' : 'success');
+        if (completedCheckout) {
+          setCheckoutNotice({
+            status: membership.tier === 'FREE' ? 'processing' : 'success',
+            email: completedCheckout.email,
+          });
         }
         setUser((prev) => {
           const updated: UserProfile = {
@@ -559,13 +567,13 @@ export default function App() {
                 <div>
                   <p className="font-black">
                     {language === 'de'
-                      ? `Zahlung für ${firebaseUser?.email || user.email} erfolgreich`
+                      ? `Zahlung für ${checkoutNotice.email} erfolgreich`
                       : language === 'pl'
-                        ? `Płatność dla ${firebaseUser?.email || user.email} zakończona pomyślnie`
-                        : `Payment for ${firebaseUser?.email || user.email} successful`}
+                        ? `Płatność dla ${checkoutNotice.email} zakończona pomyślnie`
+                        : `Payment for ${checkoutNotice.email} successful`}
                   </p>
                   <p className="mt-1 text-sm text-emerald-800">
-                    {checkoutNotice === 'success'
+                    {checkoutNotice.status === 'success'
                       ? language === 'de' ? 'Deine PRO-Mitgliedschaft wurde freigeschaltet.' : language === 'pl' ? 'Twoje członkostwo PRO zostało aktywowane.' : 'Your PRO membership has been activated.'
                       : language === 'de' ? 'Deine PRO-Mitgliedschaft wird gerade freigeschaltet. Bitte lade die Seite in Kürze neu.' : language === 'pl' ? 'Twoje członkostwo PRO jest właśnie aktywowane. Odśwież stronę za chwilę.' : 'Your PRO membership is being activated. Please refresh the page shortly.'}
                   </p>

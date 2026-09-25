@@ -18,6 +18,8 @@ export type StripeCheckoutSession = {
   payment_status?: string | null;
   status?: string | null;
   metadata?: Record<string, string> | null;
+  customer_email?: string | null;
+  customer_details?: { email?: string | null } | null;
 };
 
 export type StripeWebhookEvent = {
@@ -44,6 +46,24 @@ const stripeRequest = async <T>(
     signal: AbortSignal.timeout(20_000),
   });
   const payload = await response.json() as T & StripeApiError;
+  if (!response.ok) {
+    throw new Error(payload.error?.message || `Stripe antwortete mit Status ${response.status}.`);
+  }
+  return payload;
+};
+
+export const retrieveManagedSubscriptionCheckout = async (
+  secretKey: string,
+  sessionId: string,
+): Promise<StripeCheckoutSession> => {
+  const response = await fetch(`${STRIPE_API_URL}/checkout/sessions/${encodeURIComponent(sessionId)}`, {
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      'Stripe-Version': STRIPE_MANAGED_PAYMENTS_API_VERSION,
+    },
+    signal: AbortSignal.timeout(20_000),
+  });
+  const payload = await response.json() as StripeCheckoutSession & StripeApiError;
   if (!response.ok) {
     throw new Error(payload.error?.message || `Stripe antwortete mit Status ${response.status}.`);
   }
@@ -124,11 +144,19 @@ export const verifyStripeWebhook = (
   return JSON.parse(rawBody.toString('utf8')) as StripeWebhookEvent;
 };
 
-export const completedCheckoutMemberId = (event: StripeWebhookEvent): string | null => {
-  if (event.type !== 'checkout.session.completed') return null;
-  const session = event.data.object;
+export const completedCheckoutSessionMemberId = (session: StripeCheckoutSession): string | null => {
   if (session.mode !== 'subscription' || session.status !== 'complete') return null;
   if (session.payment_status !== 'paid' && session.payment_status !== 'no_payment_required') return null;
   if (session.metadata?.academy_tier !== 'PRO') return null;
   return session.metadata.firebase_uid || session.client_reference_id || null;
+};
+
+export const completedCheckoutMemberId = (event: StripeWebhookEvent): string | null => {
+  if (event.type !== 'checkout.session.completed') return null;
+  return completedCheckoutSessionMemberId(event.data.object);
+};
+
+export const checkoutSessionPayerEmail = (session: StripeCheckoutSession): string | null => {
+  const email = session.customer_details?.email || session.customer_email;
+  return typeof email === 'string' && email.trim() ? email.trim().toLowerCase() : null;
 };
