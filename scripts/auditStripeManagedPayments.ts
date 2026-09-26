@@ -5,12 +5,18 @@ import {
   completedCheckoutMemberId,
   completedCheckoutSessionMemberId,
   deletedSubscriptionMemberId,
+  isMissingStripeCustomerError,
   STRIPE_MANAGED_PAYMENTS_API_VERSION,
   updatedSubscriptionCancellation,
   verifyStripeWebhook,
 } from '../server/stripeManagedPayments.js';
 
 assert.equal(STRIPE_MANAGED_PAYMENTS_API_VERSION, '2026-02-25.preview');
+assert.equal(isMissingStripeCustomerError(new Error("No such customer: 'cus_test'")), false);
+assert.equal(isMissingStripeCustomerError(Object.assign(new Error("No such customer: 'cus_test'"), {
+  code: 'resource_missing',
+  param: 'customer',
+})), true);
 
 const payload = Buffer.from(JSON.stringify({
   id: 'evt_test',

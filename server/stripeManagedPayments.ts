@@ -5,8 +5,24 @@ export const STRIPE_MANAGED_PAYMENTS_API_VERSION = '2026-02-25.preview';
 const STRIPE_API_URL = 'https://api.stripe.com/v1';
 
 type StripeApiError = {
-  error?: { message?: string };
+  error?: { message?: string; code?: string; param?: string; type?: string };
 };
+
+class StripeApiRequestError extends Error {
+  constructor(
+    message: string,
+    readonly code?: string,
+    readonly param?: string,
+  ) {
+    super(message);
+    this.name = 'StripeApiRequestError';
+  }
+}
+
+export const isMissingStripeCustomerError = (error: unknown): boolean =>
+  error instanceof Error
+  && (error as Error & { code?: unknown }).code === 'resource_missing'
+  && (error as Error & { param?: unknown }).param === 'customer';
 
 export type StripeCheckoutSession = {
   id: string;
@@ -58,7 +74,11 @@ const stripeRequest = async <T>(
   });
   const payload = await response.json() as T & StripeApiError;
   if (!response.ok) {
-    throw new Error(payload.error?.message || `Stripe antwortete mit Status ${response.status}.`);
+    throw new StripeApiRequestError(
+      payload.error?.message || `Stripe antwortete mit Status ${response.status}.`,
+      payload.error?.code,
+      payload.error?.param,
+    );
   }
   return payload;
 };
