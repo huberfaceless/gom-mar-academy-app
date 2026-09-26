@@ -26,7 +26,7 @@ import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summar
 import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
-import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
+import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
 import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './src/data/academyData.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -404,14 +404,21 @@ async function startServer() {
     }
     try {
       const customerId = await loadStripeCustomerId(FIREBASE_PROJECT_ID, firebaseUser.sub);
-      const session = await createManagedSubscriptionCheckout({
+      const checkoutInput = {
         secretKey: stripeSecretKey,
         priceId,
         firebaseUid: firebaseUser.sub,
         customerEmail: firebaseUser.email,
-        customerId,
         applicationUrl: ACADEMY_PUBLIC_URL,
-      });
+      };
+      let session: Awaited<ReturnType<typeof createManagedSubscriptionCheckout>>;
+      try {
+        session = await createManagedSubscriptionCheckout({ ...checkoutInput, customerId });
+      } catch (error: unknown) {
+        if (!customerId || !isMissingStripeCustomerError(error)) throw error;
+        console.warn(`Veraltete Stripe-Kunden-ID für Mitglied ${firebaseUser.sub}; neuer Live-Kunde wird angelegt.`);
+        session = await createManagedSubscriptionCheckout(checkoutInput);
+      }
       if (!session.url) throw new Error('Stripe hat keine Checkout-URL zurückgegeben.');
       res.json({ sessionId: session.id, url: session.url });
     } catch (error: unknown) {
