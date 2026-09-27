@@ -10,6 +10,7 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "audit:academy": "tsx scripts/auditAcademyLocalization.ts",
+    "audit:content-access": "tsx scripts/auditAcademyContentAccess.ts",
     "audit:academy-navigation": "tsx scripts/auditAcademyNavigation.ts",
     "audit:auth-email": "tsx scripts/auditAuthEmailDelivery.ts",
     "audit:email-delivery": "tsx scripts/auditEmailDelivery.ts",

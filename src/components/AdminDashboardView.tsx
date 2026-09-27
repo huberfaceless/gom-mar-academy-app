@@ -29,7 +29,7 @@ import { AcademyTier, StudentRecord, Stage, Lesson, UserProfile } from '../types
 import { auth } from '../firebase/config';
 import { useLanguage } from '../context/LanguageContext';
 import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
-import { ACADEMY_STAGES } from '../data/academyData';
+import { STANDARD_LESSON_IDS } from '../data/academyMetadata';
 import { youtubeService } from '../services/youtubeService';
 import { WhatsAppInboxView } from './WhatsAppInboxView';
 
@@ -148,7 +148,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const localizedStages = useLocalizedAcademyStages(stages, language);
   const selectedLocalizedStage = localizedStages.find(stage => stage.id === selectedStageId) || localizedStages[0];
   const standardLessonIds = useMemo(
-    () => new Set(ACADEMY_STAGES.flatMap(stage => stage.lessons.map(lesson => lesson.id))),
+    () => STANDARD_LESSON_IDS,
     [],
   );
 

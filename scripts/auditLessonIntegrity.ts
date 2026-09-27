@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { ACADEMY_STAGES } from '../src/data/academyData';
+import { ACADEMY_STAGES } from '../server/academyData';
 
 type Finding = {
   lessonId: string;

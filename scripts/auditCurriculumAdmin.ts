@@ -17,7 +17,7 @@ const checks: Array<[boolean, string]> = [
   [persistence.includes('academyCurriculumOverrides'), 'Änderungen werden in einer eigenen Firestore-Sammlung gespeichert.'],
   [persistence.includes("process.env.FIREBASE_DATABASE_ID || '(default)'"), 'Die produktive Firestore-Standarddatenbank wird angesprochen.'],
   [persistence.includes('deleteCurriculumOverride'), 'Die Wiederherstellung entfernt ausschließlich den Override der gewählten Lektion.'],
-  [app.includes('applyCurriculumOverrides'), 'Die App wendet zentrale Änderungen auf das Standard-Curriculum an.'],
+  [app.includes('/api/academy/stages?language=') && server.includes("app.get('/api/academy/stages'"), 'Die App lädt das Curriculum nach serverseitiger Tarifprüfung.'],
   [admin.includes('zentral für alle Mitglieder gespeichert'), 'Der Editor bestätigt die zentrale Speicherung eindeutig.'],
   [types.includes("translations?: Partial<Record<'en' | 'pl', LessonTranslation>>"), 'Zentrale Lektionen unterstützen englische und polnische Sprachversionen.'],
   [types.includes("publicationStatus?: 'draft' | 'published'"), 'Lektionen besitzen einen Entwurfs- und Veröffentlichungsstatus.'],

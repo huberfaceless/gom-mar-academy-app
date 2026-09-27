@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { createServer } from 'vite';
-import { ACADEMY_STAGES } from '../src/data/academyData';
+import { localizeAllAcademyStages } from '../src/i18n/localizeAllAcademyStages';
+import { ACADEMY_STAGES } from '../server/academyData';
 import { localizeAcademyStages } from '../src/i18n/academyLocalization';
 import { localizeAcademyStage81 } from '../src/i18n/academyLocalization81';
 import { localizeAcademyStage82 } from '../src/i18n/academyLocalization82';
@@ -226,36 +226,9 @@ for (const language of ['en', 'pl'] as const) {
   });
 }
 
-const vite = await createServer({
-  appType: 'custom',
-  logLevel: 'silent',
-  server: { middlewareMode: true },
-});
-
-try {
-  const runtimeModule = await vite.ssrLoadModule('/src/i18n/useLocalizedAcademyStages.ts') as {
-    loadAcademyLocalizer: (language: 'en' | 'pl', stageIds?: number[]) => Promise<(stages: Stage[]) => Stage[]>;
-  };
-  for (const language of ['en', 'pl'] as const) {
-    const localizeRuntimeStages = await runtimeModule.loadAcademyLocalizer(language);
-    const fullyLocalizedStages = localize(language);
-    assert.deepEqual(
-      localizeRuntimeStages(ACADEMY_STAGES),
-      fullyLocalizedStages,
-      `${language}: Die bedarfsgeladene Sprachfassung weicht von der geprüften Academy-Lokalisierung ab`,
-    );
-
-    const localizeFirstGroup = await runtimeModule.loadAcademyLocalizer(language, [1, 2]);
-    const firstGroupOnly = localizeFirstGroup(ACADEMY_STAGES);
-    assert.deepEqual(firstGroupOnly.slice(0, 20), fullyLocalizedStages.slice(0, 20), `${language}: Etappengruppe 1–20 ist unvollständig`);
-    assert.deepEqual(
-      firstGroupOnly.slice(20),
-      preserveAcademyTechnicalFields(ACADEMY_STAGES, ACADEMY_STAGES).slice(20),
-      `${language}: Nicht angeforderte Etappengruppen wurden geladen`,
-    );
-  }
-} finally {
-  await vite.close();
+for (const language of ['en', 'pl'] as const) {
+  assert.deepEqual(localizeAllAcademyStages(ACADEMY_STAGES, language), localize(language),
+    `${language}: Die serverseitige Sprachfassung weicht von der geprüften Academy-Lokalisierung ab`);
 }
 
 console.log('Academy-Lokalisierung geprüft: 99 Etappen, Englisch und Polnisch, Inhalte und technische Felder vollständig.');

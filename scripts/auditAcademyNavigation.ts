@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { ACADEMY_STAGES } from '../src/data/academyData';
+import { ACADEMY_STAGES } from '../server/academyData';
 import { isAcademyStageAccessible, resolvePreviousAcademyLocation } from '../src/utils/academyNavigation';
 import { getAcademyStageLimit } from '../src/utils/membershipAccess';
 
