@@ -1303,6 +1303,10 @@ async function startServer() {
         res.status(400).json({ error: 'Der CRM-Kontakt oder seine E-Mail-Adresse ist ungültig.' });
         return;
       }
+      if (!contactId.startsWith('member_')) {
+        res.status(409).json({ error: 'Für diesen manuell angelegten Kontakt liegt keine überprüfbare E-Mail-Einwilligung vor. Marketing-Versand ist nur an bestätigte Academy-Mitglieder möglich.' });
+        return;
+      }
 
       let memberUserId: string | undefined;
       let consentUpdatedAt: string | null | undefined;
