@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { renderConsentEmailHtml, renderTextEmailHtml } from '../server/emailHtmlTemplate.js';
 
 const server = readFileSync('server.ts', 'utf8');
 const service = readFileSync('src/services/emailDeliveryService.ts', 'utf8');
@@ -41,6 +42,14 @@ assert.match(server, /isMarketingEmailSuppressed\(FIREBASE_PROJECT_ID, recipient
 assert.match(server, /if \(!contactId\.startsWith\('member_'\)\)\s*\{\s*const consent = await loadExternalEmailConsent\(FIREBASE_PROJECT_ID, storedRecipient\);\s*if \(!consent\.granted\)/, 'Manuelle CRM-Kontakte dürfen nur mit bestätigter Einwilligung angeschrieben werden.');
 assert.match(server, /app\.post\('\/api\/email\/subscribe', async/, 'Die freiwillige Anmeldung muss öffentlich möglich sein.');
 assert.match(server, /app\.post\('\/api\/email\/subscribe\/confirm', async/, 'Einwilligung muss durch eine bewusste Bestätigung aktiviert werden.');
+assert.match(server, /renderConsentEmailHtml\(language, message\.subject, confirmationUrl\)/, 'Academy-Bestätigungs-E-Mails brauchen eine HTML-Version.');
+assert.match(server, /renderConsentEmailHtml\(language, message\[0\], link\)/, 'Öffentliche Bestätigungs-E-Mails brauchen eine HTML-Version.');
+assert.match(server, /renderTextEmailHtml\(emailSubject, deliveredBody\)/, 'Einzel- und Test-E-Mails brauchen eine HTML-Version.');
+const sampleUrl = 'https://academy.gomo-marketing.at/api/email/subscribe/confirm?email=a%40b.at&token=sample';
+const confirmationHtml = renderConsentEmailHtml('de', 'Bestätigung', sampleUrl);
+assert.match(confirmationHtml, /Einwilligung bestätigen/, 'Die HTML-Bestätigung braucht einen lesbaren Button.');
+assert.match(confirmationHtml, /email=a%40b.at&amp;token=sample/, 'Parameter müssen im HTML-Link korrekt escaped sein.');
+assert.doesNotMatch(renderTextEmailHtml('<script>', '<img src=x>'), /<script>|<img src=x>/, 'E-Mail-Inhalte dürfen kein ungefiltertes HTML enthalten.');
 assert.match(server, /await withdrawExternalEmailConsent\(FIREBASE_PROJECT_ID, result\.email\)/, 'Die Abmeldung muss auch die externe Einwilligung widerrufen.');
 assert.match(server, /app\.get\('\/api\/email\/external-consent\/status', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Einwilligungsstatus muss geschützt sein.');
 assert.match(externalConsentStorage, /academyExternalEmailConsents/, 'Externe Einwilligungen müssen dauerhaft gespeichert werden.');
