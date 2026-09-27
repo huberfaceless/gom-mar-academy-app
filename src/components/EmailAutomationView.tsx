@@ -503,13 +503,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     }
     const confirmed = shouldPause
       ? window.confirm(`Kampagne „${activeCampaign.title}“ jetzt pausieren?`)
-      : window.confirm('Kampagne freigeben? Die E-Mails werden als geplant markiert. Ein automatischer Empfängerversand wird dadurch noch nicht ausgelöst.');
+      : window.confirm(isAdmin
+        ? 'Kampagne automatisch an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.'
+        : 'Kampagne freigeben? Die E-Mails werden als geplant markiert. Ein automatischer Empfängerversand wird dadurch nicht ausgelöst.');
     if (!confirmed) return;
     const nextStatus: Campaign['status'] = shouldPause ? 'paused' : 'active';
     const updatedCampaigns = campaigns.map((campaign) => campaign.id === activeCampaign.id
       ? {
           ...campaign,
           status: nextStatus,
+          automationStartedAt: !shouldPause && isAdmin ? campaign.automationStartedAt || new Date().toISOString() : campaign.automationStartedAt,
           emails: shouldPause
             ? campaign.emails
             : campaign.emails.map((email) => email.status === 'draft' ? { ...email, status: 'scheduled' as const } : email),
@@ -523,7 +526,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       setIsEditing(false);
       setSimulatedLeadSuccess(shouldPause
         ? 'Die Kampagne wurde pausiert.'
-        : 'Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.');
+        : isAdmin ? 'Die Kampagne wurde für den automatischen Versand freigegeben.' : 'Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.');
       setTimeout(() => setSimulatedLeadSuccess(null), 5000);
     } catch (error: unknown) {
       setCampaignActionError(error instanceof Error ? error.message : 'Der Kampagnenstatus konnte nicht gespeichert werden.');
@@ -931,7 +934,9 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               )}
 
               <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-medium text-slate-600">
-                Die Freigabe markiert vollständige E-Mails als geplant. Automatischer Empfängerversand wird erst in einem separaten Schritt verbunden.
+                {isAdmin
+                  ? 'Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt mit der Freigabe. Bereits früher aktivierte Kampagnen bleiben ohne automatische Versandfreigabe.'
+                  : 'Die Freigabe markiert vollständige E-Mails als geplant. Ein automatischer Empfängerversand ist nur für Academy-Administratoren verfügbar.'}
               </p>
 
               {isEditingCampaign && (
