@@ -2,7 +2,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  sendEmailVerification,
   sendPasswordResetEmail,
   updateProfile,
   reload,
@@ -121,14 +120,24 @@ export async function logout(): Promise<void> {
 }
 
 /**
- * Send or re-send the Firebase email verification link to the currently signed in user.
+ * Request a Firebase verification link through the authenticated Academy server.
+ * The server sends a localized HTML email to the account address only.
  */
 export async function sendVerificationEmail(userToVerify?: User | null, language: LanguageCode = 'de'): Promise<void> {
   const targetUser = userToVerify || auth.currentUser;
   if (!targetUser) {
     throw new Error(tr(language, 'auth.error.noUser'));
   }
-  await sendEmailVerification(targetUser, prepareAuthEmail(language));
+  const idToken = await targetUser.getIdToken();
+  const response = await fetch('/api/auth/verification-email', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${idToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ language }),
+  });
+  if (!response.ok) {
+    const result = await response.json().catch(() => ({})) as { error?: string };
+    throw new Error(result.error || tr(language, 'verification.sendError'));
+  }
 }
 
 /**

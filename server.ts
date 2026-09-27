@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { GoogleGenAI } from '@google/genai';
+import { GoogleAuth } from 'google-auth-library';
 import dotenv from 'dotenv';
 import { verify as verifySignature } from 'crypto';
 import {
@@ -19,7 +20,7 @@ import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsA
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
-import { renderConsentEmailHtml, renderTextEmailHtml } from './server/emailHtmlTemplate.js';
+import { accountVerificationEmailCopy, renderConsentEmailHtml, renderTextEmailHtml } from './server/emailHtmlTemplate.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
@@ -345,6 +346,68 @@ async function startServer() {
       }
       next();
   }];
+
+  const verificationGoogleAuth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/cloud-platform'] });
+  app.post('/api/auth/verification-email', requireAuthenticatedMember, async (req, res) => {
+    const firebaseUser = (req as FirebaseRequest).firebaseUser;
+    const userId = firebaseUser?.sub || '';
+    const email = typeof firebaseUser?.email === 'string' ? firebaseUser.email.trim().toLowerCase() : '';
+    const language: 'de' | 'en' | 'pl' = req.body?.language === 'en' || req.body?.language === 'pl' ? req.body.language : 'de';
+    if (!userId || !EMAIL_ADDRESS_PATTERN.test(email) || firebaseUser?.email_verified === true) {
+      res.status(400).json({ error: 'Ein unbestätigtes Konto mit gültiger E-Mail-Adresse ist erforderlich.' });
+      return;
+    }
+    const sendKey = `account-verification:${userId}`;
+    const recent = (recentEmailSends.get(sendKey) || []).filter((time) => time > Date.now() - 10 * 60_000);
+    if (recent.length >= 3) {
+      res.status(429).json({ error: 'Bitte warte einige Minuten, bevor du eine weitere Bestätigungs-E-Mail anforderst.' });
+      return;
+    }
+    try {
+      const member = await getFirebaseMember(FIREBASE_PROJECT_ID, userId);
+      if (!member || member.disabled || member.emailVerified || member.email.trim().toLowerCase() !== email) {
+        res.status(409).json({ error: 'Das Konto kann derzeit nicht per E-Mail bestätigt werden.' });
+        return;
+      }
+      const key = process.env.SENDGRID_API_KEY?.trim();
+      const senderEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
+      if (!key || !senderEmail || !EMAIL_ADDRESS_PATTERN.test(senderEmail)) throw new Error('Der E-Mail-Versand ist derzeit nicht konfiguriert.');
+
+      const client = await verificationGoogleAuth.getClient();
+      const accessToken = await client.getAccessToken();
+      if (!accessToken.token) throw new Error('Firebase-Verwaltungszugriff fehlt.');
+      const linkResponse = await fetch(`https://identitytoolkit.googleapis.com/v1/projects/${encodeURIComponent(FIREBASE_PROJECT_ID)}/accounts:sendOobCode`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestType: 'VERIFY_EMAIL', email, returnOobLink: true, continueUrl: ACADEMY_PUBLIC_URL + '/' }),
+      });
+      if (!linkResponse.ok) {
+        console.error('Firebase-Bestätigungslink konnte nicht erzeugt werden.', { status: linkResponse.status });
+        throw new Error('Der Bestätigungslink konnte nicht erzeugt werden.');
+      }
+      const { oobLink } = await linkResponse.json() as { oobLink?: string };
+      if (!oobLink || !oobLink.startsWith('https://')) throw new Error('Der Firebase-Bestätigungslink ist ungültig.');
+      const message = accountVerificationEmailCopy(language, oobLink);
+      const sendResponse = await fetch(SENDGRID_API_URL, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          personalizations: [{ to: [{ email }] }],
+          from: { email: senderEmail, name: (process.env.SENDGRID_FROM_NAME?.trim() || 'GOM-MAR Academy').slice(0, 100) },
+          subject: message.subject,
+          content: [{ type: 'text/plain', value: message.text }, { type: 'text/html', value: message.html }],
+        }),
+      });
+      if (!sendResponse.ok) {
+        console.error('SendGrid-Kontoverifizierung fehlgeschlagen.', { status: sendResponse.status });
+        throw new Error('Die Bestätigungs-E-Mail konnte nicht gesendet werden.');
+      }
+      recentEmailSends.set(sendKey, [...recent, Date.now()]);
+      res.status(202).json({ success: true });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Die Bestätigungs-E-Mail konnte nicht gesendet werden.' });
+    }
+  });
 
   const requireProMember = (req: Request, res: Response, next: NextFunction) => {
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
