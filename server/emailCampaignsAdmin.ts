@@ -45,6 +45,11 @@ export const validateEmailCampaigns = (value: unknown): Record<string, unknown>[
     if (!isBoundedString(campaign.targetAudience, 1_000, true)) throw new Error('Eine Kampagnen-Zielgruppe ist ungültig.');
     if (!isBoundedString(campaign.description, 5_000, true)) throw new Error('Eine Kampagnenbeschreibung ist ungültig.');
     if (!isBoundedString(campaign.createdAt, 100)) throw new Error('Ein Kampagnendatum ist ungültig.');
+    if (campaign.automationStartedAt !== undefined && (
+      typeof campaign.automationStartedAt !== 'string'
+      || !Number.isFinite(Date.parse(campaign.automationStartedAt))
+      || new Date(campaign.automationStartedAt).toISOString() !== campaign.automationStartedAt
+    )) throw new Error('Der Startzeitpunkt der Kampagnenautomatisierung ist ungültig.');
     if (!CAMPAIGN_STATUSES.has(String(campaign.status))) throw new Error('Ein Kampagnenstatus ist ungültig.');
     if (!Number.isInteger(campaign.leadsCount) || Number(campaign.leadsCount) < 0 || Number(campaign.leadsCount) > 10_000_000) {
       throw new Error('Eine Kampagnen-Kontaktzahl ist ungültig.');
