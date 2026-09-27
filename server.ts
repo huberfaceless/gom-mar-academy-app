@@ -387,7 +387,9 @@ async function startServer() {
       }
       const { oobLink } = await linkResponse.json() as { oobLink?: string };
       if (!oobLink || !oobLink.startsWith('https://')) throw new Error('Der Firebase-Bestätigungslink ist ungültig.');
-      const message = accountVerificationEmailCopy(language, oobLink);
+      const localizedLink = new URL(oobLink);
+      localizedLink.searchParams.set('lang', language);
+      const message = accountVerificationEmailCopy(language, localizedLink.toString());
       const sendResponse = await fetch(SENDGRID_API_URL, {
         method: 'POST',
         headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },

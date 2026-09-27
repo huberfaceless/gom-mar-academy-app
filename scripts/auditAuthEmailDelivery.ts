@@ -23,6 +23,7 @@ assert.match(
 assert.match(server, /app\.post\('\/api\/auth\/verification-email', requireAuthenticatedMember/, 'Nur angemeldete Konten dürfen die Verifizierung anfordern.');
 assert.match(server, /member\.email\.trim\(\)\.toLowerCase\(\) !== email/, 'Die E-Mail-Adresse muss serverseitig dem Konto zugeordnet werden.');
 assert.match(server, /requestType: 'VERIFY_EMAIL', email, returnOobLink: true/, 'Der Link muss von Firebase generiert werden, ohne eine zweite Firebase-E-Mail zu senden.');
+assert.match(server, /localizedLink\.searchParams\.set\('lang', language\)/, 'Die Firebase-Bestätigungsseite muss dieselbe Sprache wie die E-Mail verwenden.');
 assert.match(server, /\{ type: 'text\/plain', value: message\.text \}, \{ type: 'text\/html', value: message\.html \}/, 'Der Versand braucht Text- und HTML-Version.');
 const link = 'https://example.firebaseapp.com/action?mode=verifyEmail&oobCode=abc&lang=de';
 const de = accountVerificationEmailCopy('de', link);
