@@ -122,7 +122,6 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSavingLead, setIsSavingLead] = useState(false);
   const [isDeletingLead, setIsDeletingLead] = useState(false);
-  const [campaignStarted, setCampaignStarted] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
   const canSendMarketingEmail = lead.id.startsWith('member_');
 
@@ -242,12 +241,6 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
     setEmailSubject(draft.subject || `Austausch zu Skalierungsstrategien – ${lead.company}`);
     setEmailBody(draft.draftText);
     setActiveTab('writeEmail');
-  };
-
-  const handleStartCampaign = () => {
-    setCampaignStarted(true);
-    setActionSuccessMessage(`🎯 Kampagne für ${lead.name} gestartet! Automatische Follow-up Sequenz aktiv.`);
-    setTimeout(() => setActionSuccessMessage(null), 4000);
   };
 
   const handleDeclineLead = () => {
@@ -379,12 +372,13 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   {leadDeclined ? 'Abgelehnt' : 'Ablehnen'}
                 </button>
                 <button
-                  onClick={handleStartCampaign}
-                  disabled={campaignStarted}
-                  className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  type="button"
+                  disabled
+                  title="Kampagnen werden in der E-Mail-Übersicht gestartet und nur an Mitglieder mit bestätigter Einwilligung versendet."
+                  className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-slate-700 text-slate-300 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-not-allowed"
                 >
                   <Play className="w-4 h-4 fill-white" />
-                  <span>{campaignStarted ? 'Kampagne Aktiv' : 'Kampagne Starten'}</span>
+                  <span>Kampagne in E-Mail-Übersicht starten</span>
                 </button>
               </div>
             </div>

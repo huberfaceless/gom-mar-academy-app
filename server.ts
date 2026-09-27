@@ -915,6 +915,21 @@ async function startServer() {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const incoming = req.body?.campaigns;
+      if (Array.isArray(incoming)) {
+        const existing = await loadEmailCampaigns(FIREBASE_PROJECT_ID, userId);
+        if (incoming.some((campaign) => campaign?.automationStartedAt) && !isAcademyAdminToken((req as FirebaseRequest).firebaseUser)) {
+          res.status(403).json({ error: 'Automatischer Kampagnenversand ist nur für Administratoren verfügbar.' });
+          return;
+        }
+        for (const campaign of incoming) {
+          const previous = existing.campaigns.find((item) => item.id === campaign.id);
+          if (previous?.automationStartedAt && previous.automationStartedAt !== campaign?.automationStartedAt) {
+            res.status(409).json({ error: 'Der Startzeitpunkt einer Kampagne darf nicht geändert werden.' });
+            return;
+          }
+        }
+      }
       const campaigns = await saveEmailCampaigns(FIREBASE_PROJECT_ID, userId, req.body?.campaigns);
       res.json({ campaigns });
     } catch (error: unknown) {

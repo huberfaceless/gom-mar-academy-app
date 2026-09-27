@@ -134,6 +134,7 @@ export interface Campaign {
   leadsCount: number;
   status: 'active' | 'draft' | 'paused';
   createdAt: string;
+  automationStartedAt?: string;
   emails: EmailMessage[];
 }
 

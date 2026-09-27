@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateEmailCampaigns } from '../server/emailCampaignsAdmin.js';
+import { isCampaignEmailDue } from '../server/emailCampaignDeliveryAdmin.js';
 
 const server = readFileSync('server.ts', 'utf8');
 const storage = readFileSync('server/emailCampaignsAdmin.ts', 'utf8');
@@ -38,9 +39,11 @@ assert.match(view, /await onUpdateCampaigns\(\[\.\.\.campaigns, newCampaign\]\)/
 assert.match(view, /Die bestehende Kampagne bleibt vollständig erhalten/, 'Die sichere Ergänzung muss in der Oberfläche erklärt werden.');
 assert.match(view, /getCampaignReadinessError/, 'Vor der Freigabe müssen die Kampagneninhalte vollständig geprüft werden.');
 assert.match(view, /handleChangeCampaignStatus/, 'Kampagnen müssen kontrolliert freigegeben und pausiert werden können.');
-assert.match(view, /Ein automatischer Empfängerversand wird dadurch noch nicht ausgelöst/, 'Die Freigabe darf keinen automatischen Versand vortäuschen.');
+assert.match(view, /alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung/, 'Die automatische Empfängergruppe muss vor Aktivierung klar benannt werden.');
+assert.match(view, /automationStartedAt: !shouldPause && isAdmin/, 'Nur eine ausdrücklich bestätigte Admin-Freigabe darf den Versand starten.');
 assert.doesNotMatch(view, /handleChangeCampaignStatus[\s\S]{0,2500}sendEmail\(/, 'Die Statusänderung darf keine Empfänger-E-Mail versenden.');
-assert.match(view, /campaignActionError[\s\S]{0,300}Die Freigabe markiert vollständige E-Mails als geplant/, 'Freigabefehler müssen direkt an der Kampagne sichtbar sein.');
+assert.match(view, /campaignActionError[\s\S]{0,400}Eine neue Freigabe startet den automatischen Versand/, 'Der tatsächliche Versandbeginn muss erklärt werden.');
+assert.match(server, /Automatischer Kampagnenversand ist nur für Administratoren verfügbar/, 'Nicht-Admins dürfen keine Kampagne automatisch versenden.');
 
 const validCampaign = {
   id: 'camp_1',
@@ -63,6 +66,25 @@ const validCampaign = {
 };
 
 assert.deepEqual(validateEmailCampaigns([validCampaign]), [validCampaign], 'Eine gültige Kampagne muss akzeptiert werden.');
+const startedAt = '2026-09-27T15:00:00.000Z';
+const activeCampaign = { ...validCampaign, status: 'active', automationStartedAt: startedAt };
+assert.deepEqual(validateEmailCampaigns([activeCampaign]), [activeCampaign]);
+assert.throws(() => validateEmailCampaigns([{ ...activeCampaign, automationStartedAt: 'ungültig' }]), /Startzeitpunkt/);
+assert.equal(isCampaignEmailDue(activeCampaign, validCampaign.emails[0], Date.parse(startedAt) - 1), false);
+assert.equal(isCampaignEmailDue(activeCampaign, validCampaign.emails[0], Date.parse(startedAt)), true);
+assert.equal(isCampaignEmailDue({ ...activeCampaign, status: 'paused' }, validCampaign.emails[0], Date.parse(startedAt) + 1), false);
+assert.equal(isCampaignEmailDue({ ...activeCampaign, automationStartedAt: undefined }, validCampaign.emails[0], Date.parse(startedAt) + 1), false);
+assert.equal(isCampaignEmailDue(activeCampaign, { ...validCampaign.emails[0], dayOffset: 1 }, Date.parse(startedAt) + 86_400_000 - 1), false);
+assert.equal(isCampaignEmailDue(activeCampaign, { ...validCampaign.emails[0], dayOffset: 1 }, Date.parse(startedAt) + 86_400_000), true);
+const laterConsent = '2026-09-29T15:00:00.000Z';
+assert.equal(isCampaignEmailDue(activeCampaign, { ...validCampaign.emails[0], dayOffset: 1 }, Date.parse(laterConsent) + 86_400_000 - 1, laterConsent), false);
+assert.equal(isCampaignEmailDue(activeCampaign, { ...validCampaign.emails[0], dayOffset: 1 }, Date.parse(laterConsent) + 86_400_000, laterConsent), true);
+const delivery = readFileSync('server/emailCampaignDeliveryAdmin.ts', 'utf8');
+const scheduler = readFileSync('src/services/serverSchedulerWorker.ts', 'utf8');
+assert.match(delivery, /if \(response\.status === 409\) return null/, 'Doppelte Kampagnen-E-Mails müssen durch atomare Firestore-Reservierungen verhindert werden.');
+assert.match(delivery, /await loadEmailConsent\(projectId, member\.uid\)/, 'Die Einwilligung muss unmittelbar vor dem Versand erneut geprüft werden.');
+assert.match(delivery, /await isMarketingEmailSuppressed\(projectId, member\.email, latest\.updatedAt\)/, 'Abmeldungen müssen vor jedem Versand erneut geprüft werden.');
+assert.match(scheduler, /await runEmailCampaignDeliveries\(/, 'Der Server-Scheduler muss fällige Kampagnen verarbeiten.');
 assert.deepEqual(
   validateEmailCampaigns([{ ...validCampaign, emails: [{ ...validCampaign.emails[0], status: 'draft' }] }]),
   [{ ...validCampaign, emails: [{ ...validCampaign.emails[0], status: 'draft' }] }],

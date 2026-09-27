@@ -16,6 +16,7 @@ import {
 import { publishExistingYouTubeVideo } from '../../server/youtubeConnectionAdmin.js';
 import { loadPinterestAccessToken } from '../../server/pinterestConnectionAdmin.js';
 import { publishInstagramImage } from '../../server/instagramConnectionAdmin.js';
+import { runEmailCampaignDeliveries } from '../../server/emailCampaignDeliveryAdmin.js';
 
 
 export interface SchedulerExecutionResult {
@@ -33,6 +34,7 @@ export interface SchedulerExecutionResult {
     publishedUrl?: string;
   }>;
   executedAt: string;
+  emailDelivery?: { reserved: number; accepted: number; failed: number };
 }
 
 let isSchedulerRunning = false;
@@ -298,6 +300,11 @@ export class ServerSchedulerWorker {
       const errMsg = err instanceof Error ? err.message : String(err);
       console.warn('[ServerSchedulerWorker] Warning during scheduler runTick:', errMsg);
     } finally {
+      try {
+        result.emailDelivery = await runEmailCampaignDeliveries(process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie');
+      } catch (err: unknown) {
+        console.error('[ServerSchedulerWorker] E-Mail-Kampagnenlauf fehlgeschlagen:', err instanceof Error ? err.message : String(err));
+      }
       isSchedulerRunning = false;
       lastExecutionResult = result;
     }
