@@ -764,6 +764,15 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               </select>
               <button
                 type="button"
+                onClick={handleSendStandaloneTestEmail}
+                disabled={isSendingTestEmail}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Send className="h-4 w-4" />
+                {isSendingTestEmail ? { de: 'Test wird gesendet…', en: 'Sending test…', pl: 'Wysyłanie testu…' }[language] : { de: 'HTML-Test an mich senden', en: 'Send HTML test to myself', pl: 'Wyślij test HTML do siebie' }[language]}
+              </button>
+              <button
+                type="button"
                 onClick={handleOpenCampaignCreator}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-indigo-700"
               >
