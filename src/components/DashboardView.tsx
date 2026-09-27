@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import { UserProfile, Lesson } from '../types';
+import { UserProfile, Lesson, Stage } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
-import { ACADEMY_STAGES } from '../data/academyData';
 import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { 
   Rocket, 
@@ -41,6 +40,7 @@ const formatCopy = (template: string, values: Record<string, string | number>) =
 
 interface DashboardViewProps {
   user: UserProfile;
+  stages: Stage[];
   progressPercent: number;
   completedTasksCount: number;
   totalTasksCount: number;
@@ -51,6 +51,7 @@ interface DashboardViewProps {
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   user,
+  stages,
   progressPercent,
   completedTasksCount,
   totalTasksCount,
@@ -63,8 +64,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const isLight = user.theme === 'clean-light' || !user.theme;
   const completedTaskIdSet = useMemo(() => new Set(user.completedTaskIds), [user.completedTaskIds]);
   const accessibleSourceStages = useMemo(
-    () => ACADEMY_STAGES.filter((stage) => stage.id <= stageAccessLimit),
-    [stageAccessLimit],
+    () => stages.filter((stage) => stage.id <= stageAccessLimit),
+    [stageAccessLimit, stages],
   );
   const accessibleStages = useLocalizedAcademyStages(
     accessibleSourceStages,

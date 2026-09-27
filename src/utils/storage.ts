@@ -1,12 +1,13 @@
 import { UserProfile, Campaign, StudentRecord, Stage, Lesson } from '../types';
 import { ACADEMY_STAGES } from '../data/academyData';
+import { STANDARD_LESSON_IDS } from '../data/academyMetadata';
 import { migrateLegacyAcademyUnlocks } from './academyProgress';
 
 const STORAGE_KEY_USER = 'gommar_user_profile_v1';
 const STORAGE_KEY_CAMPAIGNS = 'gommar_campaigns_v1';
 const STORAGE_KEY_STUDENTS = 'gommar_students_directory_v1';
 const STORAGE_KEY_CUSTOM_STAGES = 'gommar_custom_stages_v1';
-export const TOTAL_ACADEMY_LESSONS = ACADEMY_STAGES.reduce((total, stage) => total + stage.lessons.length, 0);
+export const TOTAL_ACADEMY_LESSONS = STANDARD_LESSON_IDS.size;
 export const INITIAL_STUDENTS_LIST: StudentRecord[] = [];
 
 export const DEFAULT_USER_PROFILE: UserProfile = {
@@ -150,26 +151,13 @@ export function addOrUpdateStudentRecord(newStudent: Partial<StudentRecord> & { 
 }
 
 export function loadAcademyStages(): Stage[] {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_CUSTOM_STAGES);
-    if (saved) {
-      const parsed: Stage[] = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-  } catch (e) {
-    console.error('Error loading custom stages:', e);
-  }
+  // Paid lessons are fetched only after the server verifies the current tier.
+  try { localStorage.removeItem(STORAGE_KEY_CUSTOM_STAGES); } catch { /* Storage may be disabled. */ }
   return ACADEMY_STAGES;
 }
 
-export function saveAcademyStages(stages: Stage[]): void {
-  try {
-    localStorage.setItem(STORAGE_KEY_CUSTOM_STAGES, JSON.stringify(stages));
-  } catch (e) {
-    console.error('Error saving custom stages:', e);
-  }
+export function saveAcademyStages(_stages: Stage[]): void {
+  // The curriculum is persisted by the authenticated server endpoint.
 }
 
 export function resetAcademyStagesToDefault(): Stage[] {

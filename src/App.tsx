@@ -28,7 +28,7 @@ import { CheckCircle2, Loader2, X } from 'lucide-react';
 import gommarLogo from './assets/images/gommar_logo.jpg';
 import { useLanguage } from './context/LanguageContext';
 import { unlockNextAcademyStage } from './utils/academyProgress';
-import { applyCurriculumOverrides, CurriculumOverride } from './utils/academyCurriculum';
+import type { CurriculumOverride } from './utils/academyCurriculum';
 import {
   canAccessView,
   getAcademyStageLimit,
@@ -82,18 +82,21 @@ export default function App() {
   const [students, setStudents] = useState<StudentRecord[]>(loadStudents());
 
   useEffect(() => {
-    if (!firebaseUser?.emailVerified) return;
+    if (!firebaseUser?.emailVerified) {
+      setStages(loadAcademyStages());
+      return;
+    }
     let cancelled = false;
     void firebaseUser.getIdToken()
-      .then((token) => fetch('/api/academy/curriculum-overrides', { headers: { Authorization: `Bearer ${token}` } }))
+      .then((token) => fetch(`/api/academy/stages?language=${language}`, { headers: { Authorization: `Bearer ${token}` } }))
       .then(async (response) => {
-        const result = await response.json() as { overrides?: CurriculumOverride[] };
+        const result = await response.json() as { stages?: Stage[] };
         if (!response.ok) throw new Error('Curriculum konnte nicht geladen werden.');
-        if (!cancelled) setStages(applyCurriculumOverrides(result.overrides || []));
+        if (!cancelled && result.stages) setStages(result.stages);
       })
       .catch((error) => console.error(error));
     return () => { cancelled = true; };
-  }, [firebaseUser]);
+  }, [firebaseUser, language]);
 
   useEffect(() => {
     const canLoadCampaigns = Boolean(firebaseUser?.emailVerified)
@@ -395,8 +398,10 @@ export default function App() {
     const token = await firebaseUser.getIdToken();
     const response = await fetch('/api/admin/curriculum-overrides', { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
     if (!response.ok) throw new Error((await response.json() as { error?: string }).error || 'Curriculum konnte nicht zurückgesetzt werden.');
-    const defaultStages = resetAcademyStagesToDefault();
-    setStages(defaultStages);
+    resetAcademyStagesToDefault();
+    const refreshed = await fetch(`/api/academy/stages?language=${language}`, { headers: { Authorization: `Bearer ${token}` } });
+    if (!refreshed.ok) throw new Error('Curriculum konnte nicht neu geladen werden.');
+    setStages((await refreshed.json() as { stages: Stage[] }).stages);
   };
 
   const handleRestoreLesson = async (lessonId: string) => {
@@ -407,10 +412,10 @@ export default function App() {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!response.ok) throw new Error((await response.json() as { error?: string }).error || 'Die Originallektion konnte nicht wiederhergestellt werden.');
-    const curriculumResponse = await fetch('/api/academy/curriculum-overrides', { headers: { Authorization: `Bearer ${token}` } });
-    const result = await curriculumResponse.json() as { overrides?: CurriculumOverride[]; error?: string };
+    const curriculumResponse = await fetch(`/api/academy/stages?language=${language}`, { headers: { Authorization: `Bearer ${token}` } });
+    const result = await curriculumResponse.json() as { stages?: Stage[]; error?: string };
     if (!curriculumResponse.ok) throw new Error(result.error || 'Curriculum konnte nicht neu geladen werden.');
-    const restoredStages = applyCurriculumOverrides(result.overrides || []);
+    const restoredStages = result.stages || [];
     setStages(restoredStages);
     saveAcademyStages(restoredStages);
   };
@@ -593,6 +598,7 @@ export default function App() {
           {activeView === 'dashboard' && (
             <DashboardView
               user={user}
+              stages={stages}
               progressPercent={progressPercent}
               completedTasksCount={completedTasksCount}
               totalTasksCount={totalTasksCount}

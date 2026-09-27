@@ -28,7 +28,8 @@ import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMe
 import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
 import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
 import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
-import { ACADEMY_STAGES } from './src/data/academyData.js';
+import { ACADEMY_STAGES } from './server/academyData.js';
+import { visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
 import { Lesson } from './src/types.js';
@@ -538,6 +539,21 @@ async function startServer() {
   });
 
   app.get('/api/academy/lessons/:lessonId/audio', requireVerifiedMember, async (req, res) => {
+    const member = (req as FirebaseRequest).firebaseUser;
+    const stageId = Number(req.params.lessonId?.split('.')[0]);
+    if (!Number.isInteger(stageId) || stageId < 1) {
+      res.status(404).json({ error: 'Die angeforderte Lektion wurde nicht gefunden.' });
+      return;
+    }
+    if (stageId > 2) {
+      const currentMember = member && firebaseTierRank(member) >= 1
+        ? await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub)
+        : null;
+      if (!currentMember || (currentMember.role !== 'admin' && currentMember.tier === 'FREE')) {
+        res.status(403).json({ error: 'Für diese Lektion ist ein PRO-Tarif erforderlich.' });
+        return;
+      }
+    }
     const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY?.trim();
     if (!elevenLabsApiKey) {
       res.status(503).json({ error: 'Die einheitliche Academy-Stimme ist noch nicht konfiguriert.' });
@@ -1578,13 +1594,38 @@ async function startServer() {
   app.get('/api/academy/curriculum-overrides', requireVerifiedMember, async (req, res) => {
     try {
       const overrides = await listCurriculumOverrides(FIREBASE_PROJECT_ID);
-      const visibleOverrides = isAcademyAdminToken((req as FirebaseRequest).firebaseUser)
+      const member = (req as FirebaseRequest).firebaseUser;
+      const currentMember = member && firebaseTierRank(member) >= 1
+        ? await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub)
+        : null;
+      const accessibleOverrides = currentMember && (currentMember.role === 'admin' || currentMember.tier !== 'FREE')
         ? overrides
-        : overrides.map((override) => override.lesson?.publicationStatus === 'draft'
+        : overrides.filter((override) => override.stageId <= 2);
+      const visibleOverrides = currentMember?.role === 'admin'
+        ? overrides
+        : accessibleOverrides.map((override) => override.lesson?.publicationStatus === 'draft'
           ? { lessonId: override.lessonId, stageId: override.stageId, deleted: true }
           : override);
       res.setHeader('Cache-Control', 'no-store');
       res.json({ overrides: visibleOverrides });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Curriculum konnte nicht geladen werden.' });
+    }
+  });
+
+  app.get('/api/academy/stages', requireVerifiedMember, async (req, res) => {
+    try {
+      const member = (req as FirebaseRequest).firebaseUser;
+      if (!member) throw new Error('Firebase-Benutzerkennung fehlt.');
+      const language = req.query.language === 'en' || req.query.language === 'pl' ? req.query.language : 'de';
+      const currentMember = firebaseTierRank(member) >= 1
+        ? await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub)
+        : null;
+      const isAdmin = currentMember?.role === 'admin';
+      const overrides = await listCurriculumOverrides(FIREBASE_PROJECT_ID);
+      const stages = visibleAcademyStages(ACADEMY_STAGES, overrides, currentMember?.tier || 'FREE', isAdmin);
+      res.setHeader('Cache-Control', 'private, no-store');
+      res.json({ stages: localizeAllAcademyStages(stages, language) });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Curriculum konnte nicht geladen werden.' });
     }
@@ -2714,7 +2755,7 @@ Antworte mit einem reinen JSON-Objekt:
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = path.join(process.cwd(), 'dist', 'public');
     app.use(express.static(distPath));
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));

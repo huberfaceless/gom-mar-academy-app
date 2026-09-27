@@ -15,13 +15,10 @@ for (const [source, label] of [[dashboard, 'Dashboard'], [academy, 'Academy']] a
   assert.match(source, /useLocalizedAcademyStages\(/, `${label} muss den gemeinsamen Lokalisierungshook verwenden.`);
   assert.doesNotMatch(source, /localizeAllAcademyStages/, `${label} darf die vollständige Lokalisierung nicht synchron laden.`);
 }
-assert.match(localizationHook, /virtual:academy-localization-en-1-20/, 'Englisch muss nach Etappengruppen geladen werden.');
-assert.match(localizationHook, /virtual:academy-localization-pl-81-99/, 'Polnisch muss nach Etappengruppen geladen werden.');
-assert.match(viteConfig, /\{ key: '1-20', from: 1, to: 20 \}/, 'Der Build muss mit Etappengruppe 1–20 beginnen.');
-assert.match(viteConfig, /\{ key: '81-99', from: 81, to: 99 \}/, 'Der Build muss mit Etappengruppe 81–99 enden.');
-assert.match(dashboard, /accessibleSourceStages\.map\(\(stage\) => stage\.id\)/, 'Das Dashboard darf nur zugängliche Etappengruppen laden.');
-assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\]/, 'Eine direkt geöffnete Lektion darf nur ihre Etappengruppe laden.');
-assert.match(academy, /viewMode === 'lesson' \? \[selectedStageId\] : overviewStageIds/, 'Die Academy-Übersicht darf nur sichtbare Etappengruppen laden.');
+assert.match(localizationHook, /API returns localized stages/, 'Die Sprachfassung muss vom geschützten Server kommen.');
+assert.doesNotMatch(localizationHook, /virtual:academy-localization/, 'Bezahlte Sprachfassungen dürfen nicht im Browser geladen werden.');
+assert.match(viteConfig, /outDir: 'dist\/public'/, 'Nur der öffentliche Build darf statisch ausgeliefert werden.');
+assert.match(dashboard, /stages\.filter\(\(stage\) => stage\.id <= stageAccessLimit\)/, 'Das Dashboard darf nur freigegebene Etappen anzeigen.');
 assert.match(academy, /stage\.id >= selectedRange\[0\] && stage\.id <= selectedRange\[1\]/, 'Der ausgewählte Academy-Bereich muss die geladenen Etappen begrenzen.');
 assert.match(academy, /resolvePreviousAcademyLocation\(localizedStages, selectedStageId, currentLesson\.id\)/, 'Die Academy muss die geprüfte Rückwärtsnavigation verwenden.');
 assert.match(academy, /const isStageAccessible = isAcademyStageAccessible\(stage\.id, stageAccessLimit\);/, 'Etappen müssen ausschließlich entsprechend der Tarifgrenze anklickbar sein.');

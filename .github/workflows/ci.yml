@@ -82,6 +82,9 @@ jobs:
       - name: Produktions-Build erstellen
         run: bun run build
 
+      - name: PRO-Inhalte im öffentlichen Build prüfen
+        run: bun run audit:content-access
+
   deploy:
     name: Nach Cloud Run bereitstellen
     needs: quality
