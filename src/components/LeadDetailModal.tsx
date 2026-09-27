@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { authenticatedFetch } from '../services/authenticatedFetch';
 import {
   Mail,
   Phone,
@@ -123,7 +124,25 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [isSavingLead, setIsSavingLead] = useState(false);
   const [isDeletingLead, setIsDeletingLead] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
-  const canSendMarketingEmail = lead.id.startsWith('member_');
+  const [externalConsent, setExternalConsent] = useState(false);
+  const [checkingConsent, setCheckingConsent] = useState(false);
+  const canSendMarketingEmail = lead.id.startsWith('member_') || externalConsent;
+
+  useEffect(() => {
+    if (lead.id.startsWith('member_')) return;
+    let active = true;
+    setExternalConsent(false);
+    setCheckingConsent(true);
+    authenticatedFetch(`/api/email/external-consent/status?contactId=${encodeURIComponent(lead.id)}`)
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Status nicht verfügbar');
+        return response.json() as Promise<{ granted: boolean }>;
+      })
+      .then((status) => { if (active) setExternalConsent(status.granted); })
+      .catch(() => { if (active) setExternalConsent(false); })
+      .finally(() => { if (active) setCheckingConsent(false); });
+    return () => { active = false; };
+  }, [lead.id, lead.email]);
 
   const handleAddTag = (e: React.FormEvent) => {
     e.preventDefault();
@@ -687,7 +706,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   </div>
                   {!canSendMarketingEmail && (
                     <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
-                      Für manuell angelegte Kontakte ist noch keine überprüfbare E-Mail-Einwilligung hinterlegt. Marketing-E-Mails können derzeit nur an bestätigte Academy-Mitglieder gesendet werden.
+                      {checkingConsent ? 'Einwilligung wird geprüft…' : <>Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">diesen Anmeldelink</a> anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.</>}
                     </p>
                   )}
 

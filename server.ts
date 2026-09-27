@@ -18,6 +18,7 @@ import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, sy
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
+import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
@@ -1095,6 +1096,86 @@ async function startServer() {
     res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   };
 
+  const externalSignupCopy = {
+    de: { title: 'Academy-E-Mails abonnieren', description: 'Ich möchte E-Mails mit Academy-Neuigkeiten, hilfreichen Tipps und Angeboten von GOM-MAR Academy erhalten. Ich kann meine Einwilligung jederzeit über den Abmeldelink widerrufen.', button: 'Bestätigungs-E-Mail anfordern', pending: 'Falls die Anmeldung möglich ist, erhältst du eine Bestätigungs-E-Mail. Erst nach deiner Bestätigung wird die Einwilligung aktiv.', confirm: 'Einwilligung jetzt bestätigen', success: 'Deine Einwilligung wurde bestätigt.', error: 'Der Bestätigungslink ist ungültig oder abgelaufen.', unavailable: 'Die Anmeldung ist gerade nicht möglich. Bitte versuche es später erneut.', privacy: 'Datenschutzerklärung' },
+    en: { title: 'Subscribe to Academy emails', description: 'I want to receive Academy news, helpful tips and offers from GOM-MAR Academy by email. I can withdraw consent at any time through the unsubscribe link.', button: 'Request confirmation email', pending: 'If registration is possible, you will receive a confirmation email. Your consent only becomes active after confirmation.', confirm: 'Confirm consent now', success: 'Your consent has been confirmed.', error: 'The confirmation link is invalid or expired.', unavailable: 'Registration is currently unavailable. Please try again later.', privacy: 'Privacy policy' },
+    pl: { title: 'Zapisz się na e-maile Academy', description: 'Chcę otrzymywać e-maile z aktualnościami Academy, pomocnymi wskazówkami i ofertami GOM-MAR Academy. Mogę w każdej chwili wycofać zgodę za pomocą linku rezygnacji.', button: 'Poproś o e-mail potwierdzający', pending: 'Jeśli zapis jest możliwy, otrzymasz e-mail potwierdzający. Zgoda zacznie obowiązywać dopiero po potwierdzeniu.', confirm: 'Potwierdź zgodę', success: 'Twoja zgoda została potwierdzona.', error: 'Link potwierdzający jest nieprawidłowy lub wygasł.', unavailable: 'Rejestracja jest obecnie niedostępna. Spróbuj ponownie później.', privacy: 'Polityka prywatności' },
+  } as const;
+  const externalLanguage = (value: unknown): PublicEmailLanguage => value === 'en' || value === 'pl' ? value : 'de';
+  const recentPublicSignupRequests = new Map<string, number[]>();
+  const externalSignupPage = (language: PublicEmailLanguage, state: 'form' | 'pending' | 'confirm' | 'success' | 'error' | 'unavailable', email = '', token = '') => {
+    const copy = externalSignupCopy[language];
+    const content = state === 'form' ? `<p>${copy.description}</p><form method="post" action="/api/email/subscribe"><input type="hidden" name="lang" value="${language}"><label>E-Mail <input name="email" type="email" maxlength="254" required autocomplete="email"></label><label><input name="consent" type="checkbox" value="yes" required> ${copy.description}</label><p><a href="${ACADEMY_PUBLIC_URL}/?legal=privacy">${copy.privacy}</a></p><button type="submit">${copy.button}</button></form>`
+      : state === 'confirm' ? `<p>${copy.description}</p><form method="post" action="/api/email/subscribe/confirm"><input type="hidden" name="email" value="${escapeHtml(email)}"><input type="hidden" name="token" value="${token}"><input type="hidden" name="lang" value="${language}"><button type="submit">${copy.confirm}</button></form>`
+      : `<p>${copy[state]}</p>`;
+    return `<!doctype html><html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${copy.title} | GOM-MAR Academy</title><style>body{margin:0;background:#f1f5f9;color:#0f172a;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}main{background:white;border:1px solid #cbd5e1;border-radius:20px;max-width:550px;margin:20px;padding:30px}h1{font-size:24px}p{line-height:1.6}label{display:block;margin:16px 0}input[type=email]{display:block;width:95%;padding:10px}button{border:0;border-radius:10px;background:#4f46e5;color:white;padding:12px 18px;cursor:pointer}</style></head><body><main><h1>${copy.title}</h1>${content}</main></body></html>`;
+  };
+  app.get('/api/email/subscribe', (req, res) => {
+    setConsentConfirmationHeaders(res);
+    res.type('html').send(externalSignupPage(externalLanguage(req.query.lang), 'form'));
+  });
+  app.post('/api/email/subscribe', async (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const language = externalLanguage(req.body?.lang);
+    const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+    if (req.body?.consent !== 'yes' || email.length > 254 || !EMAIL_ADDRESS_PATTERN.test(email)) {
+      res.status(400).type('html').send(externalSignupPage(language, 'form'));
+      return;
+    }
+    const requestKey = req.ip || 'unknown';
+    const recentRequests = (recentPublicSignupRequests.get(requestKey) || []).filter((time) => time > Date.now() - 60 * 60 * 1000);
+    if (recentRequests.length >= 5) {
+      res.status(429).type('html').send(externalSignupPage(language, 'pending'));
+      return;
+    }
+    recentPublicSignupRequests.set(requestKey, [...recentRequests, Date.now()]);
+    const sendGridApiKey = process.env.SENDGRID_API_KEY?.trim();
+    const senderEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
+    if (!sendGridApiKey || !senderEmail || !EMAIL_ADDRESS_PATTERN.test(senderEmail)) {
+      res.status(503).type('html').send(externalSignupPage(language, 'unavailable'));
+      return;
+    }
+    try {
+      const token = await requestExternalEmailConsent(FIREBASE_PROJECT_ID, email);
+      if (token) {
+        const link = `${ACADEMY_PUBLIC_URL}/api/email/subscribe/confirm?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&lang=${language}`;
+        const message = {
+          de: ['Bitte bestätige deine Academy-E-Mail-Anmeldung', `Du hast Academy-Neuigkeiten, Tipps und Angebote angefordert. Bestätige deine Einwilligung innerhalb von 24 Stunden durch Öffnen dieses Links und anschließendes Bestätigen: ${link}\n\nFalls du die Anmeldung nicht selbst angefordert hast, ignoriere diese Nachricht.`],
+          en: ['Confirm your Academy email subscription', `You requested Academy news, tips and offers. Open this link within 24 hours and confirm your consent: ${link}\n\nIf you did not request this, ignore this email.`],
+          pl: ['Potwierdź zapis na e-maile Academy', `Poproszono o aktualności Academy, wskazówki i oferty. Otwórz ten link w ciągu 24 godzin i potwierdź zgodę: ${link}\n\nJeśli to nie Twoja prośba, zignoruj tę wiadomość.`],
+        }[language];
+        const response = await fetch(SENDGRID_API_URL, { method: 'POST', headers: { Authorization: `Bearer ${sendGridApiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ personalizations: [{ to: [{ email }] }], from: { email: senderEmail, name: (process.env.SENDGRID_FROM_NAME || 'GOM-MAR Academy').slice(0, 100) }, subject: message[0], content: [{ type: 'text/plain', value: message[1] }] }) });
+        if (!response.ok) throw new Error('Bestätigungsversand fehlgeschlagen.');
+      }
+      res.status(202).type('html').send(externalSignupPage(language, 'pending'));
+    } catch {
+      res.status(503).type('html').send(externalSignupPage(language, 'unavailable'));
+    }
+  });
+  app.get('/api/email/subscribe/confirm', (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const email = typeof req.query.email === 'string' ? req.query.email.trim().toLowerCase() : '';
+    const token = typeof req.query.token === 'string' ? req.query.token : '';
+    const language = externalLanguage(req.query.lang);
+    const valid = email.length <= 254 && EMAIL_ADDRESS_PATTERN.test(email) && /^[A-Za-z0-9_-]{40,60}$/.test(token);
+    res.status(valid ? 200 : 400).type('html').send(externalSignupPage(language, valid ? 'confirm' : 'error', email, token));
+  });
+  app.post('/api/email/subscribe/confirm', async (req, res) => {
+    setConsentConfirmationHeaders(res);
+    const email = typeof req.body?.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+    const token = typeof req.body?.token === 'string' ? req.body.token : '';
+    const language = externalLanguage(req.body?.lang);
+    if (email.length > 254 || !EMAIL_ADDRESS_PATTERN.test(email) || !/^[A-Za-z0-9_-]{40,60}$/.test(token)) {
+      res.status(400).type('html').send(externalSignupPage(language, 'error')); return;
+    }
+    try {
+      await confirmExternalEmailConsent(FIREBASE_PROJECT_ID, email, token);
+      res.type('html').send(externalSignupPage(language, 'success'));
+    } catch {
+      res.status(400).type('html').send(externalSignupPage(language, 'error'));
+    }
+  });
+
   app.get('/api/email/consent/confirm', (req, res) => {
     setConsentConfirmationHeaders(res);
     const userId = typeof req.query.uid === 'string' ? req.query.uid.trim() : '';
@@ -1194,6 +1275,7 @@ async function startServer() {
       if (result.memberUserId) {
         await withdrawEmailConsent(FIREBASE_PROJECT_ID, result.memberUserId, result.email, 'email-unsubscribe-link');
       }
+      await withdrawExternalEmailConsent(FIREBASE_PROJECT_ID, result.email);
       console.info('Academy-Marketing-E-Mail abgemeldet', {
         action: 'academy.email.marketing.unsubscribed',
         memberUserId: result.memberUserId,
@@ -1318,14 +1400,16 @@ async function startServer() {
         res.status(400).json({ error: 'Der CRM-Kontakt oder seine E-Mail-Adresse ist ungültig.' });
         return;
       }
-      if (!contactId.startsWith('member_')) {
-        res.status(409).json({ error: 'Für diesen manuell angelegten Kontakt liegt keine überprüfbare E-Mail-Einwilligung vor. Marketing-Versand ist nur an bestätigte Academy-Mitglieder möglich.' });
-        return;
-      }
-
       let memberUserId: string | undefined;
       let consentUpdatedAt: string | null | undefined;
-      if (contactId.startsWith('member_')) {
+      if (!contactId.startsWith('member_')) {
+        const consent = await loadExternalEmailConsent(FIREBASE_PROJECT_ID, storedRecipient);
+        if (!consent.granted) {
+          res.status(409).json({ error: 'Für diesen Kontakt fehlt die bestätigte Einwilligung. Bitte den freiwilligen Anmeldeweg mit E-Mail-Bestätigung nutzen.' });
+          return;
+        }
+        consentUpdatedAt = consent.updatedAt;
+      } else {
         const members = [];
         let pageToken: string | undefined;
         for (let page = 0; page < 10; page += 1) {
@@ -1353,6 +1437,23 @@ async function startServer() {
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht geprüft werden.' });
     }
+  });
+
+  app.get('/api/email/external-consent/status', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const actorUserId = (req as FirebaseRequest).firebaseUser?.sub || '';
+    const contactId = typeof req.query.contactId === 'string' ? req.query.contactId : '';
+    if (!actorUserId || !/^[a-zA-Z0-9_-]{1,100}$/.test(contactId) || contactId.startsWith('member_')) {
+      res.status(400).json({ error: 'Der CRM-Kontakt ist ungültig.' }); return;
+    }
+    try {
+      const contact = (await loadCrmContacts(FIREBASE_PROJECT_ID, actorUserId)).find((item) => item.id === contactId);
+      const email = typeof contact?.email === 'string' ? contact.email.trim().toLowerCase() : '';
+      if (!EMAIL_ADDRESS_PATTERN.test(email)) { res.status(404).json({ error: 'Der Kontakt hat keine gültige E-Mail-Adresse.' }); return; }
+      const consent = await loadExternalEmailConsent(FIREBASE_PROJECT_ID, email);
+      const suppressed = consent.granted && await isMarketingEmailSuppressed(FIREBASE_PROJECT_ID, email, consent.updatedAt);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ granted: consent.granted && !suppressed });
+    } catch { res.status(503).json({ error: 'Einwilligungsstatus derzeit nicht verfügbar.' }); }
   });
 
   app.post('/api/email/test-send', requireVerifiedMember, requireProMember, async (req, res) => {
