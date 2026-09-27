@@ -2,28 +2,15 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  sendPasswordResetEmail,
   updateProfile,
   reload,
   User,
   AuthError,
-  type ActionCodeSettings,
 } from 'firebase/auth';
 import { auth } from './config';
 import { LanguageCode, TranslationKey, translations } from '../i18n/translations';
 
 const tr = (language: LanguageCode, key: TranslationKey) => translations[language][key] || translations.de[key];
-const AUTH_EMAIL_CONTINUE_URL = 'https://academy.gomo-marketing.at/';
-const AUTH_EMAIL_ACTION_SETTINGS: ActionCodeSettings = {
-  url: AUTH_EMAIL_CONTINUE_URL,
-  handleCodeInApp: false,
-};
-
-const prepareAuthEmail = (language: LanguageCode): ActionCodeSettings => {
-  auth.languageCode = language;
-  return AUTH_EMAIL_ACTION_SETTINGS;
-};
-
 /**
  * Translates Firebase Auth error codes into clean, user-friendly German messages.
  */
@@ -162,5 +149,13 @@ export async function sendPasswordReset(email: string, language: LanguageCode = 
   if (!email || !email.trim()) {
     throw new Error(tr(language, 'auth.validation.email'));
   }
-  await sendPasswordResetEmail(auth, email.trim(), prepareAuthEmail(language));
+  const response = await fetch('/api/auth/password-reset-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email.trim(), language }),
+  });
+  if (!response.ok) {
+    const result = await response.json().catch(() => ({})) as { error?: string };
+    throw new Error(result.error || tr(language, 'auth.failure.reset'));
+  }
 }
