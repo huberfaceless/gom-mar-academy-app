@@ -29,7 +29,7 @@ import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudA
 import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
 import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
-import { visibleAcademyStages } from './server/academyContentAccess.js';
+import { resolveAcademyContentAccess, visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
 import { LanguageCode } from './src/i18n/translations.js';
 import { Lesson } from './src/types.js';
@@ -546,10 +546,9 @@ async function startServer() {
       return;
     }
     if (stageId > 2) {
-      const currentMember = member && firebaseTierRank(member) >= 1
-        ? await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub)
-        : null;
-      if (!currentMember || (currentMember.role !== 'admin' && currentMember.tier === 'FREE')) {
+      const currentMember = member && await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub);
+      const access = resolveAcademyContentAccess(currentMember || null, member || {}, ACADEMY_ADMIN_EMAILS);
+      if (access.tier === 'FREE') {
         res.status(403).json({ error: 'Für diese Lektion ist ein PRO-Tarif erforderlich.' });
         return;
       }
@@ -1595,13 +1594,12 @@ async function startServer() {
     try {
       const overrides = await listCurriculumOverrides(FIREBASE_PROJECT_ID);
       const member = (req as FirebaseRequest).firebaseUser;
-      const currentMember = member && firebaseTierRank(member) >= 1
-        ? await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub)
-        : null;
-      const accessibleOverrides = currentMember && (currentMember.role === 'admin' || currentMember.tier !== 'FREE')
+      const currentMember = member && await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub);
+      const access = resolveAcademyContentAccess(currentMember || null, member || {}, ACADEMY_ADMIN_EMAILS);
+      const accessibleOverrides = access.tier !== 'FREE'
         ? overrides
         : overrides.filter((override) => override.stageId <= 2);
-      const visibleOverrides = currentMember?.role === 'admin'
+      const visibleOverrides = access.isAdmin
         ? overrides
         : accessibleOverrides.map((override) => override.lesson?.publicationStatus === 'draft'
           ? { lessonId: override.lessonId, stageId: override.stageId, deleted: true }
@@ -1618,14 +1616,12 @@ async function startServer() {
       const member = (req as FirebaseRequest).firebaseUser;
       if (!member) throw new Error('Firebase-Benutzerkennung fehlt.');
       const language = req.query.language === 'en' || req.query.language === 'pl' ? req.query.language : 'de';
-      const currentMember = firebaseTierRank(member) >= 1
-        ? await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub)
-        : null;
-      const isAdmin = currentMember?.role === 'admin';
+      const currentMember = await getFirebaseMember(FIREBASE_PROJECT_ID, member.sub);
+      const access = resolveAcademyContentAccess(currentMember, member, ACADEMY_ADMIN_EMAILS);
       const overrides = await listCurriculumOverrides(FIREBASE_PROJECT_ID);
-      const stages = visibleAcademyStages(ACADEMY_STAGES, overrides, currentMember?.tier || 'FREE', isAdmin);
+      const stages = visibleAcademyStages(ACADEMY_STAGES, overrides, access.tier, access.isAdmin);
       res.setHeader('Cache-Control', 'private, no-store');
-      res.json({ stages: localizeAllAcademyStages(stages, language) });
+      res.json({ stages: localizeAllAcademyStages(stages, language), access });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Curriculum konnte nicht geladen werden.' });
     }

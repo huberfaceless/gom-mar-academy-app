@@ -86,17 +86,25 @@ export default function App() {
       setStages(loadAcademyStages());
       return;
     }
+    if (resolvedMembershipUid !== firebaseUser.uid) return;
     let cancelled = false;
-    void firebaseUser.getIdToken()
+    void firebaseUser.getIdToken(true)
       .then((token) => fetch(`/api/academy/stages?language=${language}`, { headers: { Authorization: `Bearer ${token}` } }))
       .then(async (response) => {
-        const result = await response.json() as { stages?: Stage[] };
+        const result = await response.json() as { stages?: Stage[]; access?: { tier: AcademyTier; isAdmin: boolean } };
         if (!response.ok) throw new Error('Curriculum konnte nicht geladen werden.');
-        if (!cancelled && result.stages) setStages(result.stages);
+        if (!cancelled && result.stages && result.access) {
+          setStages(result.stages);
+          setUser((previous) => {
+            const updated = { ...previous, tier: result.access!.tier, role: result.access!.isAdmin ? 'admin' as const : 'member' as const };
+            saveUserProfile(updated);
+            return updated;
+          });
+        }
       })
       .catch((error) => console.error(error));
     return () => { cancelled = true; };
-  }, [firebaseUser, language]);
+  }, [firebaseUser, language, resolvedMembershipUid]);
 
   useEffect(() => {
     const canLoadCampaigns = Boolean(firebaseUser?.emailVerified)

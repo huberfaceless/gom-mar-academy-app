@@ -1,5 +1,19 @@
 import type { Stage } from '../src/types.js';
 import type { CurriculumOverride } from './academyCurriculumAdmin.js';
+import type { FirebaseMember } from './firebaseMembershipAdmin.js';
+
+export const resolveAcademyContentAccess = (
+  member: FirebaseMember | null,
+  token: { email?: string; email_verified?: boolean },
+  adminEmails: ReadonlySet<string>,
+): { tier: 'FREE' | 'PRO' | 'PREMIUM'; isAdmin: boolean } => {
+  if (!member || member.disabled || !member.emailVerified) return { tier: 'FREE', isAdmin: false };
+  const verifiedAdminEmail = token.email_verified === true
+    && token.email?.toLowerCase() === member.email.toLowerCase()
+    && adminEmails.has(member.email.toLowerCase());
+  const isAdmin = member.role === 'admin' || verifiedAdminEmail;
+  return { tier: isAdmin ? 'PREMIUM' : member.tier, isAdmin };
+};
 
 export const visibleAcademyStages = (
   source: Stage[],
