@@ -1,22 +1,13 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { accountVerificationEmailCopy } from '../server/emailHtmlTemplate.js';
+import { accountVerificationEmailCopy, passwordResetEmailCopy } from '../server/emailHtmlTemplate.js';
 
 const auth = fs.readFileSync('src/firebase/auth.ts', 'utf8');
 const server = fs.readFileSync('server.ts', 'utf8');
 const entry = fs.readFileSync('src/main.tsx', 'utf8');
 const handler = fs.readFileSync('src/components/VerifyEmailAction.tsx', 'utf8');
+const resetHandler = fs.readFileSync('src/components/ResetPasswordAction.tsx', 'utf8');
 
-assert.match(
-  auth,
-  /AUTH_EMAIL_CONTINUE_URL = 'https:\/\/academy\.gomo-marketing\.at\/'/,
-  'Authentifizierungs-E-Mails müssen zur festen Produktionsdomain zurückführen.',
-);
-assert.match(
-  auth,
-  /auth\.languageCode = language/,
-  'Authentifizierungs-E-Mails müssen die gewählte Sprache verwenden.',
-);
 assert.match(
   auth,
   /fetch\('\/api\/auth\/verification-email'/,
@@ -41,10 +32,20 @@ assert.match(de.html, /E-Mail-Adresse bestätigen/, 'Die deutsche E-Mail braucht
 assert.match(en.subject, /Verify your email address/, 'Die englische Vorlage fehlt.');
 assert.match(pl.subject, /Potwierdź adres e-mail/, 'Die polnische Vorlage fehlt.');
 assert.match(de.html, /oobCode=abc&amp;lang=de/, 'Linkparameter müssen im HTML korrekt maskiert werden.');
-assert.match(
-  auth,
-  /sendPasswordResetEmail\(auth, email\.trim\(\), prepareAuthEmail\(language\)\)/,
-  'Passwort-Reset-E-Mails müssen die geprüften Aktionseinstellungen verwenden.',
-);
+assert.match(auth, /fetch\('\/api\/auth\/password-reset-email'/, 'Passwort-Reset muss den HTML-Versand nutzen.');
+assert.match(server, /app\.post\('\/api\/auth\/password-reset-email'/, 'Der Passwort-Reset-Endpunkt fehlt.');
+assert.match(server, /recent\.length >= 3 \|\| ipRecent\.length >= 10/, 'Passwort-Reset-Versand braucht Schutz gegen Massenanforderungen.');
+assert.match(server, /failure\.error\?\.message === 'EMAIL_NOT_FOUND'/, 'Unbekannte E-Mail-Adressen dürfen nicht offengelegt werden.');
+assert.match(server, /requestType: 'PASSWORD_RESET', email, returnOobLink: true/, 'Firebase muss den Passwort-Reset-Code ohne zweite E-Mail erzeugen.');
+assert.match(server, /new URL\('\/reset-password', ACADEMY_PUBLIC_URL\)/, 'Der Reset-Button muss zur Academy-Seite führen.');
+assert.match(entry, /window\.location\.pathname === '\/reset-password' \? <ResetPasswordAction/, 'Reset-Links müssen die eigene Seite öffnen.');
+assert.match(resetHandler, /verifyPasswordResetCode\(auth, code\)/, 'Der Reset-Code muss vor der Eingabe geprüft werden.');
+assert.match(resetHandler, /confirmPasswordReset\(auth, code, password\)/, 'Das neue Passwort muss bei Firebase gesetzt werden.');
+assert.match(resetHandler, /window\.history\.replaceState\(null, '', '\/reset-password'\)/, 'Reset-Codes dürfen nicht im Browser-Verlauf verbleiben.');
+const resetLink = 'https://academy.gomo-marketing.at/reset-password?oobCode=abc&lang=de';
+assert.match(passwordResetEmailCopy('de', resetLink).html, /Passwort zurücksetzen/, 'Deutsche Reset-E-Mail braucht einen Button.');
+assert.match(passwordResetEmailCopy('en', resetLink).html, /Reset password/, 'Englische Reset-E-Mail braucht einen Button.');
+assert.match(passwordResetEmailCopy('pl', resetLink).html, /Zresetuj hasło/, 'Polnische Reset-E-Mail braucht einen Button.');
+assert.match(passwordResetEmailCopy('de', resetLink).html, /oobCode=abc&amp;lang=de/, 'Reset-Link muss im HTML sicher maskiert werden.');
 
-console.log('Firebase-Kontoverifizierung geprüft: geschützter Linkversand, HTML und lokalisierte Vorlagen.');
+console.log('Firebase-Kontoverifizierung und Passwort-Reset geprüft: HTML, Einmal-Codes und drei Sprachen.');

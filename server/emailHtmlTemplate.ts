@@ -55,3 +55,18 @@ export const accountVerificationEmailCopy = (language: EmailLanguage, link: stri
 <p style="font-size:13px;line-height:1.5;overflow-wrap:anywhere"><a href="${escapeHtml(link)}">${escapeHtml(link)}</a></p>`, copy.footer, language),
   };
 };
+
+export const passwordResetEmailCopy = (language: EmailLanguage, link: string) => {
+  const copy = {
+    de: { subject: 'Setze dein Passwort für die GOM-MAR Academy zurück', intro: 'Für dein Academy-Konto wurde ein neues Passwort angefordert.', button: 'Passwort zurücksetzen', footer: 'Falls du das nicht selbst angefordert hast, ignoriere diese E-Mail. Dein Passwort bleibt unverändert.' },
+    en: { subject: 'Reset your GOM-MAR Academy password', intro: 'A new password was requested for your Academy account.', button: 'Reset password', footer: 'If you did not request this, ignore this email. Your password will not change.' },
+    pl: { subject: 'Zresetuj hasło do GOM-MAR Academy', intro: 'Poproszono o nowe hasło do Twojego konta Academy.', button: 'Zresetuj hasło', footer: 'Jeśli to nie Twoja prośba, zignoruj tę wiadomość. Hasło pozostanie bez zmian.' },
+  }[language];
+  return {
+    subject: copy.subject,
+    text: `${copy.intro}\n\n${copy.button}: ${link}\n\n${copy.footer}`,
+    html: emailFrame(copy.subject, `<p style="line-height:1.6">${copy.intro}</p>
+<p><a href="${escapeHtml(link)}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#4f46e5;color:#ffffff;text-decoration:none;font-weight:700">${copy.button}</a></p>
+<p style="font-size:13px;line-height:1.5;overflow-wrap:anywhere"><a href="${escapeHtml(link)}">${escapeHtml(link)}</a></p>`, copy.footer, language),
+  };
+};
