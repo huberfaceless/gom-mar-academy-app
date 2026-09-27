@@ -42,6 +42,8 @@ assert.match(entry, /window\.location\.pathname === '\/reset-password' \? <Reset
 assert.match(resetHandler, /verifyPasswordResetCode\(auth, code\)/, 'Der Reset-Code muss vor der Eingabe geprüft werden.');
 assert.match(resetHandler, /confirmPasswordReset\(auth, code, password\)/, 'Das neue Passwort muss bei Firebase gesetzt werden.');
 assert.match(resetHandler, /window\.history\.replaceState\(null, '', '\/reset-password'\)/, 'Reset-Codes dürfen nicht im Browser-Verlauf verbleiben.');
+assert.match(resetHandler, /\[params\] = useState\(\(\) => new URLSearchParams\(window\.location\.search\)\)/, 'Der Reset-Code muss beim ersten Rendern erhalten bleiben, auch wenn die URL geleert wird.');
+assert.match(resetHandler, /<form noValidate onSubmit=/, 'Zu kurze Passwörter müssen eine sichtbare Fehlermeldung auslösen.');
 const resetLink = 'https://academy.gomo-marketing.at/reset-password?oobCode=abc&lang=de';
 assert.match(passwordResetEmailCopy('de', resetLink).html, /Passwort zurücksetzen/, 'Deutsche Reset-E-Mail braucht einen Button.');
 assert.match(passwordResetEmailCopy('en', resetLink).html, /Reset password/, 'Englische Reset-E-Mail braucht einen Button.');
