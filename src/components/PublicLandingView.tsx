@@ -36,6 +36,9 @@ const registrationCopy = {
     emailError: 'Bitte gib eine gültige E-Mail-Adresse ein.',
     passwordError: 'Das Passwort muss mindestens 6 Zeichen lang sein.',
     registrationError: 'Registrierung fehlgeschlagen.',
+    emailSignupTitle: 'Nur Academy-E-Mails erhalten?',
+    emailSignupDescription: 'Du brauchst kein Academy-Konto und keinen CRM-Zugang. Melde dich freiwillig für Neuigkeiten, Tipps und Angebote an und bestätige deine E-Mail-Adresse. Du kannst dich jederzeit wieder abmelden.',
+    emailSignupLink: 'E-Mails ohne Konto abonnieren',
   },
   en: {
     title: 'Create a free account',
@@ -56,6 +59,9 @@ const registrationCopy = {
     emailError: 'Please enter a valid email address.',
     passwordError: 'The password must be at least 6 characters long.',
     registrationError: 'Registration failed.',
+    emailSignupTitle: 'Only want Academy emails?',
+    emailSignupDescription: 'You do not need an Academy account or CRM access. Sign up voluntarily for news, tips and offers and confirm your email address. You can unsubscribe at any time.',
+    emailSignupLink: 'Subscribe without an account',
   },
   pl: {
     title: 'Utwórz bezpłatne konto',
@@ -76,6 +82,9 @@ const registrationCopy = {
     emailError: 'Podaj prawidłowy adres e-mail.',
     passwordError: 'Hasło musi mieć co najmniej 6 znaków.',
     registrationError: 'Rejestracja nie powiodła się.',
+    emailSignupTitle: 'Chcesz otrzymywać tylko e-maile Academy?',
+    emailSignupDescription: 'Nie potrzebujesz konta Academy ani dostępu do CRM. Zapisz się dobrowolnie na aktualności, wskazówki i oferty oraz potwierdź swój adres e-mail. Możesz zrezygnować w każdej chwili.',
+    emailSignupLink: 'Zapisz się bez konta',
   },
 } as const;
 
@@ -199,6 +208,18 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
             </p>
 
           </div>
+
+          <section className="max-w-xl mx-auto rounded-2xl border border-indigo-400/40 bg-indigo-500/10 px-6 py-5 text-center space-y-3" aria-labelledby="email-signup-title">
+            <h3 id="email-signup-title" className="text-lg font-bold text-white">{copy.emailSignupTitle}</h3>
+            <p className="text-sm leading-relaxed text-slate-300">{copy.emailSignupDescription}</p>
+            <a
+              href={`/api/email/subscribe?lang=${language}`}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-500 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300"
+            >
+              <Mail className="h-4 w-4" />
+              {copy.emailSignupLink}
+            </a>
+          </section>
 
           {/* Academy introduction video */}
           <div className="max-w-sm mx-auto space-y-3 text-center">
