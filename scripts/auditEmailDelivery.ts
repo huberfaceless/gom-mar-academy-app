@@ -9,6 +9,7 @@ const consentStorage = readFileSync('server/emailConsentAdmin.ts', 'utf8');
 const consentService = readFileSync('src/services/emailConsentService.ts', 'utf8');
 const profile = readFileSync('src/components/ProfileView.tsx', 'utf8');
 const unsubscribeStorage = readFileSync('server/emailUnsubscribeAdmin.ts', 'utf8');
+const externalConsentStorage = readFileSync('server/externalEmailConsentAdmin.ts', 'utf8');
 
 assert.match(
   server,
@@ -37,7 +38,14 @@ assert.match(server, /app\.get\('\/api\/email\/unsubscribe', \(req, res\)/, 'Der
 assert.match(server, /app\.post\('\/api\/email\/unsubscribe', async/, 'Erst eine bewusste Bestätigung darf Marketing-E-Mails abmelden.');
 assert.match(server, /<form method="post" action="\/api\/email\/unsubscribe">/, 'Automatische Linkprüfungen dürfen keine Abmeldung auslösen.');
 assert.match(server, /isMarketingEmailSuppressed\(FIREBASE_PROJECT_ID, recipient, marketing\.consentUpdatedAt\)/, 'Abgemeldete Kontakte müssen vor jedem Marketing-Versand blockiert werden.');
-assert.match(server, /if \(!contactId\.startsWith\('member_'\)\)\s*\{\s*res\.status\(409\)/, 'Manuelle CRM-Kontakte ohne überprüfbare Einwilligung dürfen keine Marketing-E-Mail erhalten.');
+assert.match(server, /if \(!contactId\.startsWith\('member_'\)\)\s*\{\s*const consent = await loadExternalEmailConsent\(FIREBASE_PROJECT_ID, storedRecipient\);\s*if \(!consent\.granted\)/, 'Manuelle CRM-Kontakte dürfen nur mit bestätigter Einwilligung angeschrieben werden.');
+assert.match(server, /app\.post\('\/api\/email\/subscribe', async/, 'Die freiwillige Anmeldung muss öffentlich möglich sein.');
+assert.match(server, /app\.post\('\/api\/email\/subscribe\/confirm', async/, 'Einwilligung muss durch eine bewusste Bestätigung aktiviert werden.');
+assert.match(server, /await withdrawExternalEmailConsent\(FIREBASE_PROJECT_ID, result\.email\)/, 'Die Abmeldung muss auch die externe Einwilligung widerrufen.');
+assert.match(server, /app\.get\('\/api\/email\/external-consent\/status', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Einwilligungsstatus muss geschützt sein.');
+assert.match(externalConsentStorage, /academyExternalEmailConsents/, 'Externe Einwilligungen müssen dauerhaft gespeichert werden.');
+assert.match(externalConsentStorage, /timingSafeEqual/, 'Bestätigungstoken muss sicher geprüft werden.');
+assert.match(externalConsentStorage, /historyJson/, 'Die Einwilligungshistorie muss dokumentiert werden.');
 assert.match(automation, /await sendEmail\(\{ to: lead\.email, subject: sub, body, contactId: lead\.id, language \}\)/, 'Der CRM-Versand muss den Kontaktbezug zur Serverprüfung übergeben.');
 assert.match(server, /createMarketingUnsubscribeToken\(FIREBASE_PROJECT_ID, recipient, marketing\.memberUserId\)/, 'Jede echte Marketing-E-Mail benötigt einen sicheren Abmeldelink.');
 assert.match(server, /\{ type: 'text\/html', value: deliveredHtml \}/, 'Gmail muss einen deutlich sichtbaren HTML-Abmeldelink erhalten.');

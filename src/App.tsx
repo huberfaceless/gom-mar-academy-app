@@ -162,6 +162,13 @@ export default function App() {
   const [isLegalModalOpen, setIsLegalModalOpen] = useState<boolean>(false);
   const [legalModalDoc, setLegalModalDoc] = useState<LegalDocType>('imprint');
 
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('legal') === 'privacy') {
+      setLegalModalDoc('privacy');
+      setIsLegalModalOpen(true);
+    }
+  }, []);
+
   const handleOpenLegalModal = (docType: LegalDocType) => {
     setLegalModalDoc(docType);
     setIsLegalModalOpen(true);
