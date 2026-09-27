@@ -481,6 +481,25 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     }
   };
 
+  const handleSendStandaloneTestEmail = async () => {
+    const copy = {
+      de: { question: 'Formatierte Test-E-Mail jetzt ausschließlich an deine eigene bestätigte Anmeldeadresse senden?', subject: '[TEST] HTML-E-Mail der GOM-MAR Academy', body: 'Hallo,\n\ndiese Test-E-Mail zeigt dir die neue HTML-Darstellung der GOM-MAR Academy.\n\nViele Grüße\nGOM-MAR Academy', success: 'Die formatierte Test-E-Mail wurde an deine eigene bestätigte Anmeldeadresse gesendet.', error: 'Die Test-E-Mail konnte nicht versendet werden.' },
+      en: { question: 'Send a formatted test email only to your own verified account address?', subject: '[TEST] GOM-MAR Academy HTML email', body: 'Hello,\n\nthis test email shows the new HTML layout of the GOM-MAR Academy.\n\nBest wishes\nGOM-MAR Academy', success: 'The formatted test email was sent to your own verified account address.', error: 'The test email could not be sent.' },
+      pl: { question: 'Wysłać sformatowaną wiadomość testową tylko na Twój własny potwierdzony adres konta?', subject: '[TEST] Wiadomość HTML GOM-MAR Academy', body: 'Cześć,\n\nta wiadomość testowa pokazuje nowy wygląd HTML GOM-MAR Academy.\n\nPozdrawiamy\nGOM-MAR Academy', success: 'Sformatowana wiadomość testowa została wysłana na Twój potwierdzony adres konta.', error: 'Nie udało się wysłać wiadomości testowej.' },
+    }[language];
+    if (!window.confirm(copy.question)) return;
+    setCampaignActionError(null);
+    setIsSendingTestEmail(true);
+    try {
+      await sendTestEmail({ subject: copy.subject, body: copy.body });
+      setSimulatedLeadSuccess(copy.success);
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : copy.error);
+    } finally {
+      setIsSendingTestEmail(false);
+    }
+  };
+
   const getCampaignReadinessError = (): string | null => {
     if (!activeCampaign.title.trim()) return 'Ergänze zuerst einen Kampagnennamen.';
     if (!activeCampaign.targetAudience.trim()) return 'Ergänze zuerst die Zielgruppe.';
@@ -598,7 +617,21 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               {campaignActionError || campaignsError}
             </p>
           )}
+          {simulatedLeadSuccess && (
+            <p className="mx-auto mt-4 max-w-xl rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm font-semibold text-emerald-800" role="status">
+              {simulatedLeadSuccess}
+            </p>
+          )}
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={handleSendStandaloneTestEmail}
+              disabled={isSendingTestEmail}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <Send className="h-4 w-4" />
+              {isSendingTestEmail ? { de: 'Test wird gesendet…', en: 'Sending test…', pl: 'Wysyłanie testu…' }[language] : { de: 'HTML-Test an mich senden', en: 'Send HTML test to myself', pl: 'Wyślij test HTML do siebie' }[language]}
+            </button>
             <button
               type="button"
               onClick={handleCreateFirstCampaign}
