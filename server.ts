@@ -19,6 +19,7 @@ import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsA
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
+import { renderConsentEmailHtml, renderTextEmailHtml } from './server/emailHtmlTemplate.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
@@ -1025,7 +1026,10 @@ async function startServer() {
           personalizations: [{ to: [{ email: verifiedEmail }] }],
           from: { email: senderEmail, name: senderName.slice(0, 100) },
           subject: message.subject,
-          content: [{ type: 'text/plain', value: message.body }],
+          content: [
+            { type: 'text/plain', value: message.body },
+            { type: 'text/html', value: renderConsentEmailHtml(language, message.subject, confirmationUrl) },
+          ],
         }),
       });
       if (!sendResponse.ok) {
@@ -1144,7 +1148,10 @@ async function startServer() {
           en: ['Confirm your Academy email subscription', `You requested Academy news, tips and offers. Open this link within 24 hours and confirm your consent: ${link}\n\nIf you did not request this, ignore this email.`],
           pl: ['Potwierdź zapis na e-maile Academy', `Poproszono o aktualności Academy, wskazówki i oferty. Otwórz ten link w ciągu 24 godzin i potwierdź zgodę: ${link}\n\nJeśli to nie Twoja prośba, zignoruj tę wiadomość.`],
         }[language];
-        const response = await fetch(SENDGRID_API_URL, { method: 'POST', headers: { Authorization: `Bearer ${sendGridApiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ personalizations: [{ to: [{ email }] }], from: { email: senderEmail, name: (process.env.SENDGRID_FROM_NAME || 'GOM-MAR Academy').slice(0, 100) }, subject: message[0], content: [{ type: 'text/plain', value: message[1] }] }) });
+        const response = await fetch(SENDGRID_API_URL, { method: 'POST', headers: { Authorization: `Bearer ${sendGridApiKey}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ personalizations: [{ to: [{ email }] }], from: { email: senderEmail, name: (process.env.SENDGRID_FROM_NAME || 'GOM-MAR Academy').slice(0, 100) }, subject: message[0], content: [
+          { type: 'text/plain', value: message[1] },
+          { type: 'text/html', value: renderConsentEmailHtml(language, message[0], link) },
+        ] }) });
         if (!response.ok) throw new Error('Bestätigungsversand fehlgeschlagen.');
       }
       res.status(202).type('html').send(externalSignupPage(language, 'pending'));
@@ -1364,7 +1371,10 @@ async function startServer() {
                 { type: 'text/plain', value: deliveredBody },
                 { type: 'text/html', value: deliveredHtml },
               ]
-            : [{ type: 'text/plain', value: deliveredBody }],
+            : [
+                { type: 'text/plain', value: deliveredBody },
+                { type: 'text/html', value: renderTextEmailHtml(emailSubject, deliveredBody) },
+              ],
         }),
       });
 
