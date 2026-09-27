@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { accountVerificationEmailCopy } from '../server/emailHtmlTemplate.js';
 
 const auth = fs.readFileSync('src/firebase/auth.ts', 'utf8');
+const server = fs.readFileSync('server.ts', 'utf8');
 
 assert.match(
   auth,
@@ -15,13 +17,25 @@ assert.match(
 );
 assert.match(
   auth,
-  /sendEmailVerification\(targetUser, prepareAuthEmail\(language\)\)/,
-  'Bestätigungs-E-Mails müssen die geprüften Aktionseinstellungen verwenden.',
+  /fetch\('\/api\/auth\/verification-email'/,
+  'Bestätigungs-E-Mails müssen den geschützten Academy-Versand verwenden.',
 );
+assert.match(server, /app\.post\('\/api\/auth\/verification-email', requireAuthenticatedMember/, 'Nur angemeldete Konten dürfen die Verifizierung anfordern.');
+assert.match(server, /member\.email\.trim\(\)\.toLowerCase\(\) !== email/, 'Die E-Mail-Adresse muss serverseitig dem Konto zugeordnet werden.');
+assert.match(server, /requestType: 'VERIFY_EMAIL', email, returnOobLink: true/, 'Der Link muss von Firebase generiert werden, ohne eine zweite Firebase-E-Mail zu senden.');
+assert.match(server, /\{ type: 'text\/plain', value: message\.text \}, \{ type: 'text\/html', value: message\.html \}/, 'Der Versand braucht Text- und HTML-Version.');
+const link = 'https://example.firebaseapp.com/action?mode=verifyEmail&oobCode=abc&lang=de';
+const de = accountVerificationEmailCopy('de', link);
+const en = accountVerificationEmailCopy('en', link);
+const pl = accountVerificationEmailCopy('pl', link);
+assert.match(de.html, /E-Mail-Adresse bestätigen/, 'Die deutsche E-Mail braucht einen Bestätigungsbutton.');
+assert.match(en.subject, /Verify your email address/, 'Die englische Vorlage fehlt.');
+assert.match(pl.subject, /Potwierdź adres e-mail/, 'Die polnische Vorlage fehlt.');
+assert.match(de.html, /oobCode=abc&amp;lang=de/, 'Linkparameter müssen im HTML korrekt maskiert werden.');
 assert.match(
   auth,
   /sendPasswordResetEmail\(auth, email\.trim\(\), prepareAuthEmail\(language\)\)/,
   'Passwort-Reset-E-Mails müssen die geprüften Aktionseinstellungen verwenden.',
 );
 
-console.log('Firebase-Authentifizierungs-E-Mails geprüft: Produktionsdomain und Sprache sind fest konfiguriert.');
+console.log('Firebase-Kontoverifizierung geprüft: geschützter Linkversand, HTML und lokalisierte Vorlagen.');

@@ -39,3 +39,19 @@ export const renderConsentEmailHtml = (
 <p><a href="${safeUrl}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#4f46e5;color:#ffffff;text-decoration:none;font-weight:700">${copy.button}</a></p>
 <p style="font-size:13px;line-height:1.5;overflow-wrap:anywhere"><a href="${safeUrl}">${safeUrl}</a></p>`, copy.footer, language);
 };
+
+export const accountVerificationEmailCopy = (language: EmailLanguage, link: string) => {
+  const copy = {
+    de: { subject: 'Bestätige deine E-Mail-Adresse für die GOM-MAR Academy', intro: 'Du hast ein Konto bei der GOM-MAR Academy erstellt.', instruction: 'Bitte bestätige deine E-Mail-Adresse über diesen Link:', button: 'E-Mail-Adresse bestätigen', footer: 'Falls du kein Konto erstellt hast, ignoriere diese Nachricht.' },
+    en: { subject: 'Verify your email address for GOM-MAR Academy', intro: 'You created an account with GOM-MAR Academy.', instruction: 'Please verify your email address using this link:', button: 'Verify email address', footer: 'If you did not create an account, ignore this email.' },
+    pl: { subject: 'Potwierdź adres e-mail w GOM-MAR Academy', intro: 'Utworzono konto w GOM-MAR Academy.', instruction: 'Potwierdź swój adres e-mail za pomocą tego linku:', button: 'Potwierdź adres e-mail', footer: 'Jeśli nie utworzono konta, zignoruj tę wiadomość.' },
+  }[language];
+  return {
+    subject: copy.subject,
+    text: `${copy.intro}\n\n${copy.instruction}\n${link}\n\n${copy.footer}`,
+    html: emailFrame(copy.subject, `<p style="line-height:1.6">${copy.intro}</p>
+<p style="line-height:1.6">${copy.instruction}</p>
+<p><a href="${escapeHtml(link)}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#4f46e5;color:#ffffff;text-decoration:none;font-weight:700">${copy.button}</a></p>
+<p style="font-size:13px;line-height:1.5;overflow-wrap:anywhere"><a href="${escapeHtml(link)}">${escapeHtml(link)}</a></p>`, copy.footer, language),
+  };
+};
