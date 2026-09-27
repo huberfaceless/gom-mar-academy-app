@@ -387,9 +387,15 @@ async function startServer() {
       }
       const { oobLink } = await linkResponse.json() as { oobLink?: string };
       if (!oobLink || !oobLink.startsWith('https://')) throw new Error('Der Firebase-Bestätigungslink ist ungültig.');
-      const localizedLink = new URL(oobLink);
-      localizedLink.searchParams.set('lang', language);
-      const message = accountVerificationEmailCopy(language, localizedLink.toString());
+      const firebaseLink = new URL(oobLink);
+      const verificationCode = firebaseLink.searchParams.get('oobCode');
+      if (firebaseLink.searchParams.get('mode') !== 'verifyEmail' || !verificationCode) {
+        throw new Error('Der Firebase-Bestätigungslink ist unvollständig.');
+      }
+      const academyLink = new URL('/verify-email', ACADEMY_PUBLIC_URL);
+      academyLink.searchParams.set('oobCode', verificationCode);
+      academyLink.searchParams.set('lang', language);
+      const message = accountVerificationEmailCopy(language, academyLink.toString());
       const sendResponse = await fetch(SENDGRID_API_URL, {
         method: 'POST',
         headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
