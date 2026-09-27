@@ -639,6 +639,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
               <button
                 key={stage.id}
                 disabled={!isStageAccessible}
+                aria-label={`${copy.stage} ${stage.id}: ${stage.title} — ${isStageFullyDone ? copy.completed : isStageAccessible ? copy.available : copy.proRequired}`}
                 onClick={() => {
                   setSelectedStageId(stage.id);
                   setSelectedLessonId(stage.lessons[0].id);
@@ -648,20 +649,22 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                   isStageActive
                     ? 'bg-slate-900 dark:bg-slate-800 text-white border-indigo-600 dark:border-indigo-500 shadow-md scale-105 cursor-pointer'
                     : isStageFullyDone
-                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 cursor-pointer'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-400 dark:border-emerald-700 cursor-pointer hover:bg-emerald-100 dark:hover:bg-emerald-950/60'
                     : isStageAccessible
-                    ? 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 cursor-pointer'
-                    : 'bg-slate-100 dark:bg-slate-950 text-slate-400 border-slate-200 dark:border-slate-800 cursor-not-allowed opacity-60'
-                }`}
+                    ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-800 dark:text-indigo-200 border-indigo-300 dark:border-indigo-700 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 cursor-pointer'
+                    : 'bg-slate-100 dark:bg-slate-950 text-slate-400 dark:text-slate-600 border-slate-200 dark:border-slate-800 cursor-not-allowed opacity-60'
+                } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500`}
               >
                 <div className={`w-5 h-5 rounded-md flex items-center justify-center font-bold text-[10px] ${
                   isStageFullyDone
                     ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
                     : isStageActive
                     ? 'bg-indigo-600 text-white'
-                    : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                    : isStageAccessible
+                    ? 'bg-indigo-200 dark:bg-indigo-700 text-indigo-900 dark:text-white'
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-600'
                 }`}>
-                  {isStageFullyDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : stage.id}
+                  {isStageFullyDone ? <CheckCircle2 className="w-3.5 h-3.5" /> : isStageAccessible ? stage.id : <Lock className="w-3 h-3" />}
                 </div>
                 <span>{stage.title}</span>
                 <span className="text-[10px] opacity-70">
