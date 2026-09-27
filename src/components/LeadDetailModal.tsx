@@ -124,6 +124,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [isDeletingLead, setIsDeletingLead] = useState(false);
   const [campaignStarted, setCampaignStarted] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
+  const canSendMarketingEmail = lead.id.startsWith('member_');
 
   const handleAddTag = (e: React.FormEvent) => {
     e.preventDefault();
@@ -438,7 +439,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 <div className="flex items-center gap-3 pt-2">
                   <button
                     onClick={handleUseDraftDirectly}
-                    disabled={isSendingEmail}
+                    disabled={isSendingEmail || !canSendMarketingEmail}
                     className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
@@ -690,6 +691,11 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                       Abbrechen
                     </button>
                   </div>
+                  {!canSendMarketingEmail && (
+                    <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
+                      Für manuell angelegte Kontakte ist noch keine überprüfbare E-Mail-Einwilligung hinterlegt. Marketing-E-Mails können derzeit nur an bestätigte Academy-Mitglieder gesendet werden.
+                    </p>
+                  )}
 
                   <div className="space-y-3">
                     <div>
@@ -723,7 +729,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                       </button>
                       <button
                         onClick={handleSendEmailSubmit}
-                        disabled={isSendingEmail || !emailSubject.trim() || !emailBody.trim()}
+                        disabled={isSendingEmail || !canSendMarketingEmail || !emailSubject.trim() || !emailBody.trim()}
                         className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30"
                       >
                         <Send className="w-4 h-4" />

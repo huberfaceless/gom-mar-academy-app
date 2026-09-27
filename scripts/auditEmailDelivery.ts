@@ -37,6 +37,8 @@ assert.match(server, /app\.get\('\/api\/email\/unsubscribe', \(req, res\)/, 'Der
 assert.match(server, /app\.post\('\/api\/email\/unsubscribe', async/, 'Erst eine bewusste Bestätigung darf Marketing-E-Mails abmelden.');
 assert.match(server, /<form method="post" action="\/api\/email\/unsubscribe">/, 'Automatische Linkprüfungen dürfen keine Abmeldung auslösen.');
 assert.match(server, /isMarketingEmailSuppressed\(FIREBASE_PROJECT_ID, recipient, marketing\.consentUpdatedAt\)/, 'Abgemeldete Kontakte müssen vor jedem Marketing-Versand blockiert werden.');
+assert.match(server, /if \(!contactId\.startsWith\('member_'\)\)\s*\{\s*res\.status\(409\)/, 'Manuelle CRM-Kontakte ohne überprüfbare Einwilligung dürfen keine Marketing-E-Mail erhalten.');
+assert.match(automation, /await sendEmail\(\{ to: lead\.email, subject: sub, body, contactId: lead\.id, language \}\)/, 'Der CRM-Versand muss den Kontaktbezug zur Serverprüfung übergeben.');
 assert.match(server, /createMarketingUnsubscribeToken\(FIREBASE_PROJECT_ID, recipient, marketing\.memberUserId\)/, 'Jede echte Marketing-E-Mail benötigt einen sicheren Abmeldelink.');
 assert.match(server, /\{ type: 'text\/html', value: deliveredHtml \}/, 'Gmail muss einen deutlich sichtbaren HTML-Abmeldelink erhalten.');
 assert.match(server, /background:#4f46e5[\s\S]{0,200}unsubscribeLabel/, 'Der HTML-Abmeldelink muss als gut sichtbare Schaltfläche dargestellt werden.');
