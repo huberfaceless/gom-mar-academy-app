@@ -15,7 +15,7 @@ import {
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
-import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncConsentedMembersToCrm } from './server/crmContactsAdmin.js';
+import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
 import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
@@ -1025,7 +1025,7 @@ async function startServer() {
     }
   });
 
-  app.post('/api/admin/crm/sync-consented-members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+  app.post('/api/admin/crm/sync-members', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const adminUserId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!adminUserId) throw new Error('Firebase-Benutzerkennung fehlt.');
@@ -1038,11 +1038,12 @@ async function startServer() {
         if (!pageToken) break;
       }
       if (pageToken) throw new Error('Die Mitgliederliste ist für einen sicheren Abgleich zu groß.');
-      const result = await syncConsentedMembersToCrm(FIREBASE_PROJECT_ID, adminUserId, members);
+      const result = await syncAcademyMembersToCrm(FIREBASE_PROJECT_ID, adminUserId, members);
       console.info('Academy-Mitglieder mit CRM synchronisiert', {
         action: 'academy.crm.members.synced',
         actorUid: adminUserId,
-        eligibleCount: result.eligibleCount,
+        memberCount: result.memberCount,
+        consentedCount: result.consentedCount,
         importedCount: result.importedCount,
         timestamp: new Date().toISOString(),
       });

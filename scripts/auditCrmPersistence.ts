@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { deleteCrmContact, validateCrmContacts } from '../server/crmContactsAdmin.js';
+import { deleteCrmContact, mergeAcademyMembersIntoCrm, validateCrmContacts } from '../server/crmContactsAdmin.js';
+import type { FirebaseMember } from '../server/firebaseMembershipAdmin.js';
 
 const server = readFileSync('server.ts', 'utf8');
 const storage = readFileSync('server/crmContactsAdmin.ts', 'utf8');
@@ -11,13 +12,13 @@ const modal = readFileSync('src/components/LeadDetailModal.tsx', 'utf8');
 assert.match(server, /app\.get\('\/api\/crm\/contacts', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Lesen muss eine bestätigte Admin-Anmeldung verlangen.');
 assert.match(server, /app\.put\('\/api\/crm\/contacts', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Speichern muss eine bestätigte Admin-Anmeldung verlangen.');
 assert.match(server, /app\.delete\('\/api\/crm\/contacts\/:contactId', requireVerifiedMember, requireAcademyAdmin/, 'CRM-Löschen muss eine bestätigte Admin-Anmeldung verlangen.');
-assert.match(server, /app\.post\('\/api\/admin\/crm\/sync-consented-members', requireVerifiedMember, requireAcademyAdmin/, 'Der Mitgliederabgleich muss eine bestätigte Admin-Anmeldung verlangen.');
-assert.match(server, /syncConsentedMembersToCrm\(FIREBASE_PROJECT_ID, adminUserId, members\)/, 'Der Mitgliederabgleich muss serverseitig erfolgen.');
+assert.match(server, /app\.post\('\/api\/admin\/crm\/sync-members', requireVerifiedMember, requireAcademyAdmin/, 'Der Mitgliederabgleich muss eine bestätigte Admin-Anmeldung verlangen.');
+assert.match(server, /syncAcademyMembersToCrm\(FIREBASE_PROJECT_ID, adminUserId, members\)/, 'Der Mitgliederabgleich muss serverseitig erfolgen.');
 assert.match(storage, /academyCrmContacts\//, 'CRM-Kontakte müssen zentral in Firestore gespeichert werden.');
 assert.match(storage, /encodeURIComponent\(userId\)/, 'CRM-Kontakte müssen nach Firebase-Benutzer getrennt werden.');
 assert.match(storage, /value\.length > 1_000/, 'Die Kontaktanzahl muss serverseitig begrenzt sein.');
 assert.match(service, /authenticatedFetch\('\/api\/crm\/contacts'/, 'Der Client muss den geschützten CRM-Endpunkt verwenden.');
-assert.match(service, /authenticatedFetch\('\/api\/admin\/crm\/sync-consented-members'/, 'Der Client muss den geschützten Mitgliederabgleich verwenden.');
+assert.match(service, /authenticatedFetch\('\/api\/admin\/crm\/sync-members'/, 'Der Client muss den geschützten Mitgliederabgleich verwenden.');
 assert.match(service, /encodeURIComponent\(contactId\)/, 'Kontakt-IDs müssen beim Löschen sicher kodiert werden.');
 assert.match(view, /await saveCrmContacts\(\[newLead, \.\.\.persistentContacts\]\)/, 'Neue Kontakte müssen vor der Erfolgsmeldung zentral gespeichert werden.');
 assert.match(view, /loadCrmContacts\(\)/, 'Gespeicherte CRM-Kontakte müssen beim Öffnen geladen werden.');
@@ -26,11 +27,13 @@ assert.match(view, /onUpdateLead=\{async/, 'Änderungen am Interaktionsverlauf m
 assert.match(view, /onDeleteLead=\{async/, 'Kontakte müssen aus der zentralen Speicherung gelöscht werden.');
 assert.match(view, /if \(!isAdmin\)/, 'Normale Mitglieder dürfen keine CRM-Kontakte laden.');
 assert.match(view, /isAdmin && mainTab === 'crm'/, 'Der CRM-Bereich darf nur für Administratoren gerendert werden.');
-assert.match(view, /Einwilligende Mitglieder abgleichen/, 'Der Adminbereich muss den Mitgliederabgleich anbieten.');
+assert.match(view, /Alle Mitglieder abgleichen/, 'Der Adminbereich muss den Mitgliederabgleich anbieten.');
+assert.match(view, /void syncRequest/, 'Admin-Mitglieder müssen beim Öffnen mit dem CRM abgeglichen werden.');
 assert.match(view, /Es wurde keine E-Mail versendet\./, 'Der Mitgliederabgleich darf keinen Versand vortäuschen.');
-assert.match(storage, /consent\.granted && consent\.email\.trim\(\)\.toLowerCase\(\) === member\.email\.trim\(\)\.toLowerCase\(\)/, 'Nur Einwilligungen für die aktuell bestätigte Mitgliedsadresse dürfen übernommen werden.');
+assert.match(storage, /consent\.granted && consent\.email\.trim\(\)\.toLowerCase\(\) === member\.email\.trim\(\)\.toLowerCase\(\)/, 'Nur Einwilligungen für die aktuell bestätigte Mitgliedsadresse dürfen markiert werden.');
 assert.match(storage, /member\.emailVerified && !member\.disabled/, 'Nur bestätigte und aktive Mitglieder dürfen übernommen werden.');
-assert.match(storage, /!contact\.id\.startsWith\('member_'\)/, 'Widerrufene Mitgliedskontakte müssen beim Abgleich entfernt werden, ohne manuelle Leads zu löschen.');
+assert.match(storage, /!contact\.id\.startsWith\('member_'\)/, 'Manuell angelegte Kontakte müssen beim Abgleich erhalten bleiben.');
+assert.match(modal, /lead\.tags\.includes\('E-Mail-Einwilligung'\)/, 'Ohne Einwilligung darf der Marketing-Button für Mitglieder nicht verfügbar sein.');
 assert.match(readFileSync('src/App.tsx', 'utf8'), /isAdmin=\{user\.role === 'admin'\}/, 'Die Admin-Rolle muss ausdrücklich an den CRM-Bereich übergeben werden.');
 assert.match(modal, /Kontakt dauerhaft löschen/, 'Das Kontaktprofil muss eine sichtbare Löschfunktion anbieten.');
 assert.match(modal, /window\.confirm/, 'Vor dem dauerhaften Löschen muss eine Bestätigung verlangt werden.');
@@ -40,5 +43,22 @@ assert.deepEqual(validateCrmContacts([validContact]), [validContact], 'Ein gült
 assert.throws(() => validateCrmContacts([{ ...validContact, email: 'ungueltig' }]), /E-Mail-Adresse/, 'Ungültige Empfängeradressen müssen abgelehnt werden.');
 assert.throws(() => validateCrmContacts(new Array(1_001).fill(validContact)), /zu groß/, 'Mehr als 1.000 Kontakte müssen abgelehnt werden.');
 await assert.rejects(() => deleteCrmContact('project', 'user', '../fremd'), /Kontakt-ID/, 'Ungültige Kontakt-IDs müssen vor dem Firestore-Zugriff abgelehnt werden.');
+
+const members: FirebaseMember[] = ['stefan', 'test', 'stephan'].map((uid) => ({
+  uid, email: `${uid}@example.com`, displayName: uid, emailVerified: true, disabled: false,
+  tier: 'FREE', role: 'member', language: 'de',
+}));
+const manual = { id: 'lead_manual', name: 'Interessent', email: 'manual@example.com' };
+const consentedMember = { member: members[0], consentUpdatedAt: '2026-09-28T08:00:00Z', emailConsentGranted: true };
+const withoutConsent = members.slice(1).map((member) => ({ member, consentUpdatedAt: null, emailConsentGranted: false }));
+const merged = mergeAcademyMembersIntoCrm([consentedMember, ...withoutConsent], [manual]);
+assert.equal(merged.contacts.length, 4, 'Drei bestätigte Mitglieder und ein manueller Kontakt müssen im CRM erscheinen.');
+assert.equal(merged.memberCount, 3);
+assert.equal(merged.consentedCount, 1);
+assert.equal(merged.contacts.filter((contact) => contact.badge === 'Keine E-Mail-Einwilligung').length, 2);
+assert.equal(merged.contacts.at(-1)?.id, manual.id, 'Manuelle Kontakte müssen erhalten bleiben.');
+const refreshed = mergeAcademyMembersIntoCrm(withoutConsent.concat({ ...consentedMember, emailConsentGranted: false, consentUpdatedAt: null }), merged.contacts);
+assert.equal(refreshed.importedCount, 0, 'Ein weiterer Abgleich darf bestehende Mitglieder nicht duplizieren.');
+assert.equal(refreshed.contacts.filter((contact) => Array.isArray(contact.tags) && contact.tags.includes('E-Mail-Einwilligung')).length, 0, 'Nach Widerruf dürfen keine Einwilligungsmarker bestehen bleiben.');
 
 console.log('CRM-Persistenz geprüft: benutzergetrennt, serverseitig validiert und zentral in Firestore gespeichert.');

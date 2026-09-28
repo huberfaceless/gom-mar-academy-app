@@ -28,22 +28,25 @@ export const deleteCrmContact = async (contactId: string): Promise<LeadContact[]
   return Array.isArray(result.contacts) ? result.contacts : [];
 };
 
-export const syncConsentedMembers = async (): Promise<{
+export const syncAcademyMembers = async (): Promise<{
   contacts: LeadContact[];
-  eligibleCount: number;
+  memberCount: number;
+  consentedCount: number;
   importedCount: number;
 }> => {
-  const response = await authenticatedFetch('/api/admin/crm/sync-consented-members', { method: 'POST' });
+  const response = await authenticatedFetch('/api/admin/crm/sync-members', { method: 'POST' });
   const result = await response.json().catch(() => ({})) as {
     contacts?: LeadContact[];
-    eligibleCount?: number;
+    memberCount?: number;
+    consentedCount?: number;
     importedCount?: number;
     error?: string;
   };
   if (!response.ok) throw new Error(result.error || 'Mitglieder konnten nicht mit dem CRM synchronisiert werden.');
   return {
     contacts: Array.isArray(result.contacts) ? result.contacts : [],
-    eligibleCount: typeof result.eligibleCount === 'number' ? result.eligibleCount : 0,
+    memberCount: typeof result.memberCount === 'number' ? result.memberCount : 0,
+    consentedCount: typeof result.consentedCount === 'number' ? result.consentedCount : 0,
     importedCount: typeof result.importedCount === 'number' ? result.importedCount : 0,
   };
 };
