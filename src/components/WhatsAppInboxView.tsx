@@ -42,6 +42,17 @@ export const WhatsAppInboxView: React.FC = () => {
   const [replyText, setReplyText] = useState<Record<string, string>>({});
   const [replyingTo, setReplyingTo] = useState('');
   const [replyResult, setReplyResult] = useState<Record<string, string>>({});
+  const [selectedPhone, setSelectedPhone] = useState('');
+
+  const conversations = Array.from(messages.reduce((groups, message) => {
+    const phone = message.senderPhone;
+    groups.set(phone, [...(groups.get(phone) || []), message]);
+    return groups;
+  }, new Map<string, WhatsAppInboxMessage[]>())).map(([phone, items]) => ({
+    phone,
+    messages: items.sort((a, b) => messageDate(a.timestamp).getTime() - messageDate(b.timestamp).getTime()),
+  })).sort((a, b) => messageDate(b.messages[b.messages.length - 1].timestamp).getTime() - messageDate(a.messages[a.messages.length - 1].timestamp).getTime());
+  const activeConversation = conversations.find((conversation) => conversation.phone === selectedPhone) || conversations[0];
 
   const sendReply = async (message: WhatsAppInboxMessage) => {
     const text = replyText[message.messageId]?.trim() || '';
@@ -108,7 +119,7 @@ export const WhatsAppInboxView: React.FC = () => {
             <MessageCircle className="h-5 w-5 text-emerald-600" />
             WhatsApp-Posteingang
           </h2>
-          <p className="mt-1 text-xs text-slate-600">Die letzten 100 eingehenden Nachrichten der Cloud API.</p>
+          <p className="mt-1 text-xs text-slate-600">Die letzten 100 eingehenden Nachrichten, nach Kontakt sortiert.</p>
         </div>
         <button
           type="button"
@@ -141,62 +152,73 @@ export const WhatsAppInboxView: React.FC = () => {
       )}
 
       {messages.length > 0 && (
-        <div className="divide-y divide-slate-100">
-          {messages.map((message) => (
-            <article key={message.messageId} className="p-4 sm:p-5">
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                <div className="font-bold text-slate-900">
-                  {message.member?.displayName || message.senderName?.trim() || 'Unbekannter Kontakt'}
-                  <span className="ml-2 font-medium text-slate-500">+{message.senderPhone}</span>
-                </div>
-                <time className="text-xs font-medium text-slate-500" dateTime={messageDate(message.timestamp).toISOString()}>
-                  {formatMessageDate(message.timestamp)}
-                </time>
-              </div>
-              {message.member && (
+        <div className="grid min-h-96 md:grid-cols-[minmax(220px,280px)_minmax(0,1fr)]">
+          <nav aria-label="WhatsApp-Kontakte" className="border-b border-slate-100 md:border-b-0 md:border-r">
+            {conversations.map((conversation) => {
+              const latest = conversation.messages[conversation.messages.length - 1];
+              return (
+                <button key={conversation.phone} type="button" onClick={() => setSelectedPhone(conversation.phone)}
+                  aria-current={activeConversation?.phone === conversation.phone ? 'true' : undefined}
+                  className={`w-full border-b border-slate-100 p-4 text-left hover:bg-emerald-50 ${activeConversation?.phone === conversation.phone ? 'bg-emerald-50' : ''}`}>
+                  <span className="block truncate text-sm font-bold text-slate-900">{latest.member?.displayName || latest.senderName?.trim() || 'Unbekannter Kontakt'}</span>
+                  <span className="block text-xs text-slate-500">+{conversation.phone} · {conversation.messages.length} Nachricht{conversation.messages.length === 1 ? '' : 'en'}</span>
+                  <span className="mt-1 block truncate text-xs text-slate-600">{latest.text || `[${latest.type}]`}</span>
+                  <time className="mt-1 block text-[11px] text-slate-500" dateTime={messageDate(latest.timestamp).toISOString()}>{formatMessageDate(latest.timestamp)}</time>
+                </button>
+              );
+            })}
+          </nav>
+          {activeConversation && (() => {
+            const latest = activeConversation.messages[activeConversation.messages.length - 1];
+            const member = [...activeConversation.messages].reverse().find((message) => message.member)?.member;
+            return <div className="min-w-0 p-4 sm:p-5">
+              <div className="font-bold text-slate-900">{member?.displayName || latest.senderName?.trim() || 'Unbekannter Kontakt'} <span className="font-medium text-slate-500">+{activeConversation.phone}</span></div>
+              {member && (
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
                   <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 font-bold text-indigo-700">Academy-Mitglied</span>
-                  <span className="font-medium text-slate-600">{message.member.email}</span>
-                  <span className={`rounded-full border px-2.5 py-1 font-bold ${message.member.whatsappConsentGranted ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'}`}>
-                    {message.member.whatsappConsentGranted ? 'WhatsApp-Einwilligung aktiv' : 'Keine Versand-Einwilligung'}
+                  <span className="font-medium text-slate-600">{member.email}</span>
+                  <span className={`rounded-full border px-2.5 py-1 font-bold ${member.whatsappConsentGranted ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'}`}>
+                    {member.whatsappConsentGranted ? 'WhatsApp-Einwilligung aktiv' : 'Keine Versand-Einwilligung'}
                   </span>
                 </div>
               )}
-              <p className="mt-3 whitespace-pre-wrap break-words rounded-xl bg-slate-50 p-3 text-sm leading-relaxed text-slate-800">
-                {message.text || `[${message.type}]`}
-              </p>
-              <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
-                {message.type}
+              <div className="mt-4 max-h-[32rem] space-y-3 overflow-y-auto rounded-xl bg-slate-50 p-3" aria-label="Eingehende Nachrichten">
+                {activeConversation.messages.map((message) => (
+                  <article key={message.messageId} className="rounded-xl border border-slate-200 bg-white p-3">
+                    <time className="block text-xs text-slate-500" dateTime={messageDate(message.timestamp).toISOString()}>{formatMessageDate(message.timestamp)}</time>
+                    <p className="mt-1 whitespace-pre-wrap break-words text-sm leading-relaxed text-slate-800">{message.text || `[${message.type}]`}</p>
+                  </article>
+                ))}
               </div>
               <div className="mt-4 space-y-2 rounded-xl border border-emerald-100 bg-emerald-50/40 p-3">
-                <label className="block text-xs font-bold text-slate-700" htmlFor={`reply-${message.messageId}`}>Antworten</label>
+                <label className="block text-xs font-bold text-slate-700" htmlFor={`reply-${latest.messageId}`}>Antworten</label>
                 <textarea
-                  id={`reply-${message.messageId}`}
-                  value={replyText[message.messageId] || ''}
-                  onChange={(event) => setReplyText((current) => ({ ...current, [message.messageId]: event.target.value }))}
+                  id={`reply-${latest.messageId}`}
+                  value={replyText[latest.messageId] || ''}
+                  onChange={(event) => setReplyText((current) => ({ ...current, [latest.messageId]: event.target.value }))}
                   maxLength={4096}
                   rows={3}
-                  disabled={!isReplyWindowOpen(message.timestamp)}
-                  placeholder={isReplyWindowOpen(message.timestamp) ? 'WhatsApp-Antwort eingeben …' : 'Das 24-Stunden-Antwortfenster ist abgelaufen.'}
+                  disabled={!isReplyWindowOpen(latest.timestamp)}
+                  placeholder={isReplyWindowOpen(latest.timestamp) ? 'WhatsApp-Antwort eingeben …' : 'Das 24-Stunden-Antwortfenster ist abgelaufen.'}
                   className="w-full resize-y rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none"
                 />
                 <button
                   type="button"
-                  onClick={() => void sendReply(message)}
-                  disabled={!isReplyWindowOpen(message.timestamp) || replyingTo === message.messageId || !(replyText[message.messageId]?.trim())}
+                  onClick={() => void sendReply(latest)}
+                  disabled={!isReplyWindowOpen(latest.timestamp) || replyingTo === latest.messageId || !(replyText[latest.messageId]?.trim())}
                   className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {replyingTo === message.messageId ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                  {replyingTo === latest.messageId ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                   Antwort senden
                 </button>
-                {replyResult[message.messageId] && (
-                  <p className={`text-xs font-semibold ${replyResult[message.messageId] === 'Antwort erfolgreich gesendet.' ? 'text-emerald-700' : 'text-rose-700'}`}>
-                    {replyResult[message.messageId]}
+                {replyResult[latest.messageId] && (
+                  <p className={`text-xs font-semibold ${replyResult[latest.messageId] === 'Antwort erfolgreich gesendet.' ? 'text-emerald-700' : 'text-rose-700'}`}>
+                    {replyResult[latest.messageId]}
                   </p>
                 )}
               </div>
-            </article>
-          ))}
+            </div>;
+          })()}
         </div>
       )}
     </section>
