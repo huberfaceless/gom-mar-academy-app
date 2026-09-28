@@ -26,9 +26,10 @@ import { completePinterestAuthorization, createPinterestAuthorizationUrl, delete
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
 import { extractWhatsAppDeliveryStatuses, extractWhatsAppInboundMessages, summarizeWhatsAppWebhook, verifyWhatsAppWebhookChallenge, verifyWhatsAppWebhookSignature, WhatsAppWebhookPayload } from './server/whatsappWebhook.js';
-import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages } from './server/whatsappInboxAdmin.js';
+import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages, saveWhatsAppOutboundMessage } from './server/whatsappInboxAdmin.js';
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
-import { prepareWhatsAppReply, sendWhatsAppReply } from './server/whatsappCloudApi.js';
+import { prepareWhatsAppReply, prepareWhatsAppTemplate, sendWhatsAppReply, sendWhatsAppTemplate } from './server/whatsappCloudApi.js';
+import { eligibleWhatsAppMembers, reserveWhatsAppBulkRecipient } from './server/whatsappBulkAdmin.js';
 import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
 import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
@@ -1693,7 +1694,7 @@ async function startServer() {
     try {
       const replyToMessageId = typeof req.body?.messageId === 'string' ? req.body.messageId.trim() : '';
       const messages = await listWhatsAppInboxMessages(FIREBASE_PROJECT_ID, 200);
-      const sourceMessage = messages.find(message => message.messageId === replyToMessageId);
+      const sourceMessage = messages.find(message => message.direction === 'inbound' && message.messageId === replyToMessageId);
       if (!sourceMessage) {
         res.status(404).json({ error: 'Die ursprüngliche WhatsApp-Nachricht wurde nicht gefunden.' });
         return;
@@ -1705,6 +1706,17 @@ async function startServer() {
       }
       const reply = prepareWhatsAppReply(sourceMessage.senderPhone, req.body?.text, sourceMessage.messageId);
       const result = await sendWhatsAppReply(reply);
+      let historySaved = true;
+      try {
+        await saveWhatsAppOutboundMessage(FIREBASE_PROJECT_ID, {
+          messageId: result.messageId, senderPhone: reply.recipientPhone, text: reply.text, type: 'text',
+        });
+      } catch (error: unknown) {
+        historySaved = false;
+        console.error('WhatsApp-Antwort angenommen, aber Verlauf nicht gespeichert', {
+          messageId: result.messageId, error: error instanceof Error ? error.message : 'Unbekannter Fehler',
+        });
+      }
       const actor = (req as FirebaseRequest).firebaseUser;
       console.info('WhatsApp-Antwort gesendet', {
         action: 'academy.whatsapp.reply.sent',
@@ -1713,11 +1725,74 @@ async function startServer() {
         messageId: result.messageId,
         timestamp: new Date().toISOString(),
       });
-      res.status(201).json({ success: true, messageId: result.messageId });
+      res.status(201).json({ success: true, messageId: result.messageId, historySaved });
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Die WhatsApp-Antwort konnte nicht gesendet werden.';
       const status = /ungültig|zwischen|fehlt/.test(message) ? 400 : 502;
       res.status(status).json({ error: message });
+    }
+  });
+
+  app.get('/api/admin/whatsapp/bulk/recipients', requireVerifiedMember, requireAcademyAdmin, async (_req, res) => {
+    try {
+      const recipients = await eligibleWhatsAppMembers(FIREBASE_PROJECT_ID);
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ recipients: recipients.map(({ userId, displayName, email, phoneNumber }) => ({ userId, displayName, email, phoneNumber })) });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'WhatsApp-Empfänger konnten nicht geladen werden.' });
+    }
+  });
+
+  app.post('/api/admin/whatsapp/bulk/send', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const campaignId = typeof req.body?.campaignId === 'string' ? req.body.campaignId : '';
+    const userIds: unknown = req.body?.userIds;
+    if (!/^[a-f0-9-]{36}$/.test(campaignId) || !Array.isArray(userIds)
+      || userIds.length < 1 || userIds.length > 20 || userIds.some(id => typeof id !== 'string' || !id || id.length > 128)
+      || new Set(userIds).size !== userIds.length) {
+      res.status(400).json({ error: 'Wähle höchstens 20 verschiedene Mitglieder für den Versand aus.' }); return;
+    }
+    let template: ReturnType<typeof prepareWhatsAppTemplate>;
+    try { template = prepareWhatsAppTemplate('12345678', req.body?.templateName, req.body?.languageCode); }
+    catch (error: unknown) { res.status(400).json({ error: error instanceof Error ? error.message : 'Ungültige Vorlage.' }); return; }
+    try {
+      const eligible = await eligibleWhatsAppMembers(FIREBASE_PROJECT_ID);
+      const recipients = userIds.map(id => eligible.find(person => person.userId === id));
+      if (recipients.some(person => !person)) {
+        res.status(409).json({ error: 'Mindestens ein Mitglied hat keine gültige WhatsApp-Einwilligung oder ist nicht mehr aktiv. Bitte Empfänger aktualisieren.' }); return;
+      }
+      const results: Array<{ userId: string; status: 'accepted' | 'skipped' | 'error'; error?: string; warning?: string }> = [];
+      for (const recipient of recipients) {
+        if (!recipient) continue;
+        try {
+          // Einwilligung direkt vor jedem kostenpflichtigen API-Aufruf erneut prüfen.
+          const fresh = (await eligibleWhatsAppMembers(FIREBASE_PROJECT_ID)).find(person => person.userId === recipient.userId && person.phoneDigits === recipient.phoneDigits);
+          if (!fresh) { results.push({ userId: recipient.userId, status: 'error', error: 'Einwilligung oder Mitgliedsstatus geändert.' }); break; }
+          const reserved = await reserveWhatsAppBulkRecipient(FIREBASE_PROJECT_ID, campaignId, recipient.userId);
+          if (!reserved) { results.push({ userId: recipient.userId, status: 'skipped' }); continue; }
+          const request = prepareWhatsAppTemplate(fresh.phoneDigits, template.templateName, template.languageCode);
+          const sent = await sendWhatsAppTemplate(request);
+          let historyWarning = '';
+          try {
+            await saveWhatsAppOutboundMessage(FIREBASE_PROJECT_ID, {
+              messageId: sent.messageId, senderPhone: request.recipientPhone,
+              text: `Vorlage: ${request.templateName} (${request.languageCode})`, type: 'template',
+            });
+          } catch (error: unknown) {
+            historyWarning = 'WhatsApp hat die Vorlage angenommen, der Verlauf konnte aber nicht gespeichert werden. Bitte nicht erneut senden.';
+            console.error('WhatsApp-Vorlage angenommen, aber Verlauf nicht gespeichert', { messageId: sent.messageId, error: error instanceof Error ? error.message : 'Unbekannter Fehler' });
+          }
+          results.push({ userId: recipient.userId, status: 'accepted', ...(historyWarning ? { warning: historyWarning } : {}) });
+          console.info('WhatsApp-Vorlage angenommen', { actorUid: (req as FirebaseRequest).firebaseUser?.sub, campaignId, memberId: recipient.userId, messageId: sent.messageId });
+          if (historyWarning) break;
+        } catch (error: unknown) {
+          results.push({ userId: recipient.userId, status: 'error', error: error instanceof Error ? error.message : 'WhatsApp-Versand fehlgeschlagen.' });
+          break;
+        }
+      }
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ results });
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'WhatsApp-Versand derzeit nicht verfügbar.' });
     }
   });
 
