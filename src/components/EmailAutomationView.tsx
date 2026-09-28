@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Campaign, EmailMessage } from '../types';
 import { LeadDetailModal, LeadContact } from './LeadDetailModal';
 import { sendEmail, sendTestEmail } from '../services/emailDeliveryService';
-import { deleteCrmContact, loadCrmContacts, saveCrmContacts, syncConsentedMembers } from '../services/crmContactsService';
+import { deleteCrmContact, loadCrmContacts, syncAcademyMembers, saveCrmContacts } from '../services/crmContactsService';
 import type { LanguageCode } from '../i18n/translations';
 import { 
   Mail, 
@@ -99,6 +99,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
   const [isSavingContact, setIsSavingContact] = useState(false);
   const [isSyncingMembers, setIsSyncingMembers] = useState(false);
+  const initialMemberSync = useRef<ReturnType<typeof syncAcademyMembers> | null>(null);
   const [selectedLead, setSelectedLead] = useState<LeadContact | null>(null);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -125,12 +126,21 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       return;
     }
     let cancelled = false;
-    void loadCrmContacts()
-      .then((storedContacts) => {
-        if (!cancelled) setContacts(storedContacts);
+    const syncRequest = initialMemberSync.current || syncAcademyMembers();
+    initialMemberSync.current = syncRequest;
+    void syncRequest
+      .then((result) => {
+        if (!cancelled) setContacts(result.contacts);
       })
-      .catch((error: unknown) => {
-        if (!cancelled) setContactsError(error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht geladen werden.');
+      .catch(async (error: unknown) => {
+        if (cancelled) return;
+        setContactsError(error instanceof Error ? error.message : 'Mitglieder konnten nicht abgeglichen werden.');
+        try {
+          const storedContacts = await loadCrmContacts();
+          if (!cancelled) setContacts(storedContacts);
+        } catch (loadError: unknown) {
+          if (!cancelled) setContactsError(loadError instanceof Error ? loadError.message : 'CRM-Kontakte konnten nicht geladen werden.');
+        }
       })
       .finally(() => {
         if (!cancelled) setIsLoadingContacts(false);
@@ -246,14 +256,14 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setTimeout(() => setSimulatedLeadSuccess(null), 5000);
   };
 
-  const handleSyncConsentedMembers = async () => {
-    if (!window.confirm('Mitglieder mit aktueller E-Mail-Einwilligung jetzt mit dem CRM synchronisieren? Es wird keine E-Mail versendet.')) return;
+  const handleSyncAcademyMembers = async () => {
+    if (!window.confirm('Alle aktiven Academy-Mitglieder jetzt mit dem CRM synchronisieren? Mitglieder ohne Marketing-E-Mail-Einwilligung bleiben für Werbe-E-Mails gesperrt. Es wird keine E-Mail versendet.')) return;
     setContactsError(null);
     setIsSyncingMembers(true);
     try {
-      const result = await syncConsentedMembers();
+      const result = await syncAcademyMembers();
       setContacts(result.contacts);
-      setSimulatedLeadSuccess(`${result.eligibleCount} einwilligende Mitglieder geprüft, ${result.importedCount} neu übernommen. Es wurde keine E-Mail versendet.`);
+      setSimulatedLeadSuccess(`${result.memberCount} Mitglieder abgeglichen, davon ${result.consentedCount} mit Marketing-E-Mail-Einwilligung; ${result.importedCount} neu übernommen. Es wurde keine E-Mail versendet.`);
       setTimeout(() => setSimulatedLeadSuccess(null), 5000);
     } catch (error: unknown) {
       setContactsError(error instanceof Error ? error.message : 'Mitglieder konnten nicht mit dem CRM synchronisiert werden.');
@@ -1404,13 +1414,13 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             <div className="flex flex-col gap-2 sm:flex-row">
               <button
                 type="button"
-                onClick={() => void handleSyncConsentedMembers()}
+                onClick={() => void handleSyncAcademyMembers()}
                 disabled={isSyncingMembers || isLoadingContacts}
-                id="btn-sync-consented-members"
+                id="btn-sync-academy-members"
                 className="flex w-fit items-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50 px-5 py-3 text-xs font-bold text-indigo-700 transition-colors hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
               >
                 <RefreshCw className={`h-4 w-4 ${isSyncingMembers ? 'animate-spin' : ''}`} />
-                <span>{isSyncingMembers ? 'Mitglieder werden abgeglichen…' : 'Einwilligende Mitglieder abgleichen'}</span>
+                <span>{isSyncingMembers ? 'Mitglieder werden abgeglichen…' : 'Alle Mitglieder abgleichen'}</span>
               </button>
               <button
                 onClick={() => setShowAddLeadForm(true)}

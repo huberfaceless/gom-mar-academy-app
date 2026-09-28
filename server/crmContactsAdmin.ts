@@ -113,32 +113,17 @@ export const deleteCrmContact = async (
   return saveCrmContacts(projectId, userId, remainingContacts);
 };
 
-export const syncConsentedMembersToCrm = async (
-  projectId: string,
-  adminUserId: string,
-  members: FirebaseMember[],
-): Promise<{
+type MemberWithEmailConsent = { member: FirebaseMember; consentUpdatedAt: string | null; emailConsentGranted: boolean };
+
+export const mergeAcademyMembersIntoCrm = (
+  activeMembers: MemberWithEmailConsent[],
+  existingContacts: Record<string, unknown>[],
+): {
   contacts: Record<string, unknown>[];
-  eligibleCount: number;
+  memberCount: number;
+  consentedCount: number;
   importedCount: number;
-}> => {
-  const eligibleMembers: Array<{ member: FirebaseMember; consentUpdatedAt: string | null }> = [];
-  const candidates = members.filter((member) => member.emailVerified && !member.disabled && Boolean(member.email));
-
-  for (let offset = 0; offset < candidates.length; offset += 20) {
-    const batch = candidates.slice(offset, offset + 20);
-    const checked = await Promise.all(batch.map(async (member) => ({
-      member,
-      consent: await loadEmailConsent(projectId, member.uid),
-    })));
-    for (const { member, consent } of checked) {
-      if (consent.granted && consent.email.trim().toLowerCase() === member.email.trim().toLowerCase()) {
-        eligibleMembers.push({ member, consentUpdatedAt: consent.updatedAt });
-      }
-    }
-  }
-
-  const existingContacts = await loadCrmContacts(projectId, adminUserId);
+} => {
   const existingMemberContacts = new Map(
     existingContacts
       .filter((contact) => typeof contact.id === 'string' && contact.id.startsWith('member_'))
@@ -147,18 +132,11 @@ export const syncConsentedMembersToCrm = async (
   const manualContacts = existingContacts.filter(
     (contact) => typeof contact.id !== 'string' || !contact.id.startsWith('member_'),
   );
-  const occupiedEmails = new Set(
-    manualContacts
-      .map((contact) => typeof contact.email === 'string' ? contact.email.trim().toLowerCase() : '')
-      .filter(Boolean),
-  );
   let importedCount = 0;
   const syncedMemberContacts: Record<string, unknown>[] = [];
 
-  for (const { member, consentUpdatedAt } of eligibleMembers.sort((a, b) => a.member.email.localeCompare(b.member.email))) {
+  for (const { member, consentUpdatedAt, emailConsentGranted } of activeMembers.sort((a, b) => a.member.email.localeCompare(b.member.email))) {
     const email = member.email.trim().toLowerCase();
-    if (occupiedEmails.has(email)) continue;
-    occupiedEmails.add(email);
     const id = memberContactId(member.uid);
     const existing = existingMemberContacts.get(id);
     if (!existing) importedCount += 1;
@@ -172,25 +150,47 @@ export const syncConsentedMembersToCrm = async (
       email,
       phone: typeof existing?.phone === 'string' ? existing.phone : '—',
       location: typeof existing?.location === 'string' ? existing.location : '—',
-      badge: 'Einwilligung aktiv',
+      badge: emailConsentGranted ? 'E-Mail-Einwilligung aktiv' : 'Keine E-Mail-Einwilligung',
       badgeType: 'active',
       score: typeof existing?.score === 'number' ? existing.score : 50,
-      scoreDescription: 'Bestätigtes Academy-Mitglied mit dokumentierter E-Mail-Einwilligung.',
-      tags: ['Academy-Mitglied', 'E-Mail-Einwilligung', member.tier],
-      lastInteraction: consentUpdatedAt || 'Einwilligung erteilt',
+      scoreDescription: emailConsentGranted ? 'Bestätigtes Academy-Mitglied mit dokumentierter E-Mail-Einwilligung.' : 'Bestätigtes Academy-Mitglied ohne Marketing-E-Mail-Einwilligung.',
+      tags: emailConsentGranted ? ['Academy-Mitglied', 'E-Mail-Einwilligung', member.tier] : ['Academy-Mitglied', member.tier],
+      lastInteraction: consentUpdatedAt || (typeof existing?.lastInteraction === 'string' ? existing.lastInteraction : 'Academy-Mitglied'),
       timeline: Array.isArray(existing?.timeline) ? existing.timeline : [{
-        id: `consent_${id.slice(7)}`,
+        id: `member_${id.slice(7)}`,
         type: 'note',
-        title: 'E-Mail-Einwilligung erteilt',
+        title: emailConsentGranted ? 'E-Mail-Einwilligung erteilt' : 'Academy-Mitglied übernommen',
         timestamp: consentUpdatedAt || 'Dokumentiert',
         noteDetails: {
           author: 'System',
-          text: 'Aus der dokumentierten Academy-Einwilligung synchronisiert.',
+          text: emailConsentGranted ? 'Aus der dokumentierten Academy-Einwilligung synchronisiert.' : 'Mitgliedsprofil synchronisiert; kein Marketing-E-Mail-Versand ohne Einwilligung.',
         },
       }],
     });
   }
 
-  const contacts = await saveCrmContacts(projectId, adminUserId, [...syncedMemberContacts, ...manualContacts]);
-  return { contacts, eligibleCount: eligibleMembers.length, importedCount };
+  return { contacts: [...syncedMemberContacts, ...manualContacts], memberCount: activeMembers.length, consentedCount: activeMembers.filter((item) => item.emailConsentGranted).length, importedCount };
+};
+
+export const syncAcademyMembersToCrm = async (
+  projectId: string,
+  adminUserId: string,
+  members: FirebaseMember[],
+) => {
+  const activeMembers: MemberWithEmailConsent[] = [];
+  const candidates = members.filter((member) => member.emailVerified && !member.disabled && Boolean(member.email));
+  for (let offset = 0; offset < candidates.length; offset += 20) {
+    const batch = candidates.slice(offset, offset + 20);
+    const checked = await Promise.all(batch.map(async (member) => ({
+      member,
+      consent: await loadEmailConsent(projectId, member.uid),
+    })));
+    for (const { member, consent } of checked) {
+      const emailConsentGranted = consent.granted && consent.email.trim().toLowerCase() === member.email.trim().toLowerCase();
+      activeMembers.push({ member, consentUpdatedAt: emailConsentGranted ? consent.updatedAt : null, emailConsentGranted });
+    }
+  }
+  const result = mergeAcademyMembersIntoCrm(activeMembers, await loadCrmContacts(projectId, adminUserId));
+  const contacts = await saveCrmContacts(projectId, adminUserId, result.contacts);
+  return { ...result, contacts };
 };

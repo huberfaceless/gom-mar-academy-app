@@ -126,7 +126,9 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [leadDeclined, setLeadDeclined] = useState(false);
   const [externalConsent, setExternalConsent] = useState(false);
   const [checkingConsent, setCheckingConsent] = useState(false);
-  const canSendMarketingEmail = lead.id.startsWith('member_') || externalConsent;
+  const canSendMarketingEmail = lead.id.startsWith('member_')
+    ? lead.tags.includes('E-Mail-Einwilligung')
+    : externalConsent;
 
   useEffect(() => {
     if (lead.id.startsWith('member_')) return;
@@ -706,7 +708,9 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   </div>
                   {!canSendMarketingEmail && (
                     <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
-                      {checkingConsent ? 'Einwilligung wird geprüft…' : <>Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">diesen Anmeldelink</a> anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.</>}
+                      {checkingConsent ? 'Einwilligung wird geprüft…' : lead.id.startsWith('member_')
+                        ? 'Dieses Mitglied hat keine bestätigte Marketing-E-Mail-Einwilligung. Es kann sie im eigenen Academy-Profil freiwillig anfordern und per E-Mail bestätigen. Danach Mitglieder erneut abgleichen.'
+                        : <>Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">diesen Anmeldelink</a> anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.</>}
                     </p>
                   )}
 
