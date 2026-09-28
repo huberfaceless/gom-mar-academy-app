@@ -13,6 +13,7 @@ type FirestoreDocument = {
 
 export type WhatsAppInboxMessage = WhatsAppInboundMessage & {
   receivedAt: string;
+  direction: 'inbound' | 'outbound';
 };
 
 const googleAuth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
@@ -49,7 +50,29 @@ const storedMessage = (document: FirestoreDocument): WhatsAppInboxMessage | null
     type,
     text,
     receivedAt,
+    direction: fields?.direction?.stringValue === 'outbound' ? 'outbound' : 'inbound',
   };
+};
+
+export const saveWhatsAppOutboundMessage = async (
+  projectId: string,
+  message: { messageId: string; senderPhone: string; text: string; type: 'text' | 'template' },
+): Promise<void> => {
+  const now = new Date();
+  const response = await fetch(`${documentsUrl(projectId)}/${documentId(message.messageId)}`, {
+    method: 'PATCH',
+    headers: { Authorization: `Bearer ${await getAccessToken()}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fields: {
+      messageId: { stringValue: message.messageId },
+      senderPhone: { stringValue: message.senderPhone },
+      timestamp: { stringValue: String(Math.floor(now.getTime() / 1000)) },
+      type: { stringValue: message.type },
+      text: { stringValue: message.text },
+      receivedAt: { timestampValue: now.toISOString() },
+      direction: { stringValue: 'outbound' },
+    } }),
+  });
+  if (!response.ok) throw new Error('WhatsApp hat die Nachricht angenommen, aber der Verlauf konnte nicht gespeichert werden. Bitte vor einem weiteren Versand prüfen.');
 };
 
 export const saveWhatsAppInboundMessages = async (
@@ -118,6 +141,6 @@ export const listWhatsAppInboxMessages = async (
   } while (pageToken && messages.length < 1_000);
 
   return messages
-    .sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
+    .sort((a, b) => Date.parse(b.receivedAt) - Date.parse(a.receivedAt))
     .slice(0, limit);
 };
