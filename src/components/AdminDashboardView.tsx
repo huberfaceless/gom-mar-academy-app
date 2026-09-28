@@ -32,6 +32,8 @@ import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { STANDARD_LESSON_IDS } from '../data/academyMetadata';
 import { youtubeService } from '../services/youtubeService';
 import { WhatsAppInboxView } from './WhatsAppInboxView';
+import { loadCrmContacts } from '../services/crmContactsService';
+import type { LeadContact } from './LeadDetailModal';
 
 type FirebaseMember = {
   uid: string;
@@ -94,6 +96,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [tierFilter, setTierFilter] = useState<string>('all');
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
   const [firebaseMembers, setFirebaseMembers] = useState<FirebaseMember[]>([]);
+  const [crmContacts, setCrmContacts] = useState<LeadContact[]>([]);
+  const [crmContactsLoading, setCrmContactsLoading] = useState(true);
+  const [crmContactsError, setCrmContactsError] = useState('');
   const [membersLoading, setMembersLoading] = useState(false);
   const [membersLoaded, setMembersLoaded] = useState(false);
   const [membersError, setMembersError] = useState('');
@@ -242,6 +247,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   useEffect(() => {
     void loadFirebaseMembers();
   }, [loadFirebaseMembers]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void loadCrmContacts()
+      .then((contacts) => { if (!cancelled) setCrmContacts(contacts); })
+      .catch((error: unknown) => {
+        if (!cancelled) setCrmContactsError(error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht geladen werden.');
+      })
+      .finally(() => { if (!cancelled) setCrmContactsLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
 
   const handleTierChange = async (member: FirebaseMember, tier: AcademyTier) => {
     if (tier === member.tier || member.role === 'admin') return;
@@ -420,6 +436,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
   // Firebase Authentication is the sole source of truth for the member directory.
   const totalStudents = firebaseMembers.length;
+  const otherCrmContacts = crmContacts.filter((contact) => !contact.id.startsWith('member_'));
+  const totalContacts = totalStudents + otherCrmContacts.length;
   const proStudents = firebaseMembers.filter((member) => member.tier === 'PRO').length;
   const premiumStudents = firebaseMembers.filter((member) => member.tier === 'PREMIUM').length;
   const freeStudents = firebaseMembers.filter((member) => member.tier === 'FREE').length;
@@ -739,6 +757,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       {/* ================= TAB 1: KURSTEILNEHMER ÜBERSICHT ================= */}
       {activeTab === 'students' && (
         <div className="space-y-6 animate-fadeIn">
+          <div className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm font-bold text-indigo-950">
+            Alle Kontakte: {membersLoaded && !crmContactsLoading && !crmContactsError ? totalContacts : '…'}
+            <span className="ml-2 font-medium text-indigo-800">({totalStudents} Academy-Mitglieder, {otherCrmContacts.length} weitere CRM-Kontakte)</span>
+          </div>
           <section className="overflow-hidden rounded-2xl border border-indigo-200 bg-white shadow-xs" aria-labelledby="firebase-members-heading">
             <div className="flex flex-col gap-3 border-b border-indigo-100 bg-indigo-50/70 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
               <div>
@@ -956,6 +978,25 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </form>
               </div>
             )}
+          </section>
+
+          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs" aria-labelledby="other-contacts-heading">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 p-4 sm:p-5">
+              <div>
+                <h2 id="other-contacts-heading" className="text-sm font-black text-slate-900">Weitere CRM-Kontakte ({otherCrmContacts.length})</h2>
+                <p className="mt-1 text-xs text-slate-600">Manuell angelegte Kontakte ohne Academy-Konto. Sie besitzen keinen Mitgliedszugang.</p>
+              </div>
+              <button type="button" onClick={() => onNavigate('email')} className="rounded-xl border border-indigo-200 bg-white px-4 py-2 text-xs font-bold text-indigo-700 hover:bg-indigo-50">CRM öffnen</button>
+            </div>
+            {crmContactsError ? <p role="alert" className="p-4 text-xs font-semibold text-rose-700">{crmContactsError}</p>
+              : crmContactsLoading ? <p className="p-4 text-xs text-slate-600">CRM-Kontakte werden geladen …</p>
+                : otherCrmContacts.length === 0 ? <p className="p-4 text-xs text-slate-600">Keine weiteren CRM-Kontakte vorhanden.</p>
+                  : <ul className="divide-y divide-slate-100">{otherCrmContacts.map((contact) => (
+                    <li key={contact.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-xs sm:px-5">
+                      <span className="font-bold text-slate-900">{contact.name}</span>
+                      <span className="text-slate-600">{contact.email}</span>
+                    </li>
+                  ))}</ul>}
           </section>
 
           {/* Filters & Actions Bar */}

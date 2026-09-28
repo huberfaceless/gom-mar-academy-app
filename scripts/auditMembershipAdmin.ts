@@ -55,6 +55,10 @@ assert.match(admin, /Kündigung vorgemerkt bis/, 'Die Mitgliederverwaltung muss 
 assert.doesNotMatch(admin, /students: StudentRecord\[\]/, 'Die Admin-Mitgliederliste darf keine lokale Browserliste mehr erhalten.');
 assert.doesNotMatch(admin, /membersLoaded \? firebaseMembers : students/, 'Mitgliederzahlen dürfen nicht auf veraltete lokale Daten zurückfallen.');
 assert.match(admin, /const totalStudents = firebaseMembers\.length/, 'Firebase muss die einzige Quelle der Mitgliederzahlen sein.');
+assert.match(admin, /loadCrmContacts\(\)/, 'Zusätzliche CRM-Kontakte müssen aus dem geschützten CRM geladen werden.');
+assert.match(admin, /crmContacts\.filter\(\(contact\) => !contact\.id\.startsWith\('member_'\)\)/, 'Bereits als Mitglieder angezeigte CRM-Einträge dürfen nicht doppelt erscheinen.');
+assert.match(admin, /const totalContacts = totalStudents \+ otherCrmContacts\.length/, 'Die Adminzentrale muss Mitglieder und weitere Kontakte getrennt zählen.');
+assert.match(admin, /Manuell angelegte Kontakte ohne Academy-Konto\. Sie besitzen keinen Mitgliedszugang\./, 'CRM-Kontakte dürfen nicht als Firebase-Mitglieder dargestellt werden.');
 assert.match(admin, /window\.prompt\(`Zur Bestätigung bitte exakt eingeben:/, 'Die dauerhafte Löschung verlangt eine zweite exakte Bestätigung.');
 
 assert.equal(isMembershipResolvedForUser('admin-uid', 'admin-uid'), true);
