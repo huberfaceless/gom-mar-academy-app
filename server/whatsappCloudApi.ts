@@ -63,7 +63,7 @@ export const prepareWhatsAppTemplate = (phone: unknown, name: unknown, language:
   const languageCode = typeof language === 'string' ? language.trim() : '';
   if (!/^\d{8,15}$/.test(recipientPhone)) throw new Error('Die Empfängernummer ist ungültig.');
   if (!/^[a-z0-9_]{1,512}$/.test(templateName)) throw new Error('Der Vorlagenname ist ungültig.');
-  if (!/^(de|de_DE|en|en_US|en_GB|pl|pl_PL)$/.test(languageCode)) throw new Error('Die Vorlagensprache ist ungültig.');
+  if (!/^(de|de_AT|de_DE|en|en_US|en_GB|pl|pl_PL)$/.test(languageCode)) throw new Error('Die Vorlagensprache ist ungültig.');
   return { recipientPhone, templateName, languageCode };
 };
 

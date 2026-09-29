@@ -300,7 +300,7 @@ export const WhatsAppInboxView: React.FC = () => {
         </label>
         <label className="text-xs font-bold text-slate-700">Sprache der Vorlage
           <select value={languageCode} onChange={event => { setLanguageCode(event.target.value); setCampaignId(crypto.randomUUID()); }} className="mt-1 block rounded-lg border border-slate-300 p-2 text-sm">
-            {['de', 'de_DE', 'en', 'en_US', 'en_GB', 'pl', 'pl_PL'].map(code => <option key={code} value={code}>{code}</option>)}
+            {['de', 'de_AT', 'de_DE', 'en', 'en_US', 'en_GB', 'pl', 'pl_PL'].map(code => <option key={code} value={code}>{code}</option>)}
           </select>
         </label>
         <button type="button" onClick={() => void sendBulk()} disabled={bulkSending || selectedRecipients.length === 0 || !/^[a-z0-9_]+$/.test(templateName.trim())}

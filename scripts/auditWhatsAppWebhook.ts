@@ -25,6 +25,9 @@ assert.throws(() => prepareWhatsAppReply('+436601234567', '', 'wamid.source'), /
 assert.deepEqual(prepareWhatsAppTemplate('+43 660 1234567', 'academy_update', 'de'), {
   recipientPhone: '436601234567', templateName: 'academy_update', languageCode: 'de',
 });
+assert.deepEqual(prepareWhatsAppTemplate('+43 660 1234567', 'academy_news_de', 'de_AT'), {
+  recipientPhone: '436601234567', templateName: 'academy_news_de', languageCode: 'de_AT',
+});
 assert.throws(() => prepareWhatsAppTemplate('+43 660 1234567', 'academy update', 'de'), /Vorlagenname/);
 assert.throws(() => prepareWhatsAppTemplate('+43 660 1234567', 'academy_update', 'xx'), /Vorlagensprache/);
 
