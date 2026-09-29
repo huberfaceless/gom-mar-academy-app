@@ -32,6 +32,7 @@ import { prepareWhatsAppReply, prepareWhatsAppTemplate, sendWhatsAppReply, sendW
 import { eligibleWhatsAppMembers, reserveWhatsAppBulkRecipient } from './server/whatsappBulkAdmin.js';
 import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
 import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
+import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './server/mentorUsageAdmin.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
 import { resolveAcademyContentAccess, visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -2070,6 +2071,7 @@ async function startServer() {
   // 🤖 Frag GOM-MAR AI Mentor Endpoint
   app.post('/api/ask-gommar', requireVerifiedMember, async (req, res) => {
     try {
+      validateMentorRequest(req.body);
       const {
         prompt,
         currentStageId,
@@ -2086,6 +2088,10 @@ async function startServer() {
         res.status(400).json({ error: 'Prompt ist erforderlich.' });
         return;
       }
+
+      const member = (req as FirebaseRequest).firebaseUser!;
+      const tier: AcademyTier = firebaseTierRank(member) === 2 ? 'PREMIUM' : firebaseTierRank(member) === 1 ? 'PRO' : 'FREE';
+      await reserveMentorUsage(FIREBASE_PROJECT_ID, member.sub, tier);
 
       const outputLanguage = language === 'en' ? 'Englisch' : language === 'pl' ? 'Polnisch' : 'Deutsch';
       const systemInstruction = `Du bist "Frag GOM-MAR", der persönliche KI-Mentor der GOM-MAR Academy.
@@ -2127,6 +2133,7 @@ Verhaltensregeln:
         config: {
           systemInstruction: systemInstruction,
           temperature: 0.7,
+          maxOutputTokens: 2048,
         },
       });
 
@@ -2178,9 +2185,27 @@ Verhaltensregeln:
         suggestedAction,
       });
     } catch (err: unknown) {
-      console.error('Error in /api/ask-gommar:', err);
-      const message = err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten.';
-      res.status(500).json({ error: message });
+      const language = req.body?.language === 'en' ? 'en' : req.body?.language === 'pl' ? 'pl' : 'de';
+      if (err instanceof MentorLimitError) {
+        const daily = err.code === 'MENTOR_DAILY_LIMIT';
+        const copy = {
+          de: daily ? 'Dein tägliches KI-Mentor-Limit ist erreicht. Neue Anfragen sind ab 00:00 UTC möglich.' : 'Bitte warte eine Minute, bevor du erneut fragst.',
+          en: daily ? 'Your daily AI mentor limit has been reached. Requests reset at 00:00 UTC.' : 'Please wait a minute before asking again.',
+          pl: daily ? 'Dzienny limit mentora AI został osiągnięty. Limit odnawia się o 00:00 UTC.' : 'Poczekaj minutę przed kolejnym pytaniem.',
+        };
+        res.setHeader('Retry-After', String(err.retryAfter));
+        res.status(429).json({ code: err.code, error: copy[language] });
+        return;
+      }
+      const invalid = err instanceof Error && err.message === 'INVALID_MENTOR_REQUEST';
+      const unavailable = err instanceof Error && err.message === 'MENTOR_USAGE_UNAVAILABLE';
+      console.error('KI-Mentor-Anfrage fehlgeschlagen', { category: invalid ? 'invalid-request' : unavailable ? 'usage-unavailable' : 'provider-error' });
+      const copy = {
+        de: invalid ? 'Die Frage oder der Chatverlauf ist ungültig oder zu lang.' : 'Der KI-Mentor ist vorübergehend nicht erreichbar. Bitte versuche es später erneut.',
+        en: invalid ? 'The question or conversation is invalid or too long.' : 'The AI mentor is temporarily unavailable. Please try again later.',
+        pl: invalid ? 'Pytanie lub historia rozmowy jest nieprawidłowa lub zbyt długa.' : 'Mentor AI jest chwilowo niedostępny. Spróbuj później.',
+      };
+      res.status(invalid ? 400 : 503).json({ error: copy[language] });
     }
   });
 
