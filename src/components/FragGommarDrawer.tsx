@@ -392,12 +392,15 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
           history: messages
             .filter((message) => message.id !== retryMessageId)
             .slice(-6)
-            .map((message) => ({ sender: message.sender, text: message.text })),
+            .map((message) => ({ sender: message.sender, text: message.text.slice(0, 4000) })),
         }),
       });
 
       if (!response.ok) {
-        if (response.status === 429) throw new Error('RATE_LIMIT');
+        if (response.status === 429) {
+          const limited = await response.json().catch(() => ({}));
+          throw new Error(limited.code === 'MENTOR_DAILY_LIMIT' ? 'DAILY_LIMIT' : 'RATE_LIMIT');
+        }
         if (response.status >= 500) throw new Error('SERVER_ERROR');
         throw new Error('REQUEST_FAILED');
       }
@@ -435,6 +438,8 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
       const errorCode = err instanceof Error ? err.message : '';
       const errorText = err instanceof DOMException && err.name === 'AbortError'
         ? copy.timeout
+        : errorCode === 'DAILY_LIMIT'
+          ? ({ de: 'Dein tägliches KI-Mentor-Limit ist erreicht. Neue Anfragen sind ab 00:00 UTC möglich.', en: 'Your daily AI mentor limit has been reached. Requests reset at 00:00 UTC.', pl: 'Dzienny limit mentora AI został osiągnięty. Limit odnawia się o 00:00 UTC.' })[language]
         : errorCode === 'RATE_LIMIT'
           ? copy.rateLimit
           : errorCode === 'SERVER_ERROR'

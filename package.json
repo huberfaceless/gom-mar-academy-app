@@ -22,6 +22,7 @@
     "audit:public-i18n": "tsx scripts/auditPublicLocalization.ts",
     "audit:youtube-oauth": "tsx scripts/auditYouTubeOAuth.ts",
     "audit:instagram": "tsx scripts/auditInstagramAutomation.ts",
+    "audit:mentor": "node --import tsx scripts/auditMentorUsage.ts",
     "audit:whatsapp": "tsx scripts/auditWhatsAppWebhook.ts",
     "audit:stripe": "tsx scripts/auditStripeManagedPayments.ts",
     "audit:content-projects": "tsx scripts/auditContentEngineProjects.ts",

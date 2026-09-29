@@ -79,6 +79,9 @@ jobs:
       - name: Content-Projekte pruefen
         run: bun run audit:content-projects
 
+      - name: KI-Mentor-Nutzungsgrenzen pruefen
+        run: bun run audit:mentor
+
       - name: Produktions-Build erstellen
         run: bun run build
 
