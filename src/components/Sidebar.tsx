@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, Bot, ChevronRight, Globe, ShieldCheck, Layers, Lock, type LucideIcon } from 'lucide-react';
+import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, MessageCircle, ChevronRight, Globe, ShieldCheck, Layers, Lock, type LucideIcon } from 'lucide-react';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import type { AcademyTier, UserRole } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -89,6 +89,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
 
+        {/* 🤖 Quick Mentor Assistant Banner */}
+        <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5 shadow-sm">
+          <div className="flex items-center gap-2 text-indigo-600 font-extrabold text-xs">
+            <MessageCircle className="w-4 h-4 text-indigo-600" />
+            <span>{t('mentor.title')}</span>
+          </div>
+          <p className="text-[11px] text-slate-500 leading-snug">
+            {t('mentor.description')}
+          </p>
+          <button
+            type="button"
+            onClick={onOpenFragGommar}
+            className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-600/20 transition-all cursor-pointer"
+          >
+            <span>{t('mentor.ask')}</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
         {/* Navigation Menu */}
         <div>
           <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-3 mb-2">
@@ -135,24 +154,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               );
             })}
           </nav>
-        </div>
-
-        {/* 🤖 Quick Mentor Assistant Banner */}
-        <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5 shadow-sm">
-          <div className="flex items-center gap-2 text-indigo-600 font-extrabold text-xs">
-            <Bot className="w-4 h-4 text-indigo-600" />
-            <span>{t('mentor.title')}</span>
-          </div>
-          <p className="text-[11px] text-slate-500 leading-snug">
-            {t('mentor.description')}
-          </p>
-          <button
-            onClick={onOpenFragGommar}
-            className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-600/20 transition-all cursor-pointer"
-          >
-            <span>{t('mentor.ask')}</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
 
