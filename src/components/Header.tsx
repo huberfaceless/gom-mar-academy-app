@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogIn, LogOut, ShieldCheck, UserCheck, AlertCircle, UserRound } from 'lucide-react';
+import { LogIn, LogOut, ShieldCheck, UserCheck, AlertCircle, UserRound, MessageCircle } from 'lucide-react';
 import { UserProfile } from '../types';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import { useAuth } from '../context/AuthContext';
@@ -18,6 +18,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ 
   user, 
   onNavigate, 
+  onOpenFragGommar,
   activeView
 }) => {
   const { user: firebaseUser, authState, logout } = useAuth();
@@ -107,7 +108,20 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* RIGHT: Actions (Admin / Auth) */}
-          <div className="w-full sm:w-auto min-w-0 flex items-center justify-center sm:justify-end gap-2">
+          <div className="w-full sm:w-auto min-w-0 flex flex-wrap items-center justify-center sm:justify-end gap-2">
+            {isAuthenticated && isEmailVerified && onOpenFragGommar && (
+              <button
+                type="button"
+                onClick={() => onOpenFragGommar()}
+                aria-label={t('mentor.ask')}
+                title={t('mentor.description')}
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-indigo-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{t('mentor.ask')}</span>
+              </button>
+            )}
+
             {isAdmin && (
               <button
                 onClick={() => onNavigate('admin')}
