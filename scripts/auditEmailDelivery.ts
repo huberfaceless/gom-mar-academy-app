@@ -98,7 +98,7 @@ assert.doesNotMatch(
   /Willkommens-Mail \(Mail 1\) wurde automatisch versendet/,
   'Der Test-Lead darf keinen automatischen E-Mail-Erfolg behaupten.',
 );
-assert.match(automation, /Test an mich senden/, 'Der E-Mail-Entwurf muss einen eindeutigen Testversand anbieten.');
+assert.match(automation, /Vorschau an mich senden/, 'Der E-Mail-Entwurf muss einen eindeutigen Testversand anbieten.');
 assert.match(automation, /ausschließlich an deine eigene Anmeldeadresse/, 'Der Testversand muss vorab eindeutig bestätigt werden.');
 const adminDashboard = readFileSync('src/components/AdminDashboardView.tsx', 'utf8');
 assert.match(adminDashboard, /E-Mail schreiben/, 'Der Adminbereich muss den Mitglieder-Einzelversand anbieten.');

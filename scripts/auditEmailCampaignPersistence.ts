@@ -28,7 +28,7 @@ assert.match(view, /handleCreateEmail/, 'Neue E-Mail-Entwürfe müssen direkt in
 assert.match(view, /status: 'draft'/, 'Neue E-Mails müssen sicher als Entwurf angelegt werden.');
 assert.match(view, /nicht automatisch versendet/, 'Der Entwurfsstatus muss in der Oberfläche eindeutig erklärt werden.');
 assert.match(view, /handleDeleteCampaign/, 'Kampagnenentwürfe müssen gelöscht werden können.');
-assert.match(view, /activeCampaign\.status !== 'draft'/, 'Aktive oder pausierte Kampagnen dürfen nicht versehentlich gelöscht werden.');
+assert.match(view, /activeCampaign\.status === 'active'/, 'Aktive Kampagnen müssen vor dem Löschen pausiert werden.');
 assert.match(view, /handleDeleteEmail/, 'Einzelne E-Mail-Entwürfe müssen gelöscht werden können.');
 assert.match(view, /selectedEmail\.status !== 'draft'/, 'Bereits geplante oder versendete E-Mails dürfen nicht gelöscht werden.');
 assert.match(view, /window\.confirm\(`Kampagne/, 'Vor dem Löschen einer Kampagne muss eine Bestätigung verlangt werden.');
@@ -137,3 +137,15 @@ assert.match(delivery, /event: 'academy\.email\.campaign\.recipient\.skipped'/);
 assert.match(delivery, /logSkippedRecipient\(owner\.uid, campaign\.id, email\.id, member\.uid, consentSkipReason\)/);
 assert.match(delivery, /logSkippedRecipient\(owner\.uid, campaign\.id, email\.id, member\.uid, 'marketing-suppressed'\)/);
 console.log('Abmelde-Protokoll geprüft: fehlende Einwilligung, abweichende Adresse und Marketing-Versandsperre.');
+
+assert.match(server, /app\.get\('\/api\/email\/campaigns\/report', requireVerifiedMember, requireAcademyAdmin/);
+assert.match(server, /existing\.campaigns\.some\(previous => previous\.status === 'active'/);
+const reportSource = readFileSync('server/emailCampaignReportAdmin.ts', 'utf8');
+assert.match(reportSource, /fieldPath: 'ownerUid'/);
+assert.match(reportSource, /stringValue: ownerUid/);
+assert.match(reportSource, /documents.length > 1000/);
+assert.match(view, /Kampagnen insgesamt/);
+assert.match(view, /Kontakte im CRM/);
+assert.match(view, /Versandprotokoll der ausgewählten Kampagne/);
+assert.match(view, /Übergabe an SendGrid bestätigt keine Zustellung/);
+console.log('Kampagnenübersicht geprüft: echte Versanddaten, geschützter Bericht und Pausieren vor Löschen.');
