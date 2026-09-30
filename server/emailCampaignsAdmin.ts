@@ -31,6 +31,18 @@ const isBoundedString = (value: unknown, maximumLength: number, allowEmpty = fal
 const isOptionalCount = (value: unknown): boolean =>
   value === undefined || (Number.isInteger(value) && Number(value) >= 0 && Number(value) <= 1_000_000_000);
 
+export const campaignDeliveryMode = (campaign: { deliveryMode?: unknown }): 'self-test' | 'members' => {
+  if (campaign.deliveryMode === undefined || campaign.deliveryMode === 'members') return 'members';
+  if (campaign.deliveryMode === 'self-test') return 'self-test';
+  throw new Error('Der Kampagnen-Versandmodus ist ungültig.');
+};
+
+export const assertCampaignDeliveryModeUnchanged = (previous: Record<string, unknown> | undefined, next: Record<string, unknown>) => {
+  if (previous?.automationStartedAt && campaignDeliveryMode(previous) !== campaignDeliveryMode(next)) {
+    throw new Error('Der Versandmodus einer gestarteten Kampagne darf nicht geändert werden. Lege eine neue Kampagne an.');
+  }
+};
+
 export const validateEmailCampaigns = (value: unknown): Record<string, unknown>[] => {
   if (!Array.isArray(value) || value.length > 100) {
     throw new Error('Die E-Mail-Kampagnenliste ist ungültig oder zu groß.');
@@ -40,6 +52,7 @@ export const validateEmailCampaigns = (value: unknown): Record<string, unknown>[
   if (campaigns.length !== value.length) throw new Error('Eine E-Mail-Kampagne ist ungültig.');
 
   for (const campaign of campaigns) {
+    campaignDeliveryMode(campaign);
     if (typeof campaign.id !== 'string' || !ID_PATTERN.test(campaign.id)) throw new Error('Eine Kampagnen-ID ist ungültig.');
     if (!isBoundedString(campaign.title, 200)) throw new Error('Ein Kampagnentitel ist ungültig.');
     if (!isBoundedString(campaign.targetAudience, 1_000, true)) throw new Error('Eine Kampagnen-Zielgruppe ist ungültig.');

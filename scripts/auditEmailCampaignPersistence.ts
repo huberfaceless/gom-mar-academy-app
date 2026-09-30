@@ -42,7 +42,7 @@ assert.match(view, /handleChangeCampaignStatus/, 'Kampagnen müssen kontrolliert
 assert.match(view, /alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung/, 'Die automatische Empfängergruppe muss vor Aktivierung klar benannt werden.');
 assert.match(view, /automationStartedAt: !shouldPause && isAdmin/, 'Nur eine ausdrücklich bestätigte Admin-Freigabe darf den Versand starten.');
 assert.doesNotMatch(view, /handleChangeCampaignStatus[\s\S]{0,2500}sendEmail\(/, 'Die Statusänderung darf keine Empfänger-E-Mail versenden.');
-assert.match(view, /campaignActionError[\s\S]{0,400}Eine neue Freigabe startet den automatischen Versand/, 'Der tatsächliche Versandbeginn muss erklärt werden.');
+assert.match(view, /Eine neue Freigabe startet den automatischen Versand/, 'Der tatsächliche Versandbeginn muss erklärt werden.');
 assert.match(server, /Automatischer Kampagnenversand ist nur für Administratoren verfügbar/, 'Nicht-Admins dürfen keine Kampagne automatisch versenden.');
 
 const validCampaign = {
@@ -108,3 +108,23 @@ assert.throws(
 );
 
 console.log('E-Mail-Kampagnen geprüft: benutzergetrennt, validiert und zentral in Firestore gespeichert.');
+
+const { campaignAllowsRecipient } = await import('../server/emailCampaignDeliveryAdmin.js');
+const { campaignDeliveryMode, assertCampaignDeliveryModeUnchanged } = await import('../server/emailCampaignsAdmin.js');
+assert.equal(campaignAllowsRecipient({ deliveryMode: 'self-test' }, 'admin-one', 'admin-one'), true);
+assert.equal(campaignAllowsRecipient({ deliveryMode: 'self-test' }, 'admin-one', 'member-two'), false);
+assert.equal(campaignAllowsRecipient({ deliveryMode: 'self-test' }, 'admin-one', 'admin-two'), false);
+assert.equal(campaignAllowsRecipient({ deliveryMode: 'invalid' }, 'admin-one', 'admin-one'), false);
+assert.equal(campaignAllowsRecipient({ deliveryMode: 'members' }, 'admin-one', 'member-two'), true);
+assert.equal(campaignDeliveryMode({}), 'members', 'Bestehende Kampagnen behalten ihren bisherigen Versandmodus.');
+validateEmailCampaigns([{ ...activeCampaign, deliveryMode: 'self-test' }]);
+assert.throws(() => validateEmailCampaigns([{ ...activeCampaign, deliveryMode: 'invalid' }]), /Versandmodus/);
+const startedTest = { ...activeCampaign, deliveryMode: 'self-test' };
+assert.throws(() => assertCampaignDeliveryModeUnchanged(startedTest, { ...startedTest, deliveryMode: 'members' }), /nicht geändert/);
+assert.throws(() => assertCampaignDeliveryModeUnchanged(startedTest, { ...activeCampaign }), /nicht geändert/);
+assertCampaignDeliveryModeUnchanged(startedTest, { ...startedTest, status: 'paused' });
+assertCampaignDeliveryModeUnchanged({ ...validCampaign, deliveryMode: 'self-test' }, { ...validCampaign, deliveryMode: 'members' });
+assert.match(delivery, /campaignAllowsRecipient\(campaign, owner\.uid, member\.uid\)/);
+assert.match(delivery, /campaignAllowsRecipient\(active, owner\.uid, member\.uid\)/);
+assert.match(server, /assertCampaignDeliveryModeUnchanged\(previous, campaign\)/);
+console.log('Automatik-Testmodus geprüft: nur eigenes Konto, erneute Empfängerprüfung, gesperrter Moduswechsel und unveränderte Alt-Kampagnen.');

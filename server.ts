@@ -16,7 +16,7 @@ import {
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
-import { loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
+import { assertCampaignDeliveryModeUnchanged, loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
@@ -1082,6 +1082,11 @@ async function startServer() {
         }
         for (const campaign of incoming) {
           const previous = existing.campaigns.find((item) => item.id === campaign.id);
+          try { assertCampaignDeliveryModeUnchanged(previous, campaign); }
+          catch (error) {
+            res.status(409).json({ error: error instanceof Error ? error.message : 'Der Versandmodus darf nicht geändert werden.' });
+            return;
+          }
           if (previous?.automationStartedAt && previous.automationStartedAt !== campaign?.automationStartedAt) {
             res.status(409).json({ error: 'Der Startzeitpunkt einer Kampagne darf nicht geändert werden.' });
             return;
