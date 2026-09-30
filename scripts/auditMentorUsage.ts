@@ -46,10 +46,45 @@ await assert.rejects(reserve('separate-member', 'FREE'), /MENTOR_USAGE_UNAVAILAB
 const server = readFileSync('server.ts', 'utf8');
 const mentor = server.slice(server.indexOf("app.post('/api/ask-gommar'"), server.indexOf('// 🛠️ GOM-MAR Toolbox'));
 assert.match(mentor, /requireVerifiedMember/);
-assert.match(mentor, /firebaseTierRank\(member\)/);
+assert.match(mentor, /resolveAcademyContentAccess\(currentMember, member, ACADEMY_ADMIN_EMAILS\)/);
 assert.ok(mentor.indexOf('validateMentorRequest(req.body)') < mentor.indexOf('reserveMentorUsage('));
 assert.ok(mentor.indexOf('await reserveMentorUsage(') < mentor.indexOf('ai.models.generateContent('));
 assert.match(mentor, /maxOutputTokens: 2048/);
 assert.match(mentor, /res\.status\(429\)/);
 assert.doesNotMatch(mentor, /res\.status\(500\)\.json\(\{ error: message/);
 console.log('KI-Mentor-Limits: Validierung, Parallelzugriff, Tageswechsel, Minutenlimit und Speicherausfall geprüft.');
+
+// Lesson content must be loaded from server data and checked against current membership.
+const { resolveMentorLessonContext, MentorLessonError } = await import('../server/mentorLessonContext.js');
+const { ACADEMY_STAGES } = await import('../server/academyData.js');
+const free = { tier: 'FREE' as const, isAdmin: false };
+const pro = { tier: 'PRO' as const, isAdmin: false };
+const firstStage = ACADEMY_STAGES[0];
+const firstLesson = firstStage.lessons[0];
+const context = resolveMentorLessonContext(ACADEMY_STAGES, [], free, firstStage.id, firstLesson.id, 'de')!;
+assert.equal(context.lessonTitle, firstLesson.title);
+assert.match(context.knowledge, /"task":/);
+assert.equal(JSON.parse(context.knowledge).task, firstLesson.actionTask.instruction.slice(0, 1200));
+assert.ok(context.knowledge.length <= 16000);
+assert.equal(resolveMentorLessonContext(ACADEMY_STAGES, [], free, undefined, undefined, 'de'), null);
+assert.throws(() => resolveMentorLessonContext(ACADEMY_STAGES, [], free, '1', firstLesson.id, 'de'), error => error instanceof MentorLessonError && error.status === 400);
+assert.throws(() => resolveMentorLessonContext(ACADEMY_STAGES, [], free, 1, '3.1', 'de'), error => error instanceof MentorLessonError && error.status === 403);
+const third = ACADEMY_STAGES.find(stage => stage.id === 3)!;
+assert.throws(() => resolveMentorLessonContext(ACADEMY_STAGES, [], free, 3, third.lessons[0].id, 'de'), error => error instanceof MentorLessonError && error.status === 403);
+assert.ok(resolveMentorLessonContext(ACADEMY_STAGES, [], pro, 3, third.lessons[0].id, 'de'));
+const published = { ...structuredClone(firstLesson), title: 'Geprüfter neuer Titel', publicationStatus: 'published' as const };
+published.actionTask.instruction = 'Diese neue Aufgabe stammt aus der zentralen Verwaltung.';
+const override = { stageId: firstStage.id, lessonId: firstLesson.id, deleted: false, lesson: published };
+assert.equal(resolveMentorLessonContext(ACADEMY_STAGES, [override], free, firstStage.id, firstLesson.id, 'de')!.lessonTitle, published.title);
+assert.equal(JSON.parse(resolveMentorLessonContext(ACADEMY_STAGES, [override], free, firstStage.id, firstLesson.id, 'de')!.knowledge).task, published.actionTask.instruction);
+for (const hidden of [{ ...override, deleted: true }, { ...override, lesson: { ...published, publicationStatus: 'draft' as const } }]) {
+  assert.throws(() => resolveMentorLessonContext(ACADEMY_STAGES, [hidden], pro, firstStage.id, firstLesson.id, 'de'), error => error instanceof MentorLessonError && error.status === 403);
+}
+for (const language of ['en', 'pl'] as const) {
+  const translated = resolveMentorLessonContext(ACADEMY_STAGES, [], free, firstStage.id, firstLesson.id, language)!;
+  assert.notEqual(translated.lessonTitle, context.lessonTitle);
+  assert.ok(JSON.parse(translated.knowledge).task.length > 0);
+}
+assert.ok(mentor.indexOf('resolveMentorLessonContext(') < mentor.indexOf('await reserveMentorUsage('));
+assert.doesNotMatch(mentor, /currentLessonTitle \|\|/);
+console.log('Lektionswissen: aktuelle Inhalte, Sprachen, FREE/PRO, Entwürfe und Löschungen geprüft.');

@@ -183,6 +183,8 @@ export default function App() {
   const [isFragGommarOpen, setIsFragGommarOpen] = useState<boolean>(false);
   const [fragGommarInitialPrompt, setFragGommarInitialPrompt] = useState<string | undefined>(undefined);
 
+  const [mentorLessonContext, setMentorLessonContext] = useState<{ stageId: number; lessonId: string } | undefined>();
+
   // Celebration Modal State
   const [celebrationModal, setCelebrationModal] = useState<{
     isOpen: boolean;
@@ -471,7 +473,8 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleOpenFragGommar = (prompt?: string) => {
+  const handleOpenFragGommar = (prompt?: string, context?: { stageId: number; lessonId: string }) => {
+    setMentorLessonContext(context);
     setFragGommarInitialPrompt(prompt);
     setIsFragGommarOpen(true);
   };
@@ -482,8 +485,8 @@ export default function App() {
   };
 
   // Current active stage & lesson titles for Frag GOM-MAR context
-  const currentStageObj = stages.find((s) => s.id === (academyStageId || 1));
-  const currentLessonObj = currentStageObj?.lessons.find((l) => l.id === (academyLessonId || '1.1'));
+  const currentStageObj = stages.find((s) => s.id === (mentorLessonContext?.stageId || user.currentStageId || 1));
+  const currentLessonObj = currentStageObj?.lessons.find((l) => l.id === (mentorLessonContext?.lessonId || user.currentLessonId || '1.1'));
 
   // Theme styling helper
   const themeClass = user.theme === 'cyber-slate'
@@ -755,7 +758,7 @@ export default function App() {
       <FragGommarDrawer
         isOpen={isFragGommarOpen}
         onClose={() => setIsFragGommarOpen(false)}
-        user={user}
+        user={mentorLessonContext ? { ...user, currentStageId: mentorLessonContext.stageId, currentLessonId: mentorLessonContext.lessonId } : user}
         initialPrompt={fragGommarInitialPrompt}
         currentStageTitle={currentStageObj?.title}
         currentLessonTitle={currentLessonObj?.title}
