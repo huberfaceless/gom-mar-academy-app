@@ -19,6 +19,28 @@ export const campaignAllowsRecipient = (campaign: { deliveryMode?: unknown }, ow
 };
 
 const auth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
+
+export const campaignConsentSkipReason = (
+  consent: { granted: boolean; email: string },
+  recipientEmail: string,
+): string | null => {
+  if (!consent.granted) return 'missing-consent';
+  if (consent.email.trim().toLowerCase() !== recipientEmail.trim().toLowerCase()) return 'consent-email-mismatch';
+  return null;
+};
+
+const logSkippedRecipient = (ownerUid: string, campaignId: string, emailId: string, memberUid: string, reason: string) => {
+  // Keine E-Mail-Adressen, Inhalte oder Abmeldetoken in Produktionslogs.
+  console.info(JSON.stringify({
+    event: 'academy.email.campaign.recipient.skipped',
+    ownerUid, campaignId, emailId, memberUid, reason,
+    message: reason === 'missing-consent'
+      ? 'Wegen fehlender Einwilligung übersprungen'
+      : reason === 'marketing-suppressed'
+        ? 'Wegen Marketing-Versandsperre übersprungen'
+        : 'Wegen geänderter Versandvoraussetzungen übersprungen',
+  }));
+};
 const databaseId = process.env.FIREBASE_DATABASE_ID || '(default)';
 const MAX_SENDS_PER_TICK = 10;
 const collectionUrl = (projectId: string) =>
@@ -146,9 +168,16 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
           if (!campaignAllowsRecipient(campaign, owner.uid, member.uid)) continue;
           if (!member.emailVerified || member.disabled || !member.email) continue;
           const consent = await loadEmailConsent(projectId, member.uid);
-          if (!consent.granted || consent.email.trim().toLowerCase() !== member.email.trim().toLowerCase()) continue;
+          const consentSkipReason = campaignConsentSkipReason(consent, member.email);
+          if (consentSkipReason) {
+            logSkippedRecipient(owner.uid, campaign.id, email.id, member.uid, consentSkipReason);
+            continue;
+          }
           if (!isCampaignEmailDue(campaign, email, Date.now(), consent.updatedAt)) continue;
-          if (await isMarketingEmailSuppressed(projectId, member.email, consent.updatedAt)) continue;
+          if (await isMarketingEmailSuppressed(projectId, member.email, consent.updatedAt)) {
+            logSkippedRecipient(owner.uid, campaign.id, email.id, member.uid, 'marketing-suppressed');
+            continue;
+          }
           const reservation = await reserveDelivery(projectId, owner.uid, campaign.id, email.id, member.uid);
           if (!reservation) continue;
           outcome.reserved++;
@@ -166,6 +195,8 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
               || currentMember.email.trim().toLowerCase() !== member.email.trim().toLowerCase()
               || !latest.granted || latest.email.trim().toLowerCase() !== member.email.trim().toLowerCase()
               || await isMarketingEmailSuppressed(projectId, member.email, latest.updatedAt)) {
+              logSkippedRecipient(owner.uid, campaign.id, email.id, member.uid,
+                campaignConsentSkipReason(latest, member.email) || 'pre-send-check-failed');
               await updateDelivery(reservation, 'failed');
               outcome.failed++;
               continue;

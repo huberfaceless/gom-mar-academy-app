@@ -128,3 +128,12 @@ assert.match(delivery, /campaignAllowsRecipient\(campaign, owner\.uid, member\.u
 assert.match(delivery, /campaignAllowsRecipient\(active, owner\.uid, member\.uid\)/);
 assert.match(server, /assertCampaignDeliveryModeUnchanged\(previous, campaign\)/);
 console.log('Automatik-Testmodus geprüft: nur eigenes Konto, erneute Empfängerprüfung, gesperrter Moduswechsel und unveränderte Alt-Kampagnen.');
+
+const { campaignConsentSkipReason } = await import('../server/emailCampaignDeliveryAdmin.js');
+assert.equal(campaignConsentSkipReason({ granted: false, email: 'test@example.com' }, 'test@example.com'), 'missing-consent');
+assert.equal(campaignConsentSkipReason({ granted: true, email: 'other@example.com' }, 'test@example.com'), 'consent-email-mismatch');
+assert.equal(campaignConsentSkipReason({ granted: true, email: ' TEST@example.com ' }, 'test@EXAMPLE.com'), null);
+assert.match(delivery, /event: 'academy\.email\.campaign\.recipient\.skipped'/);
+assert.match(delivery, /logSkippedRecipient\(owner\.uid, campaign\.id, email\.id, member\.uid, consentSkipReason\)/);
+assert.match(delivery, /logSkippedRecipient\(owner\.uid, campaign\.id, email\.id, member\.uid, 'marketing-suppressed'\)/);
+console.log('Abmelde-Protokoll geprüft: fehlende Einwilligung, abweichende Adresse und Marketing-Versandsperre.');
