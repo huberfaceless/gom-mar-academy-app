@@ -1,3 +1,4 @@
+import { loadCampaignDeliveryReport } from './server/emailCampaignReportAdmin.js';
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { GoogleGenAI } from '@google/genai';
@@ -1069,6 +1070,17 @@ async function startServer() {
     }
   });
 
+  app.get('/api/email/campaigns/report', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      res.setHeader('Cache-Control', 'no-store');
+      res.json(await loadCampaignDeliveryReport(FIREBASE_PROJECT_ID, userId));
+    } catch (error: unknown) {
+      res.status(503).json({ error: error instanceof Error ? error.message : 'Versandprotokoll nicht verfügbar.' });
+    }
+  });
+
   app.put('/api/email/campaigns', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
@@ -1078,6 +1090,11 @@ async function startServer() {
         const existing = await loadEmailCampaigns(FIREBASE_PROJECT_ID, userId);
         if (incoming.some((campaign) => campaign?.automationStartedAt) && !isAcademyAdminToken((req as FirebaseRequest).firebaseUser)) {
           res.status(403).json({ error: 'Automatischer Kampagnenversand ist nur für Administratoren verfügbar.' });
+          return;
+        }
+        if (existing.campaigns.some(previous => previous.status === 'active'
+          && !incoming.some(campaign => campaign?.id === previous.id))) {
+          res.status(409).json({ error: 'Aktive Kampagnen zuerst pausieren, bevor sie gelöscht werden.' });
           return;
         }
         for (const campaign of incoming) {

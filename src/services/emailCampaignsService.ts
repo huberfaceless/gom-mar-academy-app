@@ -18,3 +18,15 @@ export const saveEmailCampaigns = async (campaigns: Campaign[]): Promise<Campaig
   if (!response.ok) throw new Error(result.error || 'E-Mail-Kampagnen konnten nicht gespeichert werden.');
   return Array.isArray(result.campaigns) ? result.campaigns : [];
 };
+
+export type CampaignDeliveryReport = {
+  deliveries: Array<{ campaignId: string; emailId: string; status: string }>;
+  selfTestAllowed: boolean;
+  checkedAt: string;
+};
+export const loadCampaignDeliveryReport = async (): Promise<CampaignDeliveryReport> => {
+  const response = await authenticatedFetch('/api/email/campaigns/report');
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error || 'Versandprotokoll nicht verfügbar.');
+  return result as CampaignDeliveryReport;
+};
