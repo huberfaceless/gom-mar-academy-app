@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { UserProfile, Stage, Lesson } from '../types';
 import { ACADEMY_STAGES } from '../data/academyData';
 import { LessonVideoPlayer } from './LessonVideoPlayer';
@@ -58,6 +58,7 @@ interface AcademyViewProps {
   onCompleteLesson: (lessonId: string, stageId: number) => void;
   onNavigateToToolbox: (category?: string) => void;
   onOpenFragGommar: (prompt?: string, context?: { stageId: number; lessonId: string }) => void;
+  onLessonContextChange?: (context: { stageId: number; lessonId: string } | undefined) => void;
   stageAccessLimit: number;
   onBackToAdmin?: () => void;
 }
@@ -111,6 +112,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   onCompleteLesson,
   onNavigateToToolbox,
   onOpenFragGommar,
+  onLessonContextChange,
   stageAccessLimit,
   onBackToAdmin,
 }) => {
@@ -191,6 +193,14 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 
   const currentStage = localizedStages.find((s) => s.id === selectedStageId) || localizedStages[0];
   const currentLesson = currentStage.lessons.find((l) => l.id === selectedLessonId) || currentStage.lessons[0];
+
+  const visibleStageId = currentStage.id;
+  const visibleLessonId = currentLesson?.id;
+  useEffect(() => {
+    onLessonContextChange?.(viewMode === 'lesson' && visibleLessonId
+      ? { stageId: visibleStageId, lessonId: visibleLessonId } : undefined);
+  }, [onLessonContextChange, viewMode, visibleStageId, visibleLessonId]);
+  useEffect(() => () => onLessonContextChange?.(undefined), [onLessonContextChange]);
 
   const isCompleted = currentLesson ? completedTaskIdSet.has(currentLesson.id) : false;
 
