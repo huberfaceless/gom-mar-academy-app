@@ -619,7 +619,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => onOpenFragGommar(`Ich bin bei Etappe ${selectedStageId} (${currentStage.title}), Lektion ${currentLesson.id} (${currentLesson.title}). Was ist hier der wichtigste Kernschritt?`, { stageId: currentStage.id, lessonId: currentLesson.id })}
+            onClick={() => onOpenFragGommar(undefined, { stageId: currentStage.id, lessonId: currentLesson.id })}
             className="px-4 py-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer"
           >
             <Bot className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
