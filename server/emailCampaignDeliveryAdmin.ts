@@ -4,6 +4,7 @@ import { getFirebaseMember, listFirebaseMembers, type FirebaseMember } from './f
 import { campaignDeliveryMode, loadEmailCampaigns } from './emailCampaignsAdmin.js';
 import { loadEmailConsent } from './emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed } from './emailUnsubscribeAdmin.js';
+import { renderCampaignEmailHtml } from './emailHtmlTemplate.js';
 
 type Campaign = {
   id: string;
@@ -99,10 +100,6 @@ const updateDelivery = async (url: string, status: 'accepted' | 'failed') => {
   if (!response.ok) throw new Error('Der E-Mail-Versandstatus konnte nicht gespeichert werden.');
 };
 
-const escapeHtml = (text: string) => text.replace(/[&<>"']/g, (value) => ({
-  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-})[value] || value);
-
 const sendCampaignEmail = async (
   projectId: string,
   member: FirebaseMember,
@@ -127,8 +124,8 @@ const sendCampaignEmail = async (
       from: { email: fromEmail, name: (process.env.SENDGRID_FROM_NAME || 'GOM-MAR Academy').slice(0, 100) },
       subject: selfTest ? `[AUTOMATIK-TEST] ${email.subject}` : email.subject,
       content: [
-        { type: 'text/plain', value: `${email.content}\n\n—\n${label}: ${unsubscribeUrl}` },
-        { type: 'text/html', value: `<div style="white-space:pre-wrap;font-family:Arial,sans-serif">${escapeHtml(email.content)}</div><p><a href="${unsubscribeUrl}">${escapeHtml(label)}</a></p>` },
+        { type: 'text/plain', value: `${email.content}\n\nhttps://academy.gomo-marketing.at\n\n—\n${label}: ${unsubscribeUrl}` },
+        { type: 'text/html', value: renderCampaignEmailHtml(member.language, selfTest ? `[AUTOMATIK-TEST] ${email.subject}` : email.subject, email.content, unsubscribeUrl) },
       ],
     }),
   });

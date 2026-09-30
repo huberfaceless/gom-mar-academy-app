@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateEmailCampaigns } from '../server/emailCampaignsAdmin.js';
 import { isCampaignEmailDue } from '../server/emailCampaignDeliveryAdmin.js';
+import { renderCampaignEmailHtml } from '../server/emailHtmlTemplate.js';
 
 const server = readFileSync('server.ts', 'utf8');
 const storage = readFileSync('server/emailCampaignsAdmin.ts', 'utf8');
@@ -149,3 +150,22 @@ assert.match(view, /Kontakte im CRM/);
 assert.match(view, /Versandprotokoll der ausgewählten Kampagne/);
 assert.match(view, /Übergabe an SendGrid bestätigt keine Zustellung/);
 console.log('Kampagnenübersicht geprüft: echte Versanddaten, geschützter Bericht und Pausieren vor Löschen.');
+
+for (const [language, button, unsubscribe] of [
+  ['de', 'Zur Academy', 'Marketing-E-Mails abbestellen'],
+  ['en', 'Go to the Academy', 'Unsubscribe from marketing emails'],
+  ['pl', 'Przejdź do Academy', 'Zrezygnuj z e-maili marketingowych'],
+] as const) {
+  const html = renderCampaignEmailHtml(language, '<Titel> & Test', 'Zeile 1\r\nZeile 2\n<script>alert("x")</script>', 'https://academy.gomo-marketing.at/api/email/unsubscribe?token=personal&lang=' + language);
+  assert.ok(html.includes(`<html lang="${language}">`));
+  assert.ok(html.includes(button));
+  assert.ok(html.includes(unsubscribe));
+  assert.ok(html.includes('href="https://academy.gomo-marketing.at"'));
+  assert.ok(html.includes(`token=personal&amp;lang=${language}`), 'Der persönliche Abmeldelink muss erhalten bleiben.');
+  assert.ok(html.includes('&lt;Titel&gt; &amp; Test'));
+  assert.ok(html.includes('Zeile 1<br>Zeile 2<br>&lt;script&gt;'));
+  assert.ok(!html.includes('<script>'), 'Kampagnentext darf kein aktives HTML einschleusen.');
+}
+assert.match(delivery, /renderCampaignEmailHtml\(member.language/, 'Der tatsächliche automatische Versand muss die HTML-Vorlage verwenden.');
+assert.match(delivery, /type: 'text\/plain'/, 'Die Textversion muss weiterhin verfügbar sein.');
+console.log('Kampagnen-HTML geprüft: DE/EN/PL, Academy-Button, persönlicher Abmeldelink und sichere Textdarstellung.');
