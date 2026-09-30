@@ -183,6 +183,7 @@ export default function App() {
   const [isFragGommarOpen, setIsFragGommarOpen] = useState<boolean>(false);
   const [fragGommarInitialPrompt, setFragGommarInitialPrompt] = useState<string | undefined>(undefined);
 
+  const [visibleMentorLesson, setVisibleMentorLesson] = useState<{ stageId: number; lessonId: string } | undefined>();
   const [mentorLessonContext, setMentorLessonContext] = useState<{ stageId: number; lessonId: string } | undefined>();
 
   // Celebration Modal State
@@ -474,7 +475,7 @@ export default function App() {
   };
 
   const handleOpenFragGommar = (prompt?: string, context?: { stageId: number; lessonId: string }) => {
-    setMentorLessonContext(context);
+    setMentorLessonContext(context || (activeView === 'academy' ? visibleMentorLesson : undefined));
     setFragGommarInitialPrompt(prompt);
     setIsFragGommarOpen(true);
   };
@@ -650,6 +651,7 @@ export default function App() {
               onCompleteLesson={handleCompleteLesson}
               onNavigateToToolbox={handleNavigateToToolbox}
               onOpenFragGommar={handleOpenFragGommar}
+              onLessonContextChange={setVisibleMentorLesson}
               stageAccessLimit={academyStageLimit}
               onBackToAdmin={() => handleNavigate('admin')}
             />

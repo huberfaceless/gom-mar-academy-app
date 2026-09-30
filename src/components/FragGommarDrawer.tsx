@@ -275,7 +275,9 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
   const [failedPrompts, setFailedPrompts] = useState<Record<string, string>>({});
   const [loadedStorageKey, setLoadedStorageKey] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const storageKey = `frag-gommar-chat:${language}:${(user.email || user.name || 'guest').trim().toLowerCase()}`;
+  const activeRequestRef = useRef<AbortController | null>(null);
+  const requestGenerationRef = useRef(0);
+  const storageKey = `frag-gommar-chat:${language}:${(user.email || user.name || 'guest').trim().toLowerCase()}:lesson:${user.currentStageId}:${user.currentLessonId}`;
 
   // Quick suggestion chips
   const quickQuestions = [
@@ -292,6 +294,9 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
   }, [initialPrompt, loadedStorageKey, storageKey]);
 
   useEffect(() => {
+    requestGenerationRef.current += 1;
+    activeRequestRef.current?.abort();
+    setIsLoading(false);
     try {
       const storedValue = window.localStorage.getItem(storageKey);
       if (!storedValue) {
@@ -331,6 +336,8 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
+
+  useEffect(() => () => activeRequestRef.current?.abort(), []);
 
   if (!isOpen) return null;
 
@@ -372,7 +379,9 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
     setInputPrompt('');
     setIsLoading(true);
 
+    const requestGeneration = requestGenerationRef.current;
     const controller = new AbortController();
+    activeRequestRef.current = controller;
     const timeoutId = window.setTimeout(() => controller.abort(), 30000);
 
     try {
@@ -432,8 +441,10 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
         suggestedAction,
       };
 
+      if (requestGeneration !== requestGenerationRef.current) return;
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
+      if (requestGeneration !== requestGenerationRef.current) return;
       console.error('Error asking Frag GOM-MAR:', err);
       const errorCode = err instanceof Error ? err.message : '';
       const errorText = err instanceof DOMException && err.name === 'AbortError'
@@ -458,7 +469,10 @@ export const FragGommarDrawer: React.FC<FragGommarDrawerProps> = ({
       setFailedPrompts((prev) => ({ ...prev, [errorMessageId]: textToSend }));
     } finally {
       window.clearTimeout(timeoutId);
-      setIsLoading(false);
+      if (requestGeneration === requestGenerationRef.current) {
+        activeRequestRef.current = null;
+        setIsLoading(false);
+      }
     }
   };
 const handleCopyMessage = async (message: ChatMessage) => {
