@@ -135,6 +135,7 @@ export interface Campaign {
   status: 'active' | 'draft' | 'paused';
   createdAt: string;
   automationStartedAt?: string;
+  deliveryMode?: 'self-test' | 'members';
   emails: EmailMessage[];
 }
 

@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { GoogleAuth } from 'google-auth-library';
 import { getFirebaseMember, listFirebaseMembers, type FirebaseMember } from './firebaseMembershipAdmin.js';
-import { loadEmailCampaigns } from './emailCampaignsAdmin.js';
+import { campaignDeliveryMode, loadEmailCampaigns } from './emailCampaignsAdmin.js';
 import { loadEmailConsent } from './emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed } from './emailUnsubscribeAdmin.js';
 
@@ -9,7 +9,13 @@ type Campaign = {
   id: string;
   status: string;
   automationStartedAt?: string;
+  deliveryMode?: 'self-test' | 'members';
   emails: Array<{ id: string; status: string; dayOffset: number; subject: string; content: string }>;
+};
+
+export const campaignAllowsRecipient = (campaign: { deliveryMode?: unknown }, ownerUid: string, recipientUid: string): boolean => {
+  try { return campaignDeliveryMode(campaign) === 'members' || ownerUid === recipientUid; }
+  catch { return false; }
 };
 
 const auth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
@@ -79,6 +85,7 @@ const sendCampaignEmail = async (
   projectId: string,
   member: FirebaseMember,
   email: Campaign['emails'][number],
+  selfTest = false,
 ) => {
   const apiKey = process.env.SENDGRID_API_KEY?.trim();
   const fromEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
@@ -96,7 +103,7 @@ const sendCampaignEmail = async (
     body: JSON.stringify({
       personalizations: [{ to: [{ email: member.email }] }],
       from: { email: fromEmail, name: (process.env.SENDGRID_FROM_NAME || 'GOM-MAR Academy').slice(0, 100) },
-      subject: email.subject,
+      subject: selfTest ? `[AUTOMATIK-TEST] ${email.subject}` : email.subject,
       content: [
         { type: 'text/plain', value: `${email.content}\n\n—\n${label}: ${unsubscribeUrl}` },
         { type: 'text/html', value: `<div style="white-space:pre-wrap;font-family:Arial,sans-serif">${escapeHtml(email.content)}</div><p><a href="${unsubscribeUrl}">${escapeHtml(label)}</a></p>` },
@@ -136,6 +143,7 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
         if (!isCampaignEmailDue(campaign, email, Date.now())) continue;
         for (const member of members) {
           if (outcome.reserved >= MAX_SENDS_PER_TICK) return outcome;
+          if (!campaignAllowsRecipient(campaign, owner.uid, member.uid)) continue;
           if (!member.emailVerified || member.disabled || !member.email) continue;
           const consent = await loadEmailConsent(projectId, member.uid);
           if (!consent.granted || consent.email.trim().toLowerCase() !== member.email.trim().toLowerCase()) continue;
@@ -151,7 +159,9 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
             const currentEmail = active?.emails.find((item) => item.id === email.id);
             const currentMember = await getFirebaseMember(projectId, member.uid);
             const latest = await loadEmailConsent(projectId, member.uid);
-            if (!active || !currentEmail || !isCampaignEmailDue(active, currentEmail, Date.now(), latest.updatedAt)
+            if (!active || !campaignAllowsRecipient(active, owner.uid, member.uid)
+              || campaignDeliveryMode(active) !== campaignDeliveryMode(campaign)
+              || !currentEmail || !isCampaignEmailDue(active, currentEmail, Date.now(), latest.updatedAt)
               || !currentMember?.emailVerified || currentMember.disabled
               || currentMember.email.trim().toLowerCase() !== member.email.trim().toLowerCase()
               || !latest.granted || latest.email.trim().toLowerCase() !== member.email.trim().toLowerCase()
@@ -160,7 +170,7 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
               outcome.failed++;
               continue;
             }
-            await sendCampaignEmail(projectId, currentMember, currentEmail);
+            await sendCampaignEmail(projectId, currentMember, currentEmail, campaignDeliveryMode(active) === 'self-test');
             await updateDelivery(reservation, 'accepted');
             outcome.accepted++;
           } catch (error: unknown) {

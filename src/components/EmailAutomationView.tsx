@@ -299,6 +299,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       description: '',
       leadsCount: 0,
       status: 'draft',
+      deliveryMode: 'self-test',
       createdAt: new Date().toISOString().split('T')[0],
       emails: [],
     };
@@ -333,6 +334,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       description: newCampaignDescription.trim(),
       leadsCount: 0,
       status: 'draft',
+      deliveryMode: 'self-test',
       createdAt: new Date().toISOString().split('T')[0],
       emails: [],
     };
@@ -510,6 +512,17 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     }
   };
 
+  const handleDeliveryModeChange = async (deliveryMode: 'self-test' | 'members') => {
+    if (!isAdmin || activeCampaign.automationStartedAt || isSavingCampaign) return;
+    setCampaignActionError(null);
+    setIsSavingCampaign(true);
+    try {
+      await onUpdateCampaigns(campaigns.map(campaign => campaign.id === activeCampaign.id ? { ...campaign, deliveryMode } : campaign));
+    } catch (error: unknown) {
+      setCampaignActionError(error instanceof Error ? error.message : 'Versandmodus konnte nicht gespeichert werden.');
+    } finally { setIsSavingCampaign(false); }
+  };
+
   const getCampaignReadinessError = (): string | null => {
     if (!activeCampaign.title.trim()) return 'Ergänze zuerst einen Kampagnennamen.';
     if (!activeCampaign.targetAudience.trim()) return 'Ergänze zuerst die Zielgruppe.';
@@ -530,10 +543,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
         return;
       }
     }
+    const selfTest = activeCampaign.deliveryMode === 'self-test';
     const confirmed = shouldPause
       ? window.confirm(`Kampagne „${activeCampaign.title}“ jetzt pausieren?`)
       : window.confirm(isAdmin
-        ? 'Kampagne automatisch an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.'
+        ? selfTest ? 'Automatik-Test starten? Diese Kampagne sendet ausschließlich an dein eigenes bestätigtes Admin-Konto mit Marketing-Einwilligung.' : 'Kampagne automatisch an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.'
         : 'Kampagne freigeben? Die E-Mails werden als geplant markiert. Ein automatischer Empfängerversand wird dadurch nicht ausgelöst.');
     if (!confirmed) return;
     const nextStatus: Campaign['status'] = shouldPause ? 'paused' : 'active';
@@ -555,7 +569,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       setIsEditing(false);
       setSimulatedLeadSuccess(shouldPause
         ? 'Die Kampagne wurde pausiert.'
-        : isAdmin ? 'Die Kampagne wurde für den automatischen Versand freigegeben.' : 'Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.');
+        : isAdmin ? selfTest ? 'Automatik-Test gestartet: Versand ausschließlich an dein eigenes Konto.' : 'Die Kampagne wurde für den automatischen Versand freigegeben.' : 'Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.');
       setTimeout(() => setSimulatedLeadSuccess(null), 5000);
     } catch (error: unknown) {
       setCampaignActionError(error instanceof Error ? error.message : 'Der Kampagnenstatus konnte nicht gespeichert werden.');
@@ -974,10 +988,24 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white disabled:cursor-not-allowed disabled:opacity-60 ${activeCampaign.status === 'active' ? 'bg-amber-600 hover:bg-amber-700' : 'bg-emerald-600 hover:bg-emerald-700'}`}
                   >
                     {activeCampaign.status === 'active' ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
-                    {activeCampaign.status === 'active' ? 'Pausieren' : activeCampaign.status === 'paused' ? 'Fortsetzen' : 'Freigeben'}
+                    {activeCampaign.status === 'active' ? 'Pausieren' : activeCampaign.status === 'paused' ? 'Fortsetzen' : isAdmin && activeCampaign.deliveryMode === 'self-test' ? 'Automatik nur an mich testen' : 'Freigeben'}
                   </button>
                 </div>
               </div>
+
+              {isAdmin && (
+                <label className="block rounded-xl border border-indigo-200 bg-indigo-50 p-3 text-xs font-bold text-indigo-900">
+                  Empfänger der Automatik
+                  <select value={activeCampaign.deliveryMode || 'members'}
+                    disabled={isSavingCampaign || Boolean(activeCampaign.automationStartedAt)}
+                    onChange={event => void handleDeliveryModeChange(event.target.value as 'self-test' | 'members')}
+                    className="mt-2 block w-full rounded-lg border border-indigo-200 bg-white p-2 text-sm disabled:opacity-60">
+                    <option value="self-test">Test: nur mein eigenes Admin-Konto</option>
+                    <option value="members">Alle Mitglieder mit bestätigter Marketing-Einwilligung</option>
+                  </select>
+                  <span className="mt-2 block font-normal">Neue Kampagnen starten im Testmodus. Nach dem Start ist der Empfängerkreis fest. Für den Versand an Mitglieder lege eine neue Kampagne an. Auch der Test benötigt deine bestätigte Marketing-Einwilligung.</span>
+                </label>
+              )}
 
               {campaignActionError && (
                 <p className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-800" role="alert">
@@ -987,7 +1015,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
               <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-medium text-slate-600">
                 {isAdmin
-                  ? 'Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt mit der Freigabe. Bereits früher aktivierte Kampagnen bleiben ohne automatische Versandfreigabe.'
+                  ? activeCampaign.deliveryMode === 'self-test' ? 'Automatik-Test: Geplante E-Mails gehen ausschließlich an dein eigenes Admin-Konto. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.' : 'Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.'
                   : 'Die Freigabe markiert vollständige E-Mails als geplant. Ein automatischer Empfängerversand ist nur für Academy-Administratoren verfügbar.'}
               </p>
 
