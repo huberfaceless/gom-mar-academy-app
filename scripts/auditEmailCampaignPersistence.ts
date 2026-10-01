@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateEmailCampaigns } from '../server/emailCampaignsAdmin.js';
-import { isCampaignEmailDue } from '../server/emailCampaignDeliveryAdmin.js';
+import { campaignExternalRecipients, campaignRecipientDeliveryId, isCampaignEmailDue } from '../server/emailCampaignDeliveryAdmin.js';
 import { renderCampaignEmailHtml } from '../server/emailHtmlTemplate.js';
 
 const server = readFileSync('server.ts', 'utf8');
@@ -169,3 +169,103 @@ for (const [language, button, unsubscribe] of [
 assert.match(delivery, /renderCampaignEmailHtml\(member.language/, 'Der tatsächliche automatische Versand muss die HTML-Vorlage verwenden.');
 assert.match(delivery, /type: 'text\/plain'/, 'Die Textversion muss weiterhin verfügbar sein.');
 console.log('Kampagnen-HTML geprüft: DE/EN/PL, Academy-Button, persönlicher Abmeldelink und sichere Textdarstellung.');
+
+validateEmailCampaigns([{ ...activeCampaign, deliveryMode: 'members-and-crm' }]);
+assert.equal(campaignAllowsRecipient({ deliveryMode: 'members-and-crm' }, 'owner', 'member'), true);
+assert.throws(() => assertCampaignDeliveryModeUnchanged(startedTest, { ...startedTest, deliveryMode: 'members-and-crm' }), /nicht geändert/);
+assert.deepEqual(campaignExternalRecipients([
+  { id: 'one', email: ' PERSON@example.com ' },
+  { id: 'two', email: 'person@example.com' },
+  { id: 'three', email: 'MEMBER@example.com' },
+  { id: 'member_fake', email: 'other@example.com' },
+], [{ email: 'member@example.com' }]), [{ id: 'one', email: 'person@example.com' }]);
+assert.equal(campaignRecipientDeliveryId('o', 'c', 'e', ' PERSON@example.com '), campaignRecipientDeliveryId('o', 'c', 'e', 'person@example.com'));
+assert.notEqual(campaignRecipientDeliveryId('o', 'c', 'e', 'person@example.com'), campaignRecipientDeliveryId('other', 'c', 'e', 'person@example.com'));
+assert.notEqual(campaignRecipientDeliveryId('o', 'c', 'e', 'person@example.com'), campaignRecipientDeliveryId('o', 'c', 'next', 'person@example.com'));
+assert.match(delivery, /await loadCrmContacts\(projectId, owner.uid\)/);
+assert.match(delivery, /const latest = await loadExternalEmailConsent\(projectId, contact.email\)/);
+assert.match(delivery, /await isMarketingEmailSuppressed\(projectId, contact.email, latest.updatedAt\)/);
+assert.match(delivery, /if \(legacy.ok\) return null/);
+assert.match(view, /value="members-and-crm"/);
+console.log('CRM-Empfänger geprüft: eigener CRM-Bestand, Adress-Deduplizierung, Einwilligung, Abmeldung und ausdrücklicher neuer Modus.');
+
+// Vollständiger Worker mit simuliertem Firebase, Firestore und SendGrid; kein Netzwerkversand.
+const { GoogleAuth } = await import('google-auth-library');
+const { runEmailCampaignDeliveries } = await import('../server/emailCampaignDeliveryAdmin.js');
+const originalFetch = globalThis.fetch;
+const originalGetClient = GoogleAuth.prototype.getClient;
+const originalKey = process.env.SENDGRID_API_KEY;
+const originalFrom = process.env.SENDGRID_FROM_EMAIL;
+try {
+  GoogleAuth.prototype.getClient = (async () => ({ getAccessToken: async () => ({ token: 'audit-token' }) })) as unknown as typeof originalGetClient;
+  process.env.SENDGRID_API_KEY = 'audit-only';
+  process.env.SENDGRID_FROM_EMAIL = 'audit@example.com';
+  for (const scenario of ['success', 'missing-consent', 'withdrawn', 'suppressed', 'deleted', 'paused', 'self-test', 'members', 'legacy'] as const) {
+    const docs = new Map<string, unknown>();
+    const sent: Array<Record<string, unknown>> = [];
+    let crmReads = 0;
+    let consentReads = 0;
+    let campaignReads = 0;
+    const fixture = { ...activeCampaign, deliveryMode: scenario === 'self-test' ? 'self-test' : scenario === 'members' ? 'members' : 'members-and-crm' };
+    const contacts = [
+      { id: 'manual_1', name: 'Kontakt', email: 'external@example.com' },
+      { id: 'manual_2', name: 'Duplikat', email: 'EXTERNAL@example.com' },
+      { id: 'manual_owner', name: 'Mitglied', email: 'owner@example.com' },
+    ];
+    const response = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
+    globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      const method = init?.method || 'GET';
+      if (url.includes('accounts:batchGet')) return response({ users: [{ localId: 'owner', email: 'owner@example.com', emailVerified: true, customAttributes: JSON.stringify({ academyRole: 'admin', academyLanguage: 'pl' }) }] });
+      if (url.includes('/academyEmailCampaigns/')) {
+        campaignReads++;
+        return response({ fields: { campaignsJson: { stringValue: JSON.stringify([{ ...fixture, status: scenario === 'paused' && campaignReads > 1 ? 'paused' : 'active' }]) } } });
+      }
+      if (url.includes('/academyCrmContacts/')) {
+        assert.ok(url.endsWith('/owner'), 'Nur das eigene CRM darf gelesen werden.');
+        crmReads++;
+        return response({ fields: { contactsJson: { stringValue: JSON.stringify(scenario === 'deleted' && crmReads > 1 ? [] : contacts) } } });
+      }
+      if (url.includes('/academyEmailConsents/')) return response({}, 404);
+      if (url.includes('/academyExternalEmailConsents/')) {
+        consentReads++;
+        return response({ fields: { email: { stringValue: 'external@example.com' }, granted: { booleanValue: !(scenario === 'missing-consent' || (scenario === 'withdrawn' && consentReads > 1)) }, updatedAt: { timestampValue: startedAt } } });
+      }
+      if (url.includes('/academyEmailSuppressions/')) return scenario === 'suppressed'
+        ? response({ fields: { suppressed: { booleanValue: true }, updatedAt: { timestampValue: startedAt } } }) : response({}, 404);
+      if (url.includes('/academyEmailDeliveries')) {
+        const parsed = new URL(url);
+        const key = parsed.searchParams.has('documentId') ? parsed.pathname + '/' + parsed.searchParams.get('documentId') : parsed.pathname;
+        if (method === 'GET') return scenario === 'legacy' ? response({ fields: { status: { stringValue: 'accepted' } } }) : docs.has(key) ? response(docs.get(key)) : response({}, 404);
+        if (method === 'POST' && docs.has(key)) return response({}, 409);
+        docs.set(key, JSON.parse(String(init?.body)));
+        return response({});
+      }
+      if (url.includes('/academyEmailUnsubscribeTokens/')) {
+        const body = JSON.parse(String(init?.body));
+        assert.equal(body.fields.memberUserId.stringValue, '', 'Externe Kontakte dürfen keine erfundene Mitglieds-UID erhalten.');
+        return response({});
+      }
+      if (url === 'https://api.sendgrid.com/v3/mail/send') {
+        sent.push(JSON.parse(String(init?.body)));
+        return response({}, 202);
+      }
+      throw new Error('Unerwarteter Audit-Netzwerkzugriff: ' + url);
+    }) as typeof fetch;
+    const result = await runEmailCampaignDeliveries('audit-project');
+    assert.equal(result.accepted, scenario === 'success' ? 1 : 0, scenario);
+    if (scenario === 'success') {
+      await runEmailCampaignDeliveries('audit-project');
+      assert.equal(sent.length, 1, 'Wiederholter Scheduler-Durchlauf darf nicht erneut senden.');
+      const message = sent[0] as { personalizations: Array<{ to: Array<{ email: string }> }>; content: Array<{ type: string; value: string }> };
+      assert.equal(message.personalizations[0].to[0].email, 'external@example.com');
+      assert.ok(message.content.some(part => part.type === 'text/html' && part.value.includes('<html lang="pl">') && part.value.includes('/api/email/unsubscribe?token=')));
+    }
+  }
+} finally {
+  globalThis.fetch = originalFetch;
+  GoogleAuth.prototype.getClient = originalGetClient;
+  if (originalKey === undefined) delete process.env.SENDGRID_API_KEY; else process.env.SENDGRID_API_KEY = originalKey;
+  if (originalFrom === undefined) delete process.env.SENDGRID_FROM_EMAIL; else process.env.SENDGRID_FROM_EMAIL = originalFrom;
+}
+console.log('Worker-Simulation bestanden: externer Versand, doppelte Kontakte, Wiederholung, Widerruf, Sperre, Löschung, Pause, Testmodus und Altdaten.');

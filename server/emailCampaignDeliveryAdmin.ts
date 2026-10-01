@@ -4,19 +4,38 @@ import { getFirebaseMember, listFirebaseMembers, type FirebaseMember } from './f
 import { campaignDeliveryMode, loadEmailCampaigns } from './emailCampaignsAdmin.js';
 import { loadEmailConsent } from './emailConsentAdmin.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed } from './emailUnsubscribeAdmin.js';
+import { loadCrmContacts } from './crmContactsAdmin.js';
+import { loadExternalEmailConsent } from './externalEmailConsentAdmin.js';
 import { renderCampaignEmailHtml } from './emailHtmlTemplate.js';
 
 type Campaign = {
   id: string;
   status: string;
   automationStartedAt?: string;
-  deliveryMode?: 'self-test' | 'members';
+  deliveryMode?: 'self-test' | 'members' | 'members-and-crm';
   emails: Array<{ id: string; status: string; dayOffset: number; subject: string; content: string }>;
 };
 
 export const campaignAllowsRecipient = (campaign: { deliveryMode?: unknown }, ownerUid: string, recipientUid: string): boolean => {
-  try { return campaignDeliveryMode(campaign) === 'members' || ownerUid === recipientUid; }
+  try { return campaignDeliveryMode(campaign) !== 'self-test' || ownerUid === recipientUid; }
   catch { return false; }
+};
+
+
+export const campaignRecipientDeliveryId = (ownerUid: string, campaignId: string, emailId: string, email: string) =>
+  createHash('sha256').update(JSON.stringify([ownerUid, campaignId, emailId, 'email', email.trim().toLowerCase()])).digest('hex');
+
+export const campaignExternalRecipients = (contacts: Record<string, unknown>[], members: Pick<FirebaseMember, 'email'>[]) => {
+  const seen = new Set(members.map(member => member.email.trim().toLowerCase()));
+  const recipients: Array<{ id: string; email: string }> = [];
+  for (const contact of contacts) {
+    if (typeof contact.id !== 'string' || contact.id.startsWith('member_') || typeof contact.email !== 'string') continue;
+    const email = contact.email.trim().toLowerCase();
+    if (!email || seen.has(email)) continue;
+    seen.add(email);
+    recipients.push({ id: contact.id, email });
+  }
+  return recipients;
 };
 
 const auth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
@@ -68,8 +87,13 @@ export const isCampaignEmailDue = (
     + email.dayOffset * 86_400_000 <= now,
 );
 
-const reserveDelivery = async (projectId: string, ownerUid: string, campaignId: string, emailId: string, memberUid: string) => {
-  const id = createHash('sha256').update(JSON.stringify([ownerUid, campaignId, emailId, memberUid])).digest('hex');
+const reserveDelivery = async (projectId: string, ownerUid: string, campaignId: string, emailId: string, memberUid: string, recipientEmail: string) => {
+  // Alte UID-Reservierungen bleiben wirksam; neue Reservierungen gelten für die Adresse.
+  const legacyId = createHash('sha256').update(JSON.stringify([ownerUid, campaignId, emailId, memberUid])).digest('hex');
+  const legacy = await fetch(`${collectionUrl(projectId)}/${legacyId}`, { headers: { Authorization: `Bearer ${await accessToken()}` } });
+  if (legacy.ok) return null;
+  if (legacy.status !== 404) throw new Error('Vorheriger Versandstatus konnte nicht geprüft werden.');
+  const id = campaignRecipientDeliveryId(ownerUid, campaignId, emailId, recipientEmail);
   const url = `${collectionUrl(projectId)}?documentId=${id}`;
   const response = await fetch(url, {
     method: 'POST',
@@ -102,7 +126,7 @@ const updateDelivery = async (url: string, status: 'accepted' | 'failed') => {
 
 const sendCampaignEmail = async (
   projectId: string,
-  member: FirebaseMember,
+  member: Pick<FirebaseMember, 'email' | 'language'> & { uid?: string },
   email: Campaign['emails'][number],
   selfTest = false,
 ) => {
@@ -157,6 +181,8 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
 
   for (const owner of owners) {
     const { campaigns } = await loadEmailCampaigns(projectId, owner.uid);
+    const contacts = campaigns.some(campaign => campaign.status === 'active' && campaign.deliveryMode === 'members-and-crm')
+      ? await loadCrmContacts(projectId, owner.uid) : [];
     for (const campaign of campaigns as Campaign[]) {
       for (const email of campaign.emails) {
         if (!isCampaignEmailDue(campaign, email, Date.now())) continue;
@@ -175,7 +201,7 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
             logSkippedRecipient(owner.uid, campaign.id, email.id, member.uid, 'marketing-suppressed');
             continue;
           }
-          const reservation = await reserveDelivery(projectId, owner.uid, campaign.id, email.id, member.uid);
+          const reservation = await reserveDelivery(projectId, owner.uid, campaign.id, email.id, member.uid, member.email);
           if (!reservation) continue;
           outcome.reserved++;
           try {
@@ -208,6 +234,39 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
               reason: error instanceof Error ? error.message : 'Unbekannter Versandfehler',
             });
             try { await updateDelivery(reservation, 'failed'); } catch { /* Die Reservierung verhindert einen doppelten Versand. */ }
+          }
+        }
+        if (campaignDeliveryMode(campaign) !== 'members-and-crm') continue;
+        for (const contact of campaignExternalRecipients(contacts, members)) {
+          if (outcome.reserved >= MAX_SENDS_PER_TICK) return outcome;
+          const consent = await loadExternalEmailConsent(projectId, contact.email);
+          if (!consent.granted || !isCampaignEmailDue(campaign, email, Date.now(), consent.updatedAt)
+            || await isMarketingEmailSuppressed(projectId, contact.email, consent.updatedAt)) continue;
+          const recipientId = `external_${createHash('sha256').update(contact.email).digest('hex')}`;
+          const reservation = await reserveDelivery(projectId, owner.uid, campaign.id, email.id, recipientId, contact.email);
+          if (!reservation) continue;
+          outcome.reserved++;
+          try {
+            const active = (await loadEmailCampaigns(projectId, owner.uid)).campaigns.find(item => item.id === campaign.id) as Campaign | undefined;
+            const currentEmail = active?.emails.find(item => item.id === email.id);
+            const currentContacts = await loadCrmContacts(projectId, owner.uid);
+            const currentMembers = await allMembers(projectId);
+            const currentContact = campaignExternalRecipients(currentContacts, currentMembers).find(item => item.id === contact.id && item.email === contact.email);
+            const latest = await loadExternalEmailConsent(projectId, contact.email);
+            if (!active || campaignDeliveryMode(active) !== 'members-and-crm' || !currentEmail || !currentContact
+              || !latest.granted || !isCampaignEmailDue(active, currentEmail, Date.now(), latest.updatedAt)
+              || await isMarketingEmailSuppressed(projectId, contact.email, latest.updatedAt)) {
+              await updateDelivery(reservation, 'failed');
+              outcome.failed++;
+              continue;
+            }
+            await sendCampaignEmail(projectId, { email: contact.email, language: owner.language }, currentEmail);
+            await updateDelivery(reservation, 'accepted');
+            outcome.accepted++;
+          } catch {
+            outcome.failed++;
+            console.error('CRM-Kampagnenversand erfordert manuelle Prüfung', { campaignId: campaign.id, emailId: email.id, recipientId });
+            try { await updateDelivery(reservation, 'failed'); } catch { /* Reservierung bleibt bestehen. */ }
           }
         }
       }

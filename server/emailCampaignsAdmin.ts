@@ -31,8 +31,9 @@ const isBoundedString = (value: unknown, maximumLength: number, allowEmpty = fal
 const isOptionalCount = (value: unknown): boolean =>
   value === undefined || (Number.isInteger(value) && Number(value) >= 0 && Number(value) <= 1_000_000_000);
 
-export const campaignDeliveryMode = (campaign: { deliveryMode?: unknown }): 'self-test' | 'members' => {
+export const campaignDeliveryMode = (campaign: { deliveryMode?: unknown }): 'self-test' | 'members' | 'members-and-crm' => {
   if (campaign.deliveryMode === undefined || campaign.deliveryMode === 'members') return 'members';
+  if (campaign.deliveryMode === 'members-and-crm') return 'members-and-crm';
   if (campaign.deliveryMode === 'self-test') return 'self-test';
   throw new Error('Der Kampagnen-Versandmodus ist ungültig.');
 };

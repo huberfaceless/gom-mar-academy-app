@@ -533,7 +533,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     }
   };
 
-  const handleDeliveryModeChange = async (deliveryMode: 'self-test' | 'members') => {
+  const handleDeliveryModeChange = async (deliveryMode: 'self-test' | 'members' | 'members-and-crm') => {
     if (!isAdmin || activeCampaign.automationStartedAt || isSavingCampaign) return;
     setCampaignActionError(null);
     setIsSavingCampaign(true);
@@ -565,10 +565,13 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       }
     }
     const selfTest = activeCampaign.deliveryMode === 'self-test';
+    const recipients = activeCampaign.deliveryMode === 'members-and-crm'
+      ? 'Academy-Mitglieder und manuelle Kontakte aus deinem CRM mit bestätigter E-Mail-Einwilligung'
+      : 'alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung';
     const confirmed = shouldPause
       ? window.confirm(`Kampagne „${activeCampaign.title}“ jetzt pausieren?`)
       : window.confirm(isAdmin
-        ? selfTest ? 'Automatik-Test starten? Diese Kampagne sendet ausschließlich an dein eigenes bestätigtes Admin-Konto mit Marketing-Einwilligung.' : 'Kampagne automatisch an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.'
+        ? selfTest ? 'Automatik-Test starten? Diese Kampagne sendet ausschließlich an dein eigenes bestätigtes Admin-Konto mit Marketing-Einwilligung.' : `Kampagne automatisch an ${recipients} senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.`
         : 'Kampagne freigeben? Die E-Mails werden als geplant markiert. Ein automatischer Empfängerversand wird dadurch nicht ausgelöst.');
     if (!confirmed) return;
     const nextStatus: Campaign['status'] = shouldPause ? 'paused' : 'active';
@@ -870,7 +873,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             <div className="grid gap-3 sm:grid-cols-2">
               {campaigns.map(campaign => <button key={campaign.id} type="button" aria-pressed={campaign.id === activeCampaign.id} onClick={() => handleSelectCampaign(campaign.id)} className={`rounded-xl border p-4 text-left ${campaign.id === activeCampaign.id ? 'border-indigo-600 bg-indigo-50' : 'border-slate-200'}`}>
                 <strong className="block">{campaign.title}</strong>
-                <span className="block text-xs mt-1">{campaign.status === 'draft' && !getCampaignReadinessError(campaign) ? 'Bereit zum Starten' : campaignStatusLabel(campaign.status)} · {campaign.emails.length} E-Mails · {campaign.deliveryMode === 'self-test' ? 'Nur mein Konto' : 'Mitglieder mit Einwilligung'}</span>
+                <span className="block text-xs mt-1">{campaign.status === 'draft' && !getCampaignReadinessError(campaign) ? 'Bereit zum Starten' : campaignStatusLabel(campaign.status)} · {campaign.emails.length} E-Mails · {campaign.deliveryMode === 'self-test' ? 'Nur mein Konto' : campaign.deliveryMode === 'members-and-crm' ? 'Mitglieder + mein CRM mit Einwilligung' : 'Mitglieder mit Einwilligung'}</span>
               </button>)}
             </div>
           </section>
@@ -1034,12 +1037,13 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   Empfänger der Automatik
                   <select value={activeCampaign.deliveryMode || 'members'}
                     disabled={isSavingCampaign || Boolean(activeCampaign.automationStartedAt)}
-                    onChange={event => void handleDeliveryModeChange(event.target.value as 'self-test' | 'members')}
+                    onChange={event => void handleDeliveryModeChange(event.target.value as 'self-test' | 'members' | 'members-and-crm')}
                     className="mt-2 block w-full rounded-lg border border-indigo-200 bg-white p-2 text-sm disabled:opacity-60">
                     <option value="self-test">Test: nur mein eigenes Admin-Konto</option>
                     <option value="members">Alle Mitglieder mit bestätigter Marketing-Einwilligung</option>
+                    <option value="members-and-crm">Mitglieder und meine CRM-Kontakte mit bestätigter Marketing-Einwilligung</option>
                   </select>
-                  <span className="mt-2 block font-normal">Neue Kampagnen starten im Testmodus. Nach dem Start ist der Empfängerkreis fest. Für den Versand an Mitglieder lege eine neue Kampagne an. Auch der Test benötigt deine bestätigte Marketing-Einwilligung.</span>
+                  <span className="mt-2 block font-normal">Neue Kampagnen starten im Testmodus. Nach dem Start ist der Empfängerkreis fest. Für einen anderen Empfängerkreis lege eine neue Kampagne an. Manuelle CRM-Kontakte benötigen ihre eigene bestätigte Einwilligung. Doppelte Adressen erhalten die E-Mail höchstens einmal; bestehende Mitgliedskonten werden über die Mitgliederprüfung behandelt. Für CRM-Kontakte wird deine Kontosprache verwendet. Auch der Test benötigt deine bestätigte Marketing-Einwilligung.</span>
                 </label>
               )}
 
@@ -1051,7 +1055,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
               <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-medium text-slate-600">
                 {isAdmin
-                  ? activeCampaign.deliveryMode === 'self-test' ? 'Automatik-Test: Geplante E-Mails gehen ausschließlich an dein eigenes Admin-Konto. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.' : 'Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.'
+                  ? activeCampaign.deliveryMode === 'self-test' ? 'Automatik-Test: Geplante E-Mails gehen ausschließlich an dein eigenes Admin-Konto. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.' : activeCampaign.deliveryMode === 'members-and-crm' ? 'Eine neue Freigabe startet den Versand an Academy-Mitglieder und manuelle Kontakte aus deinem CRM mit bestätigter Einwilligung. Abgemeldete Kontakte werden ausgeschlossen. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.' : 'Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.'
                   : 'Die Freigabe markiert vollständige E-Mails als geplant. Ein automatischer Empfängerversand ist nur für Academy-Administratoren verfügbar.'}
               </p>
 
