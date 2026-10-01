@@ -22,12 +22,12 @@ export const loadCampaignDeliveryReport = async (projectId: string, ownerUid: st
   if (documents.length > 1000) throw new Error('Das Versandprotokoll ist zu groß für diese Übersicht.');
   const deliveries = documents.map(row => {
     const f = row.document?.fields || {};
-    return { campaignId: f.campaignId?.stringValue || '', emailId: f.emailId?.stringValue || '', status: f.status?.stringValue || 'reserved' };
+    return { campaignId: f.campaignId?.stringValue || '', emailId: f.emailId?.stringValue || '', status: f.status?.stringValue || 'reserved', deliveryState: f.deliveryState?.stringValue || 'unknown' };
   });
   const member = await getFirebaseMember(projectId, ownerUid);
   const consent = await loadEmailConsent(projectId, ownerUid);
   const selfTestAllowed = Boolean(member?.emailVerified && !member.disabled && consent.granted
     && consent.email.trim().toLowerCase() === member.email.trim().toLowerCase()
     && !await isMarketingEmailSuppressed(projectId, member.email, consent.updatedAt));
-  return { deliveries, selfTestAllowed, checkedAt: new Date().toISOString() };
+  return { deliveries, selfTestAllowed, webhookKeyConfigured: Boolean(process.env.SENDGRID_EVENT_WEBHOOK_PUBLIC_KEY?.trim()), checkedAt: new Date().toISOString() };
 };

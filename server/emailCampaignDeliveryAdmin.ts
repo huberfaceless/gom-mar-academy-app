@@ -129,6 +129,7 @@ const sendCampaignEmail = async (
   member: Pick<FirebaseMember, 'email' | 'language'> & { uid?: string },
   email: Campaign['emails'][number],
   selfTest = false,
+  deliveryId?: string,
 ) => {
   const apiKey = process.env.SENDGRID_API_KEY?.trim();
   const fromEmail = process.env.SENDGRID_FROM_EMAIL?.trim();
@@ -144,7 +145,7 @@ const sendCampaignEmail = async (
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      personalizations: [{ to: [{ email: member.email }] }],
+      personalizations: [{ to: [{ email: member.email }], custom_args: { academy_delivery_id: deliveryId } }],
       from: { email: fromEmail, name: (process.env.SENDGRID_FROM_NAME || 'GOM-MAR Academy').slice(0, 100) },
       subject: selfTest ? `[AUTOMATIK-TEST] ${email.subject}` : email.subject,
       content: [
@@ -224,7 +225,7 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
               outcome.failed++;
               continue;
             }
-            await sendCampaignEmail(projectId, currentMember, currentEmail, campaignDeliveryMode(active) === 'self-test');
+            await sendCampaignEmail(projectId, currentMember, currentEmail, campaignDeliveryMode(active) === 'self-test', reservation.split('/').pop());
             await updateDelivery(reservation, 'accepted');
             outcome.accepted++;
           } catch (error: unknown) {
@@ -260,7 +261,7 @@ export const runEmailCampaignDeliveries = async (projectId: string): Promise<{ r
               outcome.failed++;
               continue;
             }
-            await sendCampaignEmail(projectId, { email: contact.email, language: owner.language }, currentEmail);
+            await sendCampaignEmail(projectId, { email: contact.email, language: owner.language }, currentEmail, false, reservation.split('/').pop());
             await updateDelivery(reservation, 'accepted');
             outcome.accepted++;
           } catch {

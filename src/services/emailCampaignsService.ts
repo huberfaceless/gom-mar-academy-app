@@ -20,8 +20,9 @@ export const saveEmailCampaigns = async (campaigns: Campaign[]): Promise<Campaig
 };
 
 export type CampaignDeliveryReport = {
-  deliveries: Array<{ campaignId: string; emailId: string; status: string }>;
+  deliveries: Array<{ campaignId: string; emailId: string; status: string; deliveryState: string }>;
   selfTestAllowed: boolean;
+  webhookKeyConfigured: boolean;
   checkedAt: string;
 };
 export const loadCampaignDeliveryReport = async (): Promise<CampaignDeliveryReport> => {
