@@ -125,26 +125,35 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   const [isDeletingLead, setIsDeletingLead] = useState(false);
   const [leadDeclined, setLeadDeclined] = useState(false);
   const [externalConsent, setExternalConsent] = useState(false);
-  const [checkingConsent, setCheckingConsent] = useState(false);
+  const [checkingConsent, setCheckingConsent] = useState(!lead.id.startsWith('member_'));
+  const [consentError, setConsentError] = useState(false);
+  const [consentVersion, setConsentVersion] = useState(0);
+  const [checkedConsentContact, setCheckedConsentContact] = useState('');
+  const consentContactKey = `${lead.id}:${lead.email}`;
   const canSendMarketingEmail = lead.id.startsWith('member_')
     ? lead.tags.includes('E-Mail-Einwilligung')
-    : externalConsent;
+    : checkedConsentContact === consentContactKey && externalConsent && !checkingConsent && !consentError;
 
   useEffect(() => {
-    if (lead.id.startsWith('member_')) return;
+    if (lead.id.startsWith('member_')) {
+      setCheckingConsent(false);
+      setConsentError(false);
+      return;
+    }
     let active = true;
     setExternalConsent(false);
     setCheckingConsent(true);
+    setConsentError(false);
     authenticatedFetch(`/api/email/external-consent/status?contactId=${encodeURIComponent(lead.id)}`)
       .then(async (response) => {
         if (!response.ok) throw new Error('Status nicht verfügbar');
         return response.json() as Promise<{ granted: boolean }>;
       })
-      .then((status) => { if (active) setExternalConsent(status.granted); })
-      .catch(() => { if (active) setExternalConsent(false); })
+      .then((status) => { if (active) { setExternalConsent(status.granted === true); setCheckedConsentContact(`${lead.id}:${lead.email}`); } })
+      .catch(() => { if (active) { setExternalConsent(false); setConsentError(true); } })
       .finally(() => { if (active) setCheckingConsent(false); });
     return () => { active = false; };
-  }, [lead.id, lead.email]);
+  }, [lead.id, lead.email, consentVersion]);
 
   const handleAddTag = (e: React.FormEvent) => {
     e.preventDefault();
@@ -587,6 +596,23 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 </div>
               </div>
 
+              <section aria-label="Marketing-Einwilligung" className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-3">
+                <h4 className="text-sm font-bold text-white">Marketing-Einwilligung</h4>
+                <p role="status" className={`text-sm font-semibold ${canSendMarketingEmail ? 'text-emerald-300' : 'text-amber-200'}`}>
+                  {checkingConsent ? 'Einwilligung wird geprüft…' : consentError ? 'Status derzeit nicht abrufbar' : canSendMarketingEmail ? 'Bestätigte Einwilligung' : 'Keine aktive Einwilligung'}
+                </p>
+                <p className="text-xs text-slate-400">
+                  {lead.id.startsWith('member_')
+                    ? 'Stand des letzten Mitgliederabgleichs. Beim Versand werden Einwilligung und Abmeldesperre erneut geprüft.'
+                    : 'Die bestätigte Einwilligung und eine mögliche Abmeldesperre werden direkt vom Server geprüft.'}
+                </p>
+                {!lead.id.startsWith('member_') && (
+                  <button type="button" disabled={checkingConsent} onClick={() => setConsentVersion(value => value + 1)} className="text-xs font-bold text-indigo-300 hover:text-indigo-200 disabled:opacity-50">
+                    Status aktualisieren
+                  </button>
+                )}
+              </section>
+
               {/* Quick Actions Card */}
               <div className="bg-slate-950/70 rounded-2xl p-5 border border-slate-800 space-y-3 shadow-lg">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
@@ -708,7 +734,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   </div>
                   {!canSendMarketingEmail && (
                     <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
-                      {checkingConsent ? 'Einwilligung wird geprüft…' : lead.id.startsWith('member_')
+                      {checkingConsent ? 'Einwilligung wird geprüft…' : consentError ? 'Der Einwilligungsstatus konnte nicht abgerufen werden. Bitte unter Marketing-Einwilligung den Status aktualisieren.' : lead.id.startsWith('member_')
                         ? 'Dieses Mitglied hat keine bestätigte Marketing-E-Mail-Einwilligung. Es kann sie im eigenen Academy-Profil freiwillig anfordern und per E-Mail bestätigen. Danach Mitglieder erneut abgleichen.'
                         : <>Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">diesen Anmeldelink</a> anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.</>}
                     </p>
