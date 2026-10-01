@@ -269,3 +269,62 @@ try {
   if (originalFrom === undefined) delete process.env.SENDGRID_FROM_EMAIL; else process.env.SENDGRID_FROM_EMAIL = originalFrom;
 }
 console.log('Worker-Simulation bestanden: externer Versand, doppelte Kontakte, Wiederholung, Widerruf, Sperre, Löschung, Pause, Testmodus und Altdaten.');
+
+const { generateKeyPairSync, sign } = await import('node:crypto');
+const { verifySendgridEventSignature, parseSendgridDeliveryEvents, shouldApplyDeliveryEvent, recordSendgridDeliveryEvents } = await import('../server/sendgridEventWebhook.js');
+const pair = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+const webhookKey = pair.publicKey.export({ type: 'spki', format: 'der' }).toString('base64');
+const webhookId = 'a'.repeat(64);
+const webhookPayload = Buffer.from(JSON.stringify([{ academy_delivery_id: webhookId, event: 'delivered', timestamp: 100, sg_event_id: 'event-one', email: 'private@example.com', response: 'private response' }]));
+const webhookTimestamp = '100';
+const webhookSignature = sign('sha256', Buffer.concat([Buffer.from(webhookTimestamp), webhookPayload]), pair.privateKey).toString('base64');
+assert.equal(verifySendgridEventSignature(webhookPayload, webhookSignature, webhookTimestamp, webhookKey), true);
+assert.equal(verifySendgridEventSignature(Buffer.concat([webhookPayload, Buffer.from(' ')]), webhookSignature, webhookTimestamp, webhookKey), false);
+assert.equal(verifySendgridEventSignature(webhookPayload, webhookSignature, '101', webhookKey), false);
+assert.equal(verifySendgridEventSignature(webhookPayload, undefined, webhookTimestamp, webhookKey), false);
+assert.equal(verifySendgridEventSignature(webhookPayload, webhookSignature, webhookTimestamp, 'invalid-key'), false);
+const [deliveredEvent] = parseSendgridDeliveryEvents(webhookPayload);
+assert.deepEqual(Object.keys(deliveredEvent).sort(), ['deliveryId', 'eventHash', 'state', 'timestamp']);
+assert.equal(parseSendgridDeliveryEvents(Buffer.from('[{"event":"delivered","email":"private@example.com"}]')).length, 0);
+assert.equal(parseSendgridDeliveryEvents(Buffer.from(JSON.stringify([{ academy_delivery_id: '../other', event: 'delivered', timestamp: 100, sg_event_id: 'event' }]))).length, 0);
+assert.throws(() => parseSendgridDeliveryEvents(Buffer.from('{}')));
+assert.throws(() => parseSendgridDeliveryEvents(Buffer.from(JSON.stringify(new Array(1001).fill({})))));
+assert.equal(shouldApplyDeliveryEvent({}, deliveredEvent), true);
+assert.equal(shouldApplyDeliveryEvent({ state: 'delivered', timestamp: 100, eventHash: deliveredEvent.eventHash }, deliveredEvent), false);
+assert.equal(shouldApplyDeliveryEvent({ state: 'delivered', timestamp: 100 }, { ...deliveredEvent, state: 'deferred', timestamp: 101 }), false);
+assert.equal(shouldApplyDeliveryEvent({ state: 'delivered', timestamp: 100 }, { ...deliveredEvent, state: 'bounce', timestamp: 99 }), false);
+assert.equal(shouldApplyDeliveryEvent({ state: 'delivered', timestamp: 100 }, { ...deliveredEvent, state: 'bounce', timestamp: 101 }), true);
+assert.equal(shouldApplyDeliveryEvent({ state: 'bounce', timestamp: 100 }, { ...deliveredEvent, timestamp: 100 }), false);
+const webhookSource = readFileSync('server/sendgridEventWebhook.ts', 'utf8');
+assert.match(webhookSource, /currentDocument.updateTime/);
+assert.ok(server.indexOf("app.post('/api/email/sendgrid/webhook'") < server.indexOf('app.use(express.json('));
+assert.match(delivery, /custom_args: \{ academy_delivery_id: deliveryId \}/);
+assert.match(view, /Zugestellt \(Empfängerserver\)/);
+try {
+  GoogleAuth.prototype.getClient = (async () => ({ getAccessToken: async () => ({ token: 'audit-token' }) })) as unknown as typeof originalGetClient;
+  let stored: Record<string, unknown> = { ownerUid: { stringValue: 'owner' }, campaignId: { stringValue: 'campaign' }, emailId: { stringValue: 'mail' }, status: { stringValue: 'reserved' } };
+  let writes = 0;
+  let conflict = true;
+  globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = new URL(String(input));
+    assert.ok(url.pathname.endsWith('/academyEmailDeliveries/' + webhookId));
+    if (init?.method !== 'PATCH') return new Response(JSON.stringify({ fields: stored, updateTime: '2026-10-01T00:00:00.000000Z' }));
+    assert.equal(url.searchParams.get('currentDocument.updateTime'), '2026-10-01T00:00:00.000000Z');
+    if (conflict) { conflict = false; return new Response('{}', { status: 412 }); }
+    const fields = JSON.parse(String(init.body)).fields;
+    assert.deepEqual(Object.keys(fields).sort(), ['deliveryEventHash', 'deliveryEventReceivedAt', 'deliveryEventTimestamp', 'deliveryState']);
+    stored = { ...stored, ...fields }; writes++;
+    return new Response('{}');
+  }) as typeof fetch;
+  await recordSendgridDeliveryEvents('audit-project', [deliveredEvent, deliveredEvent, { ...deliveredEvent, state: 'deferred', timestamp: 101, eventHash: 'different' }]);
+  assert.equal(writes, 1, 'Duplikate und spätere Verzögerungen dürfen Zustellstatus nicht überschreiben.');
+  assert.deepEqual(stored.status, { stringValue: 'reserved' }, 'Webhook und Worker müssen getrennte Statusfelder verwenden.');
+  globalThis.fetch = (async () => new Response('{}', { status: 404 })) as typeof fetch;
+  await recordSendgridDeliveryEvents('audit-project', [deliveredEvent]);
+  globalThis.fetch = (async () => new Response('{}', { status: 503 })) as typeof fetch;
+  await assert.rejects(recordSendgridDeliveryEvents('audit-project', [deliveredEvent]));
+} finally {
+  globalThis.fetch = originalFetch;
+  GoogleAuth.prototype.getClient = originalGetClient;
+}
+console.log('SendGrid-Webhooks geprüft: echte Signatur, manipulierte Daten, Ereigniszuordnung, Datensparsamkeit, Duplikate, Reihenfolge und parallele Schreibzugriffe.');

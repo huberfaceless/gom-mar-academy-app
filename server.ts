@@ -1,3 +1,4 @@
+import { verifySendgridEventSignature, parseSendgridDeliveryEvents, recordSendgridDeliveryEvents } from './server/sendgridEventWebhook.js';
 import { loadCampaignDeliveryReport } from './server/emailCampaignReportAdmin.js';
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
@@ -201,6 +202,25 @@ async function startServer() {
   const PORT = Number(process.env.PORT) || 3000;
   const recentEmailSends = new Map<string, number[]>();
   const recentLessonAudioRequests = new Map<string, number[]>();
+
+  app.post('/api/email/sendgrid/webhook', express.raw({ type: 'application/json', limit: '1mb' }), async (req, res) => {
+    const publicKey = process.env.SENDGRID_EVENT_WEBHOOK_PUBLIC_KEY?.trim();
+    if (!publicKey) { res.status(503).json({ error: 'SendGrid-Zustellmeldungen sind noch nicht konfiguriert.' }); return; }
+    if (!Buffer.isBuffer(req.body) || !verifySendgridEventSignature(req.body,
+      req.header('X-Twilio-Email-Event-Webhook-Signature'), req.header('X-Twilio-Email-Event-Webhook-Timestamp'), publicKey)) {
+      res.status(401).json({ error: 'Ungültige Webhook-Signatur.' }); return;
+    }
+    let events;
+    try { events = parseSendgridDeliveryEvents(req.body); }
+    catch { res.status(400).json({ error: 'Ungültige Zustellmeldungen.' }); return; }
+    try {
+      await recordSendgridDeliveryEvents(FIREBASE_PROJECT_ID, events);
+      res.json({ received: true });
+    } catch {
+      console.error('SendGrid-Zustellmeldungen konnten nicht gespeichert werden.');
+      res.status(503).json({ error: 'Zustellmeldungen bitte erneut übermitteln.' });
+    }
+  });
 
   app.post('/api/stripe/webhook', express.raw({ type: 'application/json', limit: '1mb' }), async (req, res) => {
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
