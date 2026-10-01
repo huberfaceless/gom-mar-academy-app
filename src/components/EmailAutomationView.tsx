@@ -85,6 +85,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   const [editDayOffset, setEditDayOffset] = useState<number>(0);
   const [editContent, setEditContent] = useState<string>('');
   const [isEditingCampaign, setIsEditingCampaign] = useState(false);
+  const campaignNameInputRef = useRef<HTMLInputElement>(null);
+  const focusCampaignEditor = () => {
+    const input = campaignNameInputRef.current;
+    if (!input) return;
+    input.scrollIntoView({ block: 'center', behavior: 'instant' });
+    input.focus({ preventScroll: true });
+  };
+  useEffect(() => {
+    if (isEditingCampaign) focusCampaignEditor();
+  }, [isEditingCampaign]);
   const [campaignTitle, setCampaignTitle] = useState('');
   const [campaignTargetAudience, setCampaignTargetAudience] = useState('');
   const [campaignDescription, setCampaignDescription] = useState('');
@@ -378,6 +388,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     setCampaignDescription(activeCampaign.description);
     setCampaignActionError(null);
     setIsEditingCampaign(true);
+    if (isEditingCampaign) focusCampaignEditor();
   };
 
   const handleSaveCampaign = async (event: React.FormEvent) => {
@@ -997,6 +1008,8 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   <button
                     type="button"
                     onClick={handleOpenCampaignEditor}
+                    aria-expanded={isEditingCampaign}
+                    aria-controls="campaign-editor"
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 hover:text-indigo-900"
                   >
                     <Edit className="h-3.5 w-3.5" />
@@ -1045,10 +1058,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <p className="text-xs text-slate-600">Jede E-Mail wird pro Empfänger höchstens einmal automatisch versendet. Fortsetzen oder erneute Einwilligung versendet bereits übergebene E-Mails nicht erneut. Für einen neuen Test eine neue E-Mail hinzufügen.</p>
 
               {isEditingCampaign && (
-                <form onSubmit={handleSaveCampaign} className="space-y-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4">
+                <form id="campaign-editor" onSubmit={handleSaveCampaign} className="space-y-4 rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4">
                   <div>
-                    <label className="mb-1 block text-xs font-bold text-slate-700">Kampagnenname *</label>
+                    <label htmlFor="campaign-name" className="mb-1 block text-xs font-bold text-slate-700">Kampagnenname *</label>
                     <input
+                      id="campaign-name"
+                      ref={campaignNameInputRef}
                       required
                       maxLength={200}
                       value={campaignTitle}
