@@ -1118,7 +1118,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="min-w-0">
                     <h4 className="font-bold text-slate-900">Versandprotokoll der ausgewählten Kampagne</h4>
-                    <p className="mt-1 break-words text-base font-bold text-indigo-700">{activeCampaign.name}</p>
+                    <p className="mt-1 break-words text-base font-bold text-indigo-700">{activeCampaign.title}</p>
                     <p className="mt-1 text-xs text-slate-600">{activeCampaign.status === 'active' ? 'Aktiv' : activeCampaign.status === 'paused' ? 'Pausiert' : 'Entwurf'} · Dieses Protokoll zeigt ausschließlich die ausgewählte Kampagne.</p>
                   </div>
                   <button type="button" onClick={() => setReportVersion(version => version + 1)} className="text-xs font-bold text-indigo-700">Status aktualisieren</button>
@@ -1142,7 +1142,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     <Activity className="w-5 h-5 text-indigo-600" />
                     E-Mail-Serie
                   </h3>
-                  <p className="mt-1 break-words text-sm font-bold text-indigo-700">{activeCampaign.name}</p>
+                  <p className="mt-1 break-words text-sm font-bold text-indigo-700">{activeCampaign.title}</p>
                   <p className="text-xs text-slate-500 mt-1">
                     {activeCampaign.emails.length > 0
                       ? `${activeCampaign.emails.length} E-Mails • Versand nach Start und bestätigter Einwilligung`
