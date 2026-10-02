@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 text-slate-900' 
           : 'bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-slate-100'
       } w-full max-w-full overflow-x-hidden px-3 sm:px-4 lg:px-8 py-3 shadow-xs transition-colors duration-200`}>
-        <div className="max-w-7xl min-w-0 mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4">
+        <div className="max-w-7xl min-w-0 mx-auto grid grid-cols-1 lg:grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5 sm:gap-4">
           
           {/* LEFT: Branding/Badge on desktop */}
           <div className="hidden lg:flex items-center gap-2 text-xs">
@@ -81,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* CENTER: GOM-MAR Academy Headline & Logo */}
           <div 
-            className="flex min-w-0 w-full sm:w-auto flex-col items-center justify-center text-center cursor-pointer group flex-1"
+            className="order-first lg:col-span-2 flex min-w-0 w-full flex-col items-center justify-center text-center cursor-pointer group"
             onClick={() => onNavigate('dashboard')}
           >
             <div className="flex min-w-0 items-center justify-center gap-2 sm:gap-3">
@@ -93,11 +93,11 @@ export const Header: React.FC<HeaderProps> = ({
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
-                <h1 className={`font-black whitespace-nowrap text-lg min-[380px]:text-xl sm:text-2xl md:text-3xl tracking-tight leading-none ${isLight ? 'text-slate-950' : 'text-white'}`}>
+              <div className="flex min-w-0 flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+                <h1 className={`font-black text-lg min-[380px]:text-xl sm:text-2xl md:text-3xl tracking-tight leading-tight ${isLight ? 'text-slate-950' : 'text-white'}`}>
                   GOM-MAR Academy
                 </h1>
-                <span className="bg-indigo-600 text-white font-extrabold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm shadow-indigo-600/30">
+                <span className="shrink-0 bg-indigo-600 text-white font-extrabold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm shadow-indigo-600/30">
                   {user.tier}
                 </span>
               </div>
@@ -108,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* RIGHT: Actions (Admin / Auth) */}
-          <div className="w-full sm:w-auto min-w-0 flex flex-wrap items-center justify-center sm:justify-end gap-2">
+          <div className="w-full min-w-0 flex flex-wrap items-center justify-center lg:justify-end gap-2">
             {isAuthenticated && isEmailVerified && onOpenFragGommar && (
               <button
                 type="button"
