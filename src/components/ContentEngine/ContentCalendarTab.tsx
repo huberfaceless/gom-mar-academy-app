@@ -751,7 +751,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       )}
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => setPlatformFilter('all')}
@@ -811,13 +811,13 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           return (
             <div
               key={item.id}
-              className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 transition-all hover:border-slate-300"
+              className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-stretch gap-4 transition-all hover:border-slate-300"
             >
               <div className="flex items-start gap-3.5 min-w-0">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center border shrink-0 ${item.color}`}>
                   <Icon className="w-5 h-5" />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                       {item.platformLabel}
@@ -826,17 +826,17 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                       {statusConf.label}
                     </span>
                     {matchingJob && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1">
-                        <Zap className="w-2.5 h-2.5" />
-                        Warteschlangenauftrag: #{matchingJob.id.slice(-5)} ({getStatusLabel(matchingJob.status)})
+                      <span className="max-w-full text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1">
+                        <Zap className="w-2.5 h-2.5 shrink-0" />
+                        <span className="min-w-0 break-words">Warteschlangenauftrag: #{matchingJob.id.slice(-5)} ({getStatusLabel(matchingJob.status)})</span>
                       </span>
                     )}
                   </div>
-                  <h4 className="text-sm font-bold text-slate-900 truncate mt-0.5 max-w-xl">
+                  <h4 className="text-sm font-bold text-slate-900 break-words mt-0.5">
                     {item.title}
                   </h4>
                   {item.targetUrl && (
-                    <p className="text-[11px] text-slate-400 truncate max-w-md mt-0.5">
+                    <p className="text-[11px] text-slate-400 break-all mt-0.5">
                       Ziel-URL: {item.targetUrl}
                     </p>
                   )}
@@ -844,22 +844,22 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
               </div>
 
               {/* Status & Date Controls */}
-              <div className="flex flex-wrap items-center gap-2.5 shrink-0 self-end lg:self-center">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
+              <div className="flex min-w-0 flex-wrap items-center justify-end gap-2.5 border-t border-slate-100 pt-3">
+                <div className="flex min-w-0 max-w-full items-center gap-1.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
                   <CalendarIcon className="w-3.5 h-3.5 text-slate-400" />
                   <input
                     type="datetime-local"
                     step="60"
                     value={item.scheduledDate}
                     onChange={(e) => handleDateChange(item.id, e.target.value)}
-                    className="bg-transparent text-xs font-semibold text-slate-700 outline-hidden cursor-pointer"
+                    className="min-w-0 max-w-full bg-transparent text-xs font-semibold text-slate-700 outline-hidden cursor-pointer"
                   />
                 </div>
 
                 <select
                   value={toCanonicalStatus(item.status)}
                   onChange={(e) => handleStatusChange(item.id, e.target.value as ContentStatus)}
-                  className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 outline-hidden cursor-pointer"
+                  className="max-w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 outline-hidden cursor-pointer"
                 >
                   <option value="DRAFT">Entwurf</option>
                   <option value="GENERATING">KI Generiert</option>
@@ -884,8 +884,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     <span>Warteschlange</span>
                   </button>
                 ) : item.platform === 'YOUTUBE' || item.platform === 'INSTAGRAM' ? (
-                  <span className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-bold rounded-xl border border-purple-200 flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5" />
+                  <span className="max-w-full px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-bold rounded-xl border border-purple-200 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 shrink-0" />
                     <span>Automatische Veröffentlichung geplant</span>
                   </span>
                 ) : (
