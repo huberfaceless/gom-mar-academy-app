@@ -40,7 +40,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
     setPublished(null);
     const canvas = document.createElement('canvas');
     void renderPinToCanvas(canvas, pin, projectSettings, { width: 1080, height: 1350 })
-      .then(() => setPreviewDataUrl(canvas.toDataURL('image/png', 0.92)))
+      .then(() => setPreviewDataUrl(canvas.toDataURL('image/jpeg', 0.82)))
       .catch(() => setError('Die Instagram-Grafik konnte nicht erstellt werden.'));
     void instagramService.getConnectionStatus()
       .then(setConnection)

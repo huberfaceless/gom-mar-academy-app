@@ -6,6 +6,7 @@ const connection = readFileSync('server/instagramConnectionAdmin.ts', 'utf8');
 const client = readFileSync('src/services/instagramService.ts', 'utf8');
 const modal = readFileSync('src/components/ContentEngine/InstagramPublishModal.tsx', 'utf8');
 const instagramTab = readFileSync('src/components/ContentEngine/InstagramPostsTab.tsx', 'utf8');
+const calendar = readFileSync('src/components/ContentEngine/ContentCalendarTab.tsx', 'utf8');
 const pins = readFileSync('src/components/ContentEngine/PinterestPinsTab.tsx', 'utf8');
 const legal = readFileSync('src/components/LegalModal.tsx', 'utf8');
 const publicPrivacy = readFileSync('public/privacy/index.html', 'utf8');
@@ -30,6 +31,9 @@ assert.match(client, /authenticatedFetch\('\/api\/instagram\/oauth\/start'/, 'De
 assert.doesNotMatch(client, /client_secret|access_token/i, 'Instagram-Geheimnisse dürfen nicht in den Browser gelangen.');
 assert.match(modal, /Instagram verbinden/, 'Die Oberfläche muss eine Instagram-Verbindung anbieten.');
 assert.match(modal, /width: 1080, height: 1350/, 'Instagram-Grafiken müssen im Feed-Format 4:5 erstellt werden.');
+assert.match(modal, /canvas\.toDataURL\('image\/jpeg', 0\.82\)/, 'Direkte Instagram-Veröffentlichungen müssen dieselbe JPEG-Kodierung wie die Queue verwenden.');
+assert.match(calendar, /canvas\.toDataURL\('image\/jpeg', 0\.82\)/, 'Geplante Instagram-Veröffentlichungen müssen JPEG verwenden.');
+assert.doesNotMatch(modal, /toDataURL\('image\/png'/, 'Die direkte Instagram-Veröffentlichung darf keine PNG-Grafik versenden.');
 assert.match(modal, /aspect-\[4\/5\]/, 'Die Instagram-Vorschau muss das Feed-Format 4:5 zeigen.');
 assert.doesNotMatch(pins, /Auf Instagram posten/, 'Pinterest- und Instagram-Veröffentlichung müssen getrennte Bereiche haben.');
 assert.match(instagramTab, /Auf Instagram veröffentlichen/, 'Der getrennte Instagram-Bereich muss eine Veröffentlichung anbieten.');
