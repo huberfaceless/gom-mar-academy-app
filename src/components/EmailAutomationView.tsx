@@ -1117,7 +1117,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="min-w-0">
-                    <h4 className="font-bold text-slate-900">Versandprotokoll</h4>
+                    <h4 className="font-bold text-slate-900">Versandprotokoll der ausgewählten Kampagne</h4>
                     <p className="mt-1 break-words text-base font-bold text-indigo-700">{activeCampaign.name}</p>
                     <p className="mt-1 text-xs text-slate-600">{activeCampaign.status === 'active' ? 'Aktiv' : activeCampaign.status === 'paused' ? 'Pausiert' : 'Entwurf'} · Dieses Protokoll zeigt ausschließlich die ausgewählte Kampagne.</p>
                   </div>
