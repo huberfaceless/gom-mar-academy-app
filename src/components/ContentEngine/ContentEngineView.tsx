@@ -439,16 +439,16 @@ export const ContentEngineView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 pb-20">
+    <div className="w-full min-w-0 max-w-7xl mx-auto space-y-6 pb-20">
       {/* Top Banner: Project Switcher & Brand Header */}
-      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
+      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-xs flex min-w-0 flex-col items-stretch gap-4">
+        <div className="flex min-w-0 items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/20 shrink-0">
             <Layers className="w-6 h-6" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight break-words">
                 KI-Inhaltszentrale
               </h1>
               <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
@@ -462,9 +462,9 @@ export const ContentEngineView: React.FC = () => {
         </div>
 
         {/* Project Selector & Settings */}
-        <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full md:w-auto">
-          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
-            <Building2 className="w-4 h-4 text-emerald-600" />
+        <div className="flex min-w-0 w-full flex-wrap items-center gap-2.5">
+          <div className="flex min-w-0 w-full sm:w-auto sm:flex-1 items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
+            <Building2 className="w-4 h-4 shrink-0 text-emerald-600" />
             <select
               value={selectedProjectId}
               onChange={(e) => {
@@ -474,7 +474,7 @@ export const ContentEngineView: React.FC = () => {
                 setErrorMsg(null);
                 setSaveNotice(null);
               }}
-              className="bg-transparent text-xs font-bold text-slate-800 outline-hidden cursor-pointer"
+              className="min-w-0 w-full bg-transparent text-xs font-bold text-slate-800 outline-hidden cursor-pointer truncate"
             >
               {projects.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -490,7 +490,7 @@ export const ContentEngineView: React.FC = () => {
               setProjectBeingEdited(activeProjectSettings);
               setIsSettingsModalOpen(true);
             }}
-            className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl shadow-xs transition-colors inline-flex items-center gap-2 text-xs font-bold"
+            className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl shadow-xs transition-colors inline-flex max-w-full items-center gap-2 text-xs font-bold"
             title="Projekt-Einstellungen bearbeiten"
           >
             <Settings className="w-4 h-4" />
