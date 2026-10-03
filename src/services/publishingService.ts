@@ -429,6 +429,10 @@ export class PublishingService {
       };
     }
 
+    if (job.publicationUncertain) {
+      throw new Error('Bitte zuerst das Instagram-Profil prüfen. Dieser Auftrag hat einen unklaren Veröffentlichungsstatus.');
+    }
+
     const currentAttempts = job.status === 'PUBLISHING' ? (job.attempts || 1) : ((job.attempts || 0) + 1);
     const maxAttempts = job.maxAttempts || 3;
 
@@ -483,7 +487,7 @@ export class PublishingService {
     if (isSuccess) {
       finalStatus = 'PUBLISHED';
     } else {
-      const isFatal = currentAttempts >= maxAttempts || result.status === 'NOT_IMPLEMENTED';
+      const isFatal = currentAttempts >= maxAttempts || result.status === 'NOT_IMPLEMENTED' || result.publicationUncertain === true;
       if (isFatal) {
         finalStatus = 'FAILED';
       } else {
@@ -521,6 +525,7 @@ export class PublishingService {
     // 5. UPDATE FIRESTORE JOB & RELEASE LOCK
     const updatedJob: PublishingJob = {
       ...job,
+      publicationUncertain: result.publicationUncertain === true,
       status: finalStatus,
       attempts: currentAttempts,
       lastError: isSuccess ? undefined : (cleanError || 'Veröffentlichung nicht erfolgreich'),
@@ -568,6 +573,9 @@ export class PublishingService {
     youtubeVideoPublisher?: YouTubeVideoPublisher,
     instagramImagePublisher?: InstagramImagePublisher,
   ): Promise<{ job: PublishingJob; result: PublishResult }> {
+    if (job.publicationUncertain) {
+      throw new Error('Unklarer Instagram-Status: Bitte das Profil prüfen. Eine erneute Veröffentlichung ist gesperrt.');
+    }
     const resetJob: PublishingJob = {
       ...job,
       attempts: 0,

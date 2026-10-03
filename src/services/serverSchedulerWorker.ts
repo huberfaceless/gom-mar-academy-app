@@ -15,6 +15,7 @@ import {
 } from '../../server/publishingQueueAdmin.js';
 import { publishExistingYouTubeVideo } from '../../server/youtubeConnectionAdmin.js';
 import { loadPinterestAccessToken } from '../../server/pinterestConnectionAdmin.js';
+import { InstagramPublicationUncertainError } from '../../server/instagramPublishingGuard.js';
 import { publishInstagramImage } from '../../server/instagramConnectionAdmin.js';
 import { runEmailCampaignDeliveries } from '../../server/emailCampaignDeliveryAdmin.js';
 
@@ -256,6 +257,7 @@ export class ServerSchedulerWorker {
                 {
                   caption: instagramJob.payload?.description || instagramJob.payload?.title || '',
                   imageBase64,
+                  publishingJobId: instagramJob.id,
                 },
               );
               return {
@@ -269,6 +271,7 @@ export class ServerSchedulerWorker {
                 success: false,
                 status: 'FAILED',
                 error: error instanceof Error ? error.message : 'Die Instagram-Veröffentlichung ist fehlgeschlagen.',
+                publicationUncertain: error instanceof InstagramPublicationUncertainError,
               };
             }
           },

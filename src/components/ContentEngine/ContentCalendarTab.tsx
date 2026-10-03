@@ -652,6 +652,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       });
       return;
     }
+    if (job.platform === 'INSTAGRAM') {
+      setActionNotice({ text: 'Instagram-Inhalte werden zum geplanten Zeitpunkt durch den Server veröffentlicht.', type: 'info' });
+      return;
+    }
     setActiveJobRunningId(job.id);
     setActionNotice(null);
 
@@ -707,6 +711,15 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     setActionNotice(null);
 
     try {
+      if (job.publicationUncertain) throw new Error('Bitte zuerst das Instagram-Profil prüfen. Dieser Auftrag ist zum Schutz vor Doppelposts gesperrt.');
+      if (job.platform === 'INSTAGRAM') {
+        await FirestoreContentService.updatePublishingJobStatus(user.uid, job.id, 'SCHEDULED', undefined, {
+          attempts: 0, nextAttemptAt: new Date().toISOString(),
+        });
+        await loadJobs();
+        setActionNotice({ text: 'Der Server prüft den Instagram-Auftrag im nächsten Durchlauf erneut.', type: 'info' });
+        return;
+      }
       const { result } = await PublishingService.retryJob(
         user.uid,
         job,
@@ -1119,7 +1132,11 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         )}
                       </td>
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
-                        {job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
+                        {job.publicationUncertain ? (
+                          <span className="text-[10px] font-bold text-amber-300" title={job.lastError}>Instagram-Profil prüfen</span>
+                        ) : job.platform === 'INSTAGRAM' && job.status !== 'FAILED' ? (
+                          <span className="text-[10px] font-bold text-fuchsia-300">Automatisch geplant</span>
+                        ) : job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
                           <span className="text-[10px] font-bold text-red-300">Automatisch geplant</span>
                         ) : !(
                           (job.platform === 'PINTEREST' && job.contentType === 'PIN')

@@ -279,6 +279,7 @@ export interface PublishingJob {
   publishedAt?: string;
   publishedUrl?: string;
   externalId?: string;
+  publicationUncertain?: boolean;
   // 🔒 Atomic Locking & Crash Recovery
   lockedAt?: string;
   lockedBy?: string;
@@ -302,6 +303,7 @@ export interface SchedulerJob {
 
 // Result abstraction for PublishingService
 export interface PublishResult {
+  publicationUncertain?: boolean;
   success: boolean;
   status: 'PUBLISHED' | 'NOT_CONNECTED' | 'NOT_IMPLEMENTED' | 'FAILED';
   externalId?: string;
