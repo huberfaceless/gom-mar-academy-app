@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { 
   Calendar as CalendarIcon, 
@@ -150,15 +150,19 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const [isTriggeringSweep, setIsTriggeringSweep] = useState<boolean>(false);
   const [selectedLogJob, setSelectedLogJob] = useState<PublishingJob | null>(null);
 
+  const jobsRequestId = useRef(0);
+
   // Load Publishing & Scheduler jobs from Firestore and fetch backend scheduler status
-  const loadJobs = async () => {
+  const loadJobs = useCallback(async (silent = false) => {
     if (!user?.uid) return;
-    setIsLoadingJobs(true);
+    const requestId = ++jobsRequestId.current;
+    if (!silent) setIsLoadingJobs(true);
     try {
       const [pJobs, sJobs] = await Promise.all([
         FirestoreContentService.getPublishingJobs(user.uid, project.id),
         FirestoreContentService.getSchedulerJobs(user.uid),
       ]);
+      if (requestId !== jobsRequestId.current) return;
       setPublishingJobs(pJobs);
       setSchedulerJobs(sJobs);
 
@@ -166,7 +170,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       authenticatedFetch('/api/scheduler/status')
         .then(res => res.json())
         .then(data => {
-          if (data.success) {
+          if (data.success && requestId === jobsRequestId.current) {
             setSchedulerServerStatus(data);
           }
         })
@@ -174,9 +178,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     } catch (err) {
       console.warn('Error loading publishing jobs:', err);
     } finally {
-      setIsLoadingJobs(false);
+      if (requestId === jobsRequestId.current) setIsLoadingJobs(false);
     }
-  };
+  }, [project.id, user?.uid]);
 
   // Trigger server background sweep manually
   const handleTriggerServerSweep = async () => {
@@ -212,8 +216,20 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   };
 
   useEffect(() => {
-    loadJobs();
-  }, [project.id, user?.uid]);
+    void loadJobs();
+    const refreshVisibleJobs = () => {
+      if (document.visibilityState === 'visible') void loadJobs(true);
+    };
+    const refreshTimer = window.setInterval(refreshVisibleJobs, 30_000);
+    document.addEventListener('visibilitychange', refreshVisibleJobs);
+    window.addEventListener('focus', refreshVisibleJobs);
+    return () => {
+      window.clearInterval(refreshTimer);
+      document.removeEventListener('visibilitychange', refreshVisibleJobs);
+      window.removeEventListener('focus', refreshVisibleJobs);
+      ++jobsRequestId.current;
+    };
+  }, [loadJobs]);
 
   // Unified items list
   const items: Array<{
@@ -1001,7 +1017,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
             <button
               type="button"
-              onClick={loadJobs}
+              onClick={() => void loadJobs()}
               disabled={isLoadingJobs}
               className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer"
             >
