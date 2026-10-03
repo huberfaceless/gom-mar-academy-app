@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { build } from 'esbuild';
 
 const worker = readFileSync('src/services/serverSchedulerWorker.ts', 'utf8');
 const publishing = readFileSync('src/services/publishingService.ts', 'utf8');
@@ -169,4 +170,99 @@ assert.doesNotMatch(publishing, /YouTube Shorts Upload API ist in dieser Entwick
 assert.match(calendar, /job\.platform === 'YOUTUBE' && \(job\.contentType === 'VIDEO' \|\| job\.contentType === 'SHORT'\)/,
   'Lang- und Kurzvideo-Aufträge müssen in der Warteschlange als automatisch geplant angezeigt werden.');
 
-console.log('Publishing-Persistenz geprüft: serverseitiger Firestore-Zugriff und lokale Benutzertrennung sind aktiv.');
+assert.match(calendar, /await FirestoreContentService\.reschedulePublishingJob/,
+  'Datumsänderungen bestehender Aufträge müssen von Firestore bestätigt werden.');
+assert.match(calendar, /formatLocalDateTime\(matchingJob\.scheduledAt\)/,
+  'Datumsfelder müssen den tatsächlichen Auftragstermin anzeigen.');
+
+// Den echten Service mit einem isolierten Firestore-Adapter ausführen: kein Cloud-Zugriff.
+let documents: Record<string, any> = {};
+let cachedPublishing: any[] = [];
+let cachedScheduler: any[] = [];
+let failCommit = false;
+const deletedField = '__deleted__';
+const snapshot = (key: string) => ({ id: key.split('/').pop(), exists: () => Boolean(documents[key]), data: () => structuredClone(documents[key]) });
+const mock = {
+  doc: (_db: unknown, collection: string, id: string) => `${collection}/${id}`,
+  collection: (_db: unknown, name: string) => name,
+  query: (...parts: any[]) => parts,
+  where: (...parts: any[]) => parts,
+  getDocs: async () => ({ docs: Object.keys(documents).filter(key => key.startsWith('schedulerJobs/')).map(snapshot) }),
+  deleteField: () => deletedField,
+  runTransaction: async (_db: unknown, callback: (transaction: any) => Promise<void>) => {
+    const writes: Array<{ key: string; fields: any }> = [];
+    await callback({ get: async (key: string) => snapshot(key), update: (key: string, fields: any) => writes.push({ key, fields }) });
+    if (failCommit) throw new Error('simulierter Cloud-Fehler');
+    for (const write of writes) {
+      for (const [field, value] of Object.entries(write.fields)) {
+        if (value === deletedField) delete documents[write.key][field];
+        else documents[write.key][field] = value;
+      }
+    }
+  },
+  loadAllPublishingJobs: () => structuredClone(cachedPublishing),
+  saveAllPublishingJobs: (jobs: any[]) => { cachedPublishing = structuredClone(jobs); },
+  loadAllSchedulerJobs: () => structuredClone(cachedScheduler),
+  saveAllSchedulerJobs: (jobs: any[]) => { cachedScheduler = structuredClone(jobs); },
+};
+(globalThis as any).__publishingScheduleAudit = mock;
+const bundled = await build({
+  entryPoints: ['src/services/firestoreContentService.ts'], bundle: true, write: false, format: 'esm', platform: 'node',
+  plugins: [{ name: 'isolated-firestore', setup(builder) {
+    builder.onResolve({ filter: /^firebase\/firestore$|firebase\/config$|utils\/contentStorage$/ }, args => ({ path: args.path, namespace: 'audit-mock' }));
+    builder.onLoad({ filter: /.*/, namespace: 'audit-mock' }, args => {
+      if (args.path.endsWith('firebase/config')) return { contents: 'export const db = {}; export const isFirestoreOperational = () => true; export const handleFirestoreError = () => {};', loader: 'js' };
+      const names = args.path === 'firebase/firestore'
+        ? ['collection', 'doc', 'setDoc', 'getDoc', 'getDocs', 'query', 'where', 'deleteDoc', 'updateDoc', 'runTransaction', 'deleteField']
+        : ['loadAllProjectSettings', 'saveAllProjectSettings', 'loadAllContentProjects', 'saveAllContentProjects', 'loadAllPublishingJobs', 'saveAllPublishingJobs', 'loadAllSchedulerJobs', 'saveAllSchedulerJobs', 'DEFAULT_VITAL50_PROJECT', 'migrateLegacyContentStorage'];
+      return { contents: names.map(name => `export const ${name} = (...args) => globalThis.__publishingScheduleAudit.${name}(...args);`).join('\n'), loader: 'js' };
+    });
+  } }],
+});
+const { FirestoreContentService: scheduleService } = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString('base64')}`);
+const oldDate = '2026-10-04T07:00:00.000Z';
+const newDate = '2026-10-03T07:10:00.000Z';
+const resetSchedule = () => {
+  documents = {
+    'publishingJobs/job': { id: 'job', userId: 'owner', status: 'SCHEDULED', scheduledAt: oldDate, attempts: 0, nextAttemptAt: oldDate, payload: { title: 'Test' } },
+    'schedulerJobs/scheduler': { id: 'scheduler', userId: 'owner', publishingJobId: 'job', status: 'PENDING', scheduledAt: oldDate },
+    'publishingJobs/other': { id: 'other', userId: 'owner', status: 'SCHEDULED', scheduledAt: oldDate },
+  };
+  cachedPublishing = [structuredClone(documents['publishingJobs/job'])];
+  cachedScheduler = [structuredClone(documents['schedulerJobs/scheduler'])];
+  failCommit = false;
+};
+resetSchedule();
+await scheduleService.reschedulePublishingJob('owner', 'job', newDate);
+assert.equal(documents['publishingJobs/job'].scheduledAt, newDate);
+assert.equal(documents['schedulerJobs/scheduler'].scheduledAt, newDate);
+assert.equal(cachedPublishing[0].scheduledAt, newDate);
+assert.equal(cachedScheduler[0].scheduledAt, newDate);
+assert.equal(documents['publishingJobs/other'].scheduledAt, oldDate);
+assert.equal(documents['publishingJobs/job'].status, 'SCHEDULED');
+assert.equal(documents['publishingJobs/job'].attempts, 0);
+assert.equal(documents['publishingJobs/job'].payload.title, 'Test');
+assert.equal(documents['publishingJobs/job'].nextAttemptAt, undefined);
+for (const status of ['PUBLISHING', 'PUBLISHED', 'FAILED', 'CANCELLED']) {
+  resetSchedule(); documents['publishingJobs/job'].status = status;
+  await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'job', newDate), /Nur wartende/);
+  assert.equal(documents['publishingJobs/job'].scheduledAt, oldDate);
+  assert.equal(documents['schedulerJobs/scheduler'].scheduledAt, oldDate);
+}
+resetSchedule();
+await assert.rejects(scheduleService.reschedulePublishingJob('stranger', 'job', newDate), /gehört nicht/);
+await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'missing', newDate), /nicht gefunden/);
+await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'job', 'ungültig'), /gültiges Datum/);
+resetSchedule(); documents['publishingJobs/job'].externalId = 'already-published';
+await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'job', newDate), /Nur wartende/);
+resetSchedule(); documents['schedulerJobs/scheduler'].status = 'RUNNING';
+await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'job', newDate), /nicht mehr verschoben/);
+resetSchedule(); failCommit = true;
+await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'job', newDate), /Cloud-Fehler/);
+assert.equal(documents['publishingJobs/job'].scheduledAt, oldDate);
+assert.equal(documents['schedulerJobs/scheduler'].scheduledAt, oldDate);
+assert.equal(cachedPublishing[0].scheduledAt, oldDate);
+assert.equal(cachedScheduler[0].scheduledAt, oldDate);
+delete (globalThis as any).__publishingScheduleAudit;
+
+console.log('Publishing-Persistenz geprüft: Terminänderung, gemeinsame Cloud-Aktualisierung, Statusschutz und Fehlerfälle erfolgreich.');

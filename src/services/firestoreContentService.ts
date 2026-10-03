@@ -7,7 +7,9 @@ import {
   query, 
   where, 
   deleteDoc, 
-  updateDoc 
+  updateDoc,
+  runTransaction,
+  deleteField
 } from 'firebase/firestore';
 import { db, isFirestoreOperational, handleFirestoreError } from '../firebase/config';
 import { 
@@ -234,6 +236,50 @@ export class FirestoreContentService {
       current.unshift(dataToSave);
     }
     saveAllPublishingJobs(current, userId);
+  }
+
+  static async reschedulePublishingJob(userId: string, jobId: string, scheduledAt: string): Promise<void> {
+    const date = new Date(scheduledAt);
+    if (!userId || !Number.isFinite(date.getTime())) {
+      throw new Error('Bitte wähle ein gültiges Datum und eine gültige Uhrzeit.');
+    }
+    const normalizedDate = date.toISOString();
+    const schedulerSnapshot = await firestoreWithTimeout(getDocs(query(
+      collection(db, COLLECTION_SCHEDULER_JOBS), where('userId', '==', userId),
+    )), FIRESTORE_WRITE_TIMEOUT_MS);
+    const schedulerRefs = schedulerSnapshot.docs
+      .filter(snapshot => snapshot.data().publishingJobId === jobId)
+      .map(snapshot => doc(db, COLLECTION_SCHEDULER_JOBS, snapshot.id));
+    const updatedAt = new Date().toISOString();
+    await firestoreWithTimeout(runTransaction(db, async transaction => {
+      const jobRef = doc(db, COLLECTION_PUBLISHING_JOBS, jobId);
+      const snapshot = await transaction.get(jobRef);
+      if (!snapshot.exists()) throw new Error('Der Veröffentlichungsauftrag wurde nicht gefunden.');
+      const job = snapshot.data() as PublishingJob;
+      if (job.userId !== userId) throw new Error('Dieser Veröffentlichungsauftrag gehört nicht zu deinem Konto.');
+      if (job.status !== 'SCHEDULED' || job.publishedAt || job.externalId) {
+        throw new Error('Nur wartende Aufträge können verschoben werden. Der Auftrag wird möglicherweise bereits veröffentlicht.');
+      }
+      const schedulerDocuments = await Promise.all(schedulerRefs.map(ref => transaction.get(ref)));
+      for (const scheduler of schedulerDocuments) {
+        if (!scheduler.exists()) continue;
+        const data = scheduler.data() as SchedulerJob;
+        if (data.userId !== userId || data.publishingJobId !== jobId || data.status !== 'PENDING') {
+          throw new Error('Der Scheduler-Auftrag kann nicht mehr verschoben werden. Bitte aktualisiere die Ansicht.');
+        }
+      }
+      transaction.update(jobRef, { scheduledAt: normalizedDate, updatedAt, nextAttemptAt: deleteField() });
+      for (let index = 0; index < schedulerDocuments.length; index++) {
+        if (schedulerDocuments[index].exists()) {
+          transaction.update(schedulerRefs[index], { scheduledAt: normalizedDate, updatedAt });
+        }
+      }
+    }), FIRESTORE_WRITE_TIMEOUT_MS);
+    // Lokale Spiegel erst nach der bestätigten gemeinsamen Cloud-Aktualisierung ändern.
+    saveAllPublishingJobs(loadAllPublishingJobs(userId).map(job => job.id === jobId
+      ? { ...job, scheduledAt: normalizedDate, updatedAt, nextAttemptAt: undefined } : job), userId);
+    saveAllSchedulerJobs(loadAllSchedulerJobs(userId).map(job => job.publishingJobId === jobId
+      ? { ...job, scheduledAt: normalizedDate, updatedAt } : job), userId);
   }
 
   static async updatePublishingJobStatus(
