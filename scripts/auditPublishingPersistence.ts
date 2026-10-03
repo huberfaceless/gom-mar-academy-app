@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
+import { selectContentProjectScope } from '../src/utils/contentProjectSelection';
+import type { CentralContentProject } from '../src/types/contentEngine';
 
 const worker = readFileSync('src/services/serverSchedulerWorker.ts', 'utf8');
 const publishing = readFileSync('src/services/publishingService.ts', 'utf8');
@@ -266,3 +268,24 @@ assert.equal(cachedScheduler[0].scheduledAt, oldDate);
 delete (globalThis as any).__publishingScheduleAudit;
 
 console.log('Publishing-Persistenz geprüft: Terminänderung, gemeinsame Cloud-Aktualisierung, Statusschutz und Fehlerfälle erfolgreich.');
+
+// A selection in another category must never leak into the displayed calendar.
+const scopeFixture = [
+  { id: 'vital-a', topic: 'Gemeinsamer Titel', projectSettings: { id: 'vital50' } },
+  { id: 'business-a', topic: 'Gemeinsamer Titel', projectSettings: { id: 'business' } },
+  { id: 'vital-b', topic: 'Weiteres Thema', projectSettings: { id: 'vital50' } },
+  { id: 'legacy', topic: 'Ohne Zuordnung' },
+] as CentralContentProject[];
+const scopeBefore = structuredClone(scopeFixture);
+const vitalScope = selectContentProjectScope(scopeFixture, 'vital50', 'business-a');
+assert.deepEqual(vitalScope.scopedProjects.map(project => project.id), ['vital-a', 'vital-b']);
+assert.equal(vitalScope.activeProject?.id, 'vital-a');
+assert.equal(selectContentProjectScope(scopeFixture, 'vital50', 'vital-b').activeProject?.id, 'vital-b');
+const businessScope = selectContentProjectScope(scopeFixture, 'business', 'vital-b');
+assert.deepEqual(businessScope.scopedProjects.map(project => project.id), ['business-a']);
+assert.equal(businessScope.activeProject?.id, 'business-a');
+assert.equal(selectContentProjectScope(scopeFixture, 'empty', 'vital-a').activeProject, null);
+assert.deepEqual(selectContentProjectScope(scopeFixture, 'empty').scopedProjects, []);
+assert.equal(selectContentProjectScope(scopeFixture.filter(project => project.id !== 'vital-b'), 'vital50', 'vital-b').activeProject?.id, 'vital-a');
+assert.deepEqual(scopeFixture, scopeBefore);
+console.log('Kategorieauswahl geprüft: Vital50 und Online Business getrennt, leere Bereiche und gelöschte Auswahl berücksichtigt.');

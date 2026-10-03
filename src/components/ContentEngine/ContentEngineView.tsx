@@ -48,6 +48,7 @@ import { PinterestPinsTab } from './PinterestPinsTab';
 import { InstagramPostsTab } from './InstagramPostsTab';
 import { YouTubeScriptTab } from './YouTubeScriptTab';
 import { ContentCalendarTab } from './ContentCalendarTab';
+import { selectContentProjectScope } from '../../utils/contentProjectSelection';
 
 const SUGGESTED_TOPICS_VITAL50 = [
   'Bauchfett verlieren ab 50: Warum Diäten scheitern und was wirklich hilft',
@@ -130,7 +131,7 @@ export const ContentEngineView: React.FC = () => {
 
   // Content Projects (Historical & Active)
   const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects(userId));
-  const [activeContentProject, setActiveContentProject] = useState<CentralContentProject | null>(() => {
+  const [selectedContentProject, setActiveContentProject] = useState<CentralContentProject | null>(() => {
     const list = loadAllContentProjects(userId);
     return list.length > 0 ? list[0] : null;
   });
@@ -183,6 +184,9 @@ export const ContentEngineView: React.FC = () => {
   }, [userId]);
 
   const activeProjectSettings = projects.find((p) => p.id === selectedProjectId) || DEFAULT_VITAL50_PROJECT;
+  const { scopedProjects, activeProject: activeContentProject } = selectContentProjectScope(
+    contentProjects, selectedProjectId, selectedContentProject?.id,
+  );
   const suggestedTopics = getSuggestedTopics(activeProjectSettings);
 
   // Persist whenever activeContentProject changes
@@ -427,7 +431,7 @@ export const ContentEngineView: React.FC = () => {
       const remaining = loadAllContentProjects(userId);
       setContentProjects(remaining);
       if (activeContentProject?.id === id) {
-        setActiveContentProject(remaining.length > 0 ? remaining[0] : null);
+        setActiveContentProject(remaining.find((p) => p.projectSettings?.id === selectedProjectId) || null);
       }
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Das Projekt konnte nicht gelöscht werden.');
@@ -463,7 +467,13 @@ export const ContentEngineView: React.FC = () => {
             <Building2 className="w-4 h-4 text-emerald-600" />
             <select
               value={selectedProjectId}
-              onChange={(e) => setSelectedProjectId(e.target.value)}
+              onChange={(e) => {
+                setSelectedProjectId(e.target.value);
+                setTopicInput('');
+                setCustomAngleInput('');
+                setErrorMsg(null);
+                setSaveNotice(null);
+              }}
               className="bg-transparent text-xs font-bold text-slate-800 outline-hidden cursor-pointer"
             >
               {projects.map((p) => (
@@ -588,13 +598,19 @@ export const ContentEngineView: React.FC = () => {
 
       {/* Progress & Navigation Tabs */}
       {!activeContentProject && (
-        <YouTubeScriptTab
-          onChangeVideo={() => undefined}
-          onChangeShorts={() => undefined}
-          onGoToCalendar={() => undefined}
-          topic=""
-          projectSettings={activeProjectSettings}
-        />
+        <div className="space-y-4">
+          <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-600">
+            Für <strong>{activeProjectSettings.name}</strong> sind noch keine Inhalte vorhanden.
+            Erstelle oben ein Thema für diesen Bereich.
+          </p>
+          <YouTubeScriptTab
+            onChangeVideo={() => undefined}
+            onChangeShorts={() => undefined}
+            onGoToCalendar={() => undefined}
+            topic=""
+            projectSettings={activeProjectSettings}
+          />
+        </div>
       )}
 
       {activeContentProject && (
@@ -686,18 +702,18 @@ export const ContentEngineView: React.FC = () => {
             </div>
 
             {/* Switch Topic Project Dropdown */}
-            {contentProjects.length > 1 && (
+            {scopedProjects.length > 1 && (
               <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700">
                 <History className="w-3.5 h-3.5 text-slate-400" />
                 <select
                   value={activeContentProject.id}
                   onChange={(e) => {
-                    const found = contentProjects.find((p) => p.id === e.target.value);
+                    const found = scopedProjects.find((p) => p.id === e.target.value);
                     if (found) setActiveContentProject(found);
                   }}
                   className="bg-transparent outline-hidden cursor-pointer max-w-[200px] truncate"
                 >
-                  {contentProjects.map((p) => (
+                  {scopedProjects.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.topic}
                     </option>
@@ -802,6 +818,7 @@ export const ContentEngineView: React.FC = () => {
 
           {activeTab === 'calendar' && (
             <ContentCalendarTab
+              key={activeContentProject.id}
               project={activeContentProject}
               onUpdateProject={handleUpdateActiveProject}
             />
