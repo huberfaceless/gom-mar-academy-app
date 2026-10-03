@@ -84,7 +84,7 @@ const toScheduledIso = (localDateTime?: string): string => {
 
 interface ContentCalendarTabProps {
   project: CentralContentProject;
-  onUpdateProject: (updated: CentralContentProject) => void;
+  onUpdateProject: (updated: CentralContentProject) => void | boolean | Promise<void | boolean>;
 }
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; border: string }> = {
@@ -140,6 +140,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   const [platformFilter, setPlatformFilter] = useState<'all' | 'blog' | 'pinterest' | 'instagram' | 'youtube'>('all');
   const [publishingJobs, setPublishingJobs] = useState<PublishingJob[]>([]);
+  const [dateDrafts, setDateDrafts] = useState<Record<string, string>>({});
+  const [savingDateId, setSavingDateId] = useState<string | null>(null);
   const [schedulerJobs, setSchedulerJobs] = useState<SchedulerJob[]>([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState<boolean>(false);
   const [activeJobRunningId, setActiveJobRunningId] = useState<string | null>(null);
@@ -492,8 +494,45 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     }
   };
 
-  const handleDateChange = (itemId: string, newDate: string) => {
-    const updated = { ...project };
+  const handleDateChange = async (itemId: string, newDate: string) => {
+    if (savingDateId) return;
+    const matchingJob = publishingJobs.find(job => job.contentId === itemId);
+    setSavingDateId(itemId);
+    try {
+      const scheduledAt = toScheduledIso(newDate);
+      if (!newDate) throw new Error('Bitte wähle ein Datum und eine Uhrzeit.');
+      if (matchingJob) {
+        if (!user?.uid) throw new Error('Bitte melde dich an, um den Auftrag zu verschieben.');
+        await FirestoreContentService.reschedulePublishingJob(user.uid, matchingJob.id, scheduledAt);
+        setPublishingJobs(jobs => jobs.map(job => job.id === matchingJob.id ? { ...job, scheduledAt } : job));
+        setSchedulerJobs(jobs => jobs.map(job => job.publishingJobId === matchingJob.id ? { ...job, scheduledAt } : job));
+      }
+      const projectSaved = await updateProjectDate(itemId, newDate);
+      if (projectSaved === false) {
+        throw new Error(matchingJob
+          ? 'Der Auftragstermin wurde gespeichert, aber der Inhaltskalender konnte nicht aktualisiert werden. Bitte lade die Ansicht neu.'
+          : 'Der Inhaltskalender konnte nicht gespeichert werden. Bitte versuche es erneut.');
+      }
+      setActionNotice({
+        text: matchingJob ? 'Der Veröffentlichungstermin wurde in der Warteschlange gespeichert.' : 'Der Termin wurde im Inhaltskalender geändert.',
+        type: 'success',
+      });
+    } catch (error) {
+      setActionNotice({ text: error instanceof Error ? error.message : 'Der Veröffentlichungstermin konnte nicht gespeichert werden.', type: 'warning' });
+    } finally {
+      setDateDrafts(drafts => {
+        const next = { ...drafts };
+        delete next[itemId];
+        return next;
+      });
+      setSavingDateId(null);
+    }
+  };
+
+  const updateProjectDate = (itemId: string, newDate: string) => {
+    const updated = { ...project, calendarItems: project.calendarItems.map(item => ({ ...item })),
+      blogArticle: project.blogArticle ? { ...project.blogArticle } : undefined,
+      youtubeVideo: project.youtubeVideo ? { ...project.youtubeVideo } : undefined };
     if (itemId === 'blog_main' && updated.blogArticle) {
       const calIdx = updated.calendarItems.findIndex((c) => c.channel === 'blog');
       if (calIdx >= 0) {
@@ -534,7 +573,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         );
       }
     }
-    onUpdateProject(updated);
+    return onUpdateProject(updated);
   };
 
   const handleStatusChange = async (itemId: string, newStatus: ContentStatus) => {
@@ -849,9 +888,15 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   <CalendarIcon className="w-3.5 h-3.5 text-slate-400" />
                   <input
                     type="datetime-local"
+                    aria-label={`Veröffentlichungstermin: ${item.title}`}
+                    title="Ändere Datum und Uhrzeit und klicke danach außerhalb des Feldes, um zu speichern."
                     step="60"
-                    value={item.scheduledDate}
-                    onChange={(e) => handleDateChange(item.id, e.target.value)}
+                    value={dateDrafts[item.id] ?? (matchingJob ? formatLocalDateTime(matchingJob.scheduledAt) : item.scheduledDate)}
+                    disabled={Boolean(savingDateId) || Boolean(matchingJob && matchingJob.status !== 'SCHEDULED')}
+                    onChange={(e) => setDateDrafts(drafts => ({ ...drafts, [item.id]: e.target.value }))}
+                    onBlur={(e) => {
+                      if (dateDrafts[item.id] !== undefined) void handleDateChange(item.id, e.target.value);
+                    }}
                     className="min-w-0 max-w-full bg-transparent text-xs font-semibold text-slate-700 outline-hidden cursor-pointer"
                   />
                 </div>
