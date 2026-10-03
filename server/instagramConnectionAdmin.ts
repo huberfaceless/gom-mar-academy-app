@@ -1,3 +1,4 @@
+import { publishInstagramOnce } from './instagramPublishingGuard.js';
 import { GoogleAuth } from 'google-auth-library';
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 
@@ -331,28 +332,36 @@ export const loadInstagramMedia = async (token: string) => {
   return { contentType: media.contentType, image: Buffer.from(await response.arrayBuffer()) };
 };
 
-export const publishInstagramImage = async (projectId: string, userId: string, input: { caption: string; imageBase64?: string; imageUrl?: string }) => {
+export const publishInstagramImage = async (projectId: string, userId: string, input: { caption: string; imageBase64?: string; imageUrl?: string; publishingJobId?: string }) => {
   const connection = await loadTokenAndProfile(projectId, userId);
   if (!connection.instagramUserId) throw new Error('Die Instagram-Konto-ID fehlt. Bitte Instagram erneut verbinden.');
   const imageUrl = input.imageBase64
     ? await uploadInstagramImage(projectId, userId, input.imageBase64)
     : input.imageUrl?.trim();
   if (!imageUrl || !/^https:\/\//i.test(imageUrl)) throw new Error('Für Instagram wird eine öffentlich erreichbare HTTPS-Grafik benötigt.');
-  const container = await requestJson<{ id?: string }>(`${graphBase()}/${encodeURIComponent(connection.instagramUserId)}/media`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ image_url: imageUrl, caption: input.caption.slice(0, 2200), access_token: connection.accessToken }).toString(),
-  });
-  if (!container.id) throw new Error('Instagram hat keinen Mediencontainer erstellt.');
-  await waitForInstagramMedia(container.id, connection.accessToken);
-  const published = await requestJson<{ id?: string }>(`${graphBase()}/${encodeURIComponent(connection.instagramUserId)}/media_publish`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ creation_id: container.id, access_token: connection.accessToken }).toString(),
-  });
-  if (!published.id) throw new Error('Instagram hat die Veröffentlichung nicht bestätigt.');
-  return {
-    id: published.id,
-    url: connection.username ? `https://www.instagram.com/${connection.username}/` : 'https://www.instagram.com/',
+  const prepare = async () => {
+    const container = await requestJson<{ id?: string }>(`${graphBase()}/${encodeURIComponent(connection.instagramUserId)}/media`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ image_url: imageUrl, caption: input.caption.slice(0, 2200), access_token: connection.accessToken }).toString(),
+    });
+    if (!container.id) throw new Error('Instagram hat keinen Mediencontainer erstellt.');
+    await waitForInstagramMedia(container.id, connection.accessToken);
+    return container.id;
   };
+  const publish = async (containerId: string) => {
+    const published = await requestJson<{ id?: string }>(`${graphBase()}/${encodeURIComponent(connection.instagramUserId)}/media_publish`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ creation_id: containerId, access_token: connection.accessToken }).toString(),
+    });
+    if (!published.id) throw new Error('Instagram hat die Veröffentlichung nicht bestätigt.');
+    return {
+      id: published.id,
+      url: connection.username ? `https://www.instagram.com/${connection.username}/` : 'https://www.instagram.com/',
+    };
+  };
+  return input.publishingJobId
+    ? publishInstagramOnce(projectId, userId, input.publishingJobId, prepare, publish, getGoogleAccessToken)
+    : publish(await prepare());
 };
