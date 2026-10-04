@@ -38,6 +38,24 @@ export const loadLessonAudioFromCache = async (
   return Buffer.from(await response.arrayBuffer());
 };
 
+export const hasLessonAudioInCache = async (
+  bucket: string,
+  objectName: string,
+  accessToken: () => Promise<string> = getAccessToken,
+): Promise<boolean> => {
+  const response = await fetch(
+    `${STORAGE_API_URL}/storage/v1/b/${encodeURIComponent(bucket)}/o/${encodeURIComponent(objectName)}?fields=size`,
+    { headers: { Authorization: `Bearer ${await accessToken()}` } },
+  );
+  if (response.status === 404) return false;
+  if (!response.ok) throw new Error(`Audio-Bestandsprüfung antwortete mit Status ${response.status}.`);
+  const metadata = await response.json() as { size?: string };
+  if (typeof metadata.size !== 'string' || !/^\d+$/.test(metadata.size)) {
+    throw new Error('Die Audio-Metadaten sind ungültig.');
+  }
+  return BigInt(metadata.size) > 0n;
+};
+
 export const saveLessonAudioToCache = async (
   bucket: string,
   objectName: string,

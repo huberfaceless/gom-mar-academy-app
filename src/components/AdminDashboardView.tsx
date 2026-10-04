@@ -114,6 +114,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [editingLesson, setEditingLesson] = useState<Lesson | null>(null);
   const [isCreatingLesson, setIsCreatingLesson] = useState<boolean>(false);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string>('');
+  const [audioStatus, setAudioStatus] = useState<Record<string, boolean>>({});
+  const [audioStatusLoading, setAudioStatusLoading] = useState(false);
+  const [audioStatusError, setAudioStatusError] = useState('');
+  const [audioStatusRefresh, setAudioStatusRefresh] = useState(0);
   const [audioSelectionOpen, setAudioSelectionOpen] = useState(false);
   const [audioLessonIds, setAudioLessonIds] = useState<string[]>([]);
   const [audioPreviewLoading, setAudioPreviewLoading] = useState(false);
@@ -180,6 +184,29 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     });
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    setAudioStatus({});
+    setAudioStatusLoading(true);
+    setAudioStatusError('');
+    void (async () => {
+      try {
+        const response = await authenticatedRequest('/api/admin/academy/audio-cache/status-german', {
+          method: 'POST',
+          body: JSON.stringify({ stageId: selectedStage.id }),
+        });
+        const result = await response.json() as { error?: string; lessons: { id: string; cached: boolean }[] };
+        if (!response.ok) throw new Error(result.error || 'Der Audio-Status konnte nicht geprüft werden.');
+        if (!cancelled) setAudioStatus(Object.fromEntries(result.lessons.map(lesson => [lesson.id, lesson.cached])));
+      } catch (error: unknown) {
+        if (!cancelled) setAudioStatusError(error instanceof Error ? error.message : 'Der Audio-Status konnte nicht geprüft werden.');
+      } finally {
+        if (!cancelled) setAudioStatusLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [selectedStage.id, audioStatusRefresh, authenticatedRequest]);
+
   const handlePreviewGermanAudio = async () => {
     setAudioPreviewLoading(true);
     setAudioPreview(null);
@@ -222,6 +249,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     } finally {
       setAudioPreview(null);
       setAudioBatchRunning(false);
+      setAudioStatusRefresh(value => value + 1);
     }
   };
 
@@ -1210,6 +1238,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             </div>
           </div>
 
+          <div className="space-y-1 text-xs text-slate-600">
+            <p>Audio-Status für die aktuelle deutsche Standardlektion. Geänderte Inhalte benötigen ein passendes neues Audio.</p>
+            <button type="button" disabled={audioStatusLoading || audioBatchRunning} onClick={() => setAudioStatusRefresh(value => value + 1)} className="font-bold text-violet-700 disabled:opacity-50">
+              {audioStatusLoading ? 'Audio-Status wird geprüft …' : 'Audio-Status aktualisieren'}
+            </button>
+            {audioStatusError && <p role="alert" className="text-red-700">{audioStatusError} Der Status bleibt ungeprüft.</p>}
+          </div>
+
           {/* Lessons List in Stage */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {selectedLocalizedStage.lessons.map((lesson) => (
@@ -1234,6 +1270,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       {lesson.durationMinutes} Min
                     </span>
                   </div>
+                  <p className={`text-xs font-bold ${audioStatus[lesson.id] === true ? 'text-emerald-700' : audioStatus[lesson.id] === false ? 'text-amber-700' : 'text-slate-500'}`}>
+                    {audioStatus[lesson.id] === true ? 'Deutsches Audio vorhanden' : audioStatus[lesson.id] === false ? 'Deutsches Audio fehlt' : 'Audio-Status noch nicht geprüft'}
+                  </p>
                   <h4 className="font-black text-sm text-slate-900 leading-snug">
                     {lesson.title}
                   </h4>
