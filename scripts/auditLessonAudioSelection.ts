@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { hasLessonAudioInCache } from '../server/lessonAudioCache';
 import { ACADEMY_STAGES } from '../server/academyData';
 import { selectAudioLessons, audioSelectionFingerprint, generateSelectedAudio } from '../server/lessonAudioSelection';
 
@@ -36,3 +37,40 @@ await assert.rejects(() => generateSelectedAudio(items, 340, async () => false, 
 }));
 assert.equal(attempts, 1);
 console.log('Audio-Auswahl geprüft: maximal zwei Lektionen, Cache-Wiederverwendung, Zeichengrenze und Abbruch vor Erzeugung bei Lesefehlern.');
+
+// Only inspect object metadata: no MP3 download, upload, or provider call.
+const originalFetch = globalThis.fetch;
+let status = 200;
+let metadata: unknown = { size: '123' };
+let requests = 0;
+try {
+  globalThis.fetch = async (url, init) => {
+    requests += 1;
+    const target = String(url);
+    assert(target.startsWith('https://storage.googleapis.com/storage/v1/'));
+    assert(target.endsWith('?fields=size'));
+    assert(!target.includes('alt=media'));
+    assert.equal(init?.method ?? 'GET', 'GET');
+    assert.equal(init?.body, undefined);
+    return new Response(JSON.stringify(metadata), { status });
+  };
+  const check = () => hasLessonAudioInCache('test-bucket', 'lesson-audio/v1/de/test.mp3', async () => 'test-token');
+  assert.equal(await check(), true);
+  status = 404;
+  assert.equal(await check(), false);
+  status = 403;
+  await assert.rejects(check);
+  status = 503;
+  await assert.rejects(check);
+  status = 200;
+  metadata = { size: '0' };
+  assert.equal(await check(), false);
+  for (const invalid of [{}, { size: 'invalid' }, { size: 123 }]) {
+    metadata = invalid;
+    await assert.rejects(check);
+  }
+  assert.equal(requests, 8);
+} finally {
+  globalThis.fetch = originalFetch;
+}
+console.log('Audio-Status geprüft: vorhandene und leere Dateien, 404, Lesefehler und ungültige Metadaten; ausschließlich lesende Speicherabfragen.');

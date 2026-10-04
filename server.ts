@@ -19,7 +19,7 @@ import {
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
 import { assertCampaignDeliveryModeUnchanged, loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
-import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
+import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache, hasLessonAudioInCache } from './server/lessonAudioCache.js';
 import { selectAudioLessons, audioSelectionFingerprint, generateSelectedAudio } from './server/lessonAudioSelection.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
@@ -825,6 +825,30 @@ async function startServer() {
       };
     });
   };
+
+  app.post('/api/admin/academy/audio-cache/status-german', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    const stageId = req.body?.stageId;
+    const stage = Number.isInteger(stageId) && ACADEMY_STAGES.find(candidate => candidate.id === stageId);
+    if (!stage) {
+      res.status(400).json({ error: 'Bitte eine gültige Etappe auswählen.' });
+      return;
+    }
+    if (!LESSON_AUDIO_BUCKET) {
+      res.status(503).json({ error: 'Der gemeinsame Audio-Cache ist nicht konfiguriert.' });
+      return;
+    }
+    try {
+      const lessons = await Promise.all(stage.lessons.map(async lesson => {
+        const [item] = selectedGermanAudioPlan([lesson.id]);
+        return { id: lesson.id, cached: await hasLessonAudioInCache(LESSON_AUDIO_BUCKET, item.objectName) };
+      }));
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ stageId, lessons });
+    } catch (error: unknown) {
+      console.error('Audio-Status konnte nicht geprüft werden:', error);
+      res.status(503).json({ error: 'Der Audio-Status konnte nicht geprüft werden. Es wurden keine Audios erzeugt.' });
+    }
+  });
 
   app.post('/api/admin/academy/audio-cache/preview-german', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     if (!LESSON_AUDIO_BUCKET) {
