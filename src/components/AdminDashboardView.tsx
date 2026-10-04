@@ -114,6 +114,15 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const [editingLesson, setEditingLesson] = useState<Lesson | null>(null);
   const [isCreatingLesson, setIsCreatingLesson] = useState<boolean>(false);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string>('');
+  const [audioSelectionOpen, setAudioSelectionOpen] = useState(false);
+  const [audioLessonIds, setAudioLessonIds] = useState<string[]>([]);
+  const [audioPreviewLoading, setAudioPreviewLoading] = useState(false);
+  const [audioError, setAudioError] = useState('');
+  const [audioPreview, setAudioPreview] = useState<{
+    lessons: { id: string; title: string; characters: number; cached: boolean }[];
+    charactersToGenerate: number;
+    fingerprint: string;
+  } | null>(null);
   const [audioBatchRunning, setAudioBatchRunning] = useState<boolean>(false);
   const [audioBatchProgress, setAudioBatchProgress] = useState<{ processed: number; total: number; generated: number; cached: number } | null>(null);
   const [lessonVideoFile, setLessonVideoFile] = useState<File | null>(null);
@@ -171,43 +180,47 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     });
   }, []);
 
-  const handleGenerateGermanAudio = async () => {
-    if (!window.confirm('Alle fehlenden deutschen Lektionsaudios jetzt mit ElevenLabs erzeugen? Dabei wird dein ElevenLabs-Guthaben verwendet.')) return;
-    setAudioBatchRunning(true);
-    setAudioBatchProgress({ processed: 0, total: totalLessons, generated: 0, cached: 0 });
-    let cursor: number | null = 0;
-    let generatedTotal = 0;
-    let cachedTotal = 0;
-
+  const handlePreviewGermanAudio = async () => {
+    setAudioPreviewLoading(true);
+    setAudioPreview(null);
+    setAudioError('');
+    setAudioBatchProgress(null);
     try {
-      while (cursor !== null) {
-        const response = await authenticatedRequest('/api/admin/academy/audio-cache/generate-german', {
-          method: 'POST',
-          body: JSON.stringify({ cursor }),
-        });
-        const result = await response.json() as {
-          error?: string;
-          processed?: number;
-          total?: number;
-          generated?: number;
-          cached?: number;
-          nextCursor?: number | null;
-        };
-        if (!response.ok) throw new Error(result.error || 'Die Audioerzeugung wurde unterbrochen.');
-        generatedTotal += result.generated || 0;
-        cachedTotal += result.cached || 0;
-        setAudioBatchProgress({
-          processed: result.processed || 0,
-          total: result.total || totalLessons,
-          generated: generatedTotal,
-          cached: cachedTotal,
-        });
-        cursor = result.nextCursor ?? null;
-      }
-      setSaveSuccessMsg(`Deutsche Audiolektionen vollständig vorbereitet: ${generatedTotal} neu erzeugt, ${cachedTotal} bereits vorhanden.`);
+      const response = await authenticatedRequest('/api/admin/academy/audio-cache/preview-german', {
+        method: 'POST',
+        body: JSON.stringify({ lessonIds: audioLessonIds }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Der Bestand konnte nicht geprüft werden.');
+      setAudioPreview(result);
     } catch (error: unknown) {
-      window.alert(error instanceof Error ? error.message : 'Die Audioerzeugung wurde unterbrochen.');
+      setAudioError(error instanceof Error ? error.message : 'Der Bestand konnte nicht geprüft werden.');
     } finally {
+      setAudioPreviewLoading(false);
+    }
+  };
+
+  const handleGenerateGermanAudio = async () => {
+    if (!audioPreview || audioBatchRunning || audioPreview.charactersToGenerate === 0) return;
+    const missing = audioPreview.lessons.filter(lesson => !lesson.cached);
+    if (!window.confirm(`Nur ${missing.map(lesson => lesson.id).join(', ')} erzeugen? ${audioPreview.charactersToGenerate.toLocaleString('de-AT')} Textzeichen werden an ElevenLabs gesendet. Dabei wird dein Guthaben verwendet.`)) return;
+    setAudioBatchRunning(true);
+    setAudioError('');
+    setAudioBatchProgress({ processed: 0, total: audioLessonIds.length, generated: 0, cached: 0 });
+    try {
+      const response = await authenticatedRequest('/api/admin/academy/audio-cache/generate-german', {
+        method: 'POST',
+        body: JSON.stringify({ lessonIds: audioLessonIds, fingerprint: audioPreview.fingerprint, maxCharacters: audioPreview.charactersToGenerate }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Die Audioerzeugung wurde unterbrochen. Bitte den Bestand erneut prüfen.');
+      setAudioBatchProgress({ processed: result.processed, total: result.total, generated: result.generated, cached: result.cached });
+      setSaveSuccessMsg(`Auswahl vorbereitet: ${result.generated} Audios neu erzeugt, ${result.cached} bereits vorhanden.`);
+    } catch (error: unknown) {
+      setAudioBatchProgress(null);
+      setAudioError(error instanceof Error ? error.message : 'Die Audioerzeugung wurde unterbrochen. Bitte den Bestand erneut prüfen.');
+    } finally {
+      setAudioPreview(null);
       setAudioBatchRunning(false);
     }
   };
@@ -1103,14 +1116,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
             <div className="flex items-center gap-2 shrink-0">
               <button
-                onClick={() => void handleGenerateGermanAudio()}
+                onClick={() => setAudioSelectionOpen(open => !open)}
                 disabled={audioBatchRunning}
                 className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:bg-violet-300 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer disabled:cursor-wait"
               >
                 <Sparkles className={`w-4 h-4 ${audioBatchRunning ? 'animate-spin' : ''}`} />
                 <span>{audioBatchRunning && audioBatchProgress
                   ? `Audio ${audioBatchProgress.processed}/${audioBatchProgress.total}`
-                  : 'Deutsche Audios vorbereiten'}</span>
+                  : 'Deutsche Audios auswählen'}</span>
               </button>
 
               <button
@@ -1136,6 +1149,52 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               </button>
             </div>
           </div>
+
+          {audioSelectionOpen && (
+            <section aria-label="Deutsche Audios gezielt vorbereiten" className="min-w-0 rounded-2xl border border-violet-200 bg-violet-50 p-4 space-y-3">
+              <h3 className="font-bold text-slate-900">Deutsche Audios gezielt vorbereiten</h3>
+              <p className="text-sm text-slate-600">Wähle eine oder höchstens zwei Lektionen. Die Bestandsprüfung verbraucht kein ElevenLabs-Guthaben. Vorhandene passende Audios werden übersprungen.</p>
+              {[0, 1].map(index => (
+                <div key={index}>
+                  <label htmlFor={`audio-lesson-${index}`} className="block text-sm font-bold mb-1">{index === 0 ? 'Erste Lektion' : 'Zweite Lektion (optional)'}</label>
+                  <select
+                    id={`audio-lesson-${index}`}
+                    value={audioLessonIds[index] || ''}
+                    disabled={audioPreviewLoading || audioBatchRunning || (index === 1 && !audioLessonIds[0])}
+                    onChange={event => {
+                      const next = [...audioLessonIds];
+                      next[index] = event.target.value;
+                      setAudioLessonIds(index === 0 && !event.target.value ? [] : next.filter(Boolean));
+                      setAudioPreview(null);
+                      setAudioError('');
+                      setAudioBatchProgress(null);
+                    }}
+                    className="w-full min-w-0 rounded-xl border border-violet-200 bg-white p-2 text-sm"
+                  >
+                    <option value="">{index === 0 ? 'Bitte auswählen' : 'Keine zweite Lektion'}</option>
+                    {stages.flatMap(stage => stage.lessons).filter(lesson => STANDARD_LESSON_IDS.has(lesson.id)).map(lesson => (
+                      <option key={lesson.id} value={lesson.id} disabled={audioLessonIds[1 - index] === lesson.id}>Lektion {lesson.id}: {lesson.title}</option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+              <button type="button" disabled={!audioLessonIds.length || audioPreviewLoading || audioBatchRunning} onClick={() => void handlePreviewGermanAudio()} className="rounded-xl bg-white border border-violet-300 px-4 py-2 text-sm font-bold disabled:opacity-50">
+                {audioPreviewLoading ? 'Bestand wird geprüft …' : 'Auswahl kostenlos prüfen'}
+              </button>
+              {audioPreview && (
+                <div className="space-y-2 text-sm" aria-live="polite">
+                  {audioPreview.lessons.map(lesson => <p key={lesson.id}>Lektion {lesson.id}: {lesson.title} – {lesson.cached ? 'Bereits vorhanden; wird übersprungen' : `${lesson.characters.toLocaleString('de-AT')} Zeichen; Audio fehlt oder Inhalt wurde geändert`}</p>)}
+                  <p className="font-bold">Für neue Audios: {audioPreview.charactersToGenerate.toLocaleString('de-AT')} Textzeichen</p>
+                  <p className="text-slate-600">Die Zeichenanzahl ist keine verbindliche Guthaben- oder Preisangabe. Die Abrechnung richtet sich nach deinem ElevenLabs-Tarif. Es werden nur die ausgewählten Lektionen bearbeitet.</p>
+                  {audioPreview.charactersToGenerate > 0 ? (
+                    <button type="button" disabled={audioBatchRunning} onClick={() => void handleGenerateGermanAudio()} className="rounded-xl bg-violet-600 text-white px-4 py-2 font-bold disabled:opacity-50">Nur ausgewählte fehlende Audios erzeugen</button>
+                  ) : <p>Alle ausgewählten Audios sind bereits vorhanden. Keine Erzeugung nötig.</p>}
+                </div>
+              )}
+              {audioBatchProgress && <p role="status" className="text-sm">{audioBatchRunning ? `Vorbereitung läuft (${audioBatchProgress.total} ausgewählte Lektionen). Bitte diese Seite geöffnet lassen.` : `Fertig: ${audioBatchProgress.generated} neu erzeugt, ${audioBatchProgress.cached} übersprungen.`}</p>}
+              {audioError && <p role="alert" className="text-sm text-red-700">{audioError}</p>}
+            </section>
+          )}
 
           {/* Current Stage Info */}
           <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-2xl flex items-center justify-between">

@@ -20,6 +20,7 @@ import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverr
 import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
 import { assertCampaignDeliveryModeUnchanged, loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache } from './server/lessonAudioCache.js';
+import { selectAudioLessons, audioSelectionFingerprint, generateSelectedAudio } from './server/lessonAudioSelection.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
 import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
 import { accountVerificationEmailCopy, passwordResetEmailCopy, renderConsentEmailHtml, renderTextEmailHtml } from './server/emailHtmlTemplate.js';
@@ -84,7 +85,6 @@ const ELEVENLABS_MODEL_ID = 'eleven_multilingual_v2';
 const LESSON_AUDIO_BUCKET = process.env.LESSON_AUDIO_BUCKET?.trim() || '';
 const LESSON_AUDIO_WINDOW_MS = 60_000;
 const LESSON_AUDIO_LIMIT = 10;
-const LESSON_AUDIO_ADMIN_BATCH_SIZE = 2;
 const SUPPORTED_LESSON_VIDEO_URL = /^https:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)[a-zA-Z0-9_-]{11}(?:[?&][^\s]*)?$/u;
 const escapeHtml = (value: string): string => value
   .replaceAll('&', '&amp;')
@@ -812,55 +812,85 @@ async function startServer() {
     }
   });
 
+  const selectedGermanAudioPlan = (lessonIds: unknown) => {
+    const lessons = localizeAllAcademyStages(ACADEMY_STAGES, 'de').flatMap(stage => stage.lessons);
+    return selectAudioLessons(lessons, lessonIds).map(lesson => {
+      const narrationText = buildLessonNarration(lesson, 'de');
+      return {
+        id: lesson.id,
+        title: lesson.title,
+        narrationText,
+        characters: narrationText.length,
+        objectName: lessonAudioObjectName(lesson.id, 'de', ELEVENLABS_VOICE_ID, ELEVENLABS_MODEL_ID, narrationText),
+      };
+    });
+  };
+
+  app.post('/api/admin/academy/audio-cache/preview-german', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    if (!LESSON_AUDIO_BUCKET) {
+      res.status(503).json({ error: 'Der gemeinsame Audio-Cache ist nicht konfiguriert.' });
+      return;
+    }
+    let plan: ReturnType<typeof selectedGermanAudioPlan>;
+    try {
+      plan = selectedGermanAudioPlan(req.body?.lessonIds);
+    } catch (error: unknown) {
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Ungültige Auswahl.' });
+      return;
+    }
+    try {
+      const lessons = [];
+      for (const item of plan) {
+        const cached = Boolean(await loadLessonAudioFromCache(LESSON_AUDIO_BUCKET, item.objectName));
+        lessons.push({ id: item.id, title: item.title, characters: item.characters, cached });
+      }
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({
+        lessons,
+        charactersToGenerate: lessons.filter(item => !item.cached).reduce((sum, item) => sum + item.characters, 0),
+        fingerprint: audioSelectionFingerprint(plan.map(item => item.objectName)),
+      });
+    } catch (error: unknown) {
+      console.error('Audio-Bestandsprüfung fehlgeschlagen:', error);
+      res.status(503).json({ error: 'Der Audio-Bestand konnte nicht geprüft werden. Es wurden keine Audios erzeugt.' });
+    }
+  });
+
   app.post('/api/admin/academy/audio-cache/generate-german', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY?.trim();
     if (!elevenLabsApiKey || !LESSON_AUDIO_BUCKET) {
       res.status(503).json({ error: 'ElevenLabs oder der gemeinsame Audio-Cache ist nicht konfiguriert.' });
       return;
     }
-
-    const lessons = localizeAllAcademyStages(ACADEMY_STAGES, 'de').flatMap(stage => stage.lessons);
-    const requestedCursor = Number(req.body?.cursor ?? 0);
-    const cursor = Number.isInteger(requestedCursor) && requestedCursor >= 0 ? requestedCursor : 0;
-    const batch = lessons.slice(cursor, cursor + LESSON_AUDIO_ADMIN_BATCH_SIZE);
-    let generated = 0;
-    let cached = 0;
-
+    let plan: ReturnType<typeof selectedGermanAudioPlan>;
     try {
-      for (const lesson of batch) {
-        const narrationText = buildLessonNarration(lesson, 'de');
-        const objectName = lessonAudioObjectName(
-          lesson.id,
-          'de',
-          ELEVENLABS_VOICE_ID,
-          ELEVENLABS_MODEL_ID,
-          narrationText,
-        );
-        const existingAudio = await loadLessonAudioFromCache(LESSON_AUDIO_BUCKET, objectName);
-        if (existingAudio) {
-          cached += 1;
-          continue;
-        }
-        const audio = await generateElevenLabsAudio(narrationText, elevenLabsApiKey);
-        await saveLessonAudioToCache(LESSON_AUDIO_BUCKET, objectName, audio);
-        generated += 1;
+      plan = selectedGermanAudioPlan(req.body?.lessonIds);
+      if (req.body?.fingerprint !== audioSelectionFingerprint(plan.map(item => item.objectName))) {
+        throw new Error('Die Auswahl oder der Lektionsinhalt hat sich geändert. Bitte erneut prüfen.');
       }
-
-      const processed = cursor + batch.length;
-      res.setHeader('Cache-Control', 'no-store');
-      res.json({
-        success: true,
-        processed,
-        total: lessons.length,
-        generated,
-        cached,
-        nextCursor: processed < lessons.length ? processed : null,
-      });
+      if (!Number.isSafeInteger(req.body?.maxCharacters) || req.body.maxCharacters < 0) {
+        throw new Error('Die bestätigte Zeichengrenze fehlt. Bitte erneut prüfen.');
+      }
     } catch (error: unknown) {
-      console.error('Deutsche Lektionsaudios konnten nicht vorgeneriert werden:', error);
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Ungültige Auswahl.' });
+      return;
+    }
+    try {
+      const result = await generateSelectedAudio(
+        plan,
+        req.body.maxCharacters,
+        async item => Boolean(await loadLessonAudioFromCache(LESSON_AUDIO_BUCKET, item.objectName)),
+        async item => {
+          const audio = await generateElevenLabsAudio(item.narrationText, elevenLabsApiKey);
+          await saveLessonAudioToCache(LESSON_AUDIO_BUCKET, item.objectName, audio);
+        },
+      );
+      res.setHeader('Cache-Control', 'no-store');
+      res.json({ success: true, processed: plan.length, total: plan.length, ...result });
+    } catch (error: unknown) {
+      console.error('Ausgewählte deutsche Lektionsaudios konnten nicht vorbereitet werden:', error);
       res.status(503).json({
-        error: error instanceof Error ? error.message : 'Deutsche Lektionsaudios konnten nicht vorgeneriert werden.',
-        cursor,
+        error: 'Die Vorbereitung wurde gestoppt. Bereits erzeugte Audios können Guthaben verbraucht haben. Bitte vor einem erneuten Start den Bestand prüfen.',
       });
     }
   });
