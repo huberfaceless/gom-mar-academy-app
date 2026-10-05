@@ -78,6 +78,7 @@ const substitutes: Record<string, string> = {
   '../../server/youtubeConnectionAdmin.js': `${forbidden} export const publishExistingYouTubeVideo = deny;`,
   '../../server/pinterestConnectionAdmin.js': `${forbidden} export const loadPinterestAccessToken = deny;`,
   '../../server/emailCampaignDeliveryAdmin.js': `export const runEmailCampaignDeliveries = async () => ({ reserved: 0, accepted: 0, failed: 0 });`,
+  './firebaseMembershipAdmin.js': `export const getFirebaseMember = async (_projectId, uid) => ({ uid, email: 'audit@example.com', emailVerified: true, disabled: false, tier: 'PRO', role: 'member' });`,
 };
 const bundle = await build({
   stdin: { contents: "export { ServerSchedulerWorker } from './src/services/serverSchedulerWorker'; export { PublishingService } from './src/services/publishingService';", resolveDir: process.cwd(), loader: 'ts' }, bundle: true, write: false,

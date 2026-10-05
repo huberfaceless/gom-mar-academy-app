@@ -18,6 +18,7 @@ import { loadPinterestAccessToken } from '../../server/pinterestConnectionAdmin.
 import { InstagramPublicationUncertainError } from '../../server/instagramPublishingGuard.js';
 import { publishInstagramImage } from '../../server/instagramConnectionAdmin.js';
 import { runEmailCampaignDeliveries } from '../../server/emailCampaignDeliveryAdmin.js';
+import { PublishingAccessDeniedError, requirePublishingMember } from '../../server/publishingMemberAccess.js';
 
 
 export interface SchedulerExecutionResult {
@@ -193,6 +194,30 @@ export class ServerSchedulerWorker {
         // 🔒 4. Execute Job through Central Publishing Service
         const claimedJob = claimResult.job;
         result.jobsProcessed++;
+
+        // Check the current account after claiming, before loading platform credentials or publishing.
+        try {
+          await requirePublishingMember(process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie', claimedJob.userId);
+        } catch (error: unknown) {
+          const denied = error instanceof PublishingAccessDeniedError;
+          const blockedJob: PublishingJob = {
+            ...claimedJob,
+            status: denied ? 'FAILED' : 'SCHEDULED',
+            attempts: Math.max(0, claimedJob.attempts - 1),
+            lastError: denied ? error.message : 'Die Mitgliedsrechte konnten nicht geprüft werden. Die Veröffentlichung wartet auf eine erneute Prüfung.',
+            nextAttemptAt: denied ? undefined : new Date(Date.now() + 60_000).toISOString(),
+            lockedAt: undefined,
+            lockedBy: undefined,
+            lockExpiresAt: undefined,
+            updatedAt: new Date().toISOString(),
+          };
+          await saveServerPublishingJob(blockedJob, claimResult.updateTime);
+          await syncServerPublishingOutcome(blockedJob);
+          if (denied) result.failedCount++;
+          else result.skippedCount++;
+          result.details.push({ jobId, platform: blockedJob.platform, status: blockedJob.status, attempts: blockedJob.attempts, error: blockedJob.lastError });
+          continue;
+        }
 
         let pinterestToken: string | undefined;
         if (claimedJob.platform === 'PINTEREST') {
