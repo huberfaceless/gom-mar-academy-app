@@ -32,6 +32,7 @@ import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
 import { STANDARD_LESSON_IDS } from '../data/academyMetadata';
 import { youtubeService } from '../services/youtubeService';
 import { WhatsAppInboxView } from './WhatsAppInboxView';
+import { loadAcademyAudioStatuses } from '../services/academyAudioStatusService';
 import { loadCrmContacts } from '../services/crmContactsService';
 import type { LeadContact } from './LeadDetailModal';
 
@@ -184,28 +185,29 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     });
   }, []);
 
+  const audioStatusStageKey = (audioSelectionOpen ? stages.map(stage => stage.id) : [selectedStage.id]).join(',');
   useEffect(() => {
     let cancelled = false;
     setAudioStatus({});
     setAudioStatusLoading(true);
     setAudioStatusError('');
-    void (async () => {
-      try {
-        const response = await authenticatedRequest('/api/admin/academy/audio-cache/status-german', {
-          method: 'POST',
-          body: JSON.stringify({ stageId: selectedStage.id }),
-        });
-        const result = await response.json() as { error?: string; lessons: { id: string; cached: boolean }[] };
-        if (!response.ok) throw new Error(result.error || 'Der Audio-Status konnte nicht geprüft werden.');
-        if (!cancelled) setAudioStatus(Object.fromEntries(result.lessons.map(lesson => [lesson.id, lesson.cached])));
-      } catch (error: unknown) {
-        if (!cancelled) setAudioStatusError(error instanceof Error ? error.message : 'Der Audio-Status konnte nicht geprüft werden.');
-      } finally {
-        if (!cancelled) setAudioStatusLoading(false);
+    void loadAcademyAudioStatuses(audioStatusStageKey.split(',').map(Number), async stageId => {
+      const response = await authenticatedRequest('/api/admin/academy/audio-cache/status-german', {
+        method: 'POST',
+        body: JSON.stringify({ stageId }),
+      });
+      if (!response.ok) throw new Error('Der Audio-Status konnte nicht geprüft werden.');
+      return response.json();
+    }, result => {
+      setAudioStatus(previous => ({ ...previous, ...Object.fromEntries(result.lessons.map(lesson => [lesson.id, lesson.cached])) }));
+    }, () => cancelled).then(failures => {
+      if (!cancelled) {
+        if (failures) setAudioStatusError('Einige Etappen konnten nicht geprüft werden. Bitte den Audio-Status erneut aktualisieren.');
+        setAudioStatusLoading(false);
       }
-    })();
+    });
     return () => { cancelled = true; };
-  }, [selectedStage.id, audioStatusRefresh, authenticatedRequest]);
+  }, [audioStatusStageKey, audioStatusRefresh, authenticatedRequest]);
 
   const handlePreviewGermanAudio = async () => {
     setAudioPreviewLoading(true);
@@ -1182,6 +1184,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             <section aria-label="Deutsche Audios gezielt vorbereiten" className="min-w-0 rounded-2xl border border-violet-200 bg-violet-50 p-4 space-y-3">
               <h3 className="font-bold text-slate-900">Deutsche Audios gezielt vorbereiten</h3>
               <p className="text-sm text-slate-600">Wähle eine oder höchstens zwei Lektionen. Die Bestandsprüfung verbraucht kein ElevenLabs-Guthaben. Vorhandene passende Audios werden übersprungen.</p>
+              <div className="text-xs text-slate-600" aria-live="polite">
+                <p>{audioStatusLoading ? 'Audio-Bestand aller Etappen wird geprüft. Die Statusangaben in beiden Auswahllisten werden nach und nach ergänzt.' : 'Audio-Status steht direkt bei jeder Lektion in beiden Auswahllisten.'}</p>
+                <button type="button" disabled={audioStatusLoading || audioBatchRunning} onClick={() => setAudioStatusRefresh(value => value + 1)} className="mt-1 font-bold text-violet-700 disabled:opacity-50">Audio-Status der Auswahllisten aktualisieren</button>
+                {audioStatusError && <p role="alert" className="text-red-700">{audioStatusError}</p>}
+              </div>
               {[0, 1].map(index => (
                 <div key={index}>
                   <label htmlFor={`audio-lesson-${index}`} className="block text-sm font-bold mb-1">{index === 0 ? 'Erste Lektion' : 'Zweite Lektion (optional)'}</label>
@@ -1201,7 +1208,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   >
                     <option value="">{index === 0 ? 'Bitte auswählen' : 'Keine zweite Lektion'}</option>
                     {stages.flatMap(stage => stage.lessons).filter(lesson => STANDARD_LESSON_IDS.has(lesson.id)).map(lesson => (
-                      <option key={lesson.id} value={lesson.id} disabled={audioLessonIds[1 - index] === lesson.id}>Lektion {lesson.id}: {lesson.title}</option>
+                      <option key={lesson.id} value={lesson.id} disabled={audioLessonIds[1 - index] === lesson.id}>Lektion {lesson.id} – {audioStatus[lesson.id] === true ? 'Audio vorhanden' : audioStatus[lesson.id] === false ? 'Audio fehlt' : 'noch nicht geprüft'}: {lesson.title}</option>
                     ))}
                   </select>
                 </div>
