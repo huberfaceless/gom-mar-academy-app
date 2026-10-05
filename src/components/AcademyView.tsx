@@ -5,6 +5,7 @@ import { LessonVideoPlayer } from './LessonVideoPlayer';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageCode } from '../i18n/translations';
 import { useLocalizedAcademyStages } from '../i18n/useLocalizedAcademyStages';
+import { loadAcademyAudioStatuses } from '../services/academyAudioStatusService';
 import { authenticatedFetch } from '../services/authenticatedFetch';
 import { isAcademyStageAccessible, resolvePreviousAcademyLocation } from '../utils/academyNavigation';
 import { 
@@ -191,6 +192,56 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
     });
   }, [searchQuery, selectedRangeFilter, localizedStages, rangeFilters]);
 
+  const [audioStatuses, setAudioStatuses] = useState<Record<string, boolean>>({});
+  const [audioStatusesLoading, setAudioStatusesLoading] = useState(false);
+  const [audioStatusesError, setAudioStatusesError] = useState(false);
+  const [audioStatusesRefresh, setAudioStatusesRefresh] = useState(0);
+  const audioStageKey = (viewMode === 'overview' ? filteredStages.map(stage => stage.id) : [selectedStageId]).join(',');
+  useEffect(() => {
+    let cancelled = false;
+    setAudioStatuses({});
+    setAudioStatusesError(false);
+    if (user.role !== 'admin') {
+      setAudioStatusesLoading(false);
+      return;
+    }
+    setAudioStatusesLoading(true);
+    const stageIds = audioStageKey ? audioStageKey.split(',').map(Number) : [];
+    void loadAcademyAudioStatuses(stageIds, async stageId => {
+      const response = await authenticatedFetch('/api/admin/academy/audio-cache/status-german', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stageId }),
+      });
+      if (!response.ok) throw new Error('Der Audio-Status konnte nicht geprüft werden.');
+      return response.json();
+    }, result => {
+      setAudioStatuses(previous => ({ ...previous, ...Object.fromEntries(result.lessons.map(lesson => [lesson.id, lesson.cached])) }));
+    }, () => cancelled).then(failures => {
+      if (!cancelled) {
+        setAudioStatusesError(failures > 0);
+        setAudioStatusesLoading(false);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [user.role, audioStageKey, audioStatusesRefresh]);
+
+  const audioStatusBadge = (lessonId: string) => user.role === 'admin' ? (
+    <span className={`block mt-1 text-[11px] font-semibold ${audioStatuses[lessonId] === true ? 'text-emerald-600 dark:text-emerald-400' : audioStatuses[lessonId] === false ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500 dark:text-slate-400'}`}>
+      {audioStatuses[lessonId] === true ? 'Deutsches Audio vorhanden' : audioStatuses[lessonId] === false ? 'Deutsches Audio fehlt' : 'Audio-Status noch nicht geprüft'}
+    </span>
+  ) : null;
+
+  const audioStatusControl = user.role === 'admin' ? (
+    <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1" aria-live="polite">
+      <p>Audio-Bestand der aktuellen deutschen Standardlektionen – reine Prüfung ohne Audio-Erzeugung.</p>
+      <button type="button" disabled={audioStatusesLoading} onClick={() => setAudioStatusesRefresh(value => value + 1)} className="font-bold text-indigo-600 dark:text-indigo-400 disabled:opacity-50">
+        {audioStatusesLoading ? 'Audio-Bestand wird geprüft …' : 'Audio-Status aktualisieren'}
+      </button>
+      {audioStatusesError && <p role="alert">Einige Etappen konnten nicht geprüft werden. Ihr Audio-Status bleibt ungeprüft. Bitte erneut aktualisieren.</p>}
+    </div>
+  ) : null;
+
   const currentStage = localizedStages.find((s) => s.id === selectedStageId) || localizedStages[0];
   const currentLesson = currentStage.lessons.find((l) => l.id === selectedLessonId) || currentStage.lessons[0];
 
@@ -304,6 +355,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   if (viewMode === 'overview') {
     return (
       <div className="space-y-8 animate-fadeIn">
+        {audioStatusControl}
         {/* Header Section */}
         <div>
           <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold mb-2">
@@ -513,6 +565,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                             <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                               {lesson.id} {lesson.title}
                             </h3>
+                            {audioStatusBadge(lesson.id)}
                             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                               {copy.videoGuide} • {lesson.durationMinutes} Min
                             </p>
@@ -543,6 +596,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                             <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                               {lesson.id} {lesson.title}
                             </h3>
+                            {audioStatusBadge(lesson.id)}
                             <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5 flex items-center gap-1">
                               <ArrowRight className="w-3.5 h-3.5" /> {copy.nextLesson} • {lesson.durationMinutes} Min
                             </p>
@@ -570,6 +624,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                             <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                               {lesson.id} {lesson.title}
                             </h3>
+                            {audioStatusBadge(lesson.id)}
                             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                               {copy.videoGuide} • {lesson.durationMinutes} Min
                             </p>
@@ -596,6 +651,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                           <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">
                             {lesson.id} {lesson.title}
                           </h3>
+                            {audioStatusBadge(lesson.id)}
                           <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
                             {copy.lockedPrevious}
                           </p>
@@ -617,6 +673,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
   // =========================================================================
   return (
     <div className="space-y-6 animate-fadeIn">
+      {audioStatusControl}
       {/* Top Controls: Back to Course Overview & AI Assistant Trigger */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
         <button
@@ -740,6 +797,7 @@ export const AcademyView: React.FC<AcademyViewProps> = ({
                       <p className="font-semibold text-slate-900 dark:text-slate-100">
                         {lesson.id} {lesson.title}
                       </p>
+                            {audioStatusBadge(lesson.id)}
                       <p className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
                         <Clock className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
                         <span>{lesson.durationMinutes} Min</span>
