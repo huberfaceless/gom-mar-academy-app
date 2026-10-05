@@ -9,6 +9,7 @@ type FirebaseAccount = {
   emailVerified?: boolean;
   displayName?: string;
   disabled?: boolean;
+  validSince?: string;
   customAttributes?: string;
   createdAt?: string;
   lastLoginAt?: string;
@@ -25,6 +26,7 @@ export type FirebaseMember = {
   displayName: string;
   emailVerified: boolean;
   disabled: boolean;
+  tokensValidAfterSeconds?: number;
   tier: AcademyTier;
   role: 'member' | 'admin';
   language: MemberLanguage;
@@ -125,6 +127,7 @@ const toFirebaseMember = (account: FirebaseAccount): FirebaseMember | null => {
     displayName: account.displayName || account.email?.split('@')[0] || 'Mitglied',
     emailVerified: account.emailVerified === true,
     disabled: account.disabled === true,
+    tokensValidAfterSeconds: account.validSince === undefined ? undefined : Number(account.validSince),
     tier: isAdmin ? 'PREMIUM' : normalizeTier(claims.academyTier),
     role: isAdmin ? 'admin' : 'member',
     language: normalizeLanguage(claims.academyLanguage),

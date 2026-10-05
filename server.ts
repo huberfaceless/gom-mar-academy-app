@@ -1,5 +1,6 @@
 import { verifySendgridEventSignature, parseSendgridDeliveryEvents, recordSendgridDeliveryEvents } from './server/sendgridEventWebhook.js';
 import { loadCampaignDeliveryReport } from './server/emailCampaignReportAdmin.js';
+import { MemberSessionDeniedError, resolveCurrentMemberSession } from './server/memberSessionAccess.js';
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { GoogleGenAI } from '@google/genai';
@@ -355,7 +356,19 @@ async function startServer() {
         res.status(401).json({ error: 'Eine Firebase-Anmeldung ist erforderlich.' });
         return;
       }
-      (req as FirebaseRequest).firebaseUser = await verifyFirebaseIdToken(idToken);
+      const verifiedToken = await verifyFirebaseIdToken(idToken);
+      try {
+        (req as FirebaseRequest).firebaseUser = await resolveCurrentMemberSession(
+          FIREBASE_PROJECT_ID, verifiedToken,
+        );
+      } catch (error) {
+        if (error instanceof MemberSessionDeniedError) {
+          res.status(401).json({ error: 'Diese Anmeldung ist nicht mehr gültig. Bitte melde dich erneut an.' });
+        } else {
+          res.status(503).json({ error: 'Der aktuelle Kontostatus konnte nicht geprüft werden. Bitte versuche es erneut.' });
+        }
+        return;
+      }
       next();
     } catch {
       res.status(401).json({ error: 'Die Firebase-Anmeldung ist ungültig oder abgelaufen.' });
