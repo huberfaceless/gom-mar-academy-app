@@ -64,6 +64,9 @@ jobs:
       - name: Firebase-Tarifverwaltung pruefen
         run: bun run audit:membership-admin
 
+      - name: Aktuelle Kontorechte und Sitzungswiderruf pruefen
+        run: bun scripts/auditMemberSessionAccess.ts
+
       - name: Stripe Managed Payments pruefen
         run: bun run audit:stripe
 
