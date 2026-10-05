@@ -85,6 +85,9 @@ jobs:
       - name: Veröffentlichungswarteschlange pruefen
         run: bun run audit:publishing-persistence
 
+      - name: Aktuelle Publishing-Mitgliedsrechte pruefen
+        run: bun scripts/auditPublishingAccess.ts
+
       - name: KI-Mentor-Nutzungsgrenzen pruefen
         run: bun run audit:mentor
 
