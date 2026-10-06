@@ -71,7 +71,7 @@ assert.match(app, /setResolvedMembershipUid\(null\)/, 'Beim Kontowechsel muss di
 assert.match(app, /tier: 'FREE',[\s\S]*role: 'member'/, 'Vor dem Laden neuer Claims muss das Konto auf Mitglied zurückgesetzt werden.');
 assert.match(app, /authLoading \|\| isMembershipResolving/, 'Die Oberfläche darf erst nach sicherer Rollenauflösung gerendert werden.');
 
-for (const view of ['email', 'toolbox']) {
+for (const view of ['email', 'toolbox', 'contentEngine']) {
   assert.equal(canAccessView(view, 'FREE', 'member'), false, `FREE darf keinen Zugriff auf ${view} erhalten`);
   assert.equal(canAccessView(view, 'PRO', 'member'), true, `PRO muss Zugriff auf ${view} erhalten`);
   assert.equal(canAccessView(view, 'PREMIUM', 'member'), true, `PREMIUM muss Zugriff auf ${view} erhalten`);
@@ -83,7 +83,7 @@ for (const view of ['dashboard', 'academy', 'progress', 'profile', 'settings']) 
   assert.equal(canAccessView(view, 'FREE', 'member'), true, `FREE muss Zugriff auf ${view} behalten`);
 }
 
-for (const view of ['admin', 'contentEngine']) {
+for (const view of ['admin']) {
   assert.equal(canAccessView(view, 'FREE', 'member'), false, `FREE-Mitglied darf ${view} nicht öffnen`);
   assert.equal(canAccessView(view, 'PRO', 'member'), false, `PRO-Mitglied darf ${view} nicht öffnen`);
   assert.equal(canAccessView(view, 'PREMIUM', 'member'), false, `PREMIUM-Mitglied darf ${view} nicht öffnen`);
@@ -92,3 +92,4 @@ for (const view of ['admin', 'contentEngine']) {
 }
 
 console.log('Firebase-Tarifverwaltung und FREE/PRO-Zugriffsgrenzen geprüft.');
+

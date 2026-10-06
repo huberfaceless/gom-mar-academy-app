@@ -36,6 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }> = [
     { id: 'dashboard', label: t('nav.dashboard'), icon: LayoutDashboard, badge: 'Home' },
     { id: 'academy', label: t('nav.academy'), icon: GraduationCap, badge: `${completedTasksCount}/${totalTasksCount}` },
+    { id: 'contentEngine', label: t('nav.contentHub'), icon: Layers, highlight: true, badge: 'PRO' },
     { id: 'email', label: t('nav.email'), icon: Mail },
     { id: 'toolbox', label: t('nav.toolbox'), icon: Wrench, badge: t('nav.ai') },
     { id: 'landing', label: t('nav.funnel'), icon: Globe, badge: 'Opt-In' },
@@ -53,13 +54,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         label: t('nav.admin'),
         icon: ShieldCheck,
         badge: 'Admin'
-      },
-      {
-        id: 'contentEngine',
-        label: t('nav.contentHub'),
-        icon: Layers,
-        highlight: true,
-        badge: 'Vital50'
       },
     );
   }
@@ -176,3 +170,4 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </aside>
   );
 };
+
