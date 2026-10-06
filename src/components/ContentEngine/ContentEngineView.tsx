@@ -36,7 +36,9 @@ import {
   loadAllContentProjects, 
   saveOrUpdateContentProject, 
   deleteContentProject as deleteLocalContentProject, 
-  DEFAULT_VITAL50_PROJECT 
+  DEFAULT_VITAL50_PROJECT,
+  createOnlineBusinessProject,
+  createStarterProjects
 } from '../../utils/contentStorage';
 import { FirestoreContentService } from '../../services/firestoreContentService';
 import { useAuth } from '../../context/AuthContext';
@@ -48,6 +50,7 @@ import { PinterestPinsTab } from './PinterestPinsTab';
 import { InstagramPostsTab } from './InstagramPostsTab';
 import { YouTubeScriptTab } from './YouTubeScriptTab';
 import { ContentCalendarTab } from './ContentCalendarTab';
+import { canUseContentProject } from '../../utils/contentProjectAccess';
 import { selectContentProjectScope } from '../../utils/contentProjectSelection';
 
 const SUGGESTED_TOPICS_VITAL50 = [
@@ -105,34 +108,20 @@ const getSuggestedTopics = (project: ProjectSettings): string[] => {
   ];
 };
 
-const createOnlineBusinessProject = (): ProjectSettings => ({
-  id: `proj_online_business_${Date.now()}`,
-  name: 'GOM-MAR Online Business',
-  websiteUrl: 'https://geldfluss.gomo-marketing.at/',
-  targetAudience: 'Menschen über 50, die sich als Anfänger seriös ein zusätzliches Online-Einkommen aufbauen möchten',
-  coreTopics: ['Online Geld verdienen', 'Affiliate Marketing', 'Digitale Produkte', 'Faceless Content', 'Automatisierung'],
-  language: 'de',
-  defaultCta: 'Entdecke jetzt den einfachen nächsten Schritt für dein Online-Einkommen.',
-  defaultTargetUrl: 'https://geldfluss.gomo-marketing.at/',
-  brandVoice: 'Einfach erklärt, ehrlich, motivierend, anfängerfreundlich und ohne unrealistische Einkommensversprechen',
-  pinterestBoardDefault: 'Online Geld verdienen ab 50',
-  youtubeChannelName: 'GOM-MAR Online Business',
-  createdAt: new Date().toISOString(),
-});
 
-export const ContentEngineView: React.FC = () => {
+export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = false }) => {
   const { user } = useAuth();
   const userId = user?.uid;
 
-  const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId));
-  const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || DEFAULT_VITAL50_PROJECT.id);
+  const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId, isAdmin));
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [projectBeingEdited, setProjectBeingEdited] = useState<ProjectSettings | null>(null);
 
   // Content Projects (Historical & Active)
-  const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects(userId));
+  const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin)));
   const [selectedContentProject, setActiveContentProject] = useState<CentralContentProject | null>(() => {
-    const list = loadAllContentProjects(userId);
+    const list = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
     return list.length > 0 ? list[0] : null;
   });
 
@@ -152,21 +141,23 @@ export const ContentEngineView: React.FC = () => {
 
   // Load from Firestore on mount or when user changes
   useEffect(() => {
+    let cancelled = false;
     async function loadData() {
       if (!userId) return;
-      const localProjects = loadAllProjectSettings(userId);
-      const localContent = loadAllContentProjects(userId);
+      const localProjects = loadAllProjectSettings(userId, isAdmin);
+      const localContent = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
       setProjects(localProjects);
-      setSelectedProjectId(localProjects[0]?.id || DEFAULT_VITAL50_PROJECT.id);
+      setSelectedProjectId(localProjects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
       setContentProjects(localContent);
       setActiveContentProject(localContent[0] || null);
       try {
-        await FirestoreContentService.syncLocalDataToFirestore(userId);
+        await FirestoreContentService.syncLocalDataToFirestore(userId, isAdmin);
         const [firestoreProjects, firestoreContent] = await Promise.all([
-          FirestoreContentService.getProjectSettings(userId),
+          FirestoreContentService.getProjectSettings(userId, isAdmin),
           FirestoreContentService.getContentProjects(userId),
         ]);
 
+        if (cancelled) return;
         if (firestoreProjects && firestoreProjects.length > 0) {
           setProjects(firestoreProjects);
           if (!firestoreProjects.some((p) => p.id === selectedProjectId)) {
@@ -174,18 +165,20 @@ export const ContentEngineView: React.FC = () => {
           }
         }
 
-        setContentProjects(firestoreContent || []);
-        setActiveContentProject(firestoreContent?.[0] || null);
+        setContentProjects((firestoreContent || []).filter(project => canUseContentProject(project.projectSettings, isAdmin)));
+        setActiveContentProject(firestoreContent?.find(project => canUseContentProject(project.projectSettings, isAdmin)) || null);
       } catch (err) {
         console.warn('Could not load content from Firestore, keeping local fallback:', err);
       }
     }
     loadData();
-  }, [userId]);
+    return () => { cancelled = true; };
+  }, [userId, isAdmin]);
 
-  const activeProjectSettings = projects.find((p) => p.id === selectedProjectId) || DEFAULT_VITAL50_PROJECT;
+  const visibleProjects = projects.filter(project => canUseContentProject(project, isAdmin));
+  const activeProjectSettings = visibleProjects.find((p) => p.id === selectedProjectId) || createStarterProjects(userId, isAdmin)[0];
   const { scopedProjects, activeProject: activeContentProject } = selectContentProjectScope(
-    contentProjects, selectedProjectId, selectedContentProject?.id,
+    contentProjects.filter(project => canUseContentProject(project.projectSettings, isAdmin)), activeProjectSettings.id, selectedContentProject?.id,
   );
   const suggestedTopics = getSuggestedTopics(activeProjectSettings);
 
@@ -216,6 +209,10 @@ export const ContentEngineView: React.FC = () => {
   };
 
   const handleSaveProjectSettings = async (updatedSettings: ProjectSettings) => {
+    if (!canUseContentProject(updatedSettings, isAdmin)) {
+      setErrorMsg('Vital50 steht ausschließlich Administratoren zur Verfügung.');
+      return;
+    }
     setErrorMsg(null);
     setSaveNotice(null);
     const exists = projects.some((p) => p.id === updatedSettings.id);
@@ -229,7 +226,7 @@ export const ContentEngineView: React.FC = () => {
     let settingsSaved = true;
     if (userId) {
       try {
-        await FirestoreContentService.saveProjectSettings(userId, updatedSettings);
+        await FirestoreContentService.saveProjectSettings(userId, updatedSettings, isAdmin);
       } catch (err) {
         console.error('Error saving project settings to Firestore:', err);
         setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
@@ -428,7 +425,7 @@ export const ContentEngineView: React.FC = () => {
       } else {
         deleteLocalContentProject(id, userId);
       }
-      const remaining = loadAllContentProjects(userId);
+      const remaining = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
       setContentProjects(remaining);
       if (activeContentProject?.id === id) {
         setActiveContentProject(remaining.find((p) => p.projectSettings?.id === selectedProjectId) || null);
@@ -466,7 +463,7 @@ export const ContentEngineView: React.FC = () => {
           <div className="flex min-w-0 w-full sm:w-auto sm:flex-1 items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
             <Building2 className="w-4 h-4 shrink-0 text-emerald-600" />
             <select
-              value={selectedProjectId}
+              value={activeProjectSettings.id}
               onChange={(e) => {
                 setSelectedProjectId(e.target.value);
                 setTopicInput('');
@@ -476,7 +473,7 @@ export const ContentEngineView: React.FC = () => {
               }}
               className="min-w-0 w-full bg-transparent text-xs font-bold text-slate-800 outline-hidden cursor-pointer truncate"
             >
-              {projects.map((p) => (
+              {visibleProjects.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name} ({p.websiteUrl.replace('https://', '').replace('/', '')})
                 </option>
@@ -499,7 +496,8 @@ export const ContentEngineView: React.FC = () => {
           <button
             type="button"
             onClick={() => {
-              setProjectBeingEdited(createOnlineBusinessProject());
+              const project = createOnlineBusinessProject(userId);
+              setProjectBeingEdited({ ...project, id: `${project.id}_${Date.now()}` });
               setIsSettingsModalOpen(true);
             }}
             className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-600 rounded-xl shadow-xs transition-colors"

@@ -197,7 +197,7 @@ export class ServerSchedulerWorker {
 
         // Check the current account after claiming, before loading platform credentials or publishing.
         try {
-          await requirePublishingMember(process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie', claimedJob.userId);
+          await requirePublishingMember(process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie', claimedJob.userId, undefined, { id: claimedJob.projectId, targetUrl: claimedJob.payload?.targetUrl });
         } catch (error: unknown) {
           const denied = error instanceof PublishingAccessDeniedError;
           const blockedJob: PublishingJob = {

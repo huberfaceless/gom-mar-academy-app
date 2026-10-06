@@ -20,6 +20,37 @@ service cloud.firestore {
           || request.auth.token.get('email', '') == 'admin@gom-mar.de');
     }
 
+    function isAcademyAdmin() {
+      return isAuthenticated()
+        && request.auth.token.get('email_verified', false) == true
+        && (request.auth.token.get('academyRole', 'member') == 'admin'
+          || request.auth.token.get('admin', false) == true
+          || request.auth.token.get('email', '') == 'admin@gom-mar.de');
+    }
+
+    function isVital50Id(value) {
+      return value is string && value.lower().matches('proj_vital50(_.*)?');
+    }
+
+    function isVital50Url(value) {
+      return value is string && value.lower().matches('https?://vital50[.]gomo-marketing[.]at([/:?#].*)?');
+    }
+
+    function isVital50Project(data) {
+      return isVital50Id(data.get('id', ''))
+        || (data.get('name', '') is string && data.get('name', '').trim().lower().matches('vital[ ]*50([ ].*)?'))
+        || isVital50Url(data.get('websiteUrl', ''))
+        || isVital50Url(data.get('defaultTargetUrl', ''))
+        || isVital50Url(data.get('targetUrl', ''));
+    }
+
+    function canUseContentProject(data) {
+      return isAcademyAdmin() || (!isVital50Project(data)
+        && !isVital50Project(data.get('projectSettings', {}))
+        && !isVital50Id(data.get('projectId', ''))
+        && !isVital50Url(data.get('payload', {}).get('targetUrl', '')));
+    }
+
     // User Profile: Users can only read and modify their own profile
     match /users/{userId} {
       allow read, write: if isOwner(userId);
@@ -28,15 +59,23 @@ service cloud.firestore {
     // Brand / Project Settings
     match /projects/{projectId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
+        && canUseContentProject(request.resource.data);
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid
+        && canUseContentProject(resource.data) && canUseContentProject(request.resource.data);
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
     // Central Content Projects (Briefs, Articles, Pins, Videos, Shorts)
     match /contentProjects/{contentProjectId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
+        && canUseContentProject(request.resource.data);
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid
+        && canUseContentProject(resource.data) && canUseContentProject(request.resource.data);
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
     // Central Publishing Queue Jobs
@@ -44,11 +83,13 @@ service cloud.firestore {
     match /publishingJobs/{jobId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
       allow create: if canSchedulePublishing()
+        && canUseContentProject(request.resource.data)
         && request.resource.data.userId == request.auth.uid
         && (!('status' in request.resource.data) || request.resource.data.status in ['DRAFT', 'SCHEDULED', 'NEEDS_REVIEW'])
         && (!('externalId' in request.resource.data) || request.resource.data.externalId == null || request.resource.data.externalId == '')
         && (!('publishedAt' in request.resource.data) || request.resource.data.publishedAt == null || request.resource.data.publishedAt == '');
       allow update: if canSchedulePublishing()
+        && canUseContentProject(resource.data) && canUseContentProject(request.resource.data)
         && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid
         && (
@@ -63,8 +104,8 @@ service cloud.firestore {
     // Scheduler Jobs
     match /schedulerJobs/{jobId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if canSchedulePublishing() && request.resource.data.userId == request.auth.uid;
-      allow update: if canSchedulePublishing() && resource.data.userId == request.auth.uid
+      allow create: if canSchedulePublishing() && canUseContentProject(request.resource.data) && request.resource.data.userId == request.auth.uid;
+      allow update: if canSchedulePublishing() && canUseContentProject(resource.data) && canUseContentProject(request.resource.data) && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid;
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
