@@ -75,6 +75,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 
         {/* Body */}
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-4 flex-1">
+          <p className="text-sm text-slate-600">Passe diese Vorlage an dein eigenes Business an. Trage deine Website, Zielseite und Kanalnamen ein. Wenn du noch keine Website hast, kannst du das Feld leer lassen.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
@@ -94,9 +95,9 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               </label>
               <input
                 type="url"
+                placeholder="https://deine-website.at"
                 value={formData.websiteUrl}
                 onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
-                required
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
             </div>
@@ -167,6 +168,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               </label>
               <input
                 type="text"
+                placeholder="Link zu deiner eigenen Zielseite (optional)"
                 value={formData.defaultTargetUrl}
                 onChange={(e) => setFormData({ ...formData, defaultTargetUrl: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
@@ -206,7 +208,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
                 type="text"
                 value={formData.pinterestBoardDefault || ''}
                 onChange={(e) => setFormData({ ...formData, pinterestBoardDefault: e.target.value })}
-                placeholder="z.B. Vitalität 50+"
+                placeholder="Name deiner Pinterest-Pinnwand (optional)"
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
             </div>
@@ -218,7 +220,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
                 type="text"
                 value={formData.youtubeChannelName || ''}
                 onChange={(e) => setFormData({ ...formData, youtubeChannelName: e.target.value })}
-                placeholder="z.B. Vital50 Kanal"
+                placeholder="Name deines YouTube-Kanals (optional)"
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
             </div>
