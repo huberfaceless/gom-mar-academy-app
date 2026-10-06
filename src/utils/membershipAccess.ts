@@ -6,8 +6,8 @@ const TIER_RANK: Record<AcademyTier, number> = {
   PREMIUM: 2,
 };
 
-const PRO_VIEWS = new Set(['email', 'toolbox']);
-const ADMIN_VIEWS = new Set(['admin', 'contentEngine']);
+const PRO_VIEWS = new Set(['email', 'toolbox', 'contentEngine']);
+const ADMIN_VIEWS = new Set(['admin']);
 
 export const normalizeAcademyTier = (value: unknown): AcademyTier => (
   value === 'PRO' || value === 'PREMIUM' ? value : 'FREE'
@@ -55,3 +55,4 @@ export const isMembershipResolvedForUser = (
   authenticatedUid?: string | null,
   resolvedUid?: string | null,
 ): boolean => !authenticatedUid || authenticatedUid === resolvedUid;
+
