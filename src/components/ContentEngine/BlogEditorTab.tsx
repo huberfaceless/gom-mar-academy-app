@@ -41,9 +41,9 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   return (
     <div className="space-y-6">
       {/* Action Header */}
-      <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
+      <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-start gap-4">
+        <div className="w-full min-w-0 break-words">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
               Blogartikel generiert
             </span>
@@ -64,8 +64,8 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
           )}
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+        <div className="flex w-full min-w-0 flex-wrap items-center gap-2">
+          <div className="flex max-w-full flex-wrap bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button
               type="button"
               onClick={() => setViewMode('preview')}
@@ -101,9 +101,9 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
             type="button"
             onClick={onGeneratePinterest}
             disabled={isGeneratingPinterest}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 disabled:opacity-50"
+            className="max-w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 disabled:opacity-50"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 shrink-0" />
             <span>{isGeneratingPinterest ? 'Generiere 5 Pinterest Pins...' : 'Weiter: 5 Pinterest Pins erzeugen'}</span>
           </button>
         </div>
