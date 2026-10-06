@@ -628,7 +628,7 @@ export default function App() {
           )}
 
           {activeView === 'contentEngine' && canAccessView('contentEngine', user.tier, user.role) && (
-            <ContentEngineView />
+            <ContentEngineView isAdmin={user.role === 'admin'} />
           )}
 
           {activeView === 'admin' && user.role === 'admin' && (

@@ -1,3 +1,4 @@
+import { canUseContentProject } from './src/utils/contentProjectAccess.js';
 import { verifySendgridEventSignature, parseSendgridDeliveryEvents, recordSendgridDeliveryEvents } from './server/sendgridEventWebhook.js';
 import { loadCampaignDeliveryReport } from './server/emailCampaignReportAdmin.js';
 import { MemberSessionDeniedError, resolveCurrentMemberSession } from './server/memberSessionAccess.js';
@@ -539,6 +540,18 @@ async function startServer() {
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
     if (!firebaseUser || firebaseTierRank(firebaseUser) < 1) {
       res.status(403).json({ error: 'Für diese Funktion ist ein freigeschalteter PRO-Tarif erforderlich.' });
+      return;
+    }
+    next();
+  };
+
+  const requireContentProjectAccess = (req: Request, res: Response, next: NextFunction) => {
+    const isAdmin = isAcademyAdminToken((req as FirebaseRequest).firebaseUser);
+    const project = req.body?.projectSettings;
+    if (!canUseContentProject(project, isAdmin)
+      || !canUseContentProject(req.body, isAdmin)
+      || !canUseContentProject(req.body?.pinData, isAdmin)) {
+      res.status(403).json({ error: 'Vital50 steht ausschließlich Administratoren zur Verfügung.' });
       return;
     }
     next();
@@ -2405,7 +2418,7 @@ Erstelle:
   });
 
   // 🚀 Content Engine: 1. Generate Content Brief
-  app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { topic, projectSettings, customAngle, targetUrl, cta } = req.body;
       if (!topic) {
@@ -2475,7 +2488,7 @@ Antworte ausschließlich im folgenden validen JSON-Format:
   });
 
   // 🚀 Content Engine: 2. Generate Full Blog Article
-  app.post('/api/content-engine/blog', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/content-engine/blog', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic || !brief) {
@@ -2537,7 +2550,7 @@ Antworte im JSON-Format:
   });
 
   // 🚀 Content Engine: 3. Generate 5 Distinct Pinterest Pins (5 Angles)
-  app.post('/api/content-engine/pins', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/content-engine/pins', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic) {
@@ -2653,7 +2666,7 @@ Antworte im JSON-Format:
   });
 
   // 🚀 Content Engine: 4. Generate YouTube Faceless Video Script & Metadata
-  app.post('/api/content-engine/youtube', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/content-engine/youtube', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic) {
@@ -2737,7 +2750,7 @@ Antworte im JSON-Format:
   });
 
   // 🚀 Content Engine: 5. Generate 3 YouTube Shorts
-  app.post('/api/content-engine/shorts', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/content-engine/shorts', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { topic, brief, projectSettings } = req.body;
       if (!topic) {
@@ -3024,7 +3037,7 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest API: 4. Publish Real Pin (Single or Scheduled)
-  app.post('/api/pinterest/publish-pin', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/pinterest/publish-pin', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { pinData, boardId } = req.body;
 

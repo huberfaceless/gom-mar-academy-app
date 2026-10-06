@@ -28,9 +28,11 @@ import {
   saveAllPublishingJobs,
   loadAllSchedulerJobs,
   saveAllSchedulerJobs,
-  DEFAULT_VITAL50_PROJECT,
+  createStarterProjects,
   migrateLegacyContentStorage,
 } from '../utils/contentStorage';
+
+import { canUseContentProject } from '../utils/contentProjectAccess';
 
 const COLLECTION_PROJECTS = 'projects';
 const COLLECTION_CONTENT_PROJECTS = 'contentProjects';
@@ -57,35 +59,39 @@ export class FirestoreContentService {
   // 1. BRAND / PROJECT SETTINGS
   // ==========================================
 
-  static async getProjectSettings(userId?: string): Promise<ProjectSettings[]> {
+  static async getProjectSettings(userId?: string, isAdmin = false): Promise<ProjectSettings[]> {
     if (!userId || !isFirestoreOperational()) {
-      return loadAllProjectSettings(userId);
+      return loadAllProjectSettings(userId, isAdmin);
     }
 
     try {
       const q = query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId));
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
-      if (snapshot.empty) {
-        const initialProject: ProjectSettings = {
-          ...DEFAULT_VITAL50_PROJECT,
-          userId,
-          updatedAt: new Date().toISOString(),
-        };
-        await setDoc(doc(db, COLLECTION_PROJECTS, initialProject.id), initialProject);
-        return [initialProject];
+      const saved = snapshot.docs.map((d) => ({ ...(d.data() as ProjectSettings), id: d.id }));
+      const visible = saved.filter(project => canUseContentProject(project, isAdmin));
+      if (visible.length > 0) {
+        saveAllProjectSettings(saved, userId);
+        return visible;
       }
-      return snapshot.docs.map((d) => ({ ...(d.data() as ProjectSettings), id: d.id }));
+      const initial = createStarterProjects(userId, isAdmin);
+      for (const project of initial) {
+        await setDoc(doc(db, COLLECTION_PROJECTS, project.id), project);
+      }
+      saveAllProjectSettings([...saved, ...initial], userId);
+      return initial;
     } catch (err) {
       handleFirestoreError(err);
-      return loadAllProjectSettings(userId);
+      return loadAllProjectSettings(userId, isAdmin);
     }
   }
 
-  static async saveProjectSettings(userId: string | undefined, settings: ProjectSettings): Promise<void> {
+  static async saveProjectSettings(userId: string | undefined, settings: ProjectSettings, isAdmin = false): Promise<void> {
     if (!userId) return;
     
+    if (!canUseContentProject(settings, isAdmin)) throw new Error('Vital50 steht ausschließlich Administratoren zur Verfügung.');
+
     // Always save locally first
-    const current = loadAllProjectSettings(userId);
+    const current = loadAllProjectSettings(userId, isAdmin);
     const idx = current.findIndex(p => p.id === settings.id);
     if (idx >= 0) {
       current[idx] = settings;
@@ -409,21 +415,21 @@ export class FirestoreContentService {
   // 5. LOCALSTORAGE TO FIRESTORE MIGRATION
   // ==========================================
 
-  static async syncLocalDataToFirestore(userId: string): Promise<void> {
+  static async syncLocalDataToFirestore(userId: string, isAdmin = false): Promise<void> {
     if (!userId) return;
     migrateLegacyContentStorage(userId);
     if (!isFirestoreOperational()) return;
 
     try {
-      const localSettings = loadAllProjectSettings(userId);
+      const localSettings = loadAllProjectSettings(userId, isAdmin);
       for (const settings of localSettings) {
         if (settings.userId === userId) {
-          await this.saveProjectSettings(userId, settings);
+          await this.saveProjectSettings(userId, settings, isAdmin);
         }
       }
       const localProjects = loadAllContentProjects(userId);
       for (const p of localProjects) {
-        if (p.userId === userId) {
+        if (p.userId === userId && canUseContentProject(p.projectSettings, isAdmin)) {
           await this.saveContentProject(userId, p);
         }
       }

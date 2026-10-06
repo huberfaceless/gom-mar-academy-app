@@ -1,4 +1,5 @@
 import { ProjectSettings, CentralContentProject } from '../types/contentEngine';
+import { canUseContentProject } from './contentProjectAccess';
 
 const STORAGE_KEY_PROJECT_SETTINGS = 'gommar_content_projects_settings_v1';
 const STORAGE_KEY_CONTENT_PROJECTS = 'gommar_content_projects_list_v1';
@@ -22,6 +23,27 @@ export const DEFAULT_VITAL50_PROJECT: ProjectSettings = {
 };
 
 const memoryStore: Record<string, string> = {};
+
+export const createOnlineBusinessProject = (userId?: string): ProjectSettings => ({
+  id: userId ? `proj_online_business_${userId}` : 'proj_online_business',
+  ...(userId ? { userId } : {}),
+  name: 'GOM-MAR Online Business',
+  websiteUrl: 'https://geldfluss.gomo-marketing.at/',
+  targetAudience: 'Menschen über 50, die sich als Anfänger seriös ein zusätzliches Online-Einkommen aufbauen möchten',
+  coreTopics: ['Online Geld verdienen', 'Affiliate Marketing', 'Digitale Produkte', 'Faceless Content', 'Automatisierung'],
+  language: 'de',
+  defaultCta: 'Entdecke jetzt den einfachen nächsten Schritt für dein Online-Einkommen.',
+  defaultTargetUrl: 'https://geldfluss.gomo-marketing.at/',
+  brandVoice: 'Einfach erklärt, ehrlich, motivierend, anfängerfreundlich und ohne unrealistische Einkommensversprechen',
+  pinterestBoardDefault: 'Online Geld verdienen ab 50',
+  youtubeChannelName: 'GOM-MAR Online Business',
+  createdAt: new Date().toISOString(),
+});
+
+export const createStarterProjects = (userId?: string, isAdmin = false): ProjectSettings[] => {
+  const business = createOnlineBusinessProject(userId);
+  return isAdmin ? [{ ...DEFAULT_VITAL50_PROJECT, id: userId ? `proj_vital50_${userId}` : DEFAULT_VITAL50_PROJECT.id, ...(userId ? { userId } : {}) }, business] : [business];
+};
 
 const scopedKey = (baseKey: string, userId?: string): string =>
   userId ? `${baseKey}:${userId}` : `${baseKey}:anonymous`;
@@ -92,22 +114,29 @@ export function migrateLegacyContentStorage(userId: string): void {
   safeSetItem(migrationMarker, 'done');
 }
 
-export function loadAllProjectSettings(userId?: string): ProjectSettings[] {
+export function loadAllProjectSettings(userId?: string, isAdmin = false): ProjectSettings[] {
   try {
     const raw = safeGetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId));
     if (!raw) {
-      saveAllProjectSettings([DEFAULT_VITAL50_PROJECT], userId);
-      return [DEFAULT_VITAL50_PROJECT];
+      const initial = createStarterProjects(userId, isAdmin);
+      saveAllProjectSettings(initial, userId);
+      return initial;
     }
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed) || parsed.length === 0) {
-      saveAllProjectSettings([DEFAULT_VITAL50_PROJECT], userId);
-      return [DEFAULT_VITAL50_PROJECT];
+      const initial = createStarterProjects(userId, isAdmin);
+      saveAllProjectSettings(initial, userId);
+      return initial;
     }
-    return parsed;
+    const visible = parsed.filter(project => canUseContentProject(project, isAdmin));
+    if (visible.length > 0) return visible;
+    const initial = createStarterProjects(userId, isAdmin);
+    // Keep legacy entries intact; only the returned selection is filtered.
+    saveAllProjectSettings([...parsed, ...initial], userId);
+    return initial;
   } catch (e) {
     console.error('Error loading project settings', e);
-    return [DEFAULT_VITAL50_PROJECT];
+    return createStarterProjects(userId, isAdmin);
   }
 }
 
