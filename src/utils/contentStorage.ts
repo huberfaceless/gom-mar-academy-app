@@ -24,24 +24,24 @@ export const DEFAULT_VITAL50_PROJECT: ProjectSettings = {
 
 const memoryStore: Record<string, string> = {};
 
-export const createOnlineBusinessProject = (userId?: string): ProjectSettings => ({
+export const createOnlineBusinessProject = (userId?: string, isAdmin = false): ProjectSettings => ({
   id: userId ? `proj_online_business_${userId}` : 'proj_online_business',
   ...(userId ? { userId } : {}),
   name: 'GOM-MAR Online Business',
-  websiteUrl: 'https://geldfluss.gomo-marketing.at/',
+  websiteUrl: isAdmin ? 'https://geldfluss.gomo-marketing.at/' : '',
   targetAudience: 'Menschen über 50, die sich als Anfänger seriös ein zusätzliches Online-Einkommen aufbauen möchten',
   coreTopics: ['Online Geld verdienen', 'Affiliate Marketing', 'Digitale Produkte', 'Faceless Content', 'Automatisierung'],
   language: 'de',
   defaultCta: 'Entdecke jetzt den einfachen nächsten Schritt für dein Online-Einkommen.',
-  defaultTargetUrl: 'https://geldfluss.gomo-marketing.at/',
+  defaultTargetUrl: isAdmin ? 'https://geldfluss.gomo-marketing.at/' : '',
   brandVoice: 'Einfach erklärt, ehrlich, motivierend, anfängerfreundlich und ohne unrealistische Einkommensversprechen',
-  pinterestBoardDefault: 'Online Geld verdienen ab 50',
-  youtubeChannelName: 'GOM-MAR Online Business',
+  pinterestBoardDefault: isAdmin ? 'Online Geld verdienen ab 50' : '',
+  youtubeChannelName: isAdmin ? 'GOM-MAR Online Business' : '',
   createdAt: new Date().toISOString(),
 });
 
 export const createStarterProjects = (userId?: string, isAdmin = false): ProjectSettings[] => {
-  const business = createOnlineBusinessProject(userId);
+  const business = createOnlineBusinessProject(userId, isAdmin);
   return isAdmin ? [{ ...DEFAULT_VITAL50_PROJECT, id: userId ? `proj_vital50_${userId}` : DEFAULT_VITAL50_PROJECT.id, ...(userId ? { userId } : {}) }, business] : [business];
 };
 

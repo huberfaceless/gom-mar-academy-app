@@ -66,3 +66,12 @@ const rules = readFileSync('firestore.rules', 'utf8');
 assert.match(rules, /function canUseContentProject/);
 assert.match(rules, /canUseContentProject\(resource.data\) && canUseContentProject\(request.resource.data\)/);
 console.log('Vital50-Schutz geprüft: Mitglieder starten mit Online Business, behalten eigene Projekte; Admins behalten Vital50.');
+
+// Mitglieder starten ohne fremde Websites oder Kanalnamen; Admin behält seine Vorlage.
+for (const field of ['websiteUrl', 'defaultTargetUrl', 'pinterestBoardDefault', 'youtubeChannelName'] as const) {
+  assert.equal(business[field], '', `Mitgliedervorlage muss ${field} leer lassen.`);
+  assert.ok(createStarterProjects('admin', true)[1][field], `Adminvorlage muss ${field} behalten.`);
+  assert.equal(createOnlineBusinessProject('new-project')[field], '', `Neue eigene Projekte müssen ${field} leer lassen.`);
+}
+assert.match(modal, /Wenn du noch keine Website hast/);
+assert.doesNotMatch(modal, /websiteUrl: e.target.value[\s\S]{0,30}required/);
