@@ -4,15 +4,8 @@ import {
   FileText, 
   Cookie, 
   X, 
-  Check, 
-  ExternalLink, 
-  Lock, 
   Building, 
-  Mail, 
-  Globe, 
-  CheckCircle2, 
-  SlidersHorizontal,
-  Info
+  Mail
 } from 'lucide-react';
 
 export type LegalDocType = 'imprint' | 'privacy' | 'cookies';
@@ -30,15 +23,6 @@ export const LegalModal: React.FC<LegalModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<LegalDocType>(initialDoc);
   
-  // Cookie settings state
-  const [cookiePreferences, setCookiePreferences] = useState({
-    essential: true,
-    functional: true,
-    analytics: true,
-    marketing: false,
-  });
-  const [cookieSaved, setCookieSaved] = useState(false);
-
   // Sync activeTab when initialDoc changes
   React.useEffect(() => {
     if (initialDoc) {
@@ -47,14 +31,6 @@ export const LegalModal: React.FC<LegalModalProps> = ({
   }, [initialDoc]);
 
   if (!isOpen) return null;
-
-  const handleSaveCookiePreferences = () => {
-    setCookieSaved(true);
-    setTimeout(() => {
-      setCookieSaved(false);
-      onClose();
-    }, 1200);
-  };
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto animate-fadeIn">
@@ -76,7 +52,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               <h2 className="text-lg sm:text-xl font-black text-white">
                 {activeTab === 'imprint' && 'Impressum'}
                 {activeTab === 'privacy' && 'Datenschutzerklärung (DSGVO)'}
-                {activeTab === 'cookies' && 'Cookie-Richtlinie & Einstellungen'}
+                {activeTab === 'cookies' && 'Cookies & lokaler Speicher'}
               </h2>
             </div>
           </div>
@@ -125,7 +101,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             }`}
           >
             <Cookie className="w-3.5 h-3.5" />
-            <span>Cookie-Richtlinie</span>
+            <span>Cookies & Speicher</span>
           </button>
         </div>
 
@@ -281,102 +257,31 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             </div>
           )}
 
-          {/* ================= 3. COOKIE-RICHTLINIE & EINSTELLUNGEN ================= */}
+          {/* ================= 3. COOKIES UND LOKALER SPEICHER ================= */}
           {activeTab === 'cookies' && (
             <div className="space-y-6 animate-fadeIn">
               <div className="space-y-2">
-                <h3 className="font-extrabold text-slate-900 text-base flex items-center gap-2">
-                  <Cookie className="w-4 h-4 text-amber-500" />
-                  Cookie-Richtlinie & Präferenzen
-                </h3>
+                <h3 className="font-extrabold text-slate-900 text-base">Cookies & lokaler Speicher</h3>
                 <p className="text-slate-600 text-xs leading-relaxed">
-                  Wir setzen Cookies und lokale Speichertechnologien ein, um dir ein optimales Lernerlebnis zu ermöglichen, Lektionsfortschritte zu sichern und unsere Plattform kontinuierlich zu verbessern.
+                  Die Academy verwendet Browser-Speicher für die Anmeldung und für lokal gespeicherte Einstellungen, Projekte und Inhaltsentwürfe. Nicht alle diese Daten sind Cookies; je nach Funktion kommen auch andere Speichertechnologien zum Einsatz.
                 </p>
               </div>
-
-              {/* Cookie Categories Selector */}
-              <div className="space-y-3 pt-2">
-                
-                {/* 1. Essential */}
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 text-xs sm:text-sm">Technisch notwendige Cookies</span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-bold">Immer aktiv</span>
-                    </div>
-                    <p className="text-slate-500 text-xs">
-                      Erforderlich für Authentifizierung, Sitzungsspeicherung, Admin-PIN-Gate und das Abspeichern deines Lernfortschritts.
-                    </p>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={true}
-                    disabled
-                    className="w-5 h-5 rounded accent-indigo-600 cursor-not-allowed shrink-0 mt-1"
-                  />
-                </div>
-
-                {/* 2. Functional */}
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 text-xs sm:text-sm">Funktionale Cookies & Komfort</span>
-                    </div>
-                    <p className="text-slate-500 text-xs">
-                      Speichern deine Theme-Einstellungen (Hell/Dunkel), Videoplayer-Präferenzen und Notizblock-Zustände.
-                    </p>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={cookiePreferences.functional}
-                    onChange={(e) => setCookiePreferences({ ...cookiePreferences, functional: e.target.checked })}
-                    className="w-5 h-5 rounded accent-indigo-600 cursor-pointer shrink-0 mt-1"
-                  />
-                </div>
-
-                {/* 3. Analytics */}
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 text-xs sm:text-sm">Analyse & Performance (Anonymisiert)</span>
-                    </div>
-                    <p className="text-slate-500 text-xs">
-                      Hilft uns zu verstehen, welche Lektionen besonders gut verständlich sind und wo Teilnehmer Unterstützung benötigen.
-                    </p>
-                  </div>
-                  <input
-                    type="checkbox"
-                    checked={cookiePreferences.analytics}
-                    onChange={(e) => setCookiePreferences({ ...cookiePreferences, analytics: e.target.checked })}
-                    className="w-5 h-5 rounded accent-indigo-600 cursor-pointer shrink-0 mt-1"
-                  />
-                </div>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm">Anmeldung und gespeicherte Inhalte</h4>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Die Speicherung unterstützt deine Anmeldung und das Wiederherstellen deiner Arbeit. Wenn du Website-Daten im Browser löschst, kann eine erneute Anmeldung erforderlich sein. Nur lokal gespeicherte, noch nicht synchronisierte Entwürfe können dabei verloren gehen.
+                </p>
               </div>
-
-              {/* Save Button */}
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-200">
-                <span className="text-xs text-slate-500">
-                  Deine Einstellungen werden lokal gespeichert und können jederzeit geändert werden.
-                </span>
-
-                <button
-                  onClick={handleSaveCookiePreferences}
-                  disabled={cookieSaved}
-                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer"
-                >
-                  {cookieSaved ? (
-                    <>
-                      <Check className="w-4 h-4 text-emerald-300" />
-                      <span>Einstellungen gespeichert!</span>
-                    </>
-                  ) : (
-                    <>
-                      <SlidersHorizontal className="w-4 h-4" />
-                      <span>Einstellungen speichern</span>
-                    </>
-                  )}
-                </button>
+              <div className="p-4 rounded-2xl bg-indigo-50 border border-indigo-100 space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm">Keine Auswahl wird hier gespeichert</h4>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Dieser Bereich informiert über die Speicherung. Er enthält keine Schalter für Analyse- oder Marketingdienste und erteilt keine Einwilligung. Angaben zu verbundenen Plattformen und zur Verarbeitung personenbezogener Daten findest du in der Datenschutzerklärung.
+                </p>
+                <button type="button" onClick={() => setActiveTab('privacy')} className="text-xs font-bold text-indigo-700 underline">Datenschutzerklärung öffnen</button>
               </div>
+              <p className="text-slate-600 text-xs leading-relaxed">
+                Deine Einwilligung für Marketing-E-Mails kannst du separat im Profil verwalten oder über den Abmeldelink in einer Marketing-E-Mail widerrufen.
+              </p>
             </div>
           )}
 
