@@ -1114,7 +1114,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 </form>
               )}
 
-              <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-3">
+              {isAdmin && <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="min-w-0">
                     <h4 className="font-bold text-slate-900">Versandprotokoll der ausgewählten Kampagne</h4>
@@ -1123,14 +1123,14 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </div>
                   <button type="button" onClick={() => setReportVersion(version => version + 1)} className="text-xs font-bold text-indigo-700">Status aktualisieren</button>
                 </div>
-                {reportError ? <p role="alert" className="text-sm text-rose-700">{reportError}</p> : !isAdmin ? <p>Nur Administratoren können das Versandprotokoll sehen.</p> : !deliveryReport ? <p>Versandstatus wird geladen…</p> : <>
+                {reportError ? <p role="alert" className="text-sm text-rose-700">{reportError}</p> : !deliveryReport ? <p>Versandstatus wird geladen…</p> : <>
                   <p className="text-sm">An SendGrid übergeben: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'accepted').length}</strong> · Fehlgeschlagen: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'failed').length}</strong> · Reserviert / Ausgang unklar: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'reserved').length}</strong></p>
                   <p className="text-sm">Zugestellt (Empfängerserver): <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.deliveryState === 'delivered').length}</strong> · Zurückgewiesen / verworfen: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && ['bounce', 'dropped'].includes(item.deliveryState)).length}</strong> · Verzögert: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.deliveryState === 'deferred').length}</strong> · Zustellung noch unbestätigt: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && !['delivered', 'bounce', 'dropped', 'deferred'].includes(item.deliveryState)).length}</strong></p>
                   {!deliveryReport.webhookKeyConfigured && <p className="text-sm text-amber-800">Zustellmeldungen noch nicht eingerichtet: SendGrid-Webhook und Prüfschlüssel konfigurieren.</p>}
                   {activeCampaign.deliveryMode === 'self-test' && <p className="text-sm font-bold">{deliveryReport.selfTestAllowed ? 'Dein Konto hat eine bestätigte Marketing-Einwilligung.' : 'Versand an dein Konto blockiert: Einwilligung, Versandsperre oder Kontostatus prüfen.'}</p>}
                   <p className="text-xs text-slate-500">Geprüft: {new Date(deliveryReport.checkedAt).toLocaleString('de-AT')}. Übergabe an SendGrid bestätigt keine Zustellung. „Zugestellt“ bestätigt die Annahme durch den Empfängerserver, nicht das Lesen oder den Posteingang. Zustellmeldungen gelten für neue Kampagnen-E-Mails nach Einrichtung des Webhooks. Öffnungen und Klicks werden hier nicht erfasst.</p>
                 </>}
-              </section>
+              </section>}
 
             </div>
 
