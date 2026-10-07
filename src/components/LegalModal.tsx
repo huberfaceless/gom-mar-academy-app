@@ -139,8 +139,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                 <h3 className="font-extrabold text-slate-900 text-base mb-1">Angaben gemäß § 5 ECG / § 5 TMG / § 25 Mediengesetz</h3>
                 <p className="text-slate-600 font-medium">
                   <strong>Stefan Gomolka</strong><br />
-                  GOM-MAR Academy • Digitale Bildungsplattform & Marketing-Systeme<br />
-                  Tullnerstraße<br />
+                  GomMar • GOM-MAR Academy • Digitale Bildungsplattform & Marketing-Systeme<br />
+                  Hammerskjoeldgasse 1<br />
                   2000 Stockerau<br />
                   Österreich
                 </p>
@@ -163,8 +163,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   </span>
                   <p className="text-slate-700">
                     <strong>Inhaber & Verantwortlicher für den Inhalt:</strong><br />
-                    Stefan Gomolka<br />
-                    Tullnerstraße, 2000 Stockerau, Österreich
+                    Stefan Gomolka (GomMar)<br />
+                    Hammerskjoeldgasse 1, 2000 Stockerau, Österreich
                   </p>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               <div className="space-y-2">
                 <h4 className="font-bold text-slate-900 text-sm">1. Verantwortliche Stelle</h4>
                 <p className="text-slate-600 text-xs">
-                  Verantwortlich für die Datenverarbeitung auf dieser Plattform ist <strong>Stefan Gomolka</strong>, Tullnerstraße, 2000 Stockerau, Österreich (E-Mail: <strong>huber@gomo-marketing.at</strong>).
+                  Verantwortlich für die Datenverarbeitung auf dieser Plattform ist <strong>Stefan Gomolka (GomMar)</strong>, Hammerskjoeldgasse 1, 2000 Stockerau, Österreich (E-Mail: <strong>huber@gomo-marketing.at</strong>).
                 </p>
               </div>
 
