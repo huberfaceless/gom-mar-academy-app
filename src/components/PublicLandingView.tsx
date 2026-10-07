@@ -81,7 +81,7 @@ const registrationCopy = {
 
 interface PublicLandingViewProps {
   onCancelToMemberArea?: () => void;
-  onOpenLegal?: (tab: 'imprint' | 'privacy' | 'terms' | 'disclaimer' | 'cookies') => void;
+  onOpenLegal?: (tab: 'imprint' | 'privacy' | 'cookies') => void;
 }
 
 export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
@@ -434,26 +434,10 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
           <span>•</span>
           <button
             type="button"
-            onClick={() => onOpenLegal?.('terms')}
-            className="hover:text-slate-300 transition-colors cursor-pointer"
-          >
-            AGB
-          </button>
-          <span>•</span>
-          <button
-            type="button"
-            onClick={() => onOpenLegal?.('disclaimer')}
-            className="hover:text-slate-300 transition-colors cursor-pointer"
-          >
-            Disclaimer
-          </button>
-          <span>•</span>
-          <button
-            type="button"
             onClick={() => onOpenLegal?.('cookies')}
             className="hover:text-slate-300 transition-colors cursor-pointer"
           >
-            Cookie-Einstellungen
+            Cookies &amp; Speicher
           </button>
         </div>
       </div>
