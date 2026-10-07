@@ -146,13 +146,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-3 pt-3 border-t border-slate-200">
-                <h4 className="font-bold text-slate-900 text-sm">EU-Streitschlichtung & Verbraucherstreitbeilegung</h4>
+                <h4 className="font-bold text-slate-900 text-sm">Verbraucherstreitbeilegung</h4>
                 <p className="text-slate-600 text-xs">
-                  Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
-                  <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline ml-1 font-semibold">
-                    https://ec.europa.eu/consumers/odr
-                  </a>.
-                  Unsere E-Mail-Adresse findest du oben im Impressum. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+                  Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
                 </p>
               </div>
 
