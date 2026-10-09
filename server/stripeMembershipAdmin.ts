@@ -138,3 +138,11 @@ export const saveStripeCancellationStatus = async (
   });
   if (!response.ok) throw new Error('Der Stripe-Kündigungsstatus konnte nicht gespeichert werden.');
 };
+
+export const loadStripeSubscriptionId = async (projectId: string, userId: string): Promise<string | undefined> => {
+  const response = await fetch(documentUrl(projectId, userId), { headers: { Authorization: `Bearer ${await accessToken()}` } });
+  if (response.status === 404) return undefined;
+  if (!response.ok) throw new Error('Die Stripe-Mitgliedschaft konnte nicht geladen werden.');
+  const document = await response.json() as FirestoreDocument;
+  return document.fields?.stripeSubscriptionId?.stringValue || undefined;
+};

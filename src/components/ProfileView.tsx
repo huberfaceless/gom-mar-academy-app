@@ -5,7 +5,7 @@ import { LanguageCode } from '../i18n/translations';
 import { User, Crown, Check, ShieldCheck, Mail, MessageCircle, Sparkles, BookOpen, Layers, Edit2, Save } from 'lucide-react';
 import { loadEmailConsent, saveEmailConsent } from '../services/emailConsentService';
 import { loadWhatsAppProfile, saveWhatsAppProfile } from '../services/whatsappProfileService';
-import { openStripeCustomerPortal, startProMonthlyCheckout } from '../services/stripePaymentService';
+import { openStripeCustomerPortal, startProMonthlyCheckout, loadProContract, loadProSubscription, cancelProSubscription, ProSubscriptionStatus } from '../services/stripePaymentService';
 
 const profileCopy: Record<LanguageCode, Record<string, string>> = {
   de: {
@@ -55,6 +55,31 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   const [whatsappSaving, setWhatsappSaving] = useState(false);
   const [whatsappMessage, setWhatsappMessage] = useState('');
   const [whatsappError, setWhatsappError] = useState('');
+  const [contract, setContract] = useState<{ sixMonthContract: boolean; contractVersion: string } | null>(null);
+  const [contractAccepted, setContractAccepted] = useState(false);
+  const [subscription, setSubscription] = useState<ProSubscriptionStatus | null>(null);
+  const [cancellationMessage, setCancellationMessage] = useState('');
+  const [cancellationLoading, setCancellationLoading] = useState(false);
+  const [cancellationConfirm, setCancellationConfirm] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    setContract(null);
+    setSubscription(null);
+    setContractAccepted(false);
+    loadProContract().then(value => { if (!cancelled) setContract(value); }).catch(() => { if (!cancelled) setProCheckoutError('Vertragsinformationen konnten nicht geladen werden. Bitte lade die Seite neu.'); });
+    if (user.tier !== 'FREE') loadProSubscription().then(value => { if (!cancelled) setSubscription(value); }).catch(() => { if (!cancelled) setCancellationMessage('Abodaten konnten nicht geladen werden. Bitte lade die Seite neu.'); });
+    return () => { cancelled = true; };
+  }, [user.email, user.tier]);
+  const handleCancellation = async () => {
+    setCancellationLoading(true);
+    setCancellationMessage('');
+    try {
+      const result = await cancelProSubscription();
+      setSubscription(previous => previous ? { ...previous, cancellationAt: result.cancellationAt } : previous);
+      setCancellationConfirm(false);
+    } catch (error) { setCancellationMessage(error instanceof Error ? error.message : 'Kündigung fehlgeschlagen.'); }
+    finally { setCancellationLoading(false); }
+  };
   const [proCheckoutLoading, setProCheckoutLoading] = useState(false);
   const [proCheckoutError, setProCheckoutError] = useState('');
   const [billingPortalLoading, setBillingPortalLoading] = useState(false);
@@ -145,7 +170,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
     setProCheckoutLoading(true);
     setProCheckoutError('');
     try {
-      await startProMonthlyCheckout();
+      if (!contract || (contract.sixMonthContract && !contractAccepted)) throw new Error('Bitte bestätige zuerst die Vertragsinformationen.');
+      await startProMonthlyCheckout(contract.sixMonthContract ? contract.contractVersion : undefined);
     } catch (error: unknown) {
       setProCheckoutError(error instanceof Error ? error.message : copy.proCheckoutError);
       setProCheckoutLoading(false);
@@ -435,15 +461,29 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               </span>
               <h4 className="text-xl font-black text-slate-950">GOM-MAR PRO</h4>
               <p className="text-xs text-slate-600">{copy.proDesc}</p>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                {language === 'de'
+                  ? 'PRO ist ein kostenpflichtiges Monatsabo mit wiederkehrender Abrechnung. Nach der Buchung kannst du dein Abo, Zahlungen und Rechnungen über „Abo, Zahlungen und Rechnungen verwalten“ im Profil aufrufen. Eine Anfrage zum FREE-Tarif ersetzt keine Abo-Kündigung. Die Kündigung und der gesetzliche Widerruf sind unterschiedliche Vorgänge.'
+                  : language === 'pl'
+                    ? 'PRO to płatna subskrypcja miesięczna z cyklicznym rozliczeniem. Po zakupie możesz otworzyć subskrypcję, płatności i faktury przez „Zarządzaj subskrypcją, płatnościami i fakturami” w profilu. Prośba o taryfę FREE nie zastępuje anulowania subskrypcji. Anulowanie subskrypcji i ustawowe odstąpienie od umowy to różne czynności.'
+                    : 'PRO is a paid monthly subscription with recurring billing. After purchase, you can access your subscription, payments and invoices through “Manage subscription, payments and invoices” in your profile. Requesting the FREE plan does not cancel your subscription. Subscription cancellation and the statutory right of withdrawal are separate processes.'}
+              </p>
 
               <ul className="text-xs text-slate-700 space-y-2 pt-2 border-t border-slate-100">
                 <li className="flex items-center gap-2 text-indigo-700 font-medium">{copy.pro1}</li><li className="flex items-center gap-2 text-indigo-700 font-medium">{copy.pro2}</li><li className="flex items-center gap-2 text-indigo-700 font-medium">{copy.pro3}</li><li className="flex items-center gap-2 text-indigo-700 font-medium">{copy.pro4}</li>
               </ul>
             </div>
 
+            {user.tier === 'FREE' && contract?.sixMonthContract && (
+              <div className="space-y-3 text-xs text-slate-700">
+                <p className="font-semibold">{language === 'de' ? '6 Monate Mindestlaufzeit · 29,90 €/Monat Gesamtpreis · Mindestgesamtpreis 179,40 €. Kündigung jederzeit vormerkbar, wirksam frühestens nach 6 Monaten; danach zum Ende des bezahlten Monats.' : language === 'pl' ? 'Minimalny okres 6 miesięcy · 29,90 €/miesiąc (cena całkowita) · minimalna cena 179,40 €. Wypowiedzenie można złożyć wcześniej, ze skutkiem najwcześniej po 6 miesiącach; później na koniec opłaconego miesiąca.' : '6-month minimum term · €29.90/month total price · minimum total €179.40. Cancellation can be requested anytime, effective after 6 months at the earliest; then at the end of the paid month.'}</p>
+                <a href="/terms/" target="_blank" rel="noreferrer" className="underline text-indigo-700">{language === 'de' ? 'Vertragsinformationen und Widerruf lesen' : language === 'pl' ? 'Warunki umowy i odstąpienie' : 'Read contract information and withdrawal rights'}</a>
+                <label className="flex items-start gap-2"><input type="checkbox" checked={contractAccepted} onChange={event => setContractAccepted(event.target.checked)} className="mt-0.5" /><span>{language === 'de' ? 'Ich habe die Vertragsinformationen gelesen und stimme der sechsmonatigen Mindestlaufzeit zu. Mein gesetzliches Widerrufsrecht bleibt unberührt.' : language === 'pl' ? 'Zapoznałem/am się z warunkami umowy i zgadzam się na minimalny okres 6 miesięcy. Ustawowe prawo odstąpienia pozostaje zachowane.' : 'I have read the contract information and agree to the 6-month minimum term. My statutory withdrawal rights remain unaffected.'}</span></label>
+              </div>
+            )}
             <button
               type="button"
-              disabled={user.tier !== 'FREE' || proCheckoutLoading}
+              disabled={user.tier !== 'FREE' || proCheckoutLoading || !contract || (contract.sixMonthContract && !contractAccepted)}
               onClick={() => void handleProCheckout()}
               className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                 user.tier === 'PRO'
@@ -451,7 +491,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                   : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 cursor-pointer'
               }`}
             >
-              {user.tier !== 'FREE' ? copy.active : proCheckoutLoading ? '…' : copy.proAction}
+              {user.tier !== 'FREE' ? copy.active : proCheckoutLoading ? '…' : contract?.sixMonthContract ? (language === 'de' ? 'PRO buchen: 29,90 €/Monat · 6 Monate Mindestlaufzeit' : language === 'pl' ? 'Kup PRO: 29,90 €/miesiąc · minimum 6 miesięcy' : 'Get PRO: €29.90/month · 6-month minimum term') : copy.proAction}
             </button>
             {proCheckoutError && <p className="text-xs font-semibold text-red-600">{proCheckoutError}</p>}
             {user.tier === 'PRO' && (
@@ -464,6 +504,14 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 {billingPortalLoading ? '…' : copy.billingPortalAction}
               </button>
             )}
+            {subscription?.sixMonthContract && (
+              <div className="space-y-2 text-xs text-slate-700">
+                {subscription.minimumTermEndsAt && <p>Mindestlaufzeit bis {new Date(subscription.minimumTermEndsAt).toLocaleDateString(language)}.</p>}
+                {subscription.cancellationAt ? <p role="status">Kündigung vorgemerkt zum {new Date(subscription.cancellationAt).toLocaleDateString(language)}. Bis dahin bleibt dein Zugang erhalten.</p> : cancellationConfirm ? <div className="space-y-2"><p>Die Kündigung wird frühestens zum Ende der sechsmonatigen Mindestlaufzeit wirksam. Möchtest du sie vormerken?</p><button type="button" disabled={cancellationLoading} onClick={() => void handleCancellation()} className="underline font-semibold">{cancellationLoading ? '…' : 'Kündigung bestätigen'}</button><button type="button" onClick={() => setCancellationConfirm(false)} className="ml-3 underline">Abbrechen</button></div> : <button type="button" onClick={() => setCancellationConfirm(true)} className="w-full border border-slate-300 rounded-xl py-2 font-semibold">Abo kündigen</button>}
+                <a href="/withdrawal/" className="block underline">Vertrag widerrufen</a>
+              </div>
+            )}
+            {cancellationMessage && <p role="alert" className="text-xs text-red-600">{cancellationMessage}</p>}
             {billingPortalError && <p className="text-xs font-semibold text-red-600">{billingPortalError}</p>}
           </div>
 

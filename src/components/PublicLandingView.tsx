@@ -439,6 +439,10 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
           >
             Cookies &amp; Speicher
           </button>
+          <span>•</span>
+          <a href="/terms/" className="hover:text-slate-300 transition-colors">PRO-Vertragsinformationen</a>
+          <span>•</span>
+          <a href="/withdrawal/" className="rounded-lg bg-indigo-600 px-3 py-2 font-semibold text-white hover:bg-indigo-500">Vertrag widerrufen</a>
         </div>
       </div>
 
