@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { academyPublicUrl } from '../server/deploymentEnvironment.js';
 import { readFileSync } from 'node:fs';
 import { renderConsentEmailHtml, renderTextEmailHtml } from '../server/emailHtmlTemplate.js';
 
@@ -30,7 +31,10 @@ assert.match(server, /app\.post\('\/api\/email\/consent\/confirm', async/, 'Erst
 assert.match(server, /firebaseUser\.email_verified === true/, 'Die Einwilligung muss an die bestätigte Firebase-Adresse gebunden sein.');
 assert.match(server, /requestEmailConsent\(FIREBASE_PROJECT_ID, userId, verifiedEmail\)/, 'Eine Zustimmung muss zuerst als ausstehend gespeichert werden.');
 assert.match(server, /confirmEmailConsent\(FIREBASE_PROJECT_ID, userId, confirmationToken\)/, 'Die Einwilligung darf erst durch den Bestätigungslink aktiv werden.');
-assert.match(server, /https:\/\/academy\.gomo-marketing\.at/, 'Der Double-Opt-in-Link muss die feste Produktionsadresse verwenden.');
+assert.equal(academyPublicUrl({}), 'https://academy.gomo-marketing.at', 'Double-Opt-in muss standardmäßig die feste Produktionsadresse verwenden.');
+assert.equal(academyPublicUrl({ ACADEMY_PUBLIC_URL: 'https://academy-test.example/' }), 'https://academy-test.example', 'Eine getrennte Testbereitstellung muss ihre eigene Rückleitungsadresse verwenden.');
+assert.throws(() => academyPublicUrl({ ACADEMY_PUBLIC_URL: 'http://academy-test.example/' }), 'Unsichere Rückleitungsadressen müssen blockiert werden.');
+assert.match(server, /const ACADEMY_PUBLIC_URL = academyPublicUrl\(process\.env\)/, 'E-Mail-Links müssen die geprüfte Bereitstellungsadresse verwenden.');
 assert.match(server, /Referrer-Policy', 'no-referrer'/, 'Der Bestätigungstoken darf beim Weiterklicken nicht als Referrer übertragen werden.');
 assert.match(server, /<form method="post" action="\/api\/email\/consent\/confirm">/, 'Automatische E-Mail-Linkprüfungen dürfen die Einwilligung nicht aktivieren.');
 assert.match(server, /Confirmation not possible/, 'Die englische Bestätigungsseite fehlt.');
