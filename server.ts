@@ -1,3 +1,7 @@
+import { academyPublicUrl, validateDeploymentEnvironment } from './server/deploymentEnvironment.js';
+import { sendProContractConfirmation } from './server/proContractConfirmation.js';
+import { recordWithdrawal, validateWithdrawal } from './server/contractWithdrawal.js';
+import { PRO_CONTRACT_VERSION, addCalendarMonths, sixMonthCheckoutEnabled } from './server/proSubscriptionContract.js';
 import { canUseContentProject } from './src/utils/contentProjectAccess.js';
 import { verifySendgridEventSignature, parseSendgridDeliveryEvents, recordSendgridDeliveryEvents } from './server/sendgridEventWebhook.js';
 import { loadCampaignDeliveryReport } from './server/emailCampaignReportAdmin.js';
@@ -35,8 +39,8 @@ import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages, saveWhatsAppOut
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, prepareWhatsAppTemplate, sendWhatsAppReply, sendWhatsAppTemplate } from './server/whatsappCloudApi.js';
 import { eligibleWhatsAppMembers, reserveWhatsAppBulkRecipient } from './server/whatsappBulkAdmin.js';
-import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook } from './server/stripeManagedPayments.js';
-import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
+import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook, retrieveStripeSubscription, scheduleSixMonthCancellation, verifySixMonthConfiguration } from './server/stripeManagedPayments.js';
+import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, loadStripeSubscriptionId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { MentorLessonError, resolveMentorLessonContext } from './server/mentorLessonContext.js';
 import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './server/mentorUsageAdmin.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
@@ -77,7 +81,7 @@ type SendEmailRequest = {
 const FIREBASE_PROJECT_ID = process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie';
 const FIREBASE_CERTIFICATES_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com';
 const SENDGRID_API_URL = 'https://api.sendgrid.com/v3/mail/send';
-const ACADEMY_PUBLIC_URL = 'https://academy.gomo-marketing.at';
+const ACADEMY_PUBLIC_URL = academyPublicUrl(process.env);
 const EMAIL_ADDRESS_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_SEND_WINDOW_MS = 60_000;
 const EMAIL_SEND_LIMIT = 5;
@@ -233,6 +237,10 @@ async function startServer() {
     try {
       const rawBody = Buffer.isBuffer(req.body) ? req.body : Buffer.from('');
       const event = verifyStripeWebhook(rawBody, req.header('stripe-signature'), webhookSecret);
+      if (process.env.ACADEMY_ENVIRONMENT === 'stripe-test' && event.livemode !== false) {
+        res.status(400).json({ error: 'Die Testumgebung akzeptiert ausschließlich Stripe-Testereignisse.' });
+        return;
+      }
       const userId = completedCheckoutMemberId(event);
       if (userId) {
         const member = await getFirebaseMember(FIREBASE_PROJECT_ID, userId);
@@ -241,6 +249,7 @@ async function startServer() {
           await updateFirebaseMemberTier(FIREBASE_PROJECT_ID, userId, 'PRO');
         }
         await saveStripeMembership(FIREBASE_PROJECT_ID, userId, event.id, event.data.object);
+        await sendProContractConfirmation(event.data.object, ACADEMY_PUBLIC_URL);
         console.info('Stripe-PRO-Mitgliedschaft aktiviert', {
           eventId: event.id,
           checkoutSessionId: event.data.object.id,
@@ -595,7 +604,7 @@ async function startServer() {
     const stripeSecretKey = process.env.STRIPE_SECRET_KEY?.trim();
     const priceId = process.env.STRIPE_PRO_MONTHLY_PRICE_ID?.trim();
     const firebaseUser = (req as FirebaseRequest).firebaseUser;
-    if (!stripeSecretKey || !priceId) {
+    if (!stripeSecretKey || (!priceId && !sixMonthCheckoutEnabled())) {
       res.status(503).json({ error: 'Stripe Checkout ist noch nicht vollständig konfiguriert.' });
       return;
     }
@@ -608,10 +617,18 @@ async function startServer() {
       return;
     }
     try {
-      const customerId = await loadStripeCustomerId(FIREBASE_PROJECT_ID, firebaseUser.sub);
+      const sixMonthContract = sixMonthCheckoutEnabled();
+      if (sixMonthContract && req.body?.contractVersion !== PRO_CONTRACT_VERSION) {
+        res.status(400).json({ error: 'Bitte bestätige die Vertragsinformationen zur sechsmonatigen Mindestlaufzeit.' });
+        return;
+      }
+      const configuration = sixMonthContract ? await verifySixMonthConfiguration(stripeSecretKey) : null;
+      // New contracts use a new customer so legacy portal links cannot bypass the minimum term.
+      const customerId = sixMonthContract ? undefined : await loadStripeCustomerId(FIREBASE_PROJECT_ID, firebaseUser.sub);
       const checkoutInput = {
         secretKey: stripeSecretKey,
-        priceId,
+        priceId: configuration?.priceId || priceId,
+        sixMonthContract,
         firebaseUid: firebaseUser.sub,
         customerEmail: firebaseUser.email,
         applicationUrl: ACADEMY_PUBLIC_URL,
@@ -672,16 +689,76 @@ async function startServer() {
         res.status(404).json({ error: 'Für dieses Konto wurde keine Stripe-Mitgliedschaft gefunden.' });
         return;
       }
+      const subscriptionId = await loadStripeSubscriptionId(FIREBASE_PROJECT_ID, firebaseUser.sub);
+      const subscription = subscriptionId ? await retrieveStripeSubscription(stripeSecretKey, subscriptionId) : null;
+      const configuration = subscription?.metadata?.contract_version === PRO_CONTRACT_VERSION
+        ? await verifySixMonthConfiguration(stripeSecretKey, false) : null;
       const portal = await createStripeBillingPortalSession({
         secretKey: stripeSecretKey,
         customerId,
         returnUrl: `${ACADEMY_PUBLIC_URL}/`,
+        configurationId: configuration?.portalId,
       });
       res.json({ url: portal.url });
     } catch (error: unknown) {
       console.error(error instanceof Error ? error.message : 'Stripe-Kundenportal konnte nicht geöffnet werden.');
       res.status(502).json({ error: 'Stripe-Kundenportal konnte nicht geöffnet werden.' });
     }
+  });
+
+  app.post('/api/payments/withdrawal', async (req, res) => {
+    const origin = req.get('origin');
+    if (origin && origin !== new URL(ACADEMY_PUBLIC_URL).origin) { res.status(403).json({ error: 'Bitte verwende das Widerrufsformular auf der Academy-Seite.' }); return; }
+    let input;
+    try { input = validateWithdrawal(req.body); }
+    catch (error) { res.status(400).json({ error: error instanceof Error ? error.message : 'Ungültige Angaben.' }); return; }
+    const key = `withdrawal:${req.ip}`;
+    const now = Date.now();
+    const recent = (recentEmailSends.get(key) || []).filter(time => time > now - 60_000);
+    if (recent.length >= 10) { res.status(429).json({ error: 'Bitte versuche es in einer Minute erneut oder schreibe an huber@gomo-marketing.at.' }); return; }
+    recentEmailSends.set(key, [...recent, now]);
+    res.setHeader('Cache-Control', 'no-store');
+    try { res.json(await recordWithdrawal(FIREBASE_PROJECT_ID, input)); }
+    catch { res.status(503).json({ error: 'Der Widerruf konnte nicht bestätigt werden. Bitte sende ihn an huber@gomo-marketing.at.' }); }
+  });
+
+  app.get('/api/payments/contract', (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.json({ sixMonthContract: sixMonthCheckoutEnabled(), contractVersion: PRO_CONTRACT_VERSION });
+  });
+
+  app.get('/api/payments/subscription', requireVerifiedMember, async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
+    const uid = (req as FirebaseRequest).firebaseUser?.sub;
+    const key = process.env.STRIPE_SECRET_KEY?.trim();
+    if (!uid || !key) { res.status(503).json({ error: 'Aboverwaltung ist derzeit nicht verfügbar.' }); return; }
+    try {
+      const id = await loadStripeSubscriptionId(FIREBASE_PROJECT_ID, uid);
+      if (!id) { res.json({ sixMonthContract: false }); return; }
+      const subscription = await retrieveStripeSubscription(key, id);
+      if (subscription.metadata?.firebase_uid !== uid) throw new Error('Abozuordnung ungültig.');
+      const isSixMonth = subscription.metadata?.contract_version === PRO_CONTRACT_VERSION;
+      res.json({ sixMonthContract: isSixMonth,
+        minimumTermEndsAt: isSixMonth && subscription.start_date ? new Date(addCalendarMonths(subscription.start_date, 6) * 1000).toISOString() : null,
+        cancellationAt: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null });
+    } catch { res.status(503).json({ error: 'Abodaten konnten nicht geladen werden.' }); }
+  });
+
+  app.post('/api/payments/subscription/cancel', requireVerifiedMember, async (req, res) => {
+    const uid = (req as FirebaseRequest).firebaseUser?.sub;
+    const key = process.env.STRIPE_SECRET_KEY?.trim();
+    if (!uid || !key) { res.status(503).json({ error: 'Aboverwaltung ist derzeit nicht verfügbar.' }); return; }
+    if (req.body?.confirm !== true) { res.status(400).json({ error: 'Bitte bestätige die Kündigung.' }); return; }
+    try {
+      const id = await loadStripeSubscriptionId(FIREBASE_PROJECT_ID, uid);
+      if (!id) throw new Error('Kein Abo gefunden.');
+      const subscription = await retrieveStripeSubscription(key, id);
+      const updated = await scheduleSixMonthCancellation(key, subscription, uid);
+      if (!updated.cancel_at) throw new Error('Stripe hat keinen Kündigungstermin bestätigt.');
+      const cancellationAt = new Date(updated.cancel_at * 1000).toISOString();
+      await saveStripeCancellationStatus(FIREBASE_PROJECT_ID, uid, 'academy-self-service', updated, cancellationAt);
+      res.json({ cancellationAt });
+    } catch { res.status(503).json({ error: 'Die Kündigung konnte nicht bestätigt werden. Bitte kontaktiere huber@gomo-marketing.at.' }); }
   });
 
   // Initialize Gemini AI Client
@@ -3283,4 +3360,5 @@ Antworte mit einem reinen JSON-Objekt:
   });
 }
 
+validateDeploymentEnvironment();
 startServer();

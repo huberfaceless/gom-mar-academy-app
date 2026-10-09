@@ -198,6 +198,13 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm">Zahlung, Aboverwaltung und Widerruf</h4>
+                <p className="text-slate-600 text-xs">E-Mail, Mitgliedskennung, Tarif und Vertragsfassung werden für kostenpflichtige Mitgliedschaften an Stripe übermittelt. Die Academy speichert Kunden-, Checkout- und Abokennungen, Vertragsannahme und Kündigungsstatus. Für bestehende Managed-Payments-Abos erfolgt der Verkauf über Link; bei neuen Standard-Billing-Verträgen ist GomMar der Verkäufer. Rechtsgrundlagen sind Vertragserfüllung und gesetzliche Pflichten (Art. 6 Abs. 1 lit. b und c DSGVO).</p>
+                <p className="text-slate-600 text-xs">Widerrufserklärungen mit Name, E-Mail, Vertragsangaben und Eingangszeitpunkt werden serverseitig in Firebase/Google Cloud gespeichert. Bestätigungen werden über Twilio SendGrid versandt. Diese Vertragsnachrichten erfordern keine Marketingeinwilligung. Weitere Angaben stehen in der <a href="/privacy/" className="underline text-indigo-600">öffentlichen Datenschutzerklärung</a>.</p>
+                <a href="/withdrawal/" className="inline-block rounded-lg bg-indigo-600 px-3 py-2 font-semibold text-white">Vertrag widerrufen</a>
+              </div>
+
+              <div className="space-y-2">
                 <h4 className="font-bold text-slate-900 text-sm">4. YouTube-Verbindung und YouTube API Services</h4>
                 <p className="text-slate-600 text-xs leading-relaxed">
                   Die optionale YouTube-Verbindung nutzt die <strong>YouTube API Services</strong> und Google OAuth. Nach deiner ausdrücklichen Zustimmung erhält die GOM-MAR Academy Berechtigungen, Videos in deinem YouTube-Konto hochzuladen und den Sichtbarkeitsstatus eines von der Academy hochgeladenen Videos zum geplanten Zeitpunkt zu ändern.
