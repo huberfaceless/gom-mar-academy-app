@@ -15,13 +15,15 @@ import { validateWithdrawal } from '../server/contractWithdrawal.js';
 assert.throws(() => validateWithdrawal({ name: 'A', email: 'a@example.com', contract: 'PRO' }));
 assert.deepEqual(validateWithdrawal({ name: ' A ', email: 'A@example.com', contract: 'PRO', confirm: true }), { name: 'A', email: 'a@example.com', contract: 'PRO' });
 const originalFetch = globalThis.fetch;
+const originalTaxMode = process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE;
+delete process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE;
 const requests: URLSearchParams[] = [];
 globalThis.fetch = async (_url, options) => {
   requests.push(options?.body as URLSearchParams);
   return new Response(JSON.stringify({ id: 'sub_test', cancel_at: seconds('2027-04-07T12:00:00Z'), url: 'https://checkout.stripe.com/test' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
 };
 try {
-  await createManagedSubscriptionCheckout({ secretKey: 'sk_test_mock', priceId: 'price_test', firebaseUid: 'user', customerEmail: 'user@example.com', applicationUrl: 'https://academy.example', sixMonthContract: true });
+  await createManagedSubscriptionCheckout({ secretKey: 'sk_test_mock', priceId: 'price_test', firebaseUid: 'user', customerEmail: 'user@example.com', applicationUrl: 'https://academy.example', sixMonthContract: true, residenceCountry: 'AT' });
   assert.equal(requests[0].get('managed_payments[enabled]'), 'false');
   assert.equal(requests[0].get('subscription_data[metadata][contract_version]'), PRO_CONTRACT_VERSION);
   assert.equal(requests[0].get('automatic_tax[enabled]'), 'true');
@@ -40,5 +42,34 @@ try {
   delete process.env.STRIPE_PRO_SIX_MONTH_ENABLED;
   await assert.rejects(verifySixMonthConfiguration('sk_test_mock'));
   if (flag !== undefined) process.env.STRIPE_PRO_SIX_MONTH_ENABLED = flag;
-} finally { globalThis.fetch = originalFetch; }
+  const baseCheckout = { secretKey: 'sk_test_mock', priceId: 'price_test', firebaseUid: 'user', customerEmail: 'user@example.com', applicationUrl: 'https://academy.example', sixMonthContract: true };
+  const beforeInvalid = requests.length;
+  for (const country of [undefined, '', 'US', 'GB', 'CH', 'at', ' AT', 'DE,PL']) {
+    await assert.rejects(createManagedSubscriptionCheckout({ ...baseCheckout, residenceCountry: country }));
+  }
+  assert.equal(requests.length, beforeInvalid, 'Unzulässiges Land muss vor Stripe-Aufruf blockieren.');
+  process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE = 'austrian-small-business';
+  for (const residenceCountry of ['AT', 'DE', 'PL']) {
+    await createManagedSubscriptionCheckout({ ...baseCheckout, residenceCountry });
+    const params = requests.at(-1)!;
+    assert.equal(params.get('automatic_tax[enabled]'), 'false');
+    assert.equal(params.get('metadata[residence_country]'), residenceCountry);
+    assert.equal(params.get('subscription_data[metadata][residence_country]'), residenceCountry);
+    assert.equal(params.get('metadata[tax_mode]'), 'austrian-small-business');
+    assert.equal(params.get('billing_address_collection'), 'required');
+    assert.match(params.get('custom_text[submit][message]')!, /Umsatzsteuerfrei/);
+    assert.equal(params.get('subscription_data[default_tax_rates][0]'), null);
+  }
+  process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE = 'unknown';
+  const beforeInvalidMode = requests.length;
+  await assert.rejects(createManagedSubscriptionCheckout({ ...baseCheckout, residenceCountry: 'AT' }));
+  assert.equal(requests.length, beforeInvalidMode);
+  await createManagedSubscriptionCheckout({ ...baseCheckout, sixMonthContract: false });
+  assert.equal(requests.at(-1)!.get('managed_payments[enabled]'), 'true');
+  assert.equal(requests.at(-1)!.get('automatic_tax[enabled]'), null, 'Bestandsangebot darf nicht durch Steuerumschaltung verändert werden.');
+} finally {
+  globalThis.fetch = originalFetch;
+  if (originalTaxMode === undefined) delete process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE;
+  else process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE = originalTaxMode;
+}
 console.log('Checkout-Modus, Bestandsschutz, Eigentümerprüfung, Widerrufseingaben und wiederholte Kündigung bestanden.');

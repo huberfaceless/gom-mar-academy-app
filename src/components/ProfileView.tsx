@@ -1,3 +1,4 @@
+import { PRO_SALES_COUNTRIES, type ProSalesCountry } from '../config/proSalesPolicy';
 import React, { useEffect, useState } from 'react';
 import { UserProfile, AcademyTier } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -57,6 +58,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   const [whatsappError, setWhatsappError] = useState('');
   const [contract, setContract] = useState<{ sixMonthContract: boolean; contractVersion: string } | null>(null);
   const [contractAccepted, setContractAccepted] = useState(false);
+  const [residenceCountry, setResidenceCountry] = useState<ProSalesCountry | ''>('');
   const [subscription, setSubscription] = useState<ProSubscriptionStatus | null>(null);
   const [cancellationMessage, setCancellationMessage] = useState('');
   const [cancellationLoading, setCancellationLoading] = useState(false);
@@ -66,6 +68,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
     setContract(null);
     setSubscription(null);
     setContractAccepted(false);
+    setResidenceCountry('');
     loadProContract().then(value => { if (!cancelled) setContract(value); }).catch(() => { if (!cancelled) setProCheckoutError('Vertragsinformationen konnten nicht geladen werden. Bitte lade die Seite neu.'); });
     if (user.tier !== 'FREE') loadProSubscription().then(value => { if (!cancelled) setSubscription(value); }).catch(() => { if (!cancelled) setCancellationMessage('Abodaten konnten nicht geladen werden. Bitte lade die Seite neu.'); });
     return () => { cancelled = true; };
@@ -170,8 +173,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
     setProCheckoutLoading(true);
     setProCheckoutError('');
     try {
-      if (!contract || (contract.sixMonthContract && !contractAccepted)) throw new Error('Bitte bestätige zuerst die Vertragsinformationen.');
-      await startProMonthlyCheckout(contract.sixMonthContract ? contract.contractVersion : undefined);
+      if (!contract || (contract.sixMonthContract && (!contractAccepted || !residenceCountry))) throw new Error('Bitte bestätige zuerst die Vertragsinformationen.');
+      await startProMonthlyCheckout(contract.sixMonthContract ? contract.contractVersion : undefined, contract.sixMonthContract && residenceCountry ? residenceCountry : undefined);
     } catch (error: unknown) {
       setProCheckoutError(error instanceof Error ? error.message : copy.proCheckoutError);
       setProCheckoutLoading(false);
@@ -476,6 +479,14 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
 
             {user.tier === 'FREE' && contract?.sixMonthContract && (
               <div className="space-y-3 text-xs text-slate-700">
+                <label className="block space-y-1">
+                  <span className="font-semibold">{language === 'de' ? 'Dein Wohnsitzland' : language === 'pl' ? 'Kraj zamieszkania' : 'Your country of residence'}</span>
+                  <select value={residenceCountry} onChange={event => { setResidenceCountry(event.target.value as ProSalesCountry | ''); setContractAccepted(false); }} className="block w-full rounded-lg border border-slate-300 bg-white p-2">
+                    <option value="">{language === 'de' ? 'Bitte auswählen' : language === 'pl' ? 'Wybierz kraj' : 'Please select'}</option>
+                    {PRO_SALES_COUNTRIES.map(country => <option key={country} value={country}>{({ de: { AT: 'Österreich', DE: 'Deutschland', PL: 'Polen' }, pl: { AT: 'Austria', DE: 'Niemcy', PL: 'Polska' }, en: { AT: 'Austria', DE: 'Germany', PL: 'Poland' } })[language][country]}</option>)}
+                  </select>
+                </label>
+                <p>{language === 'de' ? 'PRO ist derzeit nur für Personen mit Wohnsitz in Österreich, Deutschland oder Polen erhältlich. Mit der Buchung bestätigst du dein angegebenes Wohnsitzland.' : language === 'pl' ? 'PRO jest obecnie dostępne tylko dla osób mieszkających w Austrii, Niemczech lub Polsce. Dokonując zakupu, potwierdzasz podany kraj zamieszkania.' : 'PRO is currently available only to residents of Austria, Germany or Poland. By booking, you confirm your stated country of residence.'}</p>
                 <p className="font-semibold">{language === 'de' ? '6 Monate Mindestlaufzeit · 29,90 €/Monat Gesamtpreis · Mindestgesamtpreis 179,40 €. Kündigung jederzeit vormerkbar, wirksam frühestens nach 6 Monaten; danach zum Ende des bezahlten Monats.' : language === 'pl' ? 'Minimalny okres 6 miesięcy · 29,90 €/miesiąc (cena całkowita) · minimalna cena 179,40 €. Wypowiedzenie można złożyć wcześniej, ze skutkiem najwcześniej po 6 miesiącach; później na koniec opłaconego miesiąca.' : '6-month minimum term · €29.90/month total price · minimum total €179.40. Cancellation can be requested anytime, effective after 6 months at the earliest; then at the end of the paid month.'}</p>
                 <a href="/terms/" target="_blank" rel="noreferrer" className="underline text-indigo-700">{language === 'de' ? 'Vertragsinformationen und Widerruf lesen' : language === 'pl' ? 'Warunki umowy i odstąpienie' : 'Read contract information and withdrawal rights'}</a>
                 <label className="flex items-start gap-2"><input type="checkbox" checked={contractAccepted} onChange={event => setContractAccepted(event.target.checked)} className="mt-0.5" /><span>{language === 'de' ? 'Ich habe die Vertragsinformationen gelesen und stimme der sechsmonatigen Mindestlaufzeit zu. Mein gesetzliches Widerrufsrecht bleibt unberührt.' : language === 'pl' ? 'Zapoznałem/am się z warunkami umowy i zgadzam się na minimalny okres 6 miesięcy. Ustawowe prawo odstąpienia pozostaje zachowane.' : 'I have read the contract information and agree to the 6-month minimum term. My statutory withdrawal rights remain unaffected.'}</span></label>
@@ -483,7 +494,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             )}
             <button
               type="button"
-              disabled={user.tier !== 'FREE' || proCheckoutLoading || !contract || (contract.sixMonthContract && !contractAccepted)}
+              disabled={user.tier !== 'FREE' || proCheckoutLoading || !contract || (contract.sixMonthContract && (!contractAccepted || !residenceCountry))}
               onClick={() => void handleProCheckout()}
               className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                 user.tier === 'PRO'

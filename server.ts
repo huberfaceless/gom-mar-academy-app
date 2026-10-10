@@ -1,3 +1,4 @@
+import { PRO_SALES_COUNTRIES, isProSalesCountry } from './src/config/proSalesPolicy.js';
 import { academyPublicUrl, validateDeploymentEnvironment } from './server/deploymentEnvironment.js';
 import { sendProContractConfirmation } from './server/proContractConfirmation.js';
 import { recordWithdrawal, validateWithdrawal } from './server/contractWithdrawal.js';
@@ -622,6 +623,10 @@ async function startServer() {
         res.status(400).json({ error: 'Bitte bestätige die Vertragsinformationen zur sechsmonatigen Mindestlaufzeit.' });
         return;
       }
+      if (sixMonthContract && !isProSalesCountry(req.body?.residenceCountry)) {
+        res.status(400).json({ error: 'Bitte wähle dein Wohnsitzland. PRO ist derzeit nur in Österreich, Deutschland und Polen verfügbar.' });
+        return;
+      }
       const configuration = sixMonthContract ? await verifySixMonthConfiguration(stripeSecretKey) : null;
       // New contracts use a new customer so legacy portal links cannot bypass the minimum term.
       const customerId = sixMonthContract ? undefined : await loadStripeCustomerId(FIREBASE_PROJECT_ID, firebaseUser.sub);
@@ -629,6 +634,7 @@ async function startServer() {
         secretKey: stripeSecretKey,
         priceId: configuration?.priceId || priceId,
         sixMonthContract,
+        residenceCountry: sixMonthContract ? req.body.residenceCountry : undefined,
         firebaseUid: firebaseUser.sub,
         customerEmail: firebaseUser.email,
         applicationUrl: ACADEMY_PUBLIC_URL,
@@ -724,7 +730,7 @@ async function startServer() {
 
   app.get('/api/payments/contract', (_req, res) => {
     res.setHeader('Cache-Control', 'no-store');
-    res.json({ sixMonthContract: sixMonthCheckoutEnabled(), contractVersion: PRO_CONTRACT_VERSION });
+    res.json({ sixMonthContract: sixMonthCheckoutEnabled(), contractVersion: PRO_CONTRACT_VERSION, allowedCountries: PRO_SALES_COUNTRIES });
   });
 
   app.get('/api/payments/subscription', requireVerifiedMember, async (req, res) => {
