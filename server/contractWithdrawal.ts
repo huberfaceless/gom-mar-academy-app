@@ -25,7 +25,7 @@ export const recordWithdrawal = async (projectId: string, input: WithdrawalInput
   if (!response.ok) throw new Error('Der Widerruf konnte nicht gespeichert werden. Bitte sende ihn an huber@gomo-marketing.at.');
   const key = process.env.SENDGRID_API_KEY?.trim();
   const from = process.env.SENDGRID_FROM_EMAIL?.trim();
-  const text = `Dein Widerruf ist bei GomMar eingegangen.\n\nName: ${input.name}\nVertrag: ${input.contract}\nEingang: ${receivedAt}\nReferenz: ${id}\n\nDiese Nachricht bestätigt den Eingang deiner Erklärung. Die Prüfung des Widerrufsrechts sowie eine gegebenenfalls erforderliche Abo-Beendigung und Rückzahlung erfolgen gesondert.\nStefan Gomolka (GomMar), Hammerskjoeldgasse 1, 2000 Stockerau, Österreich\nhuber@gomo-marketing.at`;
+  const text = `Dein Widerruf ist bei GomMar eingegangen.\n\nName: ${input.name}\nVertrag: ${input.contract}\nEingang: ${receivedAt}\nReferenz: ${id}\n\nDiese Nachricht bestätigt den Eingang deiner Erklärung. Die Prüfung des Widerrufsrechts sowie eine gegebenenfalls erforderliche Abo-Beendigung und Rückzahlung erfolgen gesondert.\nSzczepan Gomolka (GomMar), Dag. Hammerskjöldgasse 1/6, 2000 Stockerau, Österreich\nhuber@gomo-marketing.at`;
   let emailConfirmed = false;
   if (key && from) {
     try {
