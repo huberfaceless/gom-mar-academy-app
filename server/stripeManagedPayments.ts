@@ -1,4 +1,5 @@
-import { PRO_CONTRACT_VERSION, ordinaryCancellationAt, sixMonthCheckoutEnabled } from './proSubscriptionContract.js';
+import { isProSalesCountry } from '../src/config/proSalesPolicy.js';
+import { PRO_CONTRACT_VERSION, ordinaryCancellationAt, sixMonthCheckoutEnabled, proTaxMode } from './proSubscriptionContract.js';
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 
 export const STRIPE_MANAGED_PAYMENTS_API_VERSION = '2026-02-25.preview';
@@ -129,7 +130,12 @@ export const createManagedSubscriptionCheckout = async (input: {
   customerId?: string;
   applicationUrl: string;
   sixMonthContract?: boolean;
+  residenceCountry?: string;
 }): Promise<StripeCheckoutSession> => {
+  if (input.sixMonthContract && !isProSalesCountry(input.residenceCountry)) {
+    throw new Error('PRO kann derzeit nur mit Wohnsitz in Österreich, Deutschland oder Polen gebucht werden.');
+  }
+  const taxMode = input.sixMonthContract ? proTaxMode() : null;
   const params = new URLSearchParams({
     mode: 'subscription',
     'line_items[0][price]': input.priceId,
@@ -148,7 +154,14 @@ export const createManagedSubscriptionCheckout = async (input: {
     params.set('metadata[contract_accepted_at]', new Date().toISOString());
     params.set('subscription_data[metadata][contract_version]', PRO_CONTRACT_VERSION);
     params.set('custom_text[submit][message]', '29,90 EUR monatlicher Gesamtpreis; Mindestlaufzeit 6 Monate (179,40 EUR). Kündigung schon jetzt zum Ende der Mindestlaufzeit möglich, danach zum Ende des bezahlten Monats. Gesetzlicher Widerruf bleibt unberührt. Vertragsinformationen: ' + input.applicationUrl + '/terms/');
-    params.set('automatic_tax[enabled]', 'true');
+    params.set('automatic_tax[enabled]', taxMode === 'automatic' ? 'true' : 'false');
+    params.set('billing_address_collection', 'required');
+    params.set('metadata[residence_country]', input.residenceCountry!);
+    params.set('subscription_data[metadata][residence_country]', input.residenceCountry!);
+    params.set('metadata[tax_mode]', taxMode!);
+    params.set('subscription_data[metadata][tax_mode]', taxMode!);
+    const countryName = { AT: 'Österreich', DE: 'Deutschland', PL: 'Polen' }[input.residenceCountry!];
+    params.set('custom_text[submit][message]', params.get('custom_text[submit][message]') + ' Wohnsitz bei Buchung: ' + countryName + '. ' + (taxMode === 'austrian-small-business' ? 'Umsatzsteuerfrei aufgrund der österreichischen Kleinunternehmerregelung.' : 'Eine gegebenenfalls geschuldete Umsatzsteuer ist im Gesamtpreis enthalten.'));
   }
   if (input.customerId) params.set('customer', input.customerId);
   else params.set('customer_email', input.customerEmail);
@@ -286,7 +299,7 @@ export const verifySixMonthConfiguration = async (secretKey: string, requireActi
     return response.json();
   };
   const [price, portal, portals] = await Promise.all([get(`/prices/${encodeURIComponent(priceId)}?expand[]=product`), get(`/billing_portal/configurations/${encodeURIComponent(portalId)}`), get('/billing_portal/configurations?limit=100')]);
-  if (!price.active || price.unit_amount !== 2990 || price.currency !== 'eur' || price.tax_behavior !== 'inclusive' || price.recurring?.interval !== 'month' || price.recurring?.interval_count !== 1 || !price.product?.tax_code) throw new Error('Der Preis muss 29,90 EUR inkl. MwSt. monatlich und einen Steuer-Code enthalten.');
+  if (!price.active || price.unit_amount !== 2990 || price.currency !== 'eur' || price.tax_behavior !== 'inclusive' || price.recurring?.interval !== 'month' || price.recurring?.interval_count !== 1 || !price.product?.tax_code) throw new Error('Der Preis muss 29,90 EUR monatlicher Gesamtpreis und einen Steuer-Code enthalten und als monatlicher Gesamtpreis konfiguriert sein.');
   if (!portal.active || portal.features?.subscription_cancel?.enabled !== false || portal.features?.subscription_update?.enabled !== false || portal.login_page?.enabled) throw new Error('Das separate Kundenportal darf keine direkte Kündigung, Tarifänderung oder öffentliche Anmeldung anbieten.');
   if (portals.has_more || portals.data?.some((item: { active?: boolean; login_page?: { enabled?: boolean } }) => item.active && item.login_page?.enabled)) throw new Error('Öffentliche Portal-Anmeldelinks müssen für die Mindestlaufzeit deaktiviert sein.');
   return { priceId, portalId };

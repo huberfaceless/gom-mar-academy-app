@@ -20,3 +20,12 @@ export const ordinaryCancellationAt = (start: number, periodEnd: number): number
 };
 
 export const sixMonthCheckoutEnabled = (): boolean => process.env.STRIPE_PRO_SIX_MONTH_ENABLED === 'true';
+
+export type ProTaxMode = 'automatic' | 'austrian-small-business';
+export const proTaxMode = (): ProTaxMode => {
+  const mode = process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE ?? 'automatic';
+  if (mode !== 'automatic' && mode !== 'austrian-small-business') {
+    throw new Error('Die Steuerkonfiguration für den Sechsmonatstarif ist ungültig.');
+  }
+  return mode;
+};

@@ -14,7 +14,7 @@ export const sendProContractConfirmation = async (session: StripeCheckoutSession
   const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
     method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ personalizations: [{ to: [{ email }] }], from: { email: from, name: 'GOM-MAR Academy' }, subject: 'Dein PRO-Vertrag: sechs Monate Mindestlaufzeit',
-      content: [{ type: 'text/plain', value: `Vertragsreferenz: ${session.id}\nVertragsfassung: ${PRO_CONTRACT_VERSION}\nBestätigung vor dem Checkout: ${session.metadata?.contract_accepted_at || 'siehe Buchung'}\n\n${text}\n\nOnline-Widerruf: ${applicationUrl}/withdrawal/\nAboverwaltung: ${applicationUrl}/` }] }),
+      content: [{ type: 'text/plain', value: `Vertragsreferenz: ${session.id}\nVertragsfassung: ${PRO_CONTRACT_VERSION}\nBestätigung vor dem Checkout: ${session.metadata?.contract_accepted_at || 'siehe Buchung'}\nWohnsitzland bei Buchung: ${session.metadata?.residence_country || 'siehe Buchung'}\n${session.metadata?.tax_mode === 'austrian-small-business' ? 'Umsatzsteuerfrei aufgrund der österreichischen Kleinunternehmerregelung.' : ''}\n\n${text}\n\nOnline-Widerruf: ${applicationUrl}/withdrawal/\nAboverwaltung: ${applicationUrl}/` }] }),
     signal: AbortSignal.timeout(20_000),
   });
   if (!response.ok) throw new Error('Die Vertragsbestätigung konnte nicht an SendGrid übergeben werden.');

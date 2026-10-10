@@ -1,6 +1,7 @@
+import type { ProSalesCountry } from '../config/proSalesPolicy';
 import { auth } from '../firebase/config';
 
-export const startProMonthlyCheckout = async (contractVersion?: string): Promise<void> => {
+export const startProMonthlyCheckout = async (contractVersion?: string, residenceCountry?: ProSalesCountry): Promise<void> => {
   const currentUser = auth.currentUser;
   if (!currentUser) throw new Error('Eine Anmeldung ist erforderlich.');
   const response = await fetch('/api/payments/checkout/pro-monthly', {
@@ -9,7 +10,7 @@ export const startProMonthlyCheckout = async (contractVersion?: string): Promise
       Authorization: `Bearer ${await currentUser.getIdToken()}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ contractVersion }),
+    body: JSON.stringify({ contractVersion, residenceCountry }),
   });
   const result = await response.json().catch(() => ({})) as { url?: string; error?: string };
   if (!response.ok || !result.url) throw new Error(result.error || 'Stripe Checkout konnte nicht gestartet werden.');
