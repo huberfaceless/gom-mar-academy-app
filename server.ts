@@ -1,3 +1,4 @@
+import { firestoreStripeDeliveryStore, processStripeDelivery } from './server/stripeWebhookDelivery.js';
 import { PRO_SALES_COUNTRIES, isProSalesCountry } from './src/config/proSalesPolicy.js';
 import { academyPublicUrl, validateDeploymentEnvironment } from './server/deploymentEnvironment.js';
 import { sendProContractConfirmation } from './server/proContractConfirmation.js';
@@ -242,51 +243,55 @@ async function startServer() {
         res.status(400).json({ error: 'Die Testumgebung akzeptiert ausschließlich Stripe-Testereignisse.' });
         return;
       }
-      const userId = completedCheckoutMemberId(event);
-      if (userId) {
-        const member = await getFirebaseMember(FIREBASE_PROJECT_ID, userId);
-        if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
-        if (member.role !== 'admin') {
-          await updateFirebaseMemberTier(FIREBASE_PROJECT_ID, userId, 'PRO');
+      if (!event.id || !/^evt_[A-Za-z0-9_]+$/.test(event.id)) throw new Error('Ungültige Stripe-Ereignis-ID.');
+      const delivery = await processStripeDelivery(firestoreStripeDeliveryStore(FIREBASE_PROJECT_ID, event.id), async (step) => {
+        const userId = completedCheckoutMemberId(event);
+        if (userId) {
+          const member = await getFirebaseMember(FIREBASE_PROJECT_ID, userId);
+          if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
+          if (member.role !== 'admin') {
+            await step('activate-pro', () => updateFirebaseMemberTier(FIREBASE_PROJECT_ID, userId, 'PRO'));
+          }
+          await step('save-membership', () => saveStripeMembership(FIREBASE_PROJECT_ID, userId, event.id, event.data.object));
+          await step('contract-email', () => sendProContractConfirmation(event.data.object, ACADEMY_PUBLIC_URL));
+          console.info('Stripe-PRO-Mitgliedschaft aktiviert', {
+            eventId: event.id,
+            checkoutSessionId: event.data.object.id,
+            userId,
+          });
         }
-        await saveStripeMembership(FIREBASE_PROJECT_ID, userId, event.id, event.data.object);
-        await sendProContractConfirmation(event.data.object, ACADEMY_PUBLIC_URL);
-        console.info('Stripe-PRO-Mitgliedschaft aktiviert', {
-          eventId: event.id,
-          checkoutSessionId: event.data.object.id,
-          userId,
-        });
-      }
-      const canceledUserId = deletedSubscriptionMemberId(event);
-      if (canceledUserId) {
-        const member = await getFirebaseMember(FIREBASE_PROJECT_ID, canceledUserId);
-        if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
-        if (member.role !== 'admin') {
-          await updateFirebaseMemberTier(FIREBASE_PROJECT_ID, canceledUserId, 'FREE');
+        const canceledUserId = deletedSubscriptionMemberId(event);
+        if (canceledUserId) {
+          const member = await getFirebaseMember(FIREBASE_PROJECT_ID, canceledUserId);
+          if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
+          if (member.role !== 'admin') {
+            await step('deactivate-pro', () => updateFirebaseMemberTier(FIREBASE_PROJECT_ID, canceledUserId, 'FREE'));
+          }
+          await step('cancel-membership', () => cancelStripeMembership(FIREBASE_PROJECT_ID, canceledUserId, event.id, event.data.object));
+          console.info('Stripe-PRO-Mitgliedschaft beendet', {
+            eventId: event.id,
+            subscriptionId: event.data.object.id,
+            userId: canceledUserId,
+          });
         }
-        await cancelStripeMembership(FIREBASE_PROJECT_ID, canceledUserId, event.id, event.data.object);
-        console.info('Stripe-PRO-Mitgliedschaft beendet', {
-          eventId: event.id,
-          subscriptionId: event.data.object.id,
-          userId: canceledUserId,
-        });
-      }
-      const cancellationUpdate = updatedSubscriptionCancellation(event);
-      if (cancellationUpdate) {
-        await saveStripeCancellationStatus(
-          FIREBASE_PROJECT_ID,
-          cancellationUpdate.userId,
-          event.id,
-          event.data.object,
-          cancellationUpdate.cancellationAt,
-        );
-        console.info('Stripe-Kündigungsstatus aktualisiert', {
-          eventId: event.id,
-          subscriptionId: event.data.object.id,
-          userId: cancellationUpdate.userId,
-          cancellationAt: cancellationUpdate.cancellationAt,
-        });
-      }
+        const cancellationUpdate = updatedSubscriptionCancellation(event);
+        if (cancellationUpdate) {
+          await step('cancellation-status', () => saveStripeCancellationStatus(
+            FIREBASE_PROJECT_ID,
+            cancellationUpdate.userId,
+            event.id,
+            event.data.object,
+            cancellationUpdate.cancellationAt,
+          ));
+          console.info('Stripe-Kündigungsstatus aktualisiert', {
+            eventId: event.id,
+            subscriptionId: event.data.object.id,
+            userId: cancellationUpdate.userId,
+            cancellationAt: cancellationUpdate.cancellationAt,
+          });
+        }
+      });
+      if (delivery === 'duplicate') console.info('Stripe-Webhook bereits verarbeitet', { eventId: event.id });
       res.json({ received: true });
     } catch (error: unknown) {
       console.error(error instanceof Error ? error.message : 'Stripe-Webhook konnte nicht verarbeitet werden.');

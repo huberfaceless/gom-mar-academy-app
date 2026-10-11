@@ -70,6 +70,9 @@ jobs:
       - name: Stripe Managed Payments pruefen
         run: bun run audit:stripe
 
+      - name: Stripe-Webhook-Wiederholungen pruefen
+        run: bun run audit:stripe-webhooks
+
       - name: Zentrale Lektionenverwaltung pruefen
         run: bun run audit:curriculum-admin
 
