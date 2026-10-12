@@ -31,6 +31,7 @@ export type StripeCheckoutSession = {
   url?: string | null;
   customer?: string | null;
   subscription?: string | null;
+  parent?: { subscription_details?: { subscription?: string | null } | null } | null;
   client_reference_id?: string | null;
   mode?: string | null;
   payment_status?: string | null;
@@ -303,4 +304,20 @@ export const verifySixMonthConfiguration = async (secretKey: string, requireActi
   if (!portal.active || portal.features?.subscription_cancel?.enabled !== false || portal.features?.subscription_update?.enabled !== false || portal.login_page?.enabled) throw new Error('Das separate Kundenportal darf keine direkte Kündigung, Tarifänderung oder öffentliche Anmeldung anbieten.');
   if (portals.has_more || portals.data?.some((item: { active?: boolean; login_page?: { enabled?: boolean } }) => item.active && item.login_page?.enabled)) throw new Error('Öffentliche Portal-Anmeldelinks müssen für die Mindestlaufzeit deaktiviert sein.');
   return { priceId, portalId };
+};
+
+// Invoice payloads differ between Stripe API versions.
+export const billingEventSubscriptionId = (event: StripeWebhookEvent): string | null => {
+  if (event.type === 'customer.subscription.updated' || event.type === 'customer.subscription.deleted') return event.data.object.id;
+  if (event.type === 'invoice.paid' || event.type === 'invoice.payment_failed') {
+    return event.data.object.parent?.subscription_details?.subscription || event.data.object.subscription || null;
+  }
+  return null;
+};
+
+export const subscriptionAccessTier = (status: string | null | undefined): 'PRO' | 'FREE' | null => {
+  if (status === 'active') return 'PRO';
+  if (status === 'unpaid' || status === 'canceled') return 'FREE';
+  // past_due retains existing access; unknown states never grant access.
+  return null;
 };
