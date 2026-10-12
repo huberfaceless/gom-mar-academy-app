@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
 import {
+  billingEventSubscriptionId,
+  subscriptionAccessTier,
   checkoutSessionPayerEmail,
   completedCheckoutMemberId,
   completedCheckoutSessionMemberId,
@@ -115,3 +117,18 @@ assert.equal(completedCheckoutMemberId({
 }), null);
 
 console.log('Stripe-Managed-Payments-Audit erfolgreich.');
+
+assert.equal(subscriptionAccessTier('past_due'), null);
+assert.equal(subscriptionAccessTier('unpaid'), 'FREE');
+assert.equal(subscriptionAccessTier('canceled'), 'FREE');
+assert.equal(subscriptionAccessTier('active'), 'PRO');
+assert.equal(subscriptionAccessTier('incomplete'), null);
+assert.equal(subscriptionAccessTier('trialing'), null);
+assert.equal(billingEventSubscriptionId({ ...event, type: 'invoice.paid', data: { object: {
+  id: 'in_new', parent: { subscription_details: { subscription: 'sub_new' } },
+} } }), 'sub_new');
+assert.equal(billingEventSubscriptionId({ ...event, type: 'invoice.payment_failed', data: { object: {
+  id: 'in_old', subscription: 'sub_old',
+} } }), 'sub_old');
+assert.equal(billingEventSubscriptionId(event), null);
+assert.equal(billingEventSubscriptionId({ ...event, type: 'invoice.paid', data: { object: { id: 'in_manual' } } }), null);
