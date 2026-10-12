@@ -41,8 +41,8 @@ import { listWhatsAppInboxMessages, saveWhatsAppInboundMessages, saveWhatsAppOut
 import { deleteWhatsAppMemberProfile, listWhatsAppMemberProfiles, loadWhatsAppMemberProfile, saveWhatsAppMemberProfile } from './server/whatsappMemberProfileAdmin.js';
 import { prepareWhatsAppReply, prepareWhatsAppTemplate, sendWhatsAppReply, sendWhatsAppTemplate } from './server/whatsappCloudApi.js';
 import { eligibleWhatsAppMembers, reserveWhatsAppBulkRecipient } from './server/whatsappBulkAdmin.js';
-import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, deletedSubscriptionMemberId, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook, retrieveStripeSubscription, scheduleSixMonthCancellation, verifySixMonthConfiguration } from './server/stripeManagedPayments.js';
-import { cancelStripeMembership, listStripeMemberships, loadStripeCustomerId, loadStripeSubscriptionId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
+import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckoutSessionMemberId, createManagedSubscriptionCheckout, createStripeBillingPortalSession, billingEventSubscriptionId, subscriptionAccessTier, isMissingStripeCustomerError, retrieveManagedSubscriptionCheckout, updatedSubscriptionCancellation, verifyStripeWebhook, retrieveStripeSubscription, scheduleSixMonthCancellation, verifySixMonthConfiguration } from './server/stripeManagedPayments.js';
+import { listStripeMemberships, loadStripeCustomerId, loadStripeSubscriptionId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { MentorLessonError, resolveMentorLessonContext } from './server/mentorLessonContext.js';
 import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './server/mentorUsageAdmin.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
@@ -260,35 +260,31 @@ async function startServer() {
             userId,
           });
         }
-        const canceledUserId = deletedSubscriptionMemberId(event);
-        if (canceledUserId) {
-          const member = await getFirebaseMember(FIREBASE_PROJECT_ID, canceledUserId);
-          if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
-          if (member.role !== 'admin') {
-            await step('deactivate-pro', () => updateFirebaseMemberTier(FIREBASE_PROJECT_ID, canceledUserId, 'FREE'));
+        const billingSubscriptionId = billingEventSubscriptionId(event);
+        if (billingSubscriptionId) {
+          // Read current Stripe state so delayed events cannot restore stale access.
+          const billingSecret = process.env.STRIPE_SECRET_KEY?.trim();
+          if (!billingSecret) throw new Error('Stripe-Zugang für die Statusprüfung fehlt.');
+          const subscription = await retrieveStripeSubscription(billingSecret, billingSubscriptionId);
+          const uid = subscription.metadata?.firebase_uid;
+          if (uid && subscription.metadata?.academy_tier === 'PRO') {
+            const currentId = await loadStripeSubscriptionId(FIREBASE_PROJECT_ID, uid);
+            // A canceled older subscription must not downgrade a newer membership.
+            if (currentId === subscription.id) {
+              const member = await getFirebaseMember(FIREBASE_PROJECT_ID, uid);
+              if (!member) throw new Error('Das zugehörige Academy-Mitglied wurde nicht gefunden.');
+              const tier = subscriptionAccessTier(subscription.status);
+              if (tier && member.role !== 'admin') {
+                await step('sync-billing-access', () => updateFirebaseMemberTier(FIREBASE_PROJECT_ID, uid, tier));
+              }
+              const cancellation = updatedSubscriptionCancellation({
+                ...event, type: 'customer.subscription.updated', data: { object: subscription },
+              });
+              await step('billing-status', () => saveStripeCancellationStatus(
+                FIREBASE_PROJECT_ID, uid, event.id, subscription, cancellation?.cancellationAt || null,
+              ));
+            }
           }
-          await step('cancel-membership', () => cancelStripeMembership(FIREBASE_PROJECT_ID, canceledUserId, event.id, event.data.object));
-          console.info('Stripe-PRO-Mitgliedschaft beendet', {
-            eventId: event.id,
-            subscriptionId: event.data.object.id,
-            userId: canceledUserId,
-          });
-        }
-        const cancellationUpdate = updatedSubscriptionCancellation(event);
-        if (cancellationUpdate) {
-          await step('cancellation-status', () => saveStripeCancellationStatus(
-            FIREBASE_PROJECT_ID,
-            cancellationUpdate.userId,
-            event.id,
-            event.data.object,
-            cancellationUpdate.cancellationAt,
-          ));
-          console.info('Stripe-Kündigungsstatus aktualisiert', {
-            eventId: event.id,
-            subscriptionId: event.data.object.id,
-            userId: cancellationUpdate.userId,
-            cancellationAt: cancellationUpdate.cancellationAt,
-          });
         }
       });
       if (delivery === 'duplicate') console.info('Stripe-Webhook bereits verarbeitet', { eventId: event.id });

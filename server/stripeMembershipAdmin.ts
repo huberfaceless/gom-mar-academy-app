@@ -1,5 +1,5 @@
 import { GoogleAuth } from 'google-auth-library';
-import type { StripeCheckoutSession } from './stripeManagedPayments.js';
+import { subscriptionAccessTier, type StripeCheckoutSession } from './stripeManagedPayments.js';
 
 type FirestoreDocument = {
   name?: string;
@@ -117,7 +117,11 @@ export const saveStripeCancellationStatus = async (
   subscription: StripeCheckoutSession,
   cancellationAt: string | null,
 ): Promise<void> => {
-  const response = await fetch(documentUrl(projectId, userId), {
+  const response = await fetch(documentUrl(projectId, userId) + '?' + new URLSearchParams(
+    ['userId', 'stripeCustomerId', 'stripeSubscriptionId', 'stripeEventId', 'status', 'cancellationAt', 'updatedAt',
+      ...(subscriptionAccessTier(subscription.status) ? ['tier'] : [])]
+      .map(field => ['updateMask.fieldPaths', field]),
+  ), {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${await accessToken()}`,
@@ -129,8 +133,8 @@ export const saveStripeCancellationStatus = async (
         stripeCustomerId: { stringValue: subscription.customer || '' },
         stripeSubscriptionId: { stringValue: subscription.id },
         stripeEventId: { stringValue: eventId },
-        tier: { stringValue: 'PRO' },
-        status: { stringValue: cancellationAt ? 'canceling' : 'active' },
+        ...(subscriptionAccessTier(subscription.status) ? { tier: { stringValue: subscriptionAccessTier(subscription.status)! } } : {}),
+        status: { stringValue: subscription.status === 'active' && cancellationAt ? 'canceling' : subscription.status || 'unknown' },
         cancellationAt: { stringValue: cancellationAt || '' },
         updatedAt: { timestampValue: new Date().toISOString() },
       },
