@@ -30,7 +30,8 @@
     "audit:publishing-persistence": "tsx scripts/auditPublishingPersistence.ts",
     "audit:lessons": "tsx scripts/auditLessonIntegrity.ts",
     "audit:publishing-rules": "npx --yes --package firebase-tools@14.12.1 firebase emulators:exec --only firestore --project demo-gommar-rules --config firebase.rules-test.json \"node --import tsx scripts/auditPublishingJobRules.ts\"",
-    "audit:publishing-retry": "node --import tsx scripts/auditPublishingJobRetry.ts"
+    "audit:publishing-retry": "node --import tsx scripts/auditPublishingJobRetry.ts",
+    "audit:blog": "node --import tsx scripts/auditBlogArticle.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
@@ -45,7 +46,9 @@
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "react": "^19.0.1",
-    "react-dom": "^19.0.1"
+    "react-dom": "^19.0.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.0",

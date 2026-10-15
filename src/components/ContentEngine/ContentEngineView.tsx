@@ -46,6 +46,7 @@ import { AIContentService } from '../../services/aiContentService';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
 import { BriefEditorTab } from './BriefEditorTab';
 import { BlogEditorTab } from './BlogEditorTab';
+import { AffiliateLinkModal } from './AffiliateLinkModal';
 import { PinterestPinsTab } from './PinterestPinsTab';
 import { InstagramPostsTab } from './InstagramPostsTab';
 import { YouTubeScriptTab } from './YouTubeScriptTab';
@@ -109,6 +110,10 @@ const getSuggestedTopics = (project: ProjectSettings): string[] => {
 };
 
 
+type BlogGenerationRequest =
+  | { kind: 'blog'; project: CentralContentProject }
+  | { kind: 'all'; topic: string; settings: ProjectSettings; angle: string };
+
 export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = false }) => {
   const { user } = useAuth();
   const userId = user?.uid;
@@ -138,6 +143,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const [isGeneratingYouTube, setIsGeneratingYouTube] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [saveNotice, setSaveNotice] = useState<string | null>(null);
+  const [blogGenerationRequest, setBlogGenerationRequest] = useState<BlogGenerationRequest | null>(null);
 
   // Load from Firestore on mount or when user changes
   useEffect(() => {
@@ -284,21 +290,28 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     }
   };
 
+  // Ask before any blog request; retain the selected project as a snapshot.
+  const handleGenerateBlog = () => {
+    if (activeContentProject?.contentBrief) setBlogGenerationRequest({ kind: 'blog', project: activeContentProject });
+  };
+
   // 🚀 Generate Blog
-  const handleGenerateBlog = async () => {
-    if (!activeContentProject || !activeContentProject.contentBrief) return;
+  const generateBlogWithLink = async (project: CentralContentProject, affiliateLink: string | null) => {
+    if (!project.contentBrief) return;
     setErrorMsg(null);
     setIsGeneratingBlog(true);
 
     try {
       const blogArticle = await AIContentService.generateBlogArticle(
-        activeContentProject.topic,
-        activeContentProject.contentBrief,
-        activeContentProject.projectSettings
+        project.topic,
+        project.contentBrief,
+        project.projectSettings,
+        affiliateLink
       );
 
       handleUpdateActiveProject({
-        ...activeContentProject,
+        ...project,
+        affiliateLink,
         blogArticle,
         updatedAt: new Date().toISOString(),
       });
@@ -370,9 +383,15 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     }
   };
 
+  const handleGenerateAllInOneClick = () => {
+    if (!topicInput.trim()) { setErrorMsg('Bitte gib ein Thema ein.'); return; }
+    setBlogGenerationRequest({ kind: 'all', topic: topicInput.trim(), settings: activeProjectSettings, angle: customAngleInput });
+  };
+
   // ⚡ 1-Click Multi-Format Automation (Generates Brief + Blog + 5 Pins + YouTube + Shorts in Sequence)
-  const handleGenerateAllInOneClick = async () => {
-    if (!topicInput.trim()) {
+  const generateAllWithLink = async (request: Extract<BlogGenerationRequest, { kind: 'all' }>, affiliateLink: string | null) => {
+    const { topic, settings, angle } = request;
+    if (!topic) {
       setErrorMsg('Bitte gib ein Thema ein.');
       return;
     }
@@ -382,25 +401,26 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     try {
       // 1. Brief
       const { brief } = await AIContentService.generateContentBrief(
-        topicInput.trim(),
-        activeProjectSettings,
-        customAngleInput
+        topic,
+        settings,
+        angle
       );
 
       // 2. Parallel Generation of Blog, 5 Pins, and YouTube Scripts
       const [blogArticle, pinterestPins, youtubeVideo, youtubeShorts] = await Promise.all([
-        AIContentService.generateBlogArticle(topicInput.trim(), brief, activeProjectSettings),
-        AIContentService.generatePinterestPins(topicInput.trim(), brief, activeProjectSettings),
-        AIContentService.generateYouTubeScript(topicInput.trim(), brief, activeProjectSettings),
-        AIContentService.generateYouTubeShorts(topicInput.trim(), brief, activeProjectSettings),
+        AIContentService.generateBlogArticle(topic, brief, settings, affiliateLink),
+        AIContentService.generatePinterestPins(topic, brief, settings),
+        AIContentService.generateYouTubeScript(topic, brief, settings),
+        AIContentService.generateYouTubeShorts(topic, brief, settings),
       ]);
 
       const fullProject: CentralContentProject = {
         id: `content_proj_${Date.now()}`,
-        topic: topicInput.trim(),
-        projectSettings: activeProjectSettings,
+        topic: topic,
+        projectSettings: settings,
         contentBrief: brief,
         blogArticle,
+        affiliateLink,
         pinterestPins,
         youtubeVideo,
         youtubeShorts,
@@ -416,6 +436,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     } finally {
       setIsGeneratingAll(false);
     }
+  };
+
+  const handleConfirmAffiliateLink = (affiliateLink: string | null) => {
+    const request = blogGenerationRequest;
+    setBlogGenerationRequest(null);
+    if (!request) return;
+    if (request.kind === 'blog') void generateBlogWithLink(request.project, affiliateLink);
+    else void generateAllWithLink(request, affiliateLink);
   };
 
   const handleDeleteProject = async (id: string) => {
@@ -822,6 +850,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
             />
           )}
         </div>
+      )}
+
+      {blogGenerationRequest && (
+        <AffiliateLinkModal
+          initialLink={blogGenerationRequest.kind === 'blog' ? blogGenerationRequest.project.affiliateLink : null}
+          onConfirm={handleConfirmAffiliateLink}
+          onClose={() => setBlogGenerationRequest(null)}
+        />
       )}
 
       {/* Project Settings Modal */}

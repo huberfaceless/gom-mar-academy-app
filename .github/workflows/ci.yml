@@ -46,6 +46,9 @@ jobs:
       - name: Geschützte Veröffentlichungswiederholungen prüfen
         run: bun run audit:publishing-retry
 
+      - name: Blogvorschau und Empfehlungslinks prüfen
+        run: bun run audit:blog
+
       - name: TypeScript pruefen
         run: bun run lint
 

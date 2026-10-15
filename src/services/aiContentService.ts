@@ -50,7 +50,8 @@ export class AIContentService {
   static async generateBlogArticle(
     topic: string,
     brief: ContentBrief,
-    projectSettings: ProjectSettings
+    projectSettings: ProjectSettings,
+    affiliateLink: string | null
   ): Promise<BlogArticle> {
     const response = await authenticatedFetch('/api/content-engine/blog', {
       method: 'POST',
@@ -59,6 +60,7 @@ export class AIContentService {
         topic,
         brief,
         projectSettings,
+        affiliateLink,
       }),
     });
 

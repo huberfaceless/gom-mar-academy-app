@@ -201,7 +201,7 @@ export interface CentralContentProject {
   contentAngle?: string;
   desiredCta?: string;
   targetUrl?: string;
-  affiliateLink?: string;
+  affiliateLink?: string | null;
   language?: 'de' | 'en' | 'pl';
   brandVoice?: string;
   status?: ContentStatus;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { 
   FileText, 
   Copy, 
@@ -12,6 +12,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { BlogArticle } from '../../types/contentEngine';
+import { BlogArticleContent } from './BlogArticleContent';
 
 interface BlogEditorTabProps {
   article: BlogArticle;
@@ -29,10 +30,30 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   const [viewMode, setViewMode] = useState<'preview' | 'edit'>('preview');
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(article.contentMarkdown);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const [copyError, setCopyError] = useState('');
+  const handleCopy = async (markdown = viewMode === 'edit') => {
+    setCopyError('');
+    try {
+      if (markdown) {
+        await navigator.clipboard.writeText(article.contentMarkdown);
+      } else {
+        const preview = previewRef.current;
+        if (!preview) return;
+        const links = [...preview.querySelectorAll('a[href]')].map(link => link.getAttribute('href')).filter(Boolean);
+        const text = [preview.innerText, ...new Set(links)].join('\n\n');
+        if (typeof ClipboardItem !== 'undefined' && navigator.clipboard.write) {
+          try {
+            await navigator.clipboard.write([new ClipboardItem({
+              'text/html': new Blob([preview.innerHTML], { type: 'text/html' }),
+              'text/plain': new Blob([text], { type: 'text/plain' }),
+            })]);
+          } catch { await navigator.clipboard.writeText(text); }
+        } else { await navigator.clipboard.writeText(text); }
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch { setCopyError('Kopieren nicht möglich. Bitte erlaube den Zugriff auf die Zwischenablage.'); }
   };
 
   const wordCount = article.contentMarkdown ? article.contentMarkdown.split(/\s+/).filter(Boolean).length : 0;
@@ -90,12 +111,17 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
 
           <button
             type="button"
-            onClick={handleCopy}
+            onClick={() => void handleCopy()}
             className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 flex items-center gap-1.5"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Kopiert!' : 'Artikel kopieren'}</span>
+            <span>{copied ? 'Kopiert!' : viewMode === 'edit' ? 'Markdown kopieren' : 'Artikel kopieren'}</span>
           </button>
+
+          {viewMode === 'preview' && (
+            <button type="button" onClick={() => void handleCopy(true)} className="px-3 py-2 text-xs font-semibold text-slate-600 underline">Markdown kopieren</button>
+          )}
+          {copyError && <p role="alert" className="text-xs text-rose-700">{copyError}</p>}
 
           <button
             type="button"
@@ -143,16 +169,13 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
           </div>
         </div>
       ) : (
-        <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xs max-w-4xl mx-auto">
+        <div ref={previewRef} className="bg-white p-5 sm:p-8 rounded-2xl border border-slate-200 shadow-xs max-w-4xl mx-auto">
           <div className="prose prose-slate max-w-none space-y-4">
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight pb-3 border-b border-slate-100">
               {article.title}
             </h1>
             
-            {/* Simple Markdown Render view */}
-            <div className="whitespace-pre-line text-slate-800 leading-relaxed text-base font-normal">
-              {article.contentMarkdown}
-            </div>
+            <BlogArticleContent content={article.contentMarkdown} />
           </div>
         </div>
       )}
