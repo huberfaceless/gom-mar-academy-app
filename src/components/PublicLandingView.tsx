@@ -79,6 +79,12 @@ const registrationCopy = {
   },
 } as const;
 
+const introductionCopy = {
+  de: { heading: 'GOM-MAR Academy kennenlernen', title: 'Einführung in die GOM-MAR Academy', hint: 'Ton einschalten und die Academy kurz kennenlernen.', fallback: 'Einführungsvideo öffnen' },
+  en: { heading: 'Discover GOM-MAR Academy', title: 'Introduction to GOM-MAR Academy', hint: 'Turn on the sound for a short introduction to the Academy.', fallback: 'Open introduction video' },
+  pl: { heading: 'Poznaj GOM-MAR Academy', title: 'Wprowadzenie do GOM-MAR Academy', hint: 'Włącz dźwięk i poznaj krótko Academy.', fallback: 'Otwórz film wprowadzający' },
+} as const;
+
 interface PublicLandingViewProps {
   onCancelToMemberArea?: () => void;
   onOpenLegal?: (tab: 'imprint' | 'privacy' | 'cookies') => void;
@@ -91,6 +97,9 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
   const { register, login, error: authError, clearError } = useAuth();
   const { language, setLanguage } = useLanguage();
   const copy = registrationCopy[language];
+  const introduction = introductionCopy[language];
+  const introductionVideo = `/media/gom-mar-einfuehrung-${language}.mp4`;
+  const introductionPoster = `/media/gom-mar-einfuehrung-${language}.jpg`;
 
   // Form inputs
   const [firstName, setFirstName] = useState<string>('');
@@ -201,41 +210,11 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
           </div>
 
           {/* Academy introduction video */}
-          <div className="max-w-sm mx-auto space-y-3 text-center">
+          <div className="max-w-4xl mx-auto space-y-3 text-center">
             <div className="flex items-center justify-center gap-2 text-sm font-bold text-emerald-400">
               <Tv className="w-4 h-4" />
-              <span>GOM-MAR Academy in 55 Sekunden</span>
+              <span>{introduction.heading}</span>
             </div>
-            <div className="relative aspect-[9/16] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10">
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                src="https://www.youtube-nocookie.com/embed/O1xpglmywtw?rel=0"
-                title="Einführung in die GOM-MAR Academy"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-            <p className="text-xs text-slate-400">
-              Ton einschalten und die Academy kurz kennenlernen.
-            </p>
-          </div>
-
-          {/* REAL FIREBASE REGISTRATION CARD */}
-          <div id="register-form" className="max-w-xl mx-auto bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden scroll-mt-20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
-
-            <div className="space-y-2 text-center">
-              <h3 className="text-xl font-bold text-white flex items-center justify-center gap-2">
-                <Mail className="w-5 h-5 text-emerald-400" />
-                <span>{copy.title}</span>
-              </h3>
-              <p className="text-xs text-slate-300">
-                {copy.subtitle}
-              </p>
-            </div>
-
             <div className="grid grid-cols-3 gap-2" aria-label="Sprache / Language / Język">
               {([
                 ['de', 'Deutsch'],
@@ -257,6 +236,39 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
                 </button>
               ))}
             </div>
+            <div className="relative aspect-video bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10">
+              <video
+                key={language}
+                className="absolute inset-0 h-full w-full"
+                src={introductionVideo}
+                poster={introductionPoster}
+                aria-label={introduction.title}
+                controls
+                playsInline
+                preload="none"
+              >
+                <a href={introductionVideo}>{introduction.fallback}</a>
+              </video>
+            </div>
+            <p className="text-xs text-slate-400">
+              {introduction.hint}
+            </p>
+          </div>
+
+          {/* REAL FIREBASE REGISTRATION CARD */}
+          <div id="register-form" className="max-w-xl mx-auto bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden scroll-mt-20">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="space-y-2 text-center">
+              <h3 className="text-xl font-bold text-white flex items-center justify-center gap-2">
+                <Mail className="w-5 h-5 text-emerald-400" />
+                <span>{copy.title}</span>
+              </h3>
+              <p className="text-xs text-slate-300">
+                {copy.subtitle}
+              </p>
+            </div>
+
 
             {(localError || authError) && (
               <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold flex items-start gap-2 animate-fadeIn">
