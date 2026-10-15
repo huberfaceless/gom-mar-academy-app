@@ -34,6 +34,18 @@ jobs:
       - name: Abhaengigkeiten installieren
         run: bun install --frozen-lockfile
 
+      - name: Java für Firestore-Regeltests einrichten
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Firestore-Veröffentlichungsregeln im Emulator prüfen
+        run: bun run audit:publishing-rules
+
+      - name: Geschützte Veröffentlichungswiederholungen prüfen
+        run: bun run audit:publishing-retry
+
       - name: TypeScript pruefen
         run: bun run lint
 

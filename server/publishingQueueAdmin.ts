@@ -1,5 +1,6 @@
 import { GoogleAuth } from 'google-auth-library';
 import { PublishingJob } from '../src/types/contentEngine.js';
+import { preparePublishingJobRetry, PublishingJobActionError } from './publishingJobRetry.js';
 
 type FirestoreValue = {
   nullValue?: null;
@@ -186,6 +187,28 @@ export const claimServerPublishingJob = async (
 
 export const saveServerPublishingJob = async (job: PublishingJob, expectedUpdateTime?: string): Promise<void> => {
   await replaceServerPublishingJob(job, expectedUpdateTime);
+};
+
+export const retryServerPublishingJob = async (userId: string, jobId: string, isAdmin = false): Promise<void> => {
+  const loaded = await loadServerPublishingJob(jobId);
+  if (!loaded) throw new PublishingJobActionError('Der Auftrag wurde nicht gefunden.', 404);
+  const job = preparePublishingJobRetry(loaded.job, userId, isAdmin);
+  const schedulers = (await listCollectionDocuments('schedulerJobs')).filter(document => {
+    const fields = decodeFields(document.fields || {});
+    return fields.userId === userId && fields.publishingJobId === jobId;
+  });
+  const jobName = `projects/${FIREBASE_PROJECT_ID}/databases/${FIRESTORE_DATABASE_ID}/documents/publishingJobs/${jobId}`;
+  // Atomically reset the job and linked scheduler metadata. A concurrent worker wins
+  // via updateTime, so a retry cannot overwrite a freshly claimed or completed job.
+  const writes = [{
+    update: { name: jobName, fields: encodeFields(job as unknown as Record<string, unknown>) },
+    currentDocument: { updateTime: loaded.updateTime },
+  }, ...schedulers.map(document => ({
+    update: { name: document.name, fields: encodeFields({ ...decodeFields(document.fields || {}),
+      status: 'PENDING', scheduledAt: job.scheduledAt, updatedAt: job.updatedAt, lastError: undefined }) },
+    currentDocument: { updateTime: document.updateTime },
+  }))];
+  await firestoreRequest(`${documentsUrl()}:commit`, { method: 'POST', body: JSON.stringify({ writes }) });
 };
 
 const listCollectionDocuments = async (collectionName: string): Promise<FirestoreDocument[]> => {

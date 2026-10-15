@@ -78,27 +78,48 @@ service cloud.firestore {
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
-    // Central Publishing Queue Jobs
-    // Clients can read their jobs and create scheduled/draft jobs, but cannot forge PUBLISHED state
+    // Client edits are limited to waiting, unpublished jobs. Worker state is server-owned.
+    function isWaitingPublishingJob(data) {
+      return data.get('status', '') in ['DRAFT', 'SCHEDULED', 'NEEDS_REVIEW']
+        && data.get('publicationUncertain', false) == false
+        && data.get('externalId', '') in ['', null]
+        && data.get('publishedAt', '') in ['', null]
+        && data.get('lockedAt', '') in ['', null]
+        && data.get('lockedBy', '') in ['', null]
+        && data.get('lockExpiresAt', '') in ['', null];
+    }
+
     match /publishingJobs/{jobId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
       allow create: if canSchedulePublishing()
         && canUseContentProject(request.resource.data)
         && request.resource.data.userId == request.auth.uid
-        && (!('status' in request.resource.data) || request.resource.data.status in ['DRAFT', 'SCHEDULED', 'NEEDS_REVIEW'])
-        && (!('externalId' in request.resource.data) || request.resource.data.externalId == null || request.resource.data.externalId == '')
-        && (!('publishedAt' in request.resource.data) || request.resource.data.publishedAt == null || request.resource.data.publishedAt == '');
+        && request.resource.data.id == jobId
+        && request.resource.data.keys().hasOnly([
+          'id', 'userId', 'projectId', 'contentProjectId', 'contentId', 'platform',
+          'contentType', 'scheduledAt', 'status', 'payload', 'createdAt', 'updatedAt',
+          'attempts', 'maxAttempts', 'executionLogs'
+        ])
+        && isWaitingPublishingJob(request.resource.data)
+        && request.resource.data.attempts == 0
+        && request.resource.data.maxAttempts == 3
+        && request.resource.data.executionLogs == [];
       allow update: if canSchedulePublishing()
         && canUseContentProject(resource.data) && canUseContentProject(request.resource.data)
         && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid
-        && (
-          // Allow client updates for cancellation or reschedule, but prevent forging PUBLISHED without valid previous state
-          (!('status' in request.resource.data)) ||
-          request.resource.data.status != 'PUBLISHED' ||
-          resource.data.status == 'PUBLISHED'
-        );
-      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+        && isWaitingPublishingJob(resource.data)
+        && isWaitingPublishingJob(request.resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'payload', 'scheduledAt', 'status', 'updatedAt'
+        ]);
+      // Cancellation uses deletion; never remove an in-flight or uncertain job.
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid
+        && resource.data.get('status', '') != 'PUBLISHING'
+        && resource.data.get('publicationUncertain', false) == false
+        && resource.data.get('lockedAt', '') in ['', null]
+        && resource.data.get('lockedBy', '') in ['', null]
+        && resource.data.get('lockExpiresAt', '') in ['', null];
     }
 
     // Scheduler Jobs

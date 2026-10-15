@@ -28,7 +28,9 @@
     "audit:stripe-webhooks": "tsx scripts/auditStripeWebhookDelivery.ts",
     "audit:content-projects": "tsx scripts/auditContentEngineProjects.ts",
     "audit:publishing-persistence": "tsx scripts/auditPublishingPersistence.ts",
-    "audit:lessons": "tsx scripts/auditLessonIntegrity.ts"
+    "audit:lessons": "tsx scripts/auditLessonIntegrity.ts",
+    "audit:publishing-rules": "npx --yes --package firebase-tools@14.12.1 firebase emulators:exec --only firestore --project demo-gommar-rules --config firebase.rules-test.json \"node --import tsx scripts/auditPublishingJobRules.ts\"",
+    "audit:publishing-retry": "node --import tsx scripts/auditPublishingJobRetry.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
@@ -46,6 +48,7 @@
     "react-dom": "^19.0.1"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/express": "^4.17.21",
     "@types/jszip": "^3.4.1",
