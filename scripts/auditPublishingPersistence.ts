@@ -140,8 +140,10 @@ assert.doesNotMatch(calendar, /T09:00:00\.000Z/,
 assert.match(calendar, /hour: '2-digit'[\s\S]*minute: '2-digit'/,
   'Die Warteschlange muss neben dem Datum auch die geplante Uhrzeit anzeigen.');
 
-assert.match(calendar, /if \(job\.platform === 'YOUTUBE'\)[\s\S]*ausschließlich zum geplanten Zeitpunkt durch den Server/,
-  'YouTube-Aufträge müssen gegen eine Ausführung im Browser geschützt sein.');
+assert.doesNotMatch(calendar, /PublishingService\.(processJob|retryJob)\(/,
+  'Die Kalenderoberfläche darf keine Plattform direkt veröffentlichen oder Versuchszähler zurücksetzen.');
+assert.match(calendar, /\/api\/publishing\/jobs\/\$\{encodeURIComponent\(job.id\)\}\/retry/,
+  'Wiederholungen müssen den geschützten Server-Endpunkt verwenden.');
 assert.match(calendar, /item\.platform === 'YOUTUBE'[\s\S]*Automatische Veröffentlichung geplant/,
   'Geplante YouTube-Videos dürfen in der Inhaltskarte keine manuelle Ausführung anbieten.');
 
@@ -244,7 +246,7 @@ assert.equal(documents['publishingJobs/other'].scheduledAt, oldDate);
 assert.equal(documents['publishingJobs/job'].status, 'SCHEDULED');
 assert.equal(documents['publishingJobs/job'].attempts, 0);
 assert.equal(documents['publishingJobs/job'].payload.title, 'Test');
-assert.equal(documents['publishingJobs/job'].nextAttemptAt, undefined);
+assert.equal(documents['publishingJobs/job'].nextAttemptAt, oldDate, 'Umplanen darf die serverseitige Wiederholungssperre nicht entfernen.');
 for (const status of ['PUBLISHING', 'PUBLISHED', 'FAILED', 'CANCELLED']) {
   resetSchedule(); documents['publishingJobs/job'].status = status;
   await assert.rejects(scheduleService.reschedulePublishingJob('owner', 'job', newDate), /Nur wartende/);

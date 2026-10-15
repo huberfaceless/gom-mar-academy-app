@@ -8,8 +8,7 @@ import {
   where, 
   deleteDoc, 
   updateDoc,
-  runTransaction,
-  deleteField
+  runTransaction
 } from 'firebase/firestore';
 import { db, isFirestoreOperational, handleFirestoreError } from '../firebase/config';
 import { 
@@ -274,7 +273,7 @@ export class FirestoreContentService {
           throw new Error('Der Scheduler-Auftrag kann nicht mehr verschoben werden. Bitte aktualisiere die Ansicht.');
         }
       }
-      transaction.update(jobRef, { scheduledAt: normalizedDate, updatedAt, nextAttemptAt: deleteField() });
+      transaction.update(jobRef, { scheduledAt: normalizedDate, updatedAt });
       for (let index = 0; index < schedulerDocuments.length; index++) {
         if (schedulerDocuments[index].exists()) {
           transaction.update(schedulerRefs[index], { scheduledAt: normalizedDate, updatedAt });
@@ -283,7 +282,7 @@ export class FirestoreContentService {
     }), FIRESTORE_WRITE_TIMEOUT_MS);
     // Lokale Spiegel erst nach der bestätigten gemeinsamen Cloud-Aktualisierung ändern.
     saveAllPublishingJobs(loadAllPublishingJobs(userId).map(job => job.id === jobId
-      ? { ...job, scheduledAt: normalizedDate, updatedAt, nextAttemptAt: undefined } : job), userId);
+      ? { ...job, scheduledAt: normalizedDate, updatedAt } : job), userId);
     saveAllSchedulerJobs(loadAllSchedulerJobs(userId).map(job => job.publishingJobId === jobId
       ? { ...job, scheduledAt: normalizedDate, updatedAt } : job), userId);
   }

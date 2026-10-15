@@ -45,6 +45,8 @@ import { checkoutSessionPayerEmail, completedCheckoutMemberId, completedCheckout
 import { listStripeMemberships, loadStripeCustomerId, loadStripeSubscriptionId, saveStripeCancellationStatus, saveStripeMembership } from './server/stripeMembershipAdmin.js';
 import { MentorLessonError, resolveMentorLessonContext } from './server/mentorLessonContext.js';
 import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './server/mentorUsageAdmin.js';
+import { retryServerPublishingJob } from './server/publishingQueueAdmin.js';
+import { PublishingJobActionError } from './server/publishingJobRetry.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
 import { resolveAcademyContentAccess, visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -3302,6 +3304,25 @@ Antworte mit einem reinen JSON-Objekt:
       }
     },
   );
+
+  app.post('/api/publishing/jobs/:jobId/retry', requireVerifiedMember, requireProMember, async (req, res) => {
+    const member = (req as FirebaseRequest).firebaseUser!;
+    const jobId = req.params.jobId;
+    if (!/^[A-Za-z0-9_-]{1,200}$/.test(jobId)) {
+      res.status(400).json({ error: 'Ungültige Auftragskennung.' });
+      return;
+    }
+    try {
+      await retryServerPublishingJob(member.sub, jobId, isAcademyAdminToken(member));
+      res.json({ success: true });
+    } catch (error) {
+      const status = error instanceof PublishingJobActionError ? error.status
+        : [409, 412].includes((error as Error & { status?: number }).status || 0) ? 409 : 503;
+      res.status(status).json({ error: error instanceof PublishingJobActionError ? error.message
+        : status === 409 ? 'Der Auftrag wurde inzwischen geändert. Bitte aktualisiere die Ansicht.'
+        : 'Der Auftrag konnte nicht erneut eingeplant werden. Bitte versuche es später erneut.' });
+    }
+  });
 
   // Manual immediate execution endpoint for a specific job
   app.post('/api/publishing/run-now', requireSchedulerSecret, async (req, res) => {

@@ -36,7 +36,6 @@ import { FirestoreContentService } from '../../services/firestoreContentService'
 import { PublishingService } from '../../services/publishingService';
 import { useAuth } from '../../context/AuthContext';
 import { pinterestService } from '../../services/pinterestService';
-import { instagramService } from '../../services/instagramService';
 import { renderPinToCanvas } from '../../utils/pinterestCanvasRenderer';
 
 const buildInstagramCaption = (description?: string, keywords: string[] = []): string => {
@@ -642,113 +641,34 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     }
   };
 
-  // Trigger manual publish execution for a job
+  // All platform publishing and retry counters are owned by the server worker.
   const handleExecuteJob = async (job: PublishingJob) => {
     if (!user?.uid) return;
-    if (job.platform === 'YOUTUBE') {
-      setActionNotice({
-        text: 'YouTube-Videos werden ausschließlich zum geplanten Zeitpunkt durch den Server veröffentlicht.',
-        type: 'info',
-      });
-      return;
-    }
-    if (job.platform === 'INSTAGRAM') {
-      setActionNotice({ text: 'Instagram-Inhalte werden zum geplanten Zeitpunkt durch den Server veröffentlicht.', type: 'info' });
-      return;
-    }
     setActiveJobRunningId(job.id);
     setActionNotice(null);
-
     try {
-      const { result } = await PublishingService.processJob(
-        user.uid,
-        job,
-        undefined,
-        'MANUAL_RUN',
-        true,
-        undefined,
-        async (instagramJob) => {
-          const imageBase64 = instagramJob.payload?.imageBase64;
-          if (!imageBase64) return { success: false, status: 'FAILED', error: 'Die Instagram-Grafik fehlt.' };
-          try {
-            const published = await instagramService.publishImage({
-              caption: instagramJob.payload?.description || instagramJob.payload?.title || '',
-              imageBase64,
-            });
-            return { success: true, status: 'PUBLISHED', externalId: published.id, publishedUrl: published.url };
-          } catch (error) {
-            return { success: false, status: 'FAILED', error: error instanceof Error ? error.message : 'Instagram-Veröffentlichung fehlgeschlagen.' };
-          }
-        },
-      );
+      await FirestoreContentService.reschedulePublishingJob(user.uid, job.id, new Date().toISOString());
       await loadJobs();
-
-      if (result.success) {
-        setActionNotice({
-          text: `Erfolgreich veröffentlicht auf ${job.platform}! (ID: ${result.externalId || 'OK'})`,
-          type: 'success',
-        });
-      } else {
-        setActionNotice({
-          text: `Ergebnis: ${getStatusLabel(result.status)} – ${result.error || 'Nicht erfolgreich'}`,
-          type: result.status === 'NOT_IMPLEMENTED' ? 'info' : 'warning',
-        });
-      }
-    } catch (err: any) {
-      setActionNotice({
-        text: `Fehler bei der Auftragsausführung: ${err.message}`,
-        type: 'warning',
-      });
+      setActionNotice({ text: 'Der Server veröffentlicht den Auftrag im nächsten Durchlauf. Eine laufende Wiederholungssperre bleibt erhalten.', type: 'info' });
+    } catch (err) {
+      setActionNotice({ text: err instanceof Error ? err.message : 'Der Auftrag konnte nicht eingeplant werden.', type: 'warning' });
     } finally {
       setActiveJobRunningId(null);
     }
   };
 
-  // Retry job
   const handleRetryJob = async (job: PublishingJob) => {
     if (!user?.uid) return;
     setActiveJobRunningId(job.id);
     setActionNotice(null);
-
     try {
-      if (job.publicationUncertain) throw new Error('Bitte zuerst das Instagram-Profil prüfen. Dieser Auftrag ist zum Schutz vor Doppelposts gesperrt.');
-      if (job.platform === 'INSTAGRAM') {
-        await FirestoreContentService.updatePublishingJobStatus(user.uid, job.id, 'SCHEDULED', undefined, {
-          attempts: 0, nextAttemptAt: new Date().toISOString(),
-        });
-        await loadJobs();
-        setActionNotice({ text: 'Der Server prüft den Instagram-Auftrag im nächsten Durchlauf erneut.', type: 'info' });
-        return;
-      }
-      const { result } = await PublishingService.retryJob(
-        user.uid,
-        job,
-        undefined,
-        undefined,
-        async (instagramJob) => {
-          const imageBase64 = instagramJob.payload?.imageBase64;
-          if (!imageBase64) return { success: false, status: 'FAILED', error: 'Die Instagram-Grafik fehlt.' };
-          try {
-            const published = await instagramService.publishImage({
-              caption: instagramJob.payload?.description || instagramJob.payload?.title || '',
-              imageBase64,
-            });
-            return { success: true, status: 'PUBLISHED', externalId: published.id, publishedUrl: published.url };
-          } catch (error) {
-            return { success: false, status: 'FAILED', error: error instanceof Error ? error.message : 'Instagram-Veröffentlichung fehlgeschlagen.' };
-          }
-        },
-      );
+      const response = await authenticatedFetch(`/api/publishing/jobs/${encodeURIComponent(job.id)}/retry`, { method: 'POST' });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Der Auftrag konnte nicht erneut eingeplant werden.');
       await loadJobs();
-      setActionNotice({
-        text: `Erneuter Versuch ausgeführt: ${getStatusLabel(result.status)} – ${result.error || 'Erfolgreich'}`,
-        type: result.success ? 'success' : 'info',
-      });
-    } catch (err: any) {
-      setActionNotice({
-        text: `Fehler beim erneuten Versuch: ${err.message}`,
-        type: 'warning',
-      });
+      setActionNotice({ text: 'Der Server prüft den Auftrag im nächsten Durchlauf erneut.', type: 'info' });
+    } catch (err) {
+      setActionNotice({ text: err instanceof Error ? err.message : 'Der erneute Versuch konnte nicht eingeplant werden.', type: 'warning' });
     } finally {
       setActiveJobRunningId(null);
     }
@@ -1136,11 +1056,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                           <span className="text-[10px] font-bold text-amber-300" title={job.lastError}>Instagram-Profil prüfen</span>
                         ) : job.platform === 'INSTAGRAM' && job.status !== 'FAILED' ? (
                           <span className="text-[10px] font-bold text-fuchsia-300">Automatisch geplant</span>
-                        ) : job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
+                        ) : job.platform === 'YOUTUBE' && job.status !== 'FAILED' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
                           <span className="text-[10px] font-bold text-red-300">Automatisch geplant</span>
                         ) : !(
                           (job.platform === 'PINTEREST' && job.contentType === 'PIN')
                           || (job.platform === 'INSTAGRAM' && job.contentType === 'INSTAGRAM_POST')
+                          || (job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT'))
                         ) ? (
                           <span className="text-[10px] font-bold text-slate-400">Nicht unterstützt</span>
                         ) : job.status === 'FAILED' ? (
@@ -1157,7 +1078,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         ) : (
                           <button
                             type="button"
-                            disabled={isRunning || job.status === 'PUBLISHED'}
+                            disabled={isRunning || job.status !== 'SCHEDULED'}
                             onClick={() => handleExecuteJob(job)}
                             className="px-2.5 py-1 bg-purple-600 hover:bg-purple-500 disabled:opacity-40 text-white rounded-lg text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer"
                             title="Jetzt ausführen"
@@ -1169,6 +1090,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
                         <button
                           type="button"
+                          disabled={job.status === 'PUBLISHING' || job.publicationUncertain === true}
                           onClick={() => handleDeleteJob(job.id)}
                           className="p-1 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-slate-800 transition-colors inline-flex cursor-pointer"
                           title="Löschen"
