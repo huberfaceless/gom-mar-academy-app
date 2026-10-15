@@ -47,6 +47,7 @@ import { MentorLessonError, resolveMentorLessonContext } from './server/mentorLe
 import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './server/mentorUsageAdmin.js';
 import { retryServerPublishingJob } from './server/publishingQueueAdmin.js';
 import { PublishingJobActionError } from './server/publishingJobRetry.js';
+import { validateBlogAffiliateLink } from './src/utils/blogAffiliateLink.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
 import { resolveAcademyContentAccess, visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -2582,6 +2583,16 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         return;
       }
 
+      let affiliateLink: string | null;
+      try { affiliateLink = validateBlogAffiliateLink(req.body.affiliateLink); }
+      catch (error) {
+        res.status(400).json({ error: (error as Error).message });
+        return;
+      }
+      const withRecommendation = (content: string): string => affiliateLink
+        ? `${content}\n\n[Zur Empfehlung](<${affiliateLink}>)`
+        : content;
+
       const prompt = `Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel auf Deutsch basierend auf folgendem Content Brief:
 Thema: ${topic}
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
@@ -2593,14 +2604,16 @@ H1 Titel: ${brief.h1 || brief.suggestedTitle}
 Gliederung: ${JSON.stringify(brief.outline || [])}
 FAQs: ${JSON.stringify(brief.faqTopics || [])}
 CTA: ${brief.cta}
-Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
+Bestätigter Affiliate-/Empfehlungslink: ${affiliateLink === null ? 'Kein Link gewünscht.' : affiliateLink}
 
 Stil & Struktur-Anforderungen:
 - Schreibe einen vollständigen, fundierten Artikel (mind. 1.200 - 1.800 Wörter).
 - Nutze ansprechende Markdown-Formatierung (#, ##, ###, Bulletpoints, fette Schlüsselwörter, Zitate/Infoboxen).
 - Binde die Keywords organisch und natürlich ein.
 - Baue konkrete Praxisbeispiele und Tipps für den Alltag der Zielgruppe ein.
-- Am Ende ein FAQ-Abschnitt und ein starker, konvertierender CTA mit Handlungsaufforderung.
+- Am Ende ein FAQ-Abschnitt und eine passende Handlungsaufforderung ohne Link.
+- Der bestätigte Empfehlungslink wird anschließend automatisch angehängt. Erfinde keine Empfehlungs-URLs und übernimm keine alten Links aus Briefing oder Projektvorgaben.
+- Wenn kein Link gewünscht ist, schreibe keine verlinkte Empfehlung.
 
 Antworte im JSON-Format:
 {
@@ -2624,9 +2637,9 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, article: parsed });
+        res.json({ success: true, article: { ...parsed, contentMarkdown: withRecommendation(typeof parsed.contentMarkdown === 'string' ? parsed.contentMarkdown : '') } });
       } catch {
-        res.json({ success: true, article: { title: brief.suggestedTitle, contentMarkdown: text, wordCount: 800, readingTimeMinutes: 5 } });
+        res.json({ success: true, article: { title: brief.suggestedTitle, contentMarkdown: withRecommendation(text), wordCount: 800, readingTimeMinutes: 5 } });
       }
     } catch (err: unknown) {
       console.error('Error in /api/content-engine/blog:', err);
