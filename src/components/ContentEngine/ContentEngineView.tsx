@@ -46,6 +46,8 @@ import { AIContentService } from '../../services/aiContentService';
 import { ProjectSettingsModal } from './ProjectSettingsModal';
 import { BriefEditorTab } from './BriefEditorTab';
 import { BlogEditorTab } from './BlogEditorTab';
+import { BlogArticleLibrary } from './BlogArticleLibrary';
+import { createBlogArticleProject } from '../../utils/blogArticleProjects';
 import { AffiliateLinkModal } from './AffiliateLinkModal';
 import { PinterestPinsTab } from './PinterestPinsTab';
 import { InstagramPostsTab } from './InstagramPostsTab';
@@ -112,7 +114,8 @@ const getSuggestedTopics = (project: ProjectSettings): string[] => {
 
 type BlogGenerationRequest =
   | { kind: 'blog'; project: CentralContentProject }
-  | { kind: 'all'; topic: string; settings: ProjectSettings; angle: string };
+  | { kind: 'all'; topic: string; settings: ProjectSettings; angle: string }
+  | { kind: 'new-blog'; settings: ProjectSettings };
 
 export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = false }) => {
   const { user } = useAuth();
@@ -309,18 +312,29 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         affiliateLink
       );
 
-      handleUpdateActiveProject({
-        ...project,
-        affiliateLink,
-        blogArticle,
-        updatedAt: new Date().toISOString(),
-      });
+      await handleUpdateActiveProject(createBlogArticleProject(
+        project.topic, project.projectSettings, project.contentBrief, blogArticle, affiliateLink, project,
+      ));
       setActiveTab('blog');
     } catch (err: any) {
       setErrorMsg(err.message || 'Fehler beim Erstellen des Blogartikels.');
     } finally {
       setIsGeneratingBlog(false);
     }
+  };
+
+  const generateAdditionalBlog = async (topic: string, settings: ProjectSettings, affiliateLink: string | null) => {
+    if (!topic.trim()) { setErrorMsg('Bitte gib ein Thema für den neuen Blogartikel ein.'); return; }
+    setErrorMsg(null);
+    setIsGeneratingBlog(true);
+    try {
+      const { brief } = await AIContentService.generateContentBrief(topic.trim(), settings);
+      const article = await AIContentService.generateBlogArticle(topic.trim(), brief, settings, affiliateLink);
+      await handleUpdateActiveProject(createBlogArticleProject(topic.trim(), settings, brief, article, affiliateLink));
+      setActiveTab('blog');
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Der zusätzliche Blogartikel konnte nicht erstellt werden.');
+    } finally { setIsGeneratingBlog(false); }
   };
 
   // 🚀 Generate 5 Pinterest Pins
@@ -438,12 +452,13 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     }
   };
 
-  const handleConfirmAffiliateLink = (affiliateLink: string | null) => {
+  const handleConfirmAffiliateLink = (affiliateLink: string | null, topic?: string) => {
     const request = blogGenerationRequest;
     setBlogGenerationRequest(null);
     if (!request) return;
     if (request.kind === 'blog') void generateBlogWithLink(request.project, affiliateLink);
-    else void generateAllWithLink(request, affiliateLink);
+    else if (request.kind === 'all') void generateAllWithLink(request, affiliateLink);
+    else void generateAdditionalBlog(topic || '', request.settings, affiliateLink);
   };
 
   const handleDeleteProject = async (id: string) => {
@@ -535,6 +550,18 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           </button>
         </div>
       </div>
+
+      <BlogArticleLibrary
+        projects={scopedProjects}
+        projectName={activeProjectSettings.name}
+        selectedId={activeContentProject?.id}
+        isGenerating={isGeneratingBlog || isGeneratingBrief || isGeneratingAll || isGeneratingPinterest || isGeneratingYouTube}
+        onCreate={() => setBlogGenerationRequest({ kind: 'new-blog', settings: activeProjectSettings })}
+        onSelect={id => {
+          const article = scopedProjects.find(project => project.id === id && project.blogArticle);
+          if (article) { setActiveContentProject(article); setActiveTab('blog'); }
+        }}
+      />
 
       {saveNotice && (
         <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm font-semibold text-emerald-800 flex items-center gap-2">
@@ -854,6 +881,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
       {blogGenerationRequest && (
         <AffiliateLinkModal
+          requestTopic={blogGenerationRequest.kind === 'new-blog'}
           initialLink={blogGenerationRequest.kind === 'blog' ? blogGenerationRequest.project.affiliateLink : null}
           onConfirm={handleConfirmAffiliateLink}
           onClose={() => setBlogGenerationRequest(null)}
