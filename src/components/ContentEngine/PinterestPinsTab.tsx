@@ -43,7 +43,7 @@ import { PinterestPublishModal } from './PinterestPublishModal';
 import { PinterestImagePickerModal } from './PinterestImagePickerModal';
 
 interface PinterestPinsTabProps {
-  articleTargetUrl?: string | null;
+  projectTargetUrl?: string | null;
   pins: PinterestPin[];
   onChange: (updatedPins: PinterestPin[]) => void;
   onOpenInstagram: () => void;
@@ -91,7 +91,7 @@ const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
 };
 
 export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
-  articleTargetUrl,
+  projectTargetUrl,
   pins,
   onChange,
   onOpenInstagram,
@@ -186,8 +186,8 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
 
   const utmUrl = pinterestTrackingUrl(activePin.targetUrl, projectSettings.name, activePin.angle);
   const canEditTarget = isEditablePinterestTarget(activePin.status);
-  let confirmedArticleUrl = '';
-  try { confirmedArticleUrl = resolvePinterestTargetUrl(articleTargetUrl); } catch { /* Older article data can be corrected manually. */ }
+  let confirmedProjectUrl = '';
+  try { confirmedProjectUrl = resolvePinterestTargetUrl(projectTargetUrl); } catch { /* Older project data can be corrected manually. */ }
   let targetError = '';
   try { resolvePinterestTargetUrl(activePin.targetUrl); } catch (error) { targetError = (error as Error).message; }
 
@@ -565,10 +565,10 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-900 disabled:opacity-60" />
             {targetError && <p id="pinterest-target-error" role="alert" className="text-xs text-rose-700">{targetError}</p>}
             {!canEditTarget && <p className="text-xs text-slate-500">Die Zieladresse eines bereits geplanten oder verarbeiteten Pins lässt sich hier nicht ändern.</p>}
-            {confirmedArticleUrl && pins.some(pin => isEditablePinterestTarget(pin.status)) && (
-              <button type="button" onClick={() => onChange(pins.map(pin => isEditablePinterestTarget(pin.status) ? { ...pin, targetUrl: confirmedArticleUrl } : pin))}
+            {confirmedProjectUrl && pins.some(pin => isEditablePinterestTarget(pin.status)) && (
+              <button type="button" onClick={() => onChange(pins.map(pin => isEditablePinterestTarget(pin.status) ? { ...pin, targetUrl: confirmedProjectUrl } : pin))}
                 className="rounded-lg border border-emerald-300 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-50">
-                Blog-Link für Entwürfe übernehmen
+                Projekt-Link für Entwürfe übernehmen
               </button>
             )}
           </div>

@@ -1,4 +1,8 @@
 import assert from 'node:assert/strict';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { AffiliateLinkModal } from '../src/components/ContentEngine/AffiliateLinkModal';
+import { ProjectSettingsModal } from '../src/components/ContentEngine/ProjectSettingsModal';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
@@ -29,12 +33,14 @@ assert.ok(csv.includes('ref=Stefan%2B50&value=one%20two')); assert.ok(csv.includ
 // Run actual generation and publication handlers with isolated AI/Pinterest adapters.
 const server = readFileSync('server.ts', 'utf8');
 let handler: (req: any, res: any) => Promise<void>;
+let modelReply: any = { pins: Array.from({ length: 5 }, () => ({ title: 'Test', targetUrl: 'https://invented.example/' })) };
+let lastPrompt = '';
 let aiCalls = 0; let credentialCalls = 0; let platformCalls = 0; let sent: any;
 const context = vm.createContext({
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } }, requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {},
   resolvePinterestTargetUrl, FIREBASE_PROJECT_ID: 'test',
   loadPinterestAccessToken: async () => { credentialCalls++; return 'isolated-test-token'; },
-  ai: { models: { generateContent: async () => { aiCalls++; return { text: JSON.stringify({ pins: Array.from({ length: 5 }, () => ({ title: 'Test', targetUrl: 'https://invented.example/' })) }) }; } } },
+  ai: { models: { generateContent: async (request: any) => { aiCalls++; lastPrompt = request.contents; return { text: JSON.stringify(modelReply) }; } } },
   fetch: async (_url: string, request: RequestInit) => { platformCalls++; sent = JSON.parse(String(request.body)); return Response.json({ id: 'test-pin', title: 'Test' }); }, console,
 });
 const register = (start: string, end: string) => vm.runInContext(ts.transpileModule(server.slice(server.indexOf(start), server.indexOf(end, server.indexOf(start))), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
@@ -59,6 +65,32 @@ const credentialsBefore = credentialCalls; const platformBefore = platformCalls;
 assert.equal((await invoke({ pinData: { ...pinData, targetUrl: 'javascript:alert(1)' }, boardId: 'board' })).status, 400);
 assert.equal(credentialCalls, credentialsBefore); assert.equal(platformCalls, platformBefore);
 
+// Project defaults, one-off overrides and explicit opt-out across video/brief handlers.
+for (const [route, end] of [['brief', '  // 🚀 Content Engine: 2.'], ['youtube', '  // 🚀 Content Engine: 5.'], ['shorts', "  app.post('/api/instagram/oauth/start'"]]) {
+  register("  app.post('/api/content-engine/" + route + "'", end);
+  modelReply = route === 'shorts' ? { shorts: [{ description: 'Kurzvideo' }] } : { description: 'Inhalt' };
+  for (const [value, expected] of [[undefined, fallback], [selected, selected], [null, ''], ['', '']]) {
+    const response = await invoke({ topic: 'Test', projectSettings: { defaultTargetUrl: fallback }, targetUrl: value });
+    assert.equal(response.status, 200);
+    assert.ok(lastPrompt.includes('Ziel-URL: ' + expected + '\n'));
+    if (expected !== fallback) assert.equal(lastPrompt.includes(fallback), false);
+    if (route !== 'brief') {
+      const description = route === 'youtube' ? response.result.video.description : response.result.shorts[0].description;
+      assert.equal(description, (route === 'youtube' ? 'Inhalt' : 'Kurzvideo') + (expected ? '\n\n' + expected : ''));
+    }
+  }
+  const callsBefore = aiCalls;
+  assert.equal((await invoke({ topic: 'Test', targetUrl: 'javascript:alert(1)' })).status, 400);
+  assert.equal(aiCalls, callsBefore);
+}
+const dialogHtml = renderToStaticMarkup(React.createElement(AffiliateLinkModal, { initialLink: selected, contentLabel: 'Pinterest-Pins', onConfirm() {}, onClose() {} }));
+assert.ok(dialogHtml.includes('Mit Projekt-Link erstellen'));
+assert.ok(dialogHtml.includes('Andere Adresse für diese Inhalte'));
+assert.ok(dialogHtml.includes('checked=""'));
+const settingsHtml = renderToStaticMarkup(React.createElement(ProjectSettingsModal, { isOpen: true, project: { defaultTargetUrl: selected, coreTopics: [] } as any, onSave() {}, onClose() {} }));
+assert.ok(settingsHtml.includes('Projekt-Zieladresse für alle Inhalte'));
+assert.ok(settingsHtml.includes('Briefing, Blog, Pinterest, YouTube und Shorts'));
+
 // Actual browser service must ignore model-suggested destinations as well.
 const bundled = await build({ entryPoints: ['src/services/aiContentService.ts'], bundle: true, write: false, platform: 'node', format: 'esm',
   plugins: [{ name: 'pin-fetch', setup(builder) {
@@ -69,12 +101,19 @@ const bundled = await build({ entryPoints: ['src/services/aiContentService.ts'],
 let expected = selected;
 (globalThis as any).__pinFetch = async (_url: string, request: RequestInit) => {
   assert.equal(JSON.parse(String(request.body)).targetUrl, expected);
-  return Response.json({ pins: [{ title: 'Test', targetUrl: 'https://invented.example/' }] });
+  return Response.json({ pins: [{ title: 'Test', targetUrl: 'https://invented.example/' }], video: { title: 'Test' }, shorts: [], brief: { mainKeyword: 'Test' } });
 };
 try {
   const { AIContentService } = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString('base64')}`);
   const pins = await AIContentService.generatePinterestPins('Test', {}, { defaultTargetUrl: fallback }, selected);
   assert.equal(pins[0].targetUrl, selected);
   expected = ''; assert.equal((await AIContentService.generatePinterestPins('Test', {}, { defaultTargetUrl: fallback }, null))[0].targetUrl, '');
+  for (const [value, target] of [[undefined, fallback], [selected, selected], [null, '']]) {
+    expected = target as string;
+    const settings = { defaultTargetUrl: fallback };
+    await AIContentService.generateYouTubeScript('Test', {}, settings, value);
+    await AIContentService.generateYouTubeShorts('Test', {}, settings, value);
+    await AIContentService.generateContentBrief('Test', settings, undefined, value === null ? '' : value);
+  }
 } finally { delete (globalThis as any).__pinFetch; }
 console.log('Pinterest-Zieladressen geprüft: bestätigter Link statt KI-Vorschlag, bewusster Verzicht, Tracking/CSV und Veröffentlichung ohne Ersatzadresse.');

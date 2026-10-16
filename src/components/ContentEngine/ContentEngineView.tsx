@@ -112,8 +112,8 @@ const getSuggestedTopics = (project: ProjectSettings): string[] => {
 };
 
 
-type BlogGenerationRequest =
-  | { kind: 'blog'; project: CentralContentProject }
+type ContentGenerationRequest =
+  | { kind: 'blog' | 'pinterest' | 'youtube'; project: CentralContentProject }
   | { kind: 'all'; topic: string; settings: ProjectSettings; angle: string }
   | { kind: 'new-blog'; settings: ProjectSettings };
 
@@ -146,7 +146,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const [isGeneratingYouTube, setIsGeneratingYouTube] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [saveNotice, setSaveNotice] = useState<string | null>(null);
-  const [blogGenerationRequest, setBlogGenerationRequest] = useState<BlogGenerationRequest | null>(null);
+  const [contentGenerationRequest, setContentGenerationRequest] = useState<ContentGenerationRequest | null>(null);
 
   // Load from Firestore on mount or when user changes
   useEffect(() => {
@@ -295,7 +295,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
   // Ask before any blog request; retain the selected project as a snapshot.
   const handleGenerateBlog = () => {
-    if (activeContentProject?.contentBrief) setBlogGenerationRequest({ kind: 'blog', project: activeContentProject });
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'blog', project: { ...activeContentProject, projectSettings: activeProjectSettings } });
   };
 
   // 🚀 Generate Blog
@@ -328,7 +328,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     setErrorMsg(null);
     setIsGeneratingBlog(true);
     try {
-      const { brief } = await AIContentService.generateContentBrief(topic.trim(), settings);
+      const { brief } = await AIContentService.generateContentBrief(topic.trim(), settings, undefined, affiliateLink ?? '');
       const article = await AIContentService.generateBlogArticle(topic.trim(), brief, settings, affiliateLink);
       await handleUpdateActiveProject(createBlogArticleProject(topic.trim(), settings, brief, article, affiliateLink));
       setActiveTab('blog');
@@ -338,21 +338,25 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   };
 
   // 🚀 Generate 5 Pinterest Pins
-  const handleGeneratePinterest = async () => {
-    if (!activeContentProject || !activeContentProject.contentBrief) return;
+  const handleGeneratePinterest = () => {
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'pinterest', project: { ...activeContentProject, projectSettings: activeProjectSettings } });
+  };
+
+  const generatePinterestWithLink = async (project: CentralContentProject, targetUrl: string | null) => {
+    if (!project.contentBrief) return;
     setErrorMsg(null);
     setIsGeneratingPinterest(true);
 
     try {
       const pins = await AIContentService.generatePinterestPins(
-        activeContentProject.topic,
-        activeContentProject.contentBrief,
-        activeContentProject.projectSettings,
-        activeContentProject.affiliateLink
+        project.topic,
+        project.contentBrief,
+        project.projectSettings,
+        targetUrl
       );
 
       handleUpdateActiveProject({
-        ...activeContentProject,
+        ...project,
         pinterestPins: pins,
         updatedAt: new Date().toISOString(),
       });
@@ -365,27 +369,33 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   };
 
   // 🚀 Generate YouTube Script & Shorts
-  const handleGenerateYouTube = async () => {
-    if (!activeContentProject || !activeContentProject.contentBrief) return;
+  const handleGenerateYouTube = () => {
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'youtube', project: { ...activeContentProject, projectSettings: activeProjectSettings } });
+  };
+
+  const generateYouTubeWithLink = async (project: CentralContentProject, targetUrl: string | null) => {
+    if (!project.contentBrief) return;
     setErrorMsg(null);
     setIsGeneratingYouTube(true);
 
     try {
       const [video, shorts] = await Promise.all([
         AIContentService.generateYouTubeScript(
-          activeContentProject.topic,
-          activeContentProject.contentBrief,
-          activeContentProject.projectSettings
+          project.topic,
+          project.contentBrief,
+          project.projectSettings,
+          targetUrl
         ),
         AIContentService.generateYouTubeShorts(
-          activeContentProject.topic,
-          activeContentProject.contentBrief,
-          activeContentProject.projectSettings
+          project.topic,
+          project.contentBrief,
+          project.projectSettings,
+          targetUrl
         ),
       ]);
 
       handleUpdateActiveProject({
-        ...activeContentProject,
+        ...project,
         youtubeVideo: video,
         youtubeShorts: shorts,
         updatedAt: new Date().toISOString(),
@@ -400,11 +410,11 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
   const handleGenerateAllInOneClick = () => {
     if (!topicInput.trim()) { setErrorMsg('Bitte gib ein Thema ein.'); return; }
-    setBlogGenerationRequest({ kind: 'all', topic: topicInput.trim(), settings: activeProjectSettings, angle: customAngleInput });
+    setContentGenerationRequest({ kind: 'all', topic: topicInput.trim(), settings: activeProjectSettings, angle: customAngleInput });
   };
 
   // ⚡ 1-Click Multi-Format Automation (Generates Brief + Blog + 5 Pins + YouTube + Shorts in Sequence)
-  const generateAllWithLink = async (request: Extract<BlogGenerationRequest, { kind: 'all' }>, affiliateLink: string | null) => {
+  const generateAllWithLink = async (request: Extract<ContentGenerationRequest, { kind: 'all' }>, affiliateLink: string | null) => {
     const { topic, settings, angle } = request;
     if (!topic) {
       setErrorMsg('Bitte gib ein Thema ein.');
@@ -418,15 +428,16 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       const { brief } = await AIContentService.generateContentBrief(
         topic,
         settings,
-        angle
+        angle,
+        affiliateLink ?? ''
       );
 
       // 2. Parallel Generation of Blog, 5 Pins, and YouTube Scripts
       const [blogArticle, pinterestPins, youtubeVideo, youtubeShorts] = await Promise.all([
         AIContentService.generateBlogArticle(topic, brief, settings, affiliateLink),
         AIContentService.generatePinterestPins(topic, brief, settings, affiliateLink),
-        AIContentService.generateYouTubeScript(topic, brief, settings),
-        AIContentService.generateYouTubeShorts(topic, brief, settings),
+        AIContentService.generateYouTubeScript(topic, brief, settings, affiliateLink),
+        AIContentService.generateYouTubeShorts(topic, brief, settings, affiliateLink),
       ]);
 
       const fullProject: CentralContentProject = {
@@ -454,12 +465,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   };
 
   const handleConfirmAffiliateLink = (affiliateLink: string | null, topic?: string) => {
-    const request = blogGenerationRequest;
-    setBlogGenerationRequest(null);
+    const request = contentGenerationRequest;
+    setContentGenerationRequest(null);
     if (!request) return;
     if (request.kind === 'blog') void generateBlogWithLink(request.project, affiliateLink);
     else if (request.kind === 'all') void generateAllWithLink(request, affiliateLink);
-    else void generateAdditionalBlog(topic || '', request.settings, affiliateLink);
+    else if (request.kind === 'pinterest') void generatePinterestWithLink(request.project, affiliateLink);
+    else if (request.kind === 'youtube') void generateYouTubeWithLink(request.project, affiliateLink);
+    else if (request.kind === 'new-blog') void generateAdditionalBlog(topic || '', request.settings, affiliateLink);
   };
 
   const handleDeleteProject = async (id: string) => {
@@ -557,7 +570,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         projectName={activeProjectSettings.name}
         selectedId={activeContentProject?.id}
         isGenerating={isGeneratingBlog || isGeneratingBrief || isGeneratingAll || isGeneratingPinterest || isGeneratingYouTube}
-        onCreate={() => setBlogGenerationRequest({ kind: 'new-blog', settings: activeProjectSettings })}
+        onCreate={() => setContentGenerationRequest({ kind: 'new-blog', settings: activeProjectSettings })}
         onSelect={id => {
           const article = scopedProjects.find(project => project.id === id && project.blogArticle);
           if (article) { setActiveContentProject(article); setActiveTab('blog'); }
@@ -825,7 +838,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
           {activeTab === 'pinterest' && (
             <PinterestPinsTab
-              articleTargetUrl={activeContentProject.affiliateLink}
+              projectTargetUrl={activeProjectSettings.defaultTargetUrl}
               pins={activeContentProject.pinterestPins || []}
               onChange={(updatedPins) => {
                 handleUpdateActiveProject({
@@ -881,12 +894,13 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         </div>
       )}
 
-      {blogGenerationRequest && (
+      {contentGenerationRequest && (
         <AffiliateLinkModal
-          requestTopic={blogGenerationRequest.kind === 'new-blog'}
-          initialLink={blogGenerationRequest.kind === 'blog' ? blogGenerationRequest.project.affiliateLink : null}
+          requestTopic={contentGenerationRequest.kind === 'new-blog'}
+          initialLink={'project' in contentGenerationRequest ? contentGenerationRequest.project.projectSettings.defaultTargetUrl : contentGenerationRequest.settings.defaultTargetUrl}
+          contentLabel={contentGenerationRequest.kind === 'pinterest' ? 'Pinterest-Pins' : contentGenerationRequest.kind === 'youtube' ? 'YouTube und Shorts' : contentGenerationRequest.kind === 'all' ? 'Alle Inhalte' : 'Blogartikel'}
           onConfirm={handleConfirmAffiliateLink}
-          onClose={() => setBlogGenerationRequest(null)}
+          onClose={() => setContentGenerationRequest(null)}
         />
       )}
 

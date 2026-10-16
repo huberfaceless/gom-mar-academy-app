@@ -27,7 +27,7 @@ export class AIContentService {
         topic,
         projectSettings,
         customAngle,
-        targetUrl: targetUrl || projectSettings.defaultTargetUrl,
+        targetUrl: resolvePinterestTargetUrl(targetUrl, projectSettings.defaultTargetUrl),
         cta: cta || projectSettings.defaultCta,
       }),
     });
@@ -135,7 +135,8 @@ export class AIContentService {
   static async generateYouTubeScript(
     topic: string,
     brief: ContentBrief,
-    projectSettings: ProjectSettings
+    projectSettings: ProjectSettings,
+    selectedTargetUrl?: string | null
   ): Promise<YouTubeVideoData> {
     const response = await authenticatedFetch('/api/content-engine/youtube', {
       method: 'POST',
@@ -144,6 +145,7 @@ export class AIContentService {
         topic,
         brief,
         projectSettings,
+        targetUrl: resolvePinterestTargetUrl(selectedTargetUrl, projectSettings.defaultTargetUrl),
       }),
     });
 
@@ -184,7 +186,8 @@ export class AIContentService {
   static async generateYouTubeShorts(
     topic: string,
     brief: ContentBrief,
-    projectSettings: ProjectSettings
+    projectSettings: ProjectSettings,
+    selectedTargetUrl?: string | null
   ): Promise<YouTubeShort[]> {
     const response = await authenticatedFetch('/api/content-engine/shorts', {
       method: 'POST',
@@ -193,6 +196,7 @@ export class AIContentService {
         topic,
         brief,
         projectSettings,
+        targetUrl: resolvePinterestTargetUrl(selectedTargetUrl, projectSettings.defaultTargetUrl),
       }),
     });
 

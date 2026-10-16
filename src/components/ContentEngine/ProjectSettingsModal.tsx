@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { X, Save, Plus, Trash2, Globe, Sparkles, Building2 } from 'lucide-react';
+import { resolvePinterestTargetUrl } from '../../utils/pinterestTargetUrl';
 import { ProjectSettings } from '../../types/contentEngine';
 
 interface ProjectSettingsModalProps {
@@ -17,11 +18,13 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<ProjectSettings>({ ...project });
   const [newTopic, setNewTopic] = useState('');
+  const [linkError, setLinkError] = useState('');
 
   useEffect(() => {
     if (isOpen) {
       setFormData({ ...project, coreTopics: [...project.coreTopics] });
       setNewTopic('');
+      setLinkError('');
     }
   }, [isOpen, project]);
 
@@ -47,7 +50,10 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    let defaultTargetUrl: string;
+    try { defaultTargetUrl = resolvePinterestTargetUrl(formData.defaultTargetUrl); }
+    catch (error) { setLinkError((error as Error).message); return; }
+    onSave({ ...formData, defaultTargetUrl });
     onClose();
   };
 
@@ -164,15 +170,21 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                Standard Ziel-URL (Landingpage/Lead Magnet)
+                Projekt-Zieladresse für alle Inhalte
               </label>
               <input
-                type="text"
-                placeholder="Link zu deiner eigenen Zielseite (optional)"
-                value={formData.defaultTargetUrl}
-                onChange={(e) => setFormData({ ...formData, defaultTargetUrl: e.target.value })}
+                type="url"
+                maxLength={2048}
+                aria-label="Projekt-Zieladresse für alle Inhalte"
+                aria-invalid={Boolean(linkError)}
+                aria-describedby="project-link-help"
+                placeholder="https://deine-zielseite.at (optional)"
+                value={formData.defaultTargetUrl || ''}
+                onChange={(e) => { setFormData({ ...formData, defaultTargetUrl: e.target.value }); setLinkError(''); }}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
+              <p id="project-link-help" className="mt-2 text-xs text-slate-600">Diese Adresse ist die Vorgabe für Briefing, Blog, Pinterest, YouTube und Shorts. Beim Erstellen kannst du gezielt eine andere Adresse wählen. Bestehende Inhalte behalten ihren bisherigen Link.</p>
+              {linkError && <p role="alert" className="mt-1 text-xs text-rose-700">{linkError}</p>}
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">

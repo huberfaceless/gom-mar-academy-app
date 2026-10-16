@@ -2508,18 +2508,23 @@ Erstelle:
   // 🚀 Content Engine: 1. Generate Content Brief
   app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
-      const { topic, projectSettings, customAngle, targetUrl, cta } = req.body;
+      const { topic, projectSettings, customAngle, cta } = req.body;
       if (!topic) {
         res.status(400).json({ error: 'Thema ist erforderlich.' });
         return;
       }
+
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
       const prompt = `Du bist ein führender SEO- und Content-Stratege für das Projekt "${projectSettings?.name || 'Content Engine'}".
 Website: ${projectSettings?.websiteUrl || ''}
 Zielgruppe: ${projectSettings?.targetAudience || 'Allgemein'}
 Kern-Nische: ${(projectSettings?.coreTopics || []).join(', ')}
 Brand Voice: ${projectSettings?.brandVoice || 'Professionell, einfühlsam, lösungsorientiert'}
-Ziel-URL: ${targetUrl || projectSettings?.defaultTargetUrl || ''}
+Ziel-URL: ${targetUrl}
+Die Ziel-URL ist verbindlich. Erfinde keine alternativen Zieladressen. Interne Verlinkungsvorschläge sind ausschließlich Themenvorschläge, keine Ersatz-Zieladressen.
 Gewünschter CTA: ${cta || projectSettings?.defaultCta || 'Jetzt mehr erfahren'}
 Spezifischer Angle: ${customAngle || 'Bester Mehrwert & Problemlösung'}
 
@@ -2778,6 +2783,10 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const prompt = `Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
 "${topic}"
 
@@ -2785,7 +2794,8 @@ Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 Brand Voice: ${projectSettings?.brandVoice || 'Klar, motivierend, seriös'}
 CTA: ${brief?.cta || projectSettings?.defaultCta || 'Kanal abonnieren & Link in der Beschreibung anklicken'}
-Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
+Ziel-URL: ${targetUrl}
+Verwende ausschließlich diese Zieladresse für Empfehlungen; erfinde keine Links. Schreibe keine URLs oder Link-Platzhalter in die Beschreibung; die bestätigte Adresse wird automatisch angefügt.
 
 Struktur des Skripts:
 1. Hook (Die ersten 10 Sekunden: Problem + Neugier, keine Begrüßungsfloskeln!)
@@ -2796,7 +2806,7 @@ Struktur des Skripts:
 
 Zusätzlich:
 - YouTube-Titel (Klickstark, SEO-optimiert)
-- YouTube-Beschreibung (inkl. Timestamps / Kapitel und Link-Platzhalter)
+- YouTube-Beschreibung (inkl. Timestamps / Kapitel)
 - 10 Keywords / Tags
 - Thumbnail-Konzept (Headline-Text max. 4 Wörter, Bildbeschreibung und AI-Prompt)
 
@@ -2842,7 +2852,7 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, video: parsed });
+        res.json({ success: true, video: { ...parsed, description: [parsed.description || '', targetUrl].filter(Boolean).join('\n\n') } });
       } catch {
         res.json({ success: true, video: null, raw: text });
       }
@@ -2862,9 +2872,16 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const prompt = `Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
+
+Ziel-URL: ${targetUrl}
+Verwende ausschließlich diese Zieladresse für Empfehlungen; erfinde keine Links. Schreibe keine URLs oder Link-Platzhalter in die Beschreibung; die bestätigte Adresse wird automatisch angefügt.
 
 Jeder Short muss haben:
 - shortNumber (1, 2, 3)
@@ -2917,7 +2934,7 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, shorts: parsed.shorts || [] });
+        res.json({ success: true, shorts: Array.isArray(parsed.shorts) ? parsed.shorts.map((short: Record<string, unknown>) => ({ ...short, description: [short.description || '', targetUrl].filter(Boolean).join('\n\n') })) : [] });
       } catch {
         res.json({ success: true, shorts: [] });
       }
