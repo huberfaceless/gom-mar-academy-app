@@ -7,6 +7,7 @@ import {
 } from '../types/contentEngine';
 import { FirestoreContentService } from './firestoreContentService';
 import { pinterestService } from './pinterestService';
+import { resolvePinterestTargetUrl } from '../utils/pinterestTargetUrl';
 import { doc, runTransaction } from 'firebase/firestore';
 import { db, isFirestoreOperational, handleFirestoreError } from '../firebase/config';
 import { loadAllPublishingJobs, saveAllPublishingJobs } from '../utils/contentStorage';
@@ -212,10 +213,11 @@ export class PublishingService {
 
     try {
       // If we are in node/server environment, execute directly against Pinterest API or local server endpoint
+      const targetUrl = resolvePinterestTargetUrl(job.payload.targetUrl);
       const payload: Record<string, unknown> = {
         title: (job.payload.title || 'Pin').slice(0, 100),
         description: (job.payload.description || '').slice(0, 500),
-        link: job.payload.targetUrl || 'https://vital50.gomo-marketing.at/',
+        ...(targetUrl ? { link: targetUrl } : {}),
         alt_text: (job.payload.title || 'Pin').slice(0, 500),
         board_id: job.payload.boardId,
       };
@@ -339,6 +341,7 @@ export class PublishingService {
     }
   ): Promise<{ publishingJob: PublishingJob; schedulerJob: SchedulerJob }> {
     const isPinterestPin = params.platform === 'PINTEREST' && params.contentType === 'PIN';
+    if (isPinterestPin) resolvePinterestTargetUrl(params.payload?.targetUrl);
     const isInstagramPost = params.platform === 'INSTAGRAM'
       && params.contentType === 'INSTAGRAM_POST'
       && typeof params.payload?.imageBase64 === 'string'

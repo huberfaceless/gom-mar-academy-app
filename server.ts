@@ -48,6 +48,7 @@ import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './s
 import { retryServerPublishingJob } from './server/publishingQueueAdmin.js';
 import { PublishingJobActionError } from './server/publishingJobRetry.js';
 import { validateBlogAffiliateLink } from './src/utils/blogAffiliateLink.js';
+import { resolvePinterestTargetUrl } from './src/utils/pinterestTargetUrl.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
 import { resolveAcademyContentAccess, visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -2657,10 +2658,14 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const prompt = `Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
-Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
+Ziel-URL: ${targetUrl}
 Standard-Board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}
 
 WICHTIG: Die 5 Pins MÜSSEN 5 völlig unterschiedliche psychologische Angles (Blickwinkel) nutzen, NICHT nur denselben Text umformulieren:
@@ -2674,7 +2679,7 @@ Jeder Pin benötigt:
 - title: Scroll-stoppende Headline (prägnant für Bild & Titel)
 - description: SEO-optimierte Pin-Beschreibung mit Keywords & Hashtags (max 400 Zeichen)
 - keywords: 3-5 relevante Suchbegriffe
-- targetUrl: ${projectSettings?.defaultTargetUrl || ''}
+- targetUrl: ${targetUrl}
 - board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}
 - imagePrompt: Präziser Prompt für ein hochwertiges 1080x1620 Pinterest-Bild, passend zum Thema, zur Zielgruppe und zur Tonalität der Marke ${projectSettings?.name || 'Content-Projekt'}; keine unpassenden Standardmotive und keine kitschigen Grafiken
 - templateStyle: "vital50_clean" | "vital50_bold" | "vital50_list" | "vital50_quote"
@@ -2753,7 +2758,7 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, pins: parsed.pins || [] });
+        res.json({ success: true, pins: Array.isArray(parsed.pins) ? parsed.pins.map((pin: Record<string, unknown>) => ({ ...pin, targetUrl })) : [] });
       } catch {
         res.json({ success: true, pins: [] });
       }
@@ -3150,6 +3155,10 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(pinData.targetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
       const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
@@ -3158,7 +3167,7 @@ Antworte im JSON-Format:
       const payload: Record<string, unknown> = {
         title: pinData.title.slice(0, 100),
         description: pinData.description.slice(0, 500),
-        link: pinData.targetUrl || 'https://vital50.gomo-marketing.at/',
+        ...(targetUrl ? { link: targetUrl } : {}),
         alt_text: pinData.title.slice(0, 500),
         board_id: boardId,
       };

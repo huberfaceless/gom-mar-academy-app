@@ -347,7 +347,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       const pins = await AIContentService.generatePinterestPins(
         activeContentProject.topic,
         activeContentProject.contentBrief,
-        activeContentProject.projectSettings
+        activeContentProject.projectSettings,
+        activeContentProject.affiliateLink
       );
 
       handleUpdateActiveProject({
@@ -423,7 +424,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       // 2. Parallel Generation of Blog, 5 Pins, and YouTube Scripts
       const [blogArticle, pinterestPins, youtubeVideo, youtubeShorts] = await Promise.all([
         AIContentService.generateBlogArticle(topic, brief, settings, affiliateLink),
-        AIContentService.generatePinterestPins(topic, brief, settings),
+        AIContentService.generatePinterestPins(topic, brief, settings, affiliateLink),
         AIContentService.generateYouTubeScript(topic, brief, settings),
         AIContentService.generateYouTubeShorts(topic, brief, settings),
       ]);
@@ -824,6 +825,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
           {activeTab === 'pinterest' && (
             <PinterestPinsTab
+              articleTargetUrl={activeContentProject.affiliateLink}
               pins={activeContentProject.pinterestPins || []}
               onChange={(updatedPins) => {
                 handleUpdateActiveProject({

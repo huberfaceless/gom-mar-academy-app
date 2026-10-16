@@ -1,5 +1,6 @@
 import { PinterestPin, PinTemplateStyle, PinColorTheme, ProjectSettings } from '../types/contentEngine';
 import JSZip from 'jszip';
+import { pinterestTrackingUrl } from './pinterestTargetUrl';
 
 export interface CanvasRenderOptions {
   width?: number; // default 1080
@@ -581,7 +582,7 @@ export function generatePinterestBulkUploadCsv(
 ): string {
   const headers = ['Title', 'Media URL', 'Pinterest board', 'Thumbnail', 'Description', 'Link', 'Publish date', 'Keywords'];
   const rows = pins.map((pin, idx) => {
-    const utmUrl = `${pin.targetUrl}${pin.targetUrl.includes('?') ? '&' : '?'}utm_source=pinterest&utm_medium=pin&utm_campaign=vital50_${encodeURIComponent(projectSettings.coreTopics[0] || 'health')}&utm_content=angle_${pin.angle}`;
+    const utmUrl = pinterestTrackingUrl(pin.targetUrl, projectSettings.name, pin.angle);
     const escapedTitle = `"${(pin.title || '').replace(/"/g, '""')}"`;
     const escapedDesc = `"${(pin.description || '').replace(/"/g, '""')}"`;
     const escapedBoard = `"${(pin.board || projectSettings.pinterestBoardDefault || 'Gesundheit ab 50').replace(/"/g, '""')}"`;
@@ -589,7 +590,7 @@ export function generatePinterestBulkUploadCsv(
     const keywords = `"${(pin.keywords || []).join(', ')}"`;
     const scheduledDate = pin.scheduledDate || '';
 
-    return [escapedTitle, mediaUrl, escapedBoard, '', escapedDesc, utmUrl, scheduledDate, keywords].join(',');
+    return [escapedTitle, mediaUrl, escapedBoard, '', escapedDesc, `"${utmUrl.replace(/"/g, '""')}"`, scheduledDate, keywords].join(',');
   });
 
   return [headers.join(','), ...rows].join('\n');

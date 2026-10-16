@@ -7,6 +7,7 @@ import {
   YouTubeShort 
 } from '../types/contentEngine';
 import { authenticatedFetch } from './authenticatedFetch';
+import { resolvePinterestTargetUrl } from '../utils/pinterestTargetUrl';
 
 export class AIContentService {
   /**
@@ -90,8 +91,10 @@ export class AIContentService {
   static async generatePinterestPins(
     topic: string,
     brief: ContentBrief,
-    projectSettings: ProjectSettings
+    projectSettings: ProjectSettings,
+    selectedTargetUrl?: string | null
   ): Promise<PinterestPin[]> {
+    const targetUrl = resolvePinterestTargetUrl(selectedTargetUrl, projectSettings.defaultTargetUrl);
     const response = await authenticatedFetch('/api/content-engine/pins', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -99,6 +102,7 @@ export class AIContentService {
         topic,
         brief,
         projectSettings,
+        targetUrl,
       }),
     });
 
@@ -117,7 +121,7 @@ export class AIContentService {
       title: p.title || `${topic} - Tipp ${idx + 1}`,
       description: p.description || '',
       keywords: Array.isArray(p.keywords) ? p.keywords : [],
-      targetUrl: p.targetUrl || projectSettings.defaultTargetUrl,
+      targetUrl,
       board: p.board || projectSettings.pinterestBoardDefault || projectSettings.name,
       imagePrompt: p.imagePrompt || `Fotorealistisches 1080x1620 Pinterest-Bild zum Thema ${topic}`,
       templateStyle: p.templateStyle || 'vital50_clean',
