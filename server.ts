@@ -48,6 +48,7 @@ import { MentorLimitError, reserveMentorUsage, validateMentorRequest } from './s
 import { retryServerPublishingJob } from './server/publishingQueueAdmin.js';
 import { PublishingJobActionError } from './server/publishingJobRetry.js';
 import { validateBlogAffiliateLink } from './src/utils/blogAffiliateLink.js';
+import { resolvePinterestTargetUrl } from './src/utils/pinterestTargetUrl.js';
 import { ACADEMY_STAGES } from './server/academyData.js';
 import { resolveAcademyContentAccess, visibleAcademyStages } from './server/academyContentAccess.js';
 import { localizeAllAcademyStages } from './src/i18n/localizeAllAcademyStages.js';
@@ -2507,18 +2508,23 @@ Erstelle:
   // 🚀 Content Engine: 1. Generate Content Brief
   app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
-      const { topic, projectSettings, customAngle, targetUrl, cta } = req.body;
+      const { topic, projectSettings, customAngle, cta } = req.body;
       if (!topic) {
         res.status(400).json({ error: 'Thema ist erforderlich.' });
         return;
       }
+
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
       const prompt = `Du bist ein führender SEO- und Content-Stratege für das Projekt "${projectSettings?.name || 'Content Engine'}".
 Website: ${projectSettings?.websiteUrl || ''}
 Zielgruppe: ${projectSettings?.targetAudience || 'Allgemein'}
 Kern-Nische: ${(projectSettings?.coreTopics || []).join(', ')}
 Brand Voice: ${projectSettings?.brandVoice || 'Professionell, einfühlsam, lösungsorientiert'}
-Ziel-URL: ${targetUrl || projectSettings?.defaultTargetUrl || ''}
+Ziel-URL: ${targetUrl}
+Die Ziel-URL ist verbindlich. Erfinde keine alternativen Zieladressen. Interne Verlinkungsvorschläge sind ausschließlich Themenvorschläge, keine Ersatz-Zieladressen.
 Gewünschter CTA: ${cta || projectSettings?.defaultCta || 'Jetzt mehr erfahren'}
 Spezifischer Angle: ${customAngle || 'Bester Mehrwert & Problemlösung'}
 
@@ -2657,10 +2663,14 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const prompt = `Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
-Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
+Ziel-URL: ${targetUrl}
 Standard-Board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}
 
 WICHTIG: Die 5 Pins MÜSSEN 5 völlig unterschiedliche psychologische Angles (Blickwinkel) nutzen, NICHT nur denselben Text umformulieren:
@@ -2674,7 +2684,7 @@ Jeder Pin benötigt:
 - title: Scroll-stoppende Headline (prägnant für Bild & Titel)
 - description: SEO-optimierte Pin-Beschreibung mit Keywords & Hashtags (max 400 Zeichen)
 - keywords: 3-5 relevante Suchbegriffe
-- targetUrl: ${projectSettings?.defaultTargetUrl || ''}
+- targetUrl: ${targetUrl}
 - board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}
 - imagePrompt: Präziser Prompt für ein hochwertiges 1080x1620 Pinterest-Bild, passend zum Thema, zur Zielgruppe und zur Tonalität der Marke ${projectSettings?.name || 'Content-Projekt'}; keine unpassenden Standardmotive und keine kitschigen Grafiken
 - templateStyle: "vital50_clean" | "vital50_bold" | "vital50_list" | "vital50_quote"
@@ -2753,7 +2763,7 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, pins: parsed.pins || [] });
+        res.json({ success: true, pins: Array.isArray(parsed.pins) ? parsed.pins.map((pin: Record<string, unknown>) => ({ ...pin, targetUrl })) : [] });
       } catch {
         res.json({ success: true, pins: [] });
       }
@@ -2773,6 +2783,10 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const prompt = `Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
 "${topic}"
 
@@ -2780,7 +2794,8 @@ Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 Brand Voice: ${projectSettings?.brandVoice || 'Klar, motivierend, seriös'}
 CTA: ${brief?.cta || projectSettings?.defaultCta || 'Kanal abonnieren & Link in der Beschreibung anklicken'}
-Ziel-URL: ${projectSettings?.defaultTargetUrl || ''}
+Ziel-URL: ${targetUrl}
+Verwende ausschließlich diese Zieladresse für Empfehlungen; erfinde keine Links. Schreibe keine URLs oder Link-Platzhalter in die Beschreibung; die bestätigte Adresse wird automatisch angefügt.
 
 Struktur des Skripts:
 1. Hook (Die ersten 10 Sekunden: Problem + Neugier, keine Begrüßungsfloskeln!)
@@ -2791,7 +2806,7 @@ Struktur des Skripts:
 
 Zusätzlich:
 - YouTube-Titel (Klickstark, SEO-optimiert)
-- YouTube-Beschreibung (inkl. Timestamps / Kapitel und Link-Platzhalter)
+- YouTube-Beschreibung (inkl. Timestamps / Kapitel)
 - 10 Keywords / Tags
 - Thumbnail-Konzept (Headline-Text max. 4 Wörter, Bildbeschreibung und AI-Prompt)
 
@@ -2837,7 +2852,7 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, video: parsed });
+        res.json({ success: true, video: { ...parsed, description: [parsed.description || '', targetUrl].filter(Boolean).join('\n\n') } });
       } catch {
         res.json({ success: true, video: null, raw: text });
       }
@@ -2857,9 +2872,16 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const prompt = `Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
+
+Ziel-URL: ${targetUrl}
+Verwende ausschließlich diese Zieladresse für Empfehlungen; erfinde keine Links. Schreibe keine URLs oder Link-Platzhalter in die Beschreibung; die bestätigte Adresse wird automatisch angefügt.
 
 Jeder Short muss haben:
 - shortNumber (1, 2, 3)
@@ -2912,7 +2934,7 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, shorts: parsed.shorts || [] });
+        res.json({ success: true, shorts: Array.isArray(parsed.shorts) ? parsed.shorts.map((short: Record<string, unknown>) => ({ ...short, description: [short.description || '', targetUrl].filter(Boolean).join('\n\n') })) : [] });
       } catch {
         res.json({ success: true, shorts: [] });
       }
@@ -3150,6 +3172,10 @@ Antworte im JSON-Format:
         return;
       }
 
+      let targetUrl: string;
+      try { targetUrl = resolvePinterestTargetUrl(pinData.targetUrl); }
+      catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
+
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
       const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
@@ -3158,7 +3184,7 @@ Antworte im JSON-Format:
       const payload: Record<string, unknown> = {
         title: pinData.title.slice(0, 100),
         description: pinData.description.slice(0, 500),
-        link: pinData.targetUrl || 'https://vital50.gomo-marketing.at/',
+        ...(targetUrl ? { link: targetUrl } : {}),
         alt_text: pinData.title.slice(0, 500),
         board_id: boardId,
       };

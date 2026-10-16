@@ -38,10 +38,12 @@ import {
   generatePinterestBulkUploadCsv,
   CURATED_HEALTH_PHOTOS 
 } from '../../utils/pinterestCanvasRenderer';
+import { pinterestTrackingUrl, resolvePinterestTargetUrl, isEditablePinterestTarget } from '../../utils/pinterestTargetUrl';
 import { PinterestPublishModal } from './PinterestPublishModal';
 import { PinterestImagePickerModal } from './PinterestImagePickerModal';
 
 interface PinterestPinsTabProps {
+  projectTargetUrl?: string | null;
   pins: PinterestPin[];
   onChange: (updatedPins: PinterestPin[]) => void;
   onOpenInstagram: () => void;
@@ -89,6 +91,7 @@ const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
 };
 
 export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
+  projectTargetUrl,
   pins,
   onChange,
   onOpenInstagram,
@@ -181,10 +184,12 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
     );
   }
 
-  // Calculate clean UTM link
-  const utmUrl = `${activePin.targetUrl || projectSettings.websiteUrl}${
-    (activePin.targetUrl || projectSettings.websiteUrl).includes('?') ? '&' : '?'
-  }utm_source=pinterest&utm_medium=pin&utm_campaign=vital50_${encodeURIComponent(topic.slice(0, 20))}&utm_content=angle_${activePin.angle}`;
+  const utmUrl = pinterestTrackingUrl(activePin.targetUrl, projectSettings.name, activePin.angle);
+  const canEditTarget = isEditablePinterestTarget(activePin.status);
+  let confirmedProjectUrl = '';
+  try { confirmedProjectUrl = resolvePinterestTargetUrl(projectTargetUrl); } catch { /* Older project data can be corrected manually. */ }
+  let targetError = '';
+  try { resolvePinterestTargetUrl(activePin.targetUrl); } catch (error) { targetError = (error as Error).message; }
 
   return (
     <div className="space-y-6">
@@ -552,6 +557,22 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
             />
           </div>
 
+          <div className="space-y-2">
+            <label htmlFor="pinterest-target-url" className="block text-xs font-bold text-slate-700 uppercase">Zieladresse dieses Pins</label>
+            <input id="pinterest-target-url" type="url" value={activePin.targetUrl || ''} maxLength={2048} disabled={!canEditTarget}
+              placeholder="https://…" onChange={event => handleUpdateActivePin({ targetUrl: event.target.value })}
+              aria-invalid={Boolean(targetError)} aria-describedby={targetError ? 'pinterest-target-error' : undefined}
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-900 disabled:opacity-60" />
+            {targetError && <p id="pinterest-target-error" role="alert" className="text-xs text-rose-700">{targetError}</p>}
+            {!canEditTarget && <p className="text-xs text-slate-500">Die Zieladresse eines bereits geplanten oder verarbeiteten Pins lässt sich hier nicht ändern.</p>}
+            {confirmedProjectUrl && pins.some(pin => isEditablePinterestTarget(pin.status)) && (
+              <button type="button" onClick={() => onChange(pins.map(pin => isEditablePinterestTarget(pin.status) ? { ...pin, targetUrl: confirmedProjectUrl } : pin))}
+                className="rounded-lg border border-emerald-300 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-50">
+                Projekt-Link für Entwürfe übernehmen
+              </button>
+            )}
+          </div>
+
           {/* 4. Tracking & UTM Link Preview */}
           <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-200 space-y-2">
             <div className="flex items-center justify-between">
@@ -561,6 +582,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               </span>
               <button
                 type="button"
+                disabled={!utmUrl}
                 onClick={() => handleCopyText(utmUrl, `utm_${activePin.id}`)}
                 className="text-[11px] font-bold text-emerald-800 hover:text-emerald-900 flex items-center gap-1"
               >
@@ -569,7 +591,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               </button>
             </div>
             <p className="text-[11px] font-mono text-emerald-950 bg-white p-2 rounded-lg border border-emerald-300 break-all">
-              {utmUrl}
+              {utmUrl || 'Kein Ziel-Link hinterlegt.'}
             </p>
           </div>
 

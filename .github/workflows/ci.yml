@@ -49,6 +49,9 @@ jobs:
       - name: Blogvorschau und Empfehlungslinks prüfen
         run: bun run audit:blog
 
+      - name: Pinterest-Zieladressen prüfen
+        run: bun run audit:pinterest-target
+
       - name: TypeScript pruefen
         run: bun run lint
 
