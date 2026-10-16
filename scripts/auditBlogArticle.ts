@@ -8,6 +8,13 @@ import { build } from 'esbuild';
 import { BlogArticleContent } from '../src/components/ContentEngine/BlogArticleContent';
 import { validateBlogAffiliateLink } from '../src/utils/blogAffiliateLink';
 
+import { createBlogArticleProject } from '../src/utils/blogArticleProjects';
+import { selectContentProjectScope } from '../src/utils/contentProjectSelection';
+import { createOnlineBusinessProject, saveAllContentProjects, saveOrUpdateContentProject, loadAllContentProjects } from '../src/utils/contentStorage';
+import { BlogArticleLibrary } from '../src/components/ContentEngine/BlogArticleLibrary';
+import { AffiliateLinkModal } from '../src/components/ContentEngine/AffiliateLinkModal';
+import type { BlogArticle, ContentBrief } from '../src/types/contentEngine';
+
 const link = 'https://example.com/offer?ref=Stefan&campaign=50%2B#start';
 assert.equal(validateBlogAffiliateLink(` ${link} `), link);
 assert.equal(validateBlogAffiliateLink(null), null);
@@ -66,3 +73,41 @@ try {
   await AIContentService.generateBlogArticle('Test', {}, {}, link);
 } finally { delete (globalThis as any).__blogFetch; }
 console.log('Blogartikel geprüft: formatierte Vorschau, sichere Links, URL-Parameter, explizite Linkwahl und API-Abweisung vor KI-Aufruf.');
+
+// Multiple articles survive independent edits and a JSON persistence/reload cycle.
+const owner = 'audit-multiple-blog-articles';
+const settings = createOnlineBusinessProject(owner);
+const brief = { h1: 'Ein Thema' } as ContentBrief;
+const article = (title: string): BlogArticle => ({ title, metaDescription: '', contentMarkdown: title, wordCount: 1, readingTimeMinutes: 1, status: 'ai_generated' });
+const first = createBlogArticleProject('Thema eins', settings, brief, article('Erster Artikel'), link);
+const firstBefore = structuredClone(first);
+const second = createBlogArticleProject('Thema zwei', settings, brief, article('Zweiter Artikel'), null);
+const variant = createBlogArticleProject(first.topic, settings, brief, article('Weitere Fassung'), 'https://example.com/other', first);
+assert.notEqual(first.id, second.id); assert.notEqual(first.id, variant.id); assert.notEqual(second.id, variant.id);
+assert.deepEqual(first, firstBefore, 'Eine neue Fassung darf den vorhandenen Artikel nicht überschreiben.');
+const emptyTopic = { ...first, blogArticle: undefined, pinterestPins: [{ id: 'old-pin' }] };
+const completed = createBlogArticleProject(first.topic, settings, brief, article('Erster Entwurf'), link, emptyTopic as any);
+assert.equal(completed.id, emptyTopic.id, 'Der erste Artikel darf das bereits angelegte Briefing ergänzen.');
+assert.deepEqual(completed.pinterestPins, emptyTopic.pinterestPins);
+assert.deepEqual(variant.pinterestPins, []); assert.deepEqual(variant.calendarItems, []);
+saveAllContentProjects([], owner);
+for (const value of [first, second, variant]) saveOrUpdateContentProject(value, owner);
+let reloaded = loadAllContentProjects(owner); assert.equal(reloaded.length, 3);
+assert.equal(reloaded.find(project => project.id === first.id)?.blogArticle?.title, 'Erster Artikel');
+assert.equal(reloaded.find(project => project.id === first.id)?.affiliateLink, link);
+saveOrUpdateContentProject({ ...second, blogArticle: article('Zweiter Artikel bearbeitet') }, owner);
+reloaded = loadAllContentProjects(owner); assert.equal(reloaded.length, 3);
+assert.equal(reloaded.find(project => project.id === first.id)?.blogArticle?.title, 'Erster Artikel');
+assert.equal(reloaded.find(project => project.id === second.id)?.blogArticle?.title, 'Zweiter Artikel bearbeitet');
+const foreign = createBlogArticleProject('Anderes Projekt', { ...settings, id: 'different-project' }, brief, article('Fremder Bereich'), null);
+const scoped = selectContentProjectScope([...reloaded, foreign], settings.id, first.id);
+assert.equal(scoped.scopedProjects.length, 3); assert.equal(scoped.activeProject?.id, first.id);
+const library = renderToStaticMarkup(React.createElement(BlogArticleLibrary, {
+  projects: scoped.scopedProjects, projectName: settings.name, selectedId: first.id, isGenerating: false, onSelect: () => {}, onCreate: () => {},
+}));
+for (const title of ['Erster Artikel', 'Zweiter Artikel bearbeitet', 'Weitere Fassung', 'Neuer Blogartikel']) assert.ok(library.includes(title));
+assert.ok(!library.includes('Fremder Bereich'));
+const newArticleDialog = renderToStaticMarkup(React.createElement(AffiliateLinkModal, { requestTopic: true, onConfirm: () => {}, onClose: () => {} }));
+assert.ok(newArticleDialog.includes('Thema des neuen Artikels')); assert.ok(newArticleDialog.includes('Affiliate-/Empfehlungslink'));
+saveAllContentProjects([], owner);
+console.log('Mehrere Blogartikel geprüft: getrennte IDs, neue Fassung ohne Überschreiben, Bearbeiten, Neuladen, Projekttrennung und Artikelauswahl.');
