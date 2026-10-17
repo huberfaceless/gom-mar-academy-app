@@ -49,6 +49,9 @@ jobs:
       - name: Blogvorschau und Empfehlungslinks prüfen
         run: bun run audit:blog
 
+      - name: Themenübergabe zwischen Inhaltsformaten prüfen
+        run: bun run audit:content-topic
+
       - name: Pinterest-Zieladressen prüfen
         run: bun run audit:pinterest-target
 
