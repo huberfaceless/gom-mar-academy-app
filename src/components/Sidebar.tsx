@@ -1,5 +1,5 @@
-import React from 'react';
-import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, MessageCircle, ChevronRight, Globe, ShieldCheck, Layers, Lock, type LucideIcon } from 'lucide-react';
+import React, { useState } from 'react';
+import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, MessageCircle, ChevronRight, Globe, ShieldCheck, Layers, Lock, PanelLeftClose, PanelLeftOpen, type LucideIcon } from 'lucide-react';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import type { AcademyTier, UserRole } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -27,6 +27,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   userTier,
 }) => {
   const { t } = useLanguage();
+  const [collapsed, setCollapsed] = useState(() => {
+    try { return window.localStorage.getItem('gommar-sidebar-collapsed') === 'true'; }
+    catch { return false; }
+  });
+  const toggleSidebar = () => {
+    const next = !collapsed;
+    setCollapsed(next);
+    try { window.localStorage.setItem('gommar-sidebar-collapsed', String(next)); }
+    catch { /* Keep the menu usable when browser storage is unavailable. */ }
+  };
+
   const menuItems: Array<{
     id: string;
     label: string;
@@ -59,12 +70,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }
 
   return (
-    <aside className="hidden md:flex md:w-64 bg-white border-r border-slate-200/90 text-slate-700 p-4 flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[74px] md:self-start md:max-h-[calc(100vh-74px)] md:overflow-y-auto scrollbar-thin">
+    <aside aria-label={t('nav.main')} className={`hidden md:flex ${collapsed ? 'md:w-20 p-2' : 'md:w-64 p-4'} bg-white border-r border-slate-200/90 text-slate-700 flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[74px] md:self-start md:max-h-[calc(100dvh-74px)] md:overflow-y-auto scrollbar-thin`}>
+      <div className="sticky top-0 z-10 bg-white pb-3">
+        <button type="button" onClick={toggleSidebar} aria-expanded={!collapsed} aria-controls="academy-sidebar-navigation"
+          aria-label={collapsed ? t('nav.expand') : t('nav.collapse')} title={collapsed ? t('nav.expand') : t('nav.collapse')}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 p-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-indigo-600">
+          {collapsed ? <PanelLeftOpen className="h-5 w-5 shrink-0" /> : <PanelLeftClose className="h-5 w-5 shrink-0" />}
+          {!collapsed && <span>{t('nav.collapse')}</span>}
+        </button>
+      </div>
       <div className="space-y-5">
         {/* Brand Card in Sidebar */}
-        <div 
+        <button type="button" aria-label={t('nav.dashboard')} title={t('nav.dashboard')}
           onClick={() => onNavigate('dashboard')}
-          className="hidden md:flex p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 items-center gap-3 transition-colors cursor-pointer"
+          className={`${collapsed ? 'p-1 justify-center' : 'p-3'} w-full text-left hidden md:flex rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 items-center gap-3 transition-colors cursor-pointer`}
         >
           <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-0.5 overflow-hidden shrink-0 shadow-xs">
             <img 
@@ -74,17 +93,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
               referrerPolicy="no-referrer"
             />
           </div>
-          <div className="overflow-hidden">
+          {!collapsed && <div className="overflow-hidden">
             <div className="flex items-center gap-1.5">
               <span className="font-black text-sm text-slate-950 truncate">GOM-MAR</span>
               <span className="bg-indigo-600 text-white font-extrabold text-[9px] px-1.5 py-0.2 rounded uppercase">{userTier}</span>
             </div>
             <p className="text-[10px] text-slate-500 font-medium truncate">Academy Platform</p>
-          </div>
-        </div>
+          </div>}
+        </button>
 
         {/* 🤖 Quick Mentor Assistant Banner */}
-        <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5 shadow-sm">
+        {collapsed ? <button type="button" onClick={onOpenFragGommar} aria-label={t('mentor.ask')} title={t('mentor.ask')}
+          className="flex w-full justify-center rounded-xl bg-indigo-50 p-3 text-indigo-600 hover:bg-indigo-100"><MessageCircle className="h-5 w-5" /></button> : <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5 shadow-sm">
           <div className="flex items-center gap-2 text-indigo-600 font-extrabold text-xs">
             <MessageCircle className="w-4 h-4 text-indigo-600" />
             <span>{t('mentor.title')}</span>
@@ -100,14 +120,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>{t('mentor.ask')}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
-        </div>
+        </div>}
 
         {/* Navigation Menu */}
         <div>
-          <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-3 mb-2">
+          {!collapsed && <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-3 mb-2">
             {t('nav.main')}
-          </p>
-          <nav className="space-y-1">
+          </p>}
+          <nav id="academy-sidebar-navigation" className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeView === item.id;
@@ -115,10 +135,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
               return (
                 <button
                   key={item.id}
+                  type="button"
                   id={`nav-item-${item.id}`}
+                  title={!hasAccess ? `${item.label} – PRO` : item.label}
+                  aria-current={isActive ? 'page' : undefined}
                   onClick={() => onNavigate(item.id)}
                   aria-label={!hasAccess ? `${item.label} – PRO` : item.label}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 cursor-pointer ${
+                  className={`w-full flex items-center ${collapsed ? 'justify-center px-2' : 'justify-between px-3.5'} py-2.5 rounded-xl font-medium text-sm transition-all duration-150 cursor-pointer ${
                     isActive
                       ? 'bg-indigo-50 text-indigo-600 font-extrabold shadow-sm'
                       : !hasAccess
@@ -128,9 +151,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
+                    {!collapsed && <span>{item.label}</span>}
                   </div>
-                  {!hasAccess ? (
+                  {!collapsed && (!hasAccess ? (
                     <span className="flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">
                       <Lock className="h-3 w-3" /> PRO
                     </span>
@@ -140,8 +163,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     }`}>
                       {item.badge}
                     </span>
-                  ) : null}
-                  {hasAccess && item.highlight && !isActive && (
+                  ) : null)}
+                  {!collapsed && hasAccess && item.highlight && !isActive && (
                     <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
                   )}
                 </button>
@@ -152,7 +175,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Progress Footer widget */}
-      <div className="pt-4 mt-6 border-t border-slate-100 space-y-2">
+      {!collapsed && <div className="pt-4 mt-6 border-t border-slate-100 space-y-2">
         <div className="flex items-center justify-between text-xs font-semibold">
           <span className="text-slate-500">{t('progress.total')}</span>
           <span className="text-indigo-600 font-extrabold">{progressPercent}%</span>
@@ -166,7 +189,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <p className="text-[10px] text-slate-400 text-center font-medium">
           {t('progress.tasks', { completed: completedTasksCount, total: totalTasksCount })}
         </p>
-      </div>
+      </div>}
     </aside>
   );
 };

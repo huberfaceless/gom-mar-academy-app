@@ -556,7 +556,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen w-full max-w-full overflow-x-hidden ${themeClass} flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-300 relative`}>
+    <div className={`min-h-screen w-full max-w-full overflow-x-clip ${themeClass} flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-300 relative`}>
       {/* Header */}
       <Header
         user={user}

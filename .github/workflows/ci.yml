@@ -73,6 +73,9 @@ jobs:
       - name: Academy-Lokalisierung pruefen
         run: bun run audit:academy
 
+      - name: Einklappbares Seitenmenü prüfen
+        run: bun run audit:sidebar
+
       - name: Academy-Navigation pruefen
         run: bun run audit:academy-navigation
 
