@@ -44,6 +44,8 @@ import { PinterestImagePickerModal } from './PinterestImagePickerModal';
 
 interface PinterestPinsTabProps {
   projectTargetUrl?: string | null;
+  onGenerate?: () => void;
+  isGenerating?: boolean;
   pins: PinterestPin[];
   onChange: (updatedPins: PinterestPin[]) => void;
   onOpenInstagram: () => void;
@@ -92,6 +94,8 @@ const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
 
 export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
   projectTargetUrl,
+  onGenerate,
+  isGenerating = false,
   pins,
   onChange,
   onOpenInstagram,
@@ -179,7 +183,11 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
       <div className="p-12 text-center bg-white rounded-2xl border border-slate-200 shadow-xs">
         <Pin className="w-12 h-12 text-slate-300 mx-auto mb-3" />
         <h3 className="text-base font-bold text-slate-700">Noch keine Pinterest Pins vorhanden</h3>
-        <p className="text-xs text-slate-500 mt-1">Erstelle zuerst ein Content-Projekt, um 5 psychologische Pin-Grafiken zu erzeugen.</p>
+        <p className="text-xs text-slate-500 mt-1">{onGenerate ? <>Erstelle 5 Pins zum ausgewählten Thema: <strong>{topic}</strong></> : 'Erstelle zuerst ein Content-Projekt, um 5 Pinterest-Pins zu erzeugen.'}</p>
+        {onGenerate && <button type="button" onClick={onGenerate} disabled={isGenerating}
+          className="mt-4 rounded-xl bg-rose-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-rose-700 disabled:opacity-50">
+          {isGenerating ? 'Pins werden erstellt…' : 'Pinterest-Pins zu diesem Thema erstellen'}
+        </button>}
       </div>
     );
   }

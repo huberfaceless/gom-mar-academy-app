@@ -191,6 +191,13 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   );
   const suggestedTopics = getSuggestedTopics(activeProjectSettings);
 
+  // Restore the selected article's topic without overwriting an independently edited draft.
+  useEffect(() => {
+    setTopicInput(activeContentProject?.topic || '');
+    setCustomAngleInput('');
+    setErrorMsg(null);
+  }, [activeProjectSettings.id, activeContentProject?.id, activeContentProject?.topic]);
+
   // Persist whenever activeContentProject changes
   const handleUpdateActiveProject = async (updated: CentralContentProject): Promise<boolean> => {
     setActiveContentProject(updated);
@@ -604,6 +611,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
+              aria-label="Thema für den Inhaltsablauf"
               placeholder={`z. B. ${suggestedTopics[0]}...`}
               value={topicInput}
               onChange={(e) => setTopicInput(e.target.value)}
@@ -682,6 +690,9 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
       {activeContentProject && (
         <div className="space-y-4">
+          <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
+            Aktuelles Thema: <strong>{activeContentProject.topic}</strong>. Die folgenden Schritte verwenden dieses Thema.
+          </p>
           <div className="bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
               <button
@@ -838,6 +849,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
           {activeTab === 'pinterest' && (
             <PinterestPinsTab
+              onGenerate={handleGeneratePinterest}
+              isGenerating={isGeneratingPinterest}
               projectTargetUrl={activeProjectSettings.defaultTargetUrl}
               pins={activeContentProject.pinterestPins || []}
               onChange={(updatedPins) => {
