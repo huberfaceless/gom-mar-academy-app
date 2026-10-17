@@ -654,7 +654,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                   onClick={() => {
                     setTopicInput(topic);
                   }}
-                  className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white transition-all text-left truncate max-w-md"
+                  className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white transition-all text-left w-full min-w-0 whitespace-normal break-words"
                 >
                   ⚡ {topic}
                 </button>
