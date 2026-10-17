@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SidebarTooltip } from './SidebarTooltip';
 import { LayoutDashboard, GraduationCap, Mail, Wrench, Trophy, User, Settings, MessageCircle, ChevronRight, Globe, ShieldCheck, Layers, Lock, PanelLeftClose, PanelLeftOpen, type LucideIcon } from 'lucide-react';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
 import type { AcademyTier, UserRole } from '../types';
@@ -72,16 +73,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside aria-label={t('nav.main')} className={`hidden md:flex ${collapsed ? 'md:w-20 p-2' : 'md:w-64 p-4'} bg-white border-r border-slate-200/90 text-slate-700 flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[74px] md:self-start md:max-h-[calc(100dvh-74px)] md:overflow-y-auto scrollbar-thin`}>
       <div className="sticky top-0 z-10 bg-white pb-3">
+        <SidebarTooltip enabled={collapsed} label={t('nav.expand')}>
         <button type="button" onClick={toggleSidebar} aria-expanded={!collapsed} aria-controls="academy-sidebar-navigation"
-          aria-label={collapsed ? t('nav.expand') : t('nav.collapse')} title={collapsed ? t('nav.expand') : t('nav.collapse')}
+          aria-label={collapsed ? t('nav.expand') : t('nav.collapse')} title={collapsed ? undefined : t('nav.collapse')}
           className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 p-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-indigo-600">
           {collapsed ? <PanelLeftOpen className="h-5 w-5 shrink-0" /> : <PanelLeftClose className="h-5 w-5 shrink-0" />}
           {!collapsed && <span>{t('nav.collapse')}</span>}
         </button>
+        </SidebarTooltip>
       </div>
       <div className="space-y-5">
         {/* Brand Card in Sidebar */}
-        <button type="button" aria-label={t('nav.dashboard')} title={t('nav.dashboard')}
+        <SidebarTooltip enabled={collapsed} label={t('nav.dashboard')}>
+        <button type="button" aria-label={t('nav.dashboard')} title={collapsed ? undefined : t('nav.dashboard')}
           onClick={() => onNavigate('dashboard')}
           className={`${collapsed ? 'p-1 justify-center' : 'p-3'} w-full text-left hidden md:flex rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 items-center gap-3 transition-colors cursor-pointer`}
         >
@@ -101,10 +105,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <p className="text-[10px] text-slate-500 font-medium truncate">Academy Platform</p>
           </div>}
         </button>
+        </SidebarTooltip>
 
         {/* 🤖 Quick Mentor Assistant Banner */}
-        {collapsed ? <button type="button" onClick={onOpenFragGommar} aria-label={t('mentor.ask')} title={t('mentor.ask')}
-          className="flex w-full justify-center rounded-xl bg-indigo-50 p-3 text-indigo-600 hover:bg-indigo-100"><MessageCircle className="h-5 w-5" /></button> : <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5 shadow-sm">
+        {collapsed ? <SidebarTooltip enabled label={t('mentor.ask')}><button type="button" onClick={onOpenFragGommar} aria-label={t('mentor.ask')}
+          className="flex w-full justify-center rounded-xl bg-indigo-50 p-3 text-indigo-600 hover:bg-indigo-100"><MessageCircle className="h-5 w-5" /></button></SidebarTooltip> : <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5 shadow-sm">
           <div className="flex items-center gap-2 text-indigo-600 font-extrabold text-xs">
             <MessageCircle className="w-4 h-4 text-indigo-600" />
             <span>{t('mentor.title')}</span>
@@ -133,11 +138,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
               const isActive = activeView === item.id;
               const hasAccess = canAccessView(item.id, userTier, userRole);
               return (
+                <SidebarTooltip key={item.id} enabled={collapsed} label={!hasAccess ? `${item.label} – PRO` : item.label}>
                 <button
-                  key={item.id}
                   type="button"
                   id={`nav-item-${item.id}`}
-                  title={!hasAccess ? `${item.label} – PRO` : item.label}
+                  title={collapsed ? undefined : !hasAccess ? `${item.label} – PRO` : item.label}
                   aria-current={isActive ? 'page' : undefined}
                   onClick={() => onNavigate(item.id)}
                   aria-label={!hasAccess ? `${item.label} – PRO` : item.label}
@@ -168,6 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
                   )}
                 </button>
+                </SidebarTooltip>
               );
             })}
           </nav>
