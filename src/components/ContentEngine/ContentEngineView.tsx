@@ -694,7 +694,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
             Aktuelles Thema: <strong>{activeContentProject.topic}</strong>. Die folgenden Schritte verwenden dieses Thema.
           </p>
           <div className="bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-1.5 w-full">
               <button
                 type="button"
                 onClick={() => setActiveTab('brief')}

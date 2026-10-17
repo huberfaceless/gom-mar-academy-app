@@ -391,10 +391,10 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       )}
 
       {activeSubTab === 'video' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
           
           {/* Left Column: Script Narrative & Visual Cues (7 cols) */}
-          <div className="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-6">
+          <div className="min-w-0 break-words xl:col-span-7 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-6">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
                 <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
@@ -550,7 +550,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
           </div>
 
           {/* Right Column: 16:9 Thumbnail Live Canvas & SEO Metadata (5 cols) */}
-          <div className="lg:col-span-5 space-y-5">
+          <div className="min-w-0 break-words xl:col-span-5 space-y-5">
             
             {/* 1. Live 16:9 HD Thumbnail Generator */}
             <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-4">
@@ -706,7 +706,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         </div>
       ) : (
         /* YouTube Shorts Sub-Tab (3 Vertical Cards with 1080x1920 Cover Downloader) */
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           {shorts.map((short, idx) => (
             <div key={short.id || idx} className="bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col justify-between space-y-4">
               <div className="space-y-3.5">
