@@ -19,6 +19,7 @@ import { InstagramPublicationUncertainError } from '../../server/instagramPublis
 import { publishInstagramImage } from '../../server/instagramConnectionAdmin.js';
 import { runEmailCampaignDeliveries } from '../../server/emailCampaignDeliveryAdmin.js';
 import { PublishingAccessDeniedError, requirePublishingMember } from '../../server/publishingMemberAccess.js';
+import { logPublishingSweepFailure } from '../../server/publishingMonitoring.js';
 
 
 export interface SchedulerExecutionResult {
@@ -325,8 +326,7 @@ export class ServerSchedulerWorker {
         }
       }
     } catch (err: unknown) {
-      const errMsg = err instanceof Error ? err.message : String(err);
-      console.warn('[ServerSchedulerWorker] Warning during scheduler runTick:', errMsg);
+      logPublishingSweepFailure();
     } finally {
       try {
         result.emailDelivery = await runEmailCampaignDeliveries(process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie');

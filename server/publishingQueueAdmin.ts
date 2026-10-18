@@ -1,6 +1,7 @@
 import { GoogleAuth } from 'google-auth-library';
 import { PublishingJob } from '../src/types/contentEngine.js';
 import { preparePublishingJobRetry, PublishingJobActionError } from './publishingJobRetry.js';
+import { logPublishingOutcome } from './publishingMonitoring.js';
 
 type FirestoreValue = {
   nullValue?: null;
@@ -162,6 +163,7 @@ export const claimServerPublishingJob = async (
   if (attempts > (job.maxAttempts || 3)) {
     const failedJob = { ...job, status: 'FAILED' as const, updatedAt: new Date().toISOString() };
     await replaceServerPublishingJob(failedJob, updateTime);
+    logPublishingOutcome(failedJob);
     return { success: false, reason: 'max_attempts_exceeded', job: failedJob };
   }
   const now = new Date().toISOString();
@@ -187,6 +189,7 @@ export const claimServerPublishingJob = async (
 
 export const saveServerPublishingJob = async (job: PublishingJob, expectedUpdateTime?: string): Promise<void> => {
   await replaceServerPublishingJob(job, expectedUpdateTime);
+  logPublishingOutcome(job);
 };
 
 export const retryServerPublishingJob = async (userId: string, jobId: string, isAdmin = false): Promise<void> => {

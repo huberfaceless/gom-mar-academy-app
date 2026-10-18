@@ -31,6 +31,7 @@
     "audit:lessons": "tsx scripts/auditLessonIntegrity.ts",
     "audit:publishing-rules": "npx --yes --package firebase-tools@14.12.1 firebase emulators:exec --only firestore --project demo-gommar-rules --config firebase.rules-test.json \"node --import tsx scripts/auditPublishingJobRules.ts\"",
     "audit:publishing-retry": "node --import tsx scripts/auditPublishingJobRetry.ts",
+    "audit:publishing-monitoring": "node --import tsx scripts/auditPublishingMonitoring.ts",
     "audit:blog": "node --import tsx scripts/auditBlogArticle.ts",
     "audit:pinterest-target": "node --import tsx scripts/auditPinterestTargetUrl.ts",
     "audit:content-topic": "node --import tsx scripts/auditContentTopicContinuity.ts",
