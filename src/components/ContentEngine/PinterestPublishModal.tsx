@@ -153,6 +153,8 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
         url: res.publishedPin.pin_url,
       });
       onPinPublished({
+        pinterestBoardId: selectedBoardId,
+        board: boards.find(board => board.id === selectedBoardId)?.name || pin.board,
         status: 'published',
         publishedPinId: res.publishedPin.id,
         publishedUrl: res.publishedPin.pin_url,

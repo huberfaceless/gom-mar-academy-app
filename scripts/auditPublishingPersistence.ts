@@ -267,6 +267,38 @@ assert.equal(documents['publishingJobs/job'].scheduledAt, oldDate);
 assert.equal(documents['schedulerJobs/scheduler'].scheduledAt, oldDate);
 assert.equal(cachedPublishing[0].scheduledAt, oldDate);
 assert.equal(cachedScheduler[0].scheduledAt, oldDate);
+// Ziel-Pinnwand am bestehenden Auftrag ändern, ohne Worker-Zustand zurückzusetzen.
+const resetPinterestJob = () => {
+  resetSchedule();
+  Object.assign(documents['publishingJobs/job'], { platform: 'PINTEREST', contentType: 'PIN', attempts: 2 });
+  cachedPublishing = [structuredClone(documents['publishingJobs/job'])];
+};
+resetPinterestJob();
+await scheduleService.updatePinterestJobBoard('owner', 'job', 'board-42', 'Gesund ab 50');
+assert.equal(documents['publishingJobs/job'].payload.boardId, 'board-42');
+assert.equal(documents['publishingJobs/job'].payload.boardName, 'Gesund ab 50');
+assert.equal(documents['publishingJobs/job'].payload.title, 'Test');
+assert.equal(documents['publishingJobs/job'].attempts, 2);
+assert.equal(documents['publishingJobs/job'].nextAttemptAt, oldDate);
+assert.equal(cachedPublishing[0].payload.boardId, 'board-42');
+for (const changes of [
+  { status: 'PUBLISHING' }, { status: 'PUBLISHED' }, { status: 'FAILED' }, { status: 'CANCELLED' },
+  { lockedAt: oldDate }, { lockedBy: 'worker' }, { lockExpiresAt: newDate },
+  { publicationUncertain: true }, { externalId: 'published' }, { publishedAt: oldDate },
+  { userId: 'other-user' }, { platform: 'YOUTUBE' },
+]) {
+  resetPinterestJob();
+  Object.assign(documents['publishingJobs/job'], changes);
+  const before = structuredClone(documents);
+  await assert.rejects(scheduleService.updatePinterestJobBoard('owner', 'job', 'board-42', 'Gesund ab 50'));
+  assert.deepEqual(documents, before);
+  assert.equal(cachedPublishing[0].payload.boardId, undefined);
+}
+resetPinterestJob();
+failCommit = true;
+await assert.rejects(scheduleService.updatePinterestJobBoard('owner', 'job', 'board-42', 'Gesund ab 50'), /Cloud-Fehler/);
+assert.equal(cachedPublishing[0].payload.boardId, undefined);
+assert.equal(documents['publishingJobs/job'].payload.boardId, undefined);
 delete (globalThis as any).__publishingScheduleAudit;
 
 console.log('Publishing-Persistenz geprüft: Terminänderung, gemeinsame Cloud-Aktualisierung, Statusschutz und Fehlerfälle erfolgreich.');
@@ -291,3 +323,43 @@ assert.deepEqual(selectContentProjectScope(scopeFixture, 'empty').scopedProjects
 assert.equal(selectContentProjectScope(scopeFixture.filter(project => project.id !== 'vital-b'), 'vital50', 'vital-b').activeProject?.id, 'vital-a');
 assert.deepEqual(scopeFixture, scopeBefore);
 console.log('Kategorieauswahl geprüft: Vital50 und Online Business getrennt, leere Bereiche und gelöschte Auswahl berücksichtigt.');
+
+// Den echten Einreihungsservice ausführen: fehlende Pinnwand vor jedem Cloud-Zugriff stoppen.
+const queueWrites: any[] = [];
+let queueReads = 0;
+(globalThis as any).__pinterestQueueAudit = {
+  getPublishingJobs: async () => { queueReads++; return []; },
+  savePublishingJob: async (_user: string, job: any) => { queueWrites.push(job); },
+  saveSchedulerJob: async (_user: string, job: any) => { queueWrites.push(job); },
+};
+const queueBundle = await build({
+  entryPoints: ['src/services/publishingService.ts'], bundle: true, write: false, format: 'esm', platform: 'node',
+  plugins: [{ name: 'isolated-pinterest-queue', setup(builder) {
+    const mocks: Record<string, string> = {
+      './firestoreContentService': 'export const FirestoreContentService = globalThis.__pinterestQueueAudit;',
+      './pinterestService': 'export const pinterestService = {};',
+      'firebase/firestore': 'export const doc = () => {}; export const runTransaction = () => {};',
+      '../firebase/config': 'export const db = {}; export const isFirestoreOperational = () => true; export const handleFirestoreError = () => {};',
+      '../utils/contentStorage': 'export const loadAllPublishingJobs = () => []; export const saveAllPublishingJobs = () => {};',
+    };
+    builder.onResolve({ filter: /.*/ }, args => args.path in mocks ? { path: args.path, namespace: 'queue-audit' } : undefined);
+    builder.onLoad({ filter: /.*/, namespace: 'queue-audit' }, args => ({ contents: mocks[args.path], loader: 'js' }));
+  } }],
+});
+const { PublishingService: queueService } = await import(`data:text/javascript;base64,${Buffer.from(queueBundle.outputFiles[0].text).toString('base64')}`);
+const pinParams = { projectId: 'project', contentProjectId: 'content', contentId: 'pin', platform: 'PINTEREST', contentType: 'PIN', scheduledAt: newDate };
+for (const boardId of [undefined, null, '', '   ', 42]) {
+  await assert.rejects(queueService.enqueueJob('owner', { ...pinParams, payload: { boardId } }), /Ziel-Pinnwand/);
+}
+assert.equal(queueReads, 0);
+assert.equal(queueWrites.length, 0);
+await queueService.enqueueJob('owner', { ...pinParams, payload: { title: 'Testpin', boardId: 'board-42', boardName: 'Gesund ab 50' } });
+assert.equal(queueReads, 1);
+assert.equal(queueWrites.length, 2);
+assert.equal(queueWrites[0].payload.boardId, 'board-42');
+assert.equal(queueWrites[1].publishingJobId, queueWrites[0].id);
+delete (globalThis as any).__pinterestQueueAudit;
+assert.match(calendar, /handlePinterestBoardChange/);
+assert.match(calendar, /await FirestoreContentService.updatePinterestJobBoard/);
+assert.match(calendar, /pinterestBoardId: board.id/);
+console.log('Pinterest-Pinnwand geprüft: Auswahl, Queue-Payload, atomare Korrektur und Schutz laufender Aufträge erfolgreich.');

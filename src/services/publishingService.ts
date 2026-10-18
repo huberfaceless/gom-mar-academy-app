@@ -341,7 +341,12 @@ export class PublishingService {
     }
   ): Promise<{ publishingJob: PublishingJob; schedulerJob: SchedulerJob }> {
     const isPinterestPin = params.platform === 'PINTEREST' && params.contentType === 'PIN';
-    if (isPinterestPin) resolvePinterestTargetUrl(params.payload?.targetUrl);
+    if (isPinterestPin) {
+      if (typeof params.payload?.boardId !== 'string' || !params.payload.boardId.trim()) {
+        throw new Error('Bitte wähle vor dem Einplanen eine Ziel-Pinnwand auf Pinterest aus.');
+      }
+      resolvePinterestTargetUrl(params.payload?.targetUrl);
+    }
     const isInstagramPost = params.platform === 'INSTAGRAM'
       && params.contentType === 'INSTAGRAM_POST'
       && typeof params.payload?.imageBase64 === 'string'
