@@ -1,4 +1,5 @@
 import { firestoreStripeDeliveryStore, processStripeDelivery } from './server/stripeWebhookDelivery.js';
+import { createBrowserErrorRouter } from './server/browserErrorMonitoring.js';
 import { PRO_SALES_COUNTRIES, isProSalesCountry } from './src/config/proSalesPolicy.js';
 import { academyPublicUrl, validateDeploymentEnvironment } from './server/deploymentEnvironment.js';
 import { sendProContractConfirmation } from './server/proContractConfirmation.js';
@@ -298,6 +299,13 @@ async function startServer() {
       res.status(400).json({ error: 'Stripe-Webhook konnte nicht verarbeitet werden.' });
     }
   });
+
+  // Dedicated small-body parser runs before the general API parser.
+  app.use('/api/client-errors', createBrowserErrorRouter({
+    publicOrigin: ACADEMY_PUBLIC_URL,
+    authenticate: (req, res, next) => { void requireAuthenticatedMember(req, res, next); },
+    memberId: (req) => (req as FirebaseRequest).firebaseUser?.sub,
+  }));
 
   app.use(express.json({
     limit: '8mb',

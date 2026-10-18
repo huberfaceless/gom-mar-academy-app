@@ -49,6 +49,9 @@ jobs:
       - name: Warnmeldungen für Veröffentlichungsergebnisse prüfen
         run: bun run audit:publishing-monitoring
 
+      - name: Browserfehler und Auffangansicht prüfen
+        run: bun run audit:browser-monitoring
+
       - name: Blogvorschau und Empfehlungslinks prüfen
         run: bun run audit:blog
 

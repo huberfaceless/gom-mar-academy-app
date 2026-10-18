@@ -38,6 +38,8 @@ import {
 } from './utils/membershipAccess';
 import { loadEmailCampaigns, saveEmailCampaigns } from './services/emailCampaignsService';
 import { loadCompletedProCheckout } from './services/stripePaymentService';
+import { AppErrorBoundary } from './components/AppErrorBoundary';
+import { setBrowserErrorView } from './services/browserErrorMonitoring';
 
 const DashboardView = lazy(() => import('./components/DashboardView').then((module) => ({ default: module.DashboardView })));
 const AcademyView = lazy(() => import('./components/AcademyView').then((module) => ({ default: module.AcademyView })));
@@ -143,6 +145,7 @@ export default function App() {
     return () => { cancelled = true; };
   }, [firebaseUser, legacyCampaignState, user.role, user.tier]);
   const [activeView, setActiveView] = useState<string>('dashboard');
+  useEffect(() => { setBrowserErrorView(activeView); }, [activeView]);
   const [membershipGate, setMembershipGate] = useState<{
     isOpen: boolean;
     mode: 'access' | 'change';
@@ -613,6 +616,7 @@ export default function App() {
               </button>
             </div>
           )}
+          <AppErrorBoundary key={activeView} view={activeView} language={language} onHome={() => handleNavigate('dashboard')}>
           <Suspense fallback={<ViewLoadingFallback />}>
           {activeView === 'dashboard' && (
             <DashboardView
@@ -719,6 +723,7 @@ export default function App() {
             />
           )}
           </Suspense>
+          </AppErrorBoundary>
         </main>
       </div>
 
