@@ -46,6 +46,9 @@ jobs:
       - name: Geschützte Veröffentlichungswiederholungen prüfen
         run: bun run audit:publishing-retry
 
+      - name: Warnmeldungen für Veröffentlichungsergebnisse prüfen
+        run: bun run audit:publishing-monitoring
+
       - name: Blogvorschau und Empfehlungslinks prüfen
         run: bun run audit:blog
 
