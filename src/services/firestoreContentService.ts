@@ -243,6 +243,29 @@ export class FirestoreContentService {
     saveAllPublishingJobs(current, userId);
   }
 
+  static async updatePinterestJobBoard(userId: string, jobId: string, boardId: string, boardName: string): Promise<void> {
+    if (!userId || !boardId.trim()) throw new Error('Bitte wähle eine Ziel-Pinnwand auf Pinterest aus.');
+    const updatedAt = new Date().toISOString();
+    let payload: PublishingJob['payload'];
+    await firestoreWithTimeout(runTransaction(db, async transaction => {
+      const jobRef = doc(db, COLLECTION_PUBLISHING_JOBS, jobId);
+      const snapshot = await transaction.get(jobRef);
+      if (!snapshot.exists()) throw new Error('Der Veröffentlichungsauftrag wurde nicht gefunden.');
+      const job = snapshot.data() as PublishingJob;
+      if (job.userId !== userId) throw new Error('Dieser Veröffentlichungsauftrag gehört nicht zu deinem Konto.');
+      if (job.platform !== 'PINTEREST' || job.contentType !== 'PIN') throw new Error('Dieser Auftrag ist kein Pinterest-Pin.');
+      if (!['DRAFT', 'SCHEDULED', 'NEEDS_REVIEW'].includes(job.status)
+        || job.publicationUncertain || job.externalId || job.publishedAt
+        || job.lockedAt || job.lockedBy || job.lockExpiresAt) {
+        throw new Error('Nur wartende, unveröffentlichte Pinterest-Aufträge können geändert werden. Bitte aktualisiere die Ansicht.');
+      }
+      payload = { ...job.payload, boardId: boardId.trim(), boardName };
+      transaction.update(jobRef, { payload, updatedAt });
+    }), FIRESTORE_WRITE_TIMEOUT_MS);
+    saveAllPublishingJobs(loadAllPublishingJobs(userId).map(job => job.id === jobId
+      ? { ...job, payload, updatedAt } : job), userId);
+  }
+
   static async reschedulePublishingJob(userId: string, jobId: string, scheduledAt: string): Promise<void> {
     const date = new Date(scheduledAt);
     if (!userId || !Number.isFinite(date.getTime())) {

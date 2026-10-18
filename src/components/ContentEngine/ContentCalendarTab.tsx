@@ -29,6 +29,7 @@ import {
   CentralContentProject, 
   ContentStatus, 
   PublishingJob, 
+  PinterestBoard,
   SchedulerJob, 
   toCanonicalStatus 
 } from '../../types/contentEngine';
@@ -148,6 +149,52 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const [schedulerServerStatus, setSchedulerServerStatus] = useState<{ active?: boolean; systemTime?: string; lastExecution?: any } | null>(null);
   const [isTriggeringSweep, setIsTriggeringSweep] = useState<boolean>(false);
   const [selectedLogJob, setSelectedLogJob] = useState<PublishingJob | null>(null);
+
+  const [pinterestBoards, setPinterestBoards] = useState<PinterestBoard[]>([]);
+  const [loadingPinterestBoards, setLoadingPinterestBoards] = useState(false);
+  const [savingBoardId, setSavingBoardId] = useState<string | null>(null);
+
+  const loadPinterestBoards = async () => {
+    setLoadingPinterestBoards(true);
+    const result = await pinterestService.getBoards();
+    setLoadingPinterestBoards(false);
+    if (!result.success) {
+      setActionNotice({ text: result.error || 'Pinterest-Pinnwände konnten nicht geladen werden. Bitte verbinde Pinterest im Bereich Pinterest-Pins.', type: 'warning' });
+      return;
+    }
+    setPinterestBoards(result.boards);
+    if (!result.boards.length) {
+      setActionNotice({ text: 'Keine Pinterest-Pinnwand gefunden. Erstelle zuerst eine Pinnwand auf Pinterest und lade die Liste erneut.', type: 'info' });
+    }
+  };
+
+  const handlePinterestBoardChange = async (itemId: string, boardId: string) => {
+    const board = pinterestBoards.find(candidate => candidate.id === boardId);
+    if (!board || savingBoardId) return;
+    setSavingBoardId(itemId);
+    try {
+      const waitingJobs = publishingJobs.filter(job => job.contentId === itemId && ['DRAFT', 'SCHEDULED', 'NEEDS_REVIEW'].includes(job.status));
+      for (const job of waitingJobs) {
+        await FirestoreContentService.updatePinterestJobBoard(userId, job.id, board.id, board.name);
+      }
+      const saved = await onUpdateProject({
+        ...project,
+        pinterestPins: project.pinterestPins.map((pin, index) => (pin.id || `pin_${index}`) === itemId
+          ? { ...pin, pinterestBoardId: board.id, board: board.name } : pin),
+      });
+      await loadJobs();
+      if (saved === false) throw new Error('Die Pinnwand konnte im Inhaltsprojekt nicht gespeichert werden. Bitte erneut versuchen.');
+      const failedJob = publishingJobs.some(job => job.contentId === itemId && job.status === 'FAILED');
+      setActionNotice({ text: failedJob && !waitingJobs.length
+        ? 'Pinnwand gespeichert. Entferne den fehlgeschlagenen Auftrag unten mit dem Papierkorb und reihe den Pin anschließend erneut ein.'
+        : 'Pinnwand gespeichert' + (waitingJobs.length ? ' und im wartenden Auftrag aktualisiert.' : '. Der Pin kann jetzt eingeplant werden.'), type: 'success' });
+    } catch (error) {
+      setActionNotice({ text: error instanceof Error ? error.message : 'Die Pinnwand konnte nicht gespeichert werden.', type: 'warning' });
+      await loadJobs();
+    } finally {
+      setSavingBoardId(null);
+    }
+  };
 
   const jobsRequestId = useRef(0);
 
@@ -394,6 +441,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   };
 
   const preparePayload = async (item: typeof items[0]): Promise<PublishingJob['payload']> => {
+    if (item.platform === 'PINTEREST' && !item.payloadData?.boardId?.trim()) {
+      throw new Error('Bitte wähle vor dem Einplanen die Ziel-Pinnwand für diesen Pinterest-Pin aus.');
+    }
     if (item.platform !== 'INSTAGRAM') return item.payloadData;
     const sourceIndex = item.payloadData?.metadata?.sourcePinIndex;
     const sourcePin = typeof sourceIndex === 'number' ? project.pinterestPins[sourceIndex] : undefined;
@@ -420,6 +470,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       });
       return;
     }
+
+    if (savingBoardId) return;
 
     try {
       const { publishingJob } = await PublishingService.enqueueJob(user.uid, {
@@ -469,6 +521,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   // Approve all & enqueue all
   const handleApproveAndEnqueueAll = async () => {
+    if (savingBoardId || items.some(item => item.platform === 'PINTEREST' && !item.payloadData?.boardId?.trim())) {
+      setActionNotice({ text: 'Bitte wähle zuerst für jeden Pinterest-Pin eine Ziel-Pinnwand und warte, bis sie gespeichert ist.', type: 'warning' });
+      return;
+    }
     const updated = { ...project };
     if (updated.blogArticle) updated.blogArticle.status = 'approved';
     if (updated.pinterestPins) {
@@ -598,6 +654,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         text: `${selectedItem.platformLabel} kann noch nicht automatisch eingeplant werden.`,
         type: 'info',
       });
+      return;
+    }
+    if (selectedItem?.platform === 'PINTEREST'
+      && ['APPROVED', 'SCHEDULED'].includes(toCanonicalStatus(newStatus))
+      && !selectedItem.payloadData?.boardId?.trim()) {
+      setActionNotice({ text: 'Bitte wähle zuerst eine Ziel-Pinnwand für diesen Pinterest-Pin.', type: 'warning' });
       return;
     }
     const updated = { ...project };
@@ -787,6 +849,16 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         </button>
       </div>
 
+      {project.pinterestPins?.length > 0 && (
+        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4">
+          <p className="flex-1 text-sm text-slate-700">Wähle bei jedem Pinterest-Pin die Ziel-Pinnwand, bevor du ihn einplanst.</p>
+          <button type="button" onClick={() => void loadPinterestBoards()} disabled={loadingPinterestBoards || Boolean(savingBoardId)}
+            className="rounded-xl border border-rose-300 bg-white px-3 py-2 text-sm font-bold text-rose-700 disabled:opacity-50">
+            {loadingPinterestBoards ? 'Pinnwände werden geladen …' : 'Pinterest-Pinnwände laden'}
+          </button>
+        </div>
+      )}
+
       {/* Content Assets List */}
       <div className="space-y-3">
         {filteredItems.map((item) => {
@@ -830,6 +902,25 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   )}
                 </div>
               </div>
+
+              {item.platform === 'PINTEREST' && (
+                <label className="flex flex-col gap-1 text-xs font-semibold text-slate-700">
+                  Ziel-Pinnwand auf Pinterest
+                  <select
+                    value={item.payloadData.boardId || ''}
+                    disabled={loadingPinterestBoards || Boolean(savingBoardId) || Boolean(matchingJob && (matchingJob.status === 'PUBLISHING' || matchingJob.status === 'PUBLISHED' || matchingJob.publicationUncertain))}
+                    onChange={event => void handlePinterestBoardChange(item.id, event.target.value)}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm disabled:opacity-50"
+                  >
+                    <option value="" disabled>Bitte Pinnwände laden und auswählen</option>
+                    {item.payloadData.boardId && !pinterestBoards.some(board => board.id === item.payloadData.boardId) && (
+                      <option value={item.payloadData.boardId}>{item.payloadData.boardName || 'Gespeicherte Pinnwand'}</option>
+                    )}
+                    {pinterestBoards.map(board => <option key={board.id} value={board.id}>{board.name}</option>)}
+                  </select>
+                  {savingBoardId === item.id && <span role="status">Pinnwand wird gespeichert …</span>}
+                </label>
+              )}
 
               {/* Status & Date Controls */}
               <div className="flex min-w-0 flex-wrap items-center justify-end gap-2.5 border-t border-slate-100 pt-3">
