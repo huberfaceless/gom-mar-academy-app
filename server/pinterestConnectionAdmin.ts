@@ -1,3 +1,4 @@
+import { parsePinterestEnvironment, pinterestApiBase, type PinterestEnvironment } from '../src/utils/pinterestEnvironment.js';
 import { GoogleAuth } from 'google-auth-library';
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
@@ -44,8 +45,10 @@ const getEncryptionSecret = () => {
 const getRedirectUri = () => process.env.PINTEREST_OAUTH_REDIRECT_URI?.trim()
   || 'https://academy.gomo-marketing.at/api/pinterest/oauth/callback';
 
-const documentUrl = (projectId: string, userId: string) =>
-  `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/academyPinterestConnections/${encodeURIComponent(userId)}`;
+const documentUrl = (projectId: string, userId: string, environment: PinterestEnvironment) => {
+  const collection = environment === 'sandbox' ? 'academyPinterestSandboxConnections' : 'academyPinterestConnections';
+  return `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/${collection}/${encodeURIComponent(userId)}`;
+};
 
 const getGoogleAccessToken = async () => {
   const client = await googleAuth.getClient();
@@ -54,8 +57,8 @@ const getGoogleAccessToken = async () => {
   return token.token;
 };
 
-const loadDocument = async (projectId: string, userId: string): Promise<FirestoreDocument> => {
-  const response = await fetch(documentUrl(projectId, userId), {
+const loadDocument = async (projectId: string, userId: string, environment: PinterestEnvironment): Promise<FirestoreDocument> => {
+  const response = await fetch(documentUrl(projectId, userId, environment), {
     headers: { Authorization: `Bearer ${await getGoogleAccessToken()}` },
   });
   if (response.status === 404) throw new Error('Pinterest ist noch nicht verbunden.');
@@ -78,8 +81,8 @@ const decrypt = (encrypted: string, iv: string, tag: string) => {
 
 const stateSignature = (payload: string) => createHmac('sha256', getEncryptionSecret()).update(payload).digest('base64url');
 
-const createState = (userId: string, nonce: string) => {
-  const payload = Buffer.from(JSON.stringify({ userId, nonce, createdAt: Date.now() })).toString('base64url');
+const createState = (userId: string, nonce: string, environment: PinterestEnvironment) => {
+  const payload = Buffer.from(JSON.stringify({ userId, nonce, environment, createdAt: Date.now() })).toString('base64url');
   return `${payload}.${stateSignature(payload)}`;
 };
 
@@ -92,15 +95,15 @@ const validateState = (state: string, cookieNonce: string) => {
   if (actualBuffer.length !== expectedBuffer.length || !timingSafeEqual(actualBuffer, expectedBuffer)) {
     throw new Error('Die Pinterest-Anmeldung konnte nicht verifiziert werden.');
   }
-  const decoded = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as { userId?: string; nonce?: string; createdAt?: number };
+  const decoded = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as { userId?: string; nonce?: string; createdAt?: number; environment?: PinterestEnvironment };
   if (!decoded.userId || !decoded.nonce || decoded.nonce !== cookieNonce || !decoded.createdAt || Date.now() - decoded.createdAt > oauthStateMaxAgeMs) {
     throw new Error('Die Pinterest-Anmeldung ist abgelaufen. Bitte erneut verbinden.');
   }
-  return decoded.userId;
+  return { userId: decoded.userId, environment: parsePinterestEnvironment(decoded.environment) };
 };
 
-const requestToken = async (parameters: URLSearchParams): Promise<PinterestTokenResponse> => {
-  const response = await fetch('https://api.pinterest.com/v5/oauth/token', {
+const requestToken = async (parameters: URLSearchParams, environment: PinterestEnvironment): Promise<PinterestTokenResponse> => {
+  const response = await fetch(`${pinterestApiBase(environment)}/oauth/token`, {
     method: 'POST',
     headers: {
       Authorization: `Basic ${Buffer.from(`${getClientId()}:${getClientSecret()}`).toString('base64')}`,
@@ -113,7 +116,7 @@ const requestToken = async (parameters: URLSearchParams): Promise<PinterestToken
   return data;
 };
 
-const saveTokens = async (projectId: string, userId: string, tokens: PinterestTokenResponse, existingRefreshToken = '') => {
+const saveTokens = async (projectId: string, userId: string, tokens: PinterestTokenResponse, existingRefreshToken = '', environment: PinterestEnvironment = 'production') => {
   if (!tokens.access_token) throw new Error('Pinterest hat keinen Zugriffstoken zurückgegeben.');
   const access = encrypt(tokens.access_token);
   const refreshValue = tokens.refresh_token || existingRefreshToken;
@@ -121,11 +124,12 @@ const saveTokens = async (projectId: string, userId: string, tokens: PinterestTo
   const refresh = encrypt(refreshValue);
   const timestamp = new Date().toISOString();
   const expiresAt = new Date(Date.now() + Number(tokens.expires_in || 0) * 1000).toISOString();
-  const response = await fetch(documentUrl(projectId, userId), {
+  const response = await fetch(documentUrl(projectId, userId, environment), {
     method: 'PATCH',
     headers: { Authorization: `Bearer ${await getGoogleAccessToken()}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ fields: {
       userId: { stringValue: userId },
+      environment: { stringValue: environment },
       encryptedAccessToken: { stringValue: access.encrypted },
       accessTokenIv: { stringValue: access.iv },
       accessTokenTag: { stringValue: access.tag },
@@ -141,52 +145,54 @@ const saveTokens = async (projectId: string, userId: string, tokens: PinterestTo
   if (!response.ok) throw new Error('Die Pinterest-Verbindung konnte nicht sicher gespeichert werden.');
 };
 
-export const createPinterestAuthorizationUrl = (userId: string) => {
+export const createPinterestAuthorizationUrl = (userId: string, environment: PinterestEnvironment = 'production') => {
+  parsePinterestEnvironment(environment);
   const nonce = randomBytes(24).toString('base64url');
   const params = new URLSearchParams({
     client_id: getClientId(),
     redirect_uri: getRedirectUri(),
     response_type: 'code',
     scope: pinterestScope,
-    state: createState(userId, nonce),
+    state: createState(userId, nonce, environment),
   });
   return { authorizationUrl: `https://www.pinterest.com/oauth/?${params.toString()}`, nonce };
 };
 
 export const completePinterestAuthorization = async (projectId: string, code: string, state: string, cookieNonce: string) => {
-  const userId = validateState(state, cookieNonce);
-  const tokens = await requestToken(new URLSearchParams({ code, redirect_uri: getRedirectUri(), grant_type: 'authorization_code' }));
-  await saveTokens(projectId, userId, tokens);
+  const { userId, environment } = validateState(state, cookieNonce);
+  const tokens = await requestToken(new URLSearchParams({ code, redirect_uri: getRedirectUri(), grant_type: 'authorization_code' }), environment);
+  await saveTokens(projectId, userId, tokens, '', environment);
 };
 
-export const loadPinterestAccessToken = async (projectId: string, userId: string): Promise<string> => {
-  const document = await loadDocument(projectId, userId);
+export const loadPinterestAccessToken = async (projectId: string, userId: string, environment: PinterestEnvironment = 'production'): Promise<string> => {
+  const document = await loadDocument(projectId, userId, environment);
   const fields = document.fields || {};
   const expiresAt = Date.parse(fields.accessTokenExpiresAt?.timestampValue || '');
   if (expiresAt > Date.now() + expirySafetyMs) {
     return decrypt(fields.encryptedAccessToken?.stringValue || '', fields.accessTokenIv?.stringValue || '', fields.accessTokenTag?.stringValue || '');
   }
   const refreshToken = decrypt(fields.encryptedRefreshToken?.stringValue || '', fields.refreshTokenIv?.stringValue || '', fields.refreshTokenTag?.stringValue || '');
-  const tokens = await requestToken(new URLSearchParams({ grant_type: 'refresh_token', refresh_token: refreshToken, scope: pinterestScope }));
-  await saveTokens(projectId, userId, tokens, refreshToken);
+  const tokens = await requestToken(new URLSearchParams({ grant_type: 'refresh_token', refresh_token: refreshToken, scope: pinterestScope }), environment);
+  await saveTokens(projectId, userId, tokens, refreshToken, environment);
   return tokens.access_token || '';
 };
 
-export const loadPinterestConnectionStatus = async (projectId: string, userId: string) => {
+export const loadPinterestConnectionStatus = async (projectId: string, userId: string, environment: PinterestEnvironment = 'production') => {
   try {
-    const document = await loadDocument(projectId, userId);
+    const document = await loadDocument(projectId, userId, environment);
     return {
+      environment,
       connected: Boolean(document.fields?.encryptedRefreshToken?.stringValue),
       connectedAt: document.fields?.connectedAt?.timestampValue || null,
     };
   } catch (error: unknown) {
-    if (error instanceof Error && error.message === 'Pinterest ist noch nicht verbunden.') return { connected: false, connectedAt: null };
+    if (error instanceof Error && error.message === 'Pinterest ist noch nicht verbunden.') return { connected: false, connectedAt: null, environment };
     throw error;
   }
 };
 
-export const deletePinterestConnection = async (projectId: string, userId: string): Promise<void> => {
-  const response = await fetch(documentUrl(projectId, userId), {
+export const deletePinterestConnection = async (projectId: string, userId: string, environment: PinterestEnvironment = 'production'): Promise<void> => {
+  const response = await fetch(documentUrl(projectId, userId, environment), {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${await getGoogleAccessToken()}` },
   });

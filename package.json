@@ -34,6 +34,7 @@
     "audit:publishing-monitoring": "node --import tsx scripts/auditPublishingMonitoring.ts",
     "audit:browser-monitoring": "node --import tsx scripts/auditBrowserErrorMonitoring.ts",
     "audit:blog": "node --import tsx scripts/auditBlogArticle.ts",
+    "audit:pinterest-sandbox": "node --import tsx scripts/auditPinterestSandbox.ts",
     "audit:pinterest-target": "node --import tsx scripts/auditPinterestTargetUrl.ts",
     "audit:content-topic": "node --import tsx scripts/auditContentTopicContinuity.ts",
     "audit:sidebar": "node --import tsx scripts/auditSidebarLayout.ts"
