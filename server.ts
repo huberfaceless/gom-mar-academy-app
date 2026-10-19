@@ -34,6 +34,9 @@ import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmail
 import { confirmExternalEmailConsent, loadExternalEmailConsent, requestExternalEmailConsent, withdrawExternalEmailConsent } from './server/externalEmailConsentAdmin.js';
 import { accountVerificationEmailCopy, passwordResetEmailCopy, renderConsentEmailHtml, renderTextEmailHtml } from './server/emailHtmlTemplate.js';
 import { createMarketingUnsubscribeToken, isMarketingEmailSuppressed, unsubscribeMarketingEmail } from './server/emailUnsubscribeAdmin.js';
+import { pinterestApiBase } from './src/utils/pinterestEnvironment.js';
+import { requirePinterestEnvironment } from './server/pinterestEnvironmentMiddleware.js';
+import { listPinterestBoards } from './server/pinterestBoards.js';
 import { completePinterestAuthorization, createPinterestAuthorizationUrl, deletePinterestConnection, loadPinterestAccessToken, loadPinterestConnectionStatus } from './server/pinterestConnectionAdmin.js';
 import { completeInstagramAuthorization, createInstagramAuthorizationUrl, deleteInstagramConnection, loadInstagramConnectionStatus, loadInstagramMedia, publishInstagramImage } from './server/instagramConnectionAdmin.js';
 import { completeYouTubeAuthorization, createYouTubeAuthorizationUrl, createYouTubeUploadSession, deleteYouTubeConnection, loadYouTubeConnectionStatus } from './server/youtubeConnectionAdmin.js';
@@ -3037,11 +3040,13 @@ Antworte im JSON-Format:
     }
   });
 
+  app.use('/api/pinterest', requirePinterestEnvironment);
+
   app.post('/api/pinterest/oauth/start', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-      const { authorizationUrl, nonce } = createPinterestAuthorizationUrl(userId);
+      const { authorizationUrl, nonce } = createPinterestAuthorizationUrl(userId, res.locals.pinterestEnvironment);
       res.setHeader('Set-Cookie', `pinterest_oauth_state=${encodeURIComponent(nonce)}; Path=/api/pinterest/oauth; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);
       res.json({ authorizationUrl });
     } catch (error: unknown) {
@@ -3076,7 +3081,7 @@ Antworte im JSON-Format:
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-      res.json(await loadPinterestConnectionStatus(FIREBASE_PROJECT_ID, userId));
+      res.json(await loadPinterestConnectionStatus(FIREBASE_PROJECT_ID, userId, res.locals.pinterestEnvironment));
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Pinterest-Status konnte nicht geladen werden.' });
     }
@@ -3086,7 +3091,7 @@ Antworte im JSON-Format:
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-      await deletePinterestConnection(FIREBASE_PROJECT_ID, userId);
+      await deletePinterestConnection(FIREBASE_PROJECT_ID, userId, res.locals.pinterestEnvironment);
       res.json({ success: true });
     } catch (error: unknown) {
       res.status(503).json({ error: error instanceof Error ? error.message : 'Pinterest konnte nicht getrennt werden.' });
@@ -3098,25 +3103,10 @@ Antworte im JSON-Format:
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
+      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId, res.locals.pinterestEnvironment);
 
-      const response = await fetch('https://api.pinterest.com/v5/boards?page_size=50', {
-        headers: {
-          Authorization: `Bearer ${accessToken.trim()}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        res.status(response.status).json({
-          error: errData.message || `Pinterest Boards konnten nicht geladen werden (HTTP ${response.status}).`,
-        });
-        return;
-      }
-
-      const data = await response.json();
-      res.json({ success: true, boards: data.items || [] });
+      const boards = await listPinterestBoards(accessToken, res.locals.pinterestEnvironment);
+      res.json({ success: true, boards, environment: res.locals.pinterestEnvironment });
     } catch (err: unknown) {
       console.error('Error in /api/pinterest/boards:', err);
       res.status(500).json({ error: 'Fehler beim Laden der Pinterest Boards.' });
@@ -3134,9 +3124,9 @@ Antworte im JSON-Format:
 
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
+      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId, res.locals.pinterestEnvironment);
 
-      const response = await fetch('https://api.pinterest.com/v5/boards', {
+      const response = await fetch(`${pinterestApiBase(res.locals.pinterestEnvironment)}/boards`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken.trim()}`,
@@ -3158,7 +3148,7 @@ Antworte im JSON-Format:
       }
 
       const data = await response.json();
-      res.json({ success: true, board: data });
+      res.json({ success: true, board: data, environment: res.locals.pinterestEnvironment });
     } catch (err: unknown) {
       console.error('Error in /api/pinterest/create-board:', err);
       res.status(500).json({ error: 'Fehler beim Erstellen des Pinterest Boards.' });
@@ -3186,7 +3176,7 @@ Antworte im JSON-Format:
 
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
-      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId);
+      const accessToken = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId, res.locals.pinterestEnvironment);
 
       // Genuine Pinterest API v5 Pin Creation
       const payload: Record<string, unknown> = {
@@ -3216,7 +3206,7 @@ Antworte im JSON-Format:
         };
       }
 
-      const response = await fetch('https://api.pinterest.com/v5/pins', {
+      const response = await fetch(`${pinterestApiBase(res.locals.pinterestEnvironment)}/pins`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken.trim()}`,
@@ -3237,6 +3227,7 @@ Antworte im JSON-Format:
       const createdPin = await response.json();
       res.json({
         success: true,
+        environment: res.locals.pinterestEnvironment,
         publishedPin: {
           id: createdPin.id,
           title: createdPin.title,

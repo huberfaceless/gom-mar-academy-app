@@ -58,6 +58,9 @@ jobs:
       - name: Themenübergabe zwischen Inhaltsformaten prüfen
         run: bun run audit:content-topic
 
+      - name: Pinterest-Sandbox und getrennte Verbindungen prüfen
+        run: bun run audit:pinterest-sandbox
+
       - name: Pinterest-Zieladressen prüfen
         run: bun run audit:pinterest-target
 

@@ -1,3 +1,4 @@
+import { type PinterestEnvironment } from '../utils/pinterestEnvironment';
 import { PinterestAccountConfig, PinterestBoard, PinterestPin } from '../types/contentEngine';
 import { authenticatedFetch } from './authenticatedFetch';
 
@@ -33,33 +34,33 @@ export const pinterestService = {
     }
   },
 
-  async startOAuth(): Promise<void> {
-    const res = await authenticatedFetch('/api/pinterest/oauth/start', { method: 'POST' });
+  async startOAuth(environment: PinterestEnvironment = 'production'): Promise<void> {
+    const res = await authenticatedFetch('/api/pinterest/oauth/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ environment }) });
     const data = await res.json();
     if (!res.ok || !data.authorizationUrl) throw new Error(data.error || 'Pinterest-Verbindung konnte nicht gestartet werden.');
     window.location.assign(data.authorizationUrl);
   },
 
-  async getConnectionStatus(): Promise<{ connected: boolean; connectedAt?: string | null }> {
-    const res = await authenticatedFetch('/api/pinterest/connection/status');
+  async getConnectionStatus(environment: PinterestEnvironment = 'production'): Promise<{ connected: boolean; connectedAt?: string | null }> {
+    const res = await authenticatedFetch(`/api/pinterest/connection/status?environment=${environment}`);
     if (!res.ok) return { connected: false };
     return res.json();
   },
 
-  async disconnect(): Promise<boolean> {
-    const res = await authenticatedFetch('/api/pinterest/connection', { method: 'DELETE' });
+  async disconnect(environment: PinterestEnvironment = 'production'): Promise<boolean> {
+    const res = await authenticatedFetch(`/api/pinterest/connection?environment=${environment}`, { method: 'DELETE' });
     return res.ok;
   },
 
   /**
    * Get user's Pinterest boards
    */
-  async getBoards(): Promise<{ success: boolean; boards: PinterestBoard[]; error?: string }> {
+  async getBoards(environment: PinterestEnvironment = 'production'): Promise<{ success: boolean; boards: PinterestBoard[]; error?: string }> {
     try {
       const res = await authenticatedFetch('/api/pinterest/boards', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ environment }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -75,12 +76,12 @@ export const pinterestService = {
   /**
    * Create new Pinterest Board
    */
-  async createBoard(name: string, description?: string): Promise<{ success: boolean; board?: PinterestBoard; error?: string }> {
+  async createBoard(name: string, description?: string, environment: PinterestEnvironment = 'production'): Promise<{ success: boolean; board?: PinterestBoard; error?: string }> {
     try {
       const res = await authenticatedFetch('/api/pinterest/create-board', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, description }),
+        body: JSON.stringify({ name, description, environment }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -99,14 +100,16 @@ export const pinterestService = {
   async publishPin(
     pinData: PinterestPin,
     boardId: string,
-    imageBase64?: string
-  ): Promise<{ success: boolean; publishedPin?: { id: string; pin_url: string; title: string }; error?: string }> {
+    imageBase64?: string,
+    environment: PinterestEnvironment = 'production'
+  ): Promise<{ success: boolean; publishedPin?: { id: string; pin_url: string; title: string }; environment?: PinterestEnvironment; error?: string }> {
     try {
       const res = await authenticatedFetch('/api/pinterest/publish-pin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           boardId,
+          environment,
           pinData: {
             ...pinData,
             imageBase64,
@@ -118,7 +121,7 @@ export const pinterestService = {
       if (!res.ok) {
         return { success: false, error: data.error || 'Veröffentlichung fehlgeschlagen.' };
       }
-      return { success: true, publishedPin: data.publishedPin };
+      return { success: true, publishedPin: data.publishedPin, environment: data.environment || 'production' };
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Fehler beim Veröffentlichen.';
       return { success: false, error: msg };

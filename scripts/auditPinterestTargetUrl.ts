@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { pinterestApiBase } from '../src/utils/pinterestEnvironment';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { AffiliateLinkModal } from '../src/components/ContentEngine/AffiliateLinkModal';
@@ -38,7 +39,7 @@ let lastPrompt = '';
 let aiCalls = 0; let credentialCalls = 0; let platformCalls = 0; let sent: any;
 const context = vm.createContext({
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } }, requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {},
-  resolvePinterestTargetUrl, FIREBASE_PROJECT_ID: 'test',
+  resolvePinterestTargetUrl, pinterestApiBase, FIREBASE_PROJECT_ID: 'test',
   loadPinterestAccessToken: async () => { credentialCalls++; return 'isolated-test-token'; },
   ai: { models: { generateContent: async (request: any) => { aiCalls++; lastPrompt = request.contents; return { text: JSON.stringify(modelReply) }; } } },
   fetch: async (_url: string, request: RequestInit) => { platformCalls++; sent = JSON.parse(String(request.body)); return Response.json({ id: 'test-pin', title: 'Test' }); }, console,
@@ -46,7 +47,7 @@ const context = vm.createContext({
 const register = (start: string, end: string) => vm.runInContext(ts.transpileModule(server.slice(server.indexOf(start), server.indexOf(end, server.indexOf(start))), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
 const invoke = async (body: any) => {
   let status = 200; let result: any;
-  await handler({ body, firebaseUser: { sub: 'owner' } }, { status(value: number) { status = value; return this; }, json(value: any) { result = value; } });
+  await handler({ body, firebaseUser: { sub: 'owner' } }, { locals: { pinterestEnvironment: 'production' }, status(value: number) { status = value; return this; }, json(value: any) { result = value; } });
   return { status, result };
 };
 register("  app.post('/api/content-engine/pins'", '  // 🚀 Content Engine: 4.');
