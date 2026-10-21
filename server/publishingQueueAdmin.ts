@@ -2,6 +2,8 @@ import { GoogleAuth } from 'google-auth-library';
 import { PublishingJob } from '../src/types/contentEngine.js';
 import { preparePublishingJobRetry, PublishingJobActionError } from './publishingJobRetry.js';
 import { logPublishingOutcome } from './publishingMonitoring.js';
+import { isDeepStrictEqual } from 'node:util';
+import { fetchFirestoreRead, isTransientFirestoreError, waitForFirestoreRetry } from './firestoreReadRetry.js';
 
 type FirestoreValue = {
   nullValue?: null;
@@ -33,8 +35,9 @@ const getAccessToken = async (): Promise<string> => {
   return token.token;
 };
 
-const firestoreRequest = async (url: string, init: RequestInit = {}): Promise<Response> => {
-  const response = await fetch(url, {
+const firestoreRequest = async (url: string, init: RequestInit = {}, reportFailure = true): Promise<Response> => {
+  const request = !init.method || init.method === 'GET' ? fetchFirestoreRead : fetch;
+  const response = await request(url, {
     ...init,
     headers: {
       Authorization: `Bearer ${await getAccessToken()}`,
@@ -43,8 +46,8 @@ const firestoreRequest = async (url: string, init: RequestInit = {}): Promise<Re
     },
   });
   if (!response.ok) {
-    const details = (await response.text()).slice(0, 500);
-    console.error('Firestore-Publishing-Queue-Anfrage fehlgeschlagen.', { status: response.status, details });
+    await response.body?.cancel();
+    if (reportFailure) console.error('Firestore-Publishing-Queue-Anfrage fehlgeschlagen.', { status: response.status });
     const error = new Error(`Publishing Queue ist derzeit nicht verfügbar (HTTP ${response.status}).`);
     (error as Error & { status?: number }).status = response.status;
     throw error;
@@ -118,7 +121,7 @@ export const listServerPublishingJobs = async (): Promise<PublishingJob[]> => {
 };
 
 const loadServerPublishingJob = async (jobId: string): Promise<{ job: PublishingJob; updateTime: string } | null> => {
-  const response = await fetch(`${documentsUrl()}/publishingJobs/${encodeURIComponent(jobId)}`, {
+  const response = await fetchFirestoreRead(`${documentsUrl()}/publishingJobs/${encodeURIComponent(jobId)}`, {
     headers: { Authorization: `Bearer ${await getAccessToken()}` },
   });
   if (response.status === 404) return null;
@@ -131,13 +134,15 @@ const loadServerPublishingJob = async (jobId: string): Promise<{ job: Publishing
 const replaceServerPublishingJob = async (
   job: PublishingJob,
   expectedUpdateTime?: string,
+  reportFailure = true,
 ): Promise<string> => {
   const url = new URL(`${documentsUrl()}/publishingJobs/${encodeURIComponent(job.id)}`);
   if (expectedUpdateTime) url.searchParams.set('currentDocument.updateTime', expectedUpdateTime);
   const response = await firestoreRequest(url.toString(), {
     method: 'PATCH',
     body: JSON.stringify({ fields: encodeFields(job as unknown as Record<string, unknown>) }),
-  });
+    signal: AbortSignal.timeout(8_000),
+  }, reportFailure);
   const document = await response.json() as FirestoreDocument;
   if (!document.updateTime) throw new Error('Firestore hat keine Aktualisierungszeit zurückgegeben.');
   return document.updateTime;
@@ -153,10 +158,30 @@ export const claimServerPublishingJob = async (
   if (job.status === 'PUBLISHED' || job.publishedAt || job.externalId) {
     return { success: false, reason: 'already_published', job };
   }
-  if (job.status === 'PUBLISHING' && new Date(job.lockExpiresAt || 0).getTime() > Date.now()) {
+  const lockExpires = job.lockExpiresAt ? Date.parse(job.lockExpiresAt)
+    : job.lockedAt ? Date.parse(job.lockedAt) + 10 * 60 * 1000 : 0;
+  if (job.status === 'PUBLISHING' && (!Number.isFinite(lockExpires) || lockExpires > Date.now())) {
     return { success: false, reason: 'locked_by_other' };
   }
-  if (job.status !== 'SCHEDULED' && job.status !== 'PUBLISHING') {
+  if (job.publicationUncertain) return { success: false, reason: 'publication_uncertain', job };
+  // An expired lease cannot prove that the previous worker did not publish.
+  // Quarantine using the loaded version; never start a second external publication.
+  if (job.status === 'PUBLISHING') {
+    const uncertainJob: PublishingJob = {
+      ...job, status: 'FAILED', publicationUncertain: true,
+      lastError: 'Das Veröffentlichungsergebnis ist unklar. Bitte zuerst das Plattformprofil prüfen. Dieser Auftrag wird nicht automatisch erneut veröffentlicht.',
+      updatedAt: new Date().toISOString(),
+    };
+    try {
+      await replaceServerPublishingJob(uncertainJob, updateTime);
+    } catch (error) {
+      if ([409, 412].includes((error as { status?: number }).status || 0)) return { success: false, reason: 'locked_by_other' };
+      throw error;
+    }
+    logPublishingOutcome(uncertainJob);
+    return { success: false, reason: 'publication_uncertain', job: uncertainJob };
+  }
+  if (job.status !== 'SCHEDULED') {
     return { success: false, reason: `invalid_status_${job.status}` };
   }
   const attempts = (job.attempts || 0) + 1;
@@ -188,7 +213,20 @@ export const claimServerPublishingJob = async (
 };
 
 export const saveServerPublishingJob = async (job: PublishingJob, expectedUpdateTime?: string): Promise<void> => {
-  await replaceServerPublishingJob(job, expectedUpdateTime);
+  // Replay only the same version-guarded result write, never the platform call.
+  // A lost write response may mean success: reconcile the stored job before retrying.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      await replaceServerPublishingJob(job, expectedUpdateTime, false);
+      break;
+    } catch (error) {
+      if (!expectedUpdateTime || !isTransientFirestoreError(error)) throw error;
+      const loaded = await loadServerPublishingJob(job.id);
+      if (loaded && isDeepStrictEqual(JSON.parse(JSON.stringify(loaded.job)), JSON.parse(JSON.stringify(job)))) break;
+      if (!loaded || loaded.updateTime !== expectedUpdateTime || attempt >= 2) throw error;
+      await waitForFirestoreRetry(attempt);
+    }
+  }
   logPublishingOutcome(job);
 };
 
@@ -263,7 +301,7 @@ export const syncServerPublishingOutcome = async (job: PublishingJob): Promise<v
     });
   }
 
-  const projectResponse = await fetch(
+  const projectResponse = await fetchFirestoreRead(
     `${documentsUrl()}/contentProjects/${encodeURIComponent(job.contentProjectId)}`,
     { headers: { Authorization: `Bearer ${await getAccessToken()}` } },
   );

@@ -1,4 +1,5 @@
 import { GoogleAuth } from 'google-auth-library';
+import { fetchFirestoreRead } from './firestoreReadRetry.js';
 
 type FirestoreDocument = {
   fields?: {
@@ -105,7 +106,7 @@ export const loadEmailCampaigns = async (
   projectId: string,
   userId: string,
 ): Promise<{ campaigns: Record<string, unknown>[]; exists: boolean }> => {
-  const response = await fetch(documentUrl(projectId, userId), {
+  const response = await fetchFirestoreRead(documentUrl(projectId, userId), {
     headers: { Authorization: `Bearer ${await getAccessToken()}` },
   });
   if (response.status === 404) return { campaigns: [], exists: false };

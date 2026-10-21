@@ -3315,8 +3315,9 @@ Antworte mit einem reinen JSON-Objekt:
   app.post('/api/internal/scheduler/run', requireSchedulerSecret, async (_req, res) => {
     try {
       const outcome = await ServerSchedulerWorker.runTick('API_TRIGGER');
-      res.json({
-        success: true,
+      const success = !outcome.sweepFailed && !outcome.emailSweepFailed;
+      res.status(success ? 200 : 503).json({
+        success,
         triggeredBy: 'INTERNAL_API',
         outcome,
       });
@@ -3335,7 +3336,8 @@ Antworte mit einem reinen JSON-Objekt:
     async (_req, res) => {
       try {
         const outcome = await ServerSchedulerWorker.runTick('MANUAL_RUN');
-        res.json({ success: true, outcome });
+        const success = !outcome.sweepFailed && !outcome.emailSweepFailed;
+        res.status(success ? 200 : 503).json({ success, outcome });
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : 'Fehler beim manuellen Scheduler-Durchlauf.';
         res.status(500).json({ error: message });
@@ -3395,8 +3397,9 @@ Antworte mit einem reinen JSON-Objekt:
   app.post('/api/scheduler/run-tick', requireSchedulerSecret, async (_req, res) => {
     try {
       const outcome = await ServerSchedulerWorker.runTick('API_TRIGGER');
-      res.json({
-        success: true,
+      const success = !outcome.sweepFailed && !outcome.emailSweepFailed;
+      res.status(success ? 200 : 503).json({
+        success,
         outcome,
       });
     } catch (err: unknown) {

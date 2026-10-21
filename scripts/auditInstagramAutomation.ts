@@ -140,7 +140,7 @@ assert.equal(state.job.publicationUncertain, true);
 assert.equal(state.job.attempts, 1);
 assert.equal(state.job.nextAttemptAt, undefined);
 await assert.rejects(publishingService.retryJob('audit-owner', state.job), /Unklarer Instagram-Status/);
-await assert.rejects(publishingService.processJob('audit-owner', state.job), /zuerst das Instagram-Profil prüfen/);
+await assert.rejects(publishingService.processJob('audit-owner', state.job), /zuerst das Plattformprofil prüfen/);
 await worker.runTick(); assert.equal(state.calls, 1);
 delete (globalThis as any).__instagramRetryAudit;
 console.log('Instagram-Wiederholungen geprüft: 5/15 Minuten Wartezeit, Stopp nach drei Versuchen, Erfolg nach Fehler, Sperren, Geheimnisschutz und fehlende Grafik.');

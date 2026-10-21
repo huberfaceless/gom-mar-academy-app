@@ -438,7 +438,7 @@ export class PublishingService {
     }
 
     if (job.publicationUncertain) {
-      throw new Error('Bitte zuerst das Instagram-Profil prüfen. Dieser Auftrag hat einen unklaren Veröffentlichungsstatus.');
+      throw new Error('Bitte zuerst das Plattformprofil prüfen. Dieser Auftrag hat einen unklaren Veröffentlichungsstatus.');
     }
 
     const currentAttempts = job.status === 'PUBLISHING' ? (job.attempts || 1) : ((job.attempts || 0) + 1);

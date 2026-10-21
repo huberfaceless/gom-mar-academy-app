@@ -1144,7 +1144,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                       </td>
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
                         {job.publicationUncertain ? (
-                          <span className="text-[10px] font-bold text-amber-300" title={job.lastError}>Instagram-Profil prüfen</span>
+                          <span className="text-[10px] font-bold text-amber-300" title={job.lastError}>Plattformprofil prüfen</span>
                         ) : job.platform === 'INSTAGRAM' && job.status !== 'FAILED' ? (
                           <span className="text-[10px] font-bold text-fuchsia-300">Automatisch geplant</span>
                         ) : job.platform === 'YOUTUBE' && job.status !== 'FAILED' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
