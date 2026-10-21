@@ -37,6 +37,7 @@
     "audit:blog": "node --import tsx scripts/auditBlogArticle.ts",
     "audit:pinterest-sandbox": "node --import tsx scripts/auditPinterestSandbox.ts",
     "audit:pinterest-target": "node --import tsx scripts/auditPinterestTargetUrl.ts",
+    "audit:content-hub-i18n": "node --import tsx scripts/auditContentHubLocalization.ts",
     "audit:content-topic": "node --import tsx scripts/auditContentTopicContinuity.ts",
     "audit:sidebar": "node --import tsx scripts/auditSidebarLayout.ts"
   },

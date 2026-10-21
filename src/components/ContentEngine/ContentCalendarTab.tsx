@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { 
@@ -135,6 +136,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   project,
   onUpdateProject,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const { user } = useAuth();
   const userId = user?.uid || 'local_user';
 
@@ -159,12 +161,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     const result = await pinterestService.getBoards();
     setLoadingPinterestBoards(false);
     if (!result.success) {
-      setActionNotice({ text: result.error || 'Pinterest-Pinnwände konnten nicht geladen werden. Bitte verbinde Pinterest im Bereich Pinterest-Pins.', type: 'warning' });
+      setActionNotice({ text: result.error || hubText("Pinterest-Pinnwände konnten nicht geladen werden. Bitte verbinde Pinterest im Bereich Pinterest-Pins."), type: 'warning' });
       return;
     }
     setPinterestBoards(result.boards);
     if (!result.boards.length) {
-      setActionNotice({ text: 'Keine Pinterest-Pinnwand gefunden. Erstelle zuerst eine Pinnwand auf Pinterest und lade die Liste erneut.', type: 'info' });
+      setActionNotice({ text: hubText("Keine Pinterest-Pinnwand gefunden. Erstelle zuerst eine Pinnwand auf Pinterest und lade die Liste erneut."), type: 'info' });
     }
   };
 
@@ -183,13 +185,13 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           ? { ...pin, pinterestBoardId: board.id, board: board.name } : pin),
       });
       await loadJobs();
-      if (saved === false) throw new Error('Die Pinnwand konnte im Inhaltsprojekt nicht gespeichert werden. Bitte erneut versuchen.');
+      if (saved === false) throw new Error(hubText("Die Pinnwand konnte im Inhaltsprojekt nicht gespeichert werden. Bitte erneut versuchen."));
       const failedJob = publishingJobs.some(job => job.contentId === itemId && job.status === 'FAILED');
       setActionNotice({ text: failedJob && !waitingJobs.length
-        ? 'Pinnwand gespeichert. Entferne den fehlgeschlagenen Auftrag unten mit dem Papierkorb und reihe den Pin anschließend erneut ein.'
-        : 'Pinnwand gespeichert' + (waitingJobs.length ? ' und im wartenden Auftrag aktualisiert.' : '. Der Pin kann jetzt eingeplant werden.'), type: 'success' });
+        ? hubText("Pinnwand gespeichert. Entferne den fehlgeschlagenen Auftrag unten mit dem Papierkorb und reihe den Pin anschließend erneut ein.")
+        : hubText("Pinnwand gespeichert") + (waitingJobs.length ? hubText(" und im wartenden Auftrag aktualisiert.") : hubText(". Der Pin kann jetzt eingeplant werden.")), type: 'success' });
     } catch (error) {
-      setActionNotice({ text: error instanceof Error ? error.message : 'Die Pinnwand konnte nicht gespeichert werden.', type: 'warning' });
+      setActionNotice({ text: error instanceof Error ? error.message : hubText("Die Pinnwand konnte nicht gespeichert werden."), type: 'warning' });
       await loadJobs();
     } finally {
       setSavingBoardId(null);
@@ -242,18 +244,18 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       if (data.success && data.outcome) {
         const out = data.outcome;
         setActionNotice({
-          text: `Durchlauf der Server-Zeitsteuerung abgeschlossen: ${out.jobsChecked} geprüft, ${out.jobsProcessed} verarbeitet, ${out.publishedCount} erfolgreich, ${out.failedCount} fehlgeschlagen, ${out.skippedCount} übersprungen/wartend.`,
+          text: hubText("Durchlauf der Server-Zeitsteuerung abgeschlossen: {0} geprüft, {1} verarbeitet, {2} erfolgreich, {3} fehlgeschlagen, {4} übersprungen/wartend.", out.jobsChecked, out.jobsProcessed, out.publishedCount, out.failedCount, out.skippedCount),
           type: 'success',
         });
       } else {
         setActionNotice({
-          text: data.error || 'Der Server-Scheduler konnte nicht ausgeführt werden.',
+          text: data.error || hubText("Der Server-Scheduler konnte nicht ausgeführt werden."),
           type: 'warning',
         });
       }
     } catch (err: any) {
       setActionNotice({
-        text: `Fehler beim Auslösen des Durchlaufs der Server-Zeitsteuerung: ${err.message}`,
+        text: hubText("Fehler beim Auslösen des Durchlaufs der Server-Zeitsteuerung: {0}", err.message),
         type: 'warning',
       });
     } finally {
@@ -349,7 +351,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       type: 'instagram',
       platform: 'INSTAGRAM',
       contentType: 'INSTAGRAM_POST',
-      title: `Instagram-Beitrag #${idx + 1}: ${pin.title}`,
+      title: hubText('Instagram-Beitrag #{0}: {1}', idx + 1, pin.title),
       targetUrl: pin.targetUrl,
       status: calendarItem?.status || 'ai_generated',
       scheduledDate: formatLocalDateTime(calendarItem?.scheduledDate, idx + 1),
@@ -396,7 +398,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       type: 'youtube_short',
       platform: 'YOUTUBE',
       contentType: 'SHORT',
-      title: `Kurzvideo #${short.shortNumber || idx + 1}: ${short.title}`,
+      title: hubText('Kurzvideo #{0}: {1}', short.shortNumber || idx + 1, short.title),
       targetUrl: project.projectSettings.websiteUrl,
       status: short.status || 'ai_generated',
       scheduledDate: formatLocalDateTime(short.scheduledDate, idx + 3),
@@ -442,12 +444,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   const preparePayload = async (item: typeof items[0]): Promise<PublishingJob['payload']> => {
     if (item.platform === 'PINTEREST' && !item.payloadData?.boardId?.trim()) {
-      throw new Error('Bitte wähle vor dem Einplanen die Ziel-Pinnwand für diesen Pinterest-Pin aus.');
+      throw new Error(hubText("Bitte wähle vor dem Einplanen die Ziel-Pinnwand für diesen Pinterest-Pin aus."));
     }
     if (item.platform !== 'INSTAGRAM') return item.payloadData;
     const sourceIndex = item.payloadData?.metadata?.sourcePinIndex;
     const sourcePin = typeof sourceIndex === 'number' ? project.pinterestPins[sourceIndex] : undefined;
-    if (!sourcePin) throw new Error('Die zugehörige Instagram-Grafik wurde nicht gefunden.');
+    if (!sourcePin) throw new Error(hubText("Die zugehörige Instagram-Grafik wurde nicht gefunden."));
     return {
       ...item.payloadData,
       imageBase64: await renderInstagramImage(sourcePin, project.projectSettings),
@@ -458,14 +460,14 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const handleEnqueueItem = async (item: typeof items[0]) => {
     if (!user?.uid) {
       setActionNotice({
-        text: 'Bitte melde dich an, um Inhalte in der Firestore-Veröffentlichungswarteschlange zu planen.',
+        text: hubText("Bitte melde dich an, um Inhalte in der Firestore-Veröffentlichungswarteschlange zu planen."),
         type: 'warning',
       });
       return;
     }
     if (!supportsPublishingQueue(item)) {
       setActionNotice({
-        text: `${item.platformLabel} kann bereits vorbereitet und freigegeben, aber noch nicht automatisch veröffentlicht werden.`,
+        text: hubText("{0} kann bereits vorbereitet und freigegeben, aber noch nicht automatisch veröffentlicht werden.", item.platformLabel),
         type: 'info',
       });
       return;
@@ -508,7 +510,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       await loadJobs();
 
       setActionNotice({
-        text: `Auftrag für "${item.title}" erfolgreich in die Firestore-Veröffentlichungswarteschlange eingereiht (Auftrags-ID: ${publishingJob.id.slice(-6)}).`,
+        text: hubText("Auftrag für \"{0}\" erfolgreich in die Firestore-Veröffentlichungswarteschlange eingereiht (Auftrags-ID: {1}).", item.title, publishingJob.id.slice(-6)),
         type: 'success',
       });
     } catch (err: any) {
@@ -522,7 +524,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   // Approve all & enqueue all
   const handleApproveAndEnqueueAll = async () => {
     if (savingBoardId || items.some(item => item.platform === 'PINTEREST' && !item.payloadData?.boardId?.trim())) {
-      setActionNotice({ text: 'Bitte wähle zuerst für jeden Pinterest-Pin eine Ziel-Pinnwand und warte, bis sie gespeichert ist.', type: 'warning' });
+      setActionNotice({ text: hubText("Bitte wähle zuerst für jeden Pinterest-Pin eine Ziel-Pinnwand und warte, bis sie gespeichert ist."), type: 'warning' });
       return;
     }
     const updated = { ...project };
@@ -559,7 +561,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       }
       await loadJobs();
       setActionNotice({
-        text: `${items.length} Inhalte freigegeben: ${queuedCount} unterstützte Inhalte eingereiht, ${items.length - supportedItems.length} noch nicht automatisierbare Inhalte nicht eingereiht${failedCount > 0 ? `, ${failedCount} Aufträge fehlgeschlagen` : ''}.`,
+        text: hubText("{0} Inhalte freigegeben: {1} unterstützte Inhalte eingereiht, {2} noch nicht automatisierbare Inhalte nicht eingereiht{3}.", items.length, queuedCount, items.length - supportedItems.length, failedCount > 0 ? hubText(', {0} Aufträge fehlgeschlagen', failedCount) : ''),
         type: failedCount > 0 ? 'warning' : 'success',
       });
     }
@@ -571,9 +573,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     setSavingDateId(itemId);
     try {
       const scheduledAt = toScheduledIso(newDate);
-      if (!newDate) throw new Error('Bitte wähle ein Datum und eine Uhrzeit.');
+      if (!newDate) throw new Error(hubText("Bitte wähle ein Datum und eine Uhrzeit."));
       if (matchingJob) {
-        if (!user?.uid) throw new Error('Bitte melde dich an, um den Auftrag zu verschieben.');
+        if (!user?.uid) throw new Error(hubText("Bitte melde dich an, um den Auftrag zu verschieben."));
         await FirestoreContentService.reschedulePublishingJob(user.uid, matchingJob.id, scheduledAt);
         setPublishingJobs(jobs => jobs.map(job => job.id === matchingJob.id ? { ...job, scheduledAt } : job));
         setSchedulerJobs(jobs => jobs.map(job => job.publishingJobId === matchingJob.id ? { ...job, scheduledAt } : job));
@@ -581,15 +583,15 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       const projectSaved = await updateProjectDate(itemId, newDate);
       if (projectSaved === false) {
         throw new Error(matchingJob
-          ? 'Der Auftragstermin wurde gespeichert, aber der Inhaltskalender konnte nicht aktualisiert werden. Bitte lade die Ansicht neu.'
-          : 'Der Inhaltskalender konnte nicht gespeichert werden. Bitte versuche es erneut.');
+          ? hubText("Der Auftragstermin wurde gespeichert, aber der Inhaltskalender konnte nicht aktualisiert werden. Bitte lade die Ansicht neu.")
+          : hubText("Der Inhaltskalender konnte nicht gespeichert werden. Bitte versuche es erneut."));
       }
       setActionNotice({
-        text: matchingJob ? 'Der Veröffentlichungstermin wurde in der Warteschlange gespeichert.' : 'Der Termin wurde im Inhaltskalender geändert.',
+        text: matchingJob ? hubText("Der Veröffentlichungstermin wurde in der Warteschlange gespeichert.") : hubText("Der Termin wurde im Inhaltskalender geändert."),
         type: 'success',
       });
     } catch (error) {
-      setActionNotice({ text: error instanceof Error ? error.message : 'Der Veröffentlichungstermin konnte nicht gespeichert werden.', type: 'warning' });
+      setActionNotice({ text: error instanceof Error ? error.message : hubText("Der Veröffentlichungstermin konnte nicht gespeichert werden."), type: 'warning' });
     } finally {
       setDateDrafts(drafts => {
         const next = { ...drafts };
@@ -651,7 +653,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     const selectedItem = items.find(item => item.id === itemId);
     if (selectedItem && toCanonicalStatus(newStatus) === 'SCHEDULED' && !supportsPublishingQueue(selectedItem)) {
       setActionNotice({
-        text: `${selectedItem.platformLabel} kann noch nicht automatisch eingeplant werden.`,
+        text: hubText("{0} kann noch nicht automatisch eingeplant werden.", selectedItem.platformLabel),
         type: 'info',
       });
       return;
@@ -659,7 +661,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     if (selectedItem?.platform === 'PINTEREST'
       && ['APPROVED', 'SCHEDULED'].includes(toCanonicalStatus(newStatus))
       && !selectedItem.payloadData?.boardId?.trim()) {
-      setActionNotice({ text: 'Bitte wähle zuerst eine Ziel-Pinnwand für diesen Pinterest-Pin.', type: 'warning' });
+      setActionNotice({ text: hubText("Bitte wähle zuerst eine Ziel-Pinnwand für diesen Pinterest-Pin."), type: 'warning' });
       return;
     }
     const updated = { ...project };
@@ -711,9 +713,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     try {
       await FirestoreContentService.reschedulePublishingJob(user.uid, job.id, new Date().toISOString());
       await loadJobs();
-      setActionNotice({ text: 'Der Server veröffentlicht den Auftrag im nächsten Durchlauf. Eine laufende Wiederholungssperre bleibt erhalten.', type: 'info' });
+      setActionNotice({ text: hubText("Der Server veröffentlicht den Auftrag im nächsten Durchlauf. Eine laufende Wiederholungssperre bleibt erhalten."), type: 'info' });
     } catch (err) {
-      setActionNotice({ text: err instanceof Error ? err.message : 'Der Auftrag konnte nicht eingeplant werden.', type: 'warning' });
+      setActionNotice({ text: err instanceof Error ? err.message : hubText("Der Auftrag konnte nicht eingeplant werden."), type: 'warning' });
     } finally {
       setActiveJobRunningId(null);
     }
@@ -726,11 +728,11 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     try {
       const response = await authenticatedFetch(`/api/publishing/jobs/${encodeURIComponent(job.id)}/retry`, { method: 'POST' });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Der Auftrag konnte nicht erneut eingeplant werden.');
+      if (!response.ok) throw new Error(result.error || hubText("Der Auftrag konnte nicht erneut eingeplant werden."));
       await loadJobs();
-      setActionNotice({ text: 'Der Server prüft den Auftrag im nächsten Durchlauf erneut.', type: 'info' });
+      setActionNotice({ text: hubText("Der Server prüft den Auftrag im nächsten Durchlauf erneut."), type: 'info' });
     } catch (err) {
-      setActionNotice({ text: err instanceof Error ? err.message : 'Der erneute Versuch konnte nicht eingeplant werden.', type: 'warning' });
+      setActionNotice({ text: err instanceof Error ? err.message : hubText("Der erneute Versuch konnte nicht eingeplant werden."), type: 'warning' });
     } finally {
       setActiveJobRunningId(null);
     }
@@ -743,12 +745,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       await FirestoreContentService.deletePublishingJob(user.uid, jobId);
       await loadJobs();
       setActionNotice({
-        text: 'Auftrag aus der Veröffentlichungswarteschlange entfernt.',
+        text: hubText("Auftrag aus der Veröffentlichungswarteschlange entfernt."),
         type: 'info',
       });
     } catch (err) {
       setActionNotice({
-        text: err instanceof Error ? err.message : 'Der Auftrag konnte nicht gelöscht werden.',
+        text: err instanceof Error ? err.message : hubText("Der Auftrag konnte nicht gelöscht werden."),
         type: 'warning',
       });
     }
@@ -761,12 +763,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
-              <CalendarIcon className="w-3 h-3" />
-              Content-Planung & Veröffentlichungswarteschlange
-            </span>
-            <span className="text-xs text-slate-500">Gesamtes Set ({items.length} Assets)</span>
+              <CalendarIcon className="w-3 h-3" />{hubText("Content-Planung & Veröffentlichungswarteschlange")}</span>
+            <span className="text-xs text-slate-500">{hubText("Gesamtes Set (")}{items.length} Assets)</span>
           </div>
-          <h2 className="text-xl font-bold text-slate-900 mt-1">Veröffentlichungsplan: "{project.topic}"</h2>
+          <h2 className="text-xl font-bold text-slate-900 mt-1">{hubText("Veröffentlichungsplan: \"")}{project.topic}"</h2>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
@@ -776,7 +776,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             className="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 transition-all cursor-pointer"
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>Alle freigeben & in Warteschlange einreihen</span>
+            <span>{hubText("Alle freigeben & in Warteschlange einreihen")}</span>
           </button>
         </div>
       </div>
@@ -794,9 +794,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             type="button" 
             onClick={() => setActionNotice(null)}
             className="text-slate-400 hover:text-slate-600 text-xs font-bold underline cursor-pointer"
-          >
-            Schließen
-          </button>
+          >{hubText("Schließen")}</button>
         </div>
       )}
 
@@ -808,8 +806,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             platformFilter === 'all' ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
           }`}
-        >
-          Alle Assets ({items.length})
+        >{hubText("Alle Assets (")}{items.length})
         </button>
         <button
           type="button"
@@ -851,10 +848,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
       {project.pinterestPins?.length > 0 && (
         <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4">
-          <p className="flex-1 text-sm text-slate-700">Wähle bei jedem Pinterest-Pin die Ziel-Pinnwand, bevor du ihn einplanst.</p>
+          <p className="flex-1 text-sm text-slate-700">{hubText("Wähle bei jedem Pinterest-Pin die Ziel-Pinnwand, bevor du ihn einplanst.")}</p>
           <button type="button" onClick={() => void loadPinterestBoards()} disabled={loadingPinterestBoards || Boolean(savingBoardId)}
             className="rounded-xl border border-rose-300 bg-white px-3 py-2 text-sm font-bold text-rose-700 disabled:opacity-50">
-            {loadingPinterestBoards ? 'Pinnwände werden geladen …' : 'Pinterest-Pinnwände laden'}
+            {loadingPinterestBoards ? hubText("Pinnwände werden geladen …") : hubText("Pinterest-Pinnwände laden")}
           </button>
         </div>
       )}
@@ -883,12 +880,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                       {item.platformLabel}
                     </span>
                     <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border ${statusConf.bg} ${statusConf.text} ${statusConf.border}`}>
-                      {statusConf.label}
+                      {hubText(statusConf.label)}
                     </span>
                     {matchingJob && (
                       <span className="max-w-full text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1">
                         <Zap className="w-2.5 h-2.5 shrink-0" />
-                        <span className="min-w-0 break-words">Warteschlangenauftrag: #{matchingJob.id.slice(-5)} ({getStatusLabel(matchingJob.status)})</span>
+                        <span className="min-w-0 break-words">{hubText("Warteschlangenauftrag: #")}{matchingJob.id.slice(-5)} ({hubText(getStatusLabel(matchingJob.status))})</span>
                       </span>
                     )}
                   </div>
@@ -896,29 +893,26 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     {item.title}
                   </h4>
                   {item.targetUrl && (
-                    <p className="text-[11px] text-slate-400 break-all mt-0.5">
-                      Ziel-URL: {item.targetUrl}
+                    <p className="text-[11px] text-slate-400 break-all mt-0.5">{hubText("Ziel-URL:")}{' '}{item.targetUrl}
                     </p>
                   )}
                 </div>
               </div>
 
               {item.platform === 'PINTEREST' && (
-                <label className="flex flex-col gap-1 text-xs font-semibold text-slate-700">
-                  Ziel-Pinnwand auf Pinterest
-                  <select
+                <label className="flex flex-col gap-1 text-xs font-semibold text-slate-700">{hubText("Ziel-Pinnwand auf Pinterest")}<select
                     value={item.payloadData.boardId || ''}
                     disabled={loadingPinterestBoards || Boolean(savingBoardId) || Boolean(matchingJob && (matchingJob.status === 'PUBLISHING' || matchingJob.status === 'PUBLISHED' || matchingJob.publicationUncertain))}
                     onChange={event => void handlePinterestBoardChange(item.id, event.target.value)}
                     className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm disabled:opacity-50"
                   >
-                    <option value="" disabled>Bitte Pinnwände laden und auswählen</option>
+                    <option value="" disabled>{hubText("Bitte Pinnwände laden und auswählen")}</option>
                     {item.payloadData.boardId && !pinterestBoards.some(board => board.id === item.payloadData.boardId) && (
-                      <option value={item.payloadData.boardId}>{item.payloadData.boardName || 'Gespeicherte Pinnwand'}</option>
+                      <option value={item.payloadData.boardId}>{item.payloadData.boardName || hubText("Gespeicherte Pinnwand")}</option>
                     )}
                     {pinterestBoards.map(board => <option key={board.id} value={board.id}>{board.name}</option>)}
                   </select>
-                  {savingBoardId === item.id && <span role="status">Pinnwand wird gespeichert …</span>}
+                  {savingBoardId === item.id && <span role="status">{hubText("Pinnwand wird gespeichert …")}</span>}
                 </label>
               )}
 
@@ -928,8 +922,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   <CalendarIcon className="w-3.5 h-3.5 text-slate-400" />
                   <input
                     type="datetime-local"
-                    aria-label={`Veröffentlichungstermin: ${item.title}`}
-                    title="Ändere Datum und Uhrzeit und klicke danach außerhalb des Feldes, um zu speichern."
+                    aria-label={hubText("Veröffentlichungstermin: {0}", item.title)}
+                    title={hubText("Ändere Datum und Uhrzeit und klicke danach außerhalb des Feldes, um zu speichern.")}
                     step="60"
                     value={dateDrafts[item.id] ?? (matchingJob ? formatLocalDateTime(matchingJob.scheduledAt) : item.scheduledDate)}
                     disabled={Boolean(savingDateId) || Boolean(matchingJob && matchingJob.status !== 'SCHEDULED')}
@@ -946,32 +940,32 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   onChange={(e) => handleStatusChange(item.id, e.target.value as ContentStatus)}
                   className="max-w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 outline-hidden cursor-pointer"
                 >
-                  <option value="DRAFT">Entwurf</option>
-                  <option value="GENERATING">KI Generiert</option>
-                  <option value="NEEDS_REVIEW">Prüfung nötig</option>
-                  <option value="APPROVED">Freigegeben ✅</option>
-                  <option value="SCHEDULED" disabled={!queueSupported}>In Warteschlange 📅</option>
-                  <option value="PUBLISHED">Veröffentlicht 🚀</option>
+                  <option value="DRAFT">{hubText("Entwurf")}</option>
+                  <option value="GENERATING">{hubText("KI Generiert")}</option>
+                  <option value="NEEDS_REVIEW">{hubText("Prüfung nötig")}</option>
+                  <option value="APPROVED">{hubText("Freigegeben ✅")}</option>
+                  <option value="SCHEDULED" disabled={!queueSupported}>{hubText("In Warteschlange 📅")}</option>
+                  <option value="PUBLISHED">{hubText("Veröffentlicht 🚀")}</option>
                 </select>
 
                 {!queueSupported ? (
                   <span className="px-3 py-1.5 bg-slate-100 text-slate-500 text-xs font-bold rounded-xl border border-slate-200">
-                    {item.platform === 'YOUTUBE' ? 'Zuerst Video hochladen' : 'Automatisierung folgt'}
+                    {item.platform === 'YOUTUBE' ? hubText("Zuerst Video hochladen") : hubText("Automatisierung folgt")}
                   </span>
                 ) : !matchingJob ? (
                   <button
                     type="button"
                     onClick={() => handleEnqueueItem(item)}
                     className="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
-                    title="In die Firestore-Veröffentlichungswarteschlange einreihen"
+                    title={hubText("In die Firestore-Veröffentlichungswarteschlange einreihen")}
                   >
                     <Clock className="w-3.5 h-3.5 text-purple-400" />
-                    <span>Warteschlange</span>
+                    <span>{hubText("Warteschlange")}</span>
                   </button>
                 ) : item.platform === 'YOUTUBE' || item.platform === 'INSTAGRAM' ? (
                   <span className="max-w-full px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-bold rounded-xl border border-purple-200 flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 shrink-0" />
-                    <span>Automatische Veröffentlichung geplant</span>
+                    <span>{hubText("Automatische Veröffentlichung geplant")}</span>
                   </span>
                 ) : (
                   <button
@@ -979,14 +973,14 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                     disabled={activeJobRunningId === matchingJob.id}
                     onClick={() => handleExecuteJob(matchingJob)}
                     className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
-                    title="Jetzt manuell testen / publishen"
+                    title={hubText("Jetzt manuell testen / publishen")}
                   >
                     {activeJobRunningId === matchingJob.id ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     ) : (
                       <Play className="w-3.5 h-3.5" />
                     )}
-                    <span>Ausführen</span>
+                    <span>{hubText("Ausführen")}</span>
                   </button>
                 )}
               </div>
@@ -1005,25 +999,19 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
-                  <span>Firestore-Veröffentlichungswarteschlange und Server-Zeitsteuerung</span>
+                  <span>{hubText("Firestore-Veröffentlichungswarteschlange und Server-Zeitsteuerung")}</span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] bg-purple-500/20 text-purple-300 border border-purple-500/40">
                     {publishingJobs.length} Jobs
                   </span>
                 </h3>
                 {schedulerServerStatus?.active ? (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Autopilot aktiv (60s)
-                  </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>{hubText("Autopilot aktiv (60s)")}</span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                    Hintergrund-Worker bereit
-                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">{hubText("Hintergrund-Worker bereit")}</span>
                 )}
               </div>
-              <p className="text-[11px] text-slate-400">
-                Server-seitige Hintergrund-Ausführung ohne geöffneten Browser (Idempotent, Retry mit Backoff, Audit-Logs)
-              </p>
+              <p className="text-[11px] text-slate-400">{hubText("Server-seitige Hintergrund-Ausführung ohne geöffneten Browser (Idempotent, Retry mit Backoff, Audit-Logs)")}</p>
             </div>
           </div>
 
@@ -1033,10 +1021,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
               onClick={handleTriggerServerSweep}
               disabled={isTriggeringSweep}
               className="px-3 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-900/30 cursor-pointer disabled:opacity-50"
-              title="Führt sofort eine Prüfung der Server-Zeitsteuerung aus"
+              title={hubText("Führt sofort eine Prüfung der Server-Zeitsteuerung aus")}
             >
               {isTriggeringSweep ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5 text-amber-300" />}
-              <span>Scheduler-Durchlauf auslösen</span>
+              <span>{hubText("Scheduler-Durchlauf auslösen")}</span>
             </button>
 
             <button
@@ -1046,7 +1034,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
               className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer"
             >
               <RotateCcw className={`w-3.5 h-3.5 ${isLoadingJobs ? 'animate-spin' : ''}`} />
-              <span>Aktualisieren</span>
+              <span>{hubText("Aktualisieren")}</span>
             </button>
           </div>
         </div>
@@ -1054,22 +1042,20 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         {publishingJobs.length === 0 ? (
           <div className="p-8 text-center bg-slate-950/60 rounded-2xl border border-slate-800/80 text-xs text-slate-400 space-y-2">
             <Clock className="w-8 h-8 text-slate-600 mx-auto" />
-            <p className="font-semibold text-slate-300">Aktuell befinden sich keine Aufträge in der Veröffentlichungswarteschlange.</p>
-            <p className="text-[11px] text-slate-500 max-w-md mx-auto">
-              Klicke oben bei einem Inhalt auf <strong>„Warteschlange“</strong> oder auf <strong>„Alle freigeben & in Warteschlange einreihen“</strong>, um Veröffentlichungs- und Scheduler-Aufträge in Firestore zu erstellen.
-            </p>
+            <p className="font-semibold text-slate-300">{hubText("Aktuell befinden sich keine Aufträge in der Veröffentlichungswarteschlange.")}</p>
+            <p className="text-[11px] text-slate-500 max-w-md mx-auto">{hubText("Klicke oben bei einem Inhalt auf")}{' '}<strong>{hubText("„Warteschlange“")}</strong>{' '}{hubText("oder auf")}{' '}<strong>{hubText("„Alle freigeben & in Warteschlange einreihen“")}</strong>{hubText(", um Veröffentlichungs- und Scheduler-Aufträge in Firestore zu erstellen.")}</p>
           </div>
         ) : (
           <div className="space-y-2.5 overflow-x-auto">
             <table className="w-full text-left text-xs text-slate-300">
               <thead>
                 <tr className="border-b border-slate-800 text-[11px] text-slate-400 uppercase font-bold tracking-wider">
-                  <th className="pb-2">Plattform</th>
-                  <th className="pb-2">Typ & Titel</th>
-                  <th className="pb-2">Geplant für</th>
+                  <th className="pb-2">{hubText("Plattform")}</th>
+                  <th className="pb-2">{hubText("Typ & Titel")}</th>
+                  <th className="pb-2">{hubText("Geplant für")}</th>
                   <th className="pb-2">Status</th>
-                  <th className="pb-2">Versuche</th>
-                  <th className="pb-2 text-right">Aktionen</th>
+                  <th className="pb-2">{hubText("Versuche")}</th>
+                  <th className="pb-2 text-right">{hubText("Aktionen")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60 font-medium">
@@ -1095,13 +1081,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                               onClick={() => setSelectedLogJob(job)}
                               className="text-[10px] text-purple-400 hover:text-purple-300 underline cursor-pointer"
                             >
-                              ({job.executionLogs?.length} Ausführungsprotokolle)
-                            </button>
+                              ({job.executionLogs?.length}{' '}{hubText("Ausführungsprotokolle)")}</button>
                           )}
                         </div>
                       </td>
                       <td className="py-3 pr-2 whitespace-nowrap text-slate-300">
-                        {new Date(job.scheduledAt).toLocaleDateString('de-DE', {
+                        {new Date(job.scheduledAt).toLocaleDateString(language, {
                           day: '2-digit',
                           month: '2-digit',
                           year: 'numeric',
@@ -1111,11 +1096,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                       </td>
                       <td className="py-3 pr-2 whitespace-nowrap">
                         <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border ${statusConf.bg} ${statusConf.text} ${statusConf.border}`}>
-                          {getStatusLabel(job.status)}
+                          {hubText(getStatusLabel(job.status))}
                         </span>
                         {job.lastError && (
-                          <div className="text-[10px] text-rose-400 truncate max-w-xs mt-0.5" title={job.lastError}>
-                            Fehler: {job.lastError}
+                          <div className="text-[10px] text-rose-400 truncate max-w-xs mt-0.5" title={job.lastError}>{hubText("Fehler:")}{' '}{job.lastError}
                           </div>
                         )}
                         {job.publishedUrl && (
@@ -1126,7 +1110,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                               rel="noreferrer"
                               className="text-[10px] text-teal-400 hover:text-teal-300 inline-flex items-center gap-0.5 underline"
                             >
-                              <span>Öffnen</span>
+                              <span>{hubText("Öffnen")}</span>
                               <ExternalLink className="w-2.5 h-2.5" />
                             </a>
                           </div>
@@ -1137,34 +1121,33 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                           {job.attempts} / {job.maxAttempts}
                         </span>
                         {job.nextAttemptAt && job.status !== 'PUBLISHED' && (
-                          <div className="text-[9px] text-amber-400">
-                            Nächster Versuch: {new Date(job.nextAttemptAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}
+                          <div className="text-[9px] text-amber-400">{hubText("Nächster Versuch:")}{' '}{new Date(job.nextAttemptAt).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit' })}
                           </div>
                         )}
                       </td>
                       <td className="py-3 pl-2 text-right space-x-1.5 whitespace-nowrap">
                         {job.publicationUncertain ? (
-                          <span className="text-[10px] font-bold text-amber-300" title={job.lastError}>Plattformprofil prüfen</span>
+                          <span className="text-[10px] font-bold text-amber-300" title={job.lastError}>{hubText("Plattformprofil prüfen")}</span>
                         ) : job.platform === 'INSTAGRAM' && job.status !== 'FAILED' ? (
-                          <span className="text-[10px] font-bold text-fuchsia-300">Automatisch geplant</span>
+                          <span className="text-[10px] font-bold text-fuchsia-300">{hubText("Automatisch geplant")}</span>
                         ) : job.platform === 'YOUTUBE' && job.status !== 'FAILED' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT') ? (
-                          <span className="text-[10px] font-bold text-red-300">Automatisch geplant</span>
+                          <span className="text-[10px] font-bold text-red-300">{hubText("Automatisch geplant")}</span>
                         ) : !(
                           (job.platform === 'PINTEREST' && job.contentType === 'PIN')
                           || (job.platform === 'INSTAGRAM' && job.contentType === 'INSTAGRAM_POST')
                           || (job.platform === 'YOUTUBE' && (job.contentType === 'VIDEO' || job.contentType === 'SHORT'))
                         ) ? (
-                          <span className="text-[10px] font-bold text-slate-400">Nicht unterstützt</span>
+                          <span className="text-[10px] font-bold text-slate-400">{hubText("Nicht unterstützt")}</span>
                         ) : job.status === 'FAILED' ? (
                           <button
                             type="button"
                             disabled={isRunning}
                             onClick={() => handleRetryJob(job)}
                             className="px-2.5 py-1 bg-amber-600 hover:bg-amber-500 disabled:opacity-50 text-white rounded-lg text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer"
-                            title="Erneut versuchen und Zähler zurücksetzen"
+                            title={hubText("Erneut versuchen und Zähler zurücksetzen")}
                           >
                             {isRunning ? <Loader2 className="w-3 h-3 animate-spin" /> : <RotateCcw className="w-3 h-3" />}
-                            <span>Erneut versuchen</span>
+                            <span>{hubText("Erneut versuchen")}</span>
                           </button>
                         ) : (
                           <button
@@ -1172,10 +1155,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                             disabled={isRunning || job.status !== 'SCHEDULED'}
                             onClick={() => handleExecuteJob(job)}
                             className="px-2.5 py-1 bg-purple-600 hover:bg-purple-500 disabled:opacity-40 text-white rounded-lg text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer"
-                            title="Jetzt ausführen"
+                            title={hubText("Jetzt ausführen")}
                           >
                             {isRunning ? <Loader2 className="w-3 h-3 animate-spin" /> : <Play className="w-3 h-3" />}
-                            <span>Ausführen</span>
+                            <span>{hubText("Ausführen")}</span>
                           </button>
                         )}
 
@@ -1184,7 +1167,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                           disabled={job.status === 'PUBLISHING' || job.publicationUncertain === true}
                           onClick={() => handleDeleteJob(job.id)}
                           className="p-1 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-slate-800 transition-colors inline-flex cursor-pointer"
-                          title="Löschen"
+                          title={hubText("Löschen")}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -1201,8 +1184,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800/80 flex items-start gap-2.5 text-[11px] text-slate-400">
           <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
           <div>
-            <strong className="text-slate-200">Server-Autopilot aktiv:</strong> Die serverseitige Zeitsteuerung prüft minütlich alle fälligen Firestore-Aufträge mit dem Status „In Warteschlange“. Er läuft unabhängig vom Browser, verhindert Doppelverarbeitung und verlängert die Wartezeit nach Fehlern schrittweise.
-          </div>
+            <strong className="text-slate-200">{hubText("Server-Autopilot aktiv:")}</strong>{' '}{hubText("Die serverseitige Zeitsteuerung prüft minütlich alle fälligen Firestore-Aufträge mit dem Status „In Warteschlange“. Er läuft unabhängig vom Browser, verhindert Doppelverarbeitung und verlängert die Wartezeit nach Fehlern schrittweise.")}</div>
         </div>
       </div>
 
@@ -1213,27 +1195,23 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <span>Ausführungs-Protokoll</span>
+                  <span>{hubText("Ausführungs-Protokoll")}</span>
                   <span className="text-xs px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/40">
                     {selectedLogJob.platform}
                   </span>
                 </h3>
-                <p className="text-xs text-slate-400">Auftrag: {selectedLogJob.payload?.title || selectedLogJob.id}</p>
+                <p className="text-xs text-slate-400">{hubText("Auftrag:")}{' '}{selectedLogJob.payload?.title || selectedLogJob.id}</p>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedLogJob(null)}
                 className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold cursor-pointer"
-              >
-                Schließen
-              </button>
+              >{hubText("Schließen")}</button>
             </div>
 
             <div className="space-y-2.5">
               {(!selectedLogJob.executionLogs || selectedLogJob.executionLogs.length === 0) ? (
-                <div className="p-4 text-center text-xs text-slate-400 bg-slate-950 rounded-xl">
-                  Noch keine Ausführungsprotokolle für diesen Job vorhanden.
-                </div>
+                <div className="p-4 text-center text-xs text-slate-400 bg-slate-950 rounded-xl">{hubText("Noch keine Ausführungsprotokolle für diesen Job vorhanden.")}</div>
               ) : (
                 selectedLogJob.executionLogs.map((log, idx) => (
                   <div key={log.id || idx} className="p-3 bg-slate-950 rounded-2xl border border-slate-800/80 text-xs space-y-1.5">
@@ -1242,16 +1220,14 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                         log.status === 'PUBLISHED' ? 'bg-teal-500/20 text-teal-300' :
                         log.status === 'FAILED' ? 'bg-rose-500/20 text-rose-300' : 'bg-purple-500/20 text-purple-300'
                       }`}>
-                        {getStatusLabel(log.status)} (Versuch {log.attempts}/{log.maxAttempts})
+                        {hubText(getStatusLabel(log.status))}{' '}{hubText("(Versuch")}{' '}{log.attempts}/{log.maxAttempts})
                       </span>
-                      <span className="text-[10px] text-slate-400 font-mono">
-                        Ausgelöst durch: {getTriggerLabel(log.triggeredBy)} • {new Date(log.completedAt).toLocaleString('de-DE')}
+                      <span className="text-[10px] text-slate-400 font-mono">{hubText("Ausgelöst durch:")}{' '}{hubText(getTriggerLabel(log.triggeredBy))} • {new Date(log.completedAt).toLocaleString(language)}
                       </span>
                     </div>
 
                     {log.externalId && (
-                      <div className="text-[11px] text-teal-400">
-                        Externe ID: <span className="font-mono">{log.externalId}</span>
+                      <div className="text-[11px] text-teal-400">{hubText("Externe ID:")}{' '}<span className="font-mono">{log.externalId}</span>
                       </div>
                     )}
 

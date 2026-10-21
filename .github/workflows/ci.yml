@@ -67,6 +67,9 @@ jobs:
       - name: Pinterest-Zieladressen prüfen
         run: bun run audit:pinterest-target
 
+      - name: Inhaltssprache und englischen Content Hub prüfen
+        run: bun run audit:content-hub-i18n
+
       - name: TypeScript pruefen
         run: bun run lint
 

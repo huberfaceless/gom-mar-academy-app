@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import { pinterestApiBase } from '../src/utils/pinterestEnvironment';
 import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup as renderMarkup } from 'react-dom/server';
+import { LanguageProvider } from '../src/context/LanguageContext';
+import { contentLanguageInstruction, recommendationLabel } from '../server/contentGenerationLanguage';
+import { contentHubText } from '../src/i18n/contentHubCopy';
+const renderToStaticMarkup = (element: React.ReactNode) => renderMarkup(React.createElement(LanguageProvider, null, element));
 import { AffiliateLinkModal } from '../src/components/ContentEngine/AffiliateLinkModal';
 import { ProjectSettingsModal } from '../src/components/ContentEngine/ProjectSettingsModal';
 import { readFileSync } from 'node:fs';
@@ -37,7 +41,7 @@ let handler: (req: any, res: any) => Promise<void>;
 let modelReply: any = { pins: Array.from({ length: 5 }, () => ({ title: 'Test', targetUrl: 'https://invented.example/' })) };
 let lastPrompt = '';
 let aiCalls = 0; let credentialCalls = 0; let platformCalls = 0; let sent: any;
-const context = vm.createContext({
+const context = vm.createContext({ contentLanguageInstruction, recommendationLabel,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } }, requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {},
   resolvePinterestTargetUrl, pinterestApiBase, FIREBASE_PROJECT_ID: 'test',
   loadPinterestAccessToken: async () => { credentialCalls++; return 'isolated-test-token'; },

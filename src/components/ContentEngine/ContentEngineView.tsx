@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
@@ -72,7 +73,7 @@ const SUGGESTED_TOPICS_ONLINE_BUSINESS = [
   'Mit wenig Zeit ein automatisiertes Online-Business aufbauen',
 ];
 
-const getSuggestedTopics = (project: ProjectSettings): string[] => {
+const getSuggestedTopics = (project: ProjectSettings, hubText: (source: string, ...values: unknown[]) => string): string[] => {
   if (project.id === DEFAULT_VITAL50_PROJECT.id) {
     return SUGGESTED_TOPICS_VITAL50;
   }
@@ -93,21 +94,21 @@ const getSuggestedTopics = (project: ProjectSettings): string[] => {
   const coreTopics = [...new Set(project.coreTopics.map((topic) => topic.trim()).filter(Boolean))];
   if (coreTopics.length === 0) {
     return [
-      `${project.name}: Ein verständlicher Einstieg für Anfänger`,
-      `${project.name}: Die 5 häufigsten Fehler und wie du sie vermeidest`,
-      `${project.name} Schritt für Schritt: Ein praktischer Leitfaden`,
-      `Was bei ${project.name} wirklich funktioniert – Chancen und Grenzen`,
-      `${project.name}: 7 konkrete Tipps für bessere Ergebnisse`,
+      hubText("{0}: Ein verständlicher Einstieg für Anfänger", project.name),
+      hubText("{0}: Die 5 häufigsten Fehler und wie du sie vermeidest", project.name),
+      hubText("{0} Schritt für Schritt: Ein praktischer Leitfaden", project.name),
+      hubText("Was bei {0} wirklich funktioniert – Chancen und Grenzen", project.name),
+      hubText("{0}: 7 konkrete Tipps für bessere Ergebnisse", project.name),
     ];
   }
 
   const topicAt = (index: number) => coreTopics[index % coreTopics.length];
   return [
-    `${topicAt(0)}: Ein verständlicher Einstieg für Anfänger`,
-    `${topicAt(1)}: Die 5 häufigsten Fehler und wie du sie vermeidest`,
-    `${topicAt(2)} Schritt für Schritt: Ein praktischer Leitfaden`,
-    `Was bei ${topicAt(3)} wirklich funktioniert – Chancen und Grenzen`,
-    `${topicAt(4)}: 7 konkrete Tipps für bessere Ergebnisse`,
+    hubText("{0}: Ein verständlicher Einstieg für Anfänger", topicAt(0)),
+    hubText("{0}: Die 5 häufigsten Fehler und wie du sie vermeidest", topicAt(1)),
+    hubText("{0} Schritt für Schritt: Ein praktischer Leitfaden", topicAt(2)),
+    hubText("Was bei {0} wirklich funktioniert – Chancen und Grenzen", topicAt(3)),
+    hubText("{0}: 7 konkrete Tipps für bessere Ergebnisse", topicAt(4)),
   ];
 };
 
@@ -118,6 +119,7 @@ type ContentGenerationRequest =
   | { kind: 'new-blog'; settings: ProjectSettings };
 
 export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = false }) => {
+  const { language, hubText } = useContentHubCopy();
   const { user } = useAuth();
   const userId = user?.uid;
 
@@ -189,7 +191,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const { scopedProjects, activeProject: activeContentProject } = selectContentProjectScope(
     contentProjects.filter(project => canUseContentProject(project.projectSettings, isAdmin)), activeProjectSettings.id, selectedContentProject?.id,
   );
-  const suggestedTopics = getSuggestedTopics(activeProjectSettings);
+  const suggestedTopics = getSuggestedTopics(activeProjectSettings, hubText).map(topic => hubText(topic));
 
   // Restore the selected article's topic without overwriting an independently edited draft.
   useEffect(() => {
@@ -217,7 +219,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         await FirestoreContentService.saveContentProject(userId, updated);
       } catch (err) {
         console.error('Error saving updated content project to Firestore:', err);
-        setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
+        setErrorMsg(err instanceof Error ? err.message : hubText("Die Cloud-Speicherung konnte nicht bestätigt werden."));
         return false;
       }
     }
@@ -226,7 +228,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
   const handleSaveProjectSettings = async (updatedSettings: ProjectSettings) => {
     if (!canUseContentProject(updatedSettings, isAdmin)) {
-      setErrorMsg('Vital50 steht ausschließlich Administratoren zur Verfügung.');
+      setErrorMsg(hubText("Vital50 steht ausschließlich Administratoren zur Verfügung."));
       return;
     }
     setErrorMsg(null);
@@ -245,7 +247,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         await FirestoreContentService.saveProjectSettings(userId, updatedSettings, isAdmin);
       } catch (err) {
         console.error('Error saving project settings to Firestore:', err);
-        setErrorMsg(err instanceof Error ? err.message : 'Die Cloud-Speicherung konnte nicht bestätigt werden.');
+        setErrorMsg(err instanceof Error ? err.message : hubText("Die Cloud-Speicherung konnte nicht bestätigt werden."));
         settingsSaved = false;
       }
     }
@@ -259,7 +261,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     }
 
     if (settingsSaved && contentSaved) {
-      setSaveNotice(`Projekt „${updatedSettings.name}“ wurde erfolgreich gespeichert.`);
+      setSaveNotice(hubText('Projekt „{0}“ wurde erfolgreich gespeichert.', updatedSettings.name));
     }
   };
 
@@ -267,7 +269,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const handleStartBrief = async (topicToUse?: string) => {
     const finalTopic = topicToUse || topicInput;
     if (!finalTopic.trim()) {
-      setErrorMsg('Bitte gib ein Thema ein.');
+      setErrorMsg(hubText("Bitte gib ein Thema ein."));
       return;
     }
     setErrorMsg(null);
@@ -294,7 +296,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       handleUpdateActiveProject(newProject);
       setActiveTab('brief');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen des Inhaltsbriefings.');
+      setErrorMsg(err.message || hubText("Fehler beim Erstellen des Inhaltsbriefings."));
     } finally {
       setIsGeneratingBrief(false);
     }
@@ -324,14 +326,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       ));
       setActiveTab('blog');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen des Blogartikels.');
+      setErrorMsg(err.message || hubText("Fehler beim Erstellen des Blogartikels."));
     } finally {
       setIsGeneratingBlog(false);
     }
   };
 
   const generateAdditionalBlog = async (topic: string, settings: ProjectSettings, affiliateLink: string | null) => {
-    if (!topic.trim()) { setErrorMsg('Bitte gib ein Thema für den neuen Blogartikel ein.'); return; }
+    if (!topic.trim()) { setErrorMsg(hubText("Bitte gib ein Thema für den neuen Blogartikel ein.")); return; }
     setErrorMsg(null);
     setIsGeneratingBlog(true);
     try {
@@ -340,7 +342,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       await handleUpdateActiveProject(createBlogArticleProject(topic.trim(), settings, brief, article, affiliateLink));
       setActiveTab('blog');
     } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : 'Der zusätzliche Blogartikel konnte nicht erstellt werden.');
+      setErrorMsg(err instanceof Error ? err.message : hubText("Der zusätzliche Blogartikel konnte nicht erstellt werden."));
     } finally { setIsGeneratingBlog(false); }
   };
 
@@ -369,7 +371,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       });
       setActiveTab('pinterest');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen der Pinterest-Pins.');
+      setErrorMsg(err.message || hubText("Fehler beim Erstellen der Pinterest-Pins."));
     } finally {
       setIsGeneratingPinterest(false);
     }
@@ -409,14 +411,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       });
       setActiveTab('youtube');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler beim Erstellen des YouTube-Skripts.');
+      setErrorMsg(err.message || hubText("Fehler beim Erstellen des YouTube-Skripts."));
     } finally {
       setIsGeneratingYouTube(false);
     }
   };
 
   const handleGenerateAllInOneClick = () => {
-    if (!topicInput.trim()) { setErrorMsg('Bitte gib ein Thema ein.'); return; }
+    if (!topicInput.trim()) { setErrorMsg(hubText("Bitte gib ein Thema ein.")); return; }
     setContentGenerationRequest({ kind: 'all', topic: topicInput.trim(), settings: activeProjectSettings, angle: customAngleInput });
   };
 
@@ -424,7 +426,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const generateAllWithLink = async (request: Extract<ContentGenerationRequest, { kind: 'all' }>, affiliateLink: string | null) => {
     const { topic, settings, angle } = request;
     if (!topic) {
-      setErrorMsg('Bitte gib ein Thema ein.');
+      setErrorMsg(hubText("Bitte gib ein Thema ein."));
       return;
     }
     setErrorMsg(null);
@@ -465,7 +467,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       handleUpdateActiveProject(fullProject);
       setActiveTab('brief');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Fehler bei der Ein-Klick-Erstellung.');
+      setErrorMsg(err.message || hubText("Fehler bei der Ein-Klick-Erstellung."));
     } finally {
       setIsGeneratingAll(false);
     }
@@ -495,7 +497,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         setActiveContentProject(remaining.find((p) => p.projectSettings?.id === selectedProjectId) || null);
       }
     } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : 'Das Projekt konnte nicht gelöscht werden.');
+      setErrorMsg(err instanceof Error ? err.message : hubText("Das Projekt konnte nicht gelöscht werden."));
     }
   };
 
@@ -509,16 +511,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight break-words">
-                KI-Inhaltszentrale
-              </h1>
-              <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                Phase 1 & 2 Aktiv
-              </span>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight break-words">{hubText("KI-Inhaltszentrale")}</h1>
+              <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">{hubText("Phase 1 & 2 Aktiv")}</span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              1 Thema → Inhaltsbriefing → Blogartikel + 5 Pinterest-Pins + YouTube-Skript und Kurzvideos → Kalender
-            </p>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{hubText("1 Thema → Inhaltsbriefing → Blogartikel + 5 Pinterest-Pins + YouTube-Skript und Kurzvideos → Kalender")}</p>
           </div>
         </div>
 
@@ -545,6 +541,9 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
             </select>
           </div>
 
+          <span className="text-xs font-medium text-slate-500">
+            {hubText('Inhaltssprache')}: {hubText(({ de: 'Deutsch', en: 'Englisch', pl: 'Polnisch' })[activeProjectSettings.language || 'de'])}
+          </span>
           <button
             type="button"
             onClick={() => {
@@ -552,20 +551,20 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               setIsSettingsModalOpen(true);
             }}
             className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl shadow-xs transition-colors inline-flex max-w-full items-center gap-2 text-xs font-bold"
-            title="Projekt-Einstellungen bearbeiten"
+            title={hubText("Projekt-Einstellungen bearbeiten")}
           >
             <Settings className="w-4 h-4" />
-            <span>Projekt bearbeiten</span>
+            <span>{hubText("Projekt bearbeiten")}</span>
           </button>
           <button
             type="button"
             onClick={() => {
               const project = createOnlineBusinessProject(userId);
-              setProjectBeingEdited({ ...project, id: `${project.id}_${Date.now()}` });
+              setProjectBeingEdited({ ...project, language, id: `${project.id}_${Date.now()}` });
               setIsSettingsModalOpen(true);
             }}
             className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-600 rounded-xl shadow-xs transition-colors"
-            title="Neues Inhaltsprojekt anlegen"
+            title={hubText("Neues Inhaltsprojekt anlegen")}
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -595,15 +594,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-6 sm:p-7 rounded-3xl shadow-xl border border-slate-800 space-y-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-400">
-              Neuer Inhaltsablauf
-            </span>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-0.5">
-              Welches Thema möchtest du heute erobern?
-            </h2>
+            <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-400">{hubText("Neuer Inhaltsablauf")}</span>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-0.5">{hubText("Welches Thema möchtest du heute erobern?")}</h2>
           </div>
-          <span className="text-xs text-slate-400">
-            Aktiv: <strong className="text-emerald-400 font-bold">{activeProjectSettings.name}</strong> ({activeProjectSettings.targetAudience})
+          <span className="text-xs text-slate-400">{hubText("Aktiv:")}{' '}<strong className="text-emerald-400 font-bold">{activeProjectSettings.name}</strong> ({activeProjectSettings.targetAudience})
           </span>
         </div>
 
@@ -611,8 +605,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
-              aria-label="Thema für den Inhaltsablauf"
-              placeholder={`z. B. ${suggestedTopics[0]}...`}
+              aria-label={hubText("Thema für den Inhaltsablauf")}
+              placeholder={hubText('z. B. {0}...', suggestedTopics[0])}
               value={topicInput}
               onChange={(e) => setTopicInput(e.target.value)}
               className="flex-1 px-4 py-3.5 bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl text-white placeholder:text-slate-400 text-sm font-medium focus:outline-hidden focus:border-emerald-400 focus:bg-white/15 transition-all"
@@ -626,7 +620,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 className="px-4 sm:px-5 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all disabled:opacity-50"
               >
                 {isGeneratingBrief ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4 text-emerald-400" />}
-                <span>Schritt 1: Briefing</span>
+                <span>{hubText("Schritt 1: Briefing")}</span>
               </button>
 
               <button
@@ -636,15 +630,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 className="px-5 sm:px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl text-xs sm:text-sm font-extrabold shadow-lg shadow-emerald-500/30 flex items-center gap-2 transition-all disabled:opacity-50"
               >
                 {isGeneratingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-300" />}
-                <span>1-Klick Komplett-Set erzeugen</span>
+                <span>{hubText("1-Klick Komplett-Set erzeugen")}</span>
               </button>
             </div>
           </div>
 
           {/* Inspiration Quick Pills */}
           <div className="pt-2">
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Themen-Inspiration für {activeProjectSettings.name}:
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">{hubText("Themen-Inspiration für")}{' '}{activeProjectSettings.name}:
             </p>
             <div className="flex flex-wrap gap-2">
               {suggestedTopics.map((topic, i) => (
@@ -674,10 +667,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       {/* Progress & Navigation Tabs */}
       {!activeContentProject && (
         <div className="space-y-4">
-          <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-600">
-            Für <strong>{activeProjectSettings.name}</strong> sind noch keine Inhalte vorhanden.
-            Erstelle oben ein Thema für diesen Bereich.
-          </p>
+          <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-600">{hubText("Für")}{' '}<strong>{activeProjectSettings.name}</strong>{' '}{hubText("sind noch keine Inhalte vorhanden. Erstelle oben ein Thema für diesen Bereich.")}</p>
           <YouTubeScriptTab
             onChangeVideo={() => undefined}
             onChangeShorts={() => undefined}
@@ -690,9 +680,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
       {activeContentProject && (
         <div className="space-y-4">
-          <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
-            Aktuelles Thema: <strong>{activeContentProject.topic}</strong>. Die folgenden Schritte verwenden dieses Thema.
-          </p>
+          <p className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-700">{hubText("Aktuelles Thema:")}{' '}<strong>{activeContentProject.topic}</strong>{hubText(". Die folgenden Schritte verwenden dieses Thema.")}</p>
           <div className="bg-white p-2 sm:p-2.5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap items-center gap-1.5 w-full">
               <button
@@ -705,7 +693,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <FileText className="w-4 h-4" />
-                <span>1. Inhaltsbriefing</span>
+                <span>{hubText("1. Inhaltsbriefing")}</span>
                 {activeContentProject.contentBrief && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
@@ -719,7 +707,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <BookOpen className="w-4 h-4" />
-                <span>2. Blogartikel</span>
+                <span>{hubText("2. Blogartikel")}</span>
                 {activeContentProject.blogArticle && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
@@ -733,7 +721,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <Pin className="w-4 h-4" />
-                <span>3. Pinterest Pins (5)</span>
+                <span>{hubText("3. Pinterest Pins (5)")}</span>
                 {activeContentProject.pinterestPins?.length > 0 && <span className="text-[10px] opacity-80">({activeContentProject.pinterestPins.length})</span>}
               </button>
 
@@ -747,7 +735,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <Instagram className="w-4 h-4" />
-                <span>4. Instagram Beiträge (5)</span>
+                <span>{hubText("4. Instagram Beiträge (5)")}</span>
                 {activeContentProject.pinterestPins?.length > 0 && <span className="text-[10px] opacity-80">({activeContentProject.pinterestPins.length})</span>}
               </button>
 
@@ -761,7 +749,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <Youtube className="w-4 h-4" />
-                <span>5. YouTube und Kurzvideos</span>
+                <span>{hubText("5. YouTube und Kurzvideos")}</span>
                 {activeContentProject.youtubeVideo && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
@@ -775,7 +763,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <Calendar className="w-4 h-4" />
-                <span>6. Kalender & Freigabe</span>
+                <span>{hubText("6. Kalender & Freigabe")}</span>
               </button>
             </div>
 
@@ -832,8 +820,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
             ) : (
               <div className="p-12 text-center bg-white rounded-2xl border border-slate-200">
                 <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                <h3 className="text-base font-bold text-slate-700">Noch kein Blogartikel generiert</h3>
-                <p className="text-xs text-slate-500 mt-1 mb-4">Erstelle den vollständigen 1.500-Wörter-Artikel basierend auf dem Inhaltsbriefing.</p>
+                <h3 className="text-base font-bold text-slate-700">{hubText("Noch kein Blogartikel generiert")}</h3>
+                <p className="text-xs text-slate-500 mt-1 mb-4">{hubText("Erstelle den vollständigen 1.500-Wörter-Artikel basierend auf dem Inhaltsbriefing.")}</p>
                 <button
                   type="button"
                   onClick={handleGenerateBlog}
@@ -841,7 +829,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                   className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs inline-flex items-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>{isGeneratingBlog ? 'Generiere...' : 'Blogartikel jetzt generieren'}</span>
+                  <span>{isGeneratingBlog ? hubText("Generiere...") : hubText("Blogartikel jetzt generieren")}</span>
                 </button>
               </div>
             )
@@ -911,7 +899,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         <AffiliateLinkModal
           requestTopic={contentGenerationRequest.kind === 'new-blog'}
           initialLink={'project' in contentGenerationRequest ? contentGenerationRequest.project.projectSettings.defaultTargetUrl : contentGenerationRequest.settings.defaultTargetUrl}
-          contentLabel={contentGenerationRequest.kind === 'pinterest' ? 'Pinterest-Pins' : contentGenerationRequest.kind === 'youtube' ? 'YouTube und Shorts' : contentGenerationRequest.kind === 'all' ? 'Alle Inhalte' : 'Blogartikel'}
+          contentLabel={contentGenerationRequest.kind === 'pinterest' ? 'Pinterest-Pins' : contentGenerationRequest.kind === 'youtube' ? hubText("YouTube und Shorts") : contentGenerationRequest.kind === 'all' ? hubText("Alle Inhalte") : hubText("Blogartikel")}
           onConfirm={handleConfirmAffiliateLink}
           onClose={() => setContentGenerationRequest(null)}
         />

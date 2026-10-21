@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useEffect, useState } from 'react';
 import { X, Save, Plus, Trash2, Globe, Sparkles, Building2 } from 'lucide-react';
 import { resolvePinterestTargetUrl } from '../../utils/pinterestTargetUrl';
@@ -16,6 +17,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
   project,
   onSave,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [formData, setFormData] = useState<ProjectSettings>({ ...project });
   const [newTopic, setNewTopic] = useState('');
   const [linkError, setLinkError] = useState('');
@@ -67,8 +69,8 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               <Building2 className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Projekt-Einstellungen bearbeiten</h2>
-              <p className="text-xs text-slate-500">Zentrale Marken- und Zielgruppen-Parameter für die KI-Generierung</p>
+              <h2 className="text-lg font-bold text-slate-900">{hubText("Projekt-Einstellungen bearbeiten")}</h2>
+              <p className="text-xs text-slate-500">{hubText("Zentrale Marken- und Zielgruppen-Parameter für die KI-Generierung")}</p>
             </div>
           </div>
           <button
@@ -81,12 +83,21 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 
         {/* Body */}
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-4 flex-1">
-          <p className="text-sm text-slate-600">Passe diese Vorlage an dein eigenes Business an. Trage deine Website, Zielseite und Kanalnamen ein. Wenn du noch keine Website hast, kannst du das Feld leer lassen.</p>
+          <p className="text-sm text-slate-600">{hubText("Passe diese Vorlage an dein eigenes Business an. Trage deine Website, Zielseite und Kanalnamen ein. Wenn du noch keine Website hast, kannst du das Feld leer lassen.")}</p>
+          <div>
+            <label htmlFor="content-project-language" className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText('Inhaltssprache')}</label>
+            <select id="content-project-language" value={formData.language || 'de'}
+              onChange={event => setFormData({ ...formData, language: event.target.value as ProjectSettings['language'] })}
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <option value="de">{hubText('Deutsch')}</option>
+              <option value="en">{hubText('Englisch')}</option>
+              <option value="pl">{hubText('Polnisch')}</option>
+            </select>
+            <p className="mt-1 text-xs text-slate-500">{hubText('Diese Sprache gilt für neu erzeugte Inhalte. Gespeicherte Inhalte werden nicht automatisch übersetzt.')}</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                Projektname
-              </label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Projektname")}</label>
               <input
                 type="text"
                 value={formData.name}
@@ -101,7 +112,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               </label>
               <input
                 type="url"
-                placeholder="https://deine-website.at"
+                placeholder={hubText("https://deine-website.at")}
                 value={formData.websiteUrl}
                 onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
@@ -110,9 +121,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-              Zielgruppe & Persona
-            </label>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Zielgruppe & Persona")}</label>
             <input
               type="text"
               value={formData.targetAudience}
@@ -123,13 +132,11 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-              Kernthemen & Nischen
-            </label>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Kernthemen & Nischen")}</label>
             <div className="flex gap-2 mb-2">
               <input
                 type="text"
-                placeholder="Neues Thema hinzufügen..."
+                placeholder={hubText("Neues Thema hinzufügen...")}
                 value={newTopic}
                 onChange={(e) => setNewTopic(e.target.value)}
                 onKeyDown={(e) => {
@@ -169,27 +176,23 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                Projekt-Zieladresse für alle Inhalte
-              </label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Projekt-Zieladresse für alle Inhalte")}</label>
               <input
                 type="url"
                 maxLength={2048}
-                aria-label="Projekt-Zieladresse für alle Inhalte"
+                aria-label={hubText("Projekt-Zieladresse für alle Inhalte")}
                 aria-invalid={Boolean(linkError)}
                 aria-describedby="project-link-help"
-                placeholder="https://deine-zielseite.at (optional)"
+                placeholder={hubText("https://deine-zielseite.at (optional)")}
                 value={formData.defaultTargetUrl || ''}
                 onChange={(e) => { setFormData({ ...formData, defaultTargetUrl: e.target.value }); setLinkError(''); }}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
-              <p id="project-link-help" className="mt-2 text-xs text-slate-600">Diese Adresse ist die Vorgabe für Briefing, Blog, Pinterest, YouTube und Shorts. Beim Erstellen kannst du gezielt eine andere Adresse wählen. Bestehende Inhalte behalten ihren bisherigen Link.</p>
+              <p id="project-link-help" className="mt-2 text-xs text-slate-600">{hubText("Diese Adresse ist die Vorgabe für Briefing, Blog, Pinterest, YouTube und Shorts. Beim Erstellen kannst du gezielt eine andere Adresse wählen. Bestehende Inhalte behalten ihren bisherigen Link.")}</p>
               {linkError && <p role="alert" className="mt-1 text-xs text-rose-700">{linkError}</p>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                Standard Call to Action (CTA)
-              </label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Standard Call to Action (CTA)")}</label>
               <input
                 type="text"
                 value={formData.defaultCta}
@@ -200,9 +203,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-              Brand Voice & Tonalität
-            </label>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Brand Voice & Tonalität")}</label>
             <textarea
               rows={2}
               value={formData.brandVoice}
@@ -213,26 +214,22 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                Standard Pinterest Board Name
-              </label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Standard Pinterest Board Name")}</label>
               <input
                 type="text"
                 value={formData.pinterestBoardDefault || ''}
                 onChange={(e) => setFormData({ ...formData, pinterestBoardDefault: e.target.value })}
-                placeholder="Name deiner Pinterest-Pinnwand (optional)"
+                placeholder={hubText("Name deiner Pinterest-Pinnwand (optional)")}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                YouTube Kanal Name
-              </label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("YouTube Kanal Name")}</label>
               <input
                 type="text"
                 value={formData.youtubeChannelName || ''}
                 onChange={(e) => setFormData({ ...formData, youtubeChannelName: e.target.value })}
-                placeholder="Name deines YouTube-Kanals (optional)"
+                placeholder={hubText("Name deines YouTube-Kanals (optional)")}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-emerald-500 outline-hidden"
               />
             </div>
@@ -244,16 +241,12 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               type="button"
               onClick={onClose}
               className="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-slate-900"
-            >
-              Abbrechen
-            </button>
+            >{hubText("Abbrechen")}</button>
             <button
               type="submit"
               className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl shadow-xs flex items-center gap-2"
             >
-              <Save className="w-4 h-4" />
-              Einstellungen speichern
-            </button>
+              <Save className="w-4 h-4" />{hubText("Einstellungen speichern")}</button>
           </div>
         </form>
       </div>

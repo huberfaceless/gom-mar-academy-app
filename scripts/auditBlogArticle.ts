@@ -3,7 +3,11 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
 import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup as renderMarkup } from 'react-dom/server';
+import { LanguageProvider } from '../src/context/LanguageContext';
+import { contentLanguageInstruction, recommendationLabel } from '../server/contentGenerationLanguage';
+import { contentHubText } from '../src/i18n/contentHubCopy';
+const renderToStaticMarkup = (element: React.ReactNode) => renderMarkup(React.createElement(LanguageProvider, null, element));
 import { build } from 'esbuild';
 import { BlogArticleContent } from '../src/components/ContentEngine/BlogArticleContent';
 import { validateBlogAffiliateLink } from '../src/utils/blogAffiliateLink';
@@ -36,7 +40,7 @@ const server = readFileSync('server.ts', 'utf8');
 const route = server.slice(server.indexOf("  app.post('/api/content-engine/blog'"), server.indexOf('  // 🚀 Content Engine: 3.'));
 let handler: (req: any, res: any) => Promise<void>;
 let calls = 0; let prompt = '';
-const context = vm.createContext({
+const context = vm.createContext({ contentLanguageInstruction, recommendationLabel,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } },
   requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {}, validateBlogAffiliateLink,
   ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: 'Ein hilfreicher Artikel.' }) }; } } }, console,

@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState } from 'react';
 import { 
   X, 
@@ -31,6 +32,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
   imagePrompt,
   onSelectImage,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [selectedUrl, setSelectedUrl] = useState<string>(currentImageUrl || CURATED_HEALTH_PHOTOS[0].url);
   const [customUrlInput, setCustomUrlInput] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'curated' | 'upload' | 'ai'>('curated');
@@ -81,8 +83,8 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
               <ImageIcon className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold">Hintergrundbild für Pin (1080×1620)</h3>
-              <p className="text-xs text-slate-400">Wähle kuratierte HD-Fotos, lade eigene Bilder hoch oder nutze KI-Prompts</p>
+              <h3 className="text-base font-bold">{hubText("Hintergrundbild für Pin (1080×1620)")}</h3>
+              <p className="text-xs text-slate-400">{hubText("Wähle kuratierte HD-Fotos, lade eigene Bilder hoch oder nutze KI-Prompts")}</p>
             </div>
           </div>
           <button
@@ -104,9 +106,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
                 ? 'bg-white text-emerald-700 border-emerald-600 shadow-xs'
                 : 'text-slate-500 border-transparent hover:text-slate-800'
             }`}
-          >
-            🖼️ Kuratierte Vital50 HD-Fotos
-          </button>
+          >{hubText("🖼️ Kuratierte Vital50 HD-Fotos")}</button>
           <button
             type="button"
             onClick={() => setActiveTab('upload')}
@@ -115,9 +115,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
                 ? 'bg-white text-emerald-700 border-emerald-600 shadow-xs'
                 : 'text-slate-500 border-transparent hover:text-slate-800'
             }`}
-          >
-            📤 Eigenes Bild / URL
-          </button>
+          >{hubText("📤 Eigenes Bild / URL")}</button>
           <button
             type="button"
             onClick={() => setActiveTab('ai')}
@@ -126,9 +124,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
                 ? 'bg-white text-emerald-700 border-emerald-600 shadow-xs'
                 : 'text-slate-500 border-transparent hover:text-slate-800'
             }`}
-          >
-            ✨ KI-Prompt & Imagen
-          </button>
+          >{hubText("✨ KI-Prompt & Imagen")}</button>
         </div>
 
         {/* Content */}
@@ -180,8 +176,8 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
             <div className="space-y-4">
               <label className="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-slate-50 hover:bg-emerald-50/40">
                 <Upload className="w-10 h-10 text-slate-400 mb-2" />
-                <span className="text-sm font-bold text-slate-700">Bild vom Computer hochladen</span>
-                <span className="text-xs text-slate-400 mt-1">Empfohlen: 1080×1620 (JPG, PNG, WebP)</span>
+                <span className="text-sm font-bold text-slate-700">{hubText("Bild vom Computer hochladen")}</span>
+                <span className="text-xs text-slate-400 mt-1">{hubText("Empfohlen: 1080×1620 (JPG, PNG, WebP)")}</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -191,7 +187,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
               </label>
 
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-700 uppercase">Oder Bild-URL einfügen</label>
+                <label className="block text-xs font-bold text-slate-700 uppercase">{hubText("Oder Bild-URL einfügen")}</label>
                 <div className="flex items-center gap-2">
                   <div className="relative flex-1">
                     <Link2 className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -216,16 +212,14 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
               <div className="p-4 bg-emerald-50/80 rounded-xl border border-emerald-200 flex items-start gap-3">
                 <Sparkles className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-emerald-900">Optimierter Fotografie-Prompt für Bild-KI</h4>
-                  <p className="text-xs text-emerald-700 mt-0.5">
-                    Generiere professionelle fotorealistische Prompts für Midjourney, Imagen oder DALL-E, abgestimmt auf die Zielgruppe 50+.
-                  </p>
+                  <h4 className="text-xs font-bold text-emerald-900">{hubText("Optimierter Fotografie-Prompt für Bild-KI")}</h4>
+                  <p className="text-xs text-emerald-700 mt-0.5">{hubText("Generiere professionelle fotorealistische Prompts für Midjourney, Imagen oder DALL-E, abgestimmt auf die Zielgruppe 50+.")}</p>
                 </div>
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-bold text-slate-700 uppercase">KI-Prompt (Englisch für Bildgeneratoren)</label>
+                  <label className="block text-xs font-bold text-slate-700 uppercase">{hubText("KI-Prompt (Englisch für Bildgeneratoren)")}</label>
                   <button
                     type="button"
                     onClick={handleOptimizePrompt}
@@ -233,7 +227,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
                     className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 disabled:opacity-50"
                   >
                     {isOptimizing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
-                    <span>Prompt mit KI verfeinern</span>
+                    <span>{hubText("Prompt mit KI verfeinern")}</span>
                   </button>
                 </div>
                 <textarea
@@ -246,7 +240,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
 
               {keywords.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 items-center">
-                  <span className="text-xs font-bold text-slate-500">Such-Tags:</span>
+                  <span className="text-xs font-bold text-slate-500">{hubText("Such-Tags:")}</span>
                   {keywords.map((k, i) => (
                     <span key={i} className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md text-[11px] font-semibold">
                       {k}
@@ -264,16 +258,12 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
             type="button"
             onClick={onClose}
             className="px-4 py-2 text-slate-600 hover:text-slate-800 text-xs font-semibold rounded-xl"
-          >
-            Abbrechen
-          </button>
+          >{hubText("Abbrechen")}</button>
           <button
             type="button"
             onClick={handleApply}
             className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors"
-          >
-            Bild für diesen Pin übernehmen
-          </button>
+          >{hubText("Bild für diesen Pin übernehmen")}</button>
         </div>
       </div>
     </div>

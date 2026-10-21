@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React from 'react';
 import { 
   FileText, 
@@ -26,6 +27,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
   onGenerateBlog,
   isGeneratingBlog,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [copied, setCopied] = React.useState(false);
 
   const handleCopyJson = () => {
@@ -40,16 +42,13 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
       <div className="bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-emerald-500/5 p-5 rounded-2xl border border-emerald-200/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              Content Brief fertig
-            </span>
-            <span className="text-xs text-slate-500">Fundament für Blog, Pinterest & YouTube</span>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">{hubText("Content Brief fertig")}</span>
+            <span className="text-xs text-slate-500">{hubText("Fundament für Blog, Pinterest & YouTube")}</span>
           </div>
           <h3 className="text-lg font-extrabold text-slate-900 mt-1">
             {brief.suggestedTitle || brief.h1}
           </h3>
-          <p className="text-xs text-slate-600 mt-0.5">
-            Hauptkeyword: <strong className="text-emerald-700 font-bold">{brief.mainKeyword}</strong> | Suchintention: <span className="uppercase font-mono text-[11px] bg-white px-1.5 py-0.5 rounded-sm border border-slate-200">{brief.searchIntent}</span>
+          <p className="text-xs text-slate-600 mt-0.5">{hubText("Hauptkeyword:")}{' '}<strong className="text-emerald-700 font-bold">{brief.mainKeyword}</strong>{' '}{hubText("| Suchintention:")}{' '}<span className="uppercase font-mono text-[11px] bg-white px-1.5 py-0.5 rounded-sm border border-slate-200">{brief.searchIntent}</span>
           </p>
         </div>
 
@@ -60,7 +59,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
             className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 flex items-center gap-1.5"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Kopiert' : 'JSON kopieren'}</span>
+            <span>{copied ? hubText("Kopiert") : hubText("JSON kopieren")}</span>
           </button>
 
           <button
@@ -70,7 +69,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
             className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 disabled:opacity-50"
           >
             <Sparkles className="w-4 h-4" />
-            <span>{isGeneratingBlog ? 'Generiere Blogartikel...' : 'Nächster Schritt: Blogartikel erzeugen'}</span>
+            <span>{isGeneratingBlog ? hubText("Generiere Blogartikel...") : hubText("Nächster Schritt: Blogartikel erzeugen")}</span>
           </button>
         </div>
       </div>
@@ -86,7 +85,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
             </h4>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Haupt-Keyword</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1">{hubText("Haupt-Keyword")}</label>
               <input
                 type="text"
                 value={brief.mainKeyword}
@@ -96,7 +95,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Neben-Keywords</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1">{hubText("Neben-Keywords")}</label>
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {brief.secondaryKeywords.map((kw, i) => (
                   <span key={i} className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium border border-slate-200">
@@ -114,18 +113,16 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
                 onChange={(e) => onChange({ ...brief, metaDescription: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:bg-white focus:border-emerald-500 outline-hidden"
               />
-              <span className="text-[10px] text-slate-400">Zeichen: {brief.metaDescription?.length || 0} / 155</span>
+              <span className="text-[10px] text-slate-400">{hubText("Zeichen:")}{' '}{brief.metaDescription?.length || 0} / 155</span>
             </div>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-              <Target className="w-4 h-4 text-emerald-600" />
-              Zielgruppe & CTA
-            </h4>
+              <Target className="w-4 h-4 text-emerald-600" />{hubText("Zielgruppe & CTA")}</h4>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Zielgruppe</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1">{hubText("Zielgruppe")}</label>
               <input
                 type="text"
                 value={brief.targetAudience}
@@ -151,12 +148,10 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
           {/* Article Outline */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
             <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <ListTree className="w-4 h-4 text-emerald-600" />
-              Geplante Artikelstruktur (Gliederung)
-            </h4>
+              <ListTree className="w-4 h-4 text-emerald-600" />{hubText("Geplante Artikelstruktur (Gliederung)")}</h4>
 
             <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 mb-3">
-              <p className="text-[11px] font-bold uppercase text-slate-400">H1 Hauptüberschrift:</p>
+              <p className="text-[11px] font-bold uppercase text-slate-400">{hubText("H1 Hauptüberschrift:")}</p>
               <p className="text-base font-extrabold text-slate-900 mt-0.5">{brief.h1 || brief.suggestedTitle}</p>
             </div>
 
@@ -181,7 +176,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
 
                   {section.h3s && section.h3s.length > 0 && (
                     <div className="pl-8 space-y-1">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase">Unterabschnitte (H3):</p>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase">{hubText("Unterabschnitte (H3):")}</p>
                       {section.h3s.map((h3, h3Idx) => (
                         <div key={h3Idx} className="text-xs text-slate-600 flex items-center gap-1.5">
                           <span className="text-emerald-500">•</span>
@@ -211,9 +206,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
           {brief.faqTopics && brief.faqTopics.length > 0 && (
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
               <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-emerald-600" />
-                Vorgeschlagene FAQ-Fragen für den Artikel
-              </h4>
+                <HelpCircle className="w-4 h-4 text-emerald-600" />{hubText("Vorgeschlagene FAQ-Fragen für den Artikel")}</h4>
               <div className="space-y-2">
                 {brief.faqTopics.map((faq, i) => (
                   <div key={i} className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
@@ -229,9 +222,7 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
           {brief.internalLinkingSuggestions && brief.internalLinkingSuggestions.length > 0 && (
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                <Link2 className="w-4 h-4 text-emerald-600" />
-                Interne Verlinkungsvorschläge
-              </h4>
+                <Link2 className="w-4 h-4 text-emerald-600" />{hubText("Interne Verlinkungsvorschläge")}</h4>
               <div className="flex flex-wrap gap-2">
                 {brief.internalLinkingSuggestions.map((link, i) => (
                   <span key={i} className="text-xs bg-slate-50 border border-slate-200 text-slate-700 px-3 py-1 rounded-lg">

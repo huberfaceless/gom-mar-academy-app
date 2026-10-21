@@ -77,19 +77,19 @@ assert.match(firestoreContent, /FIRESTORE_WRITE_TIMEOUT_MS = 8000/,
   'Cloud-Schreibvorgänge benötigen ein realistisches Zeitfenster für eine bestätigte Antwort.');
 assert.match(contentEngine, /setErrorMsg\(err instanceof Error \? err\.message/,
   'Fehler beim Speichern von Content-Projekten müssen sichtbar angezeigt werden.');
-assert.match(contentEngine, />Projekt bearbeiten<\/span>/,
+assert.match(contentEngine, /<span>\{hubText\("Projekt bearbeiten"\)\}<\/span>/,
   'Die Bearbeitung bestehender Projekte muss eine eindeutig beschriftete Aktion besitzen.');
-assert.match(contentEngine, /Projekt „\$\{updatedSettings\.name\}“ wurde erfolgreich gespeichert\./,
+assert.match(contentEngine, /hubText\('Projekt „\{0\}“ wurde erfolgreich gespeichert\.', updatedSettings\.name\)/,
   'Erfolgreich gespeicherte Projekte müssen sichtbar bestätigt werden.');
 assert.match(contentEngine, /contentSaved = await handleUpdateActiveProject/,
   'Die Speicherbestätigung darf erst nach dem zugehörigen Content-Projekt erscheinen.');
-assert.match(contentEngine, /const getSuggestedTopics = \(project: ProjectSettings\)/,
+assert.match(contentEngine, /const getSuggestedTopics = \(project: ProjectSettings, hubText:/,
   'Themen-Inspirationen müssen aus den Einstellungen des aktiven Projekts abgeleitet werden.');
-assert.match(contentEngine, /const suggestedTopics = getSuggestedTopics\(activeProjectSettings\)/,
+assert.match(contentEngine, /const suggestedTopics = getSuggestedTopics\(activeProjectSettings, hubText\)/,
   'Die sichtbaren Inspirationen müssen beim Projektwechsel neu bestimmt werden.');
 assert.match(contentEngine, /suggestedTopics\.map\(\(topic, i\)/,
   'Die Oberfläche muss die projektspezifischen Themen-Inspirationen anzeigen.');
-assert.match(calendar, /text: err instanceof Error \? err\.message : 'Der Auftrag konnte nicht gelöscht werden\.'/,
+assert.match(calendar, /text: err instanceof Error \? err\.message : hubText\("Der Auftrag konnte nicht gelöscht werden\."\)/,
   'Fehler beim Löschen eines Queue-Jobs müssen sichtbar angezeigt werden.');
 
 
