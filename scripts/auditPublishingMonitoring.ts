@@ -73,7 +73,7 @@ try {
   } finally { console.error = originalError; }
   assert.equal(entries.length, beforeSave + 1, 'Rejected writes must not announce a saved outcome.');
 
-  // Exhausted crash recovery claims also produce a terminal error after persistence.
+  // Expired claims require review rather than risking another external publication.
   const fields = {
     userId: { stringValue: 'owner' }, status: { stringValue: 'PUBLISHING' },
     platform: { stringValue: 'PINTEREST' }, attempts: { integerValue: '3' },
@@ -84,8 +84,8 @@ try {
       : { name: 'projects/test/databases/(default)/documents/publishingJobs/job', fields, updateTime: 'old-version' },
   )) as typeof fetch;
   const claim = await adapter.claimServerPublishingJob('job', 'worker');
-  assert.equal(claim.reason, 'max_attempts_exceeded');
-  assert.equal(entries.at(-1)!.outcome, 'FAILED');
+  assert.equal(claim.reason, 'publication_uncertain');
+  assert.equal(entries.at(-1)!.outcome, 'PUBLICATION_UNCERTAIN');
 
   // A failed queue read must be visible even when the HTTP scheduler call returns normally.
   const worker = await bundle('src/services/serverSchedulerWorker.ts', {
@@ -98,7 +98,8 @@ try {
     '../../server/emailCampaignDeliveryAdmin.js': 'export const runEmailCampaignDeliveries = async () => ({});',
     '../../server/publishingMemberAccess.js': 'export class PublishingAccessDeniedError extends Error {} export const requirePublishingMember = async () => {};',
   });
-  await worker.ServerSchedulerWorker.runTick();
+  const outcome = await worker.ServerSchedulerWorker.runTick();
+  assert.equal(outcome.sweepFailed, true);
   assert.equal(entries.at(-1)!.event, 'publishing_sweep_failed');
   assert.equal(entries.at(-1)!.severity, 'ERROR');
   assert.equal(worker.ServerSchedulerWorker.getStatus().isCurrentlyProcessing, false);

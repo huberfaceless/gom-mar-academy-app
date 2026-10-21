@@ -49,6 +49,9 @@ jobs:
       - name: Warnmeldungen für Veröffentlichungsergebnisse prüfen
         run: bun run audit:publishing-monitoring
 
+      - name: Firestore-Störungen und Schutz vor Doppelveröffentlichungen prüfen
+        run: bun run audit:firestore-recovery
+
       - name: Browserfehler und Auffangansicht prüfen
         run: bun run audit:browser-monitoring
 

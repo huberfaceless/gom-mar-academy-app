@@ -23,6 +23,8 @@ import { logPublishingSweepFailure } from '../../server/publishingMonitoring.js'
 
 
 export interface SchedulerExecutionResult {
+  sweepFailed?: boolean;
+  emailSweepFailed?: boolean;
   jobsChecked: number;
   jobsProcessed: number;
   publishedCount: number;
@@ -166,14 +168,18 @@ export class ServerSchedulerWorker {
             result.skippedCount++;
             continue;
           }
-          console.info(`[ServerSchedulerWorker] Found orphaned job ${jobId} with expired lock. Initiating crash recovery.`);
+          console.info('[ServerSchedulerWorker] Abgelaufene Veröffentlichungssperre wird auf unklaren Ausgang geprüft.');
         }
 
         // 🔒 3. Atomic Claiming via Firestore Transaction
         const claimResult = await claimServerPublishingJob(jobId, workerInstanceId);
 
         if (!claimResult.success || !claimResult.job) {
-          if (claimResult.reason === 'already_published') {
+          if (claimResult.reason === 'publication_uncertain') {
+            result.failedCount++;
+            result.details.push({ jobId, platform: job.platform, status: 'FAILED', attempts: job.attempts || 0,
+              error: claimResult.job?.lastError || 'Unklares Veröffentlichungsergebnis: Bitte Plattformprofil prüfen.' });
+          } else if (claimResult.reason === 'already_published') {
             result.skippedCount++;
           } else if (claimResult.reason === 'locked_by_other') {
             result.skippedCount++;
@@ -326,11 +332,13 @@ export class ServerSchedulerWorker {
         }
       }
     } catch (err: unknown) {
+      result.sweepFailed = true;
       logPublishingSweepFailure();
     } finally {
       try {
         result.emailDelivery = await runEmailCampaignDeliveries(process.env.VITE_FIREBASE_PROJECT_ID || 'gom-mar-akademie');
       } catch (err: unknown) {
+        result.emailSweepFailed = true;
         console.error('[ServerSchedulerWorker] E-Mail-Kampagnenlauf fehlgeschlagen:', err instanceof Error ? err.message : String(err));
       }
       isSchedulerRunning = false;
