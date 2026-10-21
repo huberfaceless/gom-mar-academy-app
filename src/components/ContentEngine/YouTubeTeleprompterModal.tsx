@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   X, 
@@ -25,6 +26,7 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
   isOpen,
   onClose,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [scrollSpeed, setScrollSpeed] = useState<number>(3); // 1 to 10
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xl'>('large');
@@ -87,14 +89,13 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
               <Volume2 className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Teleprompter & Sprecher-Modus</h3>
+              <h3 className="text-base font-bold text-white">{hubText("Teleprompter & Sprecher-Modus")}</h3>
               <p className="text-xs text-slate-400 flex items-center gap-2">
-                <span>{totalWords} Wörter</span>
+                <span>{totalWords}{' '}{hubText("Wörter")}</span>
                 <span>•</span>
                 <span className="flex items-center gap-1 text-emerald-400 font-semibold">
                   <Clock className="w-3 h-3" />
-                  ~{estimatedMinutes} Min. Sprechzeit
-                </span>
+                  ~{estimatedMinutes}{' '}{hubText("Min. Sprechzeit")}</span>
               </p>
             </div>
           </div>
@@ -106,7 +107,7 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
               className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Kopiert' : 'TTS-Text kopieren'}</span>
+              <span>{copied ? hubText("Kopiert") : hubText("TTS-Text kopieren")}</span>
             </button>
             <button
               type="button"
@@ -131,14 +132,14 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
               }`}
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-              <span>{isPlaying ? 'Pause (Leertaste)' : 'Teleprompter Starten'}</span>
+              <span>{isPlaying ? hubText("Pause (Leertaste)") : hubText("Teleprompter Starten")}</span>
             </button>
 
             <button
               type="button"
               onClick={handleResetScroll}
               className="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-colors"
-              title="An den Anfang zurückspringen"
+              title={hubText("An den Anfang zurückspringen")}
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -147,7 +148,7 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
           {/* Speed & Font Options */}
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-2">
-              <span className="text-slate-400 font-medium">Tempo:</span>
+              <span className="text-slate-400 font-medium">{hubText("Tempo:")}</span>
               <input
                 type="range"
                 min={1}
@@ -198,9 +199,7 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
         >
           {/* Hook */}
           <div className="space-y-3 border-l-4 border-red-500 pl-6">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-red-400">
-              🎬 1. Hook (Erste 10 Sekunden)
-            </span>
+            <span className="text-xs uppercase font-extrabold tracking-widest text-red-400">{hubText("🎬 1. Hook (Erste 10 Sekunden)")}</span>
             <p className={`font-extrabold text-amber-300 ${fontSizeClass}`}>
               {video.script.hook}
             </p>
@@ -223,8 +222,7 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
                 <span className="text-xs uppercase font-extrabold tracking-widest text-emerald-400">
                   {section.sectionTitle}
                 </span>
-                <span className="text-xs font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-md">
-                  Regie: {section.visualCue}
+                <span className="text-xs font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-md">{hubText("Regie:")}{' '}{section.visualCue}
                 </span>
               </div>
               <p className={`font-medium text-white ${fontSizeClass}`}>
@@ -244,9 +242,7 @@ export const YouTubeTeleprompterModal: React.FC<YouTubeTeleprompterModalProps> =
           </div>
 
           <div className="space-y-3 border-l-4 border-slate-700 pl-6 pb-20">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-slate-400">
-              5. Outro
-            </span>
+            <span className="text-xs uppercase font-extrabold tracking-widest text-slate-400">{hubText("5. Outro")}</span>
             <p className={`font-medium text-slate-300 ${fontSizeClass}`}>
               {video.script.outro}
             </p>

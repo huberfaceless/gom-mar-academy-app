@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useEffect, useState } from 'react';
 import { AlertCircle, CheckCircle2, Instagram, Loader2, Lock, Share2, X } from 'lucide-react';
 import { PinterestPin, ProjectSettings } from '../../types/contentEngine';
@@ -25,6 +26,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [connection, setConnection] = useState<InstagramConnectionStatus | null>(null);
   const [previewDataUrl, setPreviewDataUrl] = useState<string>('');
   const [caption, setCaption] = useState('');
@@ -41,12 +43,12 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
     const canvas = document.createElement('canvas');
     void renderPinToCanvas(canvas, pin, projectSettings, { width: 1080, height: 1350 })
       .then(() => setPreviewDataUrl(canvas.toDataURL('image/jpeg', 0.82)))
-      .catch(() => setError('Die Instagram-Grafik konnte nicht erstellt werden.'));
+      .catch(() => setError(hubText("Die Instagram-Grafik konnte nicht erstellt werden.")));
     void instagramService.getConnectionStatus()
       .then(setConnection)
       .catch((reason: unknown) => {
         setConnection({ connected: false });
-        setError(reason instanceof Error ? reason.message : 'Instagram-Status konnte nicht geladen werden.');
+        setError(reason instanceof Error ? reason.message : hubText("Instagram-Status konnte nicht geladen werden."));
       });
   }, [isOpen, pin, projectSettings]);
 
@@ -59,19 +61,19 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
       await instagramService.startOAuth();
     } catch (reason: unknown) {
       setIsLoading(false);
-      setError(reason instanceof Error ? reason.message : 'Instagram-Verbindung konnte nicht gestartet werden.');
+      setError(reason instanceof Error ? reason.message : hubText("Instagram-Verbindung konnte nicht gestartet werden."));
     }
   };
 
   const disconnect = async () => {
-    if (!window.confirm('Instagram-Verbindung wirklich trennen?')) return;
+    if (!window.confirm(hubText("Instagram-Verbindung wirklich trennen?"))) return;
     setIsLoading(true);
     setError(null);
     try {
       await instagramService.disconnect();
       setConnection({ connected: false });
     } catch (reason: unknown) {
-      setError(reason instanceof Error ? reason.message : 'Instagram-Verbindung konnte nicht getrennt werden.');
+      setError(reason instanceof Error ? reason.message : hubText("Instagram-Verbindung konnte nicht getrennt werden."));
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +86,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
     try {
       setPublished(await instagramService.publishImage({ caption: caption.trim(), imageBase64: previewDataUrl }));
     } catch (reason: unknown) {
-      setError(reason instanceof Error ? reason.message : 'Instagram-Beitrag konnte nicht veröffentlicht werden.');
+      setError(reason instanceof Error ? reason.message : hubText("Instagram-Beitrag konnte nicht veröffentlicht werden."));
     } finally {
       setIsPublishing(false);
     }
@@ -97,11 +99,11 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
           <div className="flex items-center gap-3">
             <Instagram className="w-7 h-7" />
             <div>
-              <h2 className="text-xl font-black">Auf Instagram veröffentlichen</h2>
-              <p className="text-sm text-white/85">Grafik und Text vor der Veröffentlichung prüfen</p>
+              <h2 className="text-xl font-black">{hubText("Auf Instagram veröffentlichen")}</h2>
+              <p className="text-sm text-white/85">{hubText("Grafik und Text vor der Veröffentlichung prüfen")}</p>
             </div>
           </div>
-          <button type="button" onClick={onClose} aria-label="Schließen" className="p-2 rounded-xl hover:bg-white/15">
+          <button type="button" onClick={onClose} aria-label={hubText("Schließen")} className="p-2 rounded-xl hover:bg-white/15">
             <X className="w-6 h-6" />
           </button>
         </header>
@@ -109,7 +111,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
         <div className="p-6 grid md:grid-cols-[280px_1fr] gap-6">
           <div>
             {previewDataUrl ? (
-              <img src={previewDataUrl} alt="Instagram-Beitragsvorschau" className="w-full rounded-2xl border border-slate-200 shadow-md" />
+              <img src={previewDataUrl} alt={hubText("Instagram-Beitragsvorschau")} className="w-full rounded-2xl border border-slate-200 shadow-md" />
             ) : (
               <div className="aspect-[4/5] rounded-2xl bg-slate-100 flex items-center justify-center">
                 <Loader2 className="w-7 h-7 animate-spin text-slate-400" />
@@ -121,28 +123,24 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
             <section className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-black text-slate-900">Instagram Business-Verbindung</p>
+                  <p className="text-sm font-black text-slate-900">{hubText("Instagram Business-Verbindung")}</p>
                   <p className="text-xs text-slate-500 mt-1">
                     {connection?.connected
                       ? `Verbunden${connection.username ? ` als @${connection.username}` : ''}`
-                      : 'Noch nicht verbunden'}
+                      : hubText("Noch nicht verbunden")}
                   </p>
                 </div>
                 {connection?.connected ? (
-                  <button type="button" onClick={disconnect} disabled={isLoading} className="px-4 py-2 rounded-xl border border-slate-300 text-sm font-bold hover:bg-white disabled:opacity-50">
-                    Verbindung trennen
-                  </button>
+                  <button type="button" onClick={disconnect} disabled={isLoading} className="px-4 py-2 rounded-xl border border-slate-300 text-sm font-bold hover:bg-white disabled:opacity-50">{hubText("Verbindung trennen")}</button>
                 ) : (
                   <button type="button" onClick={connect} disabled={isLoading} className="px-4 py-2 rounded-xl bg-fuchsia-600 text-white text-sm font-bold hover:bg-fuchsia-700 disabled:opacity-50 flex items-center gap-2">
-                    {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Instagram className="w-4 h-4" />}
-                    Instagram verbinden
-                  </button>
+                    {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Instagram className="w-4 h-4" />}{hubText("Instagram verbinden")}</button>
                 )}
               </div>
             </section>
 
             <label className="block">
-              <span className="block text-xs font-black uppercase tracking-wide text-slate-600 mb-2">Caption und Hashtags</span>
+              <span className="block text-xs font-black uppercase tracking-wide text-slate-600 mb-2">{hubText("Caption und Hashtags")}</span>
               <textarea
                 value={caption}
                 onChange={(event) => setCaption(event.target.value.slice(0, 2200))}
@@ -159,8 +157,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
             )}
             {published && (
               <div className="flex gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm font-semibold text-emerald-700">
-                <CheckCircle2 className="w-5 h-5 shrink-0" />Der Beitrag wurde auf Instagram veröffentlicht.
-              </div>
+                <CheckCircle2 className="w-5 h-5 shrink-0" />{hubText("Der Beitrag wurde auf Instagram veröffentlicht.")}</div>
             )}
 
             <button
@@ -170,11 +167,10 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
               className="w-full px-5 py-3.5 rounded-2xl bg-linear-to-r from-fuchsia-600 to-rose-600 text-white font-black shadow-lg disabled:opacity-45 flex items-center justify-center gap-2"
             >
               {isPublishing ? <Loader2 className="w-5 h-5 animate-spin" /> : published ? <CheckCircle2 className="w-5 h-5" /> : <Share2 className="w-5 h-5" />}
-              {isPublishing ? 'Wird veröffentlicht…' : published ? 'Veröffentlicht' : 'Jetzt auf Instagram veröffentlichen'}
+              {isPublishing ? hubText("Wird veröffentlicht…") : published ? hubText("Veröffentlicht") : hubText("Jetzt auf Instagram veröffentlichen")}
             </button>
             <p className="flex items-start gap-2 text-xs text-slate-500">
-              <Lock className="w-4 h-4 shrink-0" />Der Zugriffstoken wird verschlüsselt auf dem Server gespeichert und nie an den Browser übertragen.
-            </p>
+              <Lock className="w-4 h-4 shrink-0" />{hubText("Der Zugriffstoken wird verschlüsselt auf dem Server gespeichert und nie an den Browser übertragen.")}</p>
           </div>
         </div>
       </div>

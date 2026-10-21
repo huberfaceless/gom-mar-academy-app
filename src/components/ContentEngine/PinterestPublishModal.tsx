@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect } from 'react';
 import { 
   Pin, 
@@ -34,6 +35,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
   onClose,
   onPinPublished,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [environment, setEnvironment] = useState<PinterestEnvironment>(() => {
     try { return sessionStorage.getItem('gommar_pinterest_publish_environment') === 'sandbox' ? 'sandbox' : 'production'; }
     catch { return 'production'; }
@@ -63,7 +65,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
     const canvas = document.createElement('canvas');
     renderPinToCanvas(canvas, pin, projectSettings)
       .then(() => { if (active) setPreviewDataUrl(canvas.toDataURL('image/png', 0.9)); })
-      .catch(() => { if (active) setPublishError('Die Pin-Vorschau konnte nicht erzeugt werden. Bitte erneut öffnen.'); });
+      .catch(() => { if (active) setPublishError(hubText("Die Pin-Vorschau konnte nicht erzeugt werden. Bitte erneut öffnen.")); });
     return () => { active = false; };
   }, [isOpen, pin, projectSettings]);
 
@@ -88,13 +90,13 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
         if (status.connected) {
           const result = await pinterestService.getBoards(environment);
           if (!active) return;
-          if (!result.success) { setConnectionError(result.error || 'Pinnwände konnten nicht geladen werden.'); return; }
+          if (!result.success) { setConnectionError(result.error || hubText("Pinnwände konnten nicht geladen werden.")); return; }
           setBoards(result.boards);
           const storedBoard = environment === 'production' ? result.boards.find(board => board.id === pin.pinterestBoardId) : undefined;
           setSelectedBoardId(storedBoard?.id || result.boards[0]?.id || '');
         }
       } catch {
-        if (active) setConnectionError('Der Pinterest-Verbindungsstatus konnte nicht geladen werden.');
+        if (active) setConnectionError(hubText("Der Pinterest-Verbindungsstatus konnte nicht geladen werden."));
       } finally {
         if (active) { setIsTestingToken(false); setIsLoadingBoards(false); }
       }
@@ -109,17 +111,17 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
       await pinterestService.startOAuth(environment);
     } catch (error: unknown) {
       setIsTestingToken(false);
-      setConnectionError(error instanceof Error ? error.message : 'Verbindung zu Pinterest fehlgeschlagen.');
+      setConnectionError(error instanceof Error ? error.message : hubText("Verbindung zu Pinterest fehlgeschlagen."));
     }
   };
 
   const handleDisconnectPinterest = async () => {
-    if (!window.confirm('Pinterest-Verbindung wirklich trennen?')) return;
+    if (!window.confirm(hubText("Pinterest-Verbindung wirklich trennen?"))) return;
     setIsTestingToken(true);
     setConnectionError(null);
     const success = await pinterestService.disconnect(environment);
     setIsTestingToken(false);
-    if (!success) return void setConnectionError('Pinterest-Verbindung konnte nicht getrennt werden.');
+    if (!success) return void setConnectionError(hubText("Pinterest-Verbindung konnte nicht getrennt werden."));
     const safeConfig: PinterestAccountConfig = { accessToken: '', isConnected: false };
     setAccountConfig(safeConfig);
     if (!isSandbox) pinterestService.saveAccountConfig(safeConfig);
@@ -139,13 +141,13 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
       setIsCreatingBoard(false);
       setNewBoardName('');
     } else {
-      setConnectionError(res.error || 'Board konnte nicht erstellt werden.');
+      setConnectionError(res.error || hubText("Board konnte nicht erstellt werden."));
     }
   };
 
   const handlePublish = async () => {
     if (!selectedBoardId) {
-      setPublishError('Bitte wähle ein Pinterest Board aus.');
+      setPublishError(hubText("Bitte wähle ein Pinterest Board aus."));
       return;
     }
 
@@ -175,7 +177,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
         publishedUrl: res.publishedPin.pin_url,
       });
     } else {
-      setPublishError(res.error || 'Fehler beim Veröffentlichen des Pins.');
+      setPublishError(res.error || hubText("Fehler beim Veröffentlichen des Pins."));
     }
   };
 
@@ -191,8 +193,8 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
               <Pin className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold">{isSandbox ? 'Pinterest-Sandbox-Test' : 'Pinterest-Veröffentlichung'}</h3>
-              <p className="text-xs text-rose-100">{isSandbox ? 'Test-Pin erstellen – nur für dich sichtbar' : `Pin #${pin.angle.toUpperCase()} direkt auf Pinterest veröffentlichen`}</p>
+              <h3 className="text-base font-bold">{isSandbox ? 'Pinterest-Sandbox-Test' : hubText("Pinterest-Veröffentlichung")}</h3>
+              <p className="text-xs text-rose-100">{isSandbox ? hubText("Test-Pin erstellen – nur für dich sichtbar") : hubText("Pin #{0} direkt auf Pinterest veröffentlichen", pin.angle.toUpperCase())}</p>
             </div>
           </div>
           <button
@@ -206,47 +208,34 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
 
         {/* Body */}
         <div className="p-6 space-y-6 overflow-y-auto">
-          <label className="flex flex-col gap-2 text-sm font-bold text-slate-700">
-            Pinterest-Umgebung
-            <select value={environment} disabled={isPublishing || isSubmittingBoard || isTestingToken}
+          <label className="flex flex-col gap-2 text-sm font-bold text-slate-700">{hubText("Pinterest-Umgebung")}<select value={environment} disabled={isPublishing || isSubmittingBoard || isTestingToken}
               onChange={event => {
                 const selected = event.target.value as PinterestEnvironment;
                 setEnvironment(selected);
                 try { sessionStorage.setItem('gommar_pinterest_publish_environment', selected); } catch { /* Preference is optional. */ }
               }} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm disabled:opacity-50">
-              <option value="production">Produktion – Standard-Zugriff erforderlich</option>
-              <option value="sandbox">Sandbox – privater Test mit Trial-Zugriff</option>
+              <option value="production">{hubText("Produktion – Standard-Zugriff erforderlich")}</option>
+              <option value="sandbox">{hubText("Sandbox – privater Test mit Trial-Zugriff")}</option>
             </select>
           </label>
           {isSandbox && (
-            <div role="note" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-              Testmodus: Verbinde Pinterest für die Sandbox und erstelle dort eine eigene Test-Pinnwand.
-              Test-Pins sind nur für dich sichtbar. Die öffentliche Planung im Kalender verwendet weiterhin die Produktion.
-            </div>
+            <div role="note" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">{hubText("Testmodus: Verbinde Pinterest für die Sandbox und erstelle dort eine eigene Test-Pinnwand. Test-Pins sind nur für dich sichtbar. Die öffentliche Planung im Kalender verwendet weiterhin die Produktion.")}</div>
           )}
           {/* Pinterest Account Connection State */}
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-700 uppercase flex items-center gap-1.5">
-                <Key className="w-4 h-4 text-rose-600" />
-                Pinterest API v5 Authentifizierung
-              </span>
+                <Key className="w-4 h-4 text-rose-600" />{hubText("Pinterest API v5 Authentifizierung")}</span>
               {accountConfig.isConnected ? (
                 <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full border border-emerald-200 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  Verbunden
-                </span>
+                  <CheckCircle2 className="w-3.5 h-3.5" />{hubText("Verbunden")}</span>
               ) : (
-                <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200">
-                  Nicht verbunden
-                </span>
+                <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full border border-amber-200">{hubText("Nicht verbunden")}</span>
               )}
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <p className="flex-1 text-xs text-slate-600">
-                Die Verbindung wird sicher über Pinterest hergestellt und automatisch erneuert.
-              </p>
+              <p className="flex-1 text-xs text-slate-600">{hubText("Die Verbindung wird sicher über Pinterest hergestellt und automatisch erneuert.")}</p>
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   type="button"
@@ -255,7 +244,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
                   className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-50 flex items-center gap-1.5 shrink-0"
                 >
                   {isTestingToken ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Key className="w-3.5 h-3.5" />}
-                  <span>{accountConfig.isConnected ? 'Verbindung trennen' : isSandbox ? 'Sandbox mit Pinterest verbinden' : 'Mit Pinterest verbinden'}</span>
+                  <span>{accountConfig.isConnected ? hubText("Verbindung trennen") : isSandbox ? hubText("Sandbox mit Pinterest verbinden") : hubText("Mit Pinterest verbinden")}</span>
                 </button>
               </div>
             </div>
@@ -271,9 +260,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
           {/* Board Selector */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold text-slate-700 uppercase">
-                Ziel-Board auf Pinterest
-              </label>
+              <label className="block text-xs font-bold text-slate-700 uppercase">{hubText("Ziel-Board auf Pinterest")}</label>
               <button
                 type="button"
                 onClick={() => setIsCreatingBoard(!isCreatingBoard)}
@@ -281,7 +268,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
                 className="text-xs font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1"
               >
                 <FolderPlus className="w-3.5 h-3.5" />
-                <span>Neues Board erstellen</span>
+                <span>{hubText("Neues Board erstellen")}</span>
               </button>
             </div>
 
@@ -289,7 +276,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
               <div className="p-3 bg-rose-50/50 rounded-xl border border-rose-200 flex items-center gap-2">
                 <input
                   type="text"
-                  placeholder="Board Name (z.B. Vital50 - Gesunder Stoffwechsel)..."
+                  placeholder={hubText("Board Name (z.B. Vital50 - Gesunder Stoffwechsel)...")}
                   value={newBoardName}
                   onChange={(e) => setNewBoardName(e.target.value)}
                   className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-800 outline-hidden"
@@ -300,18 +287,18 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
                   disabled={isSubmittingBoard || isPublishing || !newBoardName.trim() || !accountConfig.isConnected}
                   className="px-3 py-1.5 bg-rose-600 text-white rounded-lg text-xs font-bold hover:bg-rose-700 transition-colors shrink-0 disabled:opacity-50"
                 >
-                  {isSubmittingBoard ? 'Erstelle...' : 'Speichern'}
+                  {isSubmittingBoard ? 'Erstelle...' : hubText("Speichern")}
                 </button>
               </div>
             ) : (
               <select
-                aria-label="Ziel-Pinnwand auf Pinterest"
+                aria-label={hubText("Ziel-Pinnwand auf Pinterest")}
                 value={selectedBoardId}
                 onChange={(e) => setSelectedBoardId(e.target.value)}
                 disabled={isLoadingBoards || isPublishing || isSubmittingBoard}
                 className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-rose-500 outline-hidden"
               >
-                {!boards.length && <option value="">{isSandbox ? 'Bitte eine Test-Pinnwand erstellen' : 'Keine Pinnwand vorhanden'}</option>}
+                {!boards.length && <option value="">{isSandbox ? hubText("Bitte eine Test-Pinnwand erstellen") : hubText("Keine Pinnwand vorhanden")}</option>}
                 {boards.map((b) => (
                   <option key={b.id} value={b.id}>
                     📌 {b.name} ({b.privacy || 'PUBLIC'})
@@ -325,7 +312,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200 items-center">
             {previewDataUrl && (
               <div className="sm:col-span-4 aspect-[2/3] w-28 mx-auto sm:mx-0 rounded-lg overflow-hidden border border-slate-300 shadow-xs">
-                <img src={previewDataUrl} alt="Pin-Vorschau" className="w-full h-full object-cover" />
+                <img src={previewDataUrl} alt={hubText("Pin-Vorschau")} className="w-full h-full object-cover" />
               </div>
             )}
             <div className={previewDataUrl ? 'sm:col-span-8 space-y-1.5' : 'sm:col-span-12 space-y-1.5'}>
@@ -346,16 +333,16 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
             <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-800 space-y-2">
               <div className="flex items-center gap-2 font-bold text-sm">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                <span>{isSandbox ? 'Sandbox-Test erfolgreich: Test-Pin erstellt!' : 'Pin erfolgreich auf Pinterest veröffentlicht! 🎉'}</span>
+                <span>{isSandbox ? hubText("Sandbox-Test erfolgreich: Test-Pin erstellt!") : hubText("Pin erfolgreich auf Pinterest veröffentlicht! 🎉")}</span>
               </div>
-              <p className="text-xs text-emerald-700">{isSandbox ? 'Der Test-Pin ist nur für dich sichtbar. Dein Inhalt bleibt für eine spätere öffentliche Veröffentlichung unverändert.' : 'Der Pin wurde auf der gewählten Pinterest-Pinnwand erstellt.'}</p>
+              <p className="text-xs text-emerald-700">{isSandbox ? hubText("Der Test-Pin ist nur für dich sichtbar. Dein Inhalt bleibt für eine spätere öffentliche Veröffentlichung unverändert.") : hubText("Der Pin wurde auf der gewählten Pinterest-Pinnwand erstellt.")}</p>
               <a
                 href={publishSuccess.url}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-900 underline"
               >
-                <span>{isSandbox ? 'Test-Pin auf Pinterest ansehen' : 'Pin auf Pinterest ansehen'}</span>
+                <span>{isSandbox ? hubText("Test-Pin auf Pinterest ansehen") : hubText("Pin auf Pinterest ansehen")}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -376,9 +363,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
             type="button"
             onClick={onClose}
             className="px-4 py-2 text-slate-600 hover:text-slate-800 text-xs font-semibold rounded-xl"
-          >
-            Schließen
-          </button>
+          >{hubText("Schließen")}</button>
 
           <button
             type="button"
@@ -389,12 +374,12 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
             {isPublishing ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>{isSandbox ? 'Erstelle Test-Pin …' : 'Veröffentliche auf Pinterest …'}</span>
+                <span>{isSandbox ? hubText("Erstelle Test-Pin …") : hubText("Veröffentliche auf Pinterest …")}</span>
               </>
             ) : (
               <>
                 <Share2 className="w-4 h-4" />
-                <span>{isSandbox ? 'Test-Pin in Sandbox erstellen' : 'Jetzt Pin live veröffentlichen 🚀'}</span>
+                <span>{isSandbox ? hubText("Test-Pin in Sandbox erstellen") : hubText("Jetzt Pin live veröffentlichen 🚀")}</span>
               </>
             )}
           </button>

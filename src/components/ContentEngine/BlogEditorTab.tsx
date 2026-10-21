@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useRef, useState } from 'react';
 import { 
   FileText, 
@@ -27,6 +28,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   onGeneratePinterest,
   isGeneratingPinterest,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [viewMode, setViewMode] = useState<'preview' | 'edit'>('preview');
   const [copied, setCopied] = useState(false);
 
@@ -53,7 +55,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
       }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch { setCopyError('Kopieren nicht möglich. Bitte erlaube den Zugriff auf die Zwischenablage.'); }
+    } catch { setCopyError(hubText("Kopieren nicht möglich. Bitte erlaube den Zugriff auf die Zwischenablage.")); }
   };
 
   const wordCount = article.contentMarkdown ? article.contentMarkdown.split(/\s+/).filter(Boolean).length : 0;
@@ -65,18 +67,14 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
       <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-start gap-4">
         <div className="w-full min-w-0 break-words">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              Blogartikel generiert
-            </span>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">{hubText("Blogartikel generiert")}</span>
             <div className="flex items-center gap-3 text-xs text-slate-500">
               <span className="flex items-center gap-1">
                 <Hash className="w-3.5 h-3.5" />
-                {wordCount} Wörter
-              </span>
+                {wordCount}{' '}{hubText("Wörter")}</span>
               <span className="flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5" />
-                ~{readingTime} Min. Lesezeit
-              </span>
+                ~{readingTime}{' '}{hubText("Min. Lesezeit")}</span>
             </div>
           </div>
           <h2 className="text-xl font-bold text-slate-900 mt-1">{article.title}</h2>
@@ -94,9 +92,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
                 viewMode === 'preview' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Eye className="w-3.5 h-3.5" />
-              Vorschau
-            </button>
+              <Eye className="w-3.5 h-3.5" />{hubText("Vorschau")}</button>
             <button
               type="button"
               onClick={() => setViewMode('edit')}
@@ -104,9 +100,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
                 viewMode === 'edit' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Edit3 className="w-3.5 h-3.5" />
-              Markdown Editor
-            </button>
+              <Edit3 className="w-3.5 h-3.5" />{hubText("Markdown Editor")}</button>
           </div>
 
           <button
@@ -115,11 +109,11 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
             className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 flex items-center gap-1.5"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Kopiert!' : viewMode === 'edit' ? 'Markdown kopieren' : 'Artikel kopieren'}</span>
+            <span>{copied ? hubText("Kopiert!") : viewMode === 'edit' ? hubText("Markdown kopieren") : hubText("Artikel kopieren")}</span>
           </button>
 
           {viewMode === 'preview' && (
-            <button type="button" onClick={() => void handleCopy(true)} className="px-3 py-2 text-xs font-semibold text-slate-600 underline">Markdown kopieren</button>
+            <button type="button" onClick={() => void handleCopy(true)} className="px-3 py-2 text-xs font-semibold text-slate-600 underline">{hubText("Markdown kopieren")}</button>
           )}
           {copyError && <p role="alert" className="text-xs text-rose-700">{copyError}</p>}
 
@@ -130,7 +124,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
             className="max-w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 disabled:opacity-50"
           >
             <Sparkles className="w-4 h-4 shrink-0" />
-            <span>{isGeneratingPinterest ? 'Generiere 5 Pinterest Pins...' : 'Weiter: 5 Pinterest Pins erzeugen'}</span>
+            <span>{isGeneratingPinterest ? hubText("Generiere 5 Pinterest Pins...") : hubText("Weiter: 5 Pinterest Pins erzeugen")}</span>
           </button>
         </div>
       </div>
@@ -139,7 +133,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
       {viewMode === 'edit' ? (
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Artikel Titel (H1)</label>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Artikel Titel (H1)")}</label>
             <input
               type="text"
               value={article.title}
@@ -159,7 +153,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Artikel Inhalt (Markdown)</label>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Artikel Inhalt (Markdown)")}</label>
             <textarea
               rows={22}
               value={article.contentMarkdown}

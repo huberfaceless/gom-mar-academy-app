@@ -1,3 +1,4 @@
+import { contentLanguageInstruction, recommendationLabel } from './server/contentGenerationLanguage';
 import { firestoreStripeDeliveryStore, processStripeDelivery } from './server/stripeWebhookDelivery.js';
 import { createBrowserErrorRouter } from './server/browserErrorMonitoring.js';
 import { PRO_SALES_COUNTRIES, isProSalesCountry } from './src/config/proSalesPolicy.js';
@@ -2571,7 +2572,7 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         model: 'gemini-3.7-flash',
         contents: prompt,
         config: {
-          systemInstruction: 'Du bist ein Senior SEO & Content Strategist. Gib immer reines, valides JSON ohne Markdown-Backticks zurück.',
+          systemInstruction: 'Du bist ein Senior SEO & Content Strategist. Gib immer reines, valides JSON ohne Markdown-Backticks zurück.' + '\n' + contentLanguageInstruction(projectSettings?.language),
           responseMimeType: 'application/json',
           temperature: 0.5,
         },
@@ -2607,10 +2608,10 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         return;
       }
       const withRecommendation = (content: string): string => affiliateLink
-        ? `${content}\n\n[Zur Empfehlung](<${affiliateLink}>)`
+        ? `${content}\n\n[${recommendationLabel(projectSettings?.language)}](<${affiliateLink}>)`
         : content;
 
-      const prompt = `Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel auf Deutsch basierend auf folgendem Content Brief:
+      const prompt = `Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel basierend auf folgendem Content Brief:
 Thema: ${topic}
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${brief.targetAudience || projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
@@ -2645,7 +2646,7 @@ Antworte im JSON-Format:
         model: 'gemini-3.7-flash',
         contents: prompt,
         config: {
-          systemInstruction: 'Du bist ein erfahrener Fachredakteur und Copywriter. Gib immer reines, valides JSON zurück.',
+          systemInstruction: 'Du bist ein erfahrener Fachredakteur und Copywriter. Gib immer reines, valides JSON zurück.' + '\n' + contentLanguageInstruction(projectSettings?.language),
           responseMimeType: 'application/json',
           temperature: 0.7,
         },
@@ -2765,7 +2766,7 @@ Antworte im JSON-Format:
         model: 'gemini-3.7-flash',
         contents: prompt,
         config: {
-          systemInstruction: 'Du bist ein führender Pinterest-Growth-Stratege. Gib immer reines, valides JSON zurück.',
+          systemInstruction: 'Du bist ein führender Pinterest-Growth-Stratege. Gib immer reines, valides JSON zurück.' + '\n' + contentLanguageInstruction(projectSettings?.language),
           responseMimeType: 'application/json',
           temperature: 0.7,
         },
@@ -2854,7 +2855,7 @@ Antworte im JSON-Format:
         model: 'gemini-3.7-flash',
         contents: prompt,
         config: {
-          systemInstruction: 'Du bist ein YouTube Creator & Skript-Experte für Faceless Kanäle. Gib immer reines, valides JSON zurück.',
+          systemInstruction: 'Du bist ein YouTube Creator & Skript-Experte für Faceless Kanäle. Gib immer reines, valides JSON zurück.' + '\n' + contentLanguageInstruction(projectSettings?.language),
           responseMimeType: 'application/json',
           temperature: 0.7,
         },
@@ -2936,7 +2937,7 @@ Antworte im JSON-Format:
         model: 'gemini-3.7-flash',
         contents: prompt,
         config: {
-          systemInstruction: 'Du bist ein Experte für YouTube Shorts & vertikale Kurzvideos. Gib immer reines, valides JSON zurück.',
+          systemInstruction: 'Du bist ein Experte für YouTube Shorts & vertikale Kurzvideos. Gib immer reines, valides JSON zurück.' + '\n' + contentLanguageInstruction(projectSettings?.language),
           responseMimeType: 'application/json',
           temperature: 0.7,
         },

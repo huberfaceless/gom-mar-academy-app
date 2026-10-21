@@ -1,3 +1,4 @@
+import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Youtube, 
@@ -75,12 +76,13 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   topic,
   projectSettings = DEFAULT_PROJECT_SETTINGS,
 }) => {
+  const { language, hubText } = useContentHubCopy();
   const [activeSubTab, setActiveSubTab] = useState<'video' | 'shorts'>('video');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   
   // Thumbnail State
   const [thumbnailTheme, setThumbnailTheme] = useState<ThumbnailColorTheme>('red_black');
-  const [thumbnailBadge, setThumbnailBadge] = useState<string>('ACHTUNG FÜR 50+');
+  const [thumbnailBadge, setThumbnailBadge] = useState<string>(hubText("ACHTUNG FÜR 50+"));
   const [isDownloadingThumb, setIsDownloadingThumb] = useState<boolean>(false);
   const thumbnailCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -104,13 +106,13 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   useEffect(() => {
     youtubeService.getConnectionStatus()
       .then(setYouTubeConnection)
-      .catch((error: unknown) => setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Status konnte nicht geladen werden.'));
+      .catch((error: unknown) => setYouTubeConnectionError(error instanceof Error ? error.message : hubText("YouTube-Status konnte nicht geladen werden.")));
     const params = new URLSearchParams(window.location.search);
     if (params.get('youtube') === 'connected') {
       setYouTubeConnectionError(null);
       window.history.replaceState({}, '', window.location.pathname);
     } else if (params.get('youtube') === 'error') {
-      setYouTubeConnectionError('Die YouTube-Verbindung konnte nicht abgeschlossen werden.');
+      setYouTubeConnectionError(hubText("Die YouTube-Verbindung konnte nicht abgeschlossen werden."));
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
@@ -121,20 +123,20 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     try {
       await youtubeService.startConnection();
     } catch (error: unknown) {
-      setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht gestartet werden.');
+      setYouTubeConnectionError(error instanceof Error ? error.message : hubText("YouTube-Verbindung konnte nicht gestartet werden."));
       setIsConnectingYouTube(false);
     }
   };
 
   const handleDisconnectYouTube = async () => {
-    if (!window.confirm('YouTube-Verbindung wirklich trennen? Geplante Veröffentlichungen können erst nach einer erneuten Verbindung ausgeführt werden.')) return;
+    if (!window.confirm(hubText("YouTube-Verbindung wirklich trennen? Geplante Veröffentlichungen können erst nach einer erneuten Verbindung ausgeführt werden."))) return;
     setIsDisconnectingYouTube(true);
     setYouTubeConnectionError(null);
     try {
       await youtubeService.disconnect();
       setYouTubeConnection({ connected: false, connectedAt: null });
     } catch (error: unknown) {
-      setYouTubeConnectionError(error instanceof Error ? error.message : 'YouTube-Verbindung konnte nicht getrennt werden.');
+      setYouTubeConnectionError(error instanceof Error ? error.message : hubText("YouTube-Verbindung konnte nicht getrennt werden."));
     } finally {
       setIsDisconnectingYouTube(false);
     }
@@ -142,7 +144,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
   const handleUploadYouTube = async () => {
     if (!video || !youtubeFile || youtubeConnection?.connected !== true) return;
-    if (!window.confirm('Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen?')) return;
+    if (!window.confirm(hubText("Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen?"))) return;
     setYouTubeUploadError(null);
     setYouTubeUploadedUrl(null);
     setYouTubeUploadProgress(0);
@@ -156,7 +158,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       setYouTubeUploadProgress(100);
       onChangeVideo({ ...video, status: 'approved', videoId: result.videoId, videoUrl: result.videoUrl });
     } catch (error: unknown) {
-      setYouTubeUploadError(error instanceof Error ? error.message : 'Der YouTube-Upload ist fehlgeschlagen.');
+      setYouTubeUploadError(error instanceof Error ? error.message : hubText("Der YouTube-Upload ist fehlgeschlagen."));
       setYouTubeUploadProgress(null);
     }
   };
@@ -165,7 +167,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     const shortKey = short.id || `short_${idx}`;
     const file = shortFiles[shortKey];
     if (!file || youtubeConnection?.connected !== true) return;
-    if (!window.confirm(`Kurzvideo #${short.shortNumber || idx + 1} jetzt als „Nicht gelistet“ zu YouTube hochladen?`)) return;
+    if (!window.confirm(hubText("Kurzvideo #{0} jetzt als „Nicht gelistet“ zu YouTube hochladen?", short.shortNumber || idx + 1))) return;
     setShortUploadErrors((current) => ({ ...current, [shortKey]: null }));
     setShortUploadProgress((current) => ({ ...current, [shortKey]: 0 }));
     try {
@@ -185,7 +187,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     } catch (error: unknown) {
       setShortUploadErrors((current) => ({
         ...current,
-        [shortKey]: error instanceof Error ? error.message : 'Der Kurzvideo-Upload ist fehlgeschlagen.',
+        [shortKey]: error instanceof Error ? error.message : hubText("Der Kurzvideo-Upload ist fehlgeschlagen."),
       }));
       setShortUploadProgress((current) => ({ ...current, [shortKey]: null }));
     }
@@ -195,7 +197,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     <div className="flex flex-wrap items-center gap-2">
       <span className="px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-200">
         <CheckCircle2 className="w-4 h-4" />
-        <span>YouTube verbunden</span>
+        <span>{hubText("YouTube verbunden")}</span>
       </span>
       <button
         type="button"
@@ -204,7 +206,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         className="px-3 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
       >
         <Unplug className="w-4 h-4" />
-        <span>{isDisconnectingYouTube ? 'Verbindung wird getrennt…' : 'Verbindung trennen'}</span>
+        <span>{isDisconnectingYouTube ? hubText("Verbindung wird getrennt…") : hubText("Verbindung trennen")}</span>
       </button>
     </div>
   ) : (
@@ -215,7 +217,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       className="px-4 py-2.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer bg-red-600 hover:bg-red-700 text-white disabled:opacity-50"
     >
       <Youtube className="w-4 h-4" />
-      <span>{isConnectingYouTube ? 'Weiterleitung…' : 'YouTube verbinden'}</span>
+      <span>{isConnectingYouTube ? 'Weiterleitung…' : hubText("YouTube verbinden")}</span>
     </button>
   );
 
@@ -265,8 +267,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     return (
       <div className="p-12 text-center bg-white rounded-3xl border border-slate-200 shadow-xs">
         <Youtube className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-        <h3 className="text-base font-bold text-slate-700">Noch kein YouTube Skript generiert</h3>
-        <p className="text-xs text-slate-500 mt-1">Erstelle zuerst ein Content-Projekt, um das Video-Skript ohne Gesichtsaufnahme und 3 Kurzvideos zu erzeugen.</p>
+        <h3 className="text-base font-bold text-slate-700">{hubText("Noch kein YouTube Skript generiert")}</h3>
+        <p className="text-xs text-slate-500 mt-1">{hubText("Erstelle zuerst ein Content-Projekt, um das Video-Skript ohne Gesichtsaufnahme und 3 Kurzvideos zu erzeugen.")}</p>
         <div className="mt-5 flex justify-center">
           {youtubeConnectionButton}
         </div>
@@ -299,7 +301,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
               <Youtube className="w-3.5 h-3.5 text-red-600" />
               YouTube Faceless Suite
             </span>
-            <span className="text-xs text-slate-500 font-medium">1 langes Video (~{estimatedMin} Min.) + 3 virale Kurzvideos</span>
+            <span className="text-xs text-slate-500 font-medium">{hubText("1 langes Video (~")}{estimatedMin}{' '}{hubText("Min.) + 3 virale Kurzvideos")}</span>
           </div>
           <h2 className="text-xl font-extrabold text-slate-900 mt-1.5">
             "{video.title}"
@@ -317,9 +319,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                 activeSubTab === 'video' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Tv className="w-3.5 h-3.5 text-red-600" />
-              Haupt-Video Skript
-            </button>
+              <Tv className="w-3.5 h-3.5 text-red-600" />{hubText("Haupt-Video Skript")}</button>
             <button
               type="button"
               onClick={() => setActiveSubTab('shorts')}
@@ -339,7 +339,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
             className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           >
             <Volume2 className="w-4 h-4 text-red-400" />
-            <span>Teleprompter / Sprecher</span>
+            <span>{hubText("Teleprompter / Sprecher")}</span>
           </button>
 
           {/* Next Step Button */}
@@ -349,7 +349,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
             className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 transition-all cursor-pointer"
           >
             <Calendar className="w-4 h-4" />
-            <span>Zur Inhaltsplanung</span>
+            <span>{hubText("Zur Inhaltsplanung")}</span>
           </button>
         </div>
       </div>
@@ -363,8 +363,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
       {youtubeConnection?.connected && (
         <div className="rounded-3xl border border-red-200 bg-white p-5 shadow-xs space-y-3">
           <div>
-            <h3 className="text-sm font-extrabold text-slate-900">Fertiges Video hochladen</h3>
-            <p className="mt-1 text-xs text-slate-500">Titel, Beschreibung und Tags werden aus diesem Skript übernommen. Das Video wird abschnittsweise übertragen und bleibt zunächst „Nicht gelistet“.</p>
+            <h3 className="text-sm font-extrabold text-slate-900">{hubText("Fertiges Video hochladen")}</h3>
+            <p className="mt-1 text-xs text-slate-500">{hubText("Titel, Beschreibung und Tags werden aus diesem Skript übernommen. Das Video wird abschnittsweise übertragen und bleibt zunächst „Nicht gelistet“.")}</p>
           </div>
           <input
             type="file"
@@ -379,13 +379,11 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
             disabled={!youtubeFile || (youtubeUploadProgress !== null && youtubeUploadProgress < 100)}
             className="rounded-xl bg-red-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {youtubeUploadProgress !== null && youtubeUploadProgress < 100 ? `Hochladen läuft: ${youtubeUploadProgress} %` : 'Als „Nicht gelistet“ hochladen'}
+            {youtubeUploadProgress !== null && youtubeUploadProgress < 100 ? hubText("Hochladen läuft: {0} %", youtubeUploadProgress) : hubText("Als „Nicht gelistet“ hochladen")}
           </button>
           {youtubeUploadError && <p role="alert" className="text-xs font-semibold text-red-700">{youtubeUploadError}</p>}
           {youtubeUploadedUrl && (
-            <a href={youtubeUploadedUrl} target="_blank" rel="noreferrer" className="block text-xs font-bold text-emerald-700 underline">
-              Hochgeladenes Video auf YouTube öffnen
-            </a>
+            <a href={youtubeUploadedUrl} target="_blank" rel="noreferrer" className="block text-xs font-bold text-emerald-700 underline">{hubText("Hochgeladenes Video auf YouTube öffnen")}</a>
           )}
         </div>
       )}
@@ -398,12 +396,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
                 <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-red-600" />
-                  Faceless Sprechertext & Regieanweisungen
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Optimiert für Faceless-Kanäle mit Voiceover & B-Roll Footage
-                </p>
+                  <FileText className="w-4 h-4 text-red-600" />{hubText("Faceless Sprechertext & Regieanweisungen")}</h3>
+                <p className="text-xs text-slate-400 mt-0.5">{hubText("Optimiert für Faceless-Kanäle mit Voiceover & B-Roll Footage")}</p>
               </div>
               
               <button
@@ -417,7 +411,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                 className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors"
               >
                 {copiedId === 'full_script' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedId === 'full_script' ? 'Kopiert' : 'Skript kopieren'}</span>
+                <span>{copiedId === 'full_script' ? hubText("Kopiert") : hubText("Skript kopieren")}</span>
               </button>
             </div>
 
@@ -425,9 +419,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
             <div className="p-4 bg-red-50/70 rounded-2xl border border-red-200/80 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-red-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <span>⚡</span>
-                  1. Hook (Erste 10 Sekunden – Scroll-Stopper!)
-                </span>
+                  <span>⚡</span>{hubText("1. Hook (Erste 10 Sekunden – Scroll-Stopper!)")}</span>
                 <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-red-200 text-red-700 font-bold">
                   0:00 - 0:15
                 </span>
@@ -445,9 +437,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
             {/* 2. Intro */}
             <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
-                2. Intro & Themenübersicht
-              </span>
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">{hubText("2. Intro & Themenübersicht")}</span>
               <textarea
                 rows={2}
                 value={video.script.intro}
@@ -461,9 +451,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
             {/* 3. Main Sections (Body) */}
             <div className="space-y-4">
-              <span className="text-xs font-extrabold text-slate-700 uppercase tracking-wider block">
-                3. Hauptteil (Kapitel & B-Roll Regie)
-              </span>
+              <span className="text-xs font-extrabold text-slate-700 uppercase tracking-wider block">{hubText("3. Hauptteil (Kapitel & B-Roll Regie)")}</span>
               {video.script.mainBody.map((section, idx) => (
                 <div key={idx} className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
                   <div className="flex items-center justify-between">
@@ -477,12 +465,12 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                       }}
                       className="text-xs font-black text-slate-900 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-emerald-500 outline-hidden flex-1"
                     />
-                    <span className="text-[10px] text-slate-400 font-mono">Kapitel {idx + 1}</span>
+                    <span className="text-[10px] text-slate-400 font-mono">{hubText("Kapitel")}{' '}{idx + 1}</span>
                   </div>
 
                   {/* Visual Cue (B-Roll) */}
                   <div className="p-2.5 bg-amber-50/80 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2">
-                    <span className="font-bold shrink-0">🎬 B-Roll:</span>
+                    <span className="font-bold shrink-0">{hubText("🎬 B-Roll:")}</span>
                     <input
                       type="text"
                       value={section.visualCue}
@@ -497,9 +485,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
                   {/* Narration text */}
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">
-                      Sprechertext (Voiceover):
-                    </label>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{hubText("Sprechertext (Voiceover):")}</label>
                     <textarea
                       rows={4}
                       value={section.narrationText}
@@ -533,9 +519,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
               </div>
 
               <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
-                  5. Outro & Nächstes Video Hook
-                </span>
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">{hubText("5. Outro & Nächstes Video Hook")}</span>
                 <textarea
                   rows={2}
                   value={video.script.outro}
@@ -559,9 +543,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   <Eye className="w-4 h-4 text-red-600" />
                   Live 16:9 HD Thumbnail (1280×720)
                 </h4>
-                <span className="text-[10px] bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded-md border border-red-200">
-                  High-CTR Formel
-                </span>
+                <span className="text-[10px] bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded-md border border-red-200">{hubText("High-CTR Formel")}</span>
               </div>
 
               {/* Canvas Preview Element */}
@@ -576,16 +558,14 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
               <div className="space-y-3 p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                      Farbschema:
-                    </label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">{hubText("Farbschema:")}</label>
                     <div className="flex items-center gap-1.5">
                       {THUMBNAIL_THEMES.map((th) => (
                         <button
                           key={th.id}
                           type="button"
                           onClick={() => setThumbnailTheme(th.id)}
-                          title={th.label}
+                          title={hubText(th.label)}
                           className={`w-6 h-6 rounded-full border-2 cursor-pointer transition-transform ${
                             thumbnailTheme === th.id ? 'scale-120 border-slate-900 ring-2 ring-slate-400' : 'border-white opacity-70 hover:opacity-100'
                           }`}
@@ -596,9 +576,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                      Badge Text:
-                    </label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">{hubText("Badge Text:")}</label>
                     <input
                       type="text"
                       value={thumbnailBadge}
@@ -609,9 +587,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    Headline im Thumbnail (max 3-4 Worte):
-                  </label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">{hubText("Headline im Thumbnail (max 3-4 Worte):")}</label>
                   <input
                     type="text"
                     value={video.thumbnailConcept?.headline || ''}
@@ -632,16 +608,14 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                 className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5 text-red-400" />
-                <span>{isDownloadingThumb ? 'Generiere Bild...' : '1280×720 HD Thumbnail herunterladen'}</span>
+                <span>{isDownloadingThumb ? hubText("Generiere Bild...") : hubText("1280×720 HD Thumbnail herunterladen")}</span>
               </button>
             </div>
 
             {/* 2. YouTube Title & Video Description with Timestamps */}
             <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  YouTube SEO Beschreibung & Timestamps
-                </h4>
+                <h4 className="text-xs font-black uppercase tracking-wider text-slate-500">{hubText("YouTube SEO Beschreibung & Timestamps")}</h4>
                 <button
                   type="button"
                   onClick={() => handleCopy(
@@ -653,7 +627,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   className="text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1"
                 >
                   {copiedId === 'yt_desc' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedId === 'yt_desc' ? 'Kopiert' : 'Kopieren'}</span>
+                  <span>{copiedId === 'yt_desc' ? hubText("Kopiert") : 'Kopieren'}</span>
                 </button>
               </div>
 
@@ -666,7 +640,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
               {video.chapters && video.chapters.length > 0 && (
                 <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Kapitel-Timestamps für YouTube Studio:</p>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{hubText("Kapitel-Timestamps für YouTube Studio:")}</p>
                   <div className="space-y-1">
                     {video.chapters.map((ch, i) => (
                       <div key={i} className="text-xs font-mono text-slate-700 flex items-center justify-between">
@@ -691,7 +665,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   className="text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1"
                 >
                   {copiedId === 'yt_tags' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedId === 'yt_tags' ? 'Kopiert' : 'Kommagetrennt kopieren'}</span>
+                  <span>{copiedId === 'yt_tags' ? hubText("Kopiert") : hubText("Kommagetrennt kopieren")}</span>
                 </button>
               </div>
               <div className="flex flex-wrap gap-1.5">
@@ -720,14 +694,14 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                     type="button"
                     onClick={() => handleCopy(`${short.title}\n\nHook: ${short.hook}\n\nSkript:\n${short.scriptText}\n\n${short.description}`, `short_${idx}`)}
                     className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-                    title="Kurzvideo kopieren"
+                    title={hubText("Kurzvideo kopieren")}
                   >
                     {copiedId === `short_${idx}` ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Kurzvideo-Titel:</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{hubText("Kurzvideo-Titel:")}</label>
                   <input
                     type="text"
                     value={short.title}
@@ -742,7 +716,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
                 {/* 3-Second Hook */}
                 <div className="p-3 bg-red-50/80 rounded-2xl border border-red-200">
-                  <label className="block text-[10px] font-black text-red-900 uppercase mb-1">⚡ 3-Sekunden Hook:</label>
+                  <label className="block text-[10px] font-black text-red-900 uppercase mb-1">{hubText("⚡ 3-Sekunden Hook:")}</label>
                   <textarea
                     rows={2}
                     value={short.hook}
@@ -757,9 +731,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
                 {/* Narration Script */}
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">
-                    Sprechertext (~30-45 Sek.):
-                  </label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{hubText("Sprechertext (~30-45 Sek.):")}</label>
                   <textarea
                     rows={6}
                     value={short.scriptText}
@@ -774,7 +746,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
                 {/* Description & Hashtags */}
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Beschreibung & Hashtags:</label>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{hubText("Beschreibung & Hashtags:")}</label>
                   <input
                     type="text"
                     value={short.description}
@@ -790,9 +762,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
 
               {youtubeConnection?.connected && (
                 <div className="p-3 rounded-2xl border border-red-100 bg-red-50/40 space-y-2">
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-red-800">
-                    Fertiges Kurzvideo hochladen
-                  </label>
+                  <label className="block text-[10px] font-black uppercase tracking-wider text-red-800">{hubText("Fertiges Kurzvideo hochladen")}</label>
                   <input
                     type="file"
                     accept="video/*"
@@ -818,8 +788,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                     {shortUploadProgress[short.id || `short_${idx}`] !== null
                       && shortUploadProgress[short.id || `short_${idx}`] !== undefined
                       && shortUploadProgress[short.id || `short_${idx}`] < 100
-                      ? `Hochladen läuft: ${shortUploadProgress[short.id || `short_${idx}`]} %`
-                      : 'Als „Nicht gelistet“ hochladen'}
+                      ? hubText("Hochladen läuft: {0} %", shortUploadProgress[short.id || `short_${idx}`])
+                      : hubText("Als „Nicht gelistet“ hochladen")}
                   </button>
                   {shortUploadErrors[short.id || `short_${idx}`] && (
                     <p role="alert" className="text-xs font-semibold text-red-700">
@@ -827,9 +797,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                     </p>
                   )}
                   {short.videoUrl && (
-                    <a href={short.videoUrl} target="_blank" rel="noreferrer" className="block text-xs font-bold text-emerald-700 underline">
-                      Hochgeladenes Kurzvideo auf YouTube öffnen
-                    </a>
+                    <a href={short.videoUrl} target="_blank" rel="noreferrer" className="block text-xs font-bold text-emerald-700 underline">{hubText("Hochgeladenes Kurzvideo auf YouTube öffnen")}</a>
                   )}
                 </div>
               )}
@@ -843,7 +811,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
                 >
                   <Download className="w-3.5 h-3.5 text-red-600" />
-                  <span>{downloadingShortIdx === idx ? 'Generiere...' : '1080×1920 Cover PNG'}</span>
+                  <span>{downloadingShortIdx === idx ? hubText("Generiere...") : '1080×1920 Cover PNG'}</span>
                 </button>
               </div>
             </div>

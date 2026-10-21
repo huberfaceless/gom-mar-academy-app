@@ -3,7 +3,11 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
 import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup as renderMarkup } from 'react-dom/server';
+import { LanguageProvider } from '../src/context/LanguageContext';
+import { contentLanguageInstruction, recommendationLabel } from '../server/contentGenerationLanguage';
+import { contentHubText } from '../src/i18n/contentHubCopy';
+const renderToStaticMarkup = (element: React.ReactNode) => renderMarkup(React.createElement(LanguageProvider, null, element));
 import { PinterestPinsTab } from '../src/components/ContentEngine/PinterestPinsTab';
 import { selectContentProjectScope } from '../src/utils/contentProjectSelection';
 import { createBlogArticleProject } from '../src/utils/blogArticleProjects';
@@ -30,8 +34,9 @@ const AIContentService = {
   async generateBlogArticle(topic: string) { requests.push({ kind: 'blog', topic }); return { title: topic }; },
   async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return []; },
 };
-const context = vm.createContext({ exports: {}, console, require(name: string) {
+const context = vm.createContext({ contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
   if (name === 'react') return hookReact;
+  if (name.endsWith('useContentHubCopy')) return { useContentHubCopy: () => ({ language: 'de', hubText: (source: string, ...values: unknown[]) => contentHubText('de', source, ...values) }) };
   if (name.endsWith('AuthContext')) return { useAuth: () => ({ user: null }) };
   if (name.endsWith('contentStorage')) return {
     loadAllProjectSettings: () => [settings, otherSettings], loadAllContentProjects: () => saved,
