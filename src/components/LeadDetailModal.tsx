@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext';
+import { adminInterfaceText } from '../i18n/adminInterfaceCopy';
 import React, { useEffect, useState } from 'react';
 import { authenticatedFetch } from '../services/authenticatedFetch';
 import {
@@ -108,6 +110,8 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
   onDeleteLead,
   onAddNote
 }) => {
+  const { language } = useLanguage();
+  const adminText = (source: string, ...values: (string | number)[]) => adminInterfaceText(language, source, ...values);
   const [activeTab, setActiveTab] = useState<'maraInsights' | 'details' | 'writeEmail' | 'addNote'>(
     lead.maraInsights ? 'maraInsights' : 'details'
   );
@@ -146,7 +150,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
     setConsentError(false);
     authenticatedFetch(`/api/email/external-consent/status?contactId=${encodeURIComponent(lead.id)}`)
       .then(async (response) => {
-        if (!response.ok) throw new Error('Status nicht verfügbar');
+        if (!response.ok) throw new Error(adminText("Status nicht verfügbar"));
         return response.json() as Promise<{ granted: boolean }>;
       })
       .then((status) => { if (active) { setExternalConsent(status.granted === true); setCheckedConsentContact(`${lead.id}:${lead.email}`); } })
@@ -189,17 +193,17 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
       if (onAddNote) onAddNote(lead.id, newNoteText.trim());
       setNewNoteText('');
       setActiveTab(lead.maraInsights ? 'maraInsights' : 'details');
-      setActionSuccessMessage('✅ Notiz erfolgreich im Interaktionsverlauf gespeichert!');
+      setActionSuccessMessage(adminText("✅ Notiz erfolgreich im Interaktionsverlauf gespeichert!"));
       setTimeout(() => setActionSuccessMessage(null), 4000);
     } catch (error: unknown) {
-      setActionErrorMessage(error instanceof Error ? error.message : 'Die CRM-Notiz konnte nicht gespeichert werden.');
+      setActionErrorMessage(error instanceof Error ? error.message : adminText("Die CRM-Notiz konnte nicht gespeichert werden."));
     } finally {
       setIsSavingLead(false);
     }
   };
 
   const deliverEmail = async (subject: string, body: string, title: string, successMessage: string) => {
-    const wasConfirmed = window.confirm(`E-Mail mit dem Betreff „${subject}“ jetzt an ${lead.email} senden?`);
+    const wasConfirmed = window.confirm(adminText("E-Mail mit dem Betreff „{0}“ jetzt an {1} senden?", subject, lead.email));
     if (!wasConfirmed) return false;
     setActionErrorMessage(null);
     setActionSuccessMessage(null);
@@ -222,13 +226,13 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
       try {
         await onUpdateLead({ ...lead, timeline: nextTimeline, lastInteraction: 'Gerade eben' });
       } catch {
-        setActionErrorMessage('Die E-Mail wurde versendet, aber der CRM-Verlauf konnte nicht gespeichert werden.');
+        setActionErrorMessage(adminText("Die E-Mail wurde versendet, aber der CRM-Verlauf konnte nicht gespeichert werden."));
       }
       setActionSuccessMessage(successMessage);
       setTimeout(() => setActionSuccessMessage(null), 4000);
       return true;
     } catch (error: unknown) {
-      setActionErrorMessage(error instanceof Error ? error.message : 'Die E-Mail konnte nicht versendet werden.');
+      setActionErrorMessage(error instanceof Error ? error.message : adminText("Die E-Mail konnte nicht versendet werden."));
       return false;
     } finally {
       setIsSendingEmail(false);
@@ -243,7 +247,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
       subject,
       body,
       'E-Mail gesendet (Manuell)',
-      `📨 E-Mail erfolgreich an ${lead.email} versendet!`,
+      adminText("📨 E-Mail erfolgreich an {0} versendet!", lead.email),
     );
     if (!wasSent) return;
     setEmailSubject('');
@@ -261,7 +265,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
       subject,
       body,
       'KI-Empfohlene E-Mail gesendet',
-      `🚀 Personalisierter Mara KI-Entwurf erfolgreich an ${lead.email} versendet!`,
+      adminText("🚀 Personalisierter Mara KI-Entwurf erfolgreich an {0} versendet!", lead.email),
     );
   };
 
@@ -275,7 +279,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
 
   const handleDeclineLead = () => {
     setLeadDeclined(true);
-    setActionSuccessMessage(`Lead ${lead.name} als nicht qualifiziert archiviert.`);
+    setActionSuccessMessage(adminText("Lead {0} als nicht qualifiziert archiviert.", lead.name));
     setTimeout(() => {
       setActionSuccessMessage(null);
       onClose();
@@ -284,7 +288,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
 
   const handleDeleteLead = async () => {
     const wasConfirmed = window.confirm(
-      `Kontakt „${lead.name}“ (${lead.email}) wirklich dauerhaft löschen? Der gesamte CRM-Verlauf wird entfernt.`,
+      adminText("Kontakt „{0}“ ({1}) wirklich dauerhaft löschen? Der gesamte CRM-Verlauf wird entfernt.", lead.name, lead.email),
     );
     if (!wasConfirmed) return;
     setActionErrorMessage(null);
@@ -293,7 +297,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
       await onDeleteLead(lead);
       onClose();
     } catch (error: unknown) {
-      setActionErrorMessage(error instanceof Error ? error.message : 'Der CRM-Kontakt konnte nicht gelöscht werden.');
+      setActionErrorMessage(error instanceof Error ? error.message : adminText("Der CRM-Kontakt konnte nicht gelöscht werden."));
       setIsDeletingLead(false);
     }
   };
@@ -339,7 +343,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  Mara KI Insights
+                  {adminText("Mara KI Insights")}
                 </button>
                 <button
                   onClick={() => setActiveTab('details')}
@@ -349,7 +353,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  CRM Kontaktprofil
+                  {adminText("CRM Kontaktprofil")}
                 </button>
               </div>
             )}
@@ -399,16 +403,16 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   disabled={leadDeclined}
                   className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-xs font-bold transition-all cursor-pointer"
                 >
-                  {leadDeclined ? 'Abgelehnt' : 'Ablehnen'}
+                  {leadDeclined ? adminText("Abgelehnt") : adminText("Ablehnen")}
                 </button>
                 <button
                   type="button"
                   disabled
-                  title="Kampagnen werden in der E-Mail-Übersicht gestartet und nur an Mitglieder mit bestätigter Einwilligung versendet."
+                  title={adminText("Kampagnen werden in der E-Mail-Übersicht gestartet und nur an Mitglieder mit bestätigter Einwilligung versendet.")}
                   className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-slate-700 text-slate-300 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-not-allowed"
                 >
                   <Play className="w-4 h-4 fill-white" />
-                  <span>Kampagne in E-Mail-Übersicht starten</span>
+                  <span>{adminText("Kampagne in E-Mail-Übersicht starten")}</span>
                 </button>
               </div>
             </div>
@@ -419,7 +423,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
               <div className="bg-slate-950/70 rounded-2xl p-6 border border-slate-800 flex flex-col justify-between shadow-lg">
                 <div>
                   <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1">
-                    ABSCHLUSS-WAHRSCHEINLICHKEIT
+                    {adminText("ABSCHLUSS-WAHRSCHEINLICHKEIT")}
                   </h4>
                   <div className="flex items-end gap-2">
                     <span className="text-4xl sm:text-5xl font-black text-white">
@@ -446,7 +450,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
               <div className="bg-slate-950/70 rounded-2xl p-6 border-l-4 border-blue-500 border-y border-r border-slate-800 md:col-span-2 shadow-lg flex flex-col justify-between space-y-4">
                 <div className="flex justify-between items-start">
                   <h4 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                    <span>Nächste Empfohlene Aktion</span>
+                    <span>{adminText("Nächste Empfohlene Aktion")}</span>
                   </h4>
                   <Sparkles className="w-5 h-5 text-blue-400" />
                 </div>
@@ -467,14 +471,14 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
-                    <span>{isSendingEmail ? 'Wird gesendet…' : 'Entwurf jetzt senden'}</span>
+                    <span>{isSendingEmail ? adminText("Wird gesendet…") : adminText("Entwurf jetzt senden")}</span>
                   </button>
                   <button
                     onClick={handleEditDraft}
                     className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Edit3 className="w-4 h-4 text-slate-400" />
-                    <span>Anpassen</span>
+                    <span>{adminText("Anpassen")}</span>
                   </button>
                 </div>
               </div>
@@ -482,14 +486,14 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
               {/* Card 3: Behavior Analysis (Span 2) */}
               <div className="bg-slate-950/70 rounded-2xl p-6 border border-slate-800 md:col-span-2 shadow-lg space-y-4">
                 <h4 className="text-base font-bold text-white flex items-center gap-2">
-                  <span>Verhaltensanalyse</span>
+                  <span>{adminText("Verhaltensanalyse")}</span>
                 </h4>
 
                 <div className="space-y-3 divide-y divide-slate-800/80 text-xs sm:text-sm">
                   <div className="flex items-center justify-between pb-3">
                     <div className="flex items-center gap-3 text-slate-300">
                       <Inbox className="w-4 h-4 text-slate-400" />
-                      <span>E-Mails Geöffnet</span>
+                      <span>{adminText("E-Mails Geöffnet")}</span>
                     </div>
                     <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/30">
                       {lead.maraInsights.behaviorAnalysis.emailsOpened}
@@ -499,7 +503,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   <div className="flex items-center justify-between py-3">
                     <div className="flex items-center gap-3 text-slate-300">
                       <MousePointer className="w-4 h-4 text-slate-400" />
-                      <span>Webseiten Besuche</span>
+                      <span>{adminText("Webseiten Besuche")}</span>
                     </div>
                     <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/30">
                       {lead.maraInsights.behaviorAnalysis.websiteVisits}
@@ -509,7 +513,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   <div className="flex items-center justify-between pt-3">
                     <div className="flex items-center gap-3 text-slate-300">
                       <Clock className="w-4 h-4 text-slate-400" />
-                      <span>Beste Kontaktzeit (Mara KI)</span>
+                      <span>{adminText("Beste Kontaktzeit (Mara KI)")}</span>
                     </div>
                     <span className="font-bold text-white bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
                       {lead.maraInsights.behaviorAnalysis.bestContactTime}
@@ -521,7 +525,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
               {/* Card 4: Follow-up Schedule (Span 1) */}
               <div className="bg-slate-950/70 rounded-2xl p-6 border border-slate-800 shadow-lg flex flex-col">
                 <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-4">
-                  AUTOMATISCHER FOLLOW-UP
+                  {adminText("AUTOMATISCHER FOLLOW-UP")}
                 </h4>
 
                 <div className="relative pl-5 space-y-6 flex-1 text-xs">
@@ -567,7 +571,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 </div>
 
                 <h3 className="text-xl font-extrabold text-white mb-0.5">{lead.name}</h3>
-                <p className="text-xs text-slate-400 mb-3">{lead.role} bei {lead.company}</p>
+                <p className="text-xs text-slate-400 mb-3">{lead.role} {adminText("bei")} {lead.company}</p>
 
                 <div className="flex items-center gap-2 mb-5">
                   <span className="px-3 py-1 bg-indigo-500/15 text-indigo-300 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-indigo-500/30">
@@ -596,19 +600,19 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 </div>
               </div>
 
-              <section aria-label="Marketing-Einwilligung" className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-3">
-                <h4 className="text-sm font-bold text-white">Marketing-Einwilligung</h4>
+              <section aria-label={adminText("Marketing-Einwilligung")} className="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-3">
+                <h4 className="text-sm font-bold text-white">{adminText("Marketing-Einwilligung")}</h4>
                 <p role="status" className={`text-sm font-semibold ${canSendMarketingEmail ? 'text-emerald-300' : 'text-amber-200'}`}>
-                  {checkingConsent ? 'Einwilligung wird geprüft…' : consentError ? 'Status derzeit nicht abrufbar' : canSendMarketingEmail ? 'Bestätigte Einwilligung' : 'Keine aktive Einwilligung'}
+                  {checkingConsent ? adminText("Einwilligung wird geprüft…") : consentError ? adminText("Status derzeit nicht abrufbar") : canSendMarketingEmail ? adminText("Bestätigte Einwilligung") : adminText("Keine aktive Einwilligung")}
                 </p>
                 <p className="text-xs text-slate-400">
                   {lead.id.startsWith('member_')
-                    ? 'Stand des letzten Mitgliederabgleichs. Beim Versand werden Einwilligung und Abmeldesperre erneut geprüft.'
-                    : 'Die bestätigte Einwilligung und eine mögliche Abmeldesperre werden direkt vom Server geprüft.'}
+                    ? adminText("Stand des letzten Mitgliederabgleichs. Beim Versand werden Einwilligung und Abmeldesperre erneut geprüft.")
+                    : adminText("Die bestätigte Einwilligung und eine mögliche Abmeldesperre werden direkt vom Server geprüft.")}
                 </p>
                 {!lead.id.startsWith('member_') && (
                   <button type="button" disabled={checkingConsent} onClick={() => setConsentVersion(value => value + 1)} className="text-xs font-bold text-indigo-300 hover:text-indigo-200 disabled:opacity-50">
-                    Status aktualisieren
+                    {adminText("Status aktualisieren")}
                   </button>
                 )}
               </section>
@@ -616,7 +620,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
               {/* Quick Actions Card */}
               <div className="bg-slate-950/70 rounded-2xl p-5 border border-slate-800 space-y-3 shadow-lg">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                  Schnellaktionen
+                  {adminText("Schnellaktionen")}
                 </h4>
                 <div className="flex flex-col gap-2.5">
                   <button
@@ -629,7 +633,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     }`}
                   >
                     <Send className="w-4 h-4" />
-                    <span>E-Mail schreiben</span>
+                    <span>{adminText("E-Mail schreiben")}</span>
                   </button>
 
                   <a
@@ -637,7 +641,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     className="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors"
                   >
                     <PhoneCall className="w-4 h-4 text-emerald-400" />
-                    <span>Anruf starten</span>
+                    <span>{adminText("Anruf starten")}</span>
                   </a>
 
                   <button
@@ -650,7 +654,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     }`}
                   >
                     <Edit3 className="w-4 h-4 text-amber-400" />
-                    <span>Notiz hinzufügen</span>
+                    <span>{adminText("Notiz hinzufügen")}</span>
                   </button>
 
                   <button
@@ -659,7 +663,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     className="w-full py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 disabled:cursor-not-allowed disabled:opacity-60 transition-all cursor-pointer"
                   >
                     <Trash2 className="w-4 h-4" />
-                    <span>{isDeletingLead ? 'Wird gelöscht…' : 'Kontakt dauerhaft löschen'}</span>
+                    <span>{isDeletingLead ? adminText("Wird gelöscht…") : adminText("Kontakt dauerhaft löschen")}</span>
                   </button>
                 </div>
               </div>
@@ -668,7 +672,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
               <div className="bg-slate-950/70 rounded-2xl p-5 border border-slate-800 shadow-lg space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    Tags / Segmente
+                    {adminText("Tags / Segmente")}
                   </h4>
                   <button
                     onClick={() => setShowTagInput(!showTagInput)}
@@ -682,7 +686,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   <form onSubmit={handleAddTag} className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="Neuer Tag (z.B. VIP)..."
+                      placeholder={adminText("Neuer Tag (z.B. VIP)...")}
                       value={newTagText}
                       onChange={(e) => setNewTagText(e.target.value)}
                       className="flex-1 px-3 py-1.5 text-xs bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-indigo-500"
@@ -723,29 +727,29 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                     <h4 className="font-bold text-white text-sm flex items-center gap-2">
                       <Send className="w-4 h-4 text-indigo-400" />
-                      E-Mail verfassen an {lead.name} ({lead.email})
+                      {adminText("E-Mail verfassen an")} {lead.name} ({lead.email})
                     </h4>
                     <button
                       onClick={() => setActiveTab(lead.maraInsights ? 'maraInsights' : 'details')}
                       className="text-xs text-slate-400 hover:text-white"
                     >
-                      Abbrechen
+                      {adminText("Abbrechen")}
                     </button>
                   </div>
                   {!canSendMarketingEmail && (
                     <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
-                      {checkingConsent ? 'Einwilligung wird geprüft…' : consentError ? 'Der Einwilligungsstatus konnte nicht abgerufen werden. Bitte unter Marketing-Einwilligung den Status aktualisieren.' : lead.id.startsWith('member_')
-                        ? 'Dieses Mitglied hat keine bestätigte Marketing-E-Mail-Einwilligung. Es kann sie im eigenen Academy-Profil freiwillig anfordern und per E-Mail bestätigen. Danach Mitglieder erneut abgleichen.'
-                        : <>Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">diesen Anmeldelink</a> anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.</>}
+                      {checkingConsent ? adminText("Einwilligung wird geprüft…") : consentError ? adminText("Der Einwilligungsstatus konnte nicht abgerufen werden. Bitte unter Marketing-Einwilligung den Status aktualisieren.") : lead.id.startsWith('member_')
+                        ? adminText("Dieses Mitglied hat keine bestätigte Marketing-E-Mail-Einwilligung. Es kann sie im eigenen Academy-Profil freiwillig anfordern und per E-Mail bestätigen. Danach Mitglieder erneut abgleichen.")
+                        : <>{adminText("Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über")} <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">{adminText("diesen Anmeldelink")}</a> {adminText("anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.")}</>}
                     </p>
                   )}
 
                   <div className="space-y-3">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">Betreff:</label>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">{adminText("Betreff:")}</label>
                       <input
                         type="text"
-                        placeholder="z.B. Einladung zu deiner persönlichen Strategie-Session"
+                        placeholder={adminText("z.B. Einladung zu deiner persönlichen Strategie-Session")}
                         value={emailSubject}
                         onChange={(e) => setEmailSubject(e.target.value)}
                         className="w-full px-4 py-2 text-xs sm:text-sm bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-indigo-500"
@@ -753,7 +757,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">Nachrichtentext:</label>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">{adminText("Nachrichtentext:")}</label>
                       <textarea
                         rows={6}
                         placeholder={`Hallo ${lead.name.split(' ')[0]},\n\nich habe gesehen, dass du dich für unser Webinar angemeldet hast. Lass uns gerne kurz sprechen...`}
@@ -768,7 +772,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                         onClick={() => setActiveTab(lead.maraInsights ? 'maraInsights' : 'details')}
                         className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
                       >
-                        Abbrechen
+                        {adminText("Abbrechen")}
                       </button>
                       <button
                         onClick={handleSendEmailSubmit}
@@ -776,7 +780,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                         className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30"
                       >
                         <Send className="w-4 h-4" />
-                        <span>{isSendingEmail ? 'Wird gesendet…' : 'E-Mail jetzt senden'}</span>
+                        <span>{isSendingEmail ? adminText("Wird gesendet…") : adminText("E-Mail jetzt senden")}</span>
                       </button>
                     </div>
                   </div>
@@ -789,24 +793,24 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                     <h4 className="font-bold text-white text-sm flex items-center gap-2">
                       <Edit3 className="w-4 h-4 text-amber-400" />
-                      Neue CRM-Notiz für {lead.name} erfassen
+                      {adminText("Neue CRM-Notiz für {0} erfassen", lead.name)}
                     </h4>
                     <button
                       onClick={() => setActiveTab(lead.maraInsights ? 'maraInsights' : 'details')}
                       className="text-xs text-slate-400 hover:text-white"
                     >
-                      Abbrechen
+                      {adminText("Abbrechen")}
                     </button>
                   </div>
 
                   <div className="space-y-3">
                     <div>
                       <label className="block text-xs font-semibold text-slate-300 mb-1">
-                        Gesprächs- / Beobachtungsnotiz:
+                        {adminText("Gesprächs- / Beobachtungsnotiz:")}
                       </label>
                       <textarea
                         rows={5}
-                        placeholder={`Z.B. „${lead.name} hat im Webinar nach Agentur-Rabatten gefragt. Budget liegt bei ca. 5.000€. Folgetermin am Montag vereinbart.“`}
+                        placeholder={adminText("Z.B. „{0} hat im Webinar nach Agentur-Rabatten gefragt. Budget liegt bei ca. 5.000€. Folgetermin am Montag vereinbart.“", lead.name)}
                         value={newNoteText}
                         onChange={(e) => setNewNoteText(e.target.value)}
                         className="w-full p-4 text-xs sm:text-sm bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-amber-500 leading-relaxed font-sans"
@@ -818,7 +822,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                         onClick={() => setActiveTab(lead.maraInsights ? 'maraInsights' : 'details')}
                         className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
                       >
-                        Abbrechen
+                        {adminText("Abbrechen")}
                       </button>
                       <button
                         onClick={handleSaveNote}
@@ -826,7 +830,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                         className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60 text-slate-950 text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-500/20"
                       >
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>{isSavingLead ? 'Wird gespeichert…' : 'Notiz im Verlauf speichern'}</span>
+                        <span>{isSavingLead ? adminText("Wird gespeichert…") : adminText("Notiz im Verlauf speichern")}</span>
                       </button>
                     </div>
                   </div>
@@ -847,7 +851,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
 
                 <div className="shrink-0 w-full sm:w-44 space-y-1.5">
                   <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-slate-400">Abschluss-Chance</span>
+                    <span className="text-slate-400">{adminText("Abschluss-Chance")}</span>
                     <span className="text-indigo-400 font-bold">{lead.score}%</span>
                   </div>
                   <div className="h-2.5 w-full bg-slate-800 rounded-full overflow-hidden border border-slate-700">
@@ -864,7 +868,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                   <h4 className="text-base font-bold text-white flex items-center gap-2">
                     <History className="w-5 h-5 text-indigo-400" />
-                    Interaktionsverlauf & Chronik
+                    {adminText("Interaktionsverlauf & Chronik")}
                   </h4>
                   <div className="flex items-center gap-2">
                     <button className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
@@ -915,12 +919,12 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                         {item.emailDetails && (
                           <div className="bg-slate-950 border border-slate-800 rounded-lg p-3 space-y-1 text-xs">
                             <p className="text-slate-400 font-medium">
-                              <span className="text-slate-200 font-semibold">Betreff:</span> {item.emailDetails.subject}
+                              <span className="text-slate-200 font-semibold">{adminText("Betreff:")}</span> {item.emailDetails.subject}
                             </p>
                             <p className="text-slate-300 italic">"{item.emailDetails.snippet}"</p>
                             {item.emailDetails.opens > 0 && (
                               <p className="text-indigo-400 font-semibold flex items-center gap-1 text-[11px] pt-1">
-                                <CheckCheck className="w-3.5 h-3.5" /> Geöffnet ({item.emailDetails.opens}x)
+                                <CheckCheck className="w-3.5 h-3.5" /> {adminText("Geöffnet (")}{item.emailDetails.opens}x)
                               </p>
                             )}
                           </div>
@@ -939,7 +943,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 <div className="text-center pt-2">
                   <button className="text-xs text-slate-400 hover:text-indigo-400 transition-colors inline-flex items-center gap-1 cursor-pointer">
                     <ChevronDown className="w-4 h-4" />
-                    <span>Alle historischen Ereignisse anzeigen</span>
+                    <span>{adminText("Alle historischen Ereignisse anzeigen")}</span>
                   </button>
                 </div>
               </div>

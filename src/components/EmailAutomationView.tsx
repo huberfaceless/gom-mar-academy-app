@@ -1,4 +1,4 @@
-import { emailCampaignText } from '../i18n/emailCampaignCopy';
+import { adminInterfaceText } from '../i18n/adminInterfaceCopy';
 import { loadCampaignDeliveryReport, type CampaignDeliveryReport } from '../services/emailCampaignsService';
 import React, { useEffect, useRef, useState } from 'react';
 import { Campaign, EmailMessage } from '../types';
@@ -58,7 +58,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   campaignsError,
   language,
 }) => {
-  const emailText = (source: string, ...values: (string | number)[]) => emailCampaignText(language, source, ...values);
+  const emailText = (source: string, ...values: (string | number)[]) => adminInterfaceText(language, source, ...values);
   const [deliveryReport, setDeliveryReport] = useState<CampaignDeliveryReport | null>(null);
   const [reportError, setReportError] = useState<string | null>(null);
   const [reportVersion, setReportVersion] = useState(0);
@@ -69,7 +69,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     if (isAdmin) loadCampaignDeliveryReport().then(report => {
       if (!cancelled) setDeliveryReport(report);
     }).catch(error => {
-      if (!cancelled) setReportError(error instanceof Error ? error.message : 'Versandprotokoll nicht verfügbar.');
+      if (!cancelled) setReportError(error instanceof Error ? error.message : emailText("Versandprotokoll nicht verfügbar."));
     });
     return () => { cancelled = true; };
   }, [isAdmin, campaigns, reportVersion]);
@@ -156,12 +156,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       })
       .catch(async (error: unknown) => {
         if (cancelled) return;
-        setContactsError(error instanceof Error ? error.message : 'Mitglieder konnten nicht abgeglichen werden.');
+        setContactsError(error instanceof Error ? error.message : emailText("Mitglieder konnten nicht abgeglichen werden."));
         try {
           const storedContacts = await loadCrmContacts();
           if (!cancelled) setContacts(storedContacts);
         } catch (loadError: unknown) {
-          if (!cancelled) setContactsError(loadError instanceof Error ? loadError.message : 'CRM-Kontakte konnten nicht geladen werden.');
+          if (!cancelled) setContactsError(loadError instanceof Error ? loadError.message : emailText("CRM-Kontakte konnten nicht geladen werden."));
         }
       })
       .finally(() => {
@@ -211,7 +211,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       });
       setIsEditing(false);
     } catch (error: unknown) {
-      setCampaignActionError(error instanceof Error ? error.message : 'Die E-Mail-Änderungen konnten nicht gespeichert werden.');
+      setCampaignActionError(error instanceof Error ? error.message : emailText("Die E-Mail-Änderungen konnten nicht gespeichert werden."));
     } finally {
       setIsSavingCampaign(false);
     }
@@ -264,7 +264,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       const storedContacts = await saveCrmContacts([newLead, ...persistentContacts]);
       setContacts(storedContacts);
     } catch (error: unknown) {
-      setContactsError(error instanceof Error ? error.message : 'Der Kontakt konnte nicht gespeichert werden.');
+      setContactsError(error instanceof Error ? error.message : emailText("Der Kontakt konnte nicht gespeichert werden."));
       return;
     } finally {
       setIsSavingContact(false);
@@ -279,16 +279,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
   };
 
   const handleSyncAcademyMembers = async () => {
-    if (!window.confirm('Alle aktiven Academy-Mitglieder jetzt mit dem CRM synchronisieren? Mitglieder ohne Marketing-E-Mail-Einwilligung bleiben für Werbe-E-Mails gesperrt. Es wird keine E-Mail versendet.')) return;
+    if (!window.confirm(emailText("Alle aktiven Academy-Mitglieder jetzt mit dem CRM synchronisieren? Mitglieder ohne Marketing-E-Mail-Einwilligung bleiben für Werbe-E-Mails gesperrt. Es wird keine E-Mail versendet."))) return;
     setContactsError(null);
     setIsSyncingMembers(true);
     try {
       const result = await syncAcademyMembers();
       setContacts(result.contacts);
-      setSimulatedLeadSuccess(`${result.memberCount} Mitglieder abgeglichen, davon ${result.consentedCount} mit Marketing-E-Mail-Einwilligung; ${result.importedCount} neu übernommen. Es wurde keine E-Mail versendet.`);
+      setSimulatedLeadSuccess(emailText("{0} Mitglieder abgeglichen, davon {1} mit Marketing-E-Mail-Einwilligung; {2} neu übernommen. Es wurde keine E-Mail versendet.", result.memberCount, result.consentedCount, result.importedCount));
       setTimeout(() => setSimulatedLeadSuccess(null), 5000);
     } catch (error: unknown) {
-      setContactsError(error instanceof Error ? error.message : 'Mitglieder konnten nicht mit dem CRM synchronisiert werden.');
+      setContactsError(error instanceof Error ? error.message : emailText("Mitglieder konnten nicht mit dem CRM synchronisiert werden."));
     } finally {
       setIsSyncingMembers(false);
     }
@@ -542,7 +542,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     try {
       await onUpdateCampaigns(campaigns.map(campaign => campaign.id === activeCampaign.id ? { ...campaign, deliveryMode } : campaign));
     } catch (error: unknown) {
-      setCampaignActionError(error instanceof Error ? error.message : 'Versandmodus konnte nicht gespeichert werden.');
+      setCampaignActionError(error instanceof Error ? error.message : emailText("Versandmodus konnte nicht gespeichert werden."));
     } finally { setIsSavingCampaign(false); }
   };
 
@@ -568,12 +568,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     }
     const selfTest = activeCampaign.deliveryMode === 'self-test';
     const recipients = activeCampaign.deliveryMode === 'members-and-crm'
-      ? 'Academy-Mitglieder und manuelle Kontakte aus deinem CRM mit bestätigter E-Mail-Einwilligung'
-      : 'alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung';
+      ? emailText("Academy-Mitglieder und manuelle Kontakte aus deinem CRM mit bestätigter E-Mail-Einwilligung")
+      : emailText("alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung");
     const confirmed = shouldPause
       ? window.confirm(emailText("Kampagne „{0}“ jetzt pausieren?", activeCampaign.title))
       : window.confirm(isAdmin
-        ? selfTest ? 'Automatik-Test starten? Diese Kampagne sendet ausschließlich an dein eigenes bestätigtes Admin-Konto mit Marketing-Einwilligung.' : `Kampagne automatisch an ${recipients} senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.`
+        ? selfTest ? emailText("Automatik-Test starten? Diese Kampagne sendet ausschließlich an dein eigenes bestätigtes Admin-Konto mit Marketing-Einwilligung.") : emailText("Kampagne automatisch an {0} senden? Geplante E-Mails werden ab jetzt nach ihrem Versandabstand verschickt.", recipients)
         : emailText('Kampagne freigeben? Die E-Mails werden als geplant markiert. Ein automatischer Empfängerversand wird dadurch nicht ausgelöst.'));
     if (!confirmed) return;
     const nextStatus: Campaign['status'] = shouldPause ? 'paused' : 'active';
@@ -595,7 +595,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
       setIsEditing(false);
       setSimulatedLeadSuccess(shouldPause
         ? emailText('Die Kampagne wurde pausiert.')
-        : isAdmin ? selfTest ? 'Automatik-Test gestartet: Versand ausschließlich an dein eigenes Konto.' : 'Die Kampagne wurde für den automatischen Versand freigegeben.' : emailText('Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.'));
+        : isAdmin ? selfTest ? emailText("Automatik-Test gestartet: Versand ausschließlich an dein eigenes Konto.") : emailText("Die Kampagne wurde für den automatischen Versand freigegeben.") : emailText('Die Kampagne wurde freigegeben. Es wurde keine Empfänger-E-Mail versendet.'));
       setTimeout(() => setSimulatedLeadSuccess(null), 5000);
     } catch (error: unknown) {
       setCampaignActionError(error instanceof Error ? error.message : emailText('Der Kampagnenstatus konnte nicht gespeichert werden.'));
@@ -637,7 +637,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     };
     setContacts([testLead, ...contacts]);
 
-    setSimulatedLeadSuccess(`Neuer Test-Lead (${testLead.email}) lokal erfasst. Es wurde keine E-Mail versendet.`);
+    setSimulatedLeadSuccess(emailText("Neuer Test-Lead ({0}) lokal erfasst. Es wurde keine E-Mail versendet.", testLead.email));
     setTimeout(() => setSimulatedLeadSuccess(null), 5000);
   };
 
@@ -736,7 +736,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               }`}
             >
               <Users className="w-4 h-4" />
-              <span>Kontakte verwalten (CRM)</span>
+              <span>{emailText("Kontakte verwalten (CRM)")}</span>
               <span className="px-2 py-0.5 rounded-full bg-slate-100 text-indigo-700 text-[11px] font-black border border-indigo-200">
                 {contacts.length}
               </span>
@@ -752,7 +752,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>Neuer Lead</span>
+              <span>{emailText("Neuer Lead")}</span>
             </button>
           ) : (
             <button
@@ -761,7 +761,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>+ Test-Lead eintragen</span>
+              <span>{emailText("+ Test-Lead eintragen")}</span>
             </button>
           )}
         </div>}
@@ -875,7 +875,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             <div className="grid gap-3 sm:grid-cols-2">
               {campaigns.map(campaign => <button key={campaign.id} type="button" aria-pressed={campaign.id === activeCampaign.id} onClick={() => handleSelectCampaign(campaign.id)} className={`rounded-xl border p-4 text-left ${campaign.id === activeCampaign.id ? 'border-indigo-600 bg-indigo-50' : 'border-slate-200'}`}>
                 <strong className="block">{campaign.title}</strong>
-                <span className="block text-xs mt-1">{campaign.status === 'draft' && !getCampaignReadinessError(campaign) ? emailText('Bereit zum Starten') : campaignStatusLabel(campaign.status)} · {campaign.emails.length} {emailText("E-Mails ·")} {campaign.deliveryMode === 'self-test' ? emailText('Nur mein Konto') : campaign.deliveryMode === 'members-and-crm' ? emailText('Mitglieder + mein CRM mit Einwilligung') : emailText('Mitglieder mit Einwilligung')}</span>
+                <span className="block text-xs mt-1">{campaign.status === 'draft' && !getCampaignReadinessError(campaign) ? emailText('Bereit zum Starten') : campaignStatusLabel(campaign.status)} · {emailText(campaign.emails.length === 1 ? "{0} E-Mail ·" : "{0} E-Mails ·", campaign.emails.length)} {campaign.deliveryMode === 'self-test' ? emailText('Nur mein Konto') : campaign.deliveryMode === 'members-and-crm' ? emailText('Mitglieder + mein CRM mit Einwilligung') : emailText('Mitglieder mit Einwilligung')}</span>
               </button>)}
             </div>
           </section>
@@ -944,12 +944,12 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     <Users className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-950 text-base">Neueste Leads</h3>
-                    <p className="text-xs text-slate-500">Direkt aus deinem CRM</p>
+                    <h3 className="font-bold text-slate-950 text-base">{emailText("Neueste Leads")}</h3>
+                    <p className="text-xs text-slate-500">{emailText("Direkt aus deinem CRM")}</p>
                   </div>
                 </div>
                 <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-                  {contacts.length} Kontakte
+                  {contacts.length} {emailText("Kontakte")}
                 </span>
               </div>
 
@@ -989,7 +989,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 id="btn-goto-crm"
                 className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 text-xs font-bold transition-colors cursor-pointer text-center"
               >
-                Alle Kontakte verwalten (CRM) →
+                {emailText("Alle Kontakte verwalten (CRM) →")}
               </button>
             </div>}
 
@@ -1036,16 +1036,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               {activeCampaign.status === 'active' && <p className="text-xs text-slate-500">{emailText("Zum Löschen zuerst pausieren.")}</p>}
               {isAdmin && (
                 <label className="block rounded-xl border border-indigo-200 bg-indigo-50 p-3 text-xs font-bold text-indigo-900">
-                  Empfänger der Automatik
+                  {emailText("Empfänger der Automatik")}
                   <select value={activeCampaign.deliveryMode || 'members'}
                     disabled={isSavingCampaign || Boolean(activeCampaign.automationStartedAt)}
                     onChange={event => void handleDeliveryModeChange(event.target.value as 'self-test' | 'members' | 'members-and-crm')}
                     className="mt-2 block w-full rounded-lg border border-indigo-200 bg-white p-2 text-sm disabled:opacity-60">
-                    <option value="self-test">Test: nur mein eigenes Admin-Konto</option>
-                    <option value="members">Alle Mitglieder mit bestätigter Marketing-Einwilligung</option>
-                    <option value="members-and-crm">Mitglieder und meine CRM-Kontakte mit bestätigter Marketing-Einwilligung</option>
+                    <option value="self-test">{emailText("Test: nur mein eigenes Admin-Konto")}</option>
+                    <option value="members">{emailText("Alle Mitglieder mit bestätigter Marketing-Einwilligung")}</option>
+                    <option value="members-and-crm">{emailText("Mitglieder und meine CRM-Kontakte mit bestätigter Marketing-Einwilligung")}</option>
                   </select>
-                  <span className="mt-2 block font-normal">Neue Kampagnen starten im Testmodus. Nach dem Start ist der Empfängerkreis fest. Für einen anderen Empfängerkreis lege eine neue Kampagne an. Manuelle CRM-Kontakte benötigen ihre eigene bestätigte Einwilligung. Doppelte Adressen erhalten die E-Mail höchstens einmal; bestehende Mitgliedskonten werden über die Mitgliederprüfung behandelt. Für CRM-Kontakte wird deine Kontosprache verwendet. Auch der Test benötigt deine bestätigte Marketing-Einwilligung.</span>
+                  <span className="mt-2 block font-normal">{emailText("Neue Kampagnen starten im Testmodus. Nach dem Start ist der Empfängerkreis fest. Für einen anderen Empfängerkreis lege eine neue Kampagne an. Manuelle CRM-Kontakte benötigen ihre eigene bestätigte Einwilligung. Doppelte Adressen erhalten die E-Mail höchstens einmal; bestehende Mitgliedskonten werden über die Mitgliederprüfung behandelt. Für CRM-Kontakte wird deine Kontosprache verwendet. Auch der Test benötigt deine bestätigte Marketing-Einwilligung.")}</span>
                 </label>
               )}
 
@@ -1057,7 +1057,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
               <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-medium text-slate-600">
                 {isAdmin
-                  ? activeCampaign.deliveryMode === 'self-test' ? 'Automatik-Test: Geplante E-Mails gehen ausschließlich an dein eigenes Admin-Konto. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.' : activeCampaign.deliveryMode === 'members-and-crm' ? 'Eine neue Freigabe startet den Versand an Academy-Mitglieder und manuelle Kontakte aus deinem CRM mit bestätigter Einwilligung. Abgemeldete Kontakte werden ausgeschlossen. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.' : 'Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.'
+                  ? activeCampaign.deliveryMode === 'self-test' ? emailText("Automatik-Test: Geplante E-Mails gehen ausschließlich an dein eigenes Admin-Konto. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.") : activeCampaign.deliveryMode === 'members-and-crm' ? emailText("Eine neue Freigabe startet den Versand an Academy-Mitglieder und manuelle Kontakte aus deinem CRM mit bestätigter Einwilligung. Abgemeldete Kontakte werden ausgeschlossen. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.") : emailText("Eine neue Freigabe startet den automatischen Versand an alle Academy-Mitglieder mit bestätigter E-Mail-Einwilligung. Der Versandabstand beginnt frühestens mit Freigabe und bestätigter Einwilligung.")
                   : emailText('Die Freigabe markiert vollständige E-Mails als geplant. Ein automatischer Empfängerversand ist nur für Academy-Administratoren verfügbar.')}
               </p>
 
@@ -1119,18 +1119,18 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               {isAdmin && <section className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="min-w-0">
-                    <h4 className="font-bold text-slate-900">Versandprotokoll der ausgewählten Kampagne</h4>
+                    <h4 className="font-bold text-slate-900">{emailText("Versandprotokoll der ausgewählten Kampagne")}</h4>
                     <p className="mt-1 break-words text-base font-bold text-indigo-700">{activeCampaign.title}</p>
-                    <p className="mt-1 text-xs text-slate-600">{activeCampaign.status === 'active' ? emailText('Aktiv') : activeCampaign.status === 'paused' ? emailText('Pausiert') : emailText('Entwurf')} · Dieses Protokoll zeigt ausschließlich die ausgewählte Kampagne.</p>
+                    <p className="mt-1 text-xs text-slate-600">{activeCampaign.status === 'active' ? emailText('Aktiv') : activeCampaign.status === 'paused' ? emailText('Pausiert') : emailText('Entwurf')} {emailText("· Dieses Protokoll zeigt ausschließlich die ausgewählte Kampagne.")}</p>
                   </div>
-                  <button type="button" onClick={() => setReportVersion(version => version + 1)} className="text-xs font-bold text-indigo-700">Status aktualisieren</button>
+                  <button type="button" onClick={() => setReportVersion(version => version + 1)} className="text-xs font-bold text-indigo-700">{emailText("Status aktualisieren")}</button>
                 </div>
-                {reportError ? <p role="alert" className="text-sm text-rose-700">{reportError}</p> : !deliveryReport ? <p>Versandstatus wird geladen…</p> : <>
-                  <p className="text-sm">An SendGrid übergeben: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'accepted').length}</strong> · Fehlgeschlagen: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'failed').length}</strong> · Reserviert / Ausgang unklar: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'reserved').length}</strong></p>
-                  <p className="text-sm">Zugestellt (Empfängerserver): <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.deliveryState === 'delivered').length}</strong> · Zurückgewiesen / verworfen: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && ['bounce', 'dropped'].includes(item.deliveryState)).length}</strong> · Verzögert: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.deliveryState === 'deferred').length}</strong> · Zustellung noch unbestätigt: <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && !['delivered', 'bounce', 'dropped', 'deferred'].includes(item.deliveryState)).length}</strong></p>
-                  {!deliveryReport.webhookKeyConfigured && <p className="text-sm text-amber-800">Zustellmeldungen noch nicht eingerichtet: SendGrid-Webhook und Prüfschlüssel konfigurieren.</p>}
-                  {activeCampaign.deliveryMode === 'self-test' && <p className="text-sm font-bold">{deliveryReport.selfTestAllowed ? 'Dein Konto hat eine bestätigte Marketing-Einwilligung.' : 'Versand an dein Konto blockiert: Einwilligung, Versandsperre oder Kontostatus prüfen.'}</p>}
-                  <p className="text-xs text-slate-500">Geprüft: {new Date(deliveryReport.checkedAt).toLocaleString('de-AT')}. Übergabe an SendGrid bestätigt keine Zustellung. „Zugestellt“ bestätigt die Annahme durch den Empfängerserver, nicht das Lesen oder den Posteingang. Zustellmeldungen gelten für neue Kampagnen-E-Mails nach Einrichtung des Webhooks. Öffnungen und Klicks werden hier nicht erfasst.</p>
+                {reportError ? <p role="alert" className="text-sm text-rose-700">{reportError}</p> : !deliveryReport ? <p>{emailText("Versandstatus wird geladen…")}</p> : <>
+                  <p className="text-sm">{emailText("An SendGrid übergeben:")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'accepted').length}</strong> {emailText("· Fehlgeschlagen:")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'failed').length}</strong> {emailText("· Reserviert / Ausgang unklar:")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.status === 'reserved').length}</strong></p>
+                  <p className="text-sm">{emailText("Zugestellt (Empfängerserver):")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.deliveryState === 'delivered').length}</strong> {emailText("· Zurückgewiesen / verworfen:")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && ['bounce', 'dropped'].includes(item.deliveryState)).length}</strong> {emailText("· Verzögert:")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.deliveryState === 'deferred').length}</strong> {emailText("· Zustellung noch unbestätigt:")} <strong>{deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && !['delivered', 'bounce', 'dropped', 'deferred'].includes(item.deliveryState)).length}</strong></p>
+                  {!deliveryReport.webhookKeyConfigured && <p className="text-sm text-amber-800">{emailText("Zustellmeldungen noch nicht eingerichtet: SendGrid-Webhook und Prüfschlüssel konfigurieren.")}</p>}
+                  {activeCampaign.deliveryMode === 'self-test' && <p className="text-sm font-bold">{deliveryReport.selfTestAllowed ? emailText("Dein Konto hat eine bestätigte Marketing-Einwilligung.") : emailText("Versand an dein Konto blockiert: Einwilligung, Versandsperre oder Kontostatus prüfen.")}</p>}
+                  <p className="text-xs text-slate-500">{emailText("Geprüft:")} {new Date(deliveryReport.checkedAt).toLocaleString('de-AT')}{emailText(". Übergabe an SendGrid bestätigt keine Zustellung. „Zugestellt“ bestätigt die Annahme durch den Empfängerserver, nicht das Lesen oder den Posteingang. Zustellmeldungen gelten für neue Kampagnen-E-Mails nach Einrichtung des Webhooks. Öffnungen und Klicks werden hier nicht erfasst.")}</p>
                 </>}
               </section>}
 
@@ -1248,7 +1248,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                         </div>
 
                         <div className="space-y-0.5">
-                          <p className="text-xs text-slate-600">{emailText("Tag")} {email.dayOffset} · {deliveryReport ? `${deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.emailId === email.id && item.status === 'accepted').length} an SendGrid übergeben · ${deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.emailId === email.id && item.status === 'failed').length} fehlgeschlagen` : emailText('Versandstatus nicht geladen')}</p>
+                          <p className="text-xs text-slate-600">{emailText("Tag")} {email.dayOffset} · {deliveryReport ? emailText("{0} an SendGrid übergeben · {1} fehlgeschlagen", deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.emailId === email.id && item.status === 'accepted').length, deliveryReport.deliveries.filter(item => item.campaignId === activeCampaign.id && item.emailId === email.id && item.status === 'failed').length) : emailText('Versandstatus nicht geladen')}</p>
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
                               {email.title}
@@ -1475,9 +1475,9 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
           {/* Header Section */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">Kontakte verwalten (CRM)</h1>
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">{emailText("Kontakte verwalten (CRM)")}</h1>
               <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                Überblick und Steuerung aller Leads, Interessenten und Kunden.
+                {emailText("Überblick und Steuerung aller Leads, Interessenten und Kunden.")}
               </p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -1489,7 +1489,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 className="flex w-fit items-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50 px-5 py-3 text-xs font-bold text-indigo-700 transition-colors hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm"
               >
                 <RefreshCw className={`h-4 w-4 ${isSyncingMembers ? 'animate-spin' : ''}`} />
-                <span>{isSyncingMembers ? 'Mitglieder werden abgeglichen…' : 'Alle Mitglieder abgleichen'}</span>
+                <span>{isSyncingMembers ? emailText("Mitglieder werden abgeglichen…") : emailText("Alle Mitglieder abgleichen")}</span>
               </button>
               <button
                 onClick={() => setShowAddLeadForm(true)}
@@ -1497,7 +1497,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                 className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-indigo-600/20 transition-all cursor-pointer w-fit"
               >
                 <Plus className="w-4 h-4" />
-                <span>Neuer Lead</span>
+                <span>{emailText("Neuer Lead")}</span>
               </button>
             </div>
           </div>
@@ -1508,7 +1508,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-bold text-slate-950 text-base flex items-center gap-2">
                   <UserCheck className="w-5 h-5 text-indigo-600" />
-                  Neuen Kontakt im CRM erfassen
+                  {emailText("Neuen Kontakt im CRM erfassen")}
                 </h3>
                 <button
                   onClick={() => setShowAddLeadForm(false)}
@@ -1521,10 +1521,10 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <form onSubmit={handleCreateNewLead} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Vollständiger Name *</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">{emailText("Vollständiger Name *")}</label>
                     <input
                       type="text"
-                      placeholder="z.B. Anna Müller"
+                      placeholder={emailText("z.B. Anna Müller")}
                       required
                       value={newLeadName}
                       onChange={(e) => setNewLeadName(e.target.value)}
@@ -1532,7 +1532,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">E-Mail-Adresse *</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">{emailText("E-Mail-Adresse *")}</label>
                     <input
                       type="email"
                       placeholder="anna.mueller@techflow.de"
@@ -1543,20 +1543,20 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Position / Rolle</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">{emailText("Position / Rolle")}</label>
                     <input
                       type="text"
-                      placeholder="z.B. Marketing Director"
+                      placeholder={emailText("z.B. Marketing Director")}
                       value={newLeadRole}
                       onChange={(e) => setNewLeadRole(e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Unternehmen</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">{emailText("Unternehmen")}</label>
                     <input
                       type="text"
-                      placeholder="z.B. TechFlow GmbH"
+                      placeholder={emailText("z.B. TechFlow GmbH")}
                       value={newLeadCompany}
                       onChange={(e) => setNewLeadCompany(e.target.value)}
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-600 focus:bg-white"
@@ -1578,7 +1578,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                     className="px-6 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-indigo-600/20"
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>{isSavingContact ? emailText('Wird gespeichert…') : 'Kontakt speichern'}</span>
+                    <span>{isSavingContact ? emailText('Wird gespeichert…') : emailText("Kontakt speichern")}</span>
                   </button>
                 </div>
               </form>
@@ -1588,16 +1588,16 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
           {/* CRM Summary Stats Bento */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white p-6 rounded-3xl border-l-4 border-l-indigo-600 border-y border-r border-slate-200 shadow-sm space-y-1">
-              <p className="text-xs font-semibold text-slate-500">Gesamtkontakte</p>
+              <p className="text-xs font-semibold text-slate-500">{emailText("Gesamtkontakte")}</p>
               <p className="text-3xl font-black text-slate-950">{contacts.length}</p>
               <div className="mt-3 flex items-center gap-1.5 text-emerald-600 text-xs font-bold">
                 <TrendingUp className="w-4 h-4" />
-                <span>Aktueller Stand</span>
+                <span>{emailText("Aktueller Stand")}</span>
               </div>
             </div>
 
             <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
-              <p className="text-xs font-semibold text-slate-500">Aktive Leads</p>
+              <p className="text-xs font-semibold text-slate-500">{emailText("Aktive Leads")}</p>
               <p className="text-3xl font-black text-slate-950">{activeLeadCount}</p>
               <div className="mt-3 w-full bg-slate-100 rounded-full h-2.5 overflow-hidden border border-slate-200">
                 <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2.5 rounded-full" style={{ width: `${contacts.length > 0 ? Math.round((activeLeadCount / contacts.length) * 100) : 0}%` }} />
@@ -1605,11 +1605,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             </div>
 
             <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
-              <p className="text-xs font-semibold text-slate-500">Conversion Rate</p>
+              <p className="text-xs font-semibold text-slate-500">{emailText("Conversion Rate")}</p>
               <p className="text-3xl font-black text-slate-950">{conversionRate}%</p>
               <div className="mt-3 flex items-center gap-1.5 text-slate-500 text-xs font-medium">
                 <Clock className="w-3.5 h-3.5 text-slate-400" />
-                <span>Aktueller Stand</span>
+                <span>{emailText("Aktueller Stand")}</span>
               </div>
             </div>
           </div>
@@ -1620,7 +1620,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Kontakte nach Name, E-Mail oder Tag durchsuchen..."
+                placeholder={emailText("Kontakte nach Name, E-Mail oder Tag durchsuchen...")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 focus:bg-white focus:outline-none transition-all placeholder:text-slate-400"
@@ -1638,7 +1638,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                       : 'bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200'
                   }`}
                 >
-                  {cat}
+                  {emailText(cat)}
                 </button>
               ))}
             </div>
@@ -1695,7 +1695,7 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
                   </div>
 
                   <div className="text-right">
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Letzte Interaktion</p>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">{emailText("Letzte Interaktion")}</p>
                     <p className="text-xs font-semibold text-slate-900">{contact.lastInteraction}</p>
                   </div>
 
@@ -1714,15 +1714,15 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
 
             {isLoadingContacts && (
               <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 text-slate-500">
-                <p className="text-sm font-semibold">CRM-Kontakte werden geladen…</p>
+                <p className="text-sm font-semibold">{emailText("CRM-Kontakte werden geladen…")}</p>
               </div>
             )}
 
             {!isLoadingContacts && filteredContacts.length === 0 && (
               <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 text-slate-500 space-y-2">
                 <Users className="w-8 h-8 text-slate-400 mx-auto" />
-                <p className="text-sm font-semibold">Keine Kontakte gefunden.</p>
-                <p className="text-xs text-slate-400">Versuche einen anderen Suchbegriff oder lege einen neuen Lead an.</p>
+                <p className="text-sm font-semibold">{emailText("Keine Kontakte gefunden.")}</p>
+                <p className="text-xs text-slate-400">{emailText("Versuche einen anderen Suchbegriff oder lege einen neuen Lead an.")}</p>
               </div>
             )}
           </div>
@@ -1754,11 +1754,11 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
             }
             const storedContacts = await deleteCrmContact(lead.id);
             setContacts(storedContacts);
-            setSimulatedLeadSuccess(`Kontakt „${lead.name}“ wurde dauerhaft gelöscht.`);
+            setSimulatedLeadSuccess(emailText("Kontakt „{0}“ wurde dauerhaft gelöscht.", lead.name));
             setTimeout(() => setSimulatedLeadSuccess(null), 5000);
           }}
           onAddNote={() => {
-            setSimulatedLeadSuccess('📝 Neue Notiz im CRM-Verlauf gespeichert!');
+            setSimulatedLeadSuccess(emailText("📝 Neue Notiz im CRM-Verlauf gespeichert!"));
             setTimeout(() => setSimulatedLeadSuccess(null), 5000);
           }}
         />
