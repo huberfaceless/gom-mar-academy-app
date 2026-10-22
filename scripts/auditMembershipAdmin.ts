@@ -59,7 +59,7 @@ assert.match(admin, /loadCrmContacts\(\)/, 'Zusätzliche CRM-Kontakte müssen au
 assert.match(admin, /crmContacts\.filter\(\(contact\) => !contact\.id\.startsWith\('member_'\)\)/, 'Bereits als Mitglieder angezeigte CRM-Einträge dürfen nicht doppelt erscheinen.');
 assert.match(admin, /const totalContacts = totalStudents \+ otherCrmContacts\.length/, 'Die Adminzentrale muss Mitglieder und weitere Kontakte getrennt zählen.');
 assert.match(admin, /Manuell angelegte Kontakte ohne Academy-Konto\. Sie besitzen keinen Mitgliedszugang\./, 'CRM-Kontakte dürfen nicht als Firebase-Mitglieder dargestellt werden.');
-assert.match(admin, /window\.prompt\(`Zur Bestätigung bitte exakt eingeben:/, 'Die dauerhafte Löschung verlangt eine zweite exakte Bestätigung.');
+assert.match(admin, /window\.prompt\(adminText\("Zur Bestätigung bitte exakt eingeben:/, 'Die dauerhafte Löschung verlangt eine zweite exakte Bestätigung.');
 
 assert.equal(isMembershipResolvedForUser('admin-uid', 'admin-uid'), true);
 assert.equal(isMembershipResolvedForUser('new-member-uid', 'admin-uid'), false, 'Beim Kontowechsel darf die alte Adminrolle nicht gerendert werden.');

@@ -107,6 +107,6 @@ assert.match(automation, /ausschließlich an deine eigene Anmeldeadresse/, 'Der 
 const adminDashboard = readFileSync('src/components/AdminDashboardView.tsx', 'utf8');
 assert.match(adminDashboard, /E-Mail schreiben/, 'Der Adminbereich muss den Mitglieder-Einzelversand anbieten.');
 assert.match(adminDashboard, /disabled=\{!member\.emailVerified \|\| member\.disabled \|\| !member\.email\}/, 'Der Versandbutton muss für ungeeignete Mitgliedskonten gesperrt sein.');
-assert.match(adminDashboard, /window\.confirm\(`E-Mail wirklich an \$\{emailingMember\.email\} senden\?`\)/, 'Der Mitglieder-Versand muss ausdrücklich bestätigt werden.');
+assert.match(adminDashboard, /window\.confirm\(adminText\("E-Mail wirklich an \{0\} senden\?", emailingMember\.email\)\)/, 'Der Mitglieder-Versand muss ausdrücklich bestätigt werden.');
 
 console.log('CRM-E-Mail-Versand geprüft: geschützt, begrenzt, über SendGrid und ohne simulierte Erfolgsmeldung.');

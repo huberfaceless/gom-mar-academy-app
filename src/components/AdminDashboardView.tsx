@@ -1,3 +1,4 @@
+import { adminInterfaceText } from '../i18n/adminInterfaceCopy';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { 
   Users, 
@@ -90,6 +91,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   onNavigate
 }) => {
   const { language } = useLanguage();
+  const adminText = useCallback((source: string, ...values: (string | number)[]) => adminInterfaceText(language, source, ...values), [language]);
   const [activeTab, setActiveTab] = useState<'students' | 'curriculum' | 'whatsapp'>('students');
   
   // Search & Filter state for Students
@@ -173,7 +175,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
   const authenticatedRequest = useCallback(async (url: string, init?: RequestInit) => {
     const currentUser = auth.currentUser;
-    if (!currentUser) throw new Error('Die Firebase-Anmeldung ist abgelaufen. Bitte erneut anmelden.');
+    if (!currentUser) throw new Error(adminText("Die Firebase-Anmeldung ist abgelaufen. Bitte erneut anmelden."));
     const idToken = await currentUser.getIdToken();
     return fetch(url, {
       ...init,
@@ -183,7 +185,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         ...init?.headers,
       },
     });
-  }, []);
+  }, [adminText]);
 
   const audioStatusStageKey = (audioSelectionOpen ? stages.map(stage => stage.id) : [selectedStage.id]).join(',');
   useEffect(() => {
@@ -196,13 +198,13 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         method: 'POST',
         body: JSON.stringify({ stageId }),
       });
-      if (!response.ok) throw new Error('Der Audio-Status konnte nicht geprüft werden.');
+      if (!response.ok) throw new Error(adminText("Der Audio-Status konnte nicht geprüft werden."));
       return response.json();
     }, result => {
       setAudioStatus(previous => ({ ...previous, ...Object.fromEntries(result.lessons.map(lesson => [lesson.id, lesson.cached])) }));
     }, () => cancelled).then(failures => {
       if (!cancelled) {
-        if (failures) setAudioStatusError('Einige Etappen konnten nicht geprüft werden. Bitte den Audio-Status erneut aktualisieren.');
+        if (failures) setAudioStatusError(adminText("Einige Etappen konnten nicht geprüft werden. Bitte den Audio-Status erneut aktualisieren."));
         setAudioStatusLoading(false);
       }
     });
@@ -220,10 +222,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         body: JSON.stringify({ lessonIds: audioLessonIds }),
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Der Bestand konnte nicht geprüft werden.');
+      if (!response.ok) throw new Error(result.error || adminText("Der Bestand konnte nicht geprüft werden."));
       setAudioPreview(result);
     } catch (error: unknown) {
-      setAudioError(error instanceof Error ? error.message : 'Der Bestand konnte nicht geprüft werden.');
+      setAudioError(error instanceof Error ? error.message : adminText("Der Bestand konnte nicht geprüft werden."));
     } finally {
       setAudioPreviewLoading(false);
     }
@@ -232,7 +234,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const handleGenerateGermanAudio = async () => {
     if (!audioPreview || audioBatchRunning || audioPreview.charactersToGenerate === 0) return;
     const missing = audioPreview.lessons.filter(lesson => !lesson.cached);
-    if (!window.confirm(`Nur ${missing.map(lesson => lesson.id).join(', ')} erzeugen? ${audioPreview.charactersToGenerate.toLocaleString('de-AT')} Textzeichen werden an ElevenLabs gesendet. Dabei wird dein Guthaben verwendet.`)) return;
+    if (!window.confirm(adminText("Nur {0} erzeugen? {1} Textzeichen werden an ElevenLabs gesendet. Dabei wird dein Guthaben verwendet.", missing.map(lesson => lesson.id).join(', '), audioPreview.charactersToGenerate.toLocaleString('de-AT')))) return;
     setAudioBatchRunning(true);
     setAudioError('');
     setAudioBatchProgress({ processed: 0, total: audioLessonIds.length, generated: 0, cached: 0 });
@@ -242,12 +244,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         body: JSON.stringify({ lessonIds: audioLessonIds, fingerprint: audioPreview.fingerprint, maxCharacters: audioPreview.charactersToGenerate }),
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Die Audioerzeugung wurde unterbrochen. Bitte den Bestand erneut prüfen.');
+      if (!response.ok) throw new Error(result.error || adminText("Die Audioerzeugung wurde unterbrochen. Bitte den Bestand erneut prüfen."));
       setAudioBatchProgress({ processed: result.processed, total: result.total, generated: result.generated, cached: result.cached });
-      setSaveSuccessMsg(`Auswahl vorbereitet: ${result.generated} Audios neu erzeugt, ${result.cached} bereits vorhanden.`);
+      setSaveSuccessMsg(adminText("Auswahl vorbereitet: {0} Audios neu erzeugt, {1} bereits vorhanden.", result.generated, result.cached));
     } catch (error: unknown) {
       setAudioBatchProgress(null);
-      setAudioError(error instanceof Error ? error.message : 'Die Audioerzeugung wurde unterbrochen. Bitte den Bestand erneut prüfen.');
+      setAudioError(error instanceof Error ? error.message : adminText("Die Audioerzeugung wurde unterbrochen. Bitte den Bestand erneut prüfen."));
     } finally {
       setAudioPreview(null);
       setAudioBatchRunning(false);
@@ -271,7 +273,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           members?: FirebaseMember[];
           nextPageToken?: string;
         };
-        if (!response.ok) throw new Error(result.error || 'Mitglieder konnten nicht geladen werden.');
+        if (!response.ok) throw new Error(result.error || adminText("Mitglieder konnten nicht geladen werden."));
         members.push(...(result.members || []));
         pageToken = result.nextPageToken;
         if (pageToken && seenPageTokens.has(pageToken)) break;
@@ -281,11 +283,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       setFirebaseMembers(members.sort((a, b) => a.email.localeCompare(b.email)));
       setMembersLoaded(true);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'Mitglieder konnten nicht geladen werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("Mitglieder konnten nicht geladen werden."));
     } finally {
       setMembersLoading(false);
     }
-  }, [authenticatedRequest]);
+  }, [authenticatedRequest, adminText]);
 
   useEffect(() => {
     void loadFirebaseMembers();
@@ -296,7 +298,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     void loadCrmContacts()
       .then((contacts) => { if (!cancelled) setCrmContacts(contacts); })
       .catch((error: unknown) => {
-        if (!cancelled) setCrmContactsError(error instanceof Error ? error.message : 'CRM-Kontakte konnten nicht geladen werden.');
+        if (!cancelled) setCrmContactsError(error instanceof Error ? error.message : adminText("CRM-Kontakte konnten nicht geladen werden."));
       })
       .finally(() => { if (!cancelled) setCrmContactsLoading(false); });
     return () => { cancelled = true; };
@@ -305,7 +307,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const handleTierChange = async (member: FirebaseMember, tier: AcademyTier) => {
     if (tier === member.tier || member.role === 'admin') return;
     const memberLabel = member.email || member.displayName;
-    if (!window.confirm(`Tarif für ${memberLabel} wirklich von ${member.tier} auf ${tier} ändern?`)) return;
+    if (!window.confirm(adminText("Tarif für {0} wirklich von {1} auf {2} ändern?", memberLabel, member.tier, tier))) return;
 
     setUpdatingMemberUid(member.uid);
     setMembersError('');
@@ -315,12 +317,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         { method: 'POST', body: JSON.stringify({ tier }) },
       );
       const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
-      if (!response.ok || !result.member) throw new Error(result.error || 'Tarif konnte nicht gespeichert werden.');
+      if (!response.ok || !result.member) throw new Error(result.error || adminText("Tarif konnte nicht gespeichert werden."));
       setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? { ...item, ...result.member! } : item));
-      setSaveSuccessMsg(result.message || 'Tarif erfolgreich gespeichert.');
+      setSaveSuccessMsg(result.message || adminText("Tarif erfolgreich gespeichert."));
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'Tarif konnte nicht gespeichert werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("Tarif konnte nicht gespeichert werden."));
     } finally {
       setUpdatingMemberUid(null);
     }
@@ -329,7 +331,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const handleSendMemberEmail = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!emailingMember || !memberEmailSubject.trim() || !memberEmailBody.trim()) return;
-    if (!window.confirm(`E-Mail wirklich an ${emailingMember.email} senden?`)) return;
+    if (!window.confirm(adminText("E-Mail wirklich an {0} senden?", emailingMember.email))) return;
 
     setSendingMemberEmail(true);
     setMembersError('');
@@ -342,14 +344,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         },
       );
       const result = await response.json().catch(() => ({})) as { error?: string };
-      if (!response.ok) throw new Error(result.error || 'Die E-Mail konnte nicht versendet werden.');
+      if (!response.ok) throw new Error(result.error || adminText("Die E-Mail konnte nicht versendet werden."));
       setEmailingMember(null);
       setMemberEmailSubject('');
       setMemberEmailBody('');
-      setSaveSuccessMsg(`E-Mail an ${emailingMember.email} wurde von SendGrid angenommen.`);
+      setSaveSuccessMsg(adminText("E-Mail an {0} wurde von SendGrid angenommen.", emailingMember.email));
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'Die E-Mail konnte nicht versendet werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("Die E-Mail konnte nicht versendet werden."));
     } finally {
       setSendingMemberEmail(false);
     }
@@ -369,12 +371,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         body: JSON.stringify({ language: nextLanguage }),
       });
       const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
-      if (!response.ok || !result.member) throw new Error(result.error || 'Mitgliedssprache konnte nicht gespeichert werden.');
+      if (!response.ok || !result.member) throw new Error(result.error || adminText("Mitgliedssprache konnte nicht gespeichert werden."));
       replaceMember(result.member);
-      setSaveSuccessMsg(result.message || 'Mitgliedssprache gespeichert.');
+      setSaveSuccessMsg(result.message || adminText("Mitgliedssprache gespeichert."));
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'Mitgliedssprache konnte nicht gespeichert werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("Mitgliedssprache konnte nicht gespeichert werden."));
     } finally {
       setUpdatingMemberUid(null);
     }
@@ -382,10 +384,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
   const handleEditMemberEmail = async (member: FirebaseMember) => {
     if (member.role === 'admin') return;
-    const enteredEmail = window.prompt('Neue E-Mail-Adresse eingeben:', member.email);
+    const enteredEmail = window.prompt(adminText("Neue E-Mail-Adresse eingeben:"), member.email);
     if (enteredEmail === null || enteredEmail.trim().toLowerCase() === member.email.toLowerCase()) return;
     const email = enteredEmail.trim().toLowerCase();
-    if (!window.confirm(`E-Mail-Adresse wirklich auf ${email} ändern? Die Adresse muss danach erneut bestätigt werden.`)) return;
+    if (!window.confirm(adminText("E-Mail-Adresse wirklich auf {0} ändern? Die Adresse muss danach erneut bestätigt werden.", email))) return;
     setUpdatingMemberUid(member.uid);
     setMembersError('');
     try {
@@ -394,12 +396,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         body: JSON.stringify({ email }),
       });
       const result = await response.json() as { error?: string; message?: string; member?: FirebaseMember };
-      if (!response.ok || !result.member) throw new Error(result.error || 'E-Mail-Adresse konnte nicht geändert werden.');
+      if (!response.ok || !result.member) throw new Error(result.error || adminText("E-Mail-Adresse konnte nicht geändert werden."));
       replaceMember(result.member);
-      setSaveSuccessMsg(result.message || 'E-Mail-Adresse geändert.');
+      setSaveSuccessMsg(result.message || adminText("E-Mail-Adresse geändert."));
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'E-Mail-Adresse konnte nicht geändert werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("E-Mail-Adresse konnte nicht geändert werden."));
     } finally {
       setUpdatingMemberUid(null);
     }
@@ -408,13 +410,13 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const handleEditMemberWhatsApp = async (member: FirebaseMember) => {
     if (member.role === 'admin') return;
     const enteredPhone = window.prompt(
-      'WhatsApp-Nummer mit Ländervorwahl eingeben. Zum Entfernen das Feld leer lassen:',
+      adminText("WhatsApp-Nummer mit Ländervorwahl eingeben. Zum Entfernen das Feld leer lassen:"),
       member.whatsappPhoneNumber || '',
     );
     if (enteredPhone === null || enteredPhone.trim() === (member.whatsappPhoneNumber || '')) return;
     const phoneNumber = enteredPhone.trim();
-    const action = phoneNumber ? `auf ${phoneNumber} ändern` : 'vollständig entfernen';
-    if (!window.confirm(`WhatsApp-Nummer für ${member.email || member.displayName} wirklich ${action}?`)) return;
+    const action = phoneNumber ? adminText("auf {0} ändern", phoneNumber) : adminText("vollständig entfernen");
+    if (!window.confirm(adminText("WhatsApp-Nummer für {0} wirklich {1}?", member.email || member.displayName, action))) return;
 
     setUpdatingMemberUid(member.uid);
     setMembersError('');
@@ -429,16 +431,16 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
         whatsappPhoneNumber?: string;
         whatsappConsentGranted?: boolean;
       };
-      if (!response.ok) throw new Error(result.error || 'WhatsApp-Nummer konnte nicht gespeichert werden.');
+      if (!response.ok) throw new Error(result.error || adminText("WhatsApp-Nummer konnte nicht gespeichert werden."));
       setFirebaseMembers((current) => current.map((item) => item.uid === member.uid ? {
         ...item,
         whatsappPhoneNumber: result.whatsappPhoneNumber || '',
         whatsappConsentGranted: result.whatsappConsentGranted === true,
       } : item));
-      setSaveSuccessMsg(result.message || 'WhatsApp-Nummer gespeichert.');
+      setSaveSuccessMsg(result.message || adminText("WhatsApp-Nummer gespeichert."));
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'WhatsApp-Nummer konnte nicht gespeichert werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("WhatsApp-Nummer konnte nicht gespeichert werden."));
     } finally {
       setUpdatingMemberUid(null);
     }
@@ -447,10 +449,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const handleDeleteMember = async (member: FirebaseMember) => {
     if (member.role === 'admin') return;
     const memberLabel = member.email || member.displayName;
-    if (!window.confirm(`Konto ${memberLabel} dauerhaft löschen? Der Academy-Zugang und die gespeicherte E-Mail-Adresse werden unwiderruflich entfernt.`)) return;
-    const confirmation = window.prompt(`Zur Bestätigung bitte exakt eingeben:\n${memberLabel}`);
+    if (!window.confirm(adminText("Konto {0} dauerhaft löschen? Der Academy-Zugang und die gespeicherte E-Mail-Adresse werden unwiderruflich entfernt.", memberLabel))) return;
+    const confirmation = window.prompt(adminText("Zur Bestätigung bitte exakt eingeben:\n{0}", memberLabel));
     if (confirmation !== memberLabel) {
-      if (confirmation !== null) setMembersError('Löschen abgebrochen: Die Bestätigung stimmt nicht überein.');
+      if (confirmation !== null) setMembersError(adminText("Löschen abgebrochen: Die Bestätigung stimmt nicht überein."));
       return;
     }
     setUpdatingMemberUid(member.uid);
@@ -458,12 +460,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     try {
       const response = await authenticatedRequest(`/api/admin/members/${encodeURIComponent(member.uid)}`, { method: 'DELETE' });
       const result = await response.json() as { error?: string; message?: string };
-      if (!response.ok) throw new Error(result.error || 'Mitglied konnte nicht gelöscht werden.');
+      if (!response.ok) throw new Error(result.error || adminText("Mitglied konnte nicht gelöscht werden."));
       setFirebaseMembers((current) => current.filter((item) => item.uid !== member.uid));
-      setSaveSuccessMsg(result.message || 'Mitgliedskonto und E-Mail-Adresse dauerhaft gelöscht.');
+      setSaveSuccessMsg(result.message || adminText("Mitgliedskonto und E-Mail-Adresse dauerhaft gelöscht."));
       window.setTimeout(() => setSaveSuccessMsg(''), 5000);
     } catch (error: unknown) {
-      setMembersError(error instanceof Error ? error.message : 'Mitglied konnte nicht gelöscht werden.');
+      setMembersError(error instanceof Error ? error.message : adminText("Mitglied konnte nicht gelöscht werden."));
     } finally {
       setUpdatingMemberUid(null);
     }
@@ -541,21 +543,21 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     if (!lessonVideoFile || lessonVideoUploadProgress !== null) return;
     const isMp4 = lessonVideoFile.type === 'video/mp4' || lessonVideoFile.name.toLowerCase().endsWith('.mp4');
     if (!isMp4) {
-      setLessonVideoUploadError('Bitte eine MP4-Videodatei auswählen.');
+      setLessonVideoUploadError(adminText("Bitte eine MP4-Videodatei auswählen."));
       return;
     }
     if (!lessonFormData.title?.trim()) {
-      setLessonVideoUploadError('Bitte vor dem Upload einen deutschen Lektions-Titel eintragen.');
+      setLessonVideoUploadError(adminText("Bitte vor dem Upload einen deutschen Lektions-Titel eintragen."));
       return;
     }
-    if (!window.confirm('Dieses Lektionsvideo jetzt als „Nicht gelistet“ zu YouTube hochladen?')) return;
+    if (!window.confirm(adminText("Dieses Lektionsvideo jetzt als „Nicht gelistet“ zu YouTube hochladen?"))) return;
 
     setLessonVideoUploadError('');
     setLessonVideoUploadProgress(0);
     try {
       const connection = await youtubeService.getConnectionStatus();
       if (!connection.connected) {
-        throw new Error('YouTube ist nicht verbunden. Bitte die Verbindung zuerst in der Content Engine herstellen.');
+        throw new Error(adminText("YouTube ist nicht verbunden. Bitte die Verbindung zuerst in der Content Engine herstellen."));
       }
       const result = await youtubeService.uploadUnlistedVideo(lessonVideoFile, {
         title: (lessonFormData.learnContent?.videoTitle || lessonFormData.title).trim(),
@@ -570,14 +572,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       setLessonVideoUploadProgress(100);
       setLessonVideoFile(null);
     } catch (error: unknown) {
-      setLessonVideoUploadError(error instanceof Error ? error.message : 'Das Lektionsvideo konnte nicht hochgeladen werden.');
+      setLessonVideoUploadError(error instanceof Error ? error.message : adminText("Das Lektionsvideo konnte nicht hochgeladen werden."));
       setLessonVideoUploadProgress(null);
     }
   };
 
   const handleRemoveLessonVideo = () => {
     if (lessonVideoUploadProgress !== null && lessonVideoUploadProgress < 100) return;
-    if (!window.confirm('Video aus dieser Lektion entfernen? Das Video bleibt auf YouTube gespeichert.')) return;
+    if (!window.confirm(adminText("Video aus dieser Lektion entfernen? Das Video bleibt auf YouTube gespeichert."))) return;
 
     setLessonFormData((current) => ({
       ...current,
@@ -592,12 +594,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   // Save Lesson changes
   const handleSaveLesson = async () => {
     if (!lessonFormData.title?.trim() || !lessonFormData.id?.trim()) {
-      alert('Bitte deutschen Titel und Lektions-ID angeben.');
+      alert(adminText("Bitte deutschen Titel und Lektions-ID angeben."));
       return;
     }
     const videoUrl = lessonFormData.learnContent?.videoUrl?.trim() || '';
     if (videoUrl && !getYouTubeEmbedUrl(videoUrl)) {
-      alert('Bitte eine vollständige HTTPS-YouTube-URL eintragen, zum Beispiel https://youtu.be/VIDEO-ID.');
+      alert(adminText('Bitte eine vollständige HTTPS-YouTube-URL eintragen, zum Beispiel https://youtu.be/VIDEO-ID.'));
       return;
     }
 
@@ -613,7 +615,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           || !translation.actionTask?.instruction?.trim();
       });
       if (incompleteLanguages.length > 0) {
-        alert(`Bitte die vollständige ${incompleteLanguages.map(language => language === 'en' ? 'englische' : 'polnische').join(' und ')} Sprachversion in derselben Lektion ergänzen.`);
+        alert(adminText("Bitte die vollständige {0} Sprachversion in derselben Lektion ergänzen.", incompleteLanguages.map(language => language === 'en' ? adminText('englische') : adminText('polnische')).join(adminText(' und '))));
         return;
       }
     }
@@ -644,16 +646,16 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       await onUpdateStages(updatedStages);
       setEditingLesson(null);
       setIsCreatingLesson(false);
-      setSaveSuccessMsg('Lektion zentral für alle Mitglieder gespeichert!');
+      setSaveSuccessMsg(adminText("Lektion zentral für alle Mitglieder gespeichert!"));
       setTimeout(() => setSaveSuccessMsg(''), 3000);
     } catch (error: unknown) {
-      window.alert(error instanceof Error ? error.message : 'Lektion konnte nicht gespeichert werden.');
+      window.alert(error instanceof Error ? error.message : adminText("Lektion konnte nicht gespeichert werden."));
     }
   };
 
   // Delete Lesson
   const handleDeleteLesson = async (lessonId: string) => {
-    if (!window.confirm(`Möchtest du Lektion ${lessonId} wirklich unwiderruflich löschen?`)) {
+    if (!window.confirm(adminText("Möchtest du Lektion {0} wirklich unwiderruflich löschen?", lessonId))) {
       return;
     }
     const updatedStages = stages.map(stage => {
@@ -667,10 +669,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     });
     try {
       await onUpdateStages(updatedStages);
-      setSaveSuccessMsg(`Lektion ${lessonId} zentral gelöscht.`);
+      setSaveSuccessMsg(adminText("Lektion {0} zentral gelöscht.", lessonId));
       setTimeout(() => setSaveSuccessMsg(''), 3000);
     } catch (error: unknown) {
-      window.alert(error instanceof Error ? error.message : 'Lektion konnte nicht gelöscht werden.');
+      window.alert(error instanceof Error ? error.message : adminText("Lektion konnte nicht gelöscht werden."));
     }
   };
 
@@ -695,14 +697,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
     const translation = lessonFormData.translations?.[language];
     return (
       <details className="rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4">
-        <summary className="cursor-pointer text-sm font-black text-indigo-700">{label}</summary>
+        <summary className="cursor-pointer text-sm font-black text-indigo-700">{adminText(label)}</summary>
         <div className="mt-4 space-y-4">
-          <input className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" placeholder="Lektions-Titel" value={translation?.title || ''} onChange={(event) => updateTranslation(language, 'root', 'title', event.target.value)} />
-          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={2} placeholder="Kurzbeschreibung" value={translation?.description || ''} onChange={(event) => updateTranslation(language, 'root', 'description', event.target.value)} />
-          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={3} placeholder="Zusammenfassung (Kernbotschaft)" value={translation?.learnContent?.summaryText || ''} onChange={(event) => updateTranslation(language, 'learnContent', 'summaryText', event.target.value)} />
-          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200 font-mono" rows={6} placeholder="Vollständiger Artikel (Markdown)" value={translation?.learnContent?.fullArticleGuide || ''} onChange={(event) => updateTranslation(language, 'learnContent', 'fullArticleGuide', event.target.value)} />
-          <input className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" placeholder="Kern-Erkenntnis" value={translation?.understandContent?.coreTakeaway || ''} onChange={(event) => updateTranslation(language, 'understandContent', 'coreTakeaway', event.target.value)} />
-          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={2} placeholder="Aufgabe für den Kursteilnehmer" value={translation?.actionTask?.instruction || ''} onChange={(event) => updateTranslation(language, 'actionTask', 'instruction', event.target.value)} />
+          <input className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" placeholder={adminText("Lektions-Titel")} value={translation?.title || ''} onChange={(event) => updateTranslation(language, 'root', 'title', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={2} placeholder={adminText("Kurzbeschreibung")} value={translation?.description || ''} onChange={(event) => updateTranslation(language, 'root', 'description', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={3} placeholder={adminText("Zusammenfassung (Kernbotschaft)")} value={translation?.learnContent?.summaryText || ''} onChange={(event) => updateTranslation(language, 'learnContent', 'summaryText', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200 font-mono" rows={6} placeholder={adminText("Vollständiger Artikel (Markdown)")} value={translation?.learnContent?.fullArticleGuide || ''} onChange={(event) => updateTranslation(language, 'learnContent', 'fullArticleGuide', event.target.value)} />
+          <input className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" placeholder={adminText("Kern-Erkenntnis")} value={translation?.understandContent?.coreTakeaway || ''} onChange={(event) => updateTranslation(language, 'understandContent', 'coreTakeaway', event.target.value)} />
+          <textarea className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-slate-200" rows={2} placeholder={adminText("Aufgabe für den Kursteilnehmer")} value={translation?.actionTask?.instruction || ''} onChange={(event) => updateTranslation(language, 'actionTask', 'instruction', event.target.value)} />
         </div>
       </details>
     );
@@ -719,32 +721,32 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             <div className="flex items-center gap-2.5">
               <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" />
-                Administrator-Zentrale
+                {adminText("Administrator-Zentrale")}
               </span>
               <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold">
-                Voller Systemzugriff
+                {adminText("Voller Systemzugriff")}
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
               GOM-MAR Academy Management
             </h1>
             <p className="text-sm text-slate-300 max-w-2xl">
-              Verwalte alle Kursteilnehmer, bearbeite bestehende Lektionen, füge neue Inhalte hinzu und behalte den Lernfortschritt im Blick.
+              {adminText("Verwalte alle Kursteilnehmer, bearbeite bestehende Lektionen, füge neue Inhalte hinzu und behalte den Lernfortschritt im Blick.")}
             </p>
           </div>
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-3 gap-3 bg-slate-950/60 p-3.5 rounded-2xl border border-indigo-500/20 shrink-0">
             <div className="text-center px-2">
-              <p className="text-xs text-slate-400 font-semibold">Teilnehmer</p>
+              <p className="text-xs text-slate-400 font-semibold">{adminText("Teilnehmer")}</p>
               <p className="text-xl font-black text-white">{totalStudents}</p>
             </div>
             <div className="text-center px-2 border-x border-slate-800">
-              <p className="text-xs text-slate-400 font-semibold">Lektionen</p>
+              <p className="text-xs text-slate-400 font-semibold">{adminText("Lektionen")}</p>
               <p className="text-xl font-black text-indigo-400">{totalLessons}</p>
             </div>
             <div className="text-center px-2">
-              <p className="text-xs text-slate-400 font-semibold">Ø Fortschritt</p>
+              <p className="text-xs text-slate-400 font-semibold">{adminText("Ø Fortschritt")}</p>
               <p className="text-xl font-black text-emerald-400">—</p>
             </div>
           </div>
@@ -761,7 +763,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             }`}
           >
             <Users className="w-4 h-4" />
-            <span>Kursteilnehmer ({totalStudents})</span>
+            <span>{adminText("Kursteilnehmer (")}{totalStudents})</span>
           </button>
 
           <button
@@ -773,7 +775,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            <span>Lehrplan und Lektionsverwaltung ({totalLessons})</span>
+            <span>{adminText("Lehrplan und Lektionsverwaltung (")}{totalLessons})</span>
           </button>
 
           <button
@@ -801,18 +803,18 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       {activeTab === 'students' && (
         <div className="space-y-6 animate-fadeIn">
           <div className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm font-bold text-indigo-950">
-            Alle Kontakte: {membersLoaded && !crmContactsLoading && !crmContactsError ? totalContacts : '…'}
-            <span className="ml-2 font-medium text-indigo-800">({totalStudents} Academy-Mitglieder, {otherCrmContacts.length} weitere CRM-Kontakte)</span>
+            {adminText("Alle Kontakte:")} {membersLoaded && !crmContactsLoading && !crmContactsError ? totalContacts : '…'}
+            <span className="ml-2 font-medium text-indigo-800">({totalStudents} {adminText("Academy-Mitglieder,")} {otherCrmContacts.length} {adminText("weitere CRM-Kontakte)")}</span>
           </div>
           <section className="overflow-hidden rounded-2xl border border-indigo-200 bg-white shadow-xs" aria-labelledby="firebase-members-heading">
             <div className="flex flex-col gap-3 border-b border-indigo-100 bg-indigo-50/70 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
               <div>
                 <h2 id="firebase-members-heading" className="flex items-center gap-2 text-sm font-black text-slate-900">
                   <ShieldCheck className="h-4 w-4 text-indigo-700" />
-                  Firebase-Tarifverwaltung
+                  {adminText("Firebase-Tarifverwaltung")}
                 </h2>
                 <p className="mt-1 text-xs text-slate-600">
-                  Diese Claims bestimmen den tatsächlichen Zugriff auf Academy, E-Mail-Automation und Toolbox. Der Vital50 Content Engine Hub bleibt ausschließlich Administratoren vorbehalten.
+                  {adminText("Diese Claims bestimmen den tatsächlichen Zugriff auf Academy, E-Mail-Automation und Toolbox. Der Vital50 Content Engine Hub bleibt ausschließlich Administratoren vorbehalten.")}
                 </p>
               </div>
               <button
@@ -822,7 +824,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-700 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-indigo-800 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <RotateCcw className={`h-4 w-4 ${membersLoading ? 'animate-spin' : ''}`} />
-                {membersLoading ? 'Wird geladen …' : 'Firebase aktualisieren'}
+                {membersLoading ? adminText("Wird geladen …") : adminText("Firebase aktualisieren")}
               </button>
             </div>
 
@@ -849,7 +851,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-300'
                   }`}
                 >
-                  {label} ({firebaseMembers.filter((member) => member.language === code).length})
+                  {adminText(label)} ({firebaseMembers.filter((member) => member.language === code).length})
                 </button>
               ))}
             </div>
@@ -858,20 +860,20 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               <table className="w-full text-left text-xs">
                 <thead className="border-b border-slate-200 bg-slate-50 font-extrabold uppercase tracking-wider text-slate-600">
                   <tr>
-                    <th className="px-4 py-3.5">Firebase-Mitglied</th>
-                    <th className="px-4 py-3.5">Sprache</th>
-                    <th className="px-4 py-3.5">E-Mail</th>
+                    <th className="px-4 py-3.5">{adminText("Firebase-Mitglied")}</th>
+                    <th className="px-4 py-3.5">{adminText("Sprache")}</th>
+                    <th className="px-4 py-3.5">{adminText("E-Mail")}</th>
                     <th className="px-4 py-3.5">WhatsApp</th>
-                    <th className="px-4 py-3.5">Kontostatus</th>
-                    <th className="px-4 py-3.5">Zugriffstarif</th>
-                    <th className="px-4 py-3.5">Aktionen</th>
+                    <th className="px-4 py-3.5">{adminText("Kontostatus")}</th>
+                    <th className="px-4 py-3.5">{adminText("Zugriffstarif")}</th>
+                    <th className="px-4 py-3.5">{adminText("Aktionen")}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
                   {membersLoading && !membersLoaded ? (
-                    <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">Firebase-Mitglieder werden geladen …</td></tr>
+                    <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">{adminText("Firebase-Mitglieder werden geladen …")}</td></tr>
                   ) : filteredFirebaseMembers.length === 0 ? (
-                    <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-400">Keine Firebase-Mitglieder für diesen Sprachbereich und Filter gefunden.</td></tr>
+                    <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-400">{adminText("Keine Firebase-Mitglieder für diesen Sprachbereich und Filter gefunden.")}</td></tr>
                   ) : filteredFirebaseMembers.map((member) => (
                     <tr key={member.uid} className="hover:bg-slate-50/80">
                       <td className="px-4 py-3.5">
@@ -879,7 +881,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                         <p className="font-mono text-[10px] text-slate-400">{member.uid}</p>
                       </td>
                       <td className="px-4 py-3.5">
-                        <label className="sr-only" htmlFor={`language-${member.uid}`}>Sprache für {member.email || member.displayName}</label>
+                        <label className="sr-only" htmlFor={`language-${member.uid}`}>{adminText("Sprache für")} {member.email || member.displayName}</label>
                         <select
                           id={`language-${member.uid}`}
                           value={member.language}
@@ -887,15 +889,15 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           disabled={updatingMemberUid === member.uid}
                           className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-800 focus:border-indigo-500 focus:outline-none disabled:opacity-60"
                         >
-                          <option value="de">Deutsch</option>
-                          <option value="en">Englisch</option>
-                          <option value="pl">Polnisch</option>
+                          <option value="de">{adminText("Deutsch")}</option>
+                          <option value="en">{adminText("Englisch")}</option>
+                          <option value="pl">{adminText("Polnisch")}</option>
                         </select>
                       </td>
                       <td className="px-4 py-3.5">
-                        <p>{member.email || 'Keine E-Mail hinterlegt'}</p>
+                        <p>{member.email || adminText("Keine E-Mail hinterlegt")}</p>
                         <span className={member.emailVerified ? 'text-emerald-700' : 'text-amber-700'}>
-                          {member.emailVerified ? 'Bestätigt' : 'Nicht bestätigt'}
+                          {member.emailVerified ? adminText("Bestätigt") : adminText("Nicht bestätigt")}
                         </span>
                         <button
                           type="button"
@@ -909,7 +911,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           className="mt-2 flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-2.5 py-1.5 text-[11px] font-bold text-indigo-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
                         >
                           <Mail className="h-3.5 w-3.5" />
-                          E-Mail schreiben
+                          {adminText("E-Mail schreiben")}
                         </button>
                       </td>
                       <td className="px-4 py-3.5">
@@ -917,11 +919,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                           <>
                             <p className="font-bold text-slate-900">{member.whatsappPhoneNumber}</p>
                             <span className={member.whatsappConsentGranted ? 'text-emerald-700' : 'text-amber-700'}>
-                              {member.whatsappConsentGranted ? 'Einwilligung aktiv' : 'Keine Versand-Einwilligung'}
+                              {member.whatsappConsentGranted ? adminText("Einwilligung aktiv") : adminText("Keine Versand-Einwilligung")}
                             </span>
                           </>
                         ) : (
-                          <span className="text-slate-400">Nicht hinterlegt</span>
+                          <span className="text-slate-400">{adminText("Nicht hinterlegt")}</span>
                         )}
                       </td>
                       <td className="px-4 py-3.5">
@@ -930,17 +932,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                             ? 'border-rose-300 bg-rose-50 text-rose-800'
                             : 'border-emerald-300 bg-emerald-50 text-emerald-800'
                         }`}>
-                          {member.disabled ? 'Deaktiviert' : member.role === 'admin' ? 'Administrator' : 'Aktiv'}
+                          {member.disabled ? adminText("Deaktiviert") : member.role === 'admin' ? adminText("Administrator") : adminText("Aktiv")}
                         </span>
                       </td>
                       <td className="px-4 py-3.5">
-                        <label className="sr-only" htmlFor={`tier-${member.uid}`}>Tarif für {member.email || member.displayName}</label>
+                        <label className="sr-only" htmlFor={`tier-${member.uid}`}>{adminText("Tarif für")} {member.email || member.displayName}</label>
                         <select
                           id={`tier-${member.uid}`}
                           value={member.tier}
                           onChange={(event) => void handleTierChange(member, event.target.value as AcademyTier)}
                           disabled={member.role === 'admin' || updatingMemberUid === member.uid}
-                          title={member.role === 'admin' ? 'Administratoren besitzen immer PREMIUM-Zugriff.' : 'Zugriffstarif ändern'}
+                          title={member.role === 'admin' ? adminText("Administratoren besitzen immer PREMIUM-Zugriff.") : adminText("Zugriffstarif ändern")}
                           className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-black text-slate-800 focus:border-indigo-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500"
                         >
                           <option value="FREE">FREE</option>
@@ -949,7 +951,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                         </select>
                         {member.stripeCancellationAt && (
                           <p className="mt-2 max-w-44 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold text-amber-800">
-                            Kündigung vorgemerkt bis {new Date(member.stripeCancellationAt).toLocaleDateString('de-AT')}
+                            {adminText("Kündigung vorgemerkt bis")} {new Date(member.stripeCancellationAt).toLocaleDateString('de-AT')}
                           </p>
                         )}
                       </td>
@@ -961,7 +963,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                             disabled={member.role === 'admin' || updatingMemberUid === member.uid}
                             className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 px-2.5 py-1.5 text-[11px] font-bold text-indigo-700 disabled:cursor-not-allowed disabled:text-slate-400"
                           >
-                            <Edit3 className="h-3.5 w-3.5" /> E-Mail bearbeiten
+                            <Edit3 className="h-3.5 w-3.5" /> {adminText("E-Mail bearbeiten")}
                           </button>
                           {member.role !== 'admin' && (
                             <button
@@ -970,7 +972,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                               disabled={updatingMemberUid === member.uid}
                               className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 px-2.5 py-1.5 text-[11px] font-bold text-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
                             >
-                              <MessageCircle className="h-3.5 w-3.5" /> WhatsApp bearbeiten
+                              <MessageCircle className="h-3.5 w-3.5" /> {adminText("WhatsApp bearbeiten")}
                             </button>
                           )}
                           {member.role !== 'admin' && (
@@ -980,7 +982,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                               disabled={updatingMemberUid === member.uid}
                               className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 px-2.5 py-1.5 text-[11px] font-bold text-rose-700 disabled:cursor-not-allowed disabled:opacity-60"
                             >
-                              <Trash2 className="h-3.5 w-3.5" /> Konto und E-Mail löschen
+                              <Trash2 className="h-3.5 w-3.5" /> {adminText("Konto und E-Mail löschen")}
                             </button>
                           )}
                         </div>
@@ -996,26 +998,26 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 <form onSubmit={handleSendMemberEmail} className="w-full max-w-xl space-y-4 rounded-2xl bg-white p-5 shadow-2xl">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 id="member-email-title" className="text-lg font-black text-slate-950">E-Mail an Mitglied</h3>
+                      <h3 id="member-email-title" className="text-lg font-black text-slate-950">{adminText("E-Mail an Mitglied")}</h3>
                       <p className="text-xs text-slate-600">{emailingMember.displayName} · {emailingMember.email}</p>
                     </div>
-                    <button type="button" onClick={() => setEmailingMember(null)} disabled={sendingMemberEmail} aria-label="E-Mail-Fenster schließen" className="rounded-lg p-2 text-slate-500 hover:bg-slate-100">
+                    <button type="button" onClick={() => setEmailingMember(null)} disabled={sendingMemberEmail} aria-label={adminText("E-Mail-Fenster schließen")} className="rounded-lg p-2 text-slate-500 hover:bg-slate-100">
                       <X className="h-5 w-5" />
                     </button>
                   </div>
                   <div>
-                    <label htmlFor="member-email-subject" className="mb-1 block text-xs font-bold text-slate-700">Betreff *</label>
+                    <label htmlFor="member-email-subject" className="mb-1 block text-xs font-bold text-slate-700">{adminText("Betreff *")}</label>
                     <input id="member-email-subject" required maxLength={200} value={memberEmailSubject} onChange={(event) => setMemberEmailSubject(event.target.value)} className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
                   </div>
                   <div>
-                    <label htmlFor="member-email-body" className="mb-1 block text-xs font-bold text-slate-700">Nachricht *</label>
+                    <label htmlFor="member-email-body" className="mb-1 block text-xs font-bold text-slate-700">{adminText("Nachricht *")}</label>
                     <textarea id="member-email-body" required maxLength={20000} rows={8} value={memberEmailBody} onChange={(event) => setMemberEmailBody(event.target.value)} className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-none" />
                   </div>
-                  <p className="text-xs text-slate-500">Die Empfängeradresse wird sicher aus dem Firebase-Mitgliedskonto übernommen.</p>
+                  <p className="text-xs text-slate-500">{adminText("Die Empfängeradresse wird sicher aus dem Firebase-Mitgliedskonto übernommen.")}</p>
                   <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                    <button type="button" onClick={() => setEmailingMember(null)} disabled={sendingMemberEmail} className="rounded-xl border border-slate-300 px-4 py-2.5 text-xs font-bold text-slate-700">Abbrechen</button>
+                    <button type="button" onClick={() => setEmailingMember(null)} disabled={sendingMemberEmail} className="rounded-xl border border-slate-300 px-4 py-2.5 text-xs font-bold text-slate-700">{adminText("Abbrechen")}</button>
                     <button type="submit" disabled={sendingMemberEmail} className="rounded-xl bg-indigo-700 px-4 py-2.5 text-xs font-bold text-white disabled:cursor-not-allowed disabled:opacity-60">
-                      {sendingMemberEmail ? 'Wird gesendet …' : 'E-Mail senden'}
+                      {sendingMemberEmail ? adminText("Wird gesendet …") : adminText("E-Mail senden")}
                     </button>
                   </div>
                 </form>
@@ -1026,14 +1028,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs" aria-labelledby="other-contacts-heading">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 p-4 sm:p-5">
               <div>
-                <h2 id="other-contacts-heading" className="text-sm font-black text-slate-900">Weitere CRM-Kontakte ({otherCrmContacts.length})</h2>
-                <p className="mt-1 text-xs text-slate-600">Manuell angelegte Kontakte ohne Academy-Konto. Sie besitzen keinen Mitgliedszugang.</p>
+                <h2 id="other-contacts-heading" className="text-sm font-black text-slate-900">{adminText("Weitere CRM-Kontakte (")}{otherCrmContacts.length})</h2>
+                <p className="mt-1 text-xs text-slate-600">{adminText("Manuell angelegte Kontakte ohne Academy-Konto. Sie besitzen keinen Mitgliedszugang.")}</p>
               </div>
-              <button type="button" onClick={() => onNavigate('email')} className="rounded-xl border border-indigo-200 bg-white px-4 py-2 text-xs font-bold text-indigo-700 hover:bg-indigo-50">CRM öffnen</button>
+              <button type="button" onClick={() => onNavigate('email')} className="rounded-xl border border-indigo-200 bg-white px-4 py-2 text-xs font-bold text-indigo-700 hover:bg-indigo-50">{adminText("CRM öffnen")}</button>
             </div>
             {crmContactsError ? <p role="alert" className="p-4 text-xs font-semibold text-rose-700">{crmContactsError}</p>
-              : crmContactsLoading ? <p className="p-4 text-xs text-slate-600">CRM-Kontakte werden geladen …</p>
-                : otherCrmContacts.length === 0 ? <p className="p-4 text-xs text-slate-600">Keine weiteren CRM-Kontakte vorhanden.</p>
+              : crmContactsLoading ? <p className="p-4 text-xs text-slate-600">{adminText("CRM-Kontakte werden geladen …")}</p>
+                : otherCrmContacts.length === 0 ? <p className="p-4 text-xs text-slate-600">{adminText("Keine weiteren CRM-Kontakte vorhanden.")}</p>
                   : <ul className="divide-y divide-slate-100">{otherCrmContacts.map((contact) => (
                     <li key={contact.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-xs sm:px-5">
                       <span className="font-bold text-slate-900">{contact.name}</span>
@@ -1048,7 +1050,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Teilnehmer nach Name, E-Mail oder Nische suchen..."
+                placeholder={adminText("Teilnehmer nach Name, E-Mail oder Nische suchen...")}
                 value={studentSearch}
                 onChange={(e) => setStudentSearch(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all font-medium"
@@ -1057,7 +1059,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
             <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto">
               <span className="text-xs font-bold text-slate-500 flex items-center gap-1 shrink-0">
-                <Filter className="w-3.5 h-3.5" /> Filter:
+                <Filter className="w-3.5 h-3.5" /> {adminText("Filter:")}
               </span>
               <button
                 onClick={() => setTierFilter('all')}
@@ -1065,7 +1067,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   tierFilter === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                Alle ({totalStudents})
+                {adminText("Alle (")}{totalStudents})
               </button>
               <button
                 onClick={() => setTierFilter('FREE')}
@@ -1097,12 +1099,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-900">
             <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
             <p>
-              Zugriffstarife werden sicher in Firebase gespeichert. Änderungen werden für das ausgewählte Mitglied nach der nächsten Anmeldung wirksam.
+              {adminText("Zugriffstarife werden sicher in Firebase gespeichert. Änderungen werden für das ausgewählte Mitglied nach der nächsten Anmeldung wirksam.")}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600 shadow-xs">
-            Mitglieder und Zugriffstarife werden ausschließlich aus Firebase geladen. Lernfortschritte werden hier erst angezeigt, sobald eine serverseitige Fortschrittssynchronisierung eingerichtet ist.
+            {adminText("Mitglieder und Zugriffstarife werden ausschließlich aus Firebase geladen. Lernfortschritte werden hier erst angezeigt, sobald eine serverseitige Fortschrittssynchronisierung eingerichtet ist.")}
           </div>
         </div>
       )}
@@ -1135,9 +1137,9 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                     }`}
                   >
-                    <span>Etappe {stage.id}</span>
+                    <span>{adminText("Etappe")} {stage.id}</span>
                     <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-indigo-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
-                      {stage.lessons.length} Lektionen
+                      {stage.lessons.length} {adminText("Lektionen")}
                     </span>
                   </button>
                 );
@@ -1153,7 +1155,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 <Sparkles className={`w-4 h-4 ${audioBatchRunning ? 'animate-spin' : ''}`} />
                 <span>{audioBatchRunning && audioBatchProgress
                   ? `Audio ${audioBatchProgress.processed}/${audioBatchProgress.total}`
-                  : 'Deutsche Audios auswählen'}</span>
+                  : adminText("Deutsche Audios auswählen")}</span>
               </button>
 
               <button
@@ -1161,18 +1163,18 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer"
               >
                 <PlusCircle className="w-4 h-4" />
-                <span>Neue Lektion erstellen</span>
+                <span>{adminText("Neue Lektion erstellen")}</span>
               </button>
 
               <button
                 onClick={() => {
-                  if (window.confirm('Möchtest du alle Lektionen auf den ursprünglichen Standard zurücksetzen?')) {
+                  if (window.confirm(adminText("Möchtest du alle Lektionen auf den ursprünglichen Standard zurücksetzen?"))) {
                     void onResetStages()
-                      .then(() => setSaveSuccessMsg('Curriculum zentral auf Standard zurückgesetzt.'))
-                      .catch((error: unknown) => window.alert(error instanceof Error ? error.message : 'Curriculum konnte nicht zurückgesetzt werden.'));
+                      .then(() => setSaveSuccessMsg(adminText("Curriculum zentral auf Standard zurückgesetzt.")))
+                      .catch((error: unknown) => window.alert(error instanceof Error ? error.message : adminText("Curriculum konnte nicht zurückgesetzt werden.")));
                   }
                 }}
-                title="Auf Werkseinstellung zurücksetzen"
+                title={adminText("Auf Werkseinstellung zurücksetzen")}
                 className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -1181,17 +1183,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           </div>
 
           {audioSelectionOpen && (
-            <section aria-label="Deutsche Audios gezielt vorbereiten" className="min-w-0 rounded-2xl border border-violet-200 bg-violet-50 p-4 space-y-3">
-              <h3 className="font-bold text-slate-900">Deutsche Audios gezielt vorbereiten</h3>
-              <p className="text-sm text-slate-600">Wähle eine oder höchstens zwei Lektionen. Die Bestandsprüfung verbraucht kein ElevenLabs-Guthaben. Vorhandene passende Audios werden übersprungen.</p>
+            <section aria-label={adminText("Deutsche Audios gezielt vorbereiten")} className="min-w-0 rounded-2xl border border-violet-200 bg-violet-50 p-4 space-y-3">
+              <h3 className="font-bold text-slate-900">{adminText("Deutsche Audios gezielt vorbereiten")}</h3>
+              <p className="text-sm text-slate-600">{adminText("Wähle eine oder höchstens zwei Lektionen. Die Bestandsprüfung verbraucht kein ElevenLabs-Guthaben. Vorhandene passende Audios werden übersprungen.")}</p>
               <div className="text-xs text-slate-600" aria-live="polite">
-                <p>{audioStatusLoading ? 'Audio-Bestand aller Etappen wird geprüft. Die Statusangaben in beiden Auswahllisten werden nach und nach ergänzt.' : 'Audio-Status steht direkt bei jeder Lektion in beiden Auswahllisten.'}</p>
-                <button type="button" disabled={audioStatusLoading || audioBatchRunning} onClick={() => setAudioStatusRefresh(value => value + 1)} className="mt-1 font-bold text-violet-700 disabled:opacity-50">Audio-Status der Auswahllisten aktualisieren</button>
+                <p>{audioStatusLoading ? adminText("Audio-Bestand aller Etappen wird geprüft. Die Statusangaben in beiden Auswahllisten werden nach und nach ergänzt.") : adminText("Audio-Status steht direkt bei jeder Lektion in beiden Auswahllisten.")}</p>
+                <button type="button" disabled={audioStatusLoading || audioBatchRunning} onClick={() => setAudioStatusRefresh(value => value + 1)} className="mt-1 font-bold text-violet-700 disabled:opacity-50">{adminText("Audio-Status der Auswahllisten aktualisieren")}</button>
                 {audioStatusError && <p role="alert" className="text-red-700">{audioStatusError}</p>}
               </div>
               {[0, 1].map(index => (
                 <div key={index}>
-                  <label htmlFor={`audio-lesson-${index}`} className="block text-sm font-bold mb-1">{index === 0 ? 'Erste Lektion' : 'Zweite Lektion (optional)'}</label>
+                  <label htmlFor={`audio-lesson-${index}`} className="block text-sm font-bold mb-1">{index === 0 ? adminText("Erste Lektion") : adminText("Zweite Lektion (optional)")}</label>
                   <select
                     id={`audio-lesson-${index}`}
                     value={audioLessonIds[index] || ''}
@@ -1206,27 +1208,27 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     }}
                     className="w-full min-w-0 rounded-xl border border-violet-200 bg-white p-2 text-sm"
                   >
-                    <option value="">{index === 0 ? 'Bitte auswählen' : 'Keine zweite Lektion'}</option>
+                    <option value="">{index === 0 ? adminText("Bitte auswählen") : adminText("Keine zweite Lektion")}</option>
                     {stages.flatMap(stage => stage.lessons).filter(lesson => STANDARD_LESSON_IDS.has(lesson.id)).map(lesson => (
-                      <option key={lesson.id} value={lesson.id} disabled={audioLessonIds[1 - index] === lesson.id}>Lektion {lesson.id} – {audioStatus[lesson.id] === true ? 'Audio vorhanden' : audioStatus[lesson.id] === false ? 'Audio fehlt' : 'noch nicht geprüft'}: {lesson.title}</option>
+                      <option key={lesson.id} value={lesson.id} disabled={audioLessonIds[1 - index] === lesson.id}>{adminText("Lektion")} {lesson.id} – {audioStatus[lesson.id] === true ? adminText("Audio vorhanden") : audioStatus[lesson.id] === false ? adminText("Audio fehlt") : adminText("noch nicht geprüft")}: {lesson.title}</option>
                     ))}
                   </select>
                 </div>
               ))}
               <button type="button" disabled={!audioLessonIds.length || audioPreviewLoading || audioBatchRunning} onClick={() => void handlePreviewGermanAudio()} className="rounded-xl bg-white border border-violet-300 px-4 py-2 text-sm font-bold disabled:opacity-50">
-                {audioPreviewLoading ? 'Bestand wird geprüft …' : 'Auswahl kostenlos prüfen'}
+                {audioPreviewLoading ? adminText("Bestand wird geprüft …") : adminText("Auswahl kostenlos prüfen")}
               </button>
               {audioPreview && (
                 <div className="space-y-2 text-sm" aria-live="polite">
-                  {audioPreview.lessons.map(lesson => <p key={lesson.id}>Lektion {lesson.id}: {lesson.title} – {lesson.cached ? 'Bereits vorhanden; wird übersprungen' : `${lesson.characters.toLocaleString('de-AT')} Zeichen; Audio fehlt oder Inhalt wurde geändert`}</p>)}
-                  <p className="font-bold">Für neue Audios: {audioPreview.charactersToGenerate.toLocaleString('de-AT')} Textzeichen</p>
-                  <p className="text-slate-600">Die Zeichenanzahl ist keine verbindliche Guthaben- oder Preisangabe. Die Abrechnung richtet sich nach deinem ElevenLabs-Tarif. Es werden nur die ausgewählten Lektionen bearbeitet.</p>
+                  {audioPreview.lessons.map(lesson => <p key={lesson.id}>{adminText("Lektion")} {lesson.id}: {lesson.title} – {lesson.cached ? adminText("Bereits vorhanden; wird übersprungen") : adminText("{0} Zeichen; Audio fehlt oder Inhalt wurde geändert", lesson.characters.toLocaleString('de-AT'))}</p>)}
+                  <p className="font-bold">{adminText("Für neue Audios:")} {audioPreview.charactersToGenerate.toLocaleString('de-AT')} {adminText("Textzeichen")}</p>
+                  <p className="text-slate-600">{adminText("Die Zeichenanzahl ist keine verbindliche Guthaben- oder Preisangabe. Die Abrechnung richtet sich nach deinem ElevenLabs-Tarif. Es werden nur die ausgewählten Lektionen bearbeitet.")}</p>
                   {audioPreview.charactersToGenerate > 0 ? (
-                    <button type="button" disabled={audioBatchRunning} onClick={() => void handleGenerateGermanAudio()} className="rounded-xl bg-violet-600 text-white px-4 py-2 font-bold disabled:opacity-50">Nur ausgewählte fehlende Audios erzeugen</button>
-                  ) : <p>Alle ausgewählten Audios sind bereits vorhanden. Keine Erzeugung nötig.</p>}
+                    <button type="button" disabled={audioBatchRunning} onClick={() => void handleGenerateGermanAudio()} className="rounded-xl bg-violet-600 text-white px-4 py-2 font-bold disabled:opacity-50">{adminText("Nur ausgewählte fehlende Audios erzeugen")}</button>
+                  ) : <p>{adminText("Alle ausgewählten Audios sind bereits vorhanden. Keine Erzeugung nötig.")}</p>}
                 </div>
               )}
-              {audioBatchProgress && <p role="status" className="text-sm">{audioBatchRunning ? `Vorbereitung läuft (${audioBatchProgress.total} ausgewählte Lektionen). Bitte diese Seite geöffnet lassen.` : `Fertig: ${audioBatchProgress.generated} neu erzeugt, ${audioBatchProgress.cached} übersprungen.`}</p>}
+              {audioBatchProgress && <p role="status" className="text-sm">{audioBatchRunning ? adminText("Vorbereitung läuft ({0} ausgewählte Lektionen). Bitte diese Seite geöffnet lassen.", audioBatchProgress.total) : adminText("Fertig: {0} neu erzeugt, {1} übersprungen.", audioBatchProgress.generated, audioBatchProgress.cached)}</p>}
               {audioError && <p role="alert" className="text-sm text-red-700">{audioError}</p>}
             </section>
           )}
@@ -1235,22 +1237,22 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
           <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-2xl flex items-center justify-between">
             <div>
               <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded">
-                Aktive Etappe {selectedLocalizedStage.id}
+                {adminText("Aktive Etappe")} {selectedLocalizedStage.id}
               </span>
               <h3 className="text-base font-black text-slate-900 mt-1">{selectedLocalizedStage.title}</h3>
               <p className="text-xs text-slate-600">{selectedLocalizedStage.description}</p>
             </div>
             <div className="text-right text-xs font-bold text-slate-500">
-              {selectedStage.lessons.length} Lektionen in dieser Etappe
+              {selectedStage.lessons.length} {adminText("Lektionen in dieser Etappe")}
             </div>
           </div>
 
           <div className="space-y-1 text-xs text-slate-600">
-            <p>Audio-Status für die aktuelle deutsche Standardlektion. Geänderte Inhalte benötigen ein passendes neues Audio.</p>
+            <p>{adminText("Audio-Status für die aktuelle deutsche Standardlektion. Geänderte Inhalte benötigen ein passendes neues Audio.")}</p>
             <button type="button" disabled={audioStatusLoading || audioBatchRunning} onClick={() => setAudioStatusRefresh(value => value + 1)} className="font-bold text-violet-700 disabled:opacity-50">
-              {audioStatusLoading ? 'Audio-Status wird geprüft …' : 'Audio-Status aktualisieren'}
+              {audioStatusLoading ? adminText("Audio-Status wird geprüft …") : adminText("Audio-Status aktualisieren")}
             </button>
-            {audioStatusError && <p role="alert" className="text-red-700">{audioStatusError} Der Status bleibt ungeprüft.</p>}
+            {audioStatusError && <p role="alert" className="text-red-700">{audioStatusError} {adminText("Der Status bleibt ungeprüft.")}</p>}
           </div>
 
           {/* Lessons List in Stage */}
@@ -1264,21 +1266,21 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className="px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 font-mono font-black text-xs border border-indigo-200">
-                        Lektion {lesson.id}
+                        {adminText("Lektion")} {lesson.id}
                       </span>
                       {lesson.publicationStatus === 'draft' && (
                         <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wide border border-amber-200">
-                          Entwurf
+                          {adminText("Entwurf")}
                         </span>
                       )}
                     </div>
                     <span className="text-xs text-slate-400 font-semibold flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
-                      {lesson.durationMinutes} Min
+                      {lesson.durationMinutes} {adminText("Min")}
                     </span>
                   </div>
                   <p className={`text-xs font-bold ${audioStatus[lesson.id] === true ? 'text-emerald-700' : audioStatus[lesson.id] === false ? 'text-amber-700' : 'text-slate-500'}`}>
-                    {audioStatus[lesson.id] === true ? 'Deutsches Audio vorhanden' : audioStatus[lesson.id] === false ? 'Deutsches Audio fehlt' : 'Audio-Status noch nicht geprüft'}
+                    {audioStatus[lesson.id] === true ? adminText("Deutsches Audio vorhanden") : audioStatus[lesson.id] === false ? adminText("Deutsches Audio fehlt") : adminText("Audio-Status noch nicht geprüft")}
                   </p>
                   <h4 className="font-black text-sm text-slate-900 leading-snug">
                     {lesson.title}
@@ -1293,7 +1295,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     onClick={() => onNavigate('academy', selectedStage.id, lesson.id)}
                     className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer"
                   >
-                    <span>{lesson.publicationStatus === 'draft' ? 'Entwurf ansehen' : 'Vorschau'}</span>
+                    <span>{lesson.publicationStatus === 'draft' ? adminText("Entwurf ansehen") : adminText("Vorschau")}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </button>
 
@@ -1301,17 +1303,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     {standardLessonIds.has(lesson.id) && (
                       <button
                         onClick={() => {
-                          if (window.confirm(`Lektion ${lesson.id} auf die vollständige Originalversion zurücksetzen? Alle zentral gespeicherten Änderungen an dieser Lektion werden entfernt.`)) {
+                          if (window.confirm(adminText("Lektion {0} auf die vollständige Originalversion zurücksetzen? Alle zentral gespeicherten Änderungen an dieser Lektion werden entfernt.", lesson.id))) {
                             void onRestoreLesson(lesson.id)
-                              .then(() => setSaveSuccessMsg(`Lektion ${lesson.id} wurde auf die Originalversion zurückgesetzt.`))
-                              .catch((error: unknown) => window.alert(error instanceof Error ? error.message : 'Die Originallektion konnte nicht wiederhergestellt werden.'));
+                              .then(() => setSaveSuccessMsg(adminText("Lektion {0} wurde auf die Originalversion zurückgesetzt.", lesson.id)))
+                              .catch((error: unknown) => window.alert(error instanceof Error ? error.message : adminText("Die Originallektion konnte nicht wiederhergestellt werden.")));
                           }
                         }}
-                        title="Originalversion wiederherstellen"
+                        title={adminText("Originalversion wiederherstellen")}
                         className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
-                        <span className="hidden xl:inline">Original</span>
+                        <span className="hidden xl:inline">{adminText("Original")}</span>
                       </button>
                     )}
                     <button
@@ -1319,14 +1321,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Bearbeiten</span>
+                      <span className="hidden sm:inline">{adminText("Bearbeiten")}</span>
                     </button>
                     <button
                       onClick={() => handleDeleteLesson(lesson.id)}
                       className="p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Löschen</span>
+                      <span className="hidden sm:inline">{adminText("Löschen")}</span>
                     </button>
                   </div>
                 </div>
@@ -1344,10 +1346,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             <div className="p-5 sm:p-6 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
               <div className="space-y-1">
                 <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-black text-xs uppercase tracking-wider">
-                  {isCreatingLesson ? '✨ Neue Lektion anlegen' : `✏️ Lektion ${editingLesson?.id} bearbeiten`}
+                  {isCreatingLesson ? adminText("✨ Neue Lektion anlegen") : `✏️ Lektion ${editingLesson?.id} bearbeiten`}
                 </span>
                 <h3 className="text-xl font-black">
-                  {isCreatingLesson ? 'Lektion erstellen' : lessonFormData.title || 'Lektion bearbeiten'}
+                  {isCreatingLesson ? adminText("Lektion erstellen") : lessonFormData.title || adminText("Lektion bearbeiten")}
                 </h3>
               </div>
               <button
@@ -1364,10 +1366,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
             {/* Modal Body: Form Fields */}
             <div className="p-6 overflow-y-auto space-y-6">
               <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-900">
-                <strong>Eine Lektions-ID für alle Sprachen:</strong> Die folgenden Hauptfelder sind immer die deutsche Grundversion. Englisch und Polnisch werden weiter unten innerhalb derselben Lektion eingetragen.
+                <strong>{adminText("Eine Lektions-ID für alle Sprachen:")}</strong> {adminText("Die folgenden Hauptfelder sind immer die deutsche Grundversion. Englisch und Polnisch werden weiter unten innerhalb derselben Lektion eingetragen.")}
               </div>
               <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-4 space-y-2">
-                <label className="block text-xs font-black text-indigo-950">Sichtbarkeit der Lektion</label>
+                <label className="block text-xs font-black text-indigo-950">{adminText("Sichtbarkeit der Lektion")}</label>
                 <select
                   value={lessonFormData.publicationStatus || 'published'}
                   onChange={(event) => setLessonFormData({
@@ -1376,14 +1378,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   })}
                   className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-indigo-200 font-bold focus:outline-none focus:border-indigo-500"
                 >
-                  <option value="draft">Entwurf – nur in der Admin-Zentrale sichtbar</option>
-                  <option value="published">Veröffentlicht – für berechtigte Mitglieder sichtbar</option>
+                  <option value="draft">{adminText("Entwurf – nur in der Admin-Zentrale sichtbar")}</option>
+                  <option value="published">{adminText("Veröffentlicht – für berechtigte Mitglieder sichtbar")}</option>
                 </select>
               </div>
               {/* Basic Details */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Lektions-ID (z.B. 1.15)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Lektions-ID (z.B. 1.15)")}</label>
                   <input
                     type="text"
                     value={lessonFormData.id || ''}
@@ -1394,20 +1396,20 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-bold text-slate-700 mb-1">🇩🇪 Deutscher Lektions-Titel</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("🇩🇪 Deutscher Lektions-Titel")}</label>
                   <input
                     type="text"
                     value={lessonFormData.title || ''}
                     onChange={(e) => setLessonFormData({ ...lessonFormData, title: e.target.value })}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 font-bold focus:outline-none focus:border-indigo-500"
-                    placeholder="z.B. High-Converting E-Mail Sequenzen"
+                    placeholder={adminText("z.B. High-Converting E-Mail Sequenzen")}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Dauer (Minuten)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Dauer (Minuten)")}</label>
                   <input
                     type="number"
                     value={lessonFormData.durationMinutes || 15}
@@ -1417,7 +1419,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Video Titel (optional)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Video Titel (optional)")}</label>
                   <input
                     type="text"
                     value={lessonFormData.learnContent?.videoTitle || ''}
@@ -1426,14 +1428,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       learnContent: { ...lessonFormData.learnContent!, videoTitle: e.target.value }
                     })}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500"
-                    placeholder="z.B. Praxis-Walkthrough & Aufbau"
+                    placeholder={adminText("z.B. Praxis-Walkthrough & Aufbau")}
                   />
                 </div>
               </div>
 
               <div className="space-y-3 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
                 <div className="space-y-2 rounded-xl border border-indigo-200 bg-white p-3">
-                  <label className="block text-xs font-bold text-slate-700">MP4 direkt zu YouTube hochladen</label>
+                  <label className="block text-xs font-bold text-slate-700">{adminText("MP4 direkt zu YouTube hochladen")}</label>
                   <input
                     type="file"
                     accept="video/mp4,.mp4"
@@ -1452,17 +1454,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   >
                     <Upload className="h-4 w-4" />
                     {lessonVideoUploadProgress !== null && lessonVideoUploadProgress < 100
-                      ? `Upload läuft: ${lessonVideoUploadProgress} %`
-                      : 'Als „Nicht gelistet“ hochladen'}
+                      ? adminText("Upload läuft: {0} %", lessonVideoUploadProgress)
+                      : adminText("Als „Nicht gelistet“ hochladen")}
                   </button>
-                  <p className="text-[11px] text-slate-500">Die MP4 wird in Abschnitten über die geschützte Academy-Verbindung zu YouTube übertragen. Nach dem Upload wird die YouTube-URL automatisch eingetragen; speichere anschließend die Lektion.</p>
+                  <p className="text-[11px] text-slate-500">{adminText("Die MP4 wird in Abschnitten über die geschützte Academy-Verbindung zu YouTube übertragen. Nach dem Upload wird die YouTube-URL automatisch eingetragen; speichere anschließend die Lektion.")}</p>
                   {lessonVideoUploadError && <p role="alert" className="text-xs font-semibold text-red-700">{lessonVideoUploadError}</p>}
                   {lessonVideoUploadProgress === 100 && (
-                    <p className="text-xs font-semibold text-emerald-700">Upload abgeschlossen. Die Video-URL wurde eingetragen.</p>
+                    <p className="text-xs font-semibold text-emerald-700">{adminText("Upload abgeschlossen. Die Video-URL wurde eingetragen.")}</p>
                   )}
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">YouTube-Video-URL (optional)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("YouTube-Video-URL (optional)")}</label>
                   <input
                     type="url"
                     value={lessonFormData.learnContent?.videoUrl || ''}
@@ -1476,7 +1478,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-indigo-200 focus:outline-none focus:border-indigo-500"
                     placeholder="https://youtu.be/VIDEO-ID"
                   />
-                  <p className="mt-1 text-[11px] text-slate-500">Das Video wird zusätzlich eingefügt. Text und Academy-Audio-Erklärung bleiben erhalten.</p>
+                  <p className="mt-1 text-[11px] text-slate-500">{adminText("Das Video wird zusätzlich eingefügt. Text und Academy-Audio-Erklärung bleiben erhalten.")}</p>
                   {(lessonFormData.learnContent?.videoUrl || '').trim() && (
                     <button
                       type="button"
@@ -1485,12 +1487,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       className="mt-3 inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-xs font-black text-red-700 transition-colors hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <Trash2 className="h-4 w-4" />
-                      Video aus Lektion entfernen
+                      {adminText("Video aus Lektion entfernen")}
                     </button>
                   )}
                   {lessonVideoRemoved && (
                     <p role="status" className="mt-2 text-xs font-semibold text-amber-700">
-                      Video aus dem Formular entfernt. Klicke jetzt auf „Lektion speichern“, um die Änderung zu übernehmen.
+                      {adminText("Video aus dem Formular entfernt. Klicke jetzt auf „Lektion speichern“, um die Änderung zu übernehmen.")}
                     </p>
                   )}
                 </div>
@@ -1498,7 +1500,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <div className="aspect-video overflow-hidden rounded-xl border border-indigo-200 bg-slate-950">
                     <iframe
                       src={getYouTubeEmbedUrl(lessonFormData.learnContent?.videoUrl || '')}
-                      title="Vorschau des Lektionsvideos"
+                      title={adminText("Vorschau des Lektionsvideos")}
                       className="h-full w-full border-0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -1509,24 +1511,24 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">🇩🇪 Deutsche Kurzbeschreibung (Vorschau)</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("🇩🇪 Deutsche Kurzbeschreibung (Vorschau)")}</label>
                 <textarea
                   rows={2}
                   value={lessonFormData.description || ''}
                   onChange={(e) => setLessonFormData({ ...lessonFormData, description: e.target.value })}
                   className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500"
-                  placeholder="Beschreibe kurz, worum es in dieser Lektion geht..."
+                  placeholder={adminText("Beschreibe kurz, worum es in dieser Lektion geht...")}
                 />
               </div>
 
               {/* Summary Text & Full Article */}
               <div className="space-y-4 pt-2 border-t border-slate-200">
                 <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">
-                  📖 Schritt 1: LERNEN - Ausführlicher Leitfaden
+                  {adminText("📖 Schritt 1: LERNEN - Ausführlicher Leitfaden")}
                 </h4>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Zusammenfassung (Kernbotschaft)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Zusammenfassung (Kernbotschaft)")}</label>
                   <textarea
                     rows={3}
                     value={lessonFormData.learnContent?.summaryText || ''}
@@ -1539,7 +1541,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Vollständiger Artikel & Schritt-für-Schritt Anleitung (Markdown)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Vollständiger Artikel & Schritt-für-Schritt Anleitung (Markdown)")}</label>
                   <textarea
                     rows={6}
                     value={lessonFormData.learnContent?.fullArticleGuide || ''}
@@ -1548,7 +1550,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       learnContent: { ...lessonFormData.learnContent!, fullArticleGuide: e.target.value }
                     })}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs focus:outline-none focus:border-indigo-500"
-                    placeholder="### Überschrift..."
+                    placeholder={adminText("### Überschrift...")}
                   />
                 </div>
               </div>
@@ -1556,11 +1558,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               {/* Step 2: Understand */}
               <div className="space-y-4 pt-2 border-t border-slate-200">
                 <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">
-                  💡 Schritt 2: VERSTEHEN - Das Wichtigste auf den Punkt
+                  {adminText("💡 Schritt 2: VERSTEHEN - Das Wichtigste auf den Punkt")}
                 </h4>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Kern-Erkenntnis (Takeaway)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Kern-Erkenntnis (Takeaway)")}</label>
                   <input
                     type="text"
                     value={lessonFormData.understandContent?.coreTakeaway || ''}
@@ -1569,7 +1571,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       understandContent: { ...lessonFormData.understandContent!, coreTakeaway: e.target.value }
                     })}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500"
-                    placeholder="Das wichtigste Learning..."
+                    placeholder={adminText("Das wichtigste Learning...")}
                   />
                 </div>
               </div>
@@ -1577,11 +1579,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               {/* Step 3: Action Task */}
               <div className="space-y-4 pt-2 border-t border-slate-200">
                 <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">
-                  🚀 Schritt 3: UMSETZEN - Die Aufgabe für den Kursteilnehmer
+                  {adminText("🚀 Schritt 3: UMSETZEN - Die Aufgabe für den Kursteilnehmer")}
                 </h4>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Aufgaben-Anweisung</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">{adminText("Aufgaben-Anweisung")}</label>
                   <textarea
                     rows={2}
                     value={lessonFormData.actionTask?.instruction || ''}
@@ -1590,16 +1592,16 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       actionTask: { ...lessonFormData.actionTask!, instruction: e.target.value }
                     })}
                     className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500"
-                    placeholder="Was genau soll der Teilnehmer tun oder notieren?"
+                    placeholder={adminText("Was genau soll der Teilnehmer tun oder notieren?")}
                   />
                 </div>
               </div>
 
               <div className="space-y-3 pt-2 border-t border-slate-200">
-                <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">🌍 Sprachversionen</h4>
-                <p className="text-xs text-slate-500">Beide Sprachversionen gehören zu derselben Lektions-ID. Für neue Lektionen müssen alle angezeigten Übersetzungsfelder ausgefüllt sein.</p>
-                {renderTranslationFields('en', '🇬🇧 Englische Version derselben Lektion')}
-                {renderTranslationFields('pl', '🇵🇱 Polnische Version derselben Lektion')}
+                <h4 className="text-xs font-black uppercase text-indigo-600 tracking-wider">{adminText("🌍 Sprachversionen")}</h4>
+                <p className="text-xs text-slate-500">{adminText("Beide Sprachversionen gehören zu derselben Lektions-ID. Für neue Lektionen müssen alle angezeigten Übersetzungsfelder ausgefüllt sein.")}</p>
+                {renderTranslationFields('en', adminText('🇬🇧 Englische Version derselben Lektion'))}
+                {renderTranslationFields('pl', adminText('🇵🇱 Polnische Version derselben Lektion'))}
               </div>
             </div>
 
@@ -1612,7 +1614,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 }}
                 className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer"
               >
-                Abbrechen
+                {adminText("Abbrechen")}
               </button>
 
               <button
@@ -1620,7 +1622,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md shadow-indigo-600/30 flex items-center gap-2 transition-all cursor-pointer"
               >
                 <Save className="w-4 h-4" />
-                <span>{lessonFormData.publicationStatus === 'draft' ? 'Entwurf speichern' : 'Lektion veröffentlichen'}</span>
+                <span>{lessonFormData.publicationStatus === 'draft' ? adminText("Entwurf speichern") : adminText("Lektion veröffentlichen")}</span>
               </button>
             </div>
           </div>
@@ -1651,27 +1653,27 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Mitgliedschaft:</span>
+                <span className="text-slate-500">{adminText("Mitgliedschaft:")}</span>
                 <span className="font-black text-indigo-600">{selectedStudent.tier} Member</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Fortschritt:</span>
-                <span className="font-bold text-slate-900">{selectedStudent.progressPercent}% ({selectedStudent.completedLessonsCount} / {selectedStudent.totalLessonsCount} Lektionen)</span>
+                <span className="text-slate-500">{adminText("Fortschritt:")}</span>
+                <span className="font-bold text-slate-900">{selectedStudent.progressPercent}% ({selectedStudent.completedLessonsCount} / {selectedStudent.totalLessonsCount} {adminText("Lektionen)")}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Aktueller Stand:</span>
-                <span className="font-bold text-slate-900">Lektion {selectedStudent.currentLessonId}</span>
+                <span className="text-slate-500">{adminText("Aktueller Stand:")}</span>
+                <span className="font-bold text-slate-900">{adminText("Lektion")} {selectedStudent.currentLessonId}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Gewählte Nische:</span>
+                <span className="text-slate-500">{adminText("Gewählte Nische:")}</span>
                 <span className="font-bold text-slate-900">{selectedStudent.niche}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-slate-100">
-                <span className="text-slate-500">Registrierungsdatum:</span>
+                <span className="text-slate-500">{adminText("Registrierungsdatum:")}</span>
                 <span className="font-mono text-slate-700">{selectedStudent.registeredAt}</span>
               </div>
               <div className="flex justify-between py-2">
-                <span className="text-slate-500">Zuletzt aktiv:</span>
+                <span className="text-slate-500">{adminText("Zuletzt aktiv:")}</span>
                 <span className="font-mono text-slate-700">{selectedStudent.lastActiveAt}</span>
               </div>
             </div>
@@ -1681,7 +1683,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 onClick={() => setSelectedStudent(null)}
                 className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors cursor-pointer"
               >
-                Schließen
+                {adminText("Schließen")}
               </button>
             </div>
           </div>

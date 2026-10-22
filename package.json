@@ -16,6 +16,7 @@
     "audit:email-delivery": "tsx scripts/auditEmailDelivery.ts",
     "audit:email-campaign-i18n": "node --import tsx scripts/auditEmailCampaignLocalization.ts",
     "audit:email-campaigns": "tsx scripts/auditEmailCampaignPersistence.ts",
+    "audit:admin-i18n": "node --import tsx scripts/auditAdminLocalization.ts",
     "audit:membership-admin": "tsx scripts/auditMembershipAdmin.ts",
     "audit:deployment": "tsx scripts/auditCloudRunDeployment.ts",
     "audit:curriculum-admin": "tsx scripts/auditCurriculumAdmin.ts",

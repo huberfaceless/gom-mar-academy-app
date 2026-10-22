@@ -85,6 +85,9 @@ jobs:
       - name: PRO-Mitgliederansicht auf Deutsch und Englisch pruefen
         run: bun run audit:email-campaign-i18n
 
+      - name: Admin- und CRM-Oberflaechen auf Deutsch und Englisch pruefen
+        run: bun run audit:admin-i18n
+
       - name: CRM-Kontaktspeicherung pruefen
         run: bun run audit:crm-persistence
 
