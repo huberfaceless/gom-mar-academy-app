@@ -196,10 +196,10 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
         <div className="space-y-10 animate-fadeIn">
           {/* Hero Header */}
           <div className="text-center space-y-4 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-extrabold tracking-wide uppercase">
+            <a href="#register-form" className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-extrabold tracking-wide uppercase transition-colors hover:bg-emerald-500/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-400">
               <Sparkles className="w-4 h-4 text-emerald-400 animate-spin" />
               <span>{funnel.badge}</span>
-            </div>
+            </a>
 
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
               {funnel.headlineBefore} <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">{funnel.headlineHighlight}</span> {funnel.headlineAfter}
