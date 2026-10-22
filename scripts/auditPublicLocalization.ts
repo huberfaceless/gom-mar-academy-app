@@ -1,5 +1,10 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, writeFileSync, symlinkSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { visitorFunnelCopy } from '../src/i18n/visitorFunnelCopy';
 
 const dashboard = readFileSync('src/components/DashboardView.tsx', 'utf8');
 const academy = readFileSync('src/components/AcademyView.tsx', 'utf8');
@@ -67,4 +72,58 @@ for (const unsupportedClaim of [
   );
 }
 
-console.log('Öffentliche Lokalisierung geprüft: Dashboard und Footer sind dreisprachig und risikogerecht.');
+
+
+// Render the actual visitor page through the language provider, both publicly
+// and as an in-app preview. Authentication is isolated; no accounts are created.
+const bundled = await build({ stdin: { resolveDir: process.cwd(), loader: 'tsx', contents: `
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { LanguageProvider } from './src/context/LanguageContext';
+import { PublicLandingView } from './src/components/PublicLandingView';
+export function render(preview) {
+  return renderToStaticMarkup(<LanguageProvider><PublicLandingView onCancelToMemberArea={preview ? () => {} : undefined} onOpenLegal={() => {}} /></LanguageProvider>);
+}
+` }, bundle: true, write: false, platform: 'node', format: 'esm', packages: 'external', logLevel: 'silent', plugins: [{ name: 'isolated-visitor', setup(builder) {
+  builder.onResolve({ filter: /context\/AuthContext$/ }, () => ({ path: 'auth', namespace: 'audit' }));
+  builder.onLoad({ filter: /^auth$/, namespace: 'audit' }, () => ({ contents: `export const useAuth = () => ({error:null,clearError(){},register(){throw Error('Rendering must not register an account');},login(){throw Error('Rendering must not log in');}});`, loader: 'js' }));
+  builder.onResolve({ filter: /gommar_logo[.]jpg$/ }, () => ({ path: 'logo', namespace: 'audit' }));
+  builder.onLoad({ filter: /^logo$/, namespace: 'audit' }, () => ({ contents: 'export default "/audit-logo.jpg";', loader: 'js' }));
+} }] });
+const temp = mkdtempSync(join(tmpdir(), 'gommar-visitor-i18n-'));
+const previousWindow = globalThis.window;
+try {
+  symlinkSync(join(process.cwd(), 'node_modules'), join(temp, 'node_modules'), 'dir');
+  writeFileSync(join(temp, 'render.mjs'), bundled.outputFiles[0].text);
+  const { render } = await import(pathToFileURL(join(temp, 'render.mjs')).href);
+  const registrationTitles = { de: 'Kostenloses Konto erstellen', en: 'Create a free account', pl: 'Utwórz bezpłatne konto' };
+  const escapeHtml = (text: string) => text.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll("'", '&#x27;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+  for (const language of ['de', 'en', 'pl', 'de'] as const) {
+    const storage = { getItem: (key: string) => key === 'gommar-language' ? language : null, setItem() {}, removeItem() {} };
+    globalThis.window = { localStorage: storage, sessionStorage: storage, location: { search: '' } } as unknown as Window & typeof globalThis;
+    for (const preview of [false, true]) {
+      const html = render(preview);
+      for (const [key, value] of Object.entries(visitorFunnelCopy[language])) {
+        if (key === 'closePreview' && !preview) continue;
+        assert.ok(html.includes(escapeHtml(value)), language + ': missing visitor text ' + key);
+      }
+      assert.equal(html.includes(escapeHtml(visitorFunnelCopy[language].closePreview)), preview, 'Close-preview action must only appear in the member preview.');
+      assert.ok(html.includes(registrationTitles[language]), 'Registration must follow the same language.');
+      assert.ok(html.includes('/media/gom-mar-einfuehrung-' + language + '.mp4'));
+      assert.ok(html.includes('/media/gom-mar-einfuehrung-' + language + '.jpg'));
+      assert.ok(html.includes('href="/terms/"') && html.includes('href="/withdrawal/"'), 'Legal destinations must stay intact.');
+      for (const value of ['Faceless Content & Reels', 'Digital Products & E-Books', 'High-Ticket Affiliate Marketing', 'SaaS & KI Dienstleistungen']) {
+        assert.ok(html.includes('value="' + escapeHtml(value) + '"'), 'Niche values must stay stable.');
+      }
+      if (language !== 'de') {
+        for (const key of ['pageSubtitle', 'memberLogin', 'badge', 'headlineBefore', 'introAfter', 'masterclassDescription', 'companionDescription', 'privacy'] as const) {
+          assert.ok(!html.includes(escapeHtml(visitorFunnelCopy.de[key])), language + ': German visitor text remains: ' + key);
+        }
+      }
+    }
+  }
+} finally {
+  if (previousWindow === undefined) delete (globalThis as any).window; else globalThis.window = previousWindow;
+  rmSync(temp, { recursive: true, force: true });
+}
+console.log('Öffentliche Lokalisierung geprüft: Besucher-Funnel und Mitgliedervorschau vollständig in DE/EN/PL, Formular und Videosprache synchron, Nischenwerte und Rechtslinks unverändert.');
