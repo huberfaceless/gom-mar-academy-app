@@ -82,6 +82,9 @@ jobs:
       - name: E-Mail-Kampagnenspeicherung pruefen
         run: bun run audit:email-campaigns
 
+      - name: PRO-Mitgliederansicht auf Deutsch und Englisch pruefen
+        run: bun run audit:email-campaign-i18n
+
       - name: CRM-Kontaktspeicherung pruefen
         run: bun run audit:crm-persistence
 

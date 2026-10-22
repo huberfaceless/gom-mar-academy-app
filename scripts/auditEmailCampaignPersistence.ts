@@ -32,8 +32,8 @@ assert.match(view, /handleDeleteCampaign/, 'Kampagnenentwürfe müssen gelöscht
 assert.match(view, /activeCampaign\.status === 'active'/, 'Aktive Kampagnen müssen vor dem Löschen pausiert werden.');
 assert.match(view, /handleDeleteEmail/, 'Einzelne E-Mail-Entwürfe müssen gelöscht werden können.');
 assert.match(view, /selectedEmail\.status !== 'draft'/, 'Bereits geplante oder versendete E-Mails dürfen nicht gelöscht werden.');
-assert.match(view, /window\.confirm\(`Kampagne/, 'Vor dem Löschen einer Kampagne muss eine Bestätigung verlangt werden.');
-assert.match(view, /window\.confirm\(`E-Mail-Entwurf/, 'Vor dem Löschen eines E-Mail-Entwurfs muss eine Bestätigung verlangt werden.');
+assert.match(view, /window\.confirm\(emailText\("Kampagne/, 'Vor dem Löschen einer Kampagne muss eine Bestätigung verlangt werden.');
+assert.match(view, /window\.confirm\(emailText\("E-Mail-Entwurf/, 'Vor dem Löschen eines E-Mail-Entwurfs muss eine Bestätigung verlangt werden.');
 assert.match(view, /campaigns\.find\(\(campaign\) => campaign\.id === selectedCampaignId\)/, 'Die ausgewählte Kampagne muss statt einer festen ersten Kampagne angezeigt werden.');
 assert.match(view, /id="campaign-selector"/, 'Mehrere Kampagnen müssen über eine eindeutige Auswahl erreichbar sein.');
 assert.match(view, /await onUpdateCampaigns\(\[\.\.\.campaigns, newCampaign\]\)/, 'Eine neue Kampagne muss ergänzt werden, ohne bestehende Kampagnen zu überschreiben.');
