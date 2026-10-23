@@ -1,10 +1,9 @@
 import { GoogleAuth } from 'google-auth-library';
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
-const YOUTUBE_SCOPE = [
-  'https://www.googleapis.com/auth/youtube.upload',
-  'https://www.googleapis.com/auth/youtube.force-ssl',
-].join(' ');
+// Both videos.insert (upload) and videos.update (scheduled publication) accept
+// this scope. Request it alone to match the verification submission.
+const YOUTUBE_SCOPE = 'https://www.googleapis.com/auth/youtube.force-ssl';
 const OAUTH_STATE_VALIDITY_MS = 10 * 60 * 1000;
 const googleAuth = new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/datastore'] });
 const databaseId = process.env.FIREBASE_DATABASE_ID || '(default)';
@@ -217,7 +216,7 @@ export const createYouTubeAuthorizationUrl = (userId: string): { authorizationUr
     scope: YOUTUBE_SCOPE,
     access_type: 'offline',
     prompt: 'consent',
-    include_granted_scopes: 'true',
+    include_granted_scopes: 'false',
     state,
   });
   return { authorizationUrl: `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`, nonce };

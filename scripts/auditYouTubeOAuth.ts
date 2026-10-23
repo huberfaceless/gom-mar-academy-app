@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createYouTubeAuthorizationUrl } from '../server/youtubeConnectionAdmin';
 
 const server = readFileSync('server.ts', 'utf8');
 const storage = readFileSync('server/youtubeConnectionAdmin.ts', 'utf8');
@@ -12,9 +13,38 @@ const publicPrivacy = readFileSync('public/privacy/index.html', 'utf8');
 assert.match(server, /app\.post\('\/api\/youtube\/oauth\/start', requireVerifiedMember, requireProMember/, 'YouTube OAuth muss eine bestätigte PRO-Anmeldung verlangen.');
 assert.match(server, /app\.get\('\/api\/youtube\/oauth\/callback'/, 'Der YouTube OAuth Callback fehlt.');
 assert.match(server, /HttpOnly; Secure; SameSite=Lax/, 'Der OAuth-Status muss an eine sichere Browsersitzung gebunden sein.');
-assert.match(storage, /https:\/\/www\.googleapis\.com\/auth\/youtube\.upload/, 'Der YouTube-Upload-Scope muss angefordert werden.');
+assert.doesNotMatch(storage, /https:\/\/www\.googleapis\.com\/auth\/youtube\.upload/, 'Der redundante Upload-Scope darf nicht zusätzlich angefordert werden.');
 assert.match(storage, /https:\/\/www\.googleapis\.com\/auth\/youtube\.force-ssl/, 'Die Freigabe geplanter Videos muss den von videos.update unterstützten YouTube-Scope anfordern.');
-assert.match(storage, /prompt: 'consent'/, 'Die erneute YouTube-Verbindung muss die zusätzliche Berechtigung ausdrücklich bestätigen lassen.');
+assert.match(storage, /prompt: 'consent'/, 'Die erneute YouTube-Verbindung muss die angeforderte Berechtigung ausdrücklich bestätigen lassen.');
+
+// Exercise the actual authorization URL builder with synthetic configuration.
+// No Google account is contacted and no access or refresh token is generated.
+const testEnvironment = {
+  YOUTUBE_OAUTH_CLIENT_ID: 'verification-audit.apps.googleusercontent.com',
+  YOUTUBE_OAUTH_CLIENT_SECRET: 'synthetic-client-secret',
+  YOUTUBE_TOKEN_ENCRYPTION_KEY: 'synthetic-encryption-key',
+  YOUTUBE_OAUTH_REDIRECT_URI: 'https://academy.gomo-marketing.at/api/youtube/oauth/callback',
+};
+const previousEnvironment = Object.fromEntries(Object.keys(testEnvironment).map(key => [key, process.env[key]]));
+try {
+  Object.assign(process.env, testEnvironment);
+  const first = createYouTubeAuthorizationUrl('audit-member');
+  const second = createYouTubeAuthorizationUrl('audit-member');
+  const url = new URL(first.authorizationUrl);
+  assert.equal(url.origin + url.pathname, 'https://accounts.google.com/o/oauth2/v2/auth');
+  assert.equal(url.searchParams.get('scope'), 'https://www.googleapis.com/auth/youtube.force-ssl', 'Die echte Anfrage muss exakt den eingereichten Scope enthalten.');
+  assert.equal(url.searchParams.get('include_granted_scopes'), 'false', 'Alte Berechtigungen dürfen nicht automatisch zur neuen Anfrage hinzugefügt werden.');
+  assert.equal(url.searchParams.get('access_type'), 'offline', 'Der Scheduler benötigt weiterhin dauerhaften Zugriff.');
+  assert.equal(url.searchParams.get('prompt'), 'consent');
+  assert.equal(url.searchParams.get('response_type'), 'code');
+  assert.equal(url.searchParams.get('redirect_uri'), testEnvironment.YOUTUBE_OAUTH_REDIRECT_URI);
+  assert.notEqual(first.nonce, second.nonce, 'Jeder Verbindungsversuch braucht einen neuen Sitzungswert.');
+  assert.notEqual(url.searchParams.get('state'), new URL(second.authorizationUrl).searchParams.get('state'));
+} finally {
+  for (const [key, value] of Object.entries(previousEnvironment)) {
+    if (value === undefined) delete process.env[key]; else process.env[key] = value;
+  }
+}
 assert.match(storage, /createHmac\('sha256'/, 'Der OAuth-Status muss kryptografisch signiert sein.');
 assert.match(storage, /createCipheriv\('aes-256-gcm'/, 'YouTube Refresh Tokens müssen verschlüsselt gespeichert werden.');
 assert.match(storage, /academyYouTubeConnections/, 'YouTube-Verbindungen müssen serverseitig gespeichert werden.');
