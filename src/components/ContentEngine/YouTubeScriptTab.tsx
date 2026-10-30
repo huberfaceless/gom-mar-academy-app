@@ -1,4 +1,5 @@
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
+import { youtubeUploadTitle } from '../../utils/youtubeUploadTitle';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Youtube, 
@@ -95,6 +96,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const [youtubeConnectionError, setYouTubeConnectionError] = useState<string | null>(null);
   const [isConnectingYouTube, setIsConnectingYouTube] = useState(false);
   const [isDisconnectingYouTube, setIsDisconnectingYouTube] = useState(false);
+  const [uploadTitle, setUploadTitle] = useState('');
+  const [shortTitles, setShortTitles] = useState<Record<string, string>>({});
   const [youtubeFile, setYouTubeFile] = useState<File | null>(null);
   const [youtubeUploadProgress, setYouTubeUploadProgress] = useState<number | null>(null);
   const [youtubeUploadError, setYouTubeUploadError] = useState<string | null>(null);
@@ -143,20 +146,21 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   };
 
   const handleUploadYouTube = async () => {
-    if (!video || !youtubeFile || youtubeConnection?.connected !== true) return;
+    if (!video || !youtubeFile || !uploadTitle.trim() || youtubeConnection?.connected !== true) return;
+    const title = uploadTitle.trim();
     if (!window.confirm(hubText("Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen?"))) return;
     setYouTubeUploadError(null);
     setYouTubeUploadedUrl(null);
     setYouTubeUploadProgress(0);
     try {
       const result = await youtubeService.uploadUnlistedVideo(youtubeFile, {
-        title: video.title,
+        title,
         description: video.description,
         tags: video.keywords,
       }, setYouTubeUploadProgress);
       setYouTubeUploadedUrl(result.videoUrl);
       setYouTubeUploadProgress(100);
-      onChangeVideo({ ...video, status: 'approved', videoId: result.videoId, videoUrl: result.videoUrl });
+      onChangeVideo({ ...video, title, status: 'approved', videoId: result.videoId, videoUrl: result.videoUrl });
     } catch (error: unknown) {
       setYouTubeUploadError(error instanceof Error ? error.message : hubText("Der YouTube-Upload ist fehlgeschlagen."));
       setYouTubeUploadProgress(null);
@@ -166,19 +170,20 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const handleUploadShort = async (short: YouTubeShort, idx: number) => {
     const shortKey = short.id || `short_${idx}`;
     const file = shortFiles[shortKey];
-    if (!file || youtubeConnection?.connected !== true) return;
+    const title = shortTitles[shortKey]?.trim();
+    if (!file || !title || youtubeConnection?.connected !== true) return;
     if (!window.confirm(hubText("Kurzvideo #{0} jetzt als „Nicht gelistet“ zu YouTube hochladen?", short.shortNumber || idx + 1))) return;
     setShortUploadErrors((current) => ({ ...current, [shortKey]: null }));
     setShortUploadProgress((current) => ({ ...current, [shortKey]: 0 }));
     try {
       const result = await youtubeService.uploadUnlistedVideo(file, {
-        title: short.title,
+        title,
         description: short.description,
         tags: [],
       }, (percent) => setShortUploadProgress((current) => ({ ...current, [shortKey]: percent })));
       const updatedShorts = shorts.map((candidate, candidateIdx) => (
         (candidate.id || `short_${candidateIdx}`) === shortKey
-          ? { ...candidate, status: 'approved' as const, videoId: result.videoId, videoUrl: result.videoUrl }
+          ? { ...candidate, title, status: 'approved' as const, videoId: result.videoId, videoUrl: result.videoUrl }
           : candidate
       ));
       onChangeShorts(updatedShorts);
@@ -364,19 +369,32 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         <div className="rounded-3xl border border-red-200 bg-white p-5 shadow-xs space-y-3">
           <div>
             <h3 className="text-sm font-extrabold text-slate-900">{hubText("Fertiges Video hochladen")}</h3>
-            <p className="mt-1 text-xs text-slate-500">{hubText("Titel, Beschreibung und Tags werden aus diesem Skript übernommen. Das Video wird abschnittsweise übertragen und bleibt zunächst „Nicht gelistet“.")}</p>
+            <p className="mt-1 text-xs text-slate-500">{hubText("Der Videotitel wird aus dem Dateinamen vorgeschlagen und kann vor dem Upload geändert werden. Beschreibung und Tags stammen aus dem Skript. Das Video bleibt zunächst „Nicht gelistet“.")}</p>
           </div>
           <input
             type="file"
             accept="video/*"
-            onChange={(event) => setYouTubeFile(event.target.files?.[0] || null)}
+            onChange={(event) => {
+              const file = event.target.files?.[0] || null;
+              setYouTubeFile(file);
+              setUploadTitle(file ? youtubeUploadTitle(file.name) : '');
+              setYouTubeUploadedUrl(null);
+              setYouTubeUploadProgress(null);
+            }}
             disabled={youtubeUploadProgress !== null && youtubeUploadProgress < 100}
             className="block w-full text-xs text-slate-600 file:mr-3 file:rounded-xl file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:font-bold file:text-slate-800"
           />
+          {youtubeFile && <label className="block text-xs font-bold text-slate-700">
+            {hubText("Videotitel für YouTube und Kalender")}
+            <input type="text" value={uploadTitle} maxLength={100}
+              onChange={event => setUploadTitle(event.target.value)}
+              disabled={youtubeUploadProgress !== null}
+              className="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2" />
+          </label>}
           <button
             type="button"
             onClick={handleUploadYouTube}
-            disabled={!youtubeFile || (youtubeUploadProgress !== null && youtubeUploadProgress < 100)}
+            disabled={!youtubeFile || !uploadTitle.trim() || (youtubeUploadProgress !== null && youtubeUploadProgress < 100)}
             className="rounded-xl bg-red-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {youtubeUploadProgress !== null && youtubeUploadProgress < 100 ? hubText("Hochladen läuft: {0} %", youtubeUploadProgress) : hubText("Als „Nicht gelistet“ hochladen")}
@@ -768,17 +786,27 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                     accept="video/*"
                     onChange={(event) => {
                       const shortKey = short.id || `short_${idx}`;
-                      setShortFiles((current) => ({ ...current, [shortKey]: event.target.files?.[0] || null }));
+                      const file = event.target.files?.[0] || null;
+                      setShortFiles(current => ({ ...current, [shortKey]: file }));
+                      setShortTitles(current => ({ ...current, [shortKey]: file ? youtubeUploadTitle(file.name) : '' }));
+                      setShortUploadProgress(current => ({ ...current, [shortKey]: null }));
                     }}
                     disabled={shortUploadProgress[short.id || `short_${idx}`] !== null
                       && shortUploadProgress[short.id || `short_${idx}`] !== undefined
                       && shortUploadProgress[short.id || `short_${idx}`] < 100}
                     className="block w-full text-xs text-slate-600 file:mr-2 file:rounded-lg file:border-0 file:bg-white file:px-3 file:py-2 file:text-xs file:font-bold file:text-slate-800"
                   />
+                  {shortFiles[short.id || `short_${idx}`] && <label className="block text-xs font-bold text-slate-700">
+                    {hubText("Videotitel für YouTube und Kalender")}
+                    <input type="text" maxLength={100} value={shortTitles[short.id || `short_${idx}`] || ''}
+                      onChange={event => setShortTitles(current => ({ ...current, [short.id || `short_${idx}`]: event.target.value }))}
+                      disabled={shortUploadProgress[short.id || `short_${idx}`] != null}
+                      className="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2" />
+                  </label>}
                   <button
                     type="button"
                     onClick={() => handleUploadShort(short, idx)}
-                    disabled={!shortFiles[short.id || `short_${idx}`] || (
+                    disabled={!shortFiles[short.id || `short_${idx}`] || !shortTitles[short.id || `short_${idx}`]?.trim() || (
                       shortUploadProgress[short.id || `short_${idx}`] !== null
                       && shortUploadProgress[short.id || `short_${idx}`] !== undefined
                       && shortUploadProgress[short.id || `short_${idx}`] < 100

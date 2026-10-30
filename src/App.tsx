@@ -144,6 +144,13 @@ export default function App() {
       });
     return () => { cancelled = true; };
   }, [firebaseUser, legacyCampaignState, user.role, user.tier]);
+  useEffect(() => {
+    if (firebaseUser && resolvedMembershipUid === firebaseUser.uid
+      && canAccessView('contentEngine', user.tier, user.role)
+      && ['connected', 'error'].includes(new URLSearchParams(window.location.search).get('pinterest') || '')) {
+      setActiveView('contentEngine');
+    }
+  }, [firebaseUser, resolvedMembershipUid, user.tier, user.role]);
   const [activeView, setActiveView] = useState<string>('dashboard');
   useEffect(() => { setBrowserErrorView(activeView); }, [activeView]);
   const [membershipGate, setMembershipGate] = useState<{

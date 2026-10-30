@@ -36,6 +36,7 @@ const AIContentService = {
 };
 const context = vm.createContext({ contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
   if (name === 'react') return hookReact;
+  if (name.endsWith('pinterestOAuthReturn')) return { readPinterestOAuthReturn: () => null };
   if (name.endsWith('useContentHubCopy')) return { useContentHubCopy: () => ({ language: 'de', hubText: (source: string, ...values: unknown[]) => contentHubText('de', source, ...values) }) };
   if (name.endsWith('AuthContext')) return { useAuth: () => ({ user: null }) };
   if (name.endsWith('contentStorage')) return {

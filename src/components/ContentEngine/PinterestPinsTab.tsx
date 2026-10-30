@@ -1,4 +1,5 @@
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
+import { readPinterestOAuthReturn, clearPinterestOAuthReturn, savePinterestOAuthReturn } from '../../utils/pinterestOAuthReturn';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Pin, 
@@ -44,6 +45,8 @@ import { PinterestPublishModal } from './PinterestPublishModal';
 import { PinterestImagePickerModal } from './PinterestImagePickerModal';
 
 interface PinterestPinsTabProps {
+  userId?: string;
+  contentProjectId?: string;
   projectTargetUrl?: string | null;
   onGenerate?: () => void;
   isGenerating?: boolean;
@@ -94,6 +97,8 @@ const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
 };
 
 export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
+  userId,
+  contentProjectId,
   projectTargetUrl,
   onGenerate,
   isGenerating = false,
@@ -118,6 +123,17 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
   const [isRenderingCanvas, setIsRenderingCanvas] = useState<boolean>(false);
 
   const activePin = pins[selectedPinIndex] || pins[0];
+
+  useEffect(() => {
+    const context = readPinterestOAuthReturn(userId);
+    if (!context || context.contentProjectId !== contentProjectId || context.projectId !== projectSettings.id) return;
+    const index = pins.findIndex(pin => pin.id === context.pinId);
+    if (index < 0) return;
+    sessionStorage.setItem('gommar_pinterest_publish_environment', context.environment);
+    setSelectedPinIndex(index);
+    setIsPublishModalOpen(true);
+    clearPinterestOAuthReturn();
+  }, [userId, contentProjectId, projectSettings.id, pins]);
 
   // Re-render canvas whenever activePin, theme, template or image changes
   useEffect(() => {
@@ -592,6 +608,9 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
       {/* Pinterest Publishing Modal */}
       <PinterestPublishModal
         pin={activePin}
+        onBeforeConnect={(environment) => {
+          if (userId && contentProjectId) savePinterestOAuthReturn({ userId, projectId: projectSettings.id, contentProjectId, pinId: activePin.id, environment });
+        }}
         projectSettings={projectSettings}
         isOpen={isPublishModalOpen}
         onClose={() => setIsPublishModalOpen(false)}

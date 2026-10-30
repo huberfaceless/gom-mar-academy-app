@@ -1,4 +1,5 @@
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
+import { readPinterestOAuthReturn } from '../../utils/pinterestOAuthReturn';
 import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
@@ -122,6 +123,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const { language, hubText } = useContentHubCopy();
   const { user } = useAuth();
   const userId = user?.uid;
+  const pinterestReturn = readPinterestOAuthReturn(userId);
 
   const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId, isAdmin));
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
@@ -158,9 +160,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       const localProjects = loadAllProjectSettings(userId, isAdmin);
       const localContent = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
       setProjects(localProjects);
-      setSelectedProjectId(localProjects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
+      setSelectedProjectId(localProjects.find(p => p.id === pinterestReturn?.projectId)?.id || localProjects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
       setContentProjects(localContent);
-      setActiveContentProject(localContent[0] || null);
+      setActiveContentProject(localContent.find(p => p.id === pinterestReturn?.contentProjectId) || localContent[0] || null);
+      if (pinterestReturn) setActiveTab('pinterest');
       try {
         await FirestoreContentService.syncLocalDataToFirestore(userId, isAdmin);
         const [firestoreProjects, firestoreContent] = await Promise.all([
@@ -171,13 +174,16 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         if (cancelled) return;
         if (firestoreProjects && firestoreProjects.length > 0) {
           setProjects(firestoreProjects);
-          if (!firestoreProjects.some((p) => p.id === selectedProjectId)) {
+          if (firestoreProjects.some(p => p.id === pinterestReturn?.projectId)) {
+            setSelectedProjectId(pinterestReturn!.projectId);
+          } else if (!firestoreProjects.some((p) => p.id === selectedProjectId)) {
             setSelectedProjectId(firestoreProjects[0].id);
           }
         }
 
         setContentProjects((firestoreContent || []).filter(project => canUseContentProject(project.projectSettings, isAdmin)));
-        setActiveContentProject(firestoreContent?.find(project => canUseContentProject(project.projectSettings, isAdmin)) || null);
+        setActiveContentProject(firestoreContent?.find(project => project.id === pinterestReturn?.contentProjectId && canUseContentProject(project.projectSettings, isAdmin))
+          || firestoreContent?.find(project => canUseContentProject(project.projectSettings, isAdmin)) || null);
       } catch (err) {
         console.warn('Could not load content from Firestore, keeping local fallback:', err);
       }
@@ -837,6 +843,9 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
           {activeTab === 'pinterest' && (
             <PinterestPinsTab
+              key={activeContentProject.id}
+              userId={userId}
+              contentProjectId={activeContentProject.id}
               onGenerate={handleGeneratePinterest}
               isGenerating={isGeneratingPinterest}
               projectTargetUrl={activeProjectSettings.defaultTargetUrl}
@@ -865,6 +874,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
           {activeTab === 'youtube' && (
             <YouTubeScriptTab
+              key={activeContentProject.id}
               video={activeContentProject.youtubeVideo}
               shorts={activeContentProject.youtubeShorts}
               onChangeVideo={(updatedVideo) => {

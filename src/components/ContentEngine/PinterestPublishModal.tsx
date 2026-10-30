@@ -22,6 +22,7 @@ import { renderPinToCanvas } from '../../utils/pinterestCanvasRenderer';
 
 interface PinterestPublishModalProps {
   pin: PinterestPin;
+  onBeforeConnect?: (environment: PinterestEnvironment) => void;
   projectSettings: ProjectSettings;
   isOpen: boolean;
   onClose: () => void;
@@ -30,6 +31,7 @@ interface PinterestPublishModalProps {
 
 export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
   pin,
+  onBeforeConnect,
   projectSettings,
   isOpen,
   onClose,
@@ -40,6 +42,11 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
     try { return sessionStorage.getItem('gommar_pinterest_publish_environment') === 'sandbox' ? 'sandbox' : 'production'; }
     catch { return 'production'; }
   });
+  useEffect(() => {
+    if (isOpen) {
+      try { setEnvironment(sessionStorage.getItem('gommar_pinterest_publish_environment') === 'sandbox' ? 'sandbox' : 'production'); } catch { /* Keep selected environment. */ }
+    }
+  }, [isOpen]);
   const isSandbox = environment === 'sandbox';
   const [accountConfig, setAccountConfig] = useState<PinterestAccountConfig>({ accessToken: '', isConnected: false });
   const [isTestingToken, setIsTestingToken] = useState<boolean>(false);
@@ -108,6 +115,7 @@ export const PinterestPublishModal: React.FC<PinterestPublishModalProps> = ({
     setIsTestingToken(true);
     setConnectionError(null);
     try {
+      onBeforeConnect?.(environment);
       await pinterestService.startOAuth(environment);
     } catch (error: unknown) {
       setIsTestingToken(false);
