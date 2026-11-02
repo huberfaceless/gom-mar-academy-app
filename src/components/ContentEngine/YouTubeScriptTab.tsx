@@ -97,6 +97,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const [isConnectingYouTube, setIsConnectingYouTube] = useState(false);
   const [isDisconnectingYouTube, setIsDisconnectingYouTube] = useState(false);
   const [uploadTitle, setUploadTitle] = useState('');
+  const [uploadDescription, setUploadDescription] = useState('');
+  const [uploadTags, setUploadTags] = useState('');
   const [shortTitles, setShortTitles] = useState<Record<string, string>>({});
   const [youtubeFile, setYouTubeFile] = useState<File | null>(null);
   const [youtubeUploadProgress, setYouTubeUploadProgress] = useState<number | null>(null);
@@ -148,6 +150,8 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
   const handleUploadYouTube = async () => {
     if (!video || !youtubeFile || !uploadTitle.trim() || youtubeConnection?.connected !== true) return;
     const title = uploadTitle.trim();
+    const description = uploadDescription;
+    const tags = [...new Set(uploadTags.split(',').map(tag => tag.trim()).filter(Boolean))];
     if (!window.confirm(hubText("Dieses Video jetzt als „Nicht gelistet“ zu YouTube hochladen?"))) return;
     setYouTubeUploadError(null);
     setYouTubeUploadedUrl(null);
@@ -155,12 +159,12 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
     try {
       const result = await youtubeService.uploadUnlistedVideo(youtubeFile, {
         title,
-        description: video.description,
-        tags: video.keywords,
+        description,
+        tags,
       }, setYouTubeUploadProgress);
       setYouTubeUploadedUrl(result.videoUrl);
       setYouTubeUploadProgress(100);
-      onChangeVideo({ ...video, title, status: 'approved', videoId: result.videoId, videoUrl: result.videoUrl });
+      onChangeVideo({ ...video, title, description, keywords: tags, status: 'approved', videoId: result.videoId, videoUrl: result.videoUrl });
     } catch (error: unknown) {
       setYouTubeUploadError(error instanceof Error ? error.message : hubText("Der YouTube-Upload ist fehlgeschlagen."));
       setYouTubeUploadProgress(null);
@@ -369,7 +373,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
         <div className="rounded-3xl border border-red-200 bg-white p-5 shadow-xs space-y-3">
           <div>
             <h3 className="text-sm font-extrabold text-slate-900">{hubText("Fertiges Video hochladen")}</h3>
-            <p className="mt-1 text-xs text-slate-500">{hubText("Der Videotitel wird aus dem Dateinamen vorgeschlagen und kann vor dem Upload geändert werden. Beschreibung und Tags stammen aus dem Skript. Das Video bleibt zunächst „Nicht gelistet“.")}</p>
+            <p className="mt-1 text-xs text-slate-500">{hubText("Prüfe Titel, Beschreibung und Tags vor dem Upload. Beschreibung und Tags starten bei jeder neuen Datei leer. Du kannst die Skriptangaben ausdrücklich übernehmen. Das Video bleibt zunächst „Nicht gelistet“.")}</p>
           </div>
           <input
             type="file"
@@ -378,19 +382,46 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
               const file = event.target.files?.[0] || null;
               setYouTubeFile(file);
               setUploadTitle(file ? youtubeUploadTitle(file.name) : '');
+              setUploadDescription('');
+              setUploadTags('');
+              setYouTubeUploadError(null);
               setYouTubeUploadedUrl(null);
               setYouTubeUploadProgress(null);
             }}
             disabled={youtubeUploadProgress !== null && youtubeUploadProgress < 100}
             className="block w-full text-xs text-slate-600 file:mr-3 file:rounded-xl file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:font-bold file:text-slate-800"
           />
-          {youtubeFile && <label className="block text-xs font-bold text-slate-700">
-            {hubText("Videotitel für YouTube und Kalender")}
-            <input type="text" value={uploadTitle} maxLength={100}
-              onChange={event => setUploadTitle(event.target.value)}
-              disabled={youtubeUploadProgress !== null}
-              className="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2" />
-          </label>}
+          {youtubeFile && <div className="space-y-3">
+            <label className="block text-xs font-bold text-slate-700">
+              {hubText("Videotitel für YouTube und Kalender")}
+              <input type="text" value={uploadTitle} maxLength={100}
+                onChange={event => setUploadTitle(event.target.value)}
+                disabled={youtubeUploadProgress !== null}
+                className="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2" />
+            </label>
+            <label className="block text-xs font-bold text-slate-700" htmlFor="youtube-upload-description">
+              {hubText("Beschreibung für dieses Video (optional)")}
+              <textarea id="youtube-upload-description" value={uploadDescription} rows={4} maxLength={5000}
+                onChange={event => setUploadDescription(event.target.value)}
+                disabled={youtubeUploadProgress !== null}
+                className="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2" />
+            </label>
+            <label className="block text-xs font-bold text-slate-700" htmlFor="youtube-upload-tags">
+              {hubText("Tags für dieses Video (optional, durch Kommas getrennt)")}
+              <input id="youtube-upload-tags" type="text" value={uploadTags}
+                onChange={event => setUploadTags(event.target.value)}
+                disabled={youtubeUploadProgress !== null}
+                className="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2" />
+            </label>
+            <button type="button" disabled={!video || youtubeUploadProgress !== null}
+              onClick={() => {
+                setUploadDescription(video?.description || '');
+                setUploadTags((video?.keywords || []).join(', '));
+              }}
+              className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 disabled:opacity-50">
+              {hubText("Beschreibung und Tags aus dem Skript übernehmen")}
+            </button>
+          </div>}
           <button
             type="button"
             onClick={handleUploadYouTube}

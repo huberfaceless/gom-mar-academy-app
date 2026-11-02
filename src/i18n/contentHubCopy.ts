@@ -4,7 +4,10 @@ import { LanguageCode } from './translations';
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
   'Videotitel für YouTube und Kalender': 'Video title for YouTube and calendar',
-  'Der Videotitel wird aus dem Dateinamen vorgeschlagen und kann vor dem Upload geändert werden. Beschreibung und Tags stammen aus dem Skript. Das Video bleibt zunächst „Nicht gelistet“.': 'The video title is suggested from the filename and can be edited before uploading. Description and tags come from the script. The video initially remains unlisted.',
+  'Prüfe Titel, Beschreibung und Tags vor dem Upload. Beschreibung und Tags starten bei jeder neuen Datei leer. Du kannst die Skriptangaben ausdrücklich übernehmen. Das Video bleibt zunächst „Nicht gelistet“.': 'Review the title, description and tags before uploading. Description and tags start empty for each new file. You can explicitly copy them from the script. The video initially remains unlisted.',
+  'Beschreibung für dieses Video (optional)': 'Description for this video (optional)',
+  'Tags für dieses Video (optional, durch Kommas getrennt)': 'Tags for this video (optional, separated by commas)',
+  'Beschreibung und Tags aus dem Skript übernehmen': 'Copy description and tags from the script',
   'Projekt „{0}“ wurde erfolgreich gespeichert.': 'Project “{0}” saved successfully.',
   'Instagram-Beitrag #{0}: {1}': 'Instagram post #{0}: {1}',
   'Kurzvideo #{0}: {1}': 'Short #{0}: {1}',
