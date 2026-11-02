@@ -47,7 +47,7 @@ vm.runInContext('(function(){' + ts.transpileModule(readFileSync('src/components
   compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.React, esModuleInterop: true },
 }).outputText + '\n})();', context);
 let changed: any;
-const video = { title: 'Old fasting script', description: 'Description', keywords: [], script: { hook: '', intro: '', mainBody: [], cta: '', outro: '' }, chapters: [], thumbnailConcept: { headline: '', visualDescription: '', imagePrompt: '' }, status: 'ai_generated' };
+const video = { title: 'Old fasting script', description: 'Description', keywords: ['old fasting tag'], script: { hook: '', intro: '', mainBody: [], cta: '', outro: '' }, chapters: [], thumbnailConcept: { headline: '', visualDescription: '', imagePrompt: '' }, status: 'ai_generated' };
 const props = { video, shorts: [], topic: 'Topic', onChangeVideo: (value: any) => { changed = value; }, onChangeShorts() {}, onGoToCalendar() {} };
 const render = () => { cursor = 0; pending = []; const tree = context.exports.YouTubeScriptTab(props); for (const effect of pending) effect(); return tree; };
 const find = (node: any, predicate: (value: any) => boolean): any => {
@@ -58,6 +58,14 @@ render(); await new Promise(resolve => setImmediate(resolve));
 let tree = render();
 find(tree, n => n.type === 'input' && n.props.type === 'file').props.onChange({ target: { files: [{ name: 'Academy_intro.mp4' }] } });
 tree = render();
+assert.equal(find(tree, n => n.props?.id === 'youtube-upload-description').props.value, '', 'Never silently reuse a project description.');
+assert.equal(find(tree, n => n.props?.id === 'youtube-upload-tags').props.value, '', 'Never silently reuse project tags.');
+find(tree, n => n.type === 'button' && n.props.children?.includes('Beschreibung und Tags aus dem Skript übernehmen')).props.onClick();
+tree = render();
+assert.equal(find(tree, n => n.props?.id === 'youtube-upload-description').props.value, video.description);
+assert.equal(find(tree, n => n.props?.id === 'youtube-upload-tags').props.value, 'old fasting tag');
+find(tree, n => n.props?.id === 'youtube-upload-description').props.onChange({ target: { value: 'Own upload demonstration' } });
+find(tree, n => n.props?.id === 'youtube-upload-tags').props.onChange({ target: { value: ' Academy, OAuth, , Academy ' } });
 const titleInput = find(tree, n => n.type === 'input' && n.props.maxLength === 100);
 assert.equal(titleInput.props.value, 'Academy intro');
 titleInput.props.onChange({ target: { value: 'My Academy introduction' } });
@@ -65,8 +73,23 @@ tree = render();
 await find(tree, n => n.type === 'button' && n.props.onClick?.name === 'handleUploadYouTube').props.onClick();
 assert.equal(uploads[0].metadata.title, 'My Academy introduction');
 assert.equal(changed.title, uploads[0].metadata.title, 'Persisted calendar/queue source and uploaded title must match.');
+assert.equal(uploads[0].metadata.description, 'Own upload demonstration');
+assert.equal(changed.description, uploads[0].metadata.description);
+assert.deepEqual(Array.from(uploads[0].metadata.tags), ['Academy', 'OAuth']);
+assert.deepEqual(Array.from(changed.keywords), ['Academy', 'OAuth']);
 assert.equal(changed.videoId, 'uploaded-id');
 assert.equal(changed.status, 'approved');
+// A different file must not inherit the last upload's metadata.
+tree = render();
+find(tree, n => n.type === 'input' && n.props.type === 'file').props.onChange({ target: { files: [{ name: 'Second.mp4' }] } });
+tree = render();
+assert.equal(find(tree, n => n.props?.id === 'youtube-upload-description').props.value, '');
+assert.equal(find(tree, n => n.props?.id === 'youtube-upload-tags').props.value, '');
+await find(tree, n => n.type === 'button' && n.props.onClick?.name === 'handleUploadYouTube').props.onClick();
+assert.equal(uploads[1].metadata.description, '', 'Empty input must stay empty rather than falling back to the script.');
+assert.equal(uploads[1].metadata.tags.length, 0);
+assert.equal(changed.description, '');
+assert.equal(changed.keywords.length, 0);
 console.log('Social upload flow: PASS');
 
 slots.length = 0; dependencies.length = 0;
