@@ -1,3 +1,4 @@
+import { matchesPublishingTarget } from '../../utils/publishingTarget';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
@@ -487,7 +488,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       });
 
       const updatedCalendarItems = project.calendarItems.some(calendarItem => calendarItem.id === item.id)
-        ? project.calendarItems.map(calendarItem => calendarItem.id === item.id ? { ...calendarItem, status: 'scheduled' as ContentStatus } : calendarItem)
+        ? project.calendarItems.map(calendarItem => calendarItem.id === item.id ? { ...calendarItem, title: item.title, status: 'scheduled' as ContentStatus, publishingJobId: publishingJob.id } : calendarItem)
         : [...project.calendarItems, {
             id: item.id,
             channel: item.platform === 'INSTAGRAM' ? 'instagram' as const : item.type === 'blog' ? 'blog' as const : item.type === 'pinterest' ? 'pinterest' as const : item.type === 'youtube_short' ? 'shorts' as const : 'youtube' as const,
@@ -569,7 +570,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   const handleDateChange = async (itemId: string, newDate: string) => {
     if (savingDateId) return;
-    const matchingJob = publishingJobs.find(job => job.contentId === itemId);
+    const targetItem = items.find(item => item.id === itemId);
+    const matchingJob = targetItem && publishingJobs.find(job => matchesPublishingTarget(job, {
+      contentId: targetItem.id, platform: targetItem.platform, contentType: targetItem.contentType, payload: targetItem.payloadData,
+    }));
     setSavingDateId(itemId);
     try {
       const scheduledAt = toScheduledIso(newDate);
@@ -862,7 +866,9 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           const rawStatus = toCanonicalStatus(item.status);
           const statusConf = STATUS_CONFIG[rawStatus] || STATUS_CONFIG.GENERATING;
           const Icon = item.icon;
-          const matchingJob = publishingJobs.find((j) => j.contentId === item.id);
+          const matchingJob = publishingJobs.find(job => matchesPublishingTarget(job, {
+            contentId: item.id, platform: item.platform, contentType: item.contentType, payload: item.payloadData,
+          }));
           const queueSupported = supportsPublishingQueue(item);
 
           return (
@@ -965,7 +971,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                 ) : item.platform === 'YOUTUBE' || item.platform === 'INSTAGRAM' ? (
                   <span className="max-w-full px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-bold rounded-xl border border-purple-200 flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5 shrink-0" />
-                    <span>{hubText("Automatische Veröffentlichung geplant")}</span>
+                    <span>{matchingJob.status === 'PUBLISHED' ? hubText("Veröffentlicht 🚀") : hubText("Automatische Veröffentlichung geplant")}</span>
                   </span>
                 ) : (
                   <button

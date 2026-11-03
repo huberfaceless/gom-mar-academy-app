@@ -21,7 +21,7 @@ const mocks: Record<string, string> = {
 const built = await build({
   stdin: { contents: `export {ServerSchedulerWorker} from './src/services/serverSchedulerWorker.ts';
     export {PublishingService} from './src/services/publishingService.ts';
-    export {listServerPublishingJobs, claimServerPublishingJob, saveServerPublishingJob} from './server/publishingQueueAdmin.ts';
+    export {listServerPublishingJobs, claimServerPublishingJob, saveServerPublishingJob, syncServerPublishingOutcome} from './server/publishingQueueAdmin.ts';
     export {loadEmailCampaigns} from './server/emailCampaignsAdmin.ts';
     export {fetchFirestoreRead} from './server/firestoreReadRetry.ts';`, resolveDir: process.cwd() },
   bundle: true, write: false, platform: 'node', format: 'esm',
@@ -173,6 +173,30 @@ try {
     const claim = await api.claimServerPublishingJob('job', 'another-worker');
     assert.equal(claim.success, false); assert.equal(publications, before);
   }
+  // A late historical YouTube outcome must not overwrite a replacement upload.
+  const savedFetch = globalThis.fetch;
+  let projectWrites = 0;
+  let contentProject: any = { userId: 'owner', youtubeVideo: { videoId: 'new-upload', status: 'approved', videoUrl: 'https://youtu.be/new-upload' }, calendarItems: [{ id: 'yt_video_main', status: 'approved' }] };
+  globalThis.fetch = (async (input: RequestInfo | URL, init: RequestInit = {}) => {
+    const url = new URL(String(input));
+    if (url.pathname.endsWith('/schedulerJobs')) return response(200, { documents: [] });
+    assert.ok(url.pathname.endsWith('/contentProjects/content'));
+    if (init.method === 'PATCH') {
+      projectWrites++;
+      contentProject = decode({ mapValue: { fields: JSON.parse(String(init.body)).fields } });
+    }
+    return response(200, { fields: encode(contentProject).mapValue.fields });
+  }) as typeof fetch;
+  const youtubeOutcome = { ...initial, id: 'old-youtube-job', contentId: 'yt_video_main', platform: 'YOUTUBE', contentType: 'VIDEO', status: 'PUBLISHED', payload: { metadata: { videoId: 'old-upload' } }, publishedUrl: 'https://youtu.be/old-upload' };
+  await api.syncServerPublishingOutcome(youtubeOutcome);
+  assert.equal(projectWrites, 0);
+  assert.equal(contentProject.youtubeVideo.status, 'approved');
+  assert.equal(contentProject.youtubeVideo.videoUrl, 'https://youtu.be/new-upload');
+  await api.syncServerPublishingOutcome({ ...youtubeOutcome, id: 'new-job', payload: { metadata: { videoId: 'new-upload' } }, publishedUrl: 'https://youtu.be/new-upload' });
+  assert.equal(projectWrites, 1);
+  assert.equal(contentProject.youtubeVideo.status, 'published');
+  assert.equal(contentProject.calendarItems[0].publishingJobId, 'new-job');
+  globalThis.fetch = savedFetch;
   // Verify the actual HTTP endpoint body, including its catch path, without booting Express.
   const source = readFileSync('server.ts', 'utf8');
   const route = source.match(/app\.post\('\/api\/internal\/scheduler\/run'[\s\S]*?\n  \}\);/)?.[0];
