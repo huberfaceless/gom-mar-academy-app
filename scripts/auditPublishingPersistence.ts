@@ -1,3 +1,4 @@
+import { matchesPublishingTarget, matchesCurrentYouTubeUpload } from '../src/utils/publishingTarget';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
@@ -327,8 +328,9 @@ console.log('Kategorieauswahl geprüft: Vital50 und Online Business getrennt, le
 // Den echten Einreihungsservice ausführen: fehlende Pinnwand vor jedem Cloud-Zugriff stoppen.
 const queueWrites: any[] = [];
 let queueReads = 0;
+let existingQueueJobs: any[] = [];
 (globalThis as any).__pinterestQueueAudit = {
-  getPublishingJobs: async () => { queueReads++; return []; },
+  getPublishingJobs: async () => { queueReads++; return existingQueueJobs; },
   savePublishingJob: async (_user: string, job: any) => { queueWrites.push(job); },
   saveSchedulerJob: async (_user: string, job: any) => { queueWrites.push(job); },
 };
@@ -358,6 +360,28 @@ assert.equal(queueReads, 1);
 assert.equal(queueWrites.length, 2);
 assert.equal(queueWrites[0].payload.boardId, 'board-42');
 assert.equal(queueWrites[1].publishingJobId, queueWrites[0].id);
+// A completed upload blocks only that exact YouTube video, never its replacement.
+const youtubeParams = { projectId: 'project', contentProjectId: 'content', contentId: 'yt_video_main', platform: 'YOUTUBE', contentType: 'VIDEO', scheduledAt: newDate, payload: { title: 'New video', metadata: { videoId: 'new-upload' } } };
+const oldYouTubeJob = { ...youtubeParams, id: 'old-job', status: 'PUBLISHED', payload: { title: 'Old video', metadata: { videoId: 'old-upload' } } };
+existingQueueJobs = [oldYouTubeJob];
+const beforeYouTube = queueWrites.length;
+await queueService.enqueueJob('owner', youtubeParams);
+assert.equal(queueWrites.length, beforeYouTube + 2);
+assert.equal(queueWrites[beforeYouTube].payload.metadata.videoId, 'new-upload');
+assert.equal(oldYouTubeJob.status, 'PUBLISHED');
+assert.equal(oldYouTubeJob.payload.metadata.videoId, 'old-upload');
+for (const status of ['SCHEDULED', 'PUBLISHING', 'PUBLISHED']) {
+  existingQueueJobs = [{ ...queueWrites[beforeYouTube], status }];
+  await assert.rejects(queueService.enqueueJob('owner', youtubeParams), /bereits/);
+}
+assert.equal(matchesPublishingTarget(oldYouTubeJob as any, youtubeParams as any), false);
+assert.equal(matchesPublishingTarget(queueWrites[beforeYouTube], youtubeParams as any), true);
+assert.equal(matchesCurrentYouTubeUpload(oldYouTubeJob as any, { youtubeVideo: { videoId: 'new-upload' } } as any), false);
+assert.equal(matchesCurrentYouTubeUpload(queueWrites[beforeYouTube], { youtubeVideo: { videoUrl: 'https://youtu.be/new-upload' } } as any), true);
+const shortJob = { ...oldYouTubeJob, contentId: 'short_0', contentType: 'SHORT' };
+assert.equal(matchesCurrentYouTubeUpload(shortJob as any, { youtubeShorts: [{ videoId: 'new-upload' }] } as any), false);
+assert.equal(matchesCurrentYouTubeUpload(shortJob as any, { youtubeShorts: [{ videoId: 'old-upload' }] } as any), true);
+console.log('YouTube-Aufträge geprüft: neue Video-ID einreihbar, gleicher Upload gegen Doppelveröffentlichung geschützt.');
 delete (globalThis as any).__pinterestQueueAudit;
 assert.match(calendar, /handlePinterestBoardChange/);
 assert.match(calendar, /await FirestoreContentService.updatePinterestJobBoard/);

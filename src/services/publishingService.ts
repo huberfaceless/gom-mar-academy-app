@@ -1,3 +1,4 @@
+import { matchesPublishingTarget, matchesCurrentYouTubeUpload } from '../utils/publishingTarget';
 import { 
   PublishingJob, 
   SchedulerJob, 
@@ -361,7 +362,7 @@ export class PublishingService {
 
     const existingJobs = await FirestoreContentService.getPublishingJobs(userId, params.contentProjectId);
     const existingJob = existingJobs.find(job =>
-      job.contentId === params.contentId
+      matchesPublishingTarget(job, params)
       && !['FAILED', 'CANCELLED'].includes(job.status),
     );
     if (existingJob) {
@@ -614,7 +615,7 @@ export class PublishingService {
   ): Promise<void> {
     try {
       const project = await FirestoreContentService.getContentProjectById(userId, job.contentProjectId);
-      if (!project) return;
+      if (!project || !matchesCurrentYouTubeUpload(job, project)) return;
 
       let changed = false;
 

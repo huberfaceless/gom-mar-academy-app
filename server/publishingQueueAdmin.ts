@@ -1,3 +1,4 @@
+import { matchesCurrentYouTubeUpload } from '../src/utils/publishingTarget.js';
 import { GoogleAuth } from 'google-auth-library';
 import { PublishingJob } from '../src/types/contentEngine.js';
 import { preparePublishingJobRetry, PublishingJobActionError } from './publishingJobRetry.js';
@@ -311,6 +312,8 @@ export const syncServerPublishingOutcome = async (job: PublishingJob): Promise<v
   if (!projectDocument.fields) return;
   const project = decodeFields(projectDocument.fields) as Record<string, any>;
   if (project.userId !== job.userId) throw new Error('Publishing Job und Content-Projekt gehören nicht demselben Nutzer.');
+
+  if (!matchesCurrentYouTubeUpload(job, project)) return;
 
   if (job.contentId === 'blog_main' && project.blogArticle) {
     project.blogArticle.status = contentStatus;
