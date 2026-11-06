@@ -3,6 +3,20 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Projekt entfernen": "Remove project",
+  "Inhaltsablauf entfernen": "Remove content workflow",
+  "„{0}“ wirklich entfernen?": "Really remove “{0}”?",
+  "„{0}“ wurde entfernt.": "“{0}” was removed.",
+  "Dieser Inhaltsablauf und seine Warteschlangen-Einträge werden entfernt. Das übergeordnete Projekt bleibt erhalten.": "This content workflow and its queue entries will be removed. The parent project will remain.",
+  "Das Projekt mit allen zugehörigen Inhaltsabläufen und Warteschlangen-Einträgen wird entfernt.": "The project, all its content workflows and queue entries will be removed.",
+  "Bereits veröffentlichte Videos, Pins und Artikel bleiben auf den Plattformen bestehen. Diese Aktion kann nicht rückgängig gemacht werden.": "Already published videos, pins and articles will remain on their platforms. This action cannot be undone.",
+  "Wird entfernt…": "Removing…",
+  "Endgültig entfernen": "Remove permanently",
+  "Noch keine Projekte vorhanden": "No projects yet",
+  "Lege ein neues Projekt an, um Inhalte zu erstellen.": "Create a new project to start creating content.",
+  "Neues Projekt anlegen": "Create new project",
+  "Das Projekt konnte nicht entfernt werden. Bitte erneut versuchen.": "The project could not be removed. Please try again.",
+  "Eine Veröffentlichung läuft noch oder ihr Ergebnis ist unklar. Bitte zuerst die Veröffentlichungswarteschlange prüfen.": "A publication is still running or its outcome is uncertain. Please check the publishing queue first.",
   'Videotitel für YouTube und Kalender': 'Video title for YouTube and calendar',
   'Prüfe Titel, Beschreibung und Tags vor dem Upload. Beschreibung und Tags starten bei jeder neuen Datei leer. Du kannst die Skriptangaben ausdrücklich übernehmen. Das Video bleibt zunächst „Nicht gelistet“.': 'Review the title, description and tags before uploading. Description and tags start empty for each new file. You can explicitly copy them from the script. The video initially remains unlisted.',
   'Beschreibung für dieses Video (optional)': 'Description for this video (optional)',

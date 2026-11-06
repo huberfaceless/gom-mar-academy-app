@@ -56,12 +56,22 @@ service cloud.firestore {
       allow read, write: if isOwner(userId);
     }
 
+    function projectIsActive(id) {
+      let path = /databases/$(database)/documents/projects/$(id);
+      return !exists(path) || getAfter(path).data.get('deletedAt', '') == '';
+    }
+
+    function contentIsActive(id) {
+      let path = /databases/$(database)/documents/contentProjects/$(id);
+      return !exists(path) || getAfter(path).data.get('deletedAt', '') == '';
+    }
+
     // Brand / Project Settings
     match /projects/{projectId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
         && canUseContentProject(request.resource.data);
-      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid
+      allow update: if resource.data.get('deletedAt', '') == '' && isAuthenticated() && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid
         && canUseContentProject(resource.data) && canUseContentProject(request.resource.data);
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
@@ -71,10 +81,12 @@ service cloud.firestore {
     match /contentProjects/{contentProjectId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid
-        && canUseContentProject(request.resource.data);
-      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid
+        && canUseContentProject(request.resource.data)
+        && (request.resource.data.get('deletedAt', '') != '' || projectIsActive(request.resource.data.projectSettings.id));
+      allow update: if resource.data.get('deletedAt', '') == '' && isAuthenticated() && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid
-        && canUseContentProject(resource.data) && canUseContentProject(request.resource.data);
+        && canUseContentProject(resource.data) && canUseContentProject(request.resource.data)
+        && (request.resource.data.get('deletedAt', '') != '' || projectIsActive(request.resource.data.projectSettings.id));
       allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
@@ -92,6 +104,8 @@ service cloud.firestore {
     match /publishingJobs/{jobId} {
       allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
       allow create: if canSchedulePublishing()
+        && projectIsActive(request.resource.data.projectId)
+        && contentIsActive(request.resource.data.contentProjectId)
         && canUseContentProject(request.resource.data)
         && request.resource.data.userId == request.auth.uid
         && request.resource.data.id == jobId

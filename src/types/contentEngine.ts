@@ -29,6 +29,7 @@ export type PublishContentType = 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' 
 export type SchedulerJobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
 export interface ProjectSettings {
+  deletedAt?: string;
   id: string;
   userId?: string;
   name: string; // e.g. "Vital50"
@@ -189,6 +190,7 @@ export interface CalendarItem {
 }
 
 export interface CentralContentProject {
+  deletedAt?: string;
   id: string;
   userId?: string;
   projectId?: string; // references ProjectSettings.id

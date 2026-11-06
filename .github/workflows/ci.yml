@@ -70,6 +70,9 @@ jobs:
       - name: Inhaltssprache und englischen Content Hub prüfen
         run: bun run audit:content-hub-i18n
 
+      - name: Projektentfernung und Schutz vor Wiederauftauchen prüfen
+        run: bun run audit:project-removal
+
       - name: TypeScript pruefen
         run: bun run lint
 

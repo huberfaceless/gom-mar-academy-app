@@ -219,7 +219,7 @@ const bundled = await build({
       if (args.path.endsWith('firebase/config')) return { contents: 'export const db = {}; export const isFirestoreOperational = () => true; export const handleFirestoreError = () => {};', loader: 'js' };
       const names = args.path === 'firebase/firestore'
         ? ['collection', 'doc', 'setDoc', 'getDoc', 'getDocs', 'query', 'where', 'deleteDoc', 'updateDoc', 'runTransaction', 'deleteField']
-        : ['loadAllProjectSettings', 'saveAllProjectSettings', 'loadAllContentProjects', 'saveAllContentProjects', 'loadAllPublishingJobs', 'saveAllPublishingJobs', 'loadAllSchedulerJobs', 'saveAllSchedulerJobs', 'DEFAULT_VITAL50_PROJECT', 'createStarterProjects', 'migrateLegacyContentStorage'];
+        : ['loadAllProjectSettings', 'saveAllProjectSettings', 'loadAllContentProjects', 'saveAllContentProjects', 'loadAllPublishingJobs', 'saveAllPublishingJobs', 'loadAllSchedulerJobs', 'saveAllSchedulerJobs', 'DEFAULT_VITAL50_PROJECT', 'createStarterProjects', 'migrateLegacyContentStorage', 'removeContentProjectLocally'];
       return { contents: names.map(name => `export const ${name} = (...args) => globalThis.__publishingScheduleAudit.${name}(...args);`).join('\n'), loader: 'js' };
     });
   } }],
