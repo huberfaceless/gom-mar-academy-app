@@ -29,8 +29,10 @@ import {
   saveAllSchedulerJobs,
   createStarterProjects,
   migrateLegacyContentStorage,
+  removeContentProjectLocally,
 } from '../utils/contentStorage';
 
+import { planContentProjectRemoval } from '../utils/contentProjectRemoval';
 import { canUseContentProject } from '../utils/contentProjectAccess';
 
 const COLLECTION_PROJECTS = 'projects';
@@ -67,7 +69,11 @@ export class FirestoreContentService {
       const q = query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId));
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
       const saved = snapshot.docs.map((d) => ({ ...(d.data() as ProjectSettings), id: d.id }));
-      const visible = saved.filter(project => canUseContentProject(project, isAdmin));
+      const visible = saved.filter(project => !project.deletedAt && canUseContentProject(project, isAdmin));
+      if (saved.some(project => project.deletedAt) && visible.length === 0) {
+        saveAllProjectSettings(saved, userId);
+        return [];
+      }
       if (visible.length > 0) {
         saveAllProjectSettings(saved, userId);
         return visible;
@@ -128,7 +134,7 @@ export class FirestoreContentService {
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
       const list = snapshot.docs.map((d) => ({ ...(d.data() as CentralContentProject), id: d.id }));
       saveAllContentProjects(list, userId);
-      return list;
+      return loadAllContentProjects(userId);
     } catch (err) {
       handleFirestoreError(err);
       return loadAllContentProjects(userId);
@@ -144,7 +150,7 @@ export class FirestoreContentService {
     try {
       const docRef = doc(db, COLLECTION_CONTENT_PROJECTS, contentProjectId);
       const snap = await firestoreWithTimeout(getDoc(docRef), 1500);
-      if (snap.exists() && snap.data()?.userId === userId) {
+      if (snap.exists() && !snap.data()?.deletedAt && snap.data()?.userId === userId) {
         return { ...(snap.data() as CentralContentProject), id: snap.id };
       }
       return null;
@@ -183,17 +189,61 @@ export class FirestoreContentService {
     }
   }
 
-  static async deleteContentProject(userId: string | undefined, contentProjectId: string): Promise<void> {
-    if (userId && isFirestoreOperational()) {
-      try {
-        await firestoreWithTimeout(deleteDoc(doc(db, COLLECTION_CONTENT_PROJECTS, contentProjectId)), FIRESTORE_WRITE_TIMEOUT_MS);
-      } catch (err) {
-        rethrowFirestoreWriteError(err);
-      }
-    }
+  static async deleteProjectSettings(userId: string | undefined, projectId: string): Promise<void> {
+    await this.removeProject(userId, projectId);
+  }
 
-    const current = loadAllContentProjects(userId).filter((p) => p.id !== contentProjectId);
-    saveAllContentProjects(current, userId);
+  static async deleteContentProject(userId: string | undefined, contentProjectId: string): Promise<void> {
+    const content = await this.getContentProjectById(userId, contentProjectId);
+    if (!content) throw new Error('Das Inhaltsprojekt wurde nicht gefunden. Bitte die Seite neu laden.');
+    await this.removeProject(userId, content.projectSettings.id, contentProjectId);
+  }
+
+  private static async removeProject(userId: string | undefined, projectId: string, contentProjectId?: string): Promise<void> {
+    if (userId) {
+      if (!isFirestoreOperational()) throw new Error('Zum Entfernen bitte eine Verbindung zur Cloud herstellen.');
+      const snapshots = await Promise.all([COLLECTION_CONTENT_PROJECTS, COLLECTION_PUBLISHING_JOBS, COLLECTION_SCHEDULER_JOBS].map(name =>
+        firestoreWithTimeout(getDocs(query(collection(db, name), where('userId', '==', userId))), FIRESTORE_WRITE_TIMEOUT_MS)));
+      const projectRef = doc(db, COLLECTION_PROJECTS, projectId);
+      const initialPlan = planContentProjectRemoval(projectId, contentProjectId,
+        snapshots[0].docs.map(d => ({ ...d.data(), id: d.id } as CentralContentProject)),
+        snapshots[1].docs.map(d => ({ ...d.data(), id: d.id } as PublishingJob)),
+        snapshots[2].docs.map(d => ({ ...d.data(), id: d.id } as SchedulerJob)));
+      const selections = [initialPlan.contentIds, initialPlan.jobIds, initialPlan.schedulerIds];
+      const refs = snapshots.flatMap((snapshot, index) => snapshot.docs.filter(d => selections[index].has(d.id)).map(d => d.ref));
+      if (refs.length > 450) throw new Error('Zu viele gespeicherte Einträge für eine sichere gemeinsame Löschung. Bitte zuerst abgeschlossene Warteschlangen-Einträge entfernen.');
+      // Re-read inside the transaction: a publisher claiming a queued job causes a
+      // retry, where the new lock blocks removal before any document is changed.
+      const removed = await firestoreWithTimeout(runTransaction(db, async transaction => {
+        const [project, ...documents] = await Promise.all([projectRef, ...refs].map(ref => transaction.get(ref)));
+        if (!project.exists() || project.data().userId !== userId) throw new Error('Das Projekt wurde nicht gefunden oder gehört einem anderen Konto.');
+        const contents: CentralContentProject[] = [];
+        const jobs: PublishingJob[] = [];
+        const schedulers: SchedulerJob[] = [];
+        for (const d of documents) {
+          if (!d.exists()) continue;
+          if (d.data().userId !== userId) throw new Error('Ein Eintrag gehört einem anderen Konto.');
+          const data = { ...d.data(), id: d.id };
+          if (d.ref.parent.id === COLLECTION_CONTENT_PROJECTS) contents.push(data as CentralContentProject);
+          if (d.ref.parent.id === COLLECTION_PUBLISHING_JOBS) jobs.push(data as PublishingJob);
+          if (d.ref.parent.id === COLLECTION_SCHEDULER_JOBS) schedulers.push(data as SchedulerJob);
+        }
+        const plan = planContentProjectRemoval(projectId, contentProjectId, contents, jobs, schedulers);
+        const deletedAt = new Date().toISOString();
+        if (!contentProjectId) transaction.update(projectRef, { deletedAt });
+        for (const d of documents) {
+          if (!d.exists()) continue;
+          if (d.ref.parent.id === COLLECTION_CONTENT_PROJECTS && plan.contentIds.has(d.id)) transaction.update(d.ref, { deletedAt });
+          if (d.ref.parent.id === COLLECTION_PUBLISHING_JOBS && plan.jobIds.has(d.id)) transaction.delete(d.ref);
+          if (d.ref.parent.id === COLLECTION_SCHEDULER_JOBS && plan.schedulerIds.has(d.id)) transaction.delete(d.ref);
+        }
+        return plan;
+      }), FIRESTORE_WRITE_TIMEOUT_MS);
+      // Remove stale cached locks only after the authoritative transaction succeeds.
+      saveAllPublishingJobs(loadAllPublishingJobs(userId).filter(j => !removed.jobIds.has(j.id)), userId);
+      saveAllSchedulerJobs(loadAllSchedulerJobs(userId).filter(j => !removed.schedulerIds.has(j.id)), userId);
+    }
+    removeContentProjectLocally(projectId, contentProjectId, userId);
   }
 
   // ==========================================
@@ -443,6 +493,12 @@ export class FirestoreContentService {
     if (!isFirestoreOperational()) return;
 
     try {
+      const [settingsSnapshot, contentSnapshot] = await Promise.all([
+        getDocs(query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId))),
+        getDocs(query(collection(db, COLLECTION_CONTENT_PROJECTS), where('userId', '==', userId))),
+      ]);
+      saveAllProjectSettings([...loadAllProjectSettings(userId, isAdmin), ...settingsSnapshot.docs.filter(d => d.data().deletedAt).map(d => ({ ...d.data(), id: d.id } as ProjectSettings))], userId);
+      saveAllContentProjects([...loadAllContentProjects(userId), ...contentSnapshot.docs.filter(d => d.data().deletedAt).map(d => ({ ...d.data(), id: d.id } as CentralContentProject))], userId);
       const localSettings = loadAllProjectSettings(userId, isAdmin);
       for (const settings of localSettings) {
         if (settings.userId === userId) {

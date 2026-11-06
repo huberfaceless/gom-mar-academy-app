@@ -1,4 +1,5 @@
 import { ProjectSettings, CentralContentProject } from '../types/contentEngine';
+import { planContentProjectRemoval } from './contentProjectRemoval';
 import { canUseContentProject } from './contentProjectAccess';
 
 const STORAGE_KEY_PROJECT_SETTINGS = 'gommar_content_projects_settings_v1';
@@ -128,7 +129,8 @@ export function loadAllProjectSettings(userId?: string, isAdmin = false): Projec
       saveAllProjectSettings(initial, userId);
       return initial;
     }
-    const visible = parsed.filter(project => canUseContentProject(project, isAdmin));
+    const visible = parsed.filter(project => !project.deletedAt && canUseContentProject(project, isAdmin));
+    if (parsed.some(project => project.deletedAt) && visible.length === 0) return [];
     if (visible.length > 0) return visible;
     const initial = createStarterProjects(userId, isAdmin);
     // Keep legacy entries intact; only the returned selection is filtered.
@@ -142,7 +144,8 @@ export function loadAllProjectSettings(userId?: string, isAdmin = false): Projec
 
 export function saveAllProjectSettings(projects: ProjectSettings[], userId?: string): void {
   try {
-    safeSetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId), JSON.stringify(projects));
+    const deleted = readArray<ProjectSettings>(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId)).filter(p => p.deletedAt);
+    safeSetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId), JSON.stringify(mergeById(projects, deleted)));
   } catch (e) {
     console.error('Error saving project settings', e);
   }
@@ -153,7 +156,8 @@ export function loadAllContentProjects(userId?: string): CentralContentProject[]
     const raw = safeGetItem(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    const deletedProjects = new Set(readArray<ProjectSettings>(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId)).filter(p => p.deletedAt).map(p => p.id));
+    return Array.isArray(parsed) ? parsed.filter(p => !p.deletedAt && !deletedProjects.has(p.projectSettings?.id)) : [];
   } catch (e) {
     console.error('Error loading content projects', e);
     return [];
@@ -162,7 +166,8 @@ export function loadAllContentProjects(userId?: string): CentralContentProject[]
 
 export function saveAllContentProjects(projects: CentralContentProject[], userId?: string): void {
   try {
-    safeSetItem(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId), JSON.stringify(projects));
+    const deleted = readArray<CentralContentProject>(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId)).filter(p => p.deletedAt);
+    safeSetItem(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId), JSON.stringify(mergeById(projects, deleted)));
   } catch (e) {
     console.error('Error saving content projects', e);
   }
@@ -179,9 +184,23 @@ export function saveOrUpdateContentProject(project: CentralContentProject, userI
   saveAllContentProjects(current, userId);
 }
 
+export function removeContentProjectLocally(projectId: string, contentProjectId: string | undefined, userId?: string): void {
+  const contents = readArray<CentralContentProject>(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId));
+  const plan = planContentProjectRemoval(projectId, contentProjectId, contents, loadAllPublishingJobs(userId), loadAllSchedulerJobs(userId));
+  const deletedAt = new Date().toISOString();
+  safeSetItem(scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId), JSON.stringify(contents.map(p => plan.contentIds.has(p.id) ? { ...p, deletedAt } : p)));
+  if (!contentProjectId) {
+    const settings = readArray<ProjectSettings>(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId));
+    const tombstone = { id: projectId, deletedAt };
+    safeSetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId), JSON.stringify([...settings.filter(p => p.id !== projectId), tombstone]));
+  }
+  saveAllPublishingJobs(loadAllPublishingJobs(userId).filter(j => !plan.jobIds.has(j.id)), userId);
+  saveAllSchedulerJobs(loadAllSchedulerJobs(userId).filter(j => !plan.schedulerIds.has(j.id)), userId);
+}
+
 export function deleteContentProject(id: string, userId?: string): void {
-  const current = loadAllContentProjects(userId).filter((p) => p.id !== id);
-  saveAllContentProjects(current, userId);
+  const project = loadAllContentProjects(userId).find(p => p.id === id);
+  if (project) removeContentProjectLocally(project.projectSettings.id, id, userId);
 }
 
 export function loadAllPublishingJobs(userId?: string): import('../types/contentEngine').PublishingJob[] {

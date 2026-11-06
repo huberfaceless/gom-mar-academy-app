@@ -37,7 +37,6 @@ import {
   saveAllProjectSettings, 
   loadAllContentProjects, 
   saveOrUpdateContentProject, 
-  deleteContentProject as deleteLocalContentProject, 
   DEFAULT_VITAL50_PROJECT,
   createOnlineBusinessProject,
   createStarterProjects
@@ -148,6 +147,9 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const [isGeneratingBlog, setIsGeneratingBlog] = useState(false);
   const [isGeneratingPinterest, setIsGeneratingPinterest] = useState(false);
   const [isGeneratingYouTube, setIsGeneratingYouTube] = useState(false);
+  const [isDeletingProject, setIsDeletingProject] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(Boolean(userId));
+  const [removalRequest, setRemovalRequest] = useState<{ projectId: string; contentId?: string; name: string } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [saveNotice, setSaveNotice] = useState<string | null>(null);
   const [contentGenerationRequest, setContentGenerationRequest] = useState<ContentGenerationRequest | null>(null);
@@ -156,7 +158,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   useEffect(() => {
     let cancelled = false;
     async function loadData() {
-      if (!userId) return;
+      if (!userId) { setIsLoadingData(false); return; }
+      setIsLoadingData(true);
       const localProjects = loadAllProjectSettings(userId, isAdmin);
       const localContent = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
       setProjects(localProjects);
@@ -172,12 +175,12 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         ]);
 
         if (cancelled) return;
-        if (firestoreProjects && firestoreProjects.length > 0) {
+        if (firestoreProjects) {
           setProjects(firestoreProjects);
           if (firestoreProjects.some(p => p.id === pinterestReturn?.projectId)) {
             setSelectedProjectId(pinterestReturn!.projectId);
           } else if (!firestoreProjects.some((p) => p.id === selectedProjectId)) {
-            setSelectedProjectId(firestoreProjects[0].id);
+            setSelectedProjectId(firestoreProjects[0]?.id || '');
           }
         }
 
@@ -186,6 +189,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           || firestoreContent?.find(project => canUseContentProject(project.projectSettings, isAdmin)) || null);
       } catch (err) {
         console.warn('Could not load content from Firestore, keeping local fallback:', err);
+      } finally {
+        if (!cancelled) setIsLoadingData(false);
       }
     }
     loadData();
@@ -490,22 +495,50 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     else if (request.kind === 'new-blog') void generateAdditionalBlog(topic || '', request.settings, affiliateLink);
   };
 
-  const handleDeleteProject = async (id: string) => {
+  const isBusy = isLoadingData || isDeletingProject || isGeneratingAll || isGeneratingBrief || isGeneratingBlog || isGeneratingPinterest || isGeneratingYouTube;
+  const handleRemoveProject = async () => {
+    if (!removalRequest || isBusy) return;
+    const request = removalRequest;
+    setIsDeletingProject(true);
+    setErrorMsg(null);
+    setSaveNotice(null);
     try {
-      if (userId) {
-        await FirestoreContentService.deleteContentProject(userId, id);
-      } else {
-        deleteLocalContentProject(id, userId);
-      }
-      const remaining = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
-      setContentProjects(remaining);
-      if (activeContentProject?.id === id) {
-        setActiveContentProject(remaining.find((p) => p.projectSettings?.id === selectedProjectId) || null);
-      }
+      if (request.contentId) await FirestoreContentService.deleteContentProject(userId, request.contentId);
+      else await FirestoreContentService.deleteProjectSettings(userId, request.projectId);
+      const remainingSettings = loadAllProjectSettings(userId, isAdmin);
+      const remainingContents = loadAllContentProjects(userId).filter(p => canUseContentProject(p.projectSettings, isAdmin));
+      const nextId = remainingSettings.some(p => p.id === selectedProjectId) ? selectedProjectId : remainingSettings[0]?.id || '';
+      setProjects(remainingSettings);
+      setSelectedProjectId(nextId);
+      setContentProjects(remainingContents);
+      setActiveContentProject(remainingContents.find(p => p.projectSettings.id === nextId) || null);
+      setTopicInput('');
+      setCustomAngleInput('');
+      setContentGenerationRequest(null);
+      setRemovalRequest(null);
+      setSaveNotice(hubText('„{0}“ wurde entfernt.', request.name));
     } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : hubText("Das Projekt konnte nicht gelöscht werden."));
+      setErrorMsg(err instanceof Error ? hubText(err.message) : hubText('Das Projekt konnte nicht entfernt werden. Bitte erneut versuchen.'));
+    } finally {
+      setIsDeletingProject(false);
     }
   };
+  const openNewProject = () => {
+    const project = createOnlineBusinessProject(userId);
+    setProjectBeingEdited({ ...project, language, id: `${project.id}_${Date.now()}` });
+    setIsSettingsModalOpen(true);
+  };
+
+  if (visibleProjects.length === 0) return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4">
+      <h1 className="text-xl font-bold">{hubText('Noch keine Projekte vorhanden')}</h1>
+      <p>{hubText('Lege ein neues Projekt an, um Inhalte zu erstellen.')}</p>
+      {saveNotice && <p role="status" className="text-emerald-700">{saveNotice}</p>}
+      {errorMsg && <p role="alert" className="text-red-700">{errorMsg}</p>}
+      <button type="button" onClick={openNewProject} className="rounded-xl bg-emerald-600 px-4 py-2 font-bold text-white">{hubText('Neues Projekt anlegen')}</button>
+      <ProjectSettingsModal isOpen={isSettingsModalOpen} project={projectBeingEdited || activeProjectSettings} onClose={() => setIsSettingsModalOpen(false)} onSave={handleSaveProjectSettings} />
+    </section>
+  );
 
   return (
     <div className="w-full min-w-0 max-w-7xl mx-auto space-y-6 pb-20">
@@ -562,13 +595,14 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
             <Settings className="w-4 h-4" />
             <span>{hubText("Projekt bearbeiten")}</span>
           </button>
+          <button type="button" disabled={isBusy}
+            onClick={() => { setErrorMsg(null); setRemovalRequest({ projectId: activeProjectSettings.id, name: activeProjectSettings.name }); }}
+            className="inline-flex items-center gap-2 rounded-xl border border-red-200 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-50 disabled:opacity-50">
+            <Trash2 className="h-4 w-4" />{hubText('Projekt entfernen')}
+          </button>
           <button
             type="button"
-            onClick={() => {
-              const project = createOnlineBusinessProject(userId);
-              setProjectBeingEdited({ ...project, language, id: `${project.id}_${Date.now()}` });
-              setIsSettingsModalOpen(true);
-            }}
+            onClick={openNewProject}
             className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-600 rounded-xl shadow-xs transition-colors"
             title={hubText("Neues Inhaltsprojekt anlegen")}
           >
@@ -773,6 +807,12 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               </button>
             </div>
 
+            <button type="button" disabled={isBusy}
+              onClick={() => { setErrorMsg(null); setRemovalRequest({ projectId: activeProjectSettings.id, contentId: activeContentProject.id, name: activeContentProject.topic }); }}
+              className="inline-flex items-center gap-2 rounded-xl border border-red-200 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-50 disabled:opacity-50">
+              <Trash2 className="h-4 w-4" />{hubText('Inhaltsablauf entfernen')}
+            </button>
+
             {/* Switch Topic Project Dropdown */}
             {scopedProjects.length > 1 && (
               <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700">
@@ -913,6 +953,25 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           onConfirm={handleConfirmAffiliateLink}
           onClose={() => setContentGenerationRequest(null)}
         />
+      )}
+
+      {removalRequest && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <section role="dialog" aria-modal="true" aria-labelledby="remove-project-title" className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl space-y-4">
+            <h2 id="remove-project-title" className="text-xl font-bold text-slate-900">{hubText('„{0}“ wirklich entfernen?', removalRequest.name)}</h2>
+            <p className="text-sm text-slate-700">{removalRequest.contentId
+              ? hubText('Dieser Inhaltsablauf und seine Warteschlangen-Einträge werden entfernt. Das übergeordnete Projekt bleibt erhalten.')
+              : hubText('Das Projekt mit allen zugehörigen Inhaltsabläufen und Warteschlangen-Einträgen wird entfernt.')}</p>
+            <p className="text-sm text-slate-700">{hubText('Bereits veröffentlichte Videos, Pins und Artikel bleiben auf den Plattformen bestehen. Diese Aktion kann nicht rückgängig gemacht werden.')}</p>
+            {errorMsg && <p role="alert" className="text-sm text-red-700">{errorMsg}</p>}
+            <div className="flex flex-wrap justify-end gap-3">
+              <button autoFocus type="button" disabled={isDeletingProject} onClick={() => setRemovalRequest(null)} className="rounded-xl border border-slate-300 px-4 py-2 font-bold">{hubText('Abbrechen')}</button>
+              <button type="button" disabled={isBusy} onClick={() => void handleRemoveProject()} className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 font-bold text-white disabled:opacity-50">
+                {isDeletingProject && <Loader2 className="h-4 w-4 animate-spin" />}{isDeletingProject ? hubText('Wird entfernt…') : hubText('Endgültig entfernen')}
+              </button>
+            </div>
+          </section>
+        </div>
       )}
 
       {/* Project Settings Modal */}

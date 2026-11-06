@@ -1,6 +1,7 @@
+import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { initializeTestEnvironment, assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
-import { doc, setDoc, updateDoc, deleteDoc, deleteField, runTransaction } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, deleteDoc, deleteField, runTransaction } from 'firebase/firestore';
 
 if (!process.env.FIRESTORE_EMULATOR_HOST) throw new Error('Dieser Test darf nur im Firestore-Emulator laufen.');
 const env = await initializeTestEnvironment({ projectId: 'demo-gommar-rules', firestore: { rules: readFileSync('firestore.rules', 'utf8') } });
@@ -74,5 +75,37 @@ try {
   }
   await seed({ status: 'PUBLISHED', externalId: 'real' });
   await assertSucceeds(deleteDoc(doc(owner, 'publishingJobs/job')));
+  // The full removal is atomic and cannot resurrect via stale clients.
+  await env.clearFirestore();
+  const brand = { id: 'business', userId: 'owner', name: 'Eigenes Projekt' };
+  const content = { id: 'content', userId: 'owner', topic: 'Test', projectSettings: brand };
+  await assertSucceeds(setDoc(doc(owner, 'projects/business'), brand));
+  await assertSucceeds(setDoc(doc(owner, 'contentProjects/content'), content));
+  await seed({ status: 'PUBLISHING', lockedBy: 'worker' });
+  await assertFails(runTransaction(owner, async tx => {
+    tx.update(doc(owner, 'projects/business'), { deletedAt: 'now' });
+    tx.update(doc(owner, 'contentProjects/content'), { deletedAt: 'now' });
+    tx.delete(doc(owner, 'publishingJobs/job'));
+  }));
+  assert.equal((await getDoc(doc(owner, 'projects/business'))).data()?.deletedAt, undefined);
+  await seed();
+  await assertFails(updateDoc(doc(stranger, 'projects/business'), { deletedAt: 'now' }));
+  await assertSucceeds(runTransaction(owner, async tx => {
+    tx.update(doc(owner, 'projects/business'), { deletedAt: 'now' });
+    tx.update(doc(owner, 'contentProjects/content'), { deletedAt: 'now' });
+    tx.delete(doc(owner, 'publishingJobs/job'));
+    tx.delete(doc(owner, 'schedulerJobs/scheduler'));
+  }));
+  await assertFails(setDoc(doc(owner, 'projects/business'), brand));
+  await assertFails(setDoc(doc(owner, 'contentProjects/content'), content));
+  await assertFails(setDoc(doc(owner, 'publishingJobs/job'), base));
+  await assertFails(setDoc(doc(owner, 'contentProjects/new'), { ...content, id: 'new' }));
+  // A single content removal keeps the brand and blocks new jobs for that content.
+  await env.clearFirestore();
+  await setDoc(doc(owner, 'projects/business'), brand);
+  await setDoc(doc(owner, 'contentProjects/content'), content);
+  await updateDoc(doc(owner, 'contentProjects/content'), { deletedAt: 'now' });
+  await assertFails(setDoc(doc(owner, 'publishingJobs/job'), base));
+  await assertSucceeds(setDoc(doc(owner, 'contentProjects/new'), { ...content, id: 'new' }));
   console.log('Firestore-Emulatortest erfolgreich: Anlegen, Bearbeiten, Umplanen, Löschen, Eigentum, Tarife, Serverfelder und laufende/unklare Aufträge.');
 } finally { await env.cleanup(); }
