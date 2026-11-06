@@ -10,7 +10,7 @@ import {
   updateDoc,
   runTransaction
 } from 'firebase/firestore';
-import { db, isFirestoreOperational, handleFirestoreError } from '../firebase/config';
+import { db, isFirestoreOperational, setFirestoreOperational, handleFirestoreError } from '../firebase/config';
 import { 
   ProjectSettings, 
   CentralContentProject, 
@@ -51,7 +51,13 @@ async function firestoreWithTimeout<T>(promise: Promise<T>, timeoutMs: number = 
   const timeoutPromise = new Promise<never>((_, reject) => {
     timeoutHandle = setTimeout(() => reject(new Error('Firestore operation timed out')), timeoutMs);
   });
-  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutHandle));
+  return Promise.race([promise, timeoutPromise]).then(result => {
+    setFirestoreOperational(true);
+    return result;
+  }, error => {
+    handleFirestoreError(error);
+    throw error;
+  }).finally(() => clearTimeout(timeoutHandle));
 }
 
 export class FirestoreContentService {
@@ -494,20 +500,24 @@ export class FirestoreContentService {
 
     try {
       const [settingsSnapshot, contentSnapshot] = await Promise.all([
-        getDocs(query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId))),
-        getDocs(query(collection(db, COLLECTION_CONTENT_PROJECTS), where('userId', '==', userId))),
+        firestoreWithTimeout(getDocs(query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId))), FIRESTORE_WRITE_TIMEOUT_MS),
+        firestoreWithTimeout(getDocs(query(collection(db, COLLECTION_CONTENT_PROJECTS), where('userId', '==', userId))), FIRESTORE_WRITE_TIMEOUT_MS),
       ]);
       saveAllProjectSettings([...loadAllProjectSettings(userId, isAdmin), ...settingsSnapshot.docs.filter(d => d.data().deletedAt).map(d => ({ ...d.data(), id: d.id } as ProjectSettings))], userId);
       saveAllContentProjects([...loadAllContentProjects(userId), ...contentSnapshot.docs.filter(d => d.data().deletedAt).map(d => ({ ...d.data(), id: d.id } as CentralContentProject))], userId);
+      const remoteSettings = new Map(settingsSnapshot.docs.map(d => [d.id, d.data()]));
+      const remoteContents = new Map(contentSnapshot.docs.map(d => [d.id, d.data()]));
+      const shouldSync = (local: { updatedAt?: string; createdAt?: string }, remote: { updatedAt?: string; createdAt?: string } | undefined) =>
+        !remote || (Date.parse(local.updatedAt || local.createdAt || '') || 0) > (Date.parse(remote.updatedAt || remote.createdAt || '') || 0);
       const localSettings = loadAllProjectSettings(userId, isAdmin);
       for (const settings of localSettings) {
-        if (settings.userId === userId) {
+        if (settings.userId === userId && shouldSync(settings, remoteSettings.get(settings.id))) {
           await this.saveProjectSettings(userId, settings, isAdmin);
         }
       }
       const localProjects = loadAllContentProjects(userId);
       for (const p of localProjects) {
-        if (p.userId === userId && canUseContentProject(p.projectSettings, isAdmin)) {
+        if (p.userId === userId && canUseContentProject(p.projectSettings, isAdmin) && shouldSync(p, remoteContents.get(p.id))) {
           await this.saveContentProject(userId, p);
         }
       }

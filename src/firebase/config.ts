@@ -52,17 +52,13 @@ export const db: Firestore = firebaseConfig.databaseId && firebaseConfig.databas
   ? getFirestore(app, firebaseConfig.databaseId)
   : getFirestore(app);
 
-// Circuit breaker for Firestore availability (e.g. when database is propagating or uninitialized in GCP)
-let firestoreApiAvailable = false;
-let isFirstCheckDone = false;
+// A configured client may attempt its first request. Only transport failures throttle retries.
+let firestoreApiAvailable = true;
 let lastAvailabilityCheck = 0;
-const CHECK_COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes cooldown before re-probing
+const CHECK_COOLDOWN_MS = 15 * 1000; // Retry transient transport failures after 15 seconds
 
 export function isFirestoreOperational(): boolean {
   if (!isFirebaseConfigured) return false;
-  if (!isFirstCheckDone) {
-    return false; // Safely wait until confirmed or explicitly enabled
-  }
   if (!firestoreApiAvailable) {
     if (Date.now() - lastAvailabilityCheck > CHECK_COOLDOWN_MS) {
       // Cooldown expired, allow one probe
@@ -76,24 +72,19 @@ export function isFirestoreOperational(): boolean {
 
 export function setFirestoreOperational(available: boolean): void {
   firestoreApiAvailable = available;
-  isFirstCheckDone = true;
   lastAvailabilityCheck = Date.now();
 }
 
 export function handleFirestoreError(err: unknown): void {
   const errMsg = err instanceof Error ? err.message : String(err);
   if (
-    errMsg.includes('PERMISSION_DENIED') ||
     errMsg.includes('has not been used in project') ||
     errMsg.includes('disabled') ||
-    errMsg.includes('permission-denied') ||
-    errMsg.includes('NOT_FOUND') ||
-    errMsg.includes('not-found') ||
     errMsg.includes('unavailable') ||
-    errMsg.includes('offline')
+    errMsg.includes('offline') ||
+    errMsg.includes('timed out')
   ) {
     firestoreApiAvailable = false;
-    isFirstCheckDone = true;
     lastAvailabilityCheck = Date.now();
   }
 }

@@ -6,6 +6,33 @@ import * as storage from '../src/utils/contentStorage';
 import { planContentProjectRemoval } from '../src/utils/contentProjectRemoval';
 import type { CentralContentProject, PublishingJob, SchedulerJob } from '../src/types/contentEngine';
 
+// Exercise the actual initial circuit state: the old code stayed false forever
+// because no production caller ever invoked setFirestoreOperational(true).
+const configSource = readFileSync('src/firebase/config.ts', 'utf8');
+const circuitSource = configSource.slice(configSource.indexOf('let firestoreApiAvailable'));
+let now = 1000;
+const circuit = vm.createContext({ isFirebaseConfigured: true, Date: { now: () => now }, Error });
+vm.runInContext(ts.transpileModule(circuitSource.replaceAll('export ', ''), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, circuit);
+assert.equal(circuit.isFirestoreOperational(), true, 'First authenticated cloud operation must be allowed.');
+circuit.handleFirestoreError(new Error('permission-denied: one document is forbidden'));
+assert.equal(circuit.isFirestoreOperational(), true, 'A document permission error must not disable all cloud operations.');
+circuit.handleFirestoreError(new Error('unavailable'));
+assert.equal(circuit.isFirestoreOperational(), false);
+now += 16000;
+assert.equal(circuit.isFirestoreOperational(), true, 'Transient failures must permit a new probe.');
+circuit.setFirestoreOperational(true);
+assert.equal(circuit.isFirestoreOperational(), true);
+circuit.isFirebaseConfigured = false;
+assert.equal(circuit.isFirestoreOperational(), false);
+circuit.isFirebaseConfigured = true;
+const helperSource = readFileSync('src/services/firestoreContentService.ts', 'utf8');
+vm.runInContext(ts.transpileModule(helperSource.slice(helperSource.indexOf('async function firestoreWithTimeout'), helperSource.indexOf('export class FirestoreContentService')), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, Object.assign(circuit, { setTimeout, clearTimeout }));
+circuit.setFirestoreOperational(false);
+assert.equal(await circuit.firestoreWithTimeout(Promise.resolve('confirmed')), 'confirmed');
+assert.equal(circuit.isFirestoreOperational(), true, 'A confirmed operation must reopen the circuit.');
+await assert.rejects(circuit.firestoreWithTimeout(Promise.reject(new Error('unavailable'))));
+assert.equal(circuit.isFirestoreOperational(), false);
+
 const user = 'removal-audit';
 const brand = { ...storage.createOnlineBusinessProject(user), id: 'remove-brand' };
 const other = { ...brand, id: 'keep-brand', name: 'Behalten' };
@@ -83,3 +110,27 @@ for (const scenario of ['success', 'claimed-after-query', 'foreign-owner', 'comm
   }
 }
 console.log('Projektentfernung geprüft: Einzelinhalt, ganzes/letztes Projekt, Cache-Wiederkehr, Kontotrennung, atomare Cloud-Bestätigung und laufende Aufträge.');
+
+// Reopening cloud access must not upload an older browser copy over newer data.
+const syncMethod = source.slice(source.indexOf('  static async syncLocalDataToFirestore'), source.lastIndexOf('\n}'));
+const localSettings = ['newer-local', 'older-local', 'same', 'local-only'].map(id => ({ ...brand, id, userId: 'sync', updatedAt: '2026-11-06T10:00:00Z' }));
+const remote = [
+  { ...localSettings[0], updatedAt: '2026-11-05T10:00:00Z' },
+  { ...localSettings[1], updatedAt: '2026-11-07T10:00:00Z' },
+  localSettings[2],
+];
+const syncWrites: string[] = [];
+const syncContext = vm.createContext({
+  db: {}, COLLECTION_PROJECTS: 'projects', COLLECTION_CONTENT_PROJECTS: 'contentProjects', FIRESTORE_WRITE_TIMEOUT_MS: 8000,
+  migrateLegacyContentStorage() {}, isFirestoreOperational: () => true, canUseContentProject: () => true,
+  firestoreWithTimeout: (p: Promise<unknown>) => p,
+  query: (name: string) => name, collection: (_db: unknown, name: string) => name, where() {},
+  getDocs: async (name: string) => ({ docs: (name === 'projects' ? remote : []).map(p => ({ id: p.id, data: () => p })) }),
+  loadAllProjectSettings: () => localSettings, saveAllProjectSettings() {}, loadAllContentProjects: () => [], saveAllContentProjects() {},
+  handleFirestoreError(error: unknown) { throw error; },
+});
+vm.runInContext(ts.transpileModule(`class SyncService { ${syncMethod} } globalThis.service = SyncService;`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, syncContext);
+syncContext.service.saveProjectSettings = async (_uid: string, p: { id: string }) => { syncWrites.push(p.id); };
+await syncContext.service.syncLocalDataToFirestore('sync');
+assert.deepEqual(syncWrites, ['newer-local', 'local-only']);
+console.log('Cloud-Start und Wiederverbindung geprüft: erste Anfrage, Berechtigungsfehler, Transportfehler, Wiederholung und Schutz neuerer Cloud-Daten.');
