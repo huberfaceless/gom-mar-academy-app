@@ -216,7 +216,7 @@ const bundled = await build({
   plugins: [{ name: 'isolated-firestore', setup(builder) {
     builder.onResolve({ filter: /^firebase\/firestore$|firebase\/config$|utils\/contentStorage$/ }, args => ({ path: args.path, namespace: 'audit-mock' }));
     builder.onLoad({ filter: /.*/, namespace: 'audit-mock' }, args => {
-      if (args.path.endsWith('firebase/config')) return { contents: 'export const db = {}; export const isFirestoreOperational = () => true; export const handleFirestoreError = () => {};', loader: 'js' };
+      if (args.path.endsWith('firebase/config')) return { contents: 'export const db = {}; export const isFirestoreOperational = () => true; export const setFirestoreOperational = () => {}; export const handleFirestoreError = () => {};', loader: 'js' };
       const names = args.path === 'firebase/firestore'
         ? ['collection', 'doc', 'setDoc', 'getDoc', 'getDocs', 'query', 'where', 'deleteDoc', 'updateDoc', 'runTransaction', 'deleteField']
         : ['loadAllProjectSettings', 'saveAllProjectSettings', 'loadAllContentProjects', 'saveAllContentProjects', 'loadAllPublishingJobs', 'saveAllPublishingJobs', 'loadAllSchedulerJobs', 'saveAllSchedulerJobs', 'DEFAULT_VITAL50_PROJECT', 'createStarterProjects', 'migrateLegacyContentStorage', 'removeContentProjectLocally'];
@@ -341,7 +341,7 @@ const queueBundle = await build({
       './firestoreContentService': 'export const FirestoreContentService = globalThis.__pinterestQueueAudit;',
       './pinterestService': 'export const pinterestService = {};',
       'firebase/firestore': 'export const doc = () => {}; export const runTransaction = () => {};',
-      '../firebase/config': 'export const db = {}; export const isFirestoreOperational = () => true; export const handleFirestoreError = () => {};',
+      '../firebase/config': 'export const db = {}; export const isFirestoreOperational = () => true; export const setFirestoreOperational = () => {}; export const handleFirestoreError = () => {};',
       '../utils/contentStorage': 'export const loadAllPublishingJobs = () => []; export const saveAllPublishingJobs = () => {};',
     };
     builder.onResolve({ filter: /.*/ }, args => args.path in mocks ? { path: args.path, namespace: 'queue-audit' } : undefined);
