@@ -115,6 +115,51 @@ export function migrateLegacyContentStorage(userId: string): void {
   safeSetItem(migrationMarker, 'done');
 }
 
+/** Read reconciliation is additive. Only explicit deletedAt markers hide records. */
+export function reconcileContentProjectCache(
+  cloudSettings: ProjectSettings[] | null,
+  cloudContents: CentralContentProject[] | null,
+  userId?: string,
+): void {
+  const settingsKey = scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId);
+  const contentsKey = scopedKey(STORAGE_KEY_CONTENT_PROJECTS, userId);
+  const localSettings = readArray<ProjectSettings>(settingsKey);
+  const localContents = readArray<CentralContentProject>(contentsKey);
+  const recoveryKey = scopedKey('gommar_content_project_metadata_recovery_v1', userId);
+  // Keep a small metadata snapshot before reconciliation, excluding article bodies,
+  // images, OAuth data and publishing jobs. Never overwrite the first snapshot.
+  if (!safeGetItem(recoveryKey) && (localSettings.length || localContents.length)) {
+    safeSetItem(recoveryKey, JSON.stringify({ savedAt: new Date().toISOString(), settings: localSettings,
+      referencedSettings: localContents.map(p => p.projectSettings).filter(Boolean) }));
+  }
+  const merge = <T extends { id: string; deletedAt?: string; createdAt?: string; updatedAt?: string }>(local: T[], cloud: T[] | null): T[] => {
+    const merged = new Map(local.map(p => [p.id, p]));
+    for (const remote of cloud || []) {
+      const cached = merged.get(remote.id);
+      if (cached?.deletedAt) continue;
+      if (remote.deletedAt || !cached ||
+        (Date.parse(remote.updatedAt || remote.createdAt || '') || 0) >= (Date.parse(cached.updatedAt || cached.createdAt || '') || 0)) {
+        merged.set(remote.id, remote);
+      }
+    }
+    return [...merged.values()];
+  };
+  const contents = merge(localContents, cloudContents);
+  const settings = new Map(merge(localSettings, cloudSettings).map(p => [p.id, p]));
+  // Owned content retains a copy of its brand settings. Recover a missing parent
+  // from that evidence, but never recreate a deliberately removed parent.
+  for (const content of contents) {
+    const parent = content.projectSettings;
+    if (!content.deletedAt && parent?.id && !parent.deletedAt && !settings.has(parent.id)
+      && (!content.userId || content.userId === userId) && (!parent.userId || parent.userId === userId)) {
+      settings.set(parent.id, parent);
+    }
+  }
+  const ownedSettings = [...settings.values()].map(p => userId && !p.userId ? { ...p, userId } : p);
+  safeSetItem(settingsKey, JSON.stringify(ownedSettings));
+  safeSetItem(contentsKey, JSON.stringify(contents));
+}
+
 export function loadAllProjectSettings(userId?: string, isAdmin = false): ProjectSettings[] {
   try {
     const raw = safeGetItem(scopedKey(STORAGE_KEY_PROJECT_SETTINGS, userId));

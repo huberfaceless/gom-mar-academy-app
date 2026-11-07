@@ -122,7 +122,7 @@ const remote = [
 const syncWrites: string[] = [];
 const syncContext = vm.createContext({
   db: {}, COLLECTION_PROJECTS: 'projects', COLLECTION_CONTENT_PROJECTS: 'contentProjects', FIRESTORE_WRITE_TIMEOUT_MS: 8000,
-  migrateLegacyContentStorage() {}, isFirestoreOperational: () => true, canUseContentProject: () => true,
+  reconcileContentProjectCache() {}, migrateLegacyContentStorage() {}, isFirestoreOperational: () => true, canUseContentProject: () => true,
   firestoreWithTimeout: (p: Promise<unknown>) => p,
   query: (name: string) => name, collection: (_db: unknown, name: string) => name, where() {},
   getDocs: async (name: string) => ({ docs: (name === 'projects' ? remote : []).map(p => ({ id: p.id, data: () => p })) }),
@@ -134,3 +134,37 @@ syncContext.service.saveProjectSettings = async (_uid: string, p: { id: string }
 await syncContext.service.syncLocalDataToFirestore('sync');
 assert.deepEqual(syncWrites, ['newer-local', 'local-only']);
 console.log('Cloud-Start und Wiederverbindung geprüft: erste Anfrage, Berechtigungsfehler, Transportfehler, Wiederholung und Schutz neuerer Cloud-Daten.');
+
+// Reproduce the reported regression using the actual cloud-read methods: Vital50
+// must not vanish merely because it has not yet reached the cloud query.
+const cacheUser = 'preserve-cloud-read';
+const cacheBusiness = { ...storage.createOnlineBusinessProject(cacheUser, true), id: 'business', updatedAt: '2026-11-05T10:00:00Z' };
+const cacheVital = { ...storage.DEFAULT_VITAL50_PROJECT, id: 'legacy-vital50', updatedAt: '2026-11-05T10:00:00Z' };
+const cacheContents = [content('health-article', cacheVital)];
+storage.saveAllProjectSettings([cacheBusiness, cacheVital], cacheUser);
+storage.saveAllContentProjects(cacheContents, cacheUser);
+const settingsRead = source.slice(source.indexOf('  static async getProjectSettings'), source.indexOf('  static async saveProjectSettings'));
+const contentsRead = source.slice(source.indexOf('  static async getContentProjects'), source.indexOf('  static async getContentProjectById'));
+const readContext = vm.createContext({ ...storage, db: {}, isFirestoreOperational: () => true, canUseContentProject: () => true,
+  COLLECTION_PROJECTS: 'projects', COLLECTION_CONTENT_PROJECTS: 'contentProjects',
+  firestoreWithTimeout: (p: Promise<unknown>) => p, query: (name: string) => name, collection: (_db: unknown, name: string) => name, where() {},
+  getDocs: async (name: string) => ({ docs: (name === 'projects' ? [cacheBusiness] : []).map(p => ({ id: p.id, data: () => p })) }),
+  handleFirestoreError(error: unknown) { throw error; },
+});
+vm.runInContext(ts.transpileModule(`class ReadService { ${settingsRead} ${contentsRead} } globalThis.service = ReadService;`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, readContext);
+assert.deepEqual((await readContext.service.getProjectSettings(cacheUser, true)).map((p: any) => p.id), ['business', 'legacy-vital50']);
+assert.deepEqual((await readContext.service.getContentProjects(cacheUser)).map((p: any) => p.id), ['health-article']);
+assert.equal(storage.loadAllProjectSettings(cacheUser, true).find(p => p.id === 'legacy-vital50')?.userId, cacheUser);
+// A previously missing parent can be reconstructed from the owned article copy.
+const embeddedUser = 'recover-parent-metadata';
+storage.saveAllProjectSettings([cacheBusiness], embeddedUser);
+storage.saveAllContentProjects([{ ...cacheContents[0], userId: embeddedUser }], embeddedUser);
+storage.reconcileContentProjectCache([], [], embeddedUser);
+assert.equal(storage.loadAllProjectSettings(embeddedUser, true).some(p => p.id === cacheVital.id), true);
+// A cloud tombstone remains authoritative; metadata copies never undo a deletion.
+storage.reconcileContentProjectCache([{ ...cacheVital, userId: cacheUser, deletedAt: 'removed' }], [], cacheUser);
+assert.equal(storage.loadAllProjectSettings(cacheUser, true).some(p => p.id === cacheVital.id), false);
+assert.equal(storage.loadAllContentProjects(cacheUser).length, 0);
+// Unrelated accounts and deleted workflows remain isolated.
+assert.equal(storage.loadAllProjectSettings(embeddedUser, true).some(p => p.id === cacheVital.id), true);
+console.log('Cloud-Leseabgleich geprüft: Vital50 und lokale Artikel bleiben erhalten, fehlende Eltern-Metadaten werden rekonstruiert, bewusste Löschungen bleiben wirksam.');
