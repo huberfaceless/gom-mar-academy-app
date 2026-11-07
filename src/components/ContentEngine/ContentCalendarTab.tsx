@@ -157,19 +157,37 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const [loadingPinterestBoards, setLoadingPinterestBoards] = useState(false);
   const [savingBoardId, setSavingBoardId] = useState<string | null>(null);
 
-  const loadPinterestBoards = async () => {
+  const pinterestBoardsRequest = useRef(0);
+  const hasPinterestPins = Boolean(project.pinterestPins?.length);
+
+  const loadPinterestBoards = useCallback(async () => {
+    const request = ++pinterestBoardsRequest.current;
     setLoadingPinterestBoards(true);
-    const result = await pinterestService.getBoards();
-    setLoadingPinterestBoards(false);
-    if (!result.success) {
-      setActionNotice({ text: result.error || hubText("Pinterest-Pinnwände konnten nicht geladen werden. Bitte verbinde Pinterest im Bereich Pinterest-Pins."), type: 'warning' });
-      return;
+    try {
+      const result = await pinterestService.getBoards();
+      if (request !== pinterestBoardsRequest.current) return;
+      if (!result.success) {
+        setActionNotice({ text: result.error || hubText("Pinterest-Pinnwände konnten nicht geladen werden. Bitte verbinde Pinterest im Bereich Pinterest-Pins."), type: 'warning' });
+        return;
+      }
+      setPinterestBoards(result.boards);
+      if (!result.boards.length) {
+        setActionNotice({ text: hubText("Keine Pinterest-Pinnwand gefunden. Erstelle zuerst eine Pinnwand auf Pinterest und lade die Liste erneut."), type: 'info' });
+      }
+    } catch (error) {
+      if (request === pinterestBoardsRequest.current) {
+        setActionNotice({ text: error instanceof Error ? error.message : hubText("Pinterest-Pinnwände konnten nicht geladen werden. Bitte verbinde Pinterest im Bereich Pinterest-Pins."), type: 'warning' });
+      }
+    } finally {
+      if (request === pinterestBoardsRequest.current) setLoadingPinterestBoards(false);
     }
-    setPinterestBoards(result.boards);
-    if (!result.boards.length) {
-      setActionNotice({ text: hubText("Keine Pinterest-Pinnwand gefunden. Erstelle zuerst eine Pinnwand auf Pinterest und lade die Liste erneut."), type: 'info' });
-    }
-  };
+  }, [hubText, userId]);
+
+  useEffect(() => {
+    setPinterestBoards([]);
+    if (user?.uid && hasPinterestPins) void loadPinterestBoards();
+    return () => { pinterestBoardsRequest.current += 1; };
+  }, [user?.uid, hasPinterestPins, loadPinterestBoards]);
 
   const handlePinterestBoardChange = async (itemId: string, boardId: string) => {
     const board = pinterestBoards.find(candidate => candidate.id === boardId);
@@ -906,6 +924,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
               </div>
 
               {item.platform === 'PINTEREST' && (
+                <div className="flex flex-col gap-2">
                 <label className="flex flex-col gap-1 text-xs font-semibold text-slate-700">{hubText("Ziel-Pinnwand auf Pinterest")}<select
                     value={item.payloadData.boardId || ''}
                     disabled={loadingPinterestBoards || Boolean(savingBoardId) || Boolean(matchingJob && (matchingJob.status === 'PUBLISHING' || matchingJob.status === 'PUBLISHED' || matchingJob.publicationUncertain))}
@@ -920,6 +939,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                   </select>
                   {savingBoardId === item.id && <span role="status">{hubText("Pinnwand wird gespeichert …")}</span>}
                 </label>
+                <button type="button" onClick={() => void loadPinterestBoards()}
+                  disabled={loadingPinterestBoards || Boolean(savingBoardId)}
+                  className="self-start rounded-xl border border-rose-300 bg-white px-3 py-2 text-xs font-bold text-rose-700 disabled:opacity-50">
+                  {loadingPinterestBoards ? hubText("Pinnwände werden geladen …") : hubText("Pinterest-Pinnwände laden")}
+                </button>
+                </div>
               )}
 
               {/* Status & Date Controls */}

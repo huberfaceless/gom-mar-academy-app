@@ -1,3 +1,5 @@
+import vm from 'node:vm';
+import ts from 'typescript';
 import { matchesPublishingTarget, matchesCurrentYouTubeUpload } from '../src/utils/publishingTarget';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -387,3 +389,51 @@ assert.match(calendar, /handlePinterestBoardChange/);
 assert.match(calendar, /await FirestoreContentService.updatePinterestJobBoard/);
 assert.match(calendar, /pinterestBoardId: board.id/);
 console.log('Pinterest-Pinnwand geprüft: Auswahl, Queue-Payload, atomare Korrektur und Schutz laufender Aufträge erfolgreich.');
+
+// Run the calendar's actual board loader and mount effect with isolated hooks.
+const boardEffects: Array<() => (() => void)> = [];
+const boardRequest = { current: 0 };
+let boardCalls = 0;
+let boardList: unknown[] = [];
+let boardLoading = false;
+let boardNotice: any;
+let boardResponse: any = { success: true, boards: [{ id: 'board-42', name: 'Abnehmen ab 50' }] };
+let pendingBoardResponse: ((value: any) => void) | undefined;
+const boardContext = vm.createContext({
+  user: { uid: 'owner' }, userId: 'owner', project: { pinterestPins: [{}] },
+  hubText: (text: string) => text,
+  useRef: () => boardRequest, useCallback: (fn: unknown) => fn,
+  useEffect: (fn: () => (() => void)) => { boardEffects.push(fn); },
+  setPinterestBoards: (boards: unknown[]) => { boardList = boards; },
+  setLoadingPinterestBoards: (value: boolean) => { boardLoading = value; },
+  setActionNotice: (notice: unknown) => { boardNotice = notice; },
+  pinterestService: { async getBoards() { boardCalls++; return boardResponse; } },
+});
+const boardLoaderSource = calendar.slice(calendar.indexOf('  const pinterestBoardsRequest'), calendar.indexOf('  const handlePinterestBoardChange'));
+vm.runInContext(ts.transpileModule(boardLoaderSource + '\nglobalThis.reloadBoards = loadPinterestBoards;', {
+  compilerOptions: { target: ts.ScriptTarget.ES2022 },
+}).outputText, boardContext);
+const cleanupBoardLoad = boardEffects[0]();
+await new Promise(setImmediate);
+assert.equal(boardCalls, 1, 'Opening a signed-in calendar must automatically fetch boards.');
+assert.equal((boardList[0] as any).id, 'board-42');
+assert.equal(boardLoading, false);
+boardResponse = { success: false, boards: [], error: 'Verbindung erneuern' };
+await boardContext.reloadBoards();
+assert.equal(boardNotice.text, 'Verbindung erneuern');
+assert.equal(boardLoading, false);
+boardResponse = { success: true, boards: [] };
+await boardContext.reloadBoards();
+assert.match(boardNotice.text, /Keine Pinterest-Pinnwand/);
+boardResponse = new Promise(resolve => { pendingBoardResponse = resolve; });
+const staleLoad = boardContext.reloadBoards();
+cleanupBoardLoad();
+boardList = [];
+pendingBoardResponse!({ success: true, boards: [{ id: 'old-account-board' }] });
+await staleLoad;
+assert.equal(boardList.length, 0, 'An obsolete response must not populate boards after leaving the calendar or changing accounts.');
+boardContext.user = null;
+boardEffects[0]();
+assert.equal(boardCalls, 4, 'A signed-out calendar must not request boards.');
+assert.match(calendar.slice(calendar.indexOf("{item.platform === 'PINTEREST' && (")), /onClick=\{\(\) => void loadPinterestBoards\(\)\}/);
+console.log('Kalender-Pinnwände geprüft: automatisches Laden, Fehler, leere Liste, Wiederholung, veraltete Antworten und Laden direkt beim Pin.');
