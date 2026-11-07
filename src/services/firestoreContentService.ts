@@ -30,6 +30,7 @@ import {
   createStarterProjects,
   migrateLegacyContentStorage,
   removeContentProjectLocally,
+  reconcileContentProjectCache,
 } from '../utils/contentStorage';
 
 import { planContentProjectRemoval } from '../utils/contentProjectRemoval';
@@ -75,15 +76,11 @@ export class FirestoreContentService {
       const q = query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId));
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
       const saved = snapshot.docs.map((d) => ({ ...(d.data() as ProjectSettings), id: d.id }));
-      const visible = saved.filter(project => !project.deletedAt && canUseContentProject(project, isAdmin));
-      if (saved.some(project => project.deletedAt) && visible.length === 0) {
-        saveAllProjectSettings(saved, userId);
-        return [];
-      }
-      if (visible.length > 0) {
-        saveAllProjectSettings(saved, userId);
-        return visible;
-      }
+      reconcileContentProjectCache(saved, null, userId);
+      // Absence from a cloud query is not a deletion. Keep unsynced legacy
+      // projects and recover parent metadata from the user's stored content.
+      const visible = loadAllProjectSettings(userId, isAdmin);
+      if (visible.length > 0 || saved.some(project => project.deletedAt)) return visible;
       const initial = createStarterProjects(userId, isAdmin);
       for (const project of initial) {
         await setDoc(doc(db, COLLECTION_PROJECTS, project.id), project);
@@ -139,7 +136,7 @@ export class FirestoreContentService {
       const q = query(collection(db, COLLECTION_CONTENT_PROJECTS), where('userId', '==', userId));
       const snapshot = await firestoreWithTimeout(getDocs(q), 1500);
       const list = snapshot.docs.map((d) => ({ ...(d.data() as CentralContentProject), id: d.id }));
-      saveAllContentProjects(list, userId);
+      reconcileContentProjectCache(null, list, userId);
       return loadAllContentProjects(userId);
     } catch (err) {
       handleFirestoreError(err);
@@ -503,8 +500,10 @@ export class FirestoreContentService {
         firestoreWithTimeout(getDocs(query(collection(db, COLLECTION_PROJECTS), where('userId', '==', userId))), FIRESTORE_WRITE_TIMEOUT_MS),
         firestoreWithTimeout(getDocs(query(collection(db, COLLECTION_CONTENT_PROJECTS), where('userId', '==', userId))), FIRESTORE_WRITE_TIMEOUT_MS),
       ]);
-      saveAllProjectSettings([...loadAllProjectSettings(userId, isAdmin), ...settingsSnapshot.docs.filter(d => d.data().deletedAt).map(d => ({ ...d.data(), id: d.id } as ProjectSettings))], userId);
-      saveAllContentProjects([...loadAllContentProjects(userId), ...contentSnapshot.docs.filter(d => d.data().deletedAt).map(d => ({ ...d.data(), id: d.id } as CentralContentProject))], userId);
+      reconcileContentProjectCache(
+        settingsSnapshot.docs.map(d => ({ ...d.data(), id: d.id } as ProjectSettings)),
+        contentSnapshot.docs.map(d => ({ ...d.data(), id: d.id } as CentralContentProject)), userId,
+      );
       const remoteSettings = new Map(settingsSnapshot.docs.map(d => [d.id, d.data()]));
       const remoteContents = new Map(contentSnapshot.docs.map(d => [d.id, d.data()]));
       const shouldSync = (local: { updatedAt?: string; createdAt?: string }, remote: { updatedAt?: string; createdAt?: string } | undefined) =>
