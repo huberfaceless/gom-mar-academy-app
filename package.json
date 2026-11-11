@@ -42,7 +42,8 @@
     "audit:pinterest-target": "node --import tsx scripts/auditPinterestTargetUrl.ts",
     "audit:content-hub-i18n": "node --import tsx scripts/auditContentHubLocalization.ts",
     "audit:content-topic": "node --import tsx scripts/auditContentTopicContinuity.ts",
-    "audit:sidebar": "node --import tsx scripts/auditSidebarLayout.ts"
+    "audit:sidebar": "node --import tsx scripts/auditSidebarLayout.ts",
+    "audit:wordpress": "node --import tsx scripts/auditWordPressDrafts.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

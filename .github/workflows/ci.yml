@@ -91,6 +91,9 @@ jobs:
       - name: Admin- und CRM-Oberflaechen auf Deutsch und Englisch pruefen
         run: bun run audit:admin-i18n
 
+      - name: WordPress-Entwurfsübertragung prüfen
+        run: bun run audit:wordpress
+
       - name: CRM-Kontaktspeicherung pruefen
         run: bun run audit:crm-persistence
 

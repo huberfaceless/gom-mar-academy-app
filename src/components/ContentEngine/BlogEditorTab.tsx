@@ -1,3 +1,4 @@
+import { WordPressDraftPanel } from './WordPressDraftPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useRef, useState } from 'react';
 import { 
@@ -16,6 +17,7 @@ import { BlogArticle } from '../../types/contentEngine';
 import { BlogArticleContent } from './BlogArticleContent';
 
 interface BlogEditorTabProps {
+  wordpress?: { contentId: string; onSave: () => Promise<boolean> };
   article: BlogArticle;
   onChange: (updated: BlogArticle) => void;
   onGeneratePinterest: () => void;
@@ -24,6 +26,7 @@ interface BlogEditorTabProps {
 
 export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   article,
+  wordpress,
   onChange,
   onGeneratePinterest,
   isGeneratingPinterest,
@@ -128,6 +131,8 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
           </button>
         </div>
       </div>
+
+      {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} onSave={wordpress.onSave} />}
 
       {/* Editor / Preview Area */}
       {viewMode === 'edit' ? (

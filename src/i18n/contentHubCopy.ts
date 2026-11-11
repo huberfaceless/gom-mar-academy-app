@@ -3,6 +3,22 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "WordPress-Entwurf": "WordPress draft",
+  "WordPress-Anfrage fehlgeschlagen.": "WordPress request failed.",
+  "Bitte den Artikel zuerst erfolgreich in der Cloud speichern.": "Please save the article to the cloud successfully first.",
+  "Der Artikel wurde als WordPress-Entwurf gespeichert. Bitte in WordPress prüfen und dort veröffentlichen.": "The article was saved as a WordPress draft. Review and publish it in WordPress.",
+  "Übertrage diesen Artikel direkt nach Vital50. Die Veröffentlichung erfolgt anschließend in WordPress.": "Transfer this article directly to Vital50. Publish it afterwards in WordPress.",
+  "Verbindung wird geprüft…": "Checking connection…",
+  "Die WordPress-Verbindung muss zuerst auf dem Academy-Server eingerichtet werden.": "The WordPress connection must first be configured on the Academy server.",
+  "WordPress-Benutzername": "WordPress username",
+  "WordPress-Anwendungspasswort": "WordPress application password",
+  "Erstelle das Anwendungspasswort in WordPress unter Benutzer → Profil. Verwende hierfür ein separates Passwort für die Academy.": "Create an application password in WordPress under Users → Profile. Use a separate password for the Academy.",
+  "WordPress verbinden": "Connect WordPress",
+  "WordPress verbunden": "WordPress connected",
+  "WordPress-Entwurf aktualisieren": "Update WordPress draft",
+  "Als WordPress-Entwurf übertragen": "Transfer as WordPress draft",
+  "Entwurf in WordPress öffnen": "Open draft in WordPress",
+  "Die letzte Übertragung ist noch nicht eindeutig bestätigt. Bitte die Entwürfe direkt in WordPress prüfen; ein erneutes Erstellen ist gesperrt.": "The last transfer has not been confirmed conclusively. Check the drafts directly in WordPress; creating another post is blocked.",
   "Projekt entfernen": "Remove project",
   "Inhaltsablauf entfernen": "Remove content workflow",
   "„{0}“ wirklich entfernen?": "Really remove “{0}”?",
