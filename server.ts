@@ -1,3 +1,4 @@
+import { wordpressDraftService } from './server/wordpressDraftAdmin.js';
 import { contentLanguageInstruction, recommendationLabel } from './server/contentGenerationLanguage';
 import { firestoreStripeDeliveryStore, processStripeDelivery } from './server/stripeWebhookDelivery.js';
 import { createBrowserErrorRouter } from './server/browserErrorMonitoring.js';
@@ -1187,6 +1188,22 @@ async function startServer() {
       }
     },
   );
+
+  // Vital50 WordPress drafts: authenticated administrators only; no automatic publication.
+  app.all('/api/wordpress/:contentId/:action', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
+    const uid = (req as FirebaseRequest).firebaseUser!.sub;
+    const { contentId, action } = req.params;
+    try {
+      if (action === 'status' && req.method === 'GET') res.json(await wordpressDraftService.status(uid, contentId));
+      else if (action === 'connection' && req.method === 'PUT') res.json(await wordpressDraftService.connect(uid, contentId, req.body?.username, req.body?.password));
+      else if (action === 'connection' && req.method === 'DELETE') res.json(await wordpressDraftService.disconnect(uid, contentId));
+      else if (action === 'draft' && req.method === 'POST') res.json(await wordpressDraftService.transfer(uid, contentId));
+      else res.status(405).json({ error: 'Diese WordPress-Aktion ist nicht verfügbar.' });
+    } catch (error) {
+      res.status(400).json({ error: error instanceof Error ? error.message : 'WordPress ist derzeit nicht erreichbar.' });
+    }
+  });
 
   app.get('/api/crm/contacts', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {

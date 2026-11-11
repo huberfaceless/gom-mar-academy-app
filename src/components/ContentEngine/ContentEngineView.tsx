@@ -853,6 +853,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           {activeTab === 'blog' && (
             activeContentProject.blogArticle ? (
               <BlogEditorTab
+                wordpress={isAdmin && activeContentProject.projectSettings.websiteUrl?.replace(/\/$/, '') === 'https://vital50.gomo-marketing.at' ? {
+                  contentId: activeContentProject.id,
+                  onSave: () => handleUpdateActiveProject(activeContentProject),
+                } : undefined}
                 article={activeContentProject.blogArticle}
                 onChange={(updatedArticle) => {
                   handleUpdateActiveProject({
