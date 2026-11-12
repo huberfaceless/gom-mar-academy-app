@@ -48,13 +48,30 @@ const context = vm.createContext({ contentLanguageInstruction, recommendationLab
   ai: { models: { generateContent: async (request: any) => { aiCalls++; lastPrompt = request.contents; return { text: JSON.stringify(modelReply) }; } } },
   fetch: async (_url: string, request: RequestInit) => { platformCalls++; sent = JSON.parse(String(request.body)); return Response.json({ id: 'test-pin', title: 'Test' }); }, console,
 });
-const register = (start: string, end: string) => vm.runInContext(ts.transpileModule(server.slice(server.indexOf(start), server.indexOf(end, server.indexOf(start))), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+// Select exactly one route structurally. Comment-based slices can accidentally register
+// a later endpoint and silently replace the handler under test.
+const serverAst = ts.createSourceFile('server.ts', server, ts.ScriptTarget.ES2022, true);
+const register = (path: string) => {
+  let registered = 0;
+  const visit = (node: ts.Node) => {
+    if (ts.isExpressionStatement(node) && ts.isCallExpression(node.expression)) {
+      const call = node.expression;
+      if (call.expression.getText(serverAst) === 'app.post' && ts.isStringLiteral(call.arguments[0]) && call.arguments[0].text === path) {
+        vm.runInContext(ts.transpileModule(node.getText(serverAst), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+        registered++; return;
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(serverAst);
+  assert.equal(registered, 1, `Exactly one handler must be tested: ${path}`);
+};
 const invoke = async (body: any) => {
   let status = 200; let result: any;
   await handler({ body, firebaseUser: { sub: 'owner' } }, { locals: { pinterestEnvironment: 'production' }, status(value: number) { status = value; return this; }, json(value: any) { result = value; } });
   return { status, result };
 };
-register("  app.post('/api/content-engine/pins'", '  // 🚀 Content Engine: 4.');
+register('/api/content-engine/pins');
 for (const [value, expected] of [[selected, selected], [null, ''], ['', ''], [undefined, fallback]]) {
   const result = await invoke({ topic: 'Test', projectSettings: { defaultTargetUrl: fallback }, targetUrl: value });
   assert.equal(result.status, 200); assert.equal(result.result.pins.length, 5);
@@ -62,7 +79,7 @@ for (const [value, expected] of [[selected, selected], [null, ''], ['', ''], [un
 }
 const before = aiCalls;
 assert.equal((await invoke({ topic: 'Test', targetUrl: 'javascript:alert(1)' })).status, 400); assert.equal(aiCalls, before);
-register("  app.post('/api/pinterest/publish-pin'", '  // 📌 Pinterest AI Image Prompt');
+register('/api/pinterest/publish-pin');
 const pinData = { title: 'Test', description: 'Test', imageBase64: 'data:image/png;base64,test' };
 await invoke({ pinData: { ...pinData, targetUrl: selected }, boardId: 'board' }); assert.equal(sent.link, selected);
 await invoke({ pinData: { ...pinData, targetUrl: '' }, boardId: 'board' }); assert.equal('link' in sent, false);
@@ -71,8 +88,8 @@ assert.equal((await invoke({ pinData: { ...pinData, targetUrl: 'javascript:alert
 assert.equal(credentialCalls, credentialsBefore); assert.equal(platformCalls, platformBefore);
 
 // Project defaults, one-off overrides and explicit opt-out across video/brief handlers.
-for (const [route, end] of [['brief', '  // 🚀 Content Engine: 2.'], ['youtube', '  // 🚀 Content Engine: 5.'], ['shorts', "  app.post('/api/instagram/oauth/start'"]]) {
-  register("  app.post('/api/content-engine/" + route + "'", end);
+for (const route of ['brief', 'youtube', 'shorts']) {
+  register('/api/content-engine/' + route);
   modelReply = route === 'shorts' ? { shorts: [{ description: 'Kurzvideo' }] } : { description: 'Inhalt' };
   for (const [value, expected] of [[undefined, fallback], [selected, selected], [null, ''], ['', '']]) {
     const response = await invoke({ topic: 'Test', projectSettings: { defaultTargetUrl: fallback }, targetUrl: value });
