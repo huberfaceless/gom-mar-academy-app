@@ -1195,7 +1195,8 @@ async function startServer() {
     const uid = (req as FirebaseRequest).firebaseUser!.sub;
     const { contentId, action } = req.params;
     try {
-      if (action === 'status' && req.method === 'GET') res.json(await wordpressDraftService.status(uid, contentId));
+      if (action === 'categories' && req.method === 'GET') res.json(await wordpressDraftService.categories(uid, contentId));
+      else if (action === 'status' && req.method === 'GET') res.json(await wordpressDraftService.status(uid, contentId));
       else if (action === 'connection' && req.method === 'PUT') res.json(await wordpressDraftService.connect(uid, contentId, req.body?.username, req.body?.password));
       else if (action === 'connection' && req.method === 'DELETE') res.json(await wordpressDraftService.disconnect(uid, contentId));
       else if (action === 'draft' && req.method === 'POST') res.json(await wordpressDraftService.transfer(uid, contentId));
