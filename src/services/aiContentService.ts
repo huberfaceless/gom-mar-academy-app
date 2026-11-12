@@ -76,6 +76,9 @@ export class AIContentService {
     }
 
     return {
+      seoTitle: data.article.seoTitle,
+      focusKeyword: data.article.focusKeyword,
+      answerSummary: data.article.answerSummary,
       internalLinking: data.article.internalLinking,
       title: data.article.title || brief.suggestedTitle || brief.h1,
       metaDescription: data.article.metaDescription || brief.metaDescription,
@@ -84,6 +87,15 @@ export class AIContentService {
       wordCount: data.article.wordCount || 1000,
       status: 'ai_generated',
     };
+  }
+
+  static async prepareSeoGeo(article: BlogArticle, brief: ContentBrief, projectSettings: ProjectSettings): Promise<Pick<BlogArticle, 'seoTitle' | 'metaDescription' | 'focusKeyword' | 'answerSummary'>> {
+    const response = await authenticatedFetch('/api/content-engine/seo-geo', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ article, brief, projectSettings }),
+    });
+    const data = await response.json();
+    if (!response.ok || !data.fields) throw new Error(data.error || 'SEO- und GEO-Daten konnten nicht vorbereitet werden.');
+    return data.fields;
   }
 
   static async addInternalLinks(topic: string, brief: ContentBrief, projectSettings: ProjectSettings, article: BlogArticle): Promise<BlogArticle> {

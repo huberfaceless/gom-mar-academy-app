@@ -1,3 +1,5 @@
+import { blogMarkdownWithSummary } from '../../utils/blogSeoGeo';
+import { BlogSeoGeoPanel } from './BlogSeoGeoPanel';
 import { WordPressDraftPanel } from './WordPressDraftPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useRef, useState } from 'react';
@@ -17,6 +19,8 @@ import { BlogArticle } from '../../types/contentEngine';
 import { BlogArticleContent } from './BlogArticleContent';
 
 interface BlogEditorTabProps {
+  seoGeo?: { contentId: string; mainKeyword?: string; onPrepare: () => Promise<void> };
+  contentLanguage?: string;
   wordpress?: { onAddInternalLinks: () => Promise<void>; contentId: string; onSave: (categorySlug: string) => Promise<boolean> };
   article: BlogArticle;
   onChange: (updated: BlogArticle) => void;
@@ -26,6 +30,8 @@ interface BlogEditorTabProps {
 
 export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   article,
+  seoGeo,
+  contentLanguage = 'de',
   wordpress,
   onChange,
   onGeneratePinterest,
@@ -50,7 +56,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
     setCopyError('');
     try {
       if (markdown) {
-        await navigator.clipboard.writeText(article.contentMarkdown);
+        await navigator.clipboard.writeText(blogMarkdownWithSummary(article, contentLanguage));
       } else {
         const preview = previewRef.current;
         if (!preview) return;
@@ -141,6 +147,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
         </div>
       </div>
 
+      {seoGeo && <BlogSeoGeoPanel key={seoGeo.contentId} article={article} mainKeyword={seoGeo.mainKeyword} onChange={onChange} onPrepare={seoGeo.onPrepare} />}
       {wordpress && <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5" aria-label={hubText('Interne Verlinkung')}>
         <h3 className="font-bold">{hubText('Interne Verlinkung')}</h3>
         <p className="text-sm text-slate-600">{hubText('Die Academy berücksichtigt passende, veröffentlichte Vital50-Artikel und ergänzt bis zu drei erreichbare Links.')}</p>
@@ -191,7 +198,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
               {article.title}
             </h1>
             
-            <BlogArticleContent content={article.contentMarkdown} />
+            <BlogArticleContent content={blogMarkdownWithSummary(article, contentLanguage)} />
           </div>
         </div>
       )}

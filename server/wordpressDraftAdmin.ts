@@ -1,3 +1,4 @@
+import { RANK_MATH_KEYS, rankMathMeta, blogMarkdownWithSummary } from '../src/utils/blogSeoGeo.js';
 import { blogLinkRel } from '../src/utils/blogLinkRel.js';
 import { VITAL50_CATEGORIES, isVital50CategorySlug, mapVital50Categories, suggestVital50Category } from '../src/utils/vital50BlogCategories.js';
 import { normalizeBlogMarkdown } from '../src/utils/blogMarkdownFormatting.js';
@@ -101,7 +102,18 @@ export function createWordPressDraftService(storage = store, request: typeof fet
     return { content, key: keyFor(uid, content.projectSettings.id) };
   };
   const categoriesFor = async (credential: string) => mapVital50Categories(await wp(`categories?per_page=100&hide_empty=false&slug=${VITAL50_CATEGORIES.map(c => c.slug).join(',')}`, credential));
+  const seoReady = async (credential: string) => {
+    const schema = await wp('posts', credential, { method: 'OPTIONS' });
+    const properties = schema?.schema?.properties?.meta?.properties;
+    return RANK_MATH_KEYS.every(key => properties?.[key]?.type === 'string' && properties[key].readonly !== true);
+  };
   return {
+    async seo(uid: string, contentId: string) {
+      const { key } = await projectFor(uid, contentId);
+      const connection = await storage.read(connectionCollection, key);
+      if (!connection) throw new Error('Bitte zuerst WordPress verbinden.');
+      return { ready: await seoReady(decrypt(connection.value)) };
+    },
     async categories(uid: string, contentId: string) {
       const { content, key } = await projectFor(uid, contentId);
       const connection = await storage.read(connectionCollection, key);
@@ -114,7 +126,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       const draft = await storage.read(draftCollection, keyFor(uid, contentId));
       return { configured: secret().trim().length >= 32, connected: Boolean(connection), siteUrl: WORDPRESS_ORIGIN,
         draft: draft ? { state: draft.value.state, postId: draft.value.postId || null,
-          editUrl: draft.value.postId ? `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${draft.value.postId}&action=edit` : null } : null };
+          seoStatus: draft.value.seoStatus || null, editUrl: draft.value.postId ? `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${draft.value.postId}&action=edit` : null } : null };
     },
     async connect(uid: string, contentId: string, username: unknown, password: unknown) {
       const { key } = await projectFor(uid, contentId);
@@ -151,16 +163,27 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       if (!isVital50CategorySlug(slug)) throw new Error('Bitte eine der fünf Vital50-Kategorien auswählen.');
       const category = (await categoriesFor(credential)).find(c => c.slug === slug);
       if (!category) throw new Error('Die gewählte Kategorie fehlt in WordPress. Bitte Kategorien neu laden und auswählen.');
+      const desiredMeta = rankMathMeta(article, content.contentBrief);
+      let seoStatus = desiredMeta ? 'unavailable' : 'incomplete';
+      let meta: Record<string, string> | null = null;
+      try { if (desiredMeta && await seoReady(credential)) meta = desiredMeta; } catch { /* Drafts remain available; SEO is explicitly reported as unavailable. */ }
       const lock = { state: 'pending', ...(postId ? { postId } : {}), updatedAt: new Date().toISOString() };
       // Persistent compare-and-swap before the external write, including concurrent requests.
       await storage.write(draftCollection, draftId, lock, previous?.version);
       const claimed = await storage.read(draftCollection, draftId);
       if (!claimed) throw new Error('Die Übertragung konnte nicht sicher gestartet werden.');
-      const body = { categories: [category.id], title: article.title, content: renderWordPressArticle(article.contentMarkdown), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
+      const body = { categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(article, content.projectSettings.language)), ...(meta ? { meta } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
       const post = await wp(postId ? `posts/${postId}` : 'posts', credential, { method: 'POST', body: JSON.stringify(body) });
       if (!Number.isSafeInteger(post.id) || post.id <= 0 || post.status !== 'draft' || !Array.isArray(post.categories) || !post.categories.includes(category.id)) throw new Error('WordPress hat keinen eindeutigen Entwurf bestätigt. Bitte direkt in WordPress prüfen.');
-      await storage.write(draftCollection, draftId, { state: 'confirmed', postId: post.id, updatedAt: new Date().toISOString() }, claimed.version);
-      return { postId: post.id, editUrl: `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${post.id}&action=edit`, status: 'draft' };
+      if (meta) {
+        seoStatus = 'unverified';
+        try {
+          const verified = await wp(`posts/${post.id}?context=edit`, credential);
+          if (RANK_MATH_KEYS.every(key => verified.meta?.[key] === meta[key])) seoStatus = 'saved';
+        } catch { /* The post is confirmed; a metadata read failure must never cause a duplicate creation. */ }
+      }
+      await storage.write(draftCollection, draftId, { state: 'confirmed', postId: post.id, seoStatus, updatedAt: new Date().toISOString() }, claimed.version);
+      return { seoStatus, postId: post.id, editUrl: `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${post.id}&action=edit`, status: 'draft' };
     },
   };
 }

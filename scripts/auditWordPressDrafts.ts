@@ -22,11 +22,15 @@ let fail = false;
 let categoryId = 103;
 let categoryMissing = false;
 let categoryFailure = false;
+let seoConfigured = false;
+let verifySeo = true;
+let lastMeta: Record<string, string> = {};
 const request = (async (url: string, init: RequestInit) => {
   calls.push({ url, init });
   assert.ok(url.startsWith(`${WORDPRESS_ORIGIN}/wp-json/wp/v2/`));
   assert.equal(init.redirect, 'error', 'Credentials cannot follow redirects');
   assert.equal((init.headers as any).Authorization, `Basic ${Buffer.from('editor:applicationpassword').toString('base64')}`);
+  if (init.method === 'OPTIONS') return Response.json({ schema: { properties: { meta: { properties: seoConfigured ? Object.fromEntries(['rank_math_title', 'rank_math_description', 'rank_math_focus_keyword'].map(key => [key, { type: 'string' }])) : {} } } } });
   if (url.includes('users/me')) return Response.json({ capabilities: { edit_posts: true } });
   if (url.includes('/categories?')) {
     if (categoryFailure) return new Response('', { status: 503 });
@@ -34,9 +38,10 @@ const request = (async (url: string, init: RequestInit) => {
   }
   if (init.method === 'POST') {
     if (fail) throw new Error('network timeout');
-    return Response.json({ id: 42, status: 'draft', categories: JSON.parse(init.body as string).categories });
+    const body = JSON.parse(init.body as string); lastMeta = body.meta || {};
+    return Response.json({ id: 42, status: 'draft', categories: body.categories });
   }
-  return Response.json({ id: 42, status: wpStatus });
+  return Response.json({ id: 42, status: wpStatus, meta: verifySeo ? lastMeta : {} });
 }) as typeof fetch;
 const service = createWordPressDraftService(storage, request, () => 'test-key-with-at-least-32-random-characters');
 assert.equal((await service.status('owner', 'article')).connected, false);
@@ -89,6 +94,27 @@ assert.deepEqual(JSON.parse(calls.at(-1)!.init.body as string).categories, [204]
 delete content.blogArticle.wordpressCategorySlug;
 await service.transfer('owner', 'article');
 assert.deepEqual(JSON.parse(calls.at(-1)!.init.body as string).categories, [303], 'Existing articles receive a suggestion');
+assert.equal(result.seoStatus, 'incomplete');
+content.contentBrief = { mainKeyword: 'Bauchfett ab 50' };
+content.blogArticle.seoTitle = 'Bauchfett ab 50 verstehen';
+content.blogArticle.answerSummary = 'Eine sachliche Zusammenfassung ohne neue Behauptungen.';
+assert.equal((await service.seo('owner', 'article')).ready, false);
+assert.equal((await service.transfer('owner', 'article')).seoStatus, 'unavailable');
+assert.equal(JSON.parse(calls.filter(c => c.init.method === 'POST').at(-1)!.init.body as string).meta, undefined);
+seoConfigured = true;
+assert.equal((await service.seo('owner', 'article')).ready, true);
+assert.equal((await service.transfer('owner', 'article')).seoStatus, 'saved');
+assert.deepEqual(lastMeta, { rank_math_title: 'Bauchfett ab 50 verstehen', rank_math_description: 'Beschreibung', rank_math_focus_keyword: 'Bauchfett ab 50' });
+assert.match(JSON.parse(calls.filter(c => c.init.method === 'POST').at(-1)!.init.body as string).content, /Das Wichtigste in Kürze/);
+assert.equal((await service.status('owner', 'article')).draft?.seoStatus, 'saved');
+verifySeo = false;
+assert.equal((await service.transfer('owner', 'article')).seoStatus, 'unverified');
+assert.equal((await service.status('owner', 'article')).draft?.state, 'confirmed', 'SEO readback mismatch must not lose the known draft ID');
+verifySeo = true;
+content.blogArticle.focusKeyword = '';
+assert.equal((await service.transfer('owner', 'article')).seoStatus, 'incomplete');
+assert.deepEqual(lastMeta, {}, 'Incomplete SEO values must not erase WordPress metadata');
+delete content.blogArticle.focusKeyword;
 wpStatus = 'publish';
 const before = calls.filter(c => c.init.method === 'POST').length;
 await assert.rejects(service.transfer('owner', 'article'), /kein Entwurf/);
@@ -139,3 +165,4 @@ assert.match(renderWordPressArticle('| Bereich | Wert |\n| --- | --- |\n| A | B 
 console.log('WordPress-Tabellen geprüft: bestehende Textgitter, umbrochene Zellen, echte Tabellen, sichtbare Zellrahmen und unveränderter Programmcode.');
 
 await import('./auditWordPressInternalLinks');
+await import('./auditBlogSeoGeo');
