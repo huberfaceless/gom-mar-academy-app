@@ -91,3 +91,15 @@ Ein ausgewähltes Bild erscheint im Artikeltext und benötigt einen beschreibend
 Nur angekreuzte Quellen werden unter **Quellen** ergänzt. Die Erreichbarkeit wird vor der WordPress-Übertragung erneut geprüft; bei einem Fehler kann die Auswahl korrigiert werden. Unbekannte IDs und frei eingegebene Server-URLs werden nicht akzeptiert. Quellen aus diesem Bestand erhalten normale redaktionelle Links ohne sponsored; der bisherige Umgang mit Affiliate-/Empfehlungslinks bleibt bestehen. Fachliche Passung und konkrete Belegkraft sind vor Veröffentlichung zu kontrollieren.
 
 Es ist keine neue Installation der SEO Bridge und keine neue Cloud-Konfiguration erforderlich. `npm run audit:wordpress` umfasst die ergänzten SEO-Check-, Medien- und Quellenprüfungen. Ein tatsächlicher Medien-Upload wurde während der Entwicklung nicht auf Vital50 durchgeführt.
+
+## Gespeicherte SEO-/GEO-Projektvorgaben
+
+Unter **Projekt bearbeiten → SEO-/GEO-Vorgaben für neue Blogartikel** lassen sich sechs Vorgaben speichern: Keyword-Prüfung, kurze URL-Slugs, GEO-Kurzantwort, interne Links, erreichbare Fachstellenquellen und die zusätzliche Verwendung ausgewählter Bilder als Beitragsbild. Die bestehenden Projekt-Speicherwege sichern die Werte lokal und in Firestore. Auch ausdrücklich deaktivierte Optionen bleiben nach dem Neuladen erhalten. Die Vorgaben gelten jeweils für das eigene Projekt und werden nicht auf fremde Projekte oder Konten übertragen.
+
+Für Projekte ohne bisher gespeicherte Vorgaben gelten Keyword-Prüfung, kurze Slugs, Kurzantwort und interne Links als aktiv. Für die feste Vital50-Webseite ist zusätzlich die automatische Auswahl von bis zu zwei erreichbaren Quellen aus dem bestehenden Fachstellenbestand aktiv. Ein Beitragsbild wird nur bei ausdrücklicher Projektvorgabe zusätzlich gesetzt; die Auswahl eines zum Artikel passenden Bildes und Alt-Textes bleibt beim einzelnen Artikel.
+
+Bei der Neugenerierung werden die Vorgaben bereits an das Modell übergeben. Anschließend wird das Hauptkeyword des neuen Briefings im SEO-Titel, in der Beschreibung und in der ersten vorhandenen Zwischenüberschrift ergänzt, falls es dort fehlt. Der kurze Slug und eine erkannte Vital50-Kategorie werden passend zum neuen Thema erstellt. Quellen werden frisch geprüft; Ausfälle werden am Artikel angezeigt. Es werden keine Bild-IDs, alten Slugs oder alten Quellen aus anderen Artikeln bzw. Modellantworten übernommen. Interne Links und Quellenauswahl können pro Projekt ausgeschaltet werden.
+
+Bestehende Artikel werden durch die Projektvorgaben nicht automatisch umgeschrieben. Die Funktionen zum gezielten Aktualisieren bleiben verfügbar. Fachliche Prüfung, passende Bildbeschreibung und Kontrolle vor Veröffentlichung bleiben erforderlich. Eine feste Keyword-Dichte oder ein bestimmter Rank-Math-Punktestand wird nicht garantiert.
+
+`npm run audit:wordpress` prüft zusätzlich den Speicher-/Neuladezyklus, Projekt- und Kontotrennung, deaktivierte Optionen, die tatsächliche Artikelroute sowie die Anpassung an neue Themen.

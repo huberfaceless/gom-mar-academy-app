@@ -1,3 +1,5 @@
+import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from '../src/utils/projectBlogDefaults';
+import { suggestBlogReferenceReport } from '../server/blogReferences';
 import { normalizeSeoGeo } from '../src/utils/blogSeoGeo';
 import { findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks } from '../server/wordpressInternalLinks';
 import assert from 'node:assert/strict';
@@ -80,7 +82,7 @@ const requests: any[] = [];
 const ctx = vm.createContext({
   app: { post: (path: string, ...handlers: any[]) => routes.set(path, handlers.at(-1)) },
   requireVerifiedMember: [], requireProMember() {}, requireContentProjectAccess() {},
-  normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, validateBlogAffiliateLink, resolvePinterestTargetUrl, findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks,
+  resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, validateBlogAffiliateLink, resolvePinterestTargetUrl, findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks,
   ai: { models: { generateContent: async (request: any) => { requests.push(request); return {text: JSON.stringify({brief:{},title:'Title',contentMarkdown:'Body',pins:[],video:{description:''},shorts:[]})}; } } }, console,
 });
 const serverAst = ts.createSourceFile('server.ts', server, ts.ScriptTarget.ES2022, true);

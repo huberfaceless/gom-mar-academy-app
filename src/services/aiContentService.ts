@@ -76,6 +76,10 @@ export class AIContentService {
     }
 
     return {
+      wordpressSlug: data.article.wordpressSlug,
+      wordpressCategorySlug: data.article.wordpressCategorySlug,
+      referenceIds: data.article.referenceIds,
+      referenceCheck: data.article.referenceCheck,
       seoTitle: data.article.seoTitle,
       focusKeyword: data.article.focusKeyword,
       answerSummary: data.article.answerSummary,

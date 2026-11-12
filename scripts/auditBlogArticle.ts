@@ -1,3 +1,5 @@
+import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from '../src/utils/projectBlogDefaults';
+import { suggestBlogReferenceReport } from '../server/blogReferences';
 import { normalizeSeoGeo } from '../src/utils/blogSeoGeo';
 import { findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks } from '../server/wordpressInternalLinks';
 import assert from 'node:assert/strict';
@@ -45,7 +47,7 @@ let calls = 0; let prompt = '';
 let internalReportOverride: any = null;
 let modelMarkdown = 'Ein hilfreicher Artikel.';
 let modelSeo: Record<string, string> = {};
-const context = vm.createContext({ normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
+const context = vm.createContext({ resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } },
   requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {}, validateBlogAffiliateLink,
   ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: modelMarkdown, ...modelSeo }) }; } } }, console,
@@ -71,7 +73,7 @@ internalReportOverride = { state: 'checked', checkedAt: new Date().toISOString()
 modelMarkdown = 'Ein Artikel mit [falschem Link](https://vital50.gomo-marketing.at/erfunden/).';
 modelSeo = { seoTitle: 'Ein SEO-Titel', focusKeyword: 'Keyword', answerSummary: 'Kurze Zusammenfassung des Artikels.' };
 const withInternal = await invoke(link);
-assert.equal(withInternal.body.article.seoTitle, modelSeo.seoTitle);
+assert.equal(withInternal.body.article.seoTitle, `${modelSeo.focusKeyword}: ${modelSeo.seoTitle}`);
 assert.equal(withInternal.body.article.answerSummary, modelSeo.answerSummary);
 assert.equal(withInternal.status, 200);
 assert.match(withInternal.body.article.contentMarkdown, /## Passende Artikel/);
@@ -95,13 +97,17 @@ const bundled = await build({ entryPoints: ['src/services/aiContentService.ts'],
 });
 (globalThis as any).__blogFetch = async (_url: string, request: RequestInit) => {
   assert.equal(JSON.parse(String(request.body)).affiliateLink, link);
-  return Response.json({ article: { title: 'Test', contentMarkdown: 'Inhalt', ...modelSeo } });
+  return Response.json({ article: { title: 'Test', contentMarkdown: 'Inhalt', wordpressSlug: 'kurze-url', wordpressCategorySlug: 'abnehmen-ab-50', referenceIds: ['at-adipositas'], referenceCheck: 'checked', ...modelSeo } });
 };
 try {
   const { AIContentService } = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString('base64')}`);
   const generated = await AIContentService.generateBlogArticle('Test', {}, {}, link);
   assert.equal(generated.seoTitle, modelSeo.seoTitle);
   assert.equal(generated.answerSummary, modelSeo.answerSummary);
+  assert.equal(generated.wordpressSlug, 'kurze-url');
+  assert.deepEqual(generated.referenceIds, ['at-adipositas']);
+  assert.equal(generated.referenceCheck, 'checked');
+  assert.equal(generated.wordpressCategorySlug, 'abnehmen-ab-50');
 } finally { delete (globalThis as any).__blogFetch; }
 console.log('Blogartikel geprüft: formatierte Vorschau, sichere Links, URL-Parameter, explizite Linkwahl und API-Abweisung vor KI-Aufruf.');
 
