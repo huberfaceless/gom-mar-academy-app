@@ -1,10 +1,11 @@
+import { VITAL50_CATEGORIES, mapVital50Categories, suggestVital50Category } from '../src/utils/vital50BlogCategories';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createWordPressDraftService, renderWordPressArticle, WORDPRESS_ORIGIN, type WordPressStore } from '../server/wordpressDraftAdmin';
 
 const data = new Map<string, { value: Record<string, any>; version: string }>();
 let revision = 0;
-let content: any = { userId: 'owner', projectSettings: { id: 'vital50', websiteUrl: WORDPRESS_ORIGIN }, blogArticle: { title: 'Vital50-Test', contentMarkdown: '## Überschrift\n\n**Fett** und [Link](https://example.com/)\n\n<script>alert(1)</script>', metaDescription: 'Beschreibung' } };
+let content: any = { userId: 'owner', projectSettings: { id: 'vital50', websiteUrl: WORDPRESS_ORIGIN }, blogArticle: { title: 'Vital50-Test', wordpressCategorySlug: 'abnehmen-ab-50', contentMarkdown: '## Überschrift\n\n**Fett** und [Link](https://example.com/)\n\n<script>alert(1)</script>', metaDescription: 'Beschreibung' } };
 const storage: WordPressStore = {
   async read(c, id) { return data.get(`${c}/${id}`) || null; },
   async write(c, id, value, version) {
@@ -18,15 +19,22 @@ const storage: WordPressStore = {
 const calls: Array<{ url: string; init: RequestInit }> = [];
 let wpStatus = 'draft';
 let fail = false;
+let categoryId = 103;
+let categoryMissing = false;
+let categoryFailure = false;
 const request = (async (url: string, init: RequestInit) => {
   calls.push({ url, init });
   assert.ok(url.startsWith(`${WORDPRESS_ORIGIN}/wp-json/wp/v2/`));
   assert.equal(init.redirect, 'error', 'Credentials cannot follow redirects');
   assert.equal((init.headers as any).Authorization, `Basic ${Buffer.from('editor:applicationpassword').toString('base64')}`);
   if (url.includes('users/me')) return Response.json({ capabilities: { edit_posts: true } });
+  if (url.includes('/categories?')) {
+    if (categoryFailure) return new Response('', { status: 503 });
+    return Response.json(categoryMissing ? [] : [...VITAL50_CATEGORIES.map((c, i) => ({ ...c, id: i === 0 ? categoryId : 200 + i })), { id: 4, slug: 'keto' }]);
+  }
   if (init.method === 'POST') {
     if (fail) throw new Error('network timeout');
-    return Response.json({ id: 42, status: 'draft' });
+    return Response.json({ id: 42, status: 'draft', categories: JSON.parse(init.body as string).categories });
   }
   return Response.json({ id: 42, status: wpStatus });
 }) as typeof fetch;
@@ -38,17 +46,49 @@ const storedConnection = [...data.values()][0].value;
 assert.ok(storedConnection.encrypted);
 assert.ok(!JSON.stringify(storedConnection).includes('applicationpassword'));
 assert.ok(!JSON.stringify(await service.status('owner', 'article')).includes('encrypted'));
+assert.equal((await service.categories('owner', 'article')).categories.length, 5);
+await assert.rejects(service.categories('other', 'article'), /nicht verfügbar/);
+for (const [title, slug] of [
+  ['Bauchfett verlieren ab 50', 'abnehmen-ab-50'], ['Wasser richtig trinken', 'wasser-hydration'],
+  ['Gesunde Schlafroutine', 'gesunde-gewohnheiten'], ['Mehr Energie gegen Müdigkeit', 'energie-vitalitaet'],
+  ['Smoothie-Rezept zum Abnehmen', 'rezepte'],
+]) assert.equal(suggestVital50Category(title), slug);
+assert.equal(suggestVital50Category('Unbekannt'), null);
+assert.equal(mapVital50Categories([{ id: 4, slug: 'keto' }, { id: -1, slug: 'rezepte' }]).length, 0);
+assert.equal(mapVital50Categories([{ id: 8, slug: 'rezepte' }, { id: 9, slug: 'rezepte' }]).length, 0);
+const assertNoWrite = async (pattern: RegExp) => {
+  const writes = calls.filter(c => c.init.method === 'POST').length;
+  const records = data.size;
+  await assert.rejects(service.transfer('owner', 'validation'), pattern);
+  assert.equal(calls.filter(c => c.init.method === 'POST').length, writes);
+  assert.equal(data.size, records, 'Validation failures must not leave a transfer lock');
+};
+content.blogArticle.wordpressCategorySlug = 'keto';
+await assertNoWrite(/fünf Vital50/);
+content.blogArticle.wordpressCategorySlug = 'abnehmen-ab-50';
+categoryMissing = true; await assertNoWrite(/fehlt in WordPress/); categoryMissing = false;
+categoryFailure = true; await assertNoWrite(/HTTP 503/); categoryFailure = false;
 let result = await service.transfer('owner', 'article');
 assert.equal(result.postId, 42);
 assert.equal(result.status, 'draft');
 const created = calls.find(c => c.init.method === 'POST')!;
 assert.equal(created.url, `${WORDPRESS_ORIGIN}/wp-json/wp/v2/posts`);
 assert.equal(JSON.parse(created.init.body as string).status, 'draft');
+assert.deepEqual(JSON.parse(created.init.body as string).categories, [103]);
+categoryId = 303;
 assert.ok(JSON.parse(created.init.body as string).content.includes('<strong>Fett</strong>'));
 assert.ok(!renderWordPressArticle(content.blogArticle.contentMarkdown).includes('<script>'));
 await service.transfer('owner', 'article');
 assert.equal(calls.at(-1)!.url, `${WORDPRESS_ORIGIN}/wp-json/wp/v2/posts/42`, 'Further transfers update the same post');
 assert.equal(JSON.parse(calls.at(-1)!.init.body as string).status, undefined, 'Updates must never unpublish an existing post');
+assert.deepEqual(JSON.parse(calls.at(-1)!.init.body as string).categories, [303], 'Resolve current IDs on each transfer');
+content.blogArticle.title = 'Bauchfett verlieren ab 50';
+content.blogArticle.wordpressCategorySlug = 'rezepte';
+await service.transfer('owner', 'article');
+assert.deepEqual(JSON.parse(calls.at(-1)!.init.body as string).categories, [204], 'Manual choice wins over suggestion');
+delete content.blogArticle.wordpressCategorySlug;
+await service.transfer('owner', 'article');
+assert.deepEqual(JSON.parse(calls.at(-1)!.init.body as string).categories, [303], 'Existing articles receive a suggestion');
 wpStatus = 'publish';
 const before = calls.filter(c => c.init.method === 'POST').length;
 await assert.rejects(service.transfer('owner', 'article'), /kein Entwurf/);

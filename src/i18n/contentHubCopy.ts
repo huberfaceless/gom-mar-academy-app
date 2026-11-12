@@ -3,6 +3,12 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "WordPress-Kategorie": "WordPress category",
+  "Bitte eine Kategorie auswählen.": "Please select a category.",
+  "Ein passender Vorschlag wird automatisch ausgewählt. Du kannst ihn vor der Übertragung ändern. Die Auswahl wird mit dem Artikel gespeichert.": "A matching suggestion is selected automatically. You can change it before transfer. The selection is saved with the article.",
+  "Kategorien werden geladen…": "Loading categories\u2026",
+  "Nicht alle fünf Kategorien sind in WordPress verfügbar. Bitte dort prüfen.": "Not all five categories are available in WordPress. Please check there.",
+  "Kategorien neu laden": "Reload categories",
   "WordPress-Entwurf": "WordPress draft",
   "WordPress-Anfrage fehlgeschlagen.": "WordPress request failed.",
   "Bitte den Artikel zuerst erfolgreich in der Cloud speichern.": "Please save the article to the cloud successfully first.",

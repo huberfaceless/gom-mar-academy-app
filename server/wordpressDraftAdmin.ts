@@ -1,3 +1,4 @@
+import { VITAL50_CATEGORIES, isVital50CategorySlug, mapVital50Categories, suggestVital50Category } from '../src/utils/vital50BlogCategories.js';
 import { normalizeBlogMarkdown } from '../src/utils/blogMarkdownFormatting.js';
 import { GoogleAuth } from 'google-auth-library';
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto';
@@ -98,7 +99,14 @@ export function createWordPressDraftService(storage = store, request: typeof fet
     if (url.origin !== WORDPRESS_ORIGIN) throw new Error('Diese Verbindung ist ausschließlich für Vital50 eingerichtet.');
     return { content, key: keyFor(uid, content.projectSettings.id) };
   };
+  const categoriesFor = async (credential: string) => mapVital50Categories(await wp(`categories?per_page=100&hide_empty=false&slug=${VITAL50_CATEGORIES.map(c => c.slug).join(',')}`, credential));
   return {
+    async categories(uid: string, contentId: string) {
+      const { content, key } = await projectFor(uid, contentId);
+      const connection = await storage.read(connectionCollection, key);
+      if (!connection) throw new Error('Bitte zuerst WordPress verbinden.');
+      return { categories: await categoriesFor(decrypt(connection.value)), suggestedSlug: suggestVital50Category(content.blogArticle?.title || '', content.topic, content.contentBrief?.mainKeyword) };
+    },
     async status(uid: string, contentId: string) {
       const { key } = await projectFor(uid, contentId);
       const connection = await storage.read(connectionCollection, key);
@@ -138,14 +146,18 @@ export function createWordPressDraftService(storage = store, request: typeof fet
         const current = await wp(`posts/${postId}?context=edit`, credential);
         if (current.status !== 'draft') throw new Error('Der WordPress-Beitrag ist kein Entwurf mehr. Änderungen bitte direkt in WordPress vornehmen.');
       }
+      const slug = article.wordpressCategorySlug ?? suggestVital50Category(article.title, content.topic, content.contentBrief?.mainKeyword);
+      if (!isVital50CategorySlug(slug)) throw new Error('Bitte eine der fünf Vital50-Kategorien auswählen.');
+      const category = (await categoriesFor(credential)).find(c => c.slug === slug);
+      if (!category) throw new Error('Die gewählte Kategorie fehlt in WordPress. Bitte Kategorien neu laden und auswählen.');
       const lock = { state: 'pending', ...(postId ? { postId } : {}), updatedAt: new Date().toISOString() };
       // Persistent compare-and-swap before the external write, including concurrent requests.
       await storage.write(draftCollection, draftId, lock, previous?.version);
       const claimed = await storage.read(draftCollection, draftId);
       if (!claimed) throw new Error('Die Übertragung konnte nicht sicher gestartet werden.');
-      const body = { title: article.title, content: renderWordPressArticle(article.contentMarkdown), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
+      const body = { categories: [category.id], title: article.title, content: renderWordPressArticle(article.contentMarkdown), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
       const post = await wp(postId ? `posts/${postId}` : 'posts', credential, { method: 'POST', body: JSON.stringify(body) });
-      if (!Number.isSafeInteger(post.id) || post.id <= 0 || post.status !== 'draft') throw new Error('WordPress hat keinen eindeutigen Entwurf bestätigt. Bitte direkt in WordPress prüfen.');
+      if (!Number.isSafeInteger(post.id) || post.id <= 0 || post.status !== 'draft' || !Array.isArray(post.categories) || !post.categories.includes(category.id)) throw new Error('WordPress hat keinen eindeutigen Entwurf bestätigt. Bitte direkt in WordPress prüfen.');
       await storage.write(draftCollection, draftId, { state: 'confirmed', postId: post.id, updatedAt: new Date().toISOString() }, claimed.version);
       return { postId: post.id, editUrl: `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${post.id}&action=edit`, status: 'draft' };
     },

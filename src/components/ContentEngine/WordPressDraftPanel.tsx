@@ -1,3 +1,4 @@
+import { type WordPressCategory } from '../../utils/vital50BlogCategories';
 import React, { useEffect, useState } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
@@ -9,9 +10,14 @@ const api = async (id: string, action: string, init: RequestInit = {}) => {
   if (!response.ok) throw new Error(data.error || 'WordPress-Anfrage fehlgeschlagen.');
   return data;
 };
-export const WordPressDraftPanel: React.FC<{ contentId: string; onSave: () => Promise<boolean> }> = ({ contentId, onSave }) => {
+export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlug?: string; onSave: (categorySlug: string) => Promise<boolean> }> = ({ contentId, savedCategorySlug, onSave }) => {
   const { hubText } = useContentHubCopy();
   const [status, setStatus] = useState<Status | null>(null);
+  const [categories, setCategories] = useState<WordPressCategory[]>([]);
+  const [categorySlug, setCategorySlug] = useState(savedCategorySlug || '');
+  const [categoryError, setCategoryError] = useState('');
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [categoryReload, setCategoryReload] = useState(0);
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
@@ -25,6 +31,19 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; onSave: () => Pr
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [contentId]);
+  useEffect(() => {
+    if (!status?.connected) { setCategories([]); return; }
+    let cancelled = false;
+    setCategoryLoading(true); setCategoryError('');
+    void api(contentId, 'categories').then(value => {
+      if (cancelled) return;
+      setCategories(value.categories);
+      setCategorySlug(current => current || savedCategorySlug || value.suggestedSlug || '');
+    }).catch(error => { if (!cancelled) { setCategories([]); setCategoryError(error.message); } })
+      .finally(() => { if (!cancelled) setCategoryLoading(false); });
+    return () => { cancelled = true; };
+  }, [contentId, status?.connected, categoryReload, savedCategorySlug]);
+  const validCategory = categories.some(c => c.slug === categorySlug);
   const refresh = async () => setStatus(await api(contentId, 'status'));
   const connect = async (event: React.FormEvent) => {
     event.preventDefault(); setBusy(true); setError(''); setNotice('');
@@ -37,7 +56,8 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; onSave: () => Pr
   const transfer = async () => {
     setBusy(true); setError(''); setNotice('');
     try {
-      if (!await onSave()) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
+      if (!validCategory) throw new Error(hubText('Bitte eine Kategorie auswählen.'));
+      if (!await onSave(categorySlug)) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
       await api(contentId, 'draft', { method: 'POST' });
       setNotice(hubText('Der Artikel wurde als WordPress-Entwurf gespeichert. Bitte in WordPress prüfen und dort veröffentlichen.'));
     } catch (error) { setError(error instanceof Error ? error.message : hubText('WordPress-Anfrage fehlgeschlagen.')); }
@@ -60,9 +80,22 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; onSave: () => Pr
       <p className="text-xs text-slate-600">{hubText('Erstelle das Anwendungspasswort in WordPress unter Benutzer → Profil. Verwende hierfür ein separates Passwort für die Academy.')}</p>
       <button disabled={busy} className="self-start rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">{hubText('WordPress verbinden')}</button>
     </form>}
+    {status?.connected && <div className="space-y-2">
+      <label className="block text-sm font-semibold">{hubText('WordPress-Kategorie')}
+        <select value={validCategory ? categorySlug : ''} onChange={e => setCategorySlug(e.target.value)} disabled={busy || categoryLoading} className="mt-1 w-full rounded-xl border p-2">
+          <option value="">{hubText('Bitte eine Kategorie auswählen.')}</option>
+          {categories.map(c => <option key={c.slug} value={c.slug}>{c.name}</option>)}
+        </select>
+      </label>
+      <p className="text-xs text-slate-600">{hubText('Ein passender Vorschlag wird automatisch ausgewählt. Du kannst ihn vor der Übertragung ändern. Die Auswahl wird mit dem Artikel gespeichert.')}</p>
+      {categoryLoading && <p role="status">{hubText('Kategorien werden geladen…')}</p>}
+      {categoryError && <p role="alert" className="text-sm text-rose-700">{categoryError}</p>}
+      {!categoryLoading && !categoryError && categories.length < 5 && <p role="alert">{hubText('Nicht alle fünf Kategorien sind in WordPress verfügbar. Bitte dort prüfen.')}</p>}
+      <button type="button" disabled={busy || categoryLoading} onClick={() => setCategoryReload(n => n + 1)} className="text-sm underline">{hubText('Kategorien neu laden')}</button>
+    </div>}
     {status?.connected && <div className="flex flex-wrap items-center gap-3">
       <span className="text-sm font-semibold text-emerald-800">{hubText('WordPress verbunden')}</span>
-      <button type="button" disabled={busy || status.draft?.state === 'pending'} onClick={() => void transfer()} className="rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">
+      <button type="button" disabled={busy || categoryLoading || !validCategory || status.draft?.state === 'pending'} onClick={() => void transfer()} className="rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">
         {busy ? hubText('Bitte warten…') : status.draft?.postId ? hubText('WordPress-Entwurf aktualisieren') : hubText('Als WordPress-Entwurf übertragen')}
       </button>
       <button type="button" disabled={busy} onClick={() => void disconnect()} className="text-sm underline disabled:opacity-50">{hubText('Verbindung trennen')}</button>

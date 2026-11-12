@@ -17,7 +17,7 @@ import { BlogArticle } from '../../types/contentEngine';
 import { BlogArticleContent } from './BlogArticleContent';
 
 interface BlogEditorTabProps {
-  wordpress?: { contentId: string; onSave: () => Promise<boolean> };
+  wordpress?: { contentId: string; onSave: (categorySlug: string) => Promise<boolean> };
   article: BlogArticle;
   onChange: (updated: BlogArticle) => void;
   onGeneratePinterest: () => void;
@@ -132,7 +132,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
         </div>
       </div>
 
-      {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} onSave={wordpress.onSave} />}
+      {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} savedCategorySlug={article.wordpressCategorySlug} onSave={wordpress.onSave} />}
 
       {/* Editor / Preview Area */}
       {viewMode === 'edit' ? (

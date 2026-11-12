@@ -1,6 +1,6 @@
 # Vital50: Blogartikel als WordPress-Entwurf
 
-Diese erste Anbindung überträgt Titel, Markdown-Inhalt als HTML sowie die Beschreibung als WordPress-Auszug. Sie erstellt ausschließlich Entwürfe. Weitere Übertragungen desselben Academy-Inhaltsablaufs aktualisieren denselben Entwurf. Bereits veröffentlichte oder geplante Beiträge werden nicht verändert. Kategorien, Beitragsbilder, SEO-Plugin-Felder und Veröffentlichungstermine werden zunächst in WordPress bearbeitet. Ein Auszug ersetzt kein Rank-Math-Metabeschreibungsfeld.
+Diese erste Anbindung überträgt Titel, Markdown-Inhalt als HTML sowie die Beschreibung als WordPress-Auszug. Sie erstellt ausschließlich Entwürfe. Weitere Übertragungen desselben Academy-Inhaltsablaufs aktualisieren denselben Entwurf. Bereits veröffentlichte oder geplante Beiträge werden nicht verändert. Die gewählte Vital50-Kategorie wird mitübertragen. Beitragsbilder, SEO-Plugin-Felder und Veröffentlichungstermine werden zunächst in WordPress bearbeitet. Ein Auszug ersetzt kein Rank-Math-Metabeschreibungsfeld.
 
 ## Server einrichten
 
@@ -35,3 +35,9 @@ Referenzen: [WordPress-Authentifizierung](https://developer.wordpress.org/rest-a
 ## Tabellenformatierung
 
 Vollständige ASCII-Textgitter mit Plus-/Strichrahmen werden in der Academy-Vorschau und beim WordPress-Export in echte Tabellen umgewandelt. Umgebrochene Zelltexte bleiben zusammen, eine vorhandene übergreifende Titelzeile bleibt über der Tabelle erhalten. Andere Codeblöcke und unvollständige Zeichnungen werden nicht verändert. Der WordPress-Export ergänzt sichtbare Zellrahmen und Abstände. Ein bereits übertragener Entwurf kann über **WordPress-Entwurf aktualisieren** korrigiert werden; der Artikel muss nicht neu generiert werden.
+
+## Vital50-Kategorien
+
+Die Academy lädt die vorhandenen WordPress-Kategorien und bietet genau diese fünf an: Abnehmen ab 50, Wasser & Hydration, Gesunde Gewohnheiten, Energie & Vitalität sowie Rezepte. Ein regelbasierter Vorschlag berücksichtigt zuerst den Artikeltitel, dann Hauptkeyword und Thema. Bei unklarem Thema muss eine Kategorie gewählt werden. Die Auswahl kann vor der Übertragung geändert werden und wird beim Übertragen mit dem Artikel gespeichert.
+
+Die Zuordnung erfolgt über Slugs und die jeweils aktuellen WordPress-IDs. Fehlende Kategorien werden nicht automatisch angelegt. Andere WordPress-Kategorien bleiben unverändert. Beim Aktualisieren eines Entwurfs wird dessen Kategorie ebenfalls aktualisiert. SEO-Plugin-Felder und GEO-Ergänzungen sind von dieser Kategoriezuordnung unabhängig.

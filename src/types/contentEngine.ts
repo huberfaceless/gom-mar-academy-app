@@ -65,6 +65,7 @@ export interface ContentBrief {
 }
 
 export interface BlogArticle {
+  wordpressCategorySlug?: string;
   title: string;
   metaDescription: string;
   contentMarkdown: string;
