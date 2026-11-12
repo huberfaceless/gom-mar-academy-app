@@ -29,6 +29,7 @@ export type PublishContentType = 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' 
 export type SchedulerJobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
 export interface ProjectSettings {
+  blogDefaults?: import('../utils/projectBlogDefaults').ProjectBlogDefaults;
   deletedAt?: string;
   id: string;
   userId?: string;
@@ -65,6 +66,7 @@ export interface ContentBrief {
 }
 
 export interface BlogArticle {
+  referenceCheck?: 'checked' | 'unavailable' | 'disabled';
   wordpressSlug?: string;
   referenceIds?: string[];
   wordpressImage?: { id: number; url: string; alt: string; featured?: boolean } | null;

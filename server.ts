@@ -1,4 +1,5 @@
-import { suggestBlogReferences } from './server/blogReferences.js';
+import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from './src/utils/projectBlogDefaults.js';
+import { suggestBlogReferences, suggestBlogReferenceReport } from './server/blogReferences.js';
 import { wordpressSeoBridgeZip } from './server/wordpressSeoBridge.js';
 import { normalizeSeoGeo } from './src/utils/blogSeoGeo.js';
 import { findWordPressInternalLinks, appendWordPressInternalLinks, enrichWordPressInternalLinks, removeUnverifiedInternalLinks } from './server/wordpressInternalLinks.js';
@@ -2677,7 +2678,11 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         res.status(400).json({ error: (error as Error).message });
         return;
       }
-      const internalLinking = await findWordPressInternalLinks(projectSettings, { title: brief.suggestedTitle || brief.h1 || topic, topic, brief });
+      const blogDefaults = resolveProjectBlogDefaults(projectSettings);
+      const [internalLinking, referenceReport] = await Promise.all([
+        blogDefaults.internalLinks ? findWordPressInternalLinks(projectSettings, { title: brief.suggestedTitle || brief.h1 || topic, topic, brief }) : Promise.resolve({ state: 'not-supported' as const, checkedAt: new Date().toISOString(), links: [] }),
+        blogDefaults.verifiedSources ? suggestBlogReferenceReport(`${brief.suggestedTitle || brief.h1 || topic} ${brief.mainKeyword || ''}`) : Promise.resolve({ sources: [], state: 'disabled' as const }),
+      ]);
       const withInternalLinks = (content: string) => appendWordPressInternalLinks(removeUnverifiedInternalLinks(content, internalLinking), internalLinking, projectSettings?.language);
       const withRecommendation = (content: string): string => affiliateLink
         ? `${content}\n\n[${recommendationLabel(projectSettings?.language)}](<${affiliateLink}>)`
@@ -2700,7 +2705,8 @@ Stil & Struktur-Anforderungen:
 - Schreibe einen vollständigen, fundierten Artikel (mind. 1.200 - 1.800 Wörter).
 - Nutze ansprechende Markdown-Formatierung (#, ##, ###, Bulletpoints, fette Schlüsselwörter, Zitate/Infoboxen).
 - Verwende für Vergleiche echte Markdown-Tabellen mit Kopfzeile und Trennzeile. Keine ASCII-Tabellen, Zeichenrahmen oder Textdiagramme in Codeblöcken; verwende stattdessen Tabellen oder Listen.
-- Binde die Keywords organisch und natürlich ein.
+- Verwende das Hauptkeyword exakt im SEO-Titel und in der Meta-Beschreibung, in mindestens einer passenden H2-/H3-Zwischenüberschrift und natürlich an passenden Stellen im Fließtext. Erzwinge keine feste Keyword-Dichte.
+Gespeicherte Projektvorgaben: ${JSON.stringify(blogDefaults)}
 - Baue konkrete Praxisbeispiele und Tipps für den Alltag der Zielgruppe ein.
 - Am Ende ein FAQ-Abschnitt und eine passende Handlungsaufforderung ohne Link.
 - Der bestätigte Empfehlungslink wird anschließend automatisch angehängt. Erfinde keine Empfehlungs-URLs und übernimm keine alten Links aus Briefing oder Projektvorgaben.
@@ -2731,12 +2737,13 @@ Antworte im JSON-Format:
       });
 
       const text = response.text || '{}';
-      try {
-        const parsed = JSON.parse(text);
-        res.json({ success: true, article: { ...parsed, ...normalizeSeoGeo(parsed, { ...parsed, title: parsed.title || brief.suggestedTitle || brief.h1, metaDescription: parsed.metaDescription || brief.metaDescription }, brief), internalLinking, contentMarkdown: withRecommendation(withInternalLinks(typeof parsed.contentMarkdown === 'string' ? parsed.contentMarkdown : '')) } });
-      } catch {
-        res.json({ success: true, article: { title: brief.suggestedTitle, internalLinking, contentMarkdown: withRecommendation(withInternalLinks(text)), wordCount: 800, readingTimeMinutes: 5 } });
-      }
+      let parsed: Record<string, any>;
+      try { parsed = JSON.parse(text); if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid'); }
+      catch { parsed = { title: brief.suggestedTitle || brief.h1 || topic, contentMarkdown: text }; }
+      const article = applyProjectBlogDefaults({ ...parsed, title: parsed.title || brief.suggestedTitle || brief.h1 || topic, metaDescription: parsed.metaDescription || brief.metaDescription || '', contentMarkdown: typeof parsed.contentMarkdown === 'string' ? parsed.contentMarkdown : '', status: 'ai_generated' } as any, brief, projectSettings);
+      const contentMarkdown = withRecommendation(withInternalLinks(article.contentMarkdown));
+      const wordCount = contentMarkdown.split(/\s+/).filter(Boolean).length;
+      res.json({ success: true, article: { ...article, contentMarkdown, wordCount, readingTimeMinutes: Math.max(1, Math.ceil(wordCount / 200)), internalLinking, referenceIds: referenceReport.sources.slice(0, 2).map(source => source.id), referenceCheck: referenceReport.state } });
     } catch (err: unknown) {
       console.error('Error in /api/content-engine/blog:', err);
       const message = err instanceof Error ? err.message : 'Fehler beim Erstellen des Blogartikels.';

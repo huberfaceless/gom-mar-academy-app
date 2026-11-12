@@ -860,6 +860,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 contentLanguage={activeContentProject.projectSettings.language}
                 seoGeo={{
                   contentId: activeContentProject.id,
+                  imageAsFeatured: activeProjectSettings.blogDefaults?.imageAsFeatured === true,
                   mainKeyword: activeContentProject.contentBrief?.mainKeyword,
                   onPrepare: async () => {
                     const fields = await AIContentService.prepareSeoGeo(activeContentProject.blogArticle!, activeContentProject.contentBrief!, activeContentProject.projectSettings);

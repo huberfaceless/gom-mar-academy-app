@@ -12,8 +12,12 @@ export async function verifyBlogReferences(ids: unknown, request: typeof fetch =
   }));
   return checked.filter((item): item is typeof sources[number] => item !== null);
 }
-export async function suggestBlogReferences(text: string, request: typeof fetch = fetch) {
+export async function suggestBlogReferenceReport(text: string, request: typeof fetch = fetch) {
   const query = text.toLocaleLowerCase('de').normalize('NFD').replace(/\p{M}/gu, '');
   const ids = BLOG_REFERENCES.filter(source => source.keywords.normalize('NFD').replace(/\p{M}/gu, '').split(' ').some(word => query.includes(word))).map(source => source.id);
-  return verifyBlogReferences(ids, request);
+  const sources = await verifyBlogReferences(ids, request);
+  return { sources, state: ids.length && !sources.length ? 'unavailable' as const : 'checked' as const };
+}
+export async function suggestBlogReferences(text: string, request: typeof fetch = fetch) {
+  return (await suggestBlogReferenceReport(text, request)).sources;
 }

@@ -1,3 +1,4 @@
+import { resolveProjectBlogDefaults } from '../../utils/projectBlogDefaults';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useEffect, useState } from 'react';
 import { X, Save, Plus, Trash2, Globe, Sparkles, Building2 } from 'lucide-react';
@@ -55,7 +56,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
     let defaultTargetUrl: string;
     try { defaultTargetUrl = resolvePinterestTargetUrl(formData.defaultTargetUrl); }
     catch (error) { setLinkError((error as Error).message); return; }
-    onSave({ ...formData, defaultTargetUrl });
+    onSave({ ...formData, defaultTargetUrl, blogDefaults: resolveProjectBlogDefaults(formData) });
     onClose();
   };
 
@@ -234,6 +235,23 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               />
             </div>
           </div>
+
+          <fieldset className="space-y-2 rounded-xl border border-slate-200 p-4">
+            <legend className="px-1 text-sm font-bold">{hubText('SEO-/GEO-Vorgaben für neue Blogartikel')}</legend>
+            <p className="text-xs text-slate-600">{hubText('Diese Vorgaben werden mit dem Projekt gespeichert und bei neuen Artikeln automatisch angewendet. Keyword, Beschreibung und Kurzantwort werden passend zum jeweiligen Thema erstellt.')}</p>
+            {([
+              ['keywordChecks', 'Keyword im SEO-Titel, in der Beschreibung und in einer Zwischenüberschrift sicherstellen'],
+              ['shortUrls', 'Kurze URL-Slugs automatisch vorbereiten'],
+              ['geoSummary', 'Sichtbare GEO-Kurzantwort ergänzen'],
+              ['internalLinks', 'Passende veröffentlichte WordPress-Artikel intern verlinken'],
+              ['verifiedSources', 'Bis zu zwei erreichbare Fachstellenquellen automatisch auswählen'],
+              ['imageAsFeatured', 'Ein ausgewähltes Artikelbild zusätzlich als Beitragsbild verwenden'],
+            ] as const).map(([key, label]) => <label key={key} className="flex items-start gap-2 text-sm">
+              <input type="checkbox" checked={resolveProjectBlogDefaults(formData)[key]} onChange={event => setFormData({ ...formData, blogDefaults: { ...resolveProjectBlogDefaults(formData), [key]: event.target.checked } })} />
+              {hubText(label)}
+            </label>)}
+            <p className="text-xs text-slate-600">{hubText('Bilder und Alt-Texte werden weiterhin passend zum einzelnen Artikel gewählt. Die fachliche Prüfung vor Veröffentlichung bleibt erforderlich.')}</p>
+          </fieldset>
 
           {/* Footer actions */}
           <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
