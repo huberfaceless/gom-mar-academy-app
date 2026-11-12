@@ -1,3 +1,4 @@
+import { blogLinkRel } from '../src/utils/blogLinkRel.js';
 import { VITAL50_CATEGORIES, isVital50CategorySlug, mapVital50Categories, suggestVital50Category } from '../src/utils/vital50BlogCategories.js';
 import { normalizeBlogMarkdown } from '../src/utils/blogMarkdownFormatting.js';
 import { GoogleAuth } from 'google-auth-library';
@@ -60,7 +61,7 @@ export const renderWordPressArticle = (markdown: string) => renderToStaticMarkup
     table: ({ children }) => React.createElement('div', { style: { overflowX: 'auto' } }, React.createElement('table', { style: { borderCollapse: 'collapse', width: '100%' } }, children)),
     th: ({ children }) => React.createElement('th', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
     td: ({ children }) => React.createElement('td', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
-    a: ({ children, href }) => React.createElement('a', { href, rel: 'noopener noreferrer sponsored' }, children),
+    a: ({ children, href }) => React.createElement('a', { href, rel: blogLinkRel(href) }, children),
     img: ({ alt }) => React.createElement('span', null, alt),
   },
   children: normalizeBlogMarkdown(markdown),

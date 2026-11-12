@@ -76,6 +76,7 @@ export class AIContentService {
     }
 
     return {
+      internalLinking: data.article.internalLinking,
       title: data.article.title || brief.suggestedTitle || brief.h1,
       metaDescription: data.article.metaDescription || brief.metaDescription,
       contentMarkdown: data.article.contentMarkdown || '',
@@ -83,6 +84,16 @@ export class AIContentService {
       wordCount: data.article.wordCount || 1000,
       status: 'ai_generated',
     };
+  }
+
+  static async addInternalLinks(topic: string, brief: ContentBrief, projectSettings: ProjectSettings, article: BlogArticle): Promise<BlogArticle> {
+    const response = await authenticatedFetch('/api/content-engine/internal-links', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic, brief, projectSettings, article }),
+    });
+    const data = await response.json();
+    if (!response.ok || !data.article) throw new Error(data.error || 'Die internen Links konnten nicht ergänzt werden.');
+    return data.article;
   }
 
   /**
