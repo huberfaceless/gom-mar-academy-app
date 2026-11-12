@@ -1,3 +1,4 @@
+import { normalizeSeoGeo } from '../src/utils/blogSeoGeo';
 import { findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks } from '../server/wordpressInternalLinks';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -43,10 +44,11 @@ let handler: (req: any, res: any) => Promise<void>;
 let calls = 0; let prompt = '';
 let internalReportOverride: any = null;
 let modelMarkdown = 'Ein hilfreicher Artikel.';
-const context = vm.createContext({ contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
+let modelSeo: Record<string, string> = {};
+const context = vm.createContext({ normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } },
   requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {}, validateBlogAffiliateLink,
-  ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: modelMarkdown }) }; } } }, console,
+  ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: modelMarkdown, ...modelSeo }) }; } } }, console,
 });
 vm.runInContext(ts.transpileModule(route, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
 const invoke = async (affiliateLink: unknown) => {
@@ -67,7 +69,10 @@ for (const value of [undefined, '', 'javascript:alert(1)']) {
 
 internalReportOverride = { state: 'checked', checkedAt: new Date().toISOString(), links: [{ title: 'Wasser und Hydration', url: 'https://vital50.gomo-marketing.at/hydration-ab-50/' }] };
 modelMarkdown = 'Ein Artikel mit [falschem Link](https://vital50.gomo-marketing.at/erfunden/).';
+modelSeo = { seoTitle: 'Ein SEO-Titel', focusKeyword: 'Keyword', answerSummary: 'Kurze Zusammenfassung des Artikels.' };
 const withInternal = await invoke(link);
+assert.equal(withInternal.body.article.seoTitle, modelSeo.seoTitle);
+assert.equal(withInternal.body.article.answerSummary, modelSeo.answerSummary);
 assert.equal(withInternal.status, 200);
 assert.match(withInternal.body.article.contentMarkdown, /## Passende Artikel/);
 assert.ok(withInternal.body.article.contentMarkdown.includes('https://vital50.gomo-marketing.at/hydration-ab-50/'));
@@ -90,11 +95,13 @@ const bundled = await build({ entryPoints: ['src/services/aiContentService.ts'],
 });
 (globalThis as any).__blogFetch = async (_url: string, request: RequestInit) => {
   assert.equal(JSON.parse(String(request.body)).affiliateLink, link);
-  return Response.json({ article: { title: 'Test', contentMarkdown: 'Inhalt' } });
+  return Response.json({ article: { title: 'Test', contentMarkdown: 'Inhalt', ...modelSeo } });
 };
 try {
   const { AIContentService } = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString('base64')}`);
-  await AIContentService.generateBlogArticle('Test', {}, {}, link);
+  const generated = await AIContentService.generateBlogArticle('Test', {}, {}, link);
+  assert.equal(generated.seoTitle, modelSeo.seoTitle);
+  assert.equal(generated.answerSummary, modelSeo.answerSummary);
 } finally { delete (globalThis as any).__blogFetch; }
 console.log('Blogartikel geprüft: formatierte Vorschau, sichere Links, URL-Parameter, explizite Linkwahl und API-Abweisung vor KI-Aufruf.');
 

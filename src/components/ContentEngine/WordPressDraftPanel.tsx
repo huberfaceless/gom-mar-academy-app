@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 
-type Status = { configured: boolean; connected: boolean; siteUrl: string; draft: { state: string; postId: number | null; editUrl: string | null } | null };
+type Status = { configured: boolean; connected: boolean; siteUrl: string; draft: { state: string; postId: number | null; editUrl: string | null; seoStatus?: string } | null };
 const api = async (id: string, action: string, init: RequestInit = {}) => {
   const response = await authenticatedFetch(`/api/wordpress/${encodeURIComponent(id)}/${action}`, init);
   const data = await response.json();
@@ -23,6 +23,8 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [notice, setNotice] = useState('');
+  const [seoReady, setSeoReady] = useState<boolean | null>(null);
+  const [seoError, setSeoError] = useState('');
   const [error, setError] = useState('');
   useEffect(() => {
     let cancelled = false;
@@ -43,6 +45,31 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
       .finally(() => { if (!cancelled) setCategoryLoading(false); });
     return () => { cancelled = true; };
   }, [contentId, status?.connected, categoryReload, savedCategorySlug]);
+  useEffect(() => {
+    if (!status?.connected) { setSeoReady(null); return; }
+    let cancelled = false;
+    void api(contentId, 'seo').then(value => { if (!cancelled) setSeoReady(value.ready); })
+      .catch(() => { if (!cancelled) setSeoReady(null); });
+    return () => { cancelled = true; };
+  }, [contentId, status?.connected]);
+  const checkSeo = async () => {
+    setBusy(true); setSeoError('');
+    try { setSeoReady((await api(contentId, 'seo')).ready); }
+    catch (error) { setSeoError(error instanceof Error ? error.message : hubText('WordPress-Anfrage fehlgeschlagen.')); }
+    finally { setBusy(false); }
+  };
+  const downloadSeoPlugin = async () => {
+    setBusy(true); setSeoError('');
+    try {
+      const response = await authenticatedFetch(`/api/wordpress/${encodeURIComponent(contentId)}/seo-plugin`);
+      if (!response.ok) throw new Error(hubText('Das SEO-Zusatzplugin konnte nicht geladen werden.'));
+      const url = URL.createObjectURL(await response.blob());
+      const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'gommar-academy-seo.zip';
+      document.body.appendChild(anchor); anchor.click(); anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) { setSeoError(error instanceof Error ? error.message : hubText('WordPress-Anfrage fehlgeschlagen.')); }
+    finally { setBusy(false); }
+  };
   const validCategory = categories.some(c => c.slug === categorySlug);
   const refresh = async () => setStatus(await api(contentId, 'status'));
   const connect = async (event: React.FormEvent) => {
@@ -80,6 +107,19 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
       <p className="text-xs text-slate-600">{hubText('Erstelle das Anwendungspasswort in WordPress unter Benutzer → Profil. Verwende hierfür ein separates Passwort für die Academy.')}</p>
       <button disabled={busy} className="self-start rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">{hubText('WordPress verbinden')}</button>
     </form>}
+    {status?.connected && <div className="space-y-2 rounded-xl bg-slate-50 p-3 text-sm">
+      <p className="font-semibold">{seoReady === true ? hubText('Rank-Math-Übertragung ist eingerichtet.') : hubText('Rank-Math-Übertragung ist noch nicht bestätigt.')}</p>
+      {seoReady === false && <>
+        <p>{hubText('Einmalig das SEO-Zusatzplugin herunterladen und in WordPress unter Plugins → Neues Plugin → Plugin hochladen installieren und aktivieren. Rank Math muss aktiv sein.')}</p>
+        <button type="button" disabled={busy} onClick={() => void downloadSeoPlugin()} className="font-semibold underline">{hubText('SEO-Zusatzplugin herunterladen')}</button>
+      </>}
+      <button type="button" disabled={busy} onClick={() => void checkSeo()} className="ml-3 underline">{hubText('SEO-Verbindung prüfen')}</button>
+      {seoError && <p role="alert" className="text-rose-700">{seoError}</p>}
+      {status.draft?.seoStatus === 'saved' && <p role="status" className="text-emerald-800">{hubText('SEO-Daten wurden in WordPress gespeichert und zurückgelesen.')}</p>}
+      {status.draft?.seoStatus === 'incomplete' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Für Rank Math bitte SEO-Titel, Beschreibung und Fokuskeyword vervollständigen und erneut übertragen.')}</p>}
+      {status.draft?.seoStatus === 'unavailable' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten wurden noch nicht an Rank Math übertragen. Bitte die SEO-Verbindung einrichten und erneut übertragen.')}</p>}
+      {status.draft?.seoStatus === 'unverified' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten konnten nicht eindeutig bestätigt werden. Bitte im WordPress-Entwurf prüfen.')}</p>}
+    </div>}
     {status?.connected && <div className="space-y-2">
       <label className="block text-sm font-semibold">{hubText('WordPress-Kategorie')}
         <select value={validCategory ? categorySlug : ''} onChange={e => setCategorySlug(e.target.value)} disabled={busy || categoryLoading} className="mt-1 w-full rounded-xl border p-2">

@@ -32,7 +32,13 @@ const hookReact = {
 const requests: Array<{ kind: string; topic: string }> = [];
 let resolveLinks: (value: any) => void;
 let waitForLinks = false;
+let waitForSeo = false;
+let resolveSeo: (value: any) => void;
 const AIContentService = {
+  async prepareSeoGeo() {
+    if (waitForSeo) return new Promise(resolve => { resolveSeo = resolve; });
+    return { seoTitle: 'SEO-Titel', metaDescription: 'Beschreibung', focusKeyword: 'Keyword', answerSummary: 'Zusammenfassung' };
+  },
   async addInternalLinks(_topic: string, _brief: any, _settings: any, article: any) {
     if (waitForLinks) return new Promise(resolve => { resolveLinks = resolve; });
     return { ...article, contentMarkdown: 'Text mit passenden Links', internalLinking: { state: 'checked', links: [] } };
@@ -111,3 +117,15 @@ waitForLinks = false;
 await component('BlogEditorTab').props.wordpress.onAddInternalLinks(); render();
 assert.equal((saved.find(p => p.id === first.id)?.blogArticle as any).contentMarkdown, 'Text mit passenden Links');
 console.log('Interne Linkprüfung überschreibt keine zwischenzeitlichen Artikeländerungen.');
+
+const contentBeforeSeo = (saved.find(p => p.id === first.id)?.blogArticle as any).contentMarkdown;
+await component('BlogEditorTab').props.seoGeo.onPrepare(); render();
+assert.equal((saved.find(p => p.id === first.id)?.blogArticle as any).seoTitle, 'SEO-Titel');
+assert.equal((saved.find(p => p.id === first.id)?.blogArticle as any).contentMarkdown, contentBeforeSeo);
+waitForSeo = true;
+const pendingSeo = component('BlogEditorTab').props.seoGeo.onPrepare();
+component('BlogEditorTab').props.onChange({ ...component('BlogEditorTab').props.article, metaDescription: 'Meine neue Beschreibung' }); render();
+resolveSeo!({ seoTitle: 'Veralteter Vorschlag', metaDescription: 'Veraltet' });
+await assert.rejects(pendingSeo, /inzwischen geändert/);
+assert.equal((saved.find(p => p.id === first.id)?.blogArticle as any).metaDescription, 'Meine neue Beschreibung');
+console.log('SEO-/GEO-Vorbereitung erhält Artikeltext und zwischenzeitliche Änderungen.');

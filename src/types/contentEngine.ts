@@ -65,6 +65,9 @@ export interface ContentBrief {
 }
 
 export interface BlogArticle {
+  seoTitle?: string;
+  focusKeyword?: string;
+  answerSummary?: string;
   internalLinking?: { state: 'checked' | 'unavailable' | 'not-supported'; checkedAt: string; links: { title: string; url: string }[] };
   wordpressCategorySlug?: string;
   title: string;

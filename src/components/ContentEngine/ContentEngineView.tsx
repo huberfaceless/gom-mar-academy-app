@@ -857,6 +857,17 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           {activeTab === 'blog' && (
             activeContentProject.blogArticle ? (
               <BlogEditorTab
+                contentLanguage={activeContentProject.projectSettings.language}
+                seoGeo={{
+                  contentId: activeContentProject.id,
+                  mainKeyword: activeContentProject.contentBrief?.mainKeyword,
+                  onPrepare: async () => {
+                    const fields = await AIContentService.prepareSeoGeo(activeContentProject.blogArticle!, activeContentProject.contentBrief!, activeContentProject.projectSettings);
+                    const current = latestContentProjectRef.current;
+                    if (!current || current.id !== activeContentProject.id || JSON.stringify(current.blogArticle) !== JSON.stringify(activeContentProject.blogArticle)) throw new Error(hubText('Der Artikel wurde inzwischen geändert. Bitte erneut vorbereiten.'));
+                    if (!await handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle!, ...fields } })) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
+                  },
+                }}
                 wordpress={isAdmin && activeContentProject.projectSettings.websiteUrl?.replace(/\/$/, '') === 'https://vital50.gomo-marketing.at' ? {
                   contentId: activeContentProject.id,
                   onAddInternalLinks: async () => {
