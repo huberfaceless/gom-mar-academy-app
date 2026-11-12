@@ -115,3 +115,15 @@ const newArticleDialog = renderToStaticMarkup(React.createElement(AffiliateLinkM
 assert.ok(newArticleDialog.includes('Thema des neuen Artikels')); assert.ok(newArticleDialog.includes('Affiliate-/Empfehlungslink'));
 saveAllContentProjects([], owner);
 console.log('Mehrere Blogartikel geprüft: getrennte IDs, neue Fassung ohne Überschreiben, Bearbeiten, Neuladen, Projekttrennung und Artikelauswahl.');
+
+const { normalizeBlogMarkdown } = await import('../src/utils/blogMarkdownFormatting');
+const grid = '+----------------+----------------+\n| Säule A        | Säule B        |\n| Erläuterung A  | Erläuterung B  |\n+----------------+----------------+';
+const formatted = normalizeBlogMarkdown(grid);
+assert.equal(normalizeBlogMarkdown(formatted), formatted, 'Grid conversion must be idempotent.');
+const gridPreview = renderToStaticMarkup(React.createElement(BlogArticleContent, { content: grid }));
+assert.match(gridPreview, /<table>/);
+assert.match(gridPreview, /Säule A Erläuterung A/);
+assert.doesNotMatch(gridPreview, /\+---/);
+assert.equal(normalizeBlogMarkdown('```python\n' + grid + '\n```'), '```python\n' + grid + '\n```');
+assert.match(server, /Keine ASCII-Tabellen/);
+console.log('Artikelvorschau geprüft: Textgitter als echte Tabellen; neue Artikel erhalten klare Formatvorgaben.');

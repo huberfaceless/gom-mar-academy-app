@@ -1,3 +1,4 @@
+import { normalizeBlogMarkdown } from '../src/utils/blogMarkdownFormatting.js';
 import { GoogleAuth } from 'google-auth-library';
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto';
 import React from 'react';
@@ -55,10 +56,13 @@ const keyFor = (...values: string[]) => createHash('sha256').update(JSON.stringi
 export const renderWordPressArticle = (markdown: string) => renderToStaticMarkup(React.createElement(ReactMarkdown, {
   remarkPlugins: [remarkGfm], skipHtml: true,
   components: {
+    table: ({ children }) => React.createElement('div', { style: { overflowX: 'auto' } }, React.createElement('table', { style: { borderCollapse: 'collapse', width: '100%' } }, children)),
+    th: ({ children }) => React.createElement('th', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
+    td: ({ children }) => React.createElement('td', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
     a: ({ children, href }) => React.createElement('a', { href, rel: 'noopener noreferrer sponsored' }, children),
     img: ({ alt }) => React.createElement('span', null, alt),
   },
-  children: markdown,
+  children: normalizeBlogMarkdown(markdown),
 }));
 
 export function createWordPressDraftService(storage = store, request: typeof fetch = fetch, secret = () => process.env.WORDPRESS_CREDENTIAL_ENCRYPTION_KEY || '') {

@@ -31,3 +31,7 @@ Nur `https://vital50.gomo-marketing.at` ist als Ziel freigeschaltet. Redirects w
 Die automatischen Tests verwenden isolierte WordPress- und Speicherantworten. Ein echter Entwurf mit dem später eingerichteten Anwendungspasswort ist nach dem Deployment separat zu bestätigen. Während der Entwicklung wurde kein Beitrag auf Vital50 erstellt.
 
 Referenzen: [WordPress-Authentifizierung](https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/), [Beiträge-API](https://developer.wordpress.org/rest-api/reference/posts/).
+
+## Tabellenformatierung
+
+Vollständige ASCII-Textgitter mit Plus-/Strichrahmen werden in der Academy-Vorschau und beim WordPress-Export in echte Tabellen umgewandelt. Umgebrochene Zelltexte bleiben zusammen, eine vorhandene übergreifende Titelzeile bleibt über der Tabelle erhalten. Andere Codeblöcke und unvollständige Zeichnungen werden nicht verändert. Der WordPress-Export ergänzt sichtbare Zellrahmen und Abstände. Ein bereits übertragener Entwurf kann über **WordPress-Entwurf aktualisieren** korrigiert werden; der Artikel muss nicht neu generiert werden.

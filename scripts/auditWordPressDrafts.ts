@@ -71,3 +71,29 @@ await assert.rejects(service.transfer('owner', 'article'), /zuerst WordPress ver
 const server = readFileSync('server.ts', 'utf8');
 assert.match(server, /app\.all\('\/api\/wordpress\/:contentId\/:action', requireVerifiedMember, requireAcademyAdmin/);
 console.log('WordPress-Entwürfe geprüft: Verschlüsselung, Projektzuordnung, HTML, Entwurfsstatus, Aktualisierung, parallele Anfragen, unklare Ergebnisse und feste Zieladresse.');
+
+const grid = [
+  '+------------------------------------------------------------+',
+  '| DER VITAL50 4-SÄULEN-STOFFWECHSEL-PLAN                       |',
+  '+------------------------------------------------------------+',
+  '| 1. Proteine & Blutzucker     | 2. Krafttraining              |',
+  '| 25–35g Protein / Mahlzeit    | 2–3x / Woche                  |',
+  '+-----------------------------+------------------------------+',
+  '| 3. Stress- & Schlaf-Sync     | 4. NEAT (Alltagsbewegung)     |',
+  '| Cortisolsenkung & 7–8h       | 7.000–10.000 Schritte täglich |',
+  '+-----------------------------+------------------------------+',
+].join('\n');
+for (const source of [grid, `\`\`\`\n${grid}\n\`\`\``, `\`\`\`text\n${grid}\n\`\`\``]) {
+  const rendered = renderWordPressArticle(`Einleitung\n\n${source}\n\n## Säule 1\n\nWeiterer Text.`);
+  assert.match(rendered, /<table/);
+  assert.equal((rendered.match(/<td /g) || []).length, 4);
+  assert.match(rendered, /25–35g Protein \/ Mahlzeit/);
+  assert.match(rendered, /7\.000–10\.000 Schritte täglich/);
+  assert.match(rendered, /border:1px solid/);
+  assert.doesNotMatch(rendered, /\+---|<pre>/);
+  assert.match(rendered, /<h2>Säule 1<\/h2>/);
+}
+assert.match(renderWordPressArticle('```js\nconst a = 1;\n```'), /<pre>/, 'Real source code must stay source code');
+assert.doesNotMatch(renderWordPressArticle('+---+\n| incomplete |'), /<table/);
+assert.match(renderWordPressArticle('| Bereich | Wert |\n| --- | --- |\n| A | B |'), /<table/);
+console.log('WordPress-Tabellen geprüft: bestehende Textgitter, umbrochene Zellen, echte Tabellen, sichtbare Zellrahmen und unveränderter Programmcode.');

@@ -2644,6 +2644,7 @@ Bestätigter Affiliate-/Empfehlungslink: ${affiliateLink === null ? 'Kein Link g
 Stil & Struktur-Anforderungen:
 - Schreibe einen vollständigen, fundierten Artikel (mind. 1.200 - 1.800 Wörter).
 - Nutze ansprechende Markdown-Formatierung (#, ##, ###, Bulletpoints, fette Schlüsselwörter, Zitate/Infoboxen).
+- Verwende für Vergleiche echte Markdown-Tabellen mit Kopfzeile und Trennzeile. Keine ASCII-Tabellen, Zeichenrahmen oder Textdiagramme in Codeblöcken; verwende stattdessen Tabellen oder Listen.
 - Binde die Keywords organisch und natürlich ein.
 - Baue konkrete Praxisbeispiele und Tipps für den Alltag der Zielgruppe ein.
 - Am Ende ein FAQ-Abschnitt und eine passende Handlungsaufforderung ohne Link.
