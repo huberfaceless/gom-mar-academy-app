@@ -1,3 +1,4 @@
+import { selectedBlogReferences, isWordPressImageUrl } from './blogReferences';
 import type { BlogArticle, ContentBrief } from '../types/contentEngine';
 
 export const RANK_MATH_KEYS = ['rank_math_title', 'rank_math_description', 'rank_math_focus_keyword'] as const;
@@ -27,10 +28,15 @@ export function normalizeSeoGeo(value: Record<string, unknown>, article: BlogArt
     answerSummary: seoText(value.answerSummary, 1200) || fallback.answerSummary,
   };
 }
-export function blogMarkdownWithSummary(article: Pick<BlogArticle, 'contentMarkdown' | 'answerSummary'>, language = 'de'): string {
+export function blogMarkdownWithSummary(article: Pick<BlogArticle, 'contentMarkdown' | 'answerSummary' | 'wordpressImage' | 'referenceIds'>, language = 'de'): string {
   const summary = seoText(article.answerSummary, 1200);
-  if (!summary) return article.contentMarkdown;
+  const escape = (text: string) => text.replace(/[\\`*_[\]<>]/g, '\\$&').replace(/[\r\n]+/g, ' ');
+  let content = article.contentMarkdown;
+  if (article.wordpressImage && isWordPressImageUrl(article.wordpressImage.url)) content = `![${escape(article.wordpressImage.alt)}](<${article.wordpressImage.url}>)\n\n${content}`;
+  const sources = selectedBlogReferences(article.referenceIds).filter(source => !content.includes(source.url));
+  if (sources.length) content += `\n\n## ${language === 'en' ? 'Sources' : language === 'pl' ? 'Źródła' : 'Quellen'}\n\n${sources.map(source => `- [${escape(source.publisher + ': ' + source.title)}](<${source.url}>)`).join('\n')}`;
+  if (!summary) return content;
   const heading = language === 'en' ? 'Key points at a glance' : language === 'pl' ? 'Najważniejsze informacje' : 'Das Wichtigste in Kürze';
   const escaped = summary.replace(/[\\`*_[\]<>]/g, '\\$&');
-  return `> **${heading}**\n>\n> ${escaped}\n\n${article.contentMarkdown}`;
+  return `> **${heading}**\n>\n> ${escaped}\n\n${content}`;
 }
