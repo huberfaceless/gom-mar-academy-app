@@ -26,10 +26,17 @@ let cursor = 0; let dirty = false; let effects: Array<() => void> = [];
 const hookReact = {
   createElement: (type: any, props: any, ...children: any[]) => ({ type, props: { ...props, children } }),
   useState(initial: any) { const i = cursor++; if (!(i in slots)) slots[i] = typeof initial === 'function' ? initial() : initial; return [slots[i], (value: any) => { const next = typeof value === 'function' ? value(slots[i]) : value; if (!Object.is(next, slots[i])) { slots[i] = next; dirty = true; } }]; },
+  useRef(value: any) { const i = cursor++; if (!(i in slots)) slots[i] = { current: value }; return slots[i]; },
   useEffect(effect: () => void, next: any[]) { const i = cursor++; if (!deps[i] || next.some((v, n) => !Object.is(v, deps[i][n]))) { deps[i] = next; effects.push(effect); } },
 };
 const requests: Array<{ kind: string; topic: string }> = [];
+let resolveLinks: (value: any) => void;
+let waitForLinks = false;
 const AIContentService = {
+  async addInternalLinks(_topic: string, _brief: any, _settings: any, article: any) {
+    if (waitForLinks) return new Promise(resolve => { resolveLinks = resolve; });
+    return { ...article, contentMarkdown: 'Text mit passenden Links', internalLinking: { state: 'checked', links: [] } };
+  },
   async generateContentBrief(topic: string) { requests.push({ kind: 'brief', topic }); return { brief: { h1: topic } }; },
   async generateBlogArticle(topic: string) { requests.push({ kind: 'blog', topic }); return { title: topic }; },
   async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return []; },
@@ -55,7 +62,7 @@ vm.runInContext(ts.transpileModule(readFileSync('src/components/ContentEngine/Co
 }).outputText, context);
 const View = (context.exports as any).ContentEngineView;
 let tree: any;
-const render = () => { for (let n = 0; n < 10; n++) { dirty = false; cursor = 0; effects = []; tree = View({}); for (const effect of effects) effect(); if (!dirty) return; } throw new Error('Instabile Hooks'); };
+const render = () => { for (let n = 0; n < 10; n++) { dirty = false; cursor = 0; effects = []; tree = View({ isAdmin: true }); for (const effect of effects) effect(); if (!dirty) return; } throw new Error('Instabile Hooks'); };
 const find = (predicate: (node: any) => boolean, node: any): any => {
   if (Array.isArray(node)) { for (const child of node) { const found = find(predicate, child); if (found) return found; } }
   else if (node && typeof node === 'object') { if (predicate(node)) return node; return node.props?.children ? find(predicate, node.props.children) : undefined; }
@@ -88,3 +95,19 @@ const html = renderToStaticMarkup(React.createElement(PinterestPinsTab, { pins: 
 assert.ok(html.includes(first.topic));
 assert.ok(html.includes('Pinterest-Pins zu diesem Thema erstellen'));
 console.log('Themenübergabe geprüft: Laden, Artikelauswahl, eigener Entwurf, zusätzlicher Artikel, Projektwechsel und Pinterest-Erstellung mit dem ausgewählten Thema.');
+
+// A delayed link check must not overwrite an article edited while the request was running.
+settings.websiteUrl = 'https://vital50.gomo-marketing.at';
+const brandSelector = find(n => n.type === 'select' && n.props.value === otherSettings.id, tree);
+brandSelector.props.onChange({ target: { value: settings.id } }); render();
+component('BlogArticleLibrary').props.onSelect(first.id); render();
+waitForLinks = true;
+const pendingLinks = component('BlogEditorTab').props.wordpress.onAddInternalLinks();
+component('BlogEditorTab').props.onChange({ ...first.blogArticle, title: 'Manuell geändert', contentMarkdown: 'Meine Änderung' }); render();
+resolveLinks!({ ...first.blogArticle, contentMarkdown: 'Veraltete Antwort' });
+await assert.rejects(pendingLinks, /inzwischen geändert/);
+assert.equal(saved.find(p => p.id === first.id)?.blogArticle.title, 'Manuell geändert');
+waitForLinks = false;
+await component('BlogEditorTab').props.wordpress.onAddInternalLinks(); render();
+assert.equal((saved.find(p => p.id === first.id)?.blogArticle as any).contentMarkdown, 'Text mit passenden Links');
+console.log('Interne Linkprüfung überschreibt keine zwischenzeitlichen Artikeländerungen.');

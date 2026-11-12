@@ -137,3 +137,5 @@ assert.match(renderWordPressArticle('```js\nconst a = 1;\n```'), /<pre>/, 'Real 
 assert.doesNotMatch(renderWordPressArticle('+---+\n| incomplete |'), /<table/);
 assert.match(renderWordPressArticle('| Bereich | Wert |\n| --- | --- |\n| A | B |'), /<table/);
 console.log('WordPress-Tabellen geprüft: bestehende Textgitter, umbrochene Zellen, echte Tabellen, sichtbare Zellrahmen und unveränderter Programmcode.');
+
+await import('./auditWordPressInternalLinks');

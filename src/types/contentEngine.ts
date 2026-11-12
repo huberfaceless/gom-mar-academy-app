@@ -65,6 +65,7 @@ export interface ContentBrief {
 }
 
 export interface BlogArticle {
+  internalLinking?: { state: 'checked' | 'unavailable' | 'not-supported'; checkedAt: string; links: { title: string; url: string }[] };
   wordpressCategorySlug?: string;
   title: string;
   metaDescription: string;

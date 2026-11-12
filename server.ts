@@ -1,3 +1,4 @@
+import { findWordPressInternalLinks, appendWordPressInternalLinks, enrichWordPressInternalLinks, removeUnverifiedInternalLinks } from './server/wordpressInternalLinks.js';
 import { wordpressDraftService } from './server/wordpressDraftAdmin.js';
 import { contentLanguageInstruction, recommendationLabel } from './server/contentGenerationLanguage';
 import { firestoreStripeDeliveryStore, processStripeDelivery } from './server/stripeWebhookDelivery.js';
@@ -2610,6 +2611,18 @@ Antworte ausschließlich im folgenden validen JSON-Format:
     }
   });
 
+  app.post('/api/content-engine/internal-links', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
+    const { article, projectSettings, topic, brief } = req.body;
+    if (!article || typeof article.title !== 'string' || article.title.length > 500 || typeof article.contentMarkdown !== 'string' || article.contentMarkdown.length > 200000 || typeof topic !== 'string' || !brief) {
+      res.status(400).json({ error: 'Bitte einen gespeicherten Blogartikel auswählen.' }); return;
+    }
+    try {
+      const updated = await enrichWordPressInternalLinks(article, projectSettings, topic, brief);
+      if (updated.internalLinking.state === 'unavailable') { res.status(503).json({ error: 'Die vorhandenen WordPress-Links konnten nicht geprüft werden. Bitte später erneut versuchen.' }); return; }
+      res.json({ article: updated });
+    } catch { res.status(400).json({ error: 'Die internen Links konnten nicht ergänzt werden.' }); }
+  });
+
   // 🚀 Content Engine: 2. Generate Full Blog Article
   app.post('/api/content-engine/blog', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
@@ -2625,6 +2638,8 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         res.status(400).json({ error: (error as Error).message });
         return;
       }
+      const internalLinking = await findWordPressInternalLinks(projectSettings, { title: brief.suggestedTitle || brief.h1 || topic, topic, brief });
+      const withInternalLinks = (content: string) => appendWordPressInternalLinks(removeUnverifiedInternalLinks(content, internalLinking), internalLinking, projectSettings?.language);
       const withRecommendation = (content: string): string => affiliateLink
         ? `${content}\n\n[${recommendationLabel(projectSettings?.language)}](<${affiliateLink}>)`
         : content;
@@ -2651,6 +2666,7 @@ Stil & Struktur-Anforderungen:
 - Am Ende ein FAQ-Abschnitt und eine passende Handlungsaufforderung ohne Link.
 - Der bestätigte Empfehlungslink wird anschließend automatisch angehängt. Erfinde keine Empfehlungs-URLs und übernimm keine alten Links aus Briefing oder Projektvorgaben.
 - Wenn kein Link gewünscht ist, schreibe keine verlinkte Empfehlung.
+- Interne Links werden anschließend aus dem geprüften WordPress-Bestand ergänzt. Erfinde keine internen Zieladressen.
 
 Antworte im JSON-Format:
 {
@@ -2674,9 +2690,9 @@ Antworte im JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, article: { ...parsed, contentMarkdown: withRecommendation(typeof parsed.contentMarkdown === 'string' ? parsed.contentMarkdown : '') } });
+        res.json({ success: true, article: { ...parsed, internalLinking, contentMarkdown: withRecommendation(withInternalLinks(typeof parsed.contentMarkdown === 'string' ? parsed.contentMarkdown : '')) } });
       } catch {
-        res.json({ success: true, article: { title: brief.suggestedTitle, contentMarkdown: withRecommendation(text), wordCount: 800, readingTimeMinutes: 5 } });
+        res.json({ success: true, article: { title: brief.suggestedTitle, internalLinking, contentMarkdown: withRecommendation(withInternalLinks(text)), wordCount: 800, readingTimeMinutes: 5 } });
       }
     } catch (err: unknown) {
       console.error('Error in /api/content-engine/blog:', err);

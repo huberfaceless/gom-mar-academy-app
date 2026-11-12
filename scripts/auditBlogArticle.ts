@@ -1,3 +1,4 @@
+import { findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks } from '../server/wordpressInternalLinks';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -40,10 +41,12 @@ const server = readFileSync('server.ts', 'utf8');
 const route = server.slice(server.indexOf("  app.post('/api/content-engine/blog'"), server.indexOf('  // 🚀 Content Engine: 3.'));
 let handler: (req: any, res: any) => Promise<void>;
 let calls = 0; let prompt = '';
-const context = vm.createContext({ contentLanguageInstruction, recommendationLabel,
+let internalReportOverride: any = null;
+let modelMarkdown = 'Ein hilfreicher Artikel.';
+const context = vm.createContext({ contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } },
   requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {}, validateBlogAffiliateLink,
-  ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: 'Ein hilfreicher Artikel.' }) }; } } }, console,
+  ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: modelMarkdown }) }; } } }, console,
 });
 vm.runInContext(ts.transpileModule(route, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
 const invoke = async (affiliateLink: unknown) => {
@@ -61,6 +64,23 @@ assert.equal(noLink.body.article.contentMarkdown, 'Ein hilfreicher Artikel.');
 for (const value of [undefined, '', 'javascript:alert(1)']) {
   const before = calls; assert.equal((await invoke(value)).status, 400); assert.equal(calls, before);
 }
+
+internalReportOverride = { state: 'checked', checkedAt: new Date().toISOString(), links: [{ title: 'Wasser und Hydration', url: 'https://vital50.gomo-marketing.at/hydration-ab-50/' }] };
+modelMarkdown = 'Ein Artikel mit [falschem Link](https://vital50.gomo-marketing.at/erfunden/).';
+const withInternal = await invoke(link);
+assert.equal(withInternal.status, 200);
+assert.match(withInternal.body.article.contentMarkdown, /## Passende Artikel/);
+assert.ok(withInternal.body.article.contentMarkdown.includes('https://vital50.gomo-marketing.at/hydration-ab-50/'));
+assert.ok(withInternal.body.article.contentMarkdown.endsWith(`[Zur Empfehlung](<${link}>)`));
+assert.ok(!withInternal.body.article.contentMarkdown.includes('/erfunden/'));
+assert.equal(withInternal.body.article.internalLinking.state, 'checked');
+internalReportOverride = { state: 'unavailable', checkedAt: new Date().toISOString(), links: [] };
+const unavailable = await invoke(null);
+assert.equal(unavailable.status, 200, 'WordPress failure must not block article generation');
+assert.equal(unavailable.body.article.internalLinking.state, 'unavailable');
+assert.doesNotMatch(unavailable.body.article.contentMarkdown, /## Passende Artikel/);
+internalReportOverride = null;
+modelMarkdown = 'Ein hilfreicher Artikel.';
 
 const bundled = await build({ entryPoints: ['src/services/aiContentService.ts'], bundle: true, write: false, platform: 'node', format: 'esm',
   plugins: [{ name: 'blog-fetch', setup(builder) {

@@ -1,6 +1,6 @@
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import { readPinterestOAuthReturn } from '../../utils/pinterestOAuthReturn';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Sparkles, 
   Layers, 
@@ -211,8 +211,12 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     setErrorMsg(null);
   }, [activeProjectSettings.id, activeContentProject?.id, activeContentProject?.topic]);
 
+  const latestContentProjectRef = useRef(activeContentProject);
+  latestContentProjectRef.current = activeContentProject;
+
   // Persist whenever activeContentProject changes
   const handleUpdateActiveProject = async (updated: CentralContentProject): Promise<boolean> => {
+    latestContentProjectRef.current = updated;
     setActiveContentProject(updated);
     saveOrUpdateContentProject(updated, userId);
     setContentProjects((prev) => {
@@ -855,6 +859,12 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               <BlogEditorTab
                 wordpress={isAdmin && activeContentProject.projectSettings.websiteUrl?.replace(/\/$/, '') === 'https://vital50.gomo-marketing.at' ? {
                   contentId: activeContentProject.id,
+                  onAddInternalLinks: async () => {
+                    const blogArticle = await AIContentService.addInternalLinks(activeContentProject.topic, activeContentProject.contentBrief!, activeContentProject.projectSettings, activeContentProject.blogArticle!);
+                    const current = latestContentProjectRef.current;
+                    if (!current || current.id !== activeContentProject.id || current.blogArticle?.contentMarkdown !== activeContentProject.blogArticle?.contentMarkdown || current.blogArticle?.title !== activeContentProject.blogArticle?.title) throw new Error(hubText('Der Artikel wurde inzwischen geändert. Bitte die Linkprüfung erneut starten.'));
+                    if (!await handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle!, contentMarkdown: blogArticle.contentMarkdown, internalLinking: blogArticle.internalLinking } })) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
+                  },
                   onSave: (categorySlug) => handleUpdateActiveProject({ ...activeContentProject, blogArticle: { ...activeContentProject.blogArticle!, wordpressCategorySlug: categorySlug } }),
                 } : undefined}
                 article={activeContentProject.blogArticle}
