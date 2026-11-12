@@ -1,3 +1,4 @@
+import { normalizeBlogMarkdown } from '../../utils/blogMarkdownFormatting';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -7,6 +8,6 @@ export const BlogArticleContent: React.FC<{ content: string }> = ({ content }) =
     <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml components={{
       a: ({ node: _node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer sponsored" className="font-semibold text-emerald-700 underline underline-offset-2" />,
       img: ({ alt }) => <span>{alt}</span>,
-    }}>{content}</ReactMarkdown>
+    }}>{normalizeBlogMarkdown(content)}</ReactMarkdown>
   </div>
 );
