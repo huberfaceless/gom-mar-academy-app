@@ -166,3 +166,4 @@ console.log('WordPress-Tabellen geprüft: bestehende Textgitter, umbrochene Zell
 
 await import('./auditWordPressInternalLinks');
 await import('./auditBlogSeoGeo');
+await import('./auditBlogSeoCheck');

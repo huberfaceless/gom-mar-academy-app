@@ -65,6 +65,9 @@ export interface ContentBrief {
 }
 
 export interface BlogArticle {
+  wordpressSlug?: string;
+  referenceIds?: string[];
+  wordpressImage?: { id: number; url: string; alt: string; featured?: boolean } | null;
   seoTitle?: string;
   focusKeyword?: string;
   answerSummary?: string;

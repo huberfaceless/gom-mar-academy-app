@@ -71,3 +71,23 @@ Fehlt die Freigabe, werden Entwürfe weiterhin ohne SEO-Metadaten übertragen; d
 Prüfung: `npm run audit:wordpress` beinhaltet SEO-/GEO- und Plugin-ZIP-Tests. Der tatsächliche WordPress-Rücklesetest erfordert die einmalige Plugin-Installation in Produktion.
 
 Referenzen: [WordPress-Metafelder](https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/), [Rank-Math-Support zur Registrierung der Felder](https://wordpress.org/support/topic/meta-title-and-meta-description-with-n8n/), [Google zu AI-Funktionen und SEO](https://developers.google.com/search/docs/appearance/ai-features).
+
+## SEO-Check, kurze URLs, Bilder und Quellen
+
+Der neue Bereich **SEO-Check vor der Übertragung** prüft das Fokuskeyword im SEO-Titel, in der Beschreibung und in H2–H4-Zwischenüberschriften. Er zählt Nennungen im sichtbaren Text einschließlich Kurzantwort, ohne eine feste Keyword-Dichte oder einen Google-Rankingwert zu behaupten. Vorschläge für Titel, Beschreibung und die erste vorhandene Zwischenüberschrift werden nur per Klick übernommen. Codeblöcke werden nicht bearbeitet.
+
+**URL-Vorschlag übernehmen** setzt einen kurzen editierbaren Slug (Vorschlag bis 40 Zeichen). Leer lassen bewahrt den WordPress-Slug. Ein ausdrücklich gesetzter Slug wird beim Erstellen oder Aktualisieren eines Entwurfs übertragen. Den von WordPress bestätigten Slug zeigt die Academy nach der Übertragung an; WordPress kann bei Namenskonflikten einen Zusatz vergeben. Veröffentlichte und geplante Beiträge werden weiterhin vor allen Artikeländerungen abgewiesen.
+
+### Bilder
+
+Bei einer bestehenden WordPress-Verbindung bietet der Check eine Mediathek-Suche (bis zu 30 Treffer pro Suche) und den Upload eigener PNG-, JPEG- oder WebP-Dateien bis 4 MB. Der Upload erfolgt erst nach bewusster Dateiauswahl. Format und Dateisignatur werden geprüft; Zugangsdaten werden ausschließlich an die feste Vital50-API gesendet. Nach unklarem Upload-Ergebnis zuerst die WordPress-Mediathek prüfen, bevor erneut hochgeladen wird. Es findet keine automatische Upload-Wiederholung statt.
+
+Ein ausgewähltes Bild erscheint im Artikeltext und benötigt einen beschreibenden Alt-Text. Die Bild-ID wird vor jeder Artikelübertragung erneut über WordPress geprüft; für den Export wird die dort gelieferte URL verwendet. Nur Bilder unter dem Vital50-Uploadpfad werden angezeigt. Optional kann dasselbe Bild als Beitragsbild gesetzt werden; abhängig vom Theme könnte es dann doppelt erscheinen. Alt-Texte bestehender Medien werden nicht global geändert. Beim Entfernen einer zuvor durch die Academy gesetzten Beitragsbild-Zuordnung wird nur die von der Academy verwaltete, unveränderte Zuordnung entfernt. Medien-Dateien werden dabei nicht gelöscht.
+
+### Quellen
+
+**Passende Quellen prüfen** sucht thematische Vorschläge in einem vorab recherchierten, aktuell sechs Seiten umfassenden Fachstellenbestand von DGE, IQWiG und dem österreichischen Gesundheitsportal. Dies ist keine freie Websuche und keine automatische Prüfung sämtlicher Artikelaussagen. Der Bestand deckt Ernährung, Gewicht, Bewegung, Trinken, Schlaf und Stress ab; andere Themen können ohne Treffer bleiben. Zur Laufzeit werden die ausgewählten festen HTTPS-Adressen ohne Zugangsdaten geprüft. Weiterleitungen werden nicht verfolgt.
+
+Nur angekreuzte Quellen werden unter **Quellen** ergänzt. Die Erreichbarkeit wird vor der WordPress-Übertragung erneut geprüft; bei einem Fehler kann die Auswahl korrigiert werden. Unbekannte IDs und frei eingegebene Server-URLs werden nicht akzeptiert. Quellen aus diesem Bestand erhalten normale redaktionelle Links ohne sponsored; der bisherige Umgang mit Affiliate-/Empfehlungslinks bleibt bestehen. Fachliche Passung und konkrete Belegkraft sind vor Veröffentlichung zu kontrollieren.
+
+Es ist keine neue Installation der SEO Bridge und keine neue Cloud-Konfiguration erforderlich. `npm run audit:wordpress` umfasst die ergänzten SEO-Check-, Medien- und Quellenprüfungen. Ein tatsächlicher Medien-Upload wurde während der Entwicklung nicht auf Vital50 durchgeführt.

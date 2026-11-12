@@ -1,3 +1,4 @@
+import { suggestBlogReferences } from './server/blogReferences.js';
 import { wordpressSeoBridgeZip } from './server/wordpressSeoBridge.js';
 import { normalizeSeoGeo } from './src/utils/blogSeoGeo.js';
 import { findWordPressInternalLinks, appendWordPressInternalLinks, enrichWordPressInternalLinks, removeUnverifiedInternalLinks } from './server/wordpressInternalLinks.js';
@@ -1198,7 +1199,9 @@ async function startServer() {
     const uid = (req as FirebaseRequest).firebaseUser!.sub;
     const { contentId, action } = req.params;
     try {
-      if (action === 'seo' && req.method === 'GET') res.json(await wordpressDraftService.seo(uid, contentId));
+      if (action === 'media' && req.method === 'GET') res.json(await wordpressDraftService.media(uid, contentId, String(req.query.search || '')));
+      else if (action === 'media' && req.method === 'POST') res.json(await wordpressDraftService.uploadMedia(uid, contentId, req.body?.image));
+      else if (action === 'seo' && req.method === 'GET') res.json(await wordpressDraftService.seo(uid, contentId));
       else if (action === 'seo-plugin' && req.method === 'GET') {
         await wordpressDraftService.status(uid, contentId);
         res.type('application/zip').set('Content-Disposition', 'attachment; filename="gommar-academy-seo.zip"').send(await wordpressSeoBridgeZip());
@@ -2616,6 +2619,13 @@ Antworte ausschließlich im folgenden validen JSON-Format:
       const message = err instanceof Error ? err.message : 'Fehler beim Erstellen des Content Briefs.';
       res.status(500).json({ error: message });
     }
+  });
+
+  app.post('/api/content-engine/reference-suggestions', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
+    const { title, mainKeyword } = req.body;
+    if (typeof title !== 'string' || title.length > 500 || (mainKeyword !== undefined && (typeof mainKeyword !== 'string' || mainKeyword.length > 150))) { res.status(400).json({ error: 'Bitte Artikeltitel und Fokuskeyword prüfen.' }); return; }
+    try { res.json({ sources: await suggestBlogReferences(`${title} ${mainKeyword || ''}`), checkedAt: new Date().toISOString() }); }
+    catch { res.status(503).json({ error: 'Quellen konnten nicht geprüft werden.' }); }
   });
 
   app.post('/api/content-engine/seo-geo', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {

@@ -1,3 +1,5 @@
+import { verifyBlogReferences } from './blogReferences.js';
+import { isWordPressImageUrl } from '../src/utils/blogReferences.js';
 import { RANK_MATH_KEYS, rankMathMeta, blogMarkdownWithSummary } from '../src/utils/blogSeoGeo.js';
 import { blogLinkRel } from '../src/utils/blogLinkRel.js';
 import { VITAL50_CATEGORIES, isVital50CategorySlug, mapVital50Categories, suggestVital50Category } from '../src/utils/vital50BlogCategories.js';
@@ -27,7 +29,7 @@ const fsRequest = async (path: string, init: RequestInit = {}) => {
   if (!token) throw new Error('Cloud-Zugriff für WordPress fehlt.');
   return fetch(`${root()}/${path}`, { ...init, headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(15000) });
 };
-const decode = (v: any): any => v.stringValue ?? v.booleanValue ?? (v.mapValue ? Object.fromEntries(Object.entries(v.mapValue.fields || {}).map(([k, x]) => [k, decode(x)])) : v.nullValue ?? undefined);
+export const decodeWordPressContentValue = (v: any): any => v.stringValue ?? v.booleanValue ?? (v.integerValue !== undefined ? Number(v.integerValue) : undefined) ?? (v.doubleValue !== undefined ? v.doubleValue : undefined) ?? (v.arrayValue ? (v.arrayValue.values || []).map(decodeWordPressContentValue) : undefined) ?? (v.mapValue ? Object.fromEntries(Object.entries(v.mapValue.fields || {}).map(([k, x]) => [k, decodeWordPressContentValue(x)])) : v.nullValue ?? undefined);
 const store: WordPressStore = {
   async read(collection, id) {
     const r = await fsRequest(`${collection}/${encodeURIComponent(id)}`);
@@ -50,7 +52,7 @@ const store: WordPressStore = {
     if (r.status === 404) return null;
     if (!r.ok) throw new Error('Der gespeicherte Artikel konnte nicht geladen werden.');
     const d = await r.json();
-    return Object.fromEntries(Object.entries(d.fields || {}).map(([k, v]) => [k, decode(v)]));
+    return Object.fromEntries(Object.entries(d.fields || {}).map(([k, v]) => [k, decodeWordPressContentValue(v)]));
   },
 };
 const connectionCollection = 'academyWordPressConnections';
@@ -63,12 +65,12 @@ export const renderWordPressArticle = (markdown: string) => renderToStaticMarkup
     th: ({ children }) => React.createElement('th', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
     td: ({ children }) => React.createElement('td', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
     a: ({ children, href }) => React.createElement('a', { href, rel: blogLinkRel(href) }, children),
-    img: ({ alt }) => React.createElement('span', null, alt),
+    img: ({ alt, src }) => isWordPressImageUrl(src) ? React.createElement('img', { src, alt: alt || '', loading: 'lazy' }) : React.createElement('span', null, alt),
   },
   children: normalizeBlogMarkdown(markdown),
 }));
 
-export function createWordPressDraftService(storage = store, request: typeof fetch = fetch, secret = () => process.env.WORDPRESS_CREDENTIAL_ENCRYPTION_KEY || '') {
+export function createWordPressDraftService(storage = store, request: typeof fetch = fetch, secret = () => process.env.WORDPRESS_CREDENTIAL_ENCRYPTION_KEY || '', publicRequest: typeof fetch = fetch) {
   const encryptionKey = () => {
     const key = secret().trim();
     if (key.length < 32) throw new Error('WordPress ist serverseitig noch nicht eingerichtet (Verschlüsselungsschlüssel fehlt).');
@@ -87,7 +89,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
     let r: Response;
     try {
       r = await request(`${WORDPRESS_ORIGIN}/wp-json/wp/v2/${path}`, { ...init,
-        headers: { Authorization: `Basic ${credential}`, 'Content-Type': 'application/json' }, redirect: 'error', signal: AbortSignal.timeout(20000) });
+        headers: { 'Content-Type': 'application/json', ...init.headers, Authorization: `Basic ${credential}` }, redirect: 'error', signal: AbortSignal.timeout(20000) });
     } catch { throw new Error('WordPress antwortet nicht eindeutig. Bitte die WordPress-Entwürfe prüfen.'); }
     if (!r.ok) throw new Error(`WordPress hat die Anfrage abgelehnt (HTTP ${r.status}). Bitte Benutzerrechte und Anwendungspasswort prüfen.`);
     return r.json();
@@ -101,6 +103,16 @@ export function createWordPressDraftService(storage = store, request: typeof fet
     if (url.origin !== WORDPRESS_ORIGIN) throw new Error('Diese Verbindung ist ausschließlich für Vital50 eingerichtet.');
     return { content, key: keyFor(uid, content.projectSettings.id) };
   };
+  const connectionFor = async (uid: string, contentId: string) => {
+    const { key } = await projectFor(uid, contentId);
+    const connection = await storage.read(connectionCollection, key);
+    if (!connection) throw new Error('Bitte zuerst WordPress verbinden.');
+    return decrypt(connection.value);
+  };
+  const mediaItem = (item: RecordData) => {
+    if (!Number.isSafeInteger(item.id) || item.id <= 0 || item.media_type !== 'image' || !isWordPressImageUrl(item.source_url)) throw new Error('Das WordPress-Bild ist nicht verfügbar.');
+    return { id: item.id, url: item.source_url, alt: typeof item.alt_text === 'string' ? item.alt_text : '', title: typeof item.title?.rendered === 'string' ? item.title.rendered.replace(/<[^>]*>/g, '') : `Bild ${item.id}` };
+  };
   const categoriesFor = async (credential: string) => mapVital50Categories(await wp(`categories?per_page=100&hide_empty=false&slug=${VITAL50_CATEGORIES.map(c => c.slug).join(',')}`, credential));
   const seoReady = async (credential: string) => {
     const schema = await wp('posts', credential, { method: 'OPTIONS' });
@@ -108,6 +120,30 @@ export function createWordPressDraftService(storage = store, request: typeof fet
     return RANK_MATH_KEYS.every(key => properties?.[key]?.type === 'string' && properties[key].readonly !== true);
   };
   return {
+    async media(uid: string, contentId: string, search = '') {
+      const credential = await connectionFor(uid, contentId);
+      if (typeof search !== 'string' || search.length > 100) throw new Error('Ungültige Bildsuche.');
+      const list = await wp(`media?media_type=image&per_page=30&context=edit&search=${encodeURIComponent(search)}`, credential);
+      if (!Array.isArray(list)) throw new Error('Die Mediathek konnte nicht geladen werden.');
+      return { images: list.flatMap(item => { try { return [mediaItem(item)]; } catch { return []; } }) };
+    },
+    async uploadMedia(uid: string, contentId: string, image: unknown) {
+      const credential = await connectionFor(uid, contentId);
+      if (typeof image !== 'string' || image.length > 5600000) throw new Error('Bitte ein Bild bis 4 MB auswählen.');
+      const match = image.match(/^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/]+={0,2})$/);
+      if (!match) throw new Error('Bitte PNG, JPEG oder WebP verwenden.');
+      const bytes = Buffer.from(match[2], 'base64');
+      if (!bytes.length || bytes.length > 4 * 1024 * 1024) throw new Error('Bitte ein Bild bis 4 MB auswählen.');
+      const valid = match[1] === 'png' ? bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) : match[1] === 'jpeg' ? bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255 : bytes.toString('ascii',0,4) === 'RIFF' && bytes.toString('ascii',8,12) === 'WEBP';
+      if (!valid) throw new Error('Dateiinhalt und Bildformat stimmen nicht überein.');
+      try {
+        const item = await wp('media', credential, { method: 'POST', body: bytes, headers: { 'Content-Type': `image/${match[1]}`, 'Content-Disposition': `attachment; filename="academy-${Date.now()}.${match[1] === 'jpeg' ? 'jpg' : match[1]}"` } });
+        return { image: mediaItem(item) };
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('nicht eindeutig')) throw new Error('Der Bild-Upload konnte nicht eindeutig bestätigt werden. Bitte zuerst die WordPress-Mediathek prüfen, bevor du erneut hochlädst.');
+        throw error;
+      }
+    },
     async seo(uid: string, contentId: string) {
       const { key } = await projectFor(uid, contentId);
       const connection = await storage.read(connectionCollection, key);
@@ -126,7 +162,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       const draft = await storage.read(draftCollection, keyFor(uid, contentId));
       return { configured: secret().trim().length >= 32, connected: Boolean(connection), siteUrl: WORDPRESS_ORIGIN,
         draft: draft ? { state: draft.value.state, postId: draft.value.postId || null,
-          seoStatus: draft.value.seoStatus || null, editUrl: draft.value.postId ? `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${draft.value.postId}&action=edit` : null } : null };
+          seoStatus: draft.value.seoStatus || null, slug: draft.value.slug || null, editUrl: draft.value.postId ? `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${draft.value.postId}&action=edit` : null } : null };
     },
     async connect(uid: string, contentId: string, username: unknown, password: unknown) {
       const { key } = await projectFor(uid, contentId);
@@ -155,14 +191,25 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       const previous = await storage.read(draftCollection, draftId);
       if (previous && previous.value.state !== 'confirmed') throw new Error('Eine Übertragung läuft noch oder ihr Ergebnis ist unklar. Bitte zuerst die WordPress-Entwürfe prüfen. Es wird kein weiterer Beitrag erstellt.');
       const postId = previous?.value.postId;
+      let currentFeatured = 0;
       if (postId) {
         const current = await wp(`posts/${postId}?context=edit`, credential);
+        currentFeatured = current.featured_media || 0;
         if (current.status !== 'draft') throw new Error('Der WordPress-Beitrag ist kein Entwurf mehr. Änderungen bitte direkt in WordPress vornehmen.');
       }
       const slug = article.wordpressCategorySlug ?? suggestVital50Category(article.title, content.topic, content.contentBrief?.mainKeyword);
       if (!isVital50CategorySlug(slug)) throw new Error('Bitte eine der fünf Vital50-Kategorien auswählen.');
       const category = (await categoriesFor(credential)).find(c => c.slug === slug);
       if (!category) throw new Error('Die gewählte Kategorie fehlt in WordPress. Bitte Kategorien neu laden und auswählen.');
+      if (article.wordpressSlug && (typeof article.wordpressSlug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.wordpressSlug) || article.wordpressSlug.length > 80)) throw new Error('Bitte einen kurzen URL-Slug aus Kleinbuchstaben, Zahlen und Bindestrichen verwenden.');
+      const sources = await verifyBlogReferences(article.referenceIds, publicRequest);
+      if (sources.length !== new Set(article.referenceIds || []).size) throw new Error('Eine ausgewählte Quelle ist aktuell nicht erreichbar. Bitte die Quellenauswahl prüfen.');
+      let exportArticle = article;
+      if (article.wordpressImage) {
+        if (!Number.isSafeInteger(article.wordpressImage.id) || article.wordpressImage.id <= 0 || typeof article.wordpressImage.alt !== 'string' || !article.wordpressImage.alt.trim() || article.wordpressImage.alt.length > 300) throw new Error('Bitte ein Bild mit beschreibendem Alt-Text auswählen.');
+        const image = mediaItem(await wp(`media/${article.wordpressImage.id}?context=edit`, credential));
+        exportArticle = { ...article, wordpressImage: { ...article.wordpressImage, url: image.url } };
+      }
       const desiredMeta = rankMathMeta(article, content.contentBrief);
       let seoStatus = desiredMeta ? 'unavailable' : 'incomplete';
       let meta: Record<string, string> | null = null;
@@ -172,7 +219,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       await storage.write(draftCollection, draftId, lock, previous?.version);
       const claimed = await storage.read(draftCollection, draftId);
       if (!claimed) throw new Error('Die Übertragung konnte nicht sicher gestartet werden.');
-      const body = { categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(article, content.projectSettings.language)), ...(meta ? { meta } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
+      const body = { ...(article.wordpressSlug ? { slug: article.wordpressSlug } : {}), ...(article.wordpressImage?.featured ? { featured_media: article.wordpressImage.id } : previous?.value.featuredMediaId && currentFeatured === previous.value.featuredMediaId ? { featured_media: 0 } : {}), categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(exportArticle, content.projectSettings.language)), ...(meta ? { meta } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
       const post = await wp(postId ? `posts/${postId}` : 'posts', credential, { method: 'POST', body: JSON.stringify(body) });
       if (!Number.isSafeInteger(post.id) || post.id <= 0 || post.status !== 'draft' || !Array.isArray(post.categories) || !post.categories.includes(category.id)) throw new Error('WordPress hat keinen eindeutigen Entwurf bestätigt. Bitte direkt in WordPress prüfen.');
       if (meta) {
@@ -182,7 +229,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
           if (RANK_MATH_KEYS.every(key => verified.meta?.[key] === meta[key])) seoStatus = 'saved';
         } catch { /* The post is confirmed; a metadata read failure must never cause a duplicate creation. */ }
       }
-      await storage.write(draftCollection, draftId, { state: 'confirmed', postId: post.id, seoStatus, updatedAt: new Date().toISOString() }, claimed.version);
+      await storage.write(draftCollection, draftId, { state: 'confirmed', postId: post.id, seoStatus, ...(typeof post.slug === 'string' ? { slug: post.slug } : {}), ...(article.wordpressImage?.featured ? { featuredMediaId: article.wordpressImage.id } : {}), updatedAt: new Date().toISOString() }, claimed.version);
       return { seoStatus, postId: post.id, editUrl: `${WORDPRESS_ORIGIN}/wp-admin/post.php?post=${post.id}&action=edit`, status: 'draft' };
     },
   };

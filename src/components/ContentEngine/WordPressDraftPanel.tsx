@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 
-type Status = { configured: boolean; connected: boolean; siteUrl: string; draft: { state: string; postId: number | null; editUrl: string | null; seoStatus?: string } | null };
+type Status = { configured: boolean; connected: boolean; siteUrl: string; draft: { state: string; postId: number | null; editUrl: string | null; seoStatus?: string; slug?: string } | null };
 const api = async (id: string, action: string, init: RequestInit = {}) => {
   const response = await authenticatedFetch(`/api/wordpress/${encodeURIComponent(id)}/${action}`, init);
   const data = await response.json();
@@ -140,6 +140,7 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
       </button>
       <button type="button" disabled={busy} onClick={() => void disconnect()} className="text-sm underline disabled:opacity-50">{hubText('Verbindung trennen')}</button>
     </div>}
+    {status?.draft?.slug && <p className="text-sm">{hubText('Gespeicherter URL-Slug:')} {status.draft.slug}</p>}
     {status?.draft?.editUrl && <a href={status.draft.editUrl} target="_blank" rel="noopener noreferrer" className="inline-block font-semibold text-emerald-800 underline">{hubText('Entwurf in WordPress öffnen')}</a>}
     {status?.draft?.state === 'pending' && <p role="alert" className="text-sm text-amber-800">{hubText('Die letzte Übertragung ist noch nicht eindeutig bestätigt. Bitte die Entwürfe direkt in WordPress prüfen; ein erneutes Erstellen ist gesperrt.')}</p>}
     {notice && <p role="status" className="text-sm text-emerald-800">{notice}</p>}

@@ -1,3 +1,4 @@
+import { BlogSeoCheckPanel } from './BlogSeoCheckPanel';
 import { blogMarkdownWithSummary } from '../../utils/blogSeoGeo';
 import { BlogSeoGeoPanel } from './BlogSeoGeoPanel';
 import { WordPressDraftPanel } from './WordPressDraftPanel';
@@ -148,6 +149,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
       </div>
 
       {seoGeo && <BlogSeoGeoPanel key={seoGeo.contentId} article={article} mainKeyword={seoGeo.mainKeyword} onChange={onChange} onPrepare={seoGeo.onPrepare} />}
+      {seoGeo && <BlogSeoCheckPanel key={seoGeo.contentId} article={article} mainKeyword={seoGeo.mainKeyword} contentId={wordpress?.contentId} onChange={onChange} />}
       {wordpress && <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5" aria-label={hubText('Interne Verlinkung')}>
         <h3 className="font-bold">{hubText('Interne Verlinkung')}</h3>
         <p className="text-sm text-slate-600">{hubText('Die Academy berücksichtigt passende, veröffentlichte Vital50-Artikel und ergänzt bis zu drei erreichbare Links.')}</p>
