@@ -18,7 +18,8 @@ export class AIContentService {
     projectSettings: ProjectSettings,
     customAngle?: string,
     targetUrl?: string,
-    cta?: string
+    cta?: string,
+    sourceArticle?: import('../utils/articleCampaign').CampaignArticle
   ): Promise<{ brief: ContentBrief; rawText?: string }> {
     const response = await authenticatedFetch('/api/content-engine/brief', {
       method: 'POST',
@@ -27,6 +28,7 @@ export class AIContentService {
         topic,
         projectSettings,
         customAngle,
+        sourceArticle,
         targetUrl: resolvePinterestTargetUrl(targetUrl, projectSettings.defaultTargetUrl),
         cta: cta || projectSettings.defaultCta,
       }),

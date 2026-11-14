@@ -1,3 +1,5 @@
+import { ArticleCampaignModal } from './ArticleCampaignModal';
+import { createArticleCampaign, attachCampaignSource, type CampaignArticle } from '../../utils/articleCampaign';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import { readPinterestOAuthReturn } from '../../utils/pinterestOAuthReturn';
 import React, { useState, useEffect, useRef } from 'react';
@@ -128,6 +130,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [projectBeingEdited, setProjectBeingEdited] = useState<ProjectSettings | null>(null);
+
+  const [campaignSettings, setCampaignSettings] = useState<ProjectSettings | null>(null);
 
   // Content Projects (Historical & Active)
   const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin)));
@@ -319,7 +323,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
   // Ask before any blog request; retain the selected project as a snapshot.
   const handleGenerateBlog = () => {
-    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'blog', project: { ...activeContentProject, projectSettings: activeProjectSettings } });
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'blog', project: { ...activeContentProject, projectSettings: activeContentProject.campaignSource ? { ...activeProjectSettings, defaultTargetUrl: activeContentProject.campaignSource.url } : activeProjectSettings } });
   };
 
   // 🚀 Generate Blog
@@ -363,7 +367,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
   // 🚀 Generate 5 Pinterest Pins
   const handleGeneratePinterest = () => {
-    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'pinterest', project: { ...activeContentProject, projectSettings: activeProjectSettings } });
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'pinterest', project: { ...activeContentProject, projectSettings: activeContentProject.campaignSource ? { ...activeProjectSettings, defaultTargetUrl: activeContentProject.campaignSource.url } : activeProjectSettings } });
   };
 
   const generatePinterestWithLink = async (project: CentralContentProject, targetUrl: string | null) => {
@@ -394,7 +398,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
   // 🚀 Generate YouTube Script & Shorts
   const handleGenerateYouTube = () => {
-    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'youtube', project: { ...activeContentProject, projectSettings: activeProjectSettings } });
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'youtube', project: { ...activeContentProject, projectSettings: activeContentProject.campaignSource ? { ...activeProjectSettings, defaultTargetUrl: activeContentProject.campaignSource.url } : activeProjectSettings } });
   };
 
   const generateYouTubeWithLink = async (project: CentralContentProject, targetUrl: string | null) => {
@@ -430,6 +434,39 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     } finally {
       setIsGeneratingYouTube(false);
     }
+  };
+
+  const startArticleCampaign = async (source: CampaignArticle, original?: BlogArticle) => {
+    if (!campaignSettings || isGeneratingAll) return;
+    setIsGeneratingAll(true);
+    setErrorMsg(null);
+    setSaveNotice(null);
+    try {
+      let campaign = createArticleCampaign(source, campaignSettings, original);
+      // Save the source first, so a failed AI request never loses the selected article.
+      if (!await handleUpdateActiveProject(campaign)) throw new Error(hubText('Die Cloud-Speicherung konnte nicht bestätigt werden.'));
+      const settings = campaign.projectSettings;
+      const { brief } = await AIContentService.generateContentBrief(source.title, settings, undefined, source.url, undefined, source);
+      campaign = { ...campaign, contentBrief: attachCampaignSource(brief, source) };
+      if (!await handleUpdateActiveProject(campaign)) throw new Error(hubText('Die Cloud-Speicherung konnte nicht bestätigt werden.'));
+      const results = await Promise.allSettled([
+        AIContentService.generatePinterestPins(source.title, campaign.contentBrief!, settings, source.url),
+        AIContentService.generateYouTubeScript(source.title, campaign.contentBrief!, settings, source.url),
+        AIContentService.generateYouTubeShorts(source.title, campaign.contentBrief!, settings, source.url),
+      ] as const);
+      if (results[0].status === 'fulfilled') campaign.pinterestPins = results[0].value;
+      if (results[1].status === 'fulfilled') campaign.youtubeVideo = results[1].value;
+      if (results[2].status === 'fulfilled') campaign.youtubeShorts = results[2].value;
+      campaign.updatedAt = new Date().toISOString();
+      if (!await handleUpdateActiveProject(campaign)) throw new Error(hubText('Die Cloud-Speicherung konnte nicht bestätigt werden.'));
+      setActiveTab('calendar');
+      setCampaignSettings(null);
+      if (results.some(result => result.status === 'rejected') || campaign.pinterestPins.length !== 5 || !campaign.youtubeVideo || campaign.youtubeShorts?.length !== 3) {
+        setErrorMsg(hubText('Die Kampagne wurde teilweise erstellt und gespeichert. Fehlende Inhalte kannst du in den jeweiligen Reitern ergänzen.'));
+      } else {
+        setSaveNotice(hubText('Kampagne erstellt. Prüfe die Inhalte und lege die Veröffentlichungstermine im Kalender fest.'));
+      }
+    } finally { setIsGeneratingAll(false); }
   };
 
   const handleGenerateAllInOneClick = () => {
@@ -615,6 +652,15 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         </div>
       </div>
 
+      <button type="button" disabled={isBusy} onClick={() => setCampaignSettings(structuredClone(activeProjectSettings))}
+        className="rounded-xl bg-emerald-700 text-white font-bold px-4 py-3 disabled:opacity-50">
+        {hubText('Kampagne aus vorhandenem Artikel')}
+      </button>
+      {campaignSettings && <ArticleCampaignModal key={campaignSettings.id} settings={campaignSettings}
+        projects={contentProjects.filter(project => project.projectSettings.id === campaignSettings.id)}
+        wordpressAvailable={isAdmin && campaignSettings.websiteUrl.replace(/\/$/, '') === 'https://vital50.gomo-marketing.at'}
+        onClose={() => setCampaignSettings(null)} onStart={startArticleCampaign} />}
+
       <BlogArticleLibrary
         projects={scopedProjects}
         projectName={activeProjectSettings.name}
@@ -633,6 +679,11 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           <span>{saveNotice}</span>
         </div>
       )}
+
+      {activeContentProject?.campaignSource && <p className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900">
+        {hubText('Artikelgrundlage der Kampagne:')}{' '}
+        <a href={activeContentProject.campaignSource.url} target="_blank" rel="noreferrer" className="underline">{activeContentProject.campaignSource.title}</a>
+      </p>}
 
       {/* Main Topic Input & Generation Console */}
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-6 sm:p-7 rounded-3xl shadow-xl border border-slate-800 space-y-5">
@@ -914,7 +965,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               contentProjectId={activeContentProject.id}
               onGenerate={handleGeneratePinterest}
               isGenerating={isGeneratingPinterest}
-              projectTargetUrl={activeProjectSettings.defaultTargetUrl}
+              projectTargetUrl={activeContentProject.campaignSource?.url || activeProjectSettings.defaultTargetUrl}
               pins={activeContentProject.pinterestPins || []}
               onChange={(updatedPins) => {
                 handleUpdateActiveProject({

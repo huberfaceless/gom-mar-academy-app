@@ -1,3 +1,4 @@
+import { campaignSourcePrompt } from '../src/utils/articleCampaign';
 import assert from 'node:assert/strict';
 import { pinterestApiBase } from '../src/utils/pinterestEnvironment';
 import React from 'react';
@@ -41,7 +42,7 @@ let handler: (req: any, res: any) => Promise<void>;
 let modelReply: any = { pins: Array.from({ length: 5 }, () => ({ title: 'Test', targetUrl: 'https://invented.example/' })) };
 let lastPrompt = '';
 let aiCalls = 0; let credentialCalls = 0; let platformCalls = 0; let sent: any;
-const context = vm.createContext({ contentLanguageInstruction, recommendationLabel,
+const context = vm.createContext({ campaignSourcePrompt, contentLanguageInstruction, recommendationLabel,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } }, requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {},
   resolvePinterestTargetUrl, pinterestApiBase, FIREBASE_PROJECT_ID: 'test',
   loadPinterestAccessToken: async () => { credentialCalls++; return 'isolated-test-token'; },

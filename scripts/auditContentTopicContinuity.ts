@@ -1,3 +1,4 @@
+import { campaignSourcePrompt } from '../src/utils/articleCampaign';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -47,7 +48,7 @@ const AIContentService = {
   async generateBlogArticle(topic: string) { requests.push({ kind: 'blog', topic }); return { title: topic }; },
   async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return []; },
 };
-const context = vm.createContext({ contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
+const context = vm.createContext({ campaignSourcePrompt, contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
   if (name === 'react') return hookReact;
   if (name.endsWith('pinterestOAuthReturn')) return { readPinterestOAuthReturn: () => null };
   if (name.endsWith('useContentHubCopy')) return { useContentHubCopy: () => ({ language: 'de', hubText: (source: string, ...values: unknown[]) => contentHubText('de', source, ...values) }) };

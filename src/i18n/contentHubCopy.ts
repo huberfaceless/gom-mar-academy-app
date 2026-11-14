@@ -3,6 +3,28 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Kampagne aus vorhandenem Artikel": "Campaign from an existing article",
+  "Erstellt 5 Pinterest-Pins, 5 Instagram-Beiträge, ein YouTube-Skript und 3 Shorts als neuen Inhaltsablauf. Termine und Veröffentlichung gibst du danach im Kalender frei.": "Creates 5 Pinterest pins, 5 Instagram posts, a YouTube script and 3 Shorts as a new workflow. You approve dates and publication in the calendar afterwards.",
+  "Der ursprüngliche Artikel bleibt erhalten. Es wird kein neuer Blogartikel erzeugt oder veröffentlicht.": "The original article is retained. No new blog article is generated or published.",
+  "Artikelquelle": "Article source",
+  "Gespeicherter Academy-Artikel": "Saved Academy article",
+  "Veröffentlichter WordPress-Artikel": "Published WordPress article",
+  "Artikeltext übernehmen": "Use article text",
+  "Bitte einen Artikel auswählen.": "Please select an article.",
+  "Weitere Artikel laden": "Load more articles",
+  "WordPress-Artikel laden": "Load WordPress articles",
+  "Alle veröffentlichten Artikel wurden geladen.": "All published articles have been loaded.",
+  "Artikeltitel": "Article title",
+  "Vorhandener Artikeltext": "Existing article text",
+  "Link zum Blogartikel": "Blog article link",
+  "Alle Kampagneninhalte verweisen auf diesen Artikellink. Die Erstellung verwendet KI und kann einige Minuten dauern.": "All campaign content links to this article. Creation uses AI and may take a few minutes.",
+  "Kampagne wird vorbereitet…": "Preparing campaign…",
+  "Kampagne erstellen": "Create campaign",
+  "Artikel konnten nicht geladen werden.": "Articles could not be loaded.",
+  "Die Kampagne wurde teilweise erstellt und gespeichert. Fehlende Inhalte kannst du in den jeweiligen Reitern ergänzen.": "The campaign was partially created and saved. You can add missing content in the corresponding tabs.",
+  "Kampagne erstellt. Prüfe die Inhalte und lege die Veröffentlichungstermine im Kalender fest.": "Campaign created. Review the content and set publication dates in the calendar.",
+  "Artikelgrundlage der Kampagne:": "Campaign source article:",
+
   "WordPress-Kategorie": "WordPress category",
   "Bitte eine Kategorie auswählen.": "Please select a category.",
   "Ein passender Vorschlag wird automatisch ausgewählt. Du kannst ihn vor der Übertragung ändern. Die Auswahl wird mit dem Artikel gespeichert.": "A matching suggestion is selected automatically. You can change it before transfer. The selection is saved with the article.",

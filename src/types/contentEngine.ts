@@ -48,6 +48,7 @@ export interface ProjectSettings {
 }
 
 export interface ContentBrief {
+  sourceArticle?: import('../utils/articleCampaign').CampaignArticle;
   mainKeyword: string;
   secondaryKeywords: string[];
   searchIntent: 'informational' | 'commercial' | 'transactional' | 'navigational';
@@ -200,6 +201,7 @@ export interface CalendarItem {
 }
 
 export interface CentralContentProject {
+  campaignSource?: import('../utils/articleCampaign').CampaignArticle;
   deletedAt?: string;
   id: string;
   userId?: string;

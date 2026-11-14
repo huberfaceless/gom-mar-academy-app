@@ -160,3 +160,5 @@ assert.doesNotMatch(gridPreview, /\+---/);
 assert.equal(normalizeBlogMarkdown('```python\n' + grid + '\n```'), '```python\n' + grid + '\n```');
 assert.match(server, /Keine ASCII-Tabellen/);
 console.log('Artikelvorschau geprüft: Textgitter als echte Tabellen; neue Artikel erhalten klare Formatvorgaben.');
+
+await import("./auditArticleCampaign");
