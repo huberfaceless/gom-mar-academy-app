@@ -314,14 +314,14 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     payloadData?: any;
   }> = [];
 
-  if (project.blogArticle) {
+  if (project.blogArticle && !project.campaignSource) {
     items.push({
       id: 'blog_main',
       type: 'blog',
       platform: 'BLOG',
       contentType: 'ARTICLE',
       title: `Blog: ${project.blogArticle.title}`,
-      targetUrl: project.projectSettings.websiteUrl,
+      targetUrl: project.campaignSource?.url || project.blogArticle?.publishedUrl || project.projectSettings.websiteUrl,
       status: project.blogArticle.status || 'ai_generated',
       scheduledDate: formatLocalDateTime(project.calendarItems.find((c) => c.channel === 'blog')?.scheduledDate),
       platformLabel: 'WordPress / Blog',
@@ -330,7 +330,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       payloadData: {
         title: project.blogArticle.title,
         contentMarkdown: project.blogArticle.contentMarkdown,
-        targetUrl: project.projectSettings.websiteUrl,
+        targetUrl: project.campaignSource?.url || project.blogArticle?.publishedUrl || project.projectSettings.websiteUrl,
       },
     });
   }
@@ -394,7 +394,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       platform: 'YOUTUBE',
       contentType: 'VIDEO',
       title: `YouTube Video: ${project.youtubeVideo.title}`,
-      targetUrl: project.projectSettings.websiteUrl,
+      targetUrl: project.campaignSource?.url || project.blogArticle?.publishedUrl || project.projectSettings.websiteUrl,
       status: project.youtubeVideo.status || 'ai_generated',
       scheduledDate: formatLocalDateTime(project.youtubeVideo.scheduledDate, 2),
       platformLabel: 'YouTube-Langvideo',
@@ -418,7 +418,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       platform: 'YOUTUBE',
       contentType: 'SHORT',
       title: hubText('Kurzvideo #{0}: {1}', short.shortNumber || idx + 1, short.title),
-      targetUrl: project.projectSettings.websiteUrl,
+      targetUrl: project.campaignSource?.url || project.blogArticle?.publishedUrl || project.projectSettings.websiteUrl,
       status: short.status || 'ai_generated',
       scheduledDate: formatLocalDateTime(short.scheduledDate, idx + 3),
       platformLabel: 'YouTube Shorts (9:16)',

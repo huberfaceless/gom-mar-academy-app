@@ -1,3 +1,4 @@
+import { campaignSourcePrompt } from '../src/utils/articleCampaign';
 import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from '../src/utils/projectBlogDefaults';
 import { suggestBlogReferenceReport } from '../server/blogReferences';
 import { normalizeSeoGeo } from '../src/utils/blogSeoGeo';
@@ -79,7 +80,7 @@ try {
 const server = readFileSync('server.ts', 'utf8');
 const routes = new Map<string, (req: any, res: any) => Promise<void>>();
 const requests: any[] = [];
-const ctx = vm.createContext({
+const ctx = vm.createContext({ campaignSourcePrompt,
   app: { post: (path: string, ...handlers: any[]) => routes.set(path, handlers.at(-1)) },
   requireVerifiedMember: [], requireProMember() {}, requireContentProjectAccess() {},
   resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, validateBlogAffiliateLink, resolvePinterestTargetUrl, findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks,

@@ -1,3 +1,5 @@
+import { readCampaignWordPressArticles } from './server/campaignWordPressArticles.js';
+import { campaignSourcePrompt } from './src/utils/articleCampaign.js';
 import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from './src/utils/projectBlogDefaults.js';
 import { suggestBlogReferences, suggestBlogReferenceReport } from './server/blogReferences.js';
 import { wordpressSeoBridgeZip } from './server/wordpressSeoBridge.js';
@@ -2548,6 +2550,13 @@ Erstelle:
   });
 
   // 🚀 Content Engine: 1. Generate Content Brief
+  app.post('/api/content-engine/campaign-articles', requireVerifiedMember, requireProMember, requireAcademyAdmin, requireContentProjectAccess, async (req, res) => {
+    try {
+      res.setHeader('Cache-Control', 'no-store');
+      res.json(await readCampaignWordPressArticles(req.body?.projectSettings?.websiteUrl, req.body?.postId, req.body?.page));
+    } catch (err) { res.status(400).json({ error: err instanceof Error ? err.message : 'Artikel konnten nicht geladen werden.' }); }
+  });
+
   app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
       const { topic, projectSettings, customAngle, cta } = req.body;
@@ -2568,6 +2577,7 @@ Brand Voice: ${projectSettings?.brandVoice || 'Professionell, einfühlsam, lösu
 Ziel-URL: ${targetUrl}
 Die Ziel-URL ist verbindlich. Erfinde keine alternativen Zieladressen. Interne Verlinkungsvorschläge sind ausschließlich Themenvorschläge, keine Ersatz-Zieladressen.
 Gewünschter CTA: ${cta || projectSettings?.defaultCta || 'Jetzt mehr erfahren'}
+${campaignSourcePrompt(req.body.sourceArticle)}
 Spezifischer Angle: ${customAngle || 'Bester Mehrwert & Problemlösung'}
 
 Erstelle ein hochpräzises, strategisches CONTENT BRIEF für das Thema:
@@ -2764,7 +2774,8 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
+      const prompt = `${campaignSourcePrompt(brief?.sourceArticle)}
+Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 Ziel-URL: ${targetUrl}
@@ -2884,7 +2895,8 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
+      const prompt = `${campaignSourcePrompt(brief?.sourceArticle)}
+Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
 "${topic}"
 
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
@@ -2973,7 +2985,8 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
+      const prompt = `${campaignSourcePrompt(brief?.sourceArticle)}
+Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
 
