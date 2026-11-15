@@ -168,3 +168,15 @@ await import('./auditWordPressInternalLinks');
 await import('./auditBlogSeoGeo');
 await import('./auditBlogSeoCheck');
 await import('./auditProjectBlogDefaults');
+
+// WordPress renders its own post title; Markdown headings must not add another H1.
+const headingExport = renderWordPressArticle('> Zusammenfassung\n\n# **Geld verdienen** ab 50\n\nEinleitung.\n\n## Grundlagen\n\n### Ein Beispiel\n\n# Ein weiterer Abschnitt\n\n```markdown\n# Beispiel im Code\n```', 'Geld verdienen ab 50');
+assert.doesNotMatch(headingExport, /<h1[ >]/i);
+assert.doesNotMatch(headingExport, /<strong>Geld verdienen<\/strong>/, 'Formatted duplicate title is removed even after the GEO summary');
+assert.match(headingExport, /<h2>Grundlagen<\/h2>/);
+assert.match(headingExport, /<h3>Ein Beispiel<\/h3>/);
+assert.match(headingExport, /<h2>Ein weiterer Abschnitt<\/h2>/, 'Different H1 content is preserved as H2');
+assert.match(headingExport, /# Beispiel im Code/, 'Code samples remain unchanged');
+assert.doesNotMatch(renderWordPressArticle('#  GELD   VERDIENEN ab 50', 'Geld verdienen ab 50'), /<h[12]/);
+assert.match(renderWordPressArticle('# Eigenständiger Abschnitt'), /<h2>Eigenständiger Abschnitt<\/h2>/);
+console.log('WordPress-Überschriften: ein Seitentitel vom Theme, kein doppelter Titel im Inhalt, echte Abschnitte und Code bleiben erhalten.');

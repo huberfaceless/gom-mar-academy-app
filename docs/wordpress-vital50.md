@@ -125,3 +125,7 @@ Die drei Felder sind `_seopress_titles_title`, `_seopress_titles_desc` und `_seo
 SEOPress 10.4 blendet Roh-Metadaten für Besucher aus und berücksichtigt Rollensperren. Deshalb liest die Academy stets mit Anwendungspasswort und `context=edit`, auch bevor ein Entwurf öffentlich wird. Es werden keine Schutzfilter entfernt und keine Metafelder öffentlich freigegeben. Wenn die Kontrolle scheitert, unter **SEO → Erweitert → Sicherheit** die Berechtigungen der verwendeten Rolle für SEO-Metabox und Inhaltsanalyse prüfen. Das Fehlen eines einzelnen Felds stoppt die öffentliche Veröffentlichung.
 
 Offizielle Dokumentation: [SEOPress REST API, einschließlich Sicherheitsregeln seit 10.4](https://www.seopress.org/support/guides/get-started-with-the-seopress-rest-api/) und [SEOPress-Metafelder](https://www.seopress.org/support/guides/list-of-all-post-metas-generated-by-seopress/).
+
+## Überschriften beim WordPress-Export
+
+Das WordPress-Theme gibt den Beitragstitel als H1 aus. Die Academy lässt deshalb eine gleichlautende Markdown-H1 im exportierten Artikeltext weg, auch wenn eine GEO-Kurzantwort davorsteht oder der Titel inline formatiert wurde. Andere H1-Abschnitte werden als H2 erhalten. Vorhandene H2, H3, Codebeispiele und der gespeicherte Academy-Text bleiben unverändert. Dies gilt für Vital50-Entwürfe und direkte SEOPress-Veröffentlichungen auf der Hauptwebsite. Bereits öffentliche Artikel werden nicht automatisch geändert: Dort die wiederholte Titelüberschrift im WordPress-Inhalt entfernen und den Beitrag aktualisieren.

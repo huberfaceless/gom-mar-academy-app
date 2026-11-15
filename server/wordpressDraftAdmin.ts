@@ -59,9 +59,18 @@ const store: WordPressStore = {
 const connectionCollection = 'academyWordPressConnections';
 const draftCollection = 'academyWordPressDrafts';
 const keyFor = (...values: string[]) => createHash('sha256').update(JSON.stringify(values)).digest('hex');
-export const renderWordPressArticle = (markdown: string) => renderToStaticMarkup(React.createElement(ReactMarkdown, {
+const headingText = (children: React.ReactNode): string => React.Children.toArray(children).map(child =>
+  typeof child === 'string' || typeof child === 'number' ? String(child)
+    : React.isValidElement<{ children?: React.ReactNode }>(child) ? headingText(child.props.children) : '',
+).join('');
+const normalizedHeading = (text: string) => text.normalize('NFKC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase('de');
+export const renderWordPressArticle = (markdown: string, articleTitle = '') => renderToStaticMarkup(React.createElement(ReactMarkdown, {
   remarkPlugins: [remarkGfm], skipHtml: true,
   components: {
+    // The WordPress template owns the page H1. Omit the repeated article title,
+    // preserve any other top-level content heading as H2, and leave H2/H3 intact.
+    h1: ({ children }) => articleTitle && normalizedHeading(headingText(children)) === normalizedHeading(articleTitle)
+      ? null : React.createElement('h2', null, children),
     table: ({ children }) => React.createElement('div', { style: { overflowX: 'auto' } }, React.createElement('table', { style: { borderCollapse: 'collapse', width: '100%' } }, children)),
     th: ({ children }) => React.createElement('th', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
     td: ({ children }) => React.createElement('td', { style: { border: '1px solid #cbd5e1', padding: '12px', textAlign: 'left', verticalAlign: 'top' } }, children),
@@ -272,7 +281,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       await storage.write(draftCollection, draftId, lock, previous?.version);
       const claimed = await storage.read(draftCollection, draftId);
       if (!claimed) throw new Error('Die Übertragung konnte nicht sicher gestartet werden.');
-      const body = { ...(article.wordpressSlug ? { slug: article.wordpressSlug } : {}), ...(article.wordpressImage?.featured ? { featured_media: article.wordpressImage.id } : previous?.value.featuredMediaId && currentFeatured === previous.value.featuredMediaId ? { featured_media: 0 } : {}), categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(exportArticle, content.projectSettings.language)), ...(meta ? { meta } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
+      const body = { ...(article.wordpressSlug ? { slug: article.wordpressSlug } : {}), ...(article.wordpressImage?.featured ? { featured_media: article.wordpressImage.id } : previous?.value.featuredMediaId && currentFeatured === previous.value.featuredMediaId ? { featured_media: 0 } : {}), categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(exportArticle, content.projectSettings.language), article.title), ...(meta ? { meta } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
       const post = await wp(postId ? `posts/${postId}` : 'posts', credential, { method: 'POST', body: JSON.stringify(body) });
       if (!Number.isSafeInteger(post.id) || post.id <= 0 || (postId && post.id !== postId) || post.status !== 'draft' || !Array.isArray(post.categories) || !post.categories.includes(category.id)) throw new Error('WordPress hat keinen eindeutigen Entwurf bestätigt. Bitte direkt in WordPress prüfen.');
       if (meta) {
