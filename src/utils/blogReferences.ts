@@ -1,3 +1,4 @@
+import { wordpressSiteOrigin } from './wordpressSites';
 /** Editorial sources: deliberately separate from paid/affiliate recommendations. */
 export const BLOG_REFERENCES = [
   { id: 'at-adipositas', title: 'Übergewicht und Adipositas bei Erwachsenen', publisher: 'Österreichisches Gesundheitsportal', url: 'https://www.gesundheit.gv.at/krankheiten/stoffwechsel/adipositas.html', keywords: 'abnehmen bauchfett gewicht adipositas diät stoffwechsel kalorien' },
@@ -15,5 +16,5 @@ export function isEditorialReference(href?: string): boolean {
   return BLOG_REFERENCES.some(item => item.url === href);
 }
 export function isWordPressImageUrl(value: unknown): value is string {
-  try { const url = new URL(String(value)); return url.origin === 'https://vital50.gomo-marketing.at' && url.pathname.startsWith('/wp-content/uploads/') && !url.username && !url.password; } catch { return false; }
+  try { const url = new URL(String(value)); return wordpressSiteOrigin(url.origin) !== null && url.pathname.startsWith('/wp-content/uploads/') && !url.username && !url.password; } catch { return false; }
 }

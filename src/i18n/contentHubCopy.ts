@@ -3,6 +3,16 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "WordPress · gomo-marketing.at · Sofort veröffentlichen": "WordPress \u00b7 gomo-marketing.at \u00b7 Publish now",
+  "Der Artikel ist auf gomo-marketing.at veröffentlicht. SEO-Daten wurden bestätigt.": "The article is published on gomo-marketing.at. SEO metadata was verified.",
+  "Neue Artikel werden nach erfolgreicher Cloud-Speicherung automatisch veröffentlicht. Bestehende Artikel kannst du hier sofort veröffentlichen. SEO, GEO-Kurzantwort und Kategorie werden mit übertragen.": "New articles are published automatically after confirmed cloud storage. You can publish existing articles here now. SEO, the GEO summary and category are included.",
+  "Jetzt auf gomo-marketing.at veröffentlichen": "Publish on gomo-marketing.at now",
+  "Veröffentlichten Artikel öffnen": "Open published article",
+  "Die Veröffentlichung wird noch geprüft. Bitte den Status erneut laden oder direkt in WordPress prüfen.": "Publication is still being verified. Refresh the status or check WordPress directly.",
+  "WordPress-Status aktualisieren": "Refresh WordPress status",
+  "Beitrag in WordPress bearbeiten": "Edit post in WordPress",
+  "Neue Blogartikel sofort auf gomo-marketing.at veröffentlichen": "Publish new blog articles on gomo-marketing.at immediately",
+  "Nach der Erstellung und Cloud-Speicherung öffentlich veröffentlichen, einschließlich SEO-Daten, GEO-Kurzantwort und Kategorie. Die WordPress- und Rank-Math-Verbindung müssen eingerichtet sein.": "Publish publicly after generation and cloud storage, including SEO metadata, the GEO summary and category. WordPress and Rank Math connections must be configured.",
   "Mitbewerber-Recherche und Texterstellung laufen. Das kann einige Minuten dauern.": "Competitor research and content creation are running. This may take a few minutes.",
   "Google-Suchvorschläge zur Recherche": "Google search suggestions for this research",
   "Analyse und Quellen ansehen": "View analysis and sources",
@@ -70,7 +80,7 @@ export const contentHubEnglish: Record<string, string> = {
   "Kategorien neu laden": "Reload categories",
   "Der Artikel wurde inzwischen geändert. Bitte die Linkprüfung erneut starten.": "The article has changed. Please run the link check again.",
   "Interne Verlinkung": "Internal links",
-  "Die Academy berücksichtigt passende, veröffentlichte Vital50-Artikel und ergänzt bis zu drei erreichbare Links.": "The Academy considers relevant published Vital50 articles and adds up to three reachable links.",
+  "Die Academy berücksichtigt passende, veröffentlichte Artikel dieser Website und ergänzt bis zu drei erreichbare Links.": "The Academy considers relevant published articles from this website and adds up to three reachable links.",
   "Links werden geprüft…": "Checking links\u2026",
   "Passende interne Links ergänzen": "Add relevant internal links",
   "Passende Artikel wurden geprüft und im Artikel verlinkt.": "Relevant articles were checked and linked in the article.",

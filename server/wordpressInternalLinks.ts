@@ -1,3 +1,4 @@
+import { wordpressSiteOrigin } from '../src/utils/wordpressSites';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -6,7 +7,7 @@ import type { BlogArticle, ProjectSettings, ContentBrief } from '../src/types/co
 import { WORDPRESS_ORIGIN } from './wordpressDraftAdmin.js';
 
 export type InternalLink = { title: string; url: string };
-export type InternalLinkReport = { state: 'checked' | 'unavailable' | 'not-supported'; checkedAt: string; links: InternalLink[] };
+export type InternalLinkReport = { state: 'checked' | 'unavailable' | 'not-supported'; checkedAt: string; origin?: string; links: InternalLink[] };
 const plain = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&#(x[0-9a-f]+|\d+);/gi, (_, code) => {
   const n = code[0].toLowerCase() === 'x' ? parseInt(code.slice(1), 16) : Number(code);
   return n > 0 && n <= 0x10ffff ? String.fromCodePoint(n) : '';
@@ -21,24 +22,26 @@ const matches = (title: string, query: string) => {
   for (const concept of concepts) if (concept.test(normalize(title)) && concept.test(normalize(query))) score += 2;
   return score;
 };
-const safeUrl = (value: unknown): string | null => {
+const safeUrl = (value: unknown, origin = WORDPRESS_ORIGIN): string | null => {
   try {
     if (typeof value !== 'string') return null;
     const u = new URL(value);
-    return u.origin === WORDPRESS_ORIGIN && !u.username && !u.password && u.pathname !== '/' && !u.search && !u.hash ? u.href : null;
+    return u.origin === origin && !u.username && !u.password && u.pathname !== '/' && !u.search && !u.hash ? u.href : null;
   } catch { return null; }
 };
 
 // Read only the fixed, public WordPress endpoint. Never send stored credentials or fetch a caller-supplied host.
 export async function findWordPressInternalLinks(settings: Pick<ProjectSettings, 'websiteUrl'> | undefined, query: { title: string; topic?: string; brief?: Partial<ContentBrief>; content?: string }, request: typeof fetch = fetch): Promise<InternalLinkReport> {
   const report: InternalLinkReport = { state: 'not-supported', checkedAt: new Date().toISOString(), links: [] };
-  try { if (new URL(settings?.websiteUrl || '').origin !== WORDPRESS_ORIGIN) return report; } catch { return report; }
+  const origin = wordpressSiteOrigin(settings?.websiteUrl);
+  if (!origin) return report;
+  if (origin !== WORDPRESS_ORIGIN) report.origin = origin;
   try {
     const posts: any[] = [];
     const signal = AbortSignal.timeout(12000);
     // Bounded pagination covers up to 500 current posts, without caching deleted or unpublished targets.
     for (let page = 1; page <= 5; page++) {
-      const response = await request(`${WORDPRESS_ORIGIN}/wp-json/wp/v2/posts?status=publish&per_page=100&page=${page}&orderby=date&order=desc&_fields=id,status,link,title,content.protected`, { redirect: 'error', signal });
+      const response = await request(`${origin}/wp-json/wp/v2/posts?status=publish&per_page=100&page=${page}&orderby=date&order=desc&_fields=id,status,link,title,content.protected`, { redirect: 'error', signal });
       if (!response.ok) throw new Error('Katalog nicht verfügbar');
       const batch = await response.json();
       if (!Array.isArray(batch)) throw new Error('Ungültiger Katalog');
@@ -49,7 +52,7 @@ export async function findWordPressInternalLinks(settings: Pick<ProjectSettings,
     const search = [query.title, query.topic, query.brief?.mainKeyword, ...(query.brief?.secondaryKeywords || []), ...(query.brief?.outline || []).map(item => item.h2), query.content?.slice(0, 20000)].filter(Boolean).join(' ');
     const seen = new Set<string>();
     const candidates = posts.flatMap(post => {
-      const url = safeUrl(post?.link);
+      const url = safeUrl(post?.link, origin);
       const title = typeof post?.title?.rendered === 'string' ? plain(post.title.rendered).slice(0, 500) : '';
       if (post?.status !== 'publish' || post?.content?.protected || !url || !title || seen.has(url) || normalize(title.replace(/\s*\|\s*Vital50\s*$/i, '')) === normalize(query.title.replace(/\s*\|\s*Vital50\s*$/i, ''))) return [];
       seen.add(url);
@@ -84,6 +87,8 @@ export async function enrichWordPressInternalLinks(article: BlogArticle, setting
 // Parse Markdown rather than matching link syntax with regex, including reference links and autolinks.
 export function removeUnverifiedInternalLinks(markdown: string, report: InternalLinkReport): string {
   if (report.state === 'not-supported') return markdown;
+  const origin = wordpressSiteOrigin(report.origin || WORDPRESS_ORIGIN);
+  if (!origin) return markdown;
   const approved = new Set(report.links.map(link => link.url));
   type Node = { type: string; identifier?: string; url?: string; value?: string; children?: Node[]; position?: { start: { offset?: number }; end: { offset?: number } } };
   const edits: { start: number; end: number; text: string }[] = [];
@@ -99,7 +104,7 @@ export function removeUnverifiedInternalLinks(markdown: string, report: Internal
       const url = node.url || (node.type === 'linkReference' ? definitions.get(node.identifier || '') : undefined);
       if ((node.type === 'link' || node.type === 'definition' || node.type === 'linkReference') && url) {
         let internal = false;
-        try { internal = new URL(url, WORDPRESS_ORIGIN).origin === WORDPRESS_ORIGIN; } catch { /* Renderer rejects unsafe URLs. */ }
+        try { internal = new URL(url, origin).origin === origin; } catch { /* Renderer rejects unsafe URLs. */ }
         if (internal && !url.startsWith('#') && !approved.has(url)) {
           const start = node.position?.start.offset, end = node.position?.end.offset;
           if (typeof start === 'number' && typeof end === 'number') edits.push({ start, end, text: node.type === 'definition' || label(node).includes('://') ? '' : label(node).replace(/[\\`*_[\]<>:]/g, '\\$&') });

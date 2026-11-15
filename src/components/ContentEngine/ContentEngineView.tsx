@@ -1,3 +1,5 @@
+import { automaticWordPressPublication, wordpressSiteOrigin } from '../../utils/wordpressSites';
+import { authenticatedFetch as wordpressFetch } from '../../services/authenticatedFetch';
 import { CompetitorResearchPanel } from './CompetitorResearchPanel';
 import { resolveEditorialStrategy } from '../../utils/editorialStrategy';
 import { ArticleCampaignModal } from './ArticleCampaignModal';
@@ -247,6 +249,21 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     return true;
   };
 
+  const publishSavedBlog = async (project: CentralContentProject): Promise<CentralContentProject> => {
+    setActiveTab('blog');
+    if (!await handleUpdateActiveProject(project)) throw new Error('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.');
+    if (!userId || !isAdmin || !automaticWordPressPublication(project.projectSettings)) return project;
+    const response = await wordpressFetch(`/api/wordpress/${encodeURIComponent(project.id)}/publish`, { method: 'POST' });
+    const result = await response.json();
+    if (!response.ok || result.status !== 'publish' || !result.publishedUrl) throw new Error(result.error || 'Die Veröffentlichung konnte nicht bestätigt werden.');
+    const latest = latestContentProjectRef.current;
+    const current = latest?.id === project.id ? latest : project;
+    const published: CentralContentProject = { ...current, targetUrl: result.publishedUrl, projectSettings: { ...current.projectSettings, defaultTargetUrl: result.publishedUrl }, blogArticle: { ...current.blogArticle!, status: 'published', publishedUrl: result.publishedUrl } };
+    if (!await handleUpdateActiveProject(published)) throw new Error('Der Artikel ist in WordPress veröffentlicht. Der Academy-Status konnte nicht gespeichert werden. Bitte WordPress-Status prüfen.');
+    setSaveNotice(hubText('Der Artikel ist auf gomo-marketing.at veröffentlicht. SEO-Daten wurden bestätigt.'));
+    return published;
+  };
+
   const handleSaveProjectSettings = async (updatedSettings: ProjectSettings) => {
     if (!canUseContentProject(updatedSettings, isAdmin)) {
       setErrorMsg(hubText("Vital50 steht ausschließlich Administratoren zur Verfügung."));
@@ -342,7 +359,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         affiliateLink
       );
 
-      await handleUpdateActiveProject(createBlogArticleProject(
+      await publishSavedBlog(createBlogArticleProject(
         project.topic, project.projectSettings, project.contentBrief, blogArticle, affiliateLink, project,
       ));
       setActiveTab('blog');
@@ -360,7 +377,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     try {
       const { brief } = await AIContentService.generateContentBrief(topic.trim(), settings, undefined, affiliateLink ?? '');
       const article = await AIContentService.generateBlogArticle(topic.trim(), brief, settings, affiliateLink);
-      await handleUpdateActiveProject(createBlogArticleProject(topic.trim(), settings, brief, article, affiliateLink));
+      await publishSavedBlog(createBlogArticleProject(topic.trim(), settings, brief, article, affiliateLink));
       setActiveTab('blog');
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : hubText("Der zusätzliche Blogartikel konnte nicht erstellt werden."));
@@ -495,30 +512,23 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         affiliateLink ?? ''
       );
 
-      // 2. Parallel Generation of Blog, 5 Pins, and YouTube Scripts
-      const [blogArticle, pinterestPins, youtubeVideo, youtubeShorts] = await Promise.all([
-        AIContentService.generateBlogArticle(topic, brief, settings, affiliateLink),
-        AIContentService.generatePinterestPins(topic, brief, settings, affiliateLink),
-        AIContentService.generateYouTubeScript(topic, brief, settings, affiliateLink),
-        AIContentService.generateYouTubeShorts(topic, brief, settings, affiliateLink),
+      const blogArticle = await AIContentService.generateBlogArticle(topic, brief, settings, affiliateLink);
+      let fullProject = createBlogArticleProject(topic, settings, brief, blogArticle, affiliateLink);
+      fullProject = await publishSavedBlog(fullProject);
+      const destination = fullProject.blogArticle?.publishedUrl || affiliateLink;
+      const social = await Promise.allSettled([
+        AIContentService.generatePinterestPins(topic, brief, fullProject.projectSettings, destination),
+        AIContentService.generateYouTubeScript(topic, brief, fullProject.projectSettings, destination),
+        AIContentService.generateYouTubeShorts(topic, brief, fullProject.projectSettings, destination),
       ]);
-
-      const fullProject: CentralContentProject = {
-        id: `content_proj_${Date.now()}`,
-        topic: topic,
-        projectSettings: settings,
-        contentBrief: brief,
-        blogArticle,
-        affiliateLink,
-        pinterestPins,
-        youtubeVideo,
-        youtubeShorts,
-        calendarItems: [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+      const [pins, video, shorts] = social;
+      fullProject = { ...fullProject,
+        ...(pins.status === 'fulfilled' ? { pinterestPins: pins.value } : {}),
+        ...(video.status === 'fulfilled' ? { youtubeVideo: video.value } : {}),
+        ...(shorts.status === 'fulfilled' ? { youtubeShorts: shorts.value } : {}),
       };
-
-      handleUpdateActiveProject(fullProject);
+      if (!await handleUpdateActiveProject(fullProject)) throw new Error('Die Cloud-Speicherung konnte nicht bestätigt werden.');
+      if (social.some(result => result.status === 'rejected')) setErrorMsg('Der Blogartikel ist gespeichert. Einige Kampagneninhalte konnten nicht erstellt werden; bitte diese Schritte erneut starten.');
       setActiveTab('brief');
     } catch (err: any) {
       setErrorMsg(err.message || hubText("Fehler bei der Ein-Klick-Erstellung."));
@@ -929,13 +939,18 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                     if (!await handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle!, ...fields } })) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
                   },
                 }}
-                wordpress={isAdmin && activeContentProject.projectSettings.websiteUrl?.replace(/\/$/, '') === 'https://vital50.gomo-marketing.at' ? {
+                wordpress={isAdmin && Boolean(wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl)) ? {
                   contentId: activeContentProject.id,
                   onAddInternalLinks: async () => {
                     const blogArticle = await AIContentService.addInternalLinks(activeContentProject.topic, activeContentProject.contentBrief!, activeContentProject.projectSettings, activeContentProject.blogArticle!);
                     const current = latestContentProjectRef.current;
                     if (!current || current.id !== activeContentProject.id || current.blogArticle?.contentMarkdown !== activeContentProject.blogArticle?.contentMarkdown || current.blogArticle?.title !== activeContentProject.blogArticle?.title) throw new Error(hubText('Der Artikel wurde inzwischen geändert. Bitte die Linkprüfung erneut starten.'));
                     if (!await handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle!, contentMarkdown: blogArticle.contentMarkdown, internalLinking: blogArticle.internalLinking } })) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
+                  },
+                  onPublished: async (url) => {
+                    const current = latestContentProjectRef.current;
+                    if (!current || current.id !== activeContentProject.id || !current.blogArticle) return;
+                    if (!await handleUpdateActiveProject({ ...current, targetUrl: url, projectSettings: { ...current.projectSettings, defaultTargetUrl: url }, blogArticle: { ...current.blogArticle, status: 'published', publishedUrl: url } })) throw new Error('Veröffentlicht, aber Academy-Status konnte nicht gespeichert werden.');
                   },
                   onSave: (categorySlug) => handleUpdateActiveProject({ ...activeContentProject, blogArticle: { ...activeContentProject.blogArticle!, wordpressCategorySlug: categorySlug } }),
                 } : undefined}

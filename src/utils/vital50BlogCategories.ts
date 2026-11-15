@@ -6,7 +6,7 @@ export const VITAL50_CATEGORIES = [
   { slug: 'rezepte', name: 'Rezepte' },
 ] as const;
 export type Vital50CategorySlug = typeof VITAL50_CATEGORIES[number]['slug'];
-export type WordPressCategory = { id: number; slug: Vital50CategorySlug; name: string };
+export type WordPressCategory = { id: number; slug: string; name: string };
 export const isVital50CategorySlug = (value: unknown): value is Vital50CategorySlug => VITAL50_CATEGORIES.some(c => c.slug === value);
 // Titles take precedence: incidental mentions in article boilerplate must not decide its category.
 export function suggestVital50Category(title: string, topic = '', keyword = ''): Vital50CategorySlug | null {

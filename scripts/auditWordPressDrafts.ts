@@ -128,7 +128,7 @@ const afterTimeout = calls.length;
 await assert.rejects(service.transfer('owner', 'uncertain'), /kein weiterer Beitrag/);
 assert.equal(calls.length, afterTimeout, 'Uncertain results must not cause duplicate posts');
 content = { ...content, projectSettings: { ...content.projectSettings, websiteUrl: 'http://127.0.0.1' } };
-await assert.rejects(service.status('owner', 'article'), /ausschließlich/);
+await assert.rejects(service.status('owner', 'article'), /passt nicht/);
 await assert.rejects(service.status('owner', '../unsafe'), /Ungültiger/);
 content.projectSettings.websiteUrl = WORDPRESS_ORIGIN;
 await service.disconnect('owner', 'article');

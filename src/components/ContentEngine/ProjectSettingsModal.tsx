@@ -1,3 +1,4 @@
+import { automaticWordPressPublication, wordpressSiteOrigin, GOMO_WORDPRESS_ORIGIN } from '../../utils/wordpressSites';
 import { publicResearchUrl, resolveEditorialStrategy } from '../../utils/editorialStrategy';
 import { resolveProjectBlogDefaults } from '../../utils/projectBlogDefaults';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
@@ -241,6 +242,11 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
             </div>
           </div>
 
+          {wordpressSiteOrigin(formData.websiteUrl) === GOMO_WORDPRESS_ORIGIN && <label className="block rounded-xl border border-emerald-200 p-4 text-sm">
+            <input type="checkbox" checked={automaticWordPressPublication(formData)} onChange={event => setFormData({ ...formData, wordpressAutoPublish: event.target.checked })} />{' '}
+            {hubText("Neue Blogartikel sofort auf gomo-marketing.at veröffentlichen")}
+            <span className="mt-2 block text-slate-600">{hubText("Nach der Erstellung und Cloud-Speicherung öffentlich veröffentlichen, einschließlich SEO-Daten, GEO-Kurzantwort und Kategorie. Die WordPress- und Rank-Math-Verbindung müssen eingerichtet sein.")}</span>
+          </label>}
           <fieldset className="space-y-3 rounded-xl border border-emerald-200 p-4">
             <legend className="px-1 text-sm font-bold">{hubText('Recherche und redaktionelle Strategie')}</legend>
             <label className="flex items-start gap-2 text-sm">

@@ -1,3 +1,4 @@
+import { automaticWordPressPublication, wordpressSiteOrigin } from '../src/utils/wordpressSites';
 import { resolveEditorialStrategy } from '../src/utils/editorialStrategy';
 import { campaignSourcePrompt } from '../src/utils/articleCampaign';
 import assert from 'node:assert/strict';
@@ -31,6 +32,8 @@ const hookReact = {
   useRef(value: any) { const i = cursor++; if (!(i in slots)) slots[i] = { current: value }; return slots[i]; },
   useEffect(effect: () => void, next: any[]) { const i = cursor++; if (!deps[i] || next.some((v, n) => !Object.is(v, deps[i][n]))) { deps[i] = next; effects.push(effect); } },
 };
+let signedIn = false; let cloudFails = false; let publicationFails = false;
+const publicationEvents: any[] = [];
 const requests: Array<{ kind: string; topic: string }> = [];
 let resolveLinks: (value: any) => void;
 let waitForLinks = false;
@@ -50,10 +53,16 @@ const AIContentService = {
   async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return []; },
 };
 const context = vm.createContext({ campaignSourcePrompt, contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
+  if (name.endsWith('wordpressSites')) return { automaticWordPressPublication, wordpressSiteOrigin };
   if (name === 'react') return hookReact;
   if (name.endsWith('pinterestOAuthReturn')) return { readPinterestOAuthReturn: () => null };
   if (name.endsWith('useContentHubCopy')) return { useContentHubCopy: () => ({ language: 'de', hubText: (source: string, ...values: unknown[]) => contentHubText('de', source, ...values) }) };
-  if (name.endsWith('AuthContext')) return { useAuth: () => ({ user: null }) };
+  if (name.endsWith('AuthContext')) return { useAuth: () => ({ user: signedIn ? { uid: 'owner' } : null }) };
+  if (name.endsWith('authenticatedFetch')) return { authenticatedFetch: async (url: string) => { publicationEvents.push({ kind: 'publish', url }); return Response.json(publicationFails ? { error: 'Bitte zuerst WordPress verbinden.' } : { status: 'publish', publishedUrl: 'https://gomo-marketing.at/mein-artikel/' }, { status: publicationFails ? 400 : 200 }); } };
+  if (name.endsWith('firestoreContentService')) return { FirestoreContentService: {
+    async syncLocalDataToFirestore() {}, async getProjectSettings() { return [settings, otherSettings]; }, async getContentProjects() { return saved; },
+    async saveContentProject(_uid: string, project: any) { publicationEvents.push({ kind: 'save', project: structuredClone(project) }); if (cloudFails) throw new Error('Cloud-Testfehler'); },
+  } };
   if (name.endsWith('contentStorage')) return {
     loadAllProjectSettings: () => [settings, otherSettings], loadAllContentProjects: () => saved,
     createStarterProjects: () => [settings], DEFAULT_VITAL50_PROJECT: { id: 'vital50' },
@@ -132,3 +141,28 @@ resolveSeo!({ seoTitle: 'Veralteter Vorschlag', metaDescription: 'Veraltet' });
 await assert.rejects(pendingSeo, /inzwischen geändert/);
 assert.equal((saved.find(p => p.id === first.id)?.blogArticle as any).metaDescription, 'Meine neue Beschreibung');
 console.log('SEO-/GEO-Vorbereitung erhält Artikeltext und zwischenzeitliche Änderungen.');
+
+// Exercise publication through the actual new-article callback, including persistence failures.
+settings.websiteUrl = 'https://gomo-marketing.at'; signedIn = true;
+render(); await new Promise(setImmediate); render();
+component('BlogArticleLibrary').props.onCreate(); render();
+component('AffiliateLinkModal').props.onConfirm(null, 'Neuer öffentlicher Artikel'); await new Promise(setImmediate); render();
+assert.deepEqual(publicationEvents.map(e => e.kind), ['save', 'publish', 'save']);
+assert.equal(publicationEvents[0].project.blogArticle.status, undefined, 'Save original before publication');
+assert.equal(publicationEvents.at(-1).project.blogArticle.status, 'published');
+assert.equal(publicationEvents.at(-1).project.targetUrl, 'https://gomo-marketing.at/mein-artikel/');
+publicationEvents.length = 0; publicationFails = true;
+component('BlogArticleLibrary').props.onCreate(); render();
+component('AffiliateLinkModal').props.onConfirm(null, 'Gespeichert trotz Verbindungsfehler'); await new Promise(setImmediate); render();
+assert.deepEqual(publicationEvents.map(e => e.kind), ['save', 'publish']);
+assert.ok(saved.some(p => p.topic === 'Gespeichert trotz Verbindungsfehler'));
+publicationEvents.length = 0; cloudFails = true;
+component('BlogArticleLibrary').props.onCreate(); render();
+component('AffiliateLinkModal').props.onConfirm(null, 'Nicht ohne Cloud-Bestätigung'); await new Promise(setImmediate); render();
+assert.deepEqual(publicationEvents.map(e => e.kind), ['save'], 'Never publish content not confirmed in Firestore');
+console.log('Automatische Veröffentlichung: echte Academy-Erstellung speichert vor Veröffentlichung, übernimmt den bestätigten Link und erhält Artikel bei Cloud-/Verbindungsfehlern.');
+
+publicationEvents.length = 0; cloudFails = false; publicationFails = false; settings.wordpressAutoPublish = false;
+component('BlogArticleLibrary').props.onCreate(); render();
+component('AffiliateLinkModal').props.onConfirm(null, 'Automatik bewusst ausgeschaltet'); await new Promise(setImmediate); render();
+assert.deepEqual(publicationEvents.map(e => e.kind), ['save'], 'Explicit opt-out prevents publication');
