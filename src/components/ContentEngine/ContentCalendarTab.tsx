@@ -1,3 +1,4 @@
+import { buildSocialCaption } from '../../utils/socialCaption';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
 import { socialEditorialPin, updateSocialEditorialContent, type SocialChannel } from '../../utils/socialEditorialReview';
 import { matchesPublishingTarget } from '../../utils/publishingTarget';
@@ -43,14 +44,7 @@ import { useAuth } from '../../context/AuthContext';
 import { pinterestService } from '../../services/pinterestService';
 import { renderPinToCanvas } from '../../utils/pinterestCanvasRenderer';
 
-const buildInstagramCaption = (description?: string, keywords: string[] = []): string => {
-  const hashtags = keywords
-    .map((keyword) => keyword.replace(/[^\p{L}\p{N}_]/gu, ''))
-    .filter(Boolean)
-    .map((keyword) => `#${keyword}`)
-    .join(' ');
-  return [description?.trim(), hashtags].filter(Boolean).join('\n\n').slice(0, 2200);
-};
+const buildInstagramCaption = (description = '', keywords: string[] = []): string => buildSocialCaption(description, keywords).slice(0, 2200);
 
 const renderInstagramImage = async (
   pin: CentralContentProject['pinterestPins'][number],

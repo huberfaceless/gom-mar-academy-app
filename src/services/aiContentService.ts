@@ -1,3 +1,4 @@
+import { splitSocialCaption } from '../utils/socialCaption';
 import { 
   ProjectSettings, 
   ContentBrief, 
@@ -148,8 +149,7 @@ export class AIContentService {
       angle: p.angle || 'solution',
       angleLabel: p.angleLabel || `Pin ${idx + 1}`,
       title: p.title || `${topic} - Tipp ${idx + 1}`,
-      description: p.description || '',
-      keywords: Array.isArray(p.keywords) ? p.keywords : [],
+      ...splitSocialCaption(p.description || '', Array.isArray(p.keywords) ? p.keywords : []),
       targetUrl,
       board: p.board || projectSettings.pinterestBoardDefault || projectSettings.name,
       imagePrompt: p.imagePrompt || `Fotorealistisches 1080x1620 Pinterest-Bild zum Thema ${topic}`,

@@ -164,3 +164,5 @@ console.log('Artikelvorschau geprüft: Textgitter als echte Tabellen; neue Artik
 await import("./auditArticleCampaign");
 
 await import("./auditSocialEditorialReview");
+
+await import("./auditSocialCaption");

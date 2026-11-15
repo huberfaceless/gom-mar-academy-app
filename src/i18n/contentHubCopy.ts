@@ -3,6 +3,11 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "CTA-Text auf der Grafik": "CTA text on the graphic",
+  "Grafikvorschau: Zielseite öffnen": "Graphic preview: open target page",
+  "Der CTA ist Text im Bild, keine eigene Schaltfläche. In dieser Vorschau öffnet ein Klick auf die Grafik die Zielseite. Der veröffentlichte Beitrag benötigt weiterhin seinen Ziel-Link.": "The CTA is text in the image, not a separate button. Clicking the graphic in this preview opens the target page. The published post still needs its destination link.",
+  "Hashtags werden aus dem Beitragstext in die Suchbegriffe übernommen und bei Instagram einmalig angefügt.": "Hashtags are moved from the post text into the keywords and appended once on Instagram.",
+
   "Neues Projekt": "New project",
   "Zielseite zum inhaltlichen Abgleich öffnen": "Open the target page to check the content",
   "Inhalt prüfen und bearbeiten": "Review and edit content",

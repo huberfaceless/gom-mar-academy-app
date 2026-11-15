@@ -2790,7 +2790,7 @@ WICHTIG: Die 5 Pins MÜSSEN 5 völlig unterschiedliche psychologische Angles (Bl
 
 Jeder Pin benötigt:
 - title: Scroll-stoppende Headline (prägnant für Bild & Titel)
-- description: SEO-optimierte Pin-Beschreibung mit Keywords & Hashtags (max 400 Zeichen)
+- description: SEO-optimierte Pin-Beschreibung als Fließtext ohne Hashtags (max 400 Zeichen). Hashtags und Suchbegriffe gehören ausschließlich in keywords.
 - keywords: 3-5 relevante Suchbegriffe
 - targetUrl: ${targetUrl}
 - board: ${projectSettings?.pinterestBoardDefault || projectSettings?.name || 'Content-Ideen'}

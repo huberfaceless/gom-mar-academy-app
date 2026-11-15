@@ -1,3 +1,4 @@
+import { buildSocialCaption } from '../../utils/socialCaption';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useEffect, useState } from 'react';
 import { AlertCircle, CheckCircle2, Instagram, Loader2, Lock, Share2, X } from 'lucide-react';
@@ -12,13 +13,7 @@ interface InstagramPublishModalProps {
   onClose: () => void;
 }
 
-const buildCaption = (pin: PinterestPin) => {
-  const hashtags = pin.keywords
-    .map((keyword) => `#${keyword.replace(/[^\p{L}\p{N}_]/gu, '')}`)
-    .filter((tag) => tag.length > 1)
-    .join(' ');
-  return `${pin.description.trim()}\n\n${hashtags}`.trim().slice(0, 2200);
-};
+const buildCaption = (pin: PinterestPin) => buildSocialCaption(pin.description, pin.keywords).slice(0, 2200);
 
 export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
   pin,
@@ -84,7 +79,7 @@ export const InstagramPublishModal: React.FC<InstagramPublishModalProps> = ({
     setIsPublishing(true);
     setError(null);
     try {
-      setPublished(await instagramService.publishImage({ caption: caption.trim(), imageBase64: previewDataUrl }));
+      setPublished(await instagramService.publishImage({ caption: buildSocialCaption(caption).slice(0, 2200), imageBase64: previewDataUrl }));
     } catch (reason: unknown) {
       setError(reason instanceof Error ? reason.message : hubText("Instagram-Beitrag konnte nicht veröffentlicht werden."));
     } finally {
