@@ -1,7 +1,7 @@
 import { wordpressSiteOrigin, GOMO_WORDPRESS_ORIGIN } from '../src/utils/wordpressSites';
 import { verifyBlogReferences } from './blogReferences.js';
 import { isWordPressImageUrl } from '../src/utils/blogReferences.js';
-import { RANK_MATH_KEYS, rankMathMeta, blogMarkdownWithSummary } from '../src/utils/blogSeoGeo.js';
+import { wordpressSeoKeys, wordpressSeoMeta, blogMarkdownWithSummary, type WordPressSeoProvider } from '../src/utils/blogSeoGeo.js';
 import { blogLinkRel } from '../src/utils/blogLinkRel.js';
 import { VITAL50_CATEGORIES, isVital50CategorySlug, mapVital50Categories, suggestVital50Category } from '../src/utils/vital50BlogCategories.js';
 import { normalizeBlogMarkdown } from '../src/utils/blogMarkdownFormatting.js';
@@ -73,6 +73,9 @@ export const renderWordPressArticle = (markdown: string) => renderToStaticMarkup
 
 export function createWordPressDraftService(storage = store, request: typeof fetch = fetch, secret = () => process.env.WORDPRESS_CREDENTIAL_ENCRYPTION_KEY || '', publicRequest: typeof fetch = fetch, siteOrigin = WORDPRESS_ORIGIN) {
   if (wordpressSiteOrigin(siteOrigin) !== siteOrigin) throw new Error('Diese WordPress-Seite ist nicht freigegeben.');
+  const seoProvider: WordPressSeoProvider = siteOrigin === GOMO_WORDPRESS_ORIGIN ? 'seopress' : 'rank-math';
+  const seoName = seoProvider === 'seopress' ? 'SEOPress' : 'Rank Math';
+  const seoKeys = wordpressSeoKeys(seoProvider);
   const encryptionKey = () => {
     const key = secret().trim();
     if (key.length < 32) throw new Error('WordPress ist serverseitig noch nicht eingerichtet (Verschlüsselungsschlüssel fehlt).');
@@ -143,7 +146,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
   };
   const confirmPublished = async (uid: string, contentId: string, credential: string, record: Stored) => {
     const post = await wp(`posts/${record.value.postId}?context=edit`, credential);
-    if (post.id !== record.value.postId || post.status !== 'publish' || !record.value.expectedMeta || !RANK_MATH_KEYS.every(key => post.meta?.[key] === record.value.expectedMeta[key])) throw new Error('Die Veröffentlichung ist noch nicht eindeutig bestätigt. Bitte WordPress prüfen und den Status erneut laden.');
+    if (post.id !== record.value.postId || post.status !== 'publish' || !record.value.expectedMeta || !wordpressSeoKeys(record.value.seoProvider || 'rank-math').every(key => typeof record.value.expectedMeta[key] === 'string' && post.meta?.[key] === record.value.expectedMeta[key])) throw new Error('Die Veröffentlichung ist noch nicht eindeutig bestätigt. Bitte WordPress prüfen und den Status erneut laden.');
     const publishedUrl = publicationUrl(post.link);
     const value = { ...record.value, state: 'confirmed', postStatus: 'publish', publishedUrl, seoStatus: 'saved', updatedAt: new Date().toISOString() };
     try { await storage.write(draftCollection, mappingId(uid, contentId), value, record.version); }
@@ -153,7 +156,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
   const seoReady = async (credential: string) => {
     const schema = await wp('posts', credential, { method: 'OPTIONS' });
     const properties = schema?.schema?.properties?.meta?.properties;
-    return RANK_MATH_KEYS.every(key => properties?.[key]?.type === 'string' && properties[key].readonly !== true);
+    return seoKeys.every(key => properties?.[key]?.type === 'string' && properties[key].readonly !== true);
   };
   const service = {
     async media(uid: string, contentId: string, search = '') {
@@ -184,7 +187,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       const { key } = await projectFor(uid, contentId);
       const connection = await storage.read(connectionCollection, key);
       if (!connection) throw new Error('Bitte zuerst WordPress verbinden.');
-      return { ready: await seoReady(boundCredential(connection.value)) };
+      return { ready: await seoReady(boundCredential(connection.value)), provider: seoProvider, requiresBridge: seoProvider === 'rank-math' };
     },
     async categories(uid: string, contentId: string) {
       const { content, key } = await projectFor(uid, contentId);
@@ -200,9 +203,9 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       if (draft?.value.state === 'publishing' && connection) {
         try { await confirmPublished(uid, contentId, boundCredential(connection.value), draft); draft = await storage.read(draftCollection, mappingId(uid, contentId)); } catch { /* Keep an uncertain write visible, never create another post. */ }
       }
-      return { configured: secret().trim().length >= 32, connected: Boolean(connection), siteUrl: siteOrigin,
+      return { configured: secret().trim().length >= 32, connected: Boolean(connection), siteUrl: siteOrigin, seoProvider,
         draft: draft ? { state: draft.value.state, postId: draft.value.postId || null,
-          postStatus: draft.value.postStatus || 'draft', publishedUrl: draft.value.publishedUrl || null, seoStatus: draft.value.seoStatus || null, slug: draft.value.slug || null, editUrl: draft.value.postId ? `${siteOrigin}/wp-admin/post.php?post=${draft.value.postId}&action=edit` : null } : null };
+          seoProvider: draft.value.seoProvider || 'rank-math', postStatus: draft.value.postStatus || 'draft', publishedUrl: draft.value.publishedUrl || null, seoStatus: draft.value.seoStatus || null, slug: draft.value.slug || null, editUrl: draft.value.postId ? `${siteOrigin}/wp-admin/post.php?post=${draft.value.postId}&action=edit` : null } : null };
     },
     async connect(uid: string, contentId: string, username: unknown, password: unknown) {
       const { key } = await projectFor(uid, contentId);
@@ -254,12 +257,12 @@ export function createWordPressDraftService(storage = store, request: typeof fet
         const image = mediaItem(await wp(`media/${article.wordpressImage.id}?context=edit`, credential));
         exportArticle = { ...article, wordpressImage: { ...article.wordpressImage, url: image.url } };
       }
-      const desiredMeta = rankMathMeta(article, content.contentBrief);
+      const desiredMeta = wordpressSeoMeta(seoProvider, article, content.contentBrief);
       let seoStatus = desiredMeta ? 'unavailable' : 'incomplete';
       let meta: Record<string, string> | null = null;
       try { if (desiredMeta && await seoReady(credential)) meta = desiredMeta; } catch { /* Drafts remain available; SEO is explicitly reported as unavailable. */ }
       if (publishNow) {
-        if (!desiredMeta || !meta) throw new Error('Für die direkte Veröffentlichung müssen SEO-Titel, Beschreibung, Fokuskeyword und die Rank-Math-Verbindung vollständig eingerichtet sein.');
+        if (!desiredMeta || !meta) throw new Error(`Für die direkte Veröffentlichung müssen SEO-Titel, Beschreibung, Fokuskeyword und die ${seoName}-Verbindung vollständig eingerichtet sein.`);
         if (typeof article.answerSummary !== 'string' || !article.answerSummary.trim()) throw new Error('Bitte die GEO-Kurzantwort vor der Veröffentlichung ergänzen.');
         const me = await wp('users/me?context=edit', credential);
         if (!me.capabilities?.publish_posts) throw new Error('Der WordPress-Benutzer darf keine Beiträge veröffentlichen.');
@@ -276,10 +279,10 @@ export function createWordPressDraftService(storage = store, request: typeof fet
         seoStatus = 'unverified';
         try {
           const verified = await wp(`posts/${post.id}?context=edit`, credential);
-          if (RANK_MATH_KEYS.every(key => verified.meta?.[key] === meta[key])) seoStatus = 'saved';
+          if (seoKeys.every(key => verified.meta?.[key] === meta[key])) seoStatus = 'saved';
         } catch { /* The post is confirmed; a metadata read failure must never cause a duplicate creation. */ }
       }
-      const confirmed = { state: 'confirmed', postId: post.id, postStatus: 'draft', seoStatus, ...(typeof post.slug === 'string' ? { slug: post.slug } : {}), ...(article.wordpressImage?.featured ? { featuredMediaId: article.wordpressImage.id } : {}), updatedAt: new Date().toISOString() };
+      const confirmed = { state: 'confirmed', seoProvider, postId: post.id, postStatus: 'draft', seoStatus, ...(typeof post.slug === 'string' ? { slug: post.slug } : {}), ...(article.wordpressImage?.featured ? { featuredMediaId: article.wordpressImage.id } : {}), updatedAt: new Date().toISOString() };
       await storage.write(draftCollection, draftId, confirmed, claimed.version);
       if (publishNow) {
         if (seoStatus !== 'saved') throw new Error('Der Artikel wurde als Entwurf gespeichert. Die SEO-Daten sind noch nicht bestätigt; er wurde nicht veröffentlicht.');

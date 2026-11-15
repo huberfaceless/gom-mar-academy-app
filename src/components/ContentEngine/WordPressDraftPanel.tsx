@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 
-type Status = { configured: boolean; connected: boolean; siteUrl: string; draft: { state: string; postId: number | null; editUrl: string | null; postStatus?: string; publishedUrl?: string; seoStatus?: string; slug?: string } | null };
+type Status = { configured: boolean; connected: boolean; siteUrl: string; seoProvider?: 'rank-math' | 'seopress'; draft: { state: string; postId: number | null; editUrl: string | null; seoProvider?: 'rank-math' | 'seopress'; postStatus?: string; publishedUrl?: string; seoStatus?: string; slug?: string } | null };
 const api = async (id: string, action: string, init: RequestInit = {}) => {
   const response = await authenticatedFetch(`/api/wordpress/${encodeURIComponent(id)}/${action}`, init);
   const data = await response.json();
@@ -72,6 +72,7 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
     finally { setBusy(false); }
   };
   const publishNow = status?.siteUrl === GOMO_WORDPRESS_ORIGIN;
+  const usesSeopress = status?.seoProvider === 'seopress';
   const published = status?.draft?.postStatus === 'publish';
   const validCategory = categories.some(c => c.slug === categorySlug);
   const refresh = async () => setStatus(await api(contentId, 'status'));
@@ -112,16 +113,17 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
       <button disabled={busy} className="self-start rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">{hubText('WordPress verbinden')}</button>
     </form>}
     {status?.connected && <div className="space-y-2 rounded-xl bg-slate-50 p-3 text-sm">
-      <p className="font-semibold">{seoReady === true ? hubText('Rank-Math-Übertragung ist eingerichtet.') : hubText('Rank-Math-Übertragung ist noch nicht bestätigt.')}</p>
-      {seoReady === false && <>
+      <p className="font-semibold">{usesSeopress ? seoReady === true ? hubText('SEOPress-Übertragung ist eingerichtet.') : hubText('SEOPress-Übertragung ist noch nicht bestätigt.') : seoReady === true ? hubText('Rank-Math-Übertragung ist eingerichtet.') : hubText('Rank-Math-Übertragung ist noch nicht bestätigt.')}</p>
+      {usesSeopress && <p>{hubText('SEOPress 10.4 verwendet seine vorhandene WordPress-API. Kein zusätzliches SEO-Plugin erforderlich. Bei fehlendem Zugriff bitte SEOPress aktivieren und unter SEO → Erweitert → Sicherheit die Rollensperren für SEO-Metabox und Inhaltsanalyse prüfen.')}</p>}
+      {seoReady === false && !usesSeopress && <>
         <p>{hubText('Einmalig das SEO-Zusatzplugin herunterladen und in WordPress unter Plugins → Neues Plugin → Plugin hochladen installieren und aktivieren. Rank Math muss aktiv sein.')}</p>
         <button type="button" disabled={busy} onClick={() => void downloadSeoPlugin()} className="font-semibold underline">{hubText('SEO-Zusatzplugin herunterladen')}</button>
       </>}
       <button type="button" disabled={busy} onClick={() => void checkSeo()} className="ml-3 underline">{hubText('SEO-Verbindung prüfen')}</button>
       {seoError && <p role="alert" className="text-rose-700">{seoError}</p>}
-      {status.draft?.seoStatus === 'saved' && <p role="status" className="text-emerald-800">{hubText('SEO-Daten wurden in WordPress gespeichert und zurückgelesen.')}</p>}
-      {status.draft?.seoStatus === 'incomplete' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Für Rank Math bitte SEO-Titel, Beschreibung und Fokuskeyword vervollständigen und erneut übertragen.')}</p>}
-      {status.draft?.seoStatus === 'unavailable' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten wurden noch nicht an Rank Math übertragen. Bitte die SEO-Verbindung einrichten und erneut übertragen.')}</p>}
+      {status.draft?.seoStatus === 'saved' && (status.draft.seoProvider || 'rank-math') === (status.seoProvider || 'rank-math') && <p role="status" className="text-emerald-800">{hubText('SEO-Daten wurden in WordPress gespeichert und zurückgelesen.')}</p>}
+      {status.draft?.seoStatus === 'incomplete' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Bitte SEO-Titel, Beschreibung und Fokuskeyword vervollständigen und erneut übertragen.')}</p>}
+      {status.draft?.seoStatus === 'unavailable' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten wurden noch nicht an das SEO-Plugin übertragen. Bitte die SEO-Verbindung einrichten und erneut übertragen.')}</p>}
       {status.draft?.seoStatus === 'unverified' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten konnten nicht eindeutig bestätigt werden. Bitte im WordPress-Entwurf prüfen.')}</p>}
     </div>}
     {status?.connected && <div className="space-y-2">

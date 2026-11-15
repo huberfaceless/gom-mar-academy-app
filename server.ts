@@ -1198,7 +1198,7 @@ async function startServer() {
     },
   );
 
-  // Vital50 WordPress drafts: authenticated administrators only; no automatic publication.
+  // WordPress: isolated site connections; draft-only on Vital50, explicit publication on the main site.
   app.all('/api/wordpress/:contentId/:action', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     res.setHeader('Cache-Control', 'no-store');
     const uid = (req as FirebaseRequest).firebaseUser!.sub;
@@ -1208,7 +1208,8 @@ async function startServer() {
       else if (action === 'media' && req.method === 'POST') res.json(await wordpressDraftService.uploadMedia(uid, contentId, req.body?.image));
       else if (action === 'seo' && req.method === 'GET') res.json(await wordpressDraftService.seo(uid, contentId));
       else if (action === 'seo-plugin' && req.method === 'GET') {
-        await wordpressDraftService.status(uid, contentId);
+        const status = await wordpressDraftService.status(uid, contentId);
+        if (status.seoProvider !== 'rank-math') throw new Error('SEOPress benötigt dieses Rank-Math-Zusatzplugin nicht. Bitte die SEO-Verbindung prüfen.');
         res.type('application/zip').set('Content-Disposition', 'attachment; filename="gommar-academy-seo.zip"').send(await wordpressSeoBridgeZip());
       }
       else if (action === 'categories' && req.method === 'GET') res.json(await wordpressDraftService.categories(uid, contentId));

@@ -1,6 +1,9 @@
 import { selectedBlogReferences, isWordPressImageUrl } from './blogReferences';
 import type { BlogArticle, ContentBrief } from '../types/contentEngine';
 
+export type WordPressSeoProvider = 'rank-math' | 'seopress';
+export const SEOPRESS_KEYS = ['_seopress_titles_title', '_seopress_titles_desc', '_seopress_analysis_target_kw'] as const;
+export const wordpressSeoKeys = (provider: WordPressSeoProvider) => provider === 'seopress' ? SEOPRESS_KEYS : RANK_MATH_KEYS;
 export const RANK_MATH_KEYS = ['rank_math_title', 'rank_math_description', 'rank_math_focus_keyword'] as const;
 export const seoText = (value: unknown, limit: number): string => typeof value === 'string'
   ? value.replace(/<[^>]*>/g, '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, limit) : '';
@@ -18,6 +21,13 @@ export function rankMathMeta(article: BlogArticle, brief?: Partial<ContentBrief>
   if (value.seoTitle.length > 200 || value.metaDescription.length > 500 || value.focusKeyword.length > 150) throw new Error('Die SEO-Daten sind zu lang. Bitte die Felder im Artikel prüfen.');
   const meta = { rank_math_title: seoText(value.seoTitle, 200), rank_math_description: seoText(value.metaDescription, 500), rank_math_focus_keyword: seoText(value.focusKeyword, 150) };
   return Object.values(meta).every(Boolean) ? meta : null;
+}
+// SEOPress 10.4 exposes these registered text metas to authenticated editors
+// through the core posts API. Preserve the plugin's own role restrictions.
+export function wordpressSeoMeta(provider: WordPressSeoProvider, article: BlogArticle, brief?: Partial<ContentBrief>): Record<string, string> | null {
+  const meta = rankMathMeta(article, brief);
+  if (!meta || provider === 'rank-math') return meta;
+  return { _seopress_titles_title: meta.rank_math_title, _seopress_titles_desc: meta.rank_math_description, _seopress_analysis_target_kw: meta.rank_math_focus_keyword };
 }
 export function normalizeSeoGeo(value: Record<string, unknown>, article: BlogArticle, brief?: Partial<ContentBrief>) {
   const fallback = articleSeoDefaults(article, brief);
