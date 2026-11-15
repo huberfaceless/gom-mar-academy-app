@@ -3,6 +3,7 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Neues Projekt": "New project",
   "Zielseite zum inhaltlichen Abgleich öffnen": "Open the target page to check the content",
   "Inhalt prüfen und bearbeiten": "Review and edit content",
   "Prüfe Aussagen, Zahlen, Rechtschreibung und die Übereinstimmung mit dem Blogartikel. Deine Korrekturen aktualisieren die Vorschau und werden erst beim Speichern übernommen.": "Check claims, numbers, spelling and consistency with the blog article. Your corrections update the preview and are only applied when you save.",
