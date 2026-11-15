@@ -1,3 +1,4 @@
+import { resolveEditorialStrategy } from '../src/utils/editorialStrategy';
 import { campaignSourcePrompt } from '../src/utils/articleCampaign';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -58,6 +59,7 @@ const context = vm.createContext({ campaignSourcePrompt, contentLanguageInstruct
     createStarterProjects: () => [settings], DEFAULT_VITAL50_PROJECT: { id: 'vital50' },
     saveOrUpdateContentProject(value: any) { saved = [value, ...saved.filter(p => p.id !== value.id)]; },
   };
+  if (name.endsWith('editorialStrategy')) return { resolveEditorialStrategy };
   if (name.endsWith('contentProjectSelection')) return { selectContentProjectScope };
   if (name.endsWith('contentProjectAccess')) return { canUseContentProject: () => true };
   if (name.endsWith('blogArticleProjects')) return { createBlogArticleProject };

@@ -3,6 +3,20 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Mitbewerber-Recherche und Texterstellung laufen. Das kann einige Minuten dauern.": "Competitor research and content creation are running. This may take a few minutes.",
+  "Google-Suchvorschläge zur Recherche": "Google search suggestions for this research",
+  "Analyse und Quellen ansehen": "View analysis and sources",
+  "Momentaufnahme öffentlicher Inhalte. Beobachtungen und Vorschläge sind keine vollständige Marktanalyse oder geprüfte Erfolgsdaten. Mitbewerberversprechen ersetzen keine Fachbelege.": "A snapshot of public content. Observations and suggestions are not a complete market analysis or verified performance data. Competitor promises do not replace expert evidence.",
+  "Stand:": "As of:",
+  "Mitbewerber-Recherche vor der Erstellung": "Competitor research before creation",
+  "Bitte höchstens fünf öffentliche HTTPS-Websites für die Recherche angeben.": "Please enter no more than five public HTTPS websites for research.",
+  "Zugespitzt in der Haltung, präzise bei den Fakten. Keine erfundenen Belege, Gegner, Erfolgsversprechen oder Angst- und Schamtricks. Beobachtung, Meinung und Unsicherheit werden getrennt.": "Sharp in positioning, precise with facts. No invented evidence, opponents, promises of success or fear and shame tactics. Observation, opinion and uncertainty are separated.",
+  "Hart, ehrlich, glasklar: klare Thesen und begründete Gegenpositionen": "Bold, honest and clear: strong theses and reasoned counterpositions",
+  "Ohne Vorgaben sucht die KI nach Anbietern für die gespeicherte Zielgruppe und das jeweilige Thema. Es werden nur öffentlich auffindbare Inhalte berücksichtigt.": "Without specified websites, AI searches for providers serving the saved audience and topic. Only publicly discoverable content is considered.",
+  "Mitbewerber-Websites (optional, eine HTTPS-Adresse je Zeile)": "Competitor websites (optional, one HTTPS address per line)",
+  "Die Recherche verwendet eine zusätzliche KI-Websuche und kann länger dauern sowie zusätzliche API-Kosten verursachen. Ergebnis, Datum und Quellen werden mit dem Briefing gespeichert. Ohne belegbare Recherche wird die Erstellung gestoppt.": "Research uses an additional AI web search, may take longer and may incur additional API costs. Findings, date and sources are saved with the brief. Creation stops if sourced research is unavailable.",
+  "Vor neuen Briefings passende Mitbewerber recherchieren": "Research relevant competitors before new briefs",
+  "Recherche und redaktionelle Strategie": "Research and editorial strategy",
   "CTA-Text auf der Grafik": "CTA text on the graphic",
   "Grafikvorschau: Zielseite öffnen": "Graphic preview: open target page",
   "Der CTA ist Text im Bild, keine eigene Schaltfläche. In dieser Vorschau öffnet ein Klick auf die Grafik die Zielseite. Der veröffentlichte Beitrag benötigt weiterhin seinen Ziel-Link.": "The CTA is text in the image, not a separate button. Clicking the graphic in this preview opens the target page. The published post still needs its destination link.",

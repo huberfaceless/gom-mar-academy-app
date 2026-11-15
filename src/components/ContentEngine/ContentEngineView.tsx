@@ -1,3 +1,5 @@
+import { CompetitorResearchPanel } from './CompetitorResearchPanel';
+import { resolveEditorialStrategy } from '../../utils/editorialStrategy';
 import { ArticleCampaignModal } from './ArticleCampaignModal';
 import { createArticleCampaign, attachCampaignSource, type CampaignArticle } from '../../utils/articleCampaign';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
@@ -675,6 +677,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           if (article) { setActiveContentProject(article); setActiveTab('blog'); }
         }}
       />
+
+      {(isGeneratingBrief || isGeneratingAll) && resolveEditorialStrategy(activeProjectSettings).competitorResearch &&
+        <p role="status" className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900">{hubText('Mitbewerber-Recherche und Texterstellung laufen. Das kann einige Minuten dauern.')}</p>}
+      {activeContentProject?.contentBrief?.competitorResearch && <CompetitorResearchPanel report={activeContentProject.contentBrief.competitorResearch} />}
 
       {saveNotice && (
         <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm font-semibold text-emerald-800 flex items-center gap-2">

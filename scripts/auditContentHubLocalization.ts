@@ -1,3 +1,5 @@
+import { researchBeforeBrief } from '../server/competitorResearch';
+import { editorialStrategyPrompt } from '../src/utils/editorialStrategy';
 import { campaignSourcePrompt } from '../src/utils/articleCampaign';
 import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from '../src/utils/projectBlogDefaults';
 import { suggestBlogReferenceReport } from '../server/blogReferences';
@@ -80,7 +82,7 @@ try {
 const server = readFileSync('server.ts', 'utf8');
 const routes = new Map<string, (req: any, res: any) => Promise<void>>();
 const requests: any[] = [];
-const ctx = vm.createContext({ campaignSourcePrompt,
+const ctx = vm.createContext({ researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt,
   app: { post: (path: string, ...handlers: any[]) => routes.set(path, handlers.at(-1)) },
   requireVerifiedMember: [], requireProMember() {}, requireContentProjectAccess() {},
   resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, validateBlogAffiliateLink, resolvePinterestTargetUrl, findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks,

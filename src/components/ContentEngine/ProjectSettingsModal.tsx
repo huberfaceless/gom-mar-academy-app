@@ -1,3 +1,4 @@
+import { publicResearchUrl, resolveEditorialStrategy } from '../../utils/editorialStrategy';
 import { resolveProjectBlogDefaults } from '../../utils/projectBlogDefaults';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useEffect, useState } from 'react';
@@ -56,7 +57,11 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
     let defaultTargetUrl: string;
     try { defaultTargetUrl = resolvePinterestTargetUrl(formData.defaultTargetUrl); }
     catch (error) { setLinkError((error as Error).message); return; }
-    onSave({ ...formData, defaultTargetUrl, blogDefaults: resolveProjectBlogDefaults(formData) });
+    const competitorWebsites = (formData.editorialStrategy?.competitorWebsites || []).map(url => url.trim()).filter(Boolean);
+    if (competitorWebsites.length > 5 || competitorWebsites.some(url => !publicResearchUrl(url))) {
+      setLinkError(hubText('Bitte höchstens fünf öffentliche HTTPS-Websites für die Recherche angeben.')); return;
+    }
+    onSave({ ...formData, editorialStrategy: resolveEditorialStrategy(formData), defaultTargetUrl, blogDefaults: resolveProjectBlogDefaults(formData) });
     onClose();
   };
 
@@ -235,6 +240,28 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
               />
             </div>
           </div>
+
+          <fieldset className="space-y-3 rounded-xl border border-emerald-200 p-4">
+            <legend className="px-1 text-sm font-bold">{hubText('Recherche und redaktionelle Strategie')}</legend>
+            <label className="flex items-start gap-2 text-sm">
+              <input type="checkbox" checked={resolveEditorialStrategy(formData).competitorResearch}
+                onChange={event => setFormData({ ...formData, editorialStrategy: { ...resolveEditorialStrategy(formData), competitorResearch: event.target.checked } })} />
+              {hubText('Vor neuen Briefings passende Mitbewerber recherchieren')}
+            </label>
+            <p className="text-xs text-slate-600">{hubText('Die Recherche verwendet eine zusätzliche KI-Websuche und kann länger dauern sowie zusätzliche API-Kosten verursachen. Ergebnis, Datum und Quellen werden mit dem Briefing gespeichert. Ohne belegbare Recherche wird die Erstellung gestoppt.')}</p>
+            <label className="block text-sm font-semibold">{hubText('Mitbewerber-Websites (optional, eine HTTPS-Adresse je Zeile)')}
+              <textarea rows={3} maxLength={10240} value={(formData.editorialStrategy?.competitorWebsites || []).join('\n')}
+                onChange={event => setFormData({ ...formData, editorialStrategy: { ...resolveEditorialStrategy(formData), competitorWebsites: event.target.value.split('\n') } })}
+                className="mt-1 block w-full rounded-xl border border-slate-300 p-3 font-normal" />
+            </label>
+            <p className="text-xs text-slate-600">{hubText('Ohne Vorgaben sucht die KI nach Anbietern für die gespeicherte Zielgruppe und das jeweilige Thema. Es werden nur öffentlich auffindbare Inhalte berücksichtigt.')}</p>
+            <label className="flex items-start gap-2 text-sm">
+              <input type="checkbox" checked={resolveEditorialStrategy(formData).boldHonest}
+                onChange={event => setFormData({ ...formData, editorialStrategy: { ...resolveEditorialStrategy(formData), boldHonest: event.target.checked } })} />
+              {hubText('Hart, ehrlich, glasklar: klare Thesen und begründete Gegenpositionen')}
+            </label>
+            <p className="text-xs text-slate-600">{hubText('Zugespitzt in der Haltung, präzise bei den Fakten. Keine erfundenen Belege, Gegner, Erfolgsversprechen oder Angst- und Schamtricks. Beobachtung, Meinung und Unsicherheit werden getrennt.')}</p>
+          </fieldset>
 
           <fieldset className="space-y-2 rounded-xl border border-slate-200 p-4">
             <legend className="px-1 text-sm font-bold">{hubText('SEO-/GEO-Vorgaben für neue Blogartikel')}</legend>
