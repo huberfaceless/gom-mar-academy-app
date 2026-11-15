@@ -19,7 +19,7 @@ export function BlogSeoGeoPanel({ article, mainKeyword, onChange, onPrepare }: {
   };
   return <section aria-label={hubText('SEO und GEO')} className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5">
     <h3 className="font-bold">{hubText('SEO und GEO')}</h3>
-    <p className="text-sm text-slate-600">{hubText('SEO-Titel, Beschreibung und Fokuskeyword werden an Rank Math übergeben, sobald die WordPress-Verbindung dafür eingerichtet ist. Die Kurzantwort erscheint sichtbar im Artikel.')}</p>
+    <p className="text-sm text-slate-600">{hubText('SEO-Titel, Beschreibung und Fokuskeyword werden an das für diese Website eingerichtete SEO-Plugin übergeben, sobald die WordPress-Verbindung dafür eingerichtet ist. Die Kurzantwort erscheint sichtbar im Artikel.')}</p>
     <button type="button" disabled={busy} onClick={() => void prepare()} className="rounded-xl border px-4 py-2 font-semibold disabled:opacity-50">{busy ? hubText('SEO und GEO werden vorbereitet…') : hubText('SEO und GEO vorbereiten')}</button>
     <div className="grid gap-3 md:grid-cols-2">
       <label className="text-sm font-semibold">{hubText('SEO-Titel')}<input value={fields.seoTitle} maxLength={200} onChange={e => onChange({ ...article, seoTitle: e.target.value })} className="mt-1 w-full rounded-xl border p-2" /><span className="text-xs font-normal text-slate-500">{fields.seoTitle.length} / 60 {hubText('Zeichen als Richtwert')}</span></label>

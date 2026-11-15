@@ -3,6 +3,9 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "SEOPress-Übertragung ist eingerichtet.": "SEOPress transfer is configured.",
+  "SEOPress-Übertragung ist noch nicht bestätigt.": "SEOPress transfer has not yet been verified.",
+  "SEOPress 10.4 verwendet seine vorhandene WordPress-API. Kein zusätzliches SEO-Plugin erforderlich. Bei fehlendem Zugriff bitte SEOPress aktivieren und unter SEO → Erweitert → Sicherheit die Rollensperren für SEO-Metabox und Inhaltsanalyse prüfen.": "SEOPress 10.4 uses its existing WordPress API. No additional SEO plugin is required. If access is missing, activate SEOPress and check the role restrictions for SEO metaboxes and content analysis under SEO → Advanced → Security.",
   "WordPress · gomo-marketing.at · Sofort veröffentlichen": "WordPress \u00b7 gomo-marketing.at \u00b7 Publish now",
   "Der Artikel ist auf gomo-marketing.at veröffentlicht. SEO-Daten wurden bestätigt.": "The article is published on gomo-marketing.at. SEO metadata was verified.",
   "Neue Artikel werden nach erfolgreicher Cloud-Speicherung automatisch veröffentlicht. Bestehende Artikel kannst du hier sofort veröffentlichen. SEO, GEO-Kurzantwort und Kategorie werden mit übertragen.": "New articles are published automatically after confirmed cloud storage. You can publish existing articles here now. SEO, the GEO summary and category are included.",
@@ -12,7 +15,7 @@ export const contentHubEnglish: Record<string, string> = {
   "WordPress-Status aktualisieren": "Refresh WordPress status",
   "Beitrag in WordPress bearbeiten": "Edit post in WordPress",
   "Neue Blogartikel sofort auf gomo-marketing.at veröffentlichen": "Publish new blog articles on gomo-marketing.at immediately",
-  "Nach der Erstellung und Cloud-Speicherung öffentlich veröffentlichen, einschließlich SEO-Daten, GEO-Kurzantwort und Kategorie. Die WordPress- und Rank-Math-Verbindung müssen eingerichtet sein.": "Publish publicly after generation and cloud storage, including SEO metadata, the GEO summary and category. WordPress and Rank Math connections must be configured.",
+  "Nach der Erstellung und Cloud-Speicherung öffentlich veröffentlichen, einschließlich SEO-Daten, GEO-Kurzantwort und Kategorie. Die WordPress- und SEOPress-Verbindung müssen eingerichtet sein.": "Publish publicly after generation and cloud storage, including SEO metadata, the GEO summary and category. WordPress and SEOPress connections must be configured.",
   "Mitbewerber-Recherche und Texterstellung laufen. Das kann einige Minuten dauern.": "Competitor research and content creation are running. This may take a few minutes.",
   "Google-Suchvorschläge zur Recherche": "Google search suggestions for this research",
   "Analyse und Quellen ansehen": "View analysis and sources",
@@ -95,7 +98,7 @@ export const contentHubEnglish: Record<string, string> = {
   "Zeichen als Richtwert": "characters as a guideline",
   "SEO und GEO vorbereiten": "Prepare SEO and GEO",
   "SEO und GEO werden vorbereitet…": "Preparing SEO and GEO\u2026",
-  "SEO-Titel, Beschreibung und Fokuskeyword werden an Rank Math übergeben, sobald die WordPress-Verbindung dafür eingerichtet ist. Die Kurzantwort erscheint sichtbar im Artikel.": "The SEO title, description and focus keyword are sent to Rank Math once the WordPress connection is configured for this. The short answer appears visibly in the article.",
+  "SEO-Titel, Beschreibung und Fokuskeyword werden an das für diese Website eingerichtete SEO-Plugin übergeben, sobald die WordPress-Verbindung dafür eingerichtet ist. Die Kurzantwort erscheint sichtbar im Artikel.": "The SEO title, description and focus keyword are sent to the SEO plugin configured for this website once the WordPress connection is configured for this. The short answer appears visibly in the article.",
   "Vor der Veröffentlichung fachlich prüfen. Die Kurzantwort fasst den Artikel zusammen; sie ist kein Nachweis für die Richtigkeit seiner Aussagen.": "Review accuracy before publishing. The short answer summarizes the article; it does not verify its claims.",
   "SEO- und GEO-Daten konnten nicht vorbereitet werden.": "SEO and GEO data could not be prepared.",
   "Der Artikel wurde inzwischen geändert. Bitte erneut vorbereiten.": "The article has changed. Please prepare again.",
@@ -106,8 +109,8 @@ export const contentHubEnglish: Record<string, string> = {
   "SEO-Zusatzplugin herunterladen": "Download SEO add-on",
   "SEO-Verbindung prüfen": "Check SEO connection",
   "SEO-Daten wurden in WordPress gespeichert und zurückgelesen.": "SEO data was saved in WordPress and read back.",
-  "Der Entwurf wurde gespeichert. Für Rank Math bitte SEO-Titel, Beschreibung und Fokuskeyword vervollständigen und erneut übertragen.": "The draft was saved. Complete the SEO title, description and focus keyword for Rank Math, then transfer again.",
-  "Der Entwurf wurde gespeichert. Die SEO-Daten wurden noch nicht an Rank Math übertragen. Bitte die SEO-Verbindung einrichten und erneut übertragen.": "The draft was saved. SEO data has not been transferred to Rank Math yet. Set up the SEO connection, then transfer again.",
+  "Der Entwurf wurde gespeichert. Bitte SEO-Titel, Beschreibung und Fokuskeyword vervollständigen und erneut übertragen.": "The draft was saved. Complete the SEO title, description and focus keyword, then transfer again.",
+  "Der Entwurf wurde gespeichert. Die SEO-Daten wurden noch nicht an das SEO-Plugin übertragen. Bitte die SEO-Verbindung einrichten und erneut übertragen.": "The draft was saved. SEO data has not been transferred to the SEO plugin yet. Set up the SEO connection, then transfer again.",
   "Der Entwurf wurde gespeichert. Die SEO-Daten konnten nicht eindeutig bestätigt werden. Bitte im WordPress-Entwurf prüfen.": "The draft was saved. SEO data could not be confirmed. Please check it in the WordPress draft.",
   "SEO-Check vor der Übertragung": "SEO check before transfer",
   "Hinweise zur Gestaltung, kein Google-Rankingwert. Vorschläge werden erst nach deinem Klick übernommen.": "Editorial checks, not a Google ranking score. Suggestions are applied only when you click.",
