@@ -4,8 +4,8 @@ import vm from 'node:vm';
 import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { researchBeforeBrief, researchReport } from '../server/competitorResearch';
-import { editorialStrategyPrompt, publicResearchUrl, resolveEditorialStrategy } from '../src/utils/editorialStrategy';
+import { researchBeforeBrief, researchReport, classifyResearchError, CompetitorResearchError } from '../server/competitorResearch';
+import { editorialStrategyPrompt, publicResearchUrl, groundedResearchUrl, resolveEditorialStrategy } from '../src/utils/editorialStrategy';
 import { CompetitorResearchPanel } from '../src/components/ContentEngine/CompetitorResearchPanel';
 import { ProjectSettingsModal } from '../src/components/ContentEngine/ProjectSettingsModal';
 import { LanguageProvider } from '../src/context/LanguageContext';
@@ -43,6 +43,8 @@ assert.equal(editorialStrategyPrompt(undefined), '');
 let paidCalls = 0;
 const adapter: any = { models: { generateContent: async (request: any) => {
   paidCalls++; assert.deepEqual(request.config.tools, [{ googleSearch: {} }]);
+  assert.equal(request.config.thinkingConfig.thinkingBudget, 512);
+  assert.equal(request.config.maxOutputTokens, 6144);
   assert.equal(request.config.responseMimeType, undefined, 'Grounded research is not forced into JSON.');
   assert.match(request.contents, new RegExp(settings.targetAudience.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   return fixture;
@@ -95,3 +97,35 @@ const form = renderToStaticMarkup(React.createElement(LanguageProvider, null, Re
 assert.match(form, /Hart, ehrlich, glasklar/); assert.match(form, /zusätzliche API-Kosten/);
 assert.match(form, /anbieter-a.example.com/);
 console.log('Mitbewerber-Recherche: echte Suchmetadaten statt Modellbehauptung, Quellenzuordnung, Recherche vor Briefing, Stopp bei Fehlern, Projektscope, ehrliche Zuspitzung, Speicherung und isolierte Quellenanzeige geprüft.');
+
+// Realistic failure variants must retain a precise, safe diagnostic rather than the old catch-all.
+for (const [key, expected] of [['groundingChunks', 'RESEARCH_SOURCES'], ['webSearchQueries', 'RESEARCH_NO_SEARCH'], ['groundingSupports', 'RESEARCH_CITATIONS'], ['searchEntryPoint', 'RESEARCH_SUGGESTIONS']]) {
+  const invalid = structuredClone(fixture); delete invalid.candidates[0].groundingMetadata[key];
+  assert.throws(() => researchReport(invalid, 'Topic', settings), (error: unknown) => error instanceof CompetitorResearchError && error.code === expected);
+}
+const truncated = structuredClone(fixture); truncated.candidates[0].finishReason = 'MAX_TOKENS';
+assert.throws(() => researchReport(truncated, 'Topic', settings), (error: unknown) => error instanceof CompetitorResearchError && error.code === 'RESEARCH_OUTPUT_LIMIT');
+for (const [provider, expected] of [[{ status: 401 }, 'RESEARCH_AUTH'], [{ status: 403 }, 'RESEARCH_AUTH'], [{ status: 404 }, 'RESEARCH_MODEL'], [{ status: 429 }, 'RESEARCH_QUOTA'], [{ status: 400 }, 'RESEARCH_REQUEST'], [{ name: 'TimeoutError' }, 'RESEARCH_TIMEOUT'], [new TypeError('secret API_KEY=do-not-log'), 'RESEARCH_PROVIDER']] as const) {
+  const error = classifyResearchError(provider); assert.equal(error.code, expected); assert.doesNotMatch(error.message, /do-not-log|API_KEY=/);
+}
+const longGoogleLink = 'https://vertexaisearch.cloud.google.com/grounding-api-redirect/' + 'x'.repeat(3500);
+assert.equal(publicResearchUrl(longGoogleLink), null, 'Competitor input limits remain unchanged.');
+assert.equal(groundedResearchUrl(longGoogleLink), longGoogleLink);
+assert.equal(groundedResearchUrl('https://evil.example.com/' + 'x'.repeat(3500)), null);
+assert.equal(groundedResearchUrl('https://vertexaisearch.cloud.google.com/other/' + 'x'.repeat(3500)), null);
+assert.equal(groundedResearchUrl(longGoogleLink + 'x'.repeat(17000)), null);
+const longSources = structuredClone(fixture); longSources.candidates[0].groundingMetadata.groundingChunks[0].web.uri = longGoogleLink;
+const longReport = researchReport(longSources, 'Topic', settings);
+assert.equal(longReport.sources[0].url, longGoogleLink);
+const longPanel = renderToStaticMarkup(React.createElement(LanguageProvider, null, React.createElement(CompetitorResearchPanel, { report: longReport })));
+assert.ok(longPanel.includes('href="' + longGoogleLink + '"'), 'Valid signed Google sources must remain clickable.');
+const logged: unknown[][] = [];
+const originalWarn = console.warn;
+try {
+  console.warn = (...args: unknown[]) => { logged.push(args); };
+  await assert.rejects(researchBeforeBrief({ models: { generateContent: async () => { throw Object.assign(new Error('SECRET_KEY=do-not-log private prompt'), { status: 429 }); } } } as any, 'private topic', settings), /RESEARCH_QUOTA/);
+  await assert.rejects(researchBeforeBrief({ models: { generateContent: async () => truncated } } as any, 'private topic', settings), /RESEARCH_OUTPUT_LIMIT/);
+} finally { console.warn = originalWarn; }
+assert.match(JSON.stringify(logged), /RESEARCH_QUOTA/); assert.match(JSON.stringify(logged), /RESEARCH_OUTPUT_LIMIT/);
+assert.doesNotMatch(JSON.stringify(logged), /SECRET_KEY|private topic|private prompt|do-not-log/);
+console.log('Recherche-Diagnose: API-/Kontingent-/Timeoutfehler, abgeschnittene Antworten, Denkbudget, lange signierte Google-Quellen und geheimnisfreie Protokolle geprüft.');
