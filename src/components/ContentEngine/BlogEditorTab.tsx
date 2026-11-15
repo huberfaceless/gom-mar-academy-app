@@ -22,7 +22,7 @@ import { BlogArticleContent } from './BlogArticleContent';
 interface BlogEditorTabProps {
   seoGeo?: { imageAsFeatured?: boolean; contentId: string; mainKeyword?: string; onPrepare: () => Promise<void> };
   contentLanguage?: string;
-  wordpress?: { onAddInternalLinks: () => Promise<void>; contentId: string; onSave: (categorySlug: string) => Promise<boolean> };
+  wordpress?: { onPublished?: (url: string) => Promise<void>; onAddInternalLinks: () => Promise<void>; contentId: string; onSave: (categorySlug: string) => Promise<boolean> };
   article: BlogArticle;
   onChange: (updated: BlogArticle) => void;
   onGeneratePinterest: () => void;
@@ -152,13 +152,13 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
       {seoGeo && <BlogSeoCheckPanel key={seoGeo.contentId} article={article} mainKeyword={seoGeo.mainKeyword} contentId={wordpress?.contentId} defaultFeatured={seoGeo.imageAsFeatured} onChange={onChange} />}
       {wordpress && <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5" aria-label={hubText('Interne Verlinkung')}>
         <h3 className="font-bold">{hubText('Interne Verlinkung')}</h3>
-        <p className="text-sm text-slate-600">{hubText('Die Academy berücksichtigt passende, veröffentlichte Vital50-Artikel und ergänzt bis zu drei erreichbare Links.')}</p>
+        <p className="text-sm text-slate-600">{hubText('Die Academy berücksichtigt passende, veröffentlichte Artikel dieser Website und ergänzt bis zu drei erreichbare Links.')}</p>
         <button type="button" disabled={linkBusy} onClick={() => void addInternalLinks()} className="rounded-xl border px-4 py-2 font-semibold disabled:opacity-50">{linkBusy ? hubText('Links werden geprüft…') : hubText('Passende interne Links ergänzen')}</button>
         {article.internalLinking?.state === 'checked' && <p role="status" className="text-sm text-emerald-800">{article.internalLinking.links.length ? hubText('Passende Artikel wurden geprüft und im Artikel verlinkt.') : hubText('Keine weiteren passenden veröffentlichten Artikel gefunden.')}</p>}
         {article.internalLinking?.state === 'unavailable' && <p role="alert" className="text-sm text-amber-800">{hubText('WordPress-Links konnten nicht geprüft werden. Du kannst die Prüfung erneut starten.')}</p>}
         {linkError && <p role="alert" className="text-sm text-rose-700">{linkError}</p>}
       </section>}
-      {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} savedCategorySlug={article.wordpressCategorySlug} onSave={wordpress.onSave} />}
+      {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} savedCategorySlug={article.wordpressCategorySlug} onSave={wordpress.onSave} onPublished={wordpress.onPublished} />}
 
       {/* Editor / Preview Area */}
       {viewMode === 'edit' ? (

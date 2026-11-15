@@ -22,7 +22,7 @@ Die Zugangsdaten werden weder in Browser-Speichern noch im Quellcode abgelegt. D
 
 Ein dauerhafter Firestore-Eintrag wird vor dem WordPress-Schreibzugriff mit einer Versionsbedingung gesperrt. Ein paralleler zweiter Zugriff scheitert vor dem Erstellen. Bei einem Timeout oder einer fehlenden Speicherbestätigung wird keine automatische Wiederholung ausgeführt: WordPress-Entwürfe direkt prüfen. Ein ausstehender Eintrag ist kein Beleg für eine erfolgreiche oder gescheiterte Erstellung. Für eine manuelle Auflösung muss ein Administrator den zugehörigen WordPress-Beitrag eindeutig identifizieren und den Transfer-Datensatz korrigieren; nicht einfach löschen und erneut übertragen.
 
-Nur `https://vital50.gomo-marketing.at` ist als Ziel freigeschaltet. Redirects werden nicht verfolgt. Weitere Webseiten benötigen eine eigene freigegebene Anbindung; die Projekt-URL wird nicht als frei wählbares Server-Request-Ziel verwendet.
+Als Ziele sind ausschließlich `https://vital50.gomo-marketing.at` und `https://gomo-marketing.at` freigeschaltet; Verbindungen und Beitragszuordnungen bleiben pro Website getrennt. Redirects werden nicht verfolgt. Weitere Webseiten benötigen eine eigene freigegebene Anbindung; die Projekt-URL wird nicht als frei wählbares Server-Request-Ziel verwendet.
 
 ## Validierung
 
@@ -103,3 +103,19 @@ Bei der Neugenerierung werden die Vorgaben bereits an das Modell übergeben. Ans
 Bestehende Artikel werden durch die Projektvorgaben nicht automatisch umgeschrieben. Die Funktionen zum gezielten Aktualisieren bleiben verfügbar. Fachliche Prüfung, passende Bildbeschreibung und Kontrolle vor Veröffentlichung bleiben erforderlich. Eine feste Keyword-Dichte oder ein bestimmter Rank-Math-Punktestand wird nicht garantiert.
 
 `npm run audit:wordpress` prüft zusätzlich den Speicher-/Neuladezyklus, Projekt- und Kontotrennung, deaktivierte Optionen, die tatsächliche Artikelroute sowie die Anpassung an neue Themen.
+
+## gomo-marketing.at: sofort öffentlich veröffentlichen
+
+Im Online-Business-Projekt unter **Projekt bearbeiten** die Website auf `https://gomo-marketing.at` setzen und **Neue Blogartikel sofort auf gomo-marketing.at veröffentlichen** aktiv lassen. Die Option lässt sich für künftige Artikel deaktivieren. Vorhandene Artikel werden dadurch nicht nachträglich automatisch veröffentlicht.
+
+Einmalig einen gespeicherten Artikel öffnen und im Abschnitt **WordPress · gomo-marketing.at · Sofort veröffentlichen** die Hauptwebsite mit einem eigenen Anwendungspasswort verbinden. Der WordPress-Benutzer benötigt `edit_posts` und `publish_posts`. Auf der Hauptwebsite Rank Math und das im Panel angebotene SEO-Zusatzplugin aktivieren. Die bestehende Vital50-Verbindung wird nicht übernommen; derselbe bereits konfigurierte Server-Verschlüsselungsschlüssel genügt.
+
+Bestehende Artikel können über **Jetzt auf gomo-marketing.at veröffentlichen** ohne Neugenerierung veröffentlicht werden. Neue Einzelartikel, zusätzliche Artikel und die Ein-Klick-Kampagne speichern den Blog zuerst in Firestore und starten anschließend die Veröffentlichung. Ein bestätigter öffentlicher Link wird im Artikel gespeichert; die anschließende Ein-Klick-Kampagne verwendet diesen Link für ihre Beiträge. Ein Teilfehler der Kampagnenerstellung verliert den bereits gespeicherten Blog nicht.
+
+Die Academy lädt die tatsächlichen Kategorien der Hauptwebsite. Gibt es genau eine eigene Kategorie, wird sie vorgeschlagen; andernfalls wird ein eindeutiger Themenabgleich versucht. Ohne eindeutige Zuordnung muss die Kategorie im Artikel gewählt werden. Keine Kategorie-ID wird fest im Code hinterlegt.
+
+Vor dem öffentlichen Schalten sind SEO-Titel, Meta-Beschreibung, Fokuskeyword, GEO-Kurzantwort, Kategorie, Rechte und Rank-Math-Freigabe erforderlich. Der Beitrag wird zuerst als Entwurf mit formatiertem Inhalt und SEO-Metadaten übertragen. Erst wenn die drei Rank-Math-Werte aus WordPress zurückgelesen wurden, wird derselbe Beitrag öffentlich geschaltet. SEO-Werte werden anschließend nochmals gelesen. Gewählte Bilder, Alt-Texte, Quellen und geprüfte interne Links werden wie bisher exportiert. Die Kurzantwort wird sichtbar eingefügt; Rank Math bleibt für strukturierte Daten zuständig. Ein Bild wird nicht automatisch erfunden oder ausgewählt.
+
+Fehlt die Einrichtung, bleibt der generierte Artikel in der Academy gespeichert und eine konkrete Fehlermeldung erscheint. Bei unbestätigten SEO-Daten bleibt ein gegebenenfalls bereits übertragener WordPress-Beitrag ein Entwurf. Bei einer verlorenen Veröffentlichungsantwort wird ausschließlich der bekannte Beitrag erneut gelesen. **WordPress-Status aktualisieren** kann die erfolgreiche Veröffentlichung nachträglich bestätigen; ein unklarer Schreibvorgang wird nicht blind wiederholt. Bestätigte öffentliche Beiträge werden durch erneutes Klicken weder dupliziert noch stillschweigend geändert.
+
+Zusätzliche Validierung: `node --import tsx scripts/auditWordPressPublishing.ts`. Die Prüfungen verwenden isolierte Antworten. Ein echter öffentlicher Beitrag auf der Hauptwebsite muss nach der einmaligen Verbindung durch den Benutzer bestätigt werden.

@@ -170,3 +170,5 @@ await import("./auditSocialEditorialReview");
 await import("./auditSocialCaption");
 
 await import("./auditCompetitorResearch");
+
+await import("./auditWordPressPublishing");

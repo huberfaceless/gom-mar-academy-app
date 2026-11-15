@@ -1215,6 +1215,7 @@ async function startServer() {
       else if (action === 'status' && req.method === 'GET') res.json(await wordpressDraftService.status(uid, contentId));
       else if (action === 'connection' && req.method === 'PUT') res.json(await wordpressDraftService.connect(uid, contentId, req.body?.username, req.body?.password));
       else if (action === 'connection' && req.method === 'DELETE') res.json(await wordpressDraftService.disconnect(uid, contentId));
+      else if (action === 'publish' && req.method === 'POST') res.json(await wordpressDraftService.publish(uid, contentId));
       else if (action === 'draft' && req.method === 'POST') res.json(await wordpressDraftService.transfer(uid, contentId));
       else res.status(405).json({ error: 'Diese WordPress-Aktion ist nicht verfügbar.' });
     } catch (error) {
