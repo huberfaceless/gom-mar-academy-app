@@ -3,6 +3,23 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Zielseite zum inhaltlichen Abgleich öffnen": "Open the target page to check the content",
+  "Inhalt prüfen und bearbeiten": "Review and edit content",
+  "Prüfe Aussagen, Zahlen, Rechtschreibung und die Übereinstimmung mit dem Blogartikel. Deine Korrekturen aktualisieren die Vorschau und werden erst beim Speichern übernommen.": "Check claims, numbers, spelling and consistency with the blog article. Your corrections update the preview and are only applied when you save.",
+  "Bereits eingeplante Aufträge behalten ihren bisherigen Inhalt. Entferne sie zuerst aus der Warteschlange und plane sie nach der Korrektur neu ein. Bereits veröffentlichte Beiträge werden nicht geändert.": "Already queued jobs retain their previous content. Remove them from the queue first and schedule them again after correcting the content. Published posts are not changed.",
+  "Diese Textkorrekturen gelten nur für Instagram. Der Pinterest-Pin bleibt unverändert.": "These text corrections apply only to Instagram. The Pinterest pin remains unchanged.",
+  "Der Beitrag wurde inzwischen geändert. Bitte die Prüfung neu öffnen.": "The post has changed in the meantime. Please reopen the review.",
+  "Die Grafikvorschau konnte nicht erstellt werden.": "The graphic preview could not be created.",
+  "Grafikvorschau des bearbeiteten Beitrags": "Graphic preview of the edited post",
+  "Grafikvorschau wird aktualisiert…": "Updating graphic preview…",
+  "Überschrift auf der Grafik": "Headline on the graphic",
+  "Unterzeile auf der Grafik": "Subheading on the graphic",
+  "Stichpunkte auf der Grafik (eine Zeile je Punkt)": "Bullet points on the graphic (one per line)",
+  "Button-Text auf der Grafik": "Button text on the graphic",
+  "Beschreibung / Beitragstext": "Description / post text",
+  "Suchbegriffe / Hashtags (mit Komma trennen)": "Keywords / hashtags (separate with commas)",
+  "Korrekturen speichern": "Save corrections",
+
   "Kampagne aus vorhandenem Artikel": "Campaign from an existing article",
   "Erstellt 5 Pinterest-Pins, 5 Instagram-Beiträge, ein YouTube-Skript und 3 Shorts als neuen Inhaltsablauf. Termine und Veröffentlichung gibst du danach im Kalender frei.": "Creates 5 Pinterest pins, 5 Instagram posts, a YouTube script and 3 Shorts as a new workflow. You approve dates and publication in the calendar afterwards.",
   "Der ursprüngliche Artikel bleibt erhalten. Es wird kein neuer Blogartikel erzeugt oder veröffentlicht.": "The original article is retained. No new blog article is generated or published.",

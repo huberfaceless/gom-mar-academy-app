@@ -1,3 +1,5 @@
+import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
+import { updateSocialEditorialContent } from '../../utils/socialEditorialReview';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import { readPinterestOAuthReturn, clearPinterestOAuthReturn, savePinterestOAuthReturn } from '../../utils/pinterestOAuthReturn';
 import React, { useState, useEffect, useRef } from 'react';
@@ -51,7 +53,7 @@ interface PinterestPinsTabProps {
   onGenerate?: () => void;
   isGenerating?: boolean;
   pins: PinterestPin[];
-  onChange: (updatedPins: PinterestPin[]) => void;
+  onChange: (updatedPins: PinterestPin[]) => void | boolean | Promise<void | boolean>;
   onOpenInstagram: () => void;
   topic: string;
   projectSettings?: ProjectSettings;
@@ -109,6 +111,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
   projectSettings = DEFAULT_PROJECT_SETTINGS,
 }) => {
   const { language, hubText } = useContentHubCopy();
+  const [reviewing, setReviewing] = useState(false);
   const [selectedPinIndex, setSelectedPinIndex] = useState<number>(0);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isDownloadingSingle, setIsDownloadingSingle] = useState<boolean>(false);
@@ -343,6 +346,10 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               </div>
             )}
           </div>
+
+          <button type="button" onClick={() => setReviewing(true)} className="w-full rounded-xl border border-emerald-600 px-4 py-3 font-bold text-emerald-800">{hubText('Inhalt prüfen und bearbeiten')}</button>
+          {reviewing && <SocialEditorialReviewModal pin={activePin} channel="pinterest" projectSettings={projectSettings}
+            onClose={() => setReviewing(false)} onSave={content => onChange(updateSocialEditorialContent(pins, activePin.id, 'pinterest', content))} />}
 
           {/* Canvas Actions Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

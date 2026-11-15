@@ -98,6 +98,7 @@ export type PinTemplateStyle =
 export type PinColorTheme = 'emerald' | 'teal' | 'coral' | 'amber' | 'berry' | 'dark' | 'ocean';
 
 export interface PinterestPin {
+  instagramContent?: import('../utils/socialEditorialReview').SocialEditorialContent;
   id: string;
   angle: PinAngle;
   angleLabel: string;

@@ -968,7 +968,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               projectTargetUrl={activeContentProject.campaignSource?.url || activeProjectSettings.defaultTargetUrl}
               pins={activeContentProject.pinterestPins || []}
               onChange={(updatedPins) => {
-                handleUpdateActiveProject({
+                return handleUpdateActiveProject({
                   ...activeContentProject,
                   pinterestPins: updatedPins,
                 });
@@ -981,6 +981,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
           {activeTab === 'instagram' && (
             <InstagramPostsTab
+              onChange={pins => handleUpdateActiveProject({ ...activeContentProject, pinterestPins: pins })}
               pins={activeContentProject.pinterestPins || []}
               topic={activeContentProject.topic}
               projectSettings={activeContentProject.projectSettings || activeProjectSettings}

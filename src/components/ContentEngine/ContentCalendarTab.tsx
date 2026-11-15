@@ -1,3 +1,5 @@
+import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
+import { socialEditorialPin, updateSocialEditorialContent, type SocialChannel } from '../../utils/socialEditorialReview';
 import { matchesPublishingTarget } from '../../utils/publishingTarget';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
@@ -141,6 +143,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   const { user } = useAuth();
   const userId = user?.uid || 'local_user';
 
+  const [editorialReview, setEditorialReview] = useState<{ id: string; channel: SocialChannel } | null>(null);
   const [platformFilter, setPlatformFilter] = useState<'all' | 'blog' | 'pinterest' | 'instagram' | 'youtube'>('all');
   const [publishingJobs, setPublishingJobs] = useState<PublishingJob[]>([]);
   const [dateDrafts, setDateDrafts] = useState<Record<string, string>>({});
@@ -363,6 +366,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   (project.pinterestPins || []).forEach((pin, idx) => {
     const sourceId = pin.id || `pin_${idx}`;
+    const editorialPin = socialEditorialPin(pin, 'instagram');
     const instagramId = `instagram_${sourceId}`;
     const calendarItem = project.calendarItems.find((item) => item.id === instagramId);
     items.push({
@@ -370,18 +374,18 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       type: 'instagram',
       platform: 'INSTAGRAM',
       contentType: 'INSTAGRAM_POST',
-      title: hubText('Instagram-Beitrag #{0}: {1}', idx + 1, pin.title),
-      targetUrl: pin.targetUrl,
+      title: hubText('Instagram-Beitrag #{0}: {1}', idx + 1, editorialPin.title),
+      targetUrl: editorialPin.targetUrl,
       status: calendarItem?.status || 'ai_generated',
       scheduledDate: formatLocalDateTime(calendarItem?.scheduledDate, idx + 1),
       platformLabel: 'Instagram Feed (4:5)',
       icon: Instagram,
       color: 'text-fuchsia-600 bg-fuchsia-50 border-fuchsia-200',
       payloadData: {
-        title: pin.title,
-        description: buildInstagramCaption(pin.description, pin.keywords),
-        targetUrl: pin.targetUrl,
-        tags: pin.keywords,
+        title: editorialPin.title,
+        description: buildInstagramCaption(editorialPin.description, editorialPin.keywords),
+        targetUrl: editorialPin.targetUrl,
+        tags: editorialPin.keywords,
         metadata: { sourcePinId: sourceId, sourcePinIndex: idx },
       },
     });
@@ -471,7 +475,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     if (!sourcePin) throw new Error(hubText("Die zugehörige Instagram-Grafik wurde nicht gefunden."));
     return {
       ...item.payloadData,
-      imageBase64: await renderInstagramImage(sourcePin, project.projectSettings),
+      imageBase64: await renderInstagramImage(socialEditorialPin(sourcePin, 'instagram'), project.projectSettings),
     };
   };
 
@@ -923,6 +927,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
                 </div>
               </div>
 
+              {(item.platform === 'PINTEREST' || item.platform === 'INSTAGRAM') && <button type="button"
+                onClick={() => setEditorialReview({ id: item.platform === 'INSTAGRAM' ? item.payloadData.metadata.sourcePinId : item.id, channel: item.platform === 'INSTAGRAM' ? 'instagram' : 'pinterest' })}
+                className="self-start rounded-xl border border-emerald-600 px-4 py-2 font-bold text-emerald-800 text-sm">
+                {hubText('Inhalt prüfen und bearbeiten')}
+              </button>}
+
               {item.platform === 'PINTEREST' && (
                 <div className="flex flex-col gap-2">
                 <label className="flex flex-col gap-1 text-xs font-semibold text-slate-700">{hubText("Ziel-Pinnwand auf Pinterest")}<select
@@ -1019,6 +1029,12 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           );
         })}
       </div>
+
+      {editorialReview && project.pinterestPins.some(pin => pin.id === editorialReview.id) && <SocialEditorialReviewModal
+        key={`${editorialReview.channel}_${editorialReview.id}`}
+        pin={project.pinterestPins.find(pin => pin.id === editorialReview.id)!} channel={editorialReview.channel} projectSettings={project.projectSettings}
+        onClose={() => setEditorialReview(null)}
+        onSave={content => onUpdateProject({ ...project, pinterestPins: updateSocialEditorialContent(project.pinterestPins, editorialReview.id, editorialReview.channel, content) })} />}
 
       {/* 🚀 CENTRAL PUBLISHING QUEUE & SCHEDULER MONITOR */}
       <div className="bg-slate-900 text-white p-5 sm:p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
