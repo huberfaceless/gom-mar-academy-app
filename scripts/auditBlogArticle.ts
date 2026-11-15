@@ -162,3 +162,5 @@ assert.match(server, /Keine ASCII-Tabellen/);
 console.log('Artikelvorschau geprüft: Textgitter als echte Tabellen; neue Artikel erhalten klare Formatvorgaben.');
 
 await import("./auditArticleCampaign");
+
+await import("./auditSocialEditorialReview");

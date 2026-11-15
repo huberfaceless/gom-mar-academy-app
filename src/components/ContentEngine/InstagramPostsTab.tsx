@@ -1,3 +1,5 @@
+import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
+import { socialEditorialPin, updateSocialEditorialContent } from '../../utils/socialEditorialReview';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Instagram, RefreshCw, Sparkles } from 'lucide-react';
@@ -7,6 +9,7 @@ import { InstagramPublishModal } from './InstagramPublishModal';
 
 interface InstagramPostsTabProps {
   pins: PinterestPin[];
+  onChange?: (pins: PinterestPin[]) => void | boolean | Promise<void | boolean>;
   topic: string;
   projectSettings: ProjectSettings;
   onGenerateYouTube: () => void;
@@ -15,17 +18,20 @@ interface InstagramPostsTabProps {
 
 export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
   pins,
+  onChange,
   topic,
   projectSettings,
   onGenerateYouTube,
   isGeneratingYouTube,
 }) => {
   const { language, hubText } = useContentHubCopy();
+  const [reviewing, setReviewing] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isRendering, setIsRendering] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const activePin = pins[selectedIndex] || pins[0];
+  const sourcePin = pins[selectedIndex] || pins[0];
+  const activePin = React.useMemo(() => sourcePin ? socialEditorialPin(sourcePin, 'instagram') : undefined, [sourcePin]);
 
   useEffect(() => {
     if (!canvasRef.current || !activePin) return;
@@ -77,7 +83,7 @@ export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
             }`}
           >
             <span className="text-[10px] font-black text-fuchsia-700">{hubText("BEITRAG #")}{index + 1}</span>
-            <p className="text-xs font-extrabold text-slate-900 line-clamp-2 mt-1">{pin.title}</p>
+            <p className="text-xs font-extrabold text-slate-900 line-clamp-2 mt-1">{socialEditorialPin(pin, 'instagram').title}</p>
             <span className="text-[10px] text-slate-400 mt-2 block">📐 1080×1350 · 4:5</span>
           </button>
         ))}
@@ -113,6 +119,9 @@ export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
               <p className="text-sm text-fuchsia-700 mt-4">{activePin.keywords.map((keyword) => `#${keyword.replace(/[^\p{L}\p{N}_]/gu, '')}`).join(' ')}</p>
             )}
           </div>
+          {onChange && <button type="button" onClick={() => setReviewing(true)} className="w-full rounded-xl border border-fuchsia-600 p-3 font-bold text-fuchsia-800">{hubText('Inhalt prüfen und bearbeiten')}</button>}
+          {reviewing && onChange && <SocialEditorialReviewModal pin={sourcePin} channel="instagram" projectSettings={projectSettings}
+            onClose={() => setReviewing(false)} onSave={content => onChange(updateSocialEditorialContent(pins, sourcePin.id, 'instagram', content))} />}
           <button
             type="button"
             onClick={() => setIsPublishModalOpen(true)}
