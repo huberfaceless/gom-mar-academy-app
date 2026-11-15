@@ -644,17 +644,20 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           <button
             type="button"
             onClick={openNewProject}
-            className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-600 rounded-xl shadow-xs transition-colors"
+            disabled={isBusy}
+            className="inline-flex max-w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50"
             title={hubText("Neues Inhaltsprojekt anlegen")}
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span>{hubText('Neues Projekt')}</span>
           </button>
         </div>
       </div>
 
       <button type="button" disabled={isBusy} onClick={() => setCampaignSettings(structuredClone(activeProjectSettings))}
-        className="rounded-xl bg-emerald-700 text-white font-bold px-4 py-3 disabled:opacity-50">
-        {hubText('Kampagne aus vorhandenem Artikel')}
+        className="inline-flex max-w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50">
+        <BookOpen className="w-4 h-4 shrink-0" aria-hidden="true" />
+        <span>{hubText('Kampagne aus vorhandenem Artikel')}</span>
       </button>
       {campaignSettings && <ArticleCampaignModal key={campaignSettings.id} settings={campaignSettings}
         projects={contentProjects.filter(project => project.projectSettings.id === campaignSettings.id)}
