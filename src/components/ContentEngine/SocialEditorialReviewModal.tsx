@@ -62,7 +62,8 @@ export function SocialEditorialReviewModal({ pin, channel, projectSettings, onCl
       {channel === 'instagram' && <p className="text-sm text-fuchsia-800">{hubText('Diese Textkorrekturen gelten nur für Instagram. Der Pinterest-Pin bleibt unverändert.')}</p>}
       <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] gap-5">
         <div className="space-y-2">
-          {preview && <img src={preview} alt={hubText('Grafikvorschau des bearbeiteten Beitrags')} className="w-full rounded-xl" />}
+          {preview && (targetLink ? <a href={targetLink} target="_blank" rel="noreferrer" aria-label={hubText('Grafikvorschau: Zielseite öffnen')}><img src={preview} alt={hubText('Grafikvorschau des bearbeiteten Beitrags')} className="w-full rounded-xl" /></a> : <img src={preview} alt={hubText('Grafikvorschau des bearbeiteten Beitrags')} className="w-full rounded-xl" />)}
+          <p className="text-xs text-slate-600">{hubText('Der CTA ist Text im Bild, keine eigene Schaltfläche. In dieser Vorschau öffnet ein Klick auf die Grafik die Zielseite. Der veröffentlichte Beitrag benötigt weiterhin seinen Ziel-Link.')}</p>
           {rendering && <p role="status">{hubText('Grafikvorschau wird aktualisiert…')}</p>}
           <p className="text-xs break-all">{hubText('Ziel-URL:')}{' '}{pin.targetUrl}</p>
           {targetLink && <a href={targetLink} target="_blank" rel="noreferrer" className="block font-semibold underline text-emerald-800">{hubText('Zielseite zum inhaltlichen Abgleich öffnen')}</a>}
@@ -71,12 +72,13 @@ export function SocialEditorialReviewModal({ pin, channel, projectSettings, onCl
           <label className="block font-semibold">{hubText('Überschrift auf der Grafik')}<input disabled={saving} maxLength={100} value={draft.title} onChange={event => setDraft(old => ({ ...old, title: event.target.value }))} className="block w-full mt-1 rounded-xl border p-3" /></label>
           <label className="block font-semibold">{hubText('Unterzeile auf der Grafik')}<textarea disabled={saving} maxLength={300} rows={2} value={draft.subHook || ''} onChange={event => setDraft(old => ({ ...old, subHook: event.target.value }))} className="block w-full mt-1 rounded-xl border p-3" /></label>
           <label className="block font-semibold">{hubText('Stichpunkte auf der Grafik (eine Zeile je Punkt)')}<textarea disabled={saving} rows={3} value={bullets} onChange={event => setBullets(event.target.value)} className="block w-full mt-1 rounded-xl border p-3" /></label>
-          <label className="block font-semibold">{hubText('Button-Text auf der Grafik')}<input disabled={saving} maxLength={100} value={draft.ctaButtonText || ''} onChange={event => setDraft(old => ({ ...old, ctaButtonText: event.target.value }))} className="block w-full mt-1 rounded-xl border p-3" /></label>
+          <label className="block font-semibold">{hubText('CTA-Text auf der Grafik')}<input disabled={saving} maxLength={100} value={draft.ctaButtonText || ''} onChange={event => setDraft(old => ({ ...old, ctaButtonText: event.target.value }))} className="block w-full mt-1 rounded-xl border p-3" /></label>
           <label className="block font-semibold">{hubText('Beschreibung / Beitragstext')}<textarea disabled={saving} maxLength={channel === 'instagram' ? 2000 : 500} rows={6} value={draft.description} onChange={event => setDraft(old => ({ ...old, description: event.target.value }))} className="block w-full mt-1 rounded-xl border p-3" /></label>
           <label className="block font-semibold">{hubText('Suchbegriffe / Hashtags (mit Komma trennen)')}<textarea disabled={saving} rows={2} value={keywords} onChange={event => setKeywords(event.target.value)} className="block w-full mt-1 rounded-xl border p-3" /></label>
         </div>
       </div>
       {error && <p role="alert" className="text-red-700">{error}</p>}
+      <p className="text-sm text-slate-600">{hubText('Hashtags werden aus dem Beitragstext in die Suchbegriffe übernommen und bei Instagram einmalig angefügt.')}</p>
       <div className="flex justify-end gap-4"><button type="button" disabled={saving} onClick={onClose}>{hubText('Abbrechen')}</button>
         <button type="button" disabled={saving} onClick={() => void save()} className="rounded-xl p-3 bg-emerald-700 text-white font-bold disabled:opacity-50">{hubText(saving ? 'Wird gespeichert…' : 'Korrekturen speichern')}</button></div>
     </section>

@@ -1,3 +1,4 @@
+import { buildSocialCaption } from '../../utils/socialCaption';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
 import { socialEditorialPin, updateSocialEditorialContent } from '../../utils/socialEditorialReview';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
@@ -114,10 +115,7 @@ export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
           </div>
           <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
             <p className="text-xs font-black text-slate-500 uppercase mb-2">{hubText("Caption und Hashtags")}</p>
-            <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">{activePin.description}</p>
-            {activePin.keywords.length > 0 && (
-              <p className="text-sm text-fuchsia-700 mt-4">{activePin.keywords.map((keyword) => `#${keyword.replace(/[^\p{L}\p{N}_]/gu, '')}`).join(' ')}</p>
-            )}
+            <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">{buildSocialCaption(activePin.description, activePin.keywords).slice(0, 2200)}</p>
           </div>
           {onChange && <button type="button" onClick={() => setReviewing(true)} className="w-full rounded-xl border border-fuchsia-600 p-3 font-bold text-fuchsia-800">{hubText('Inhalt prüfen und bearbeiten')}</button>}
           {reviewing && onChange && <SocialEditorialReviewModal pin={sourcePin} channel="instagram" projectSettings={projectSettings}
