@@ -10,13 +10,25 @@ export interface CompetitorResearch {
   sources: { title: string; url: string }[];
   searchSuggestionsHtml: string;
 }
-export function publicResearchUrl(value: unknown): string | null {
+function checkedResearchUrl(value: unknown, maxLength: number): string | null {
   try {
-    if (typeof value !== 'string' || value.length > 2048) return null;
+    if (typeof value !== 'string' || value.length > maxLength) return null;
     const url = new URL(value);
     const host = url.hostname.toLowerCase();
     if (url.protocol !== 'https:' || url.username || url.password || url.port || !host.includes('.') || /(^|\.)(localhost|local|internal|test|invalid)$/.test(host) || /^[\d.:\[\]]+$/.test(host)) return null;
     return url.href;
+  } catch { return null; }
+}
+export function publicResearchUrl(value: unknown): string | null { return checkedResearchUrl(value, 2048); }
+// Google grounding can return signed redirect URLs longer than normal website inputs.
+// Only this exact provider origin/path receives the larger allowance.
+export function groundedResearchUrl(value: unknown): string | null {
+  const normal = publicResearchUrl(value);
+  if (normal) return normal;
+  try {
+    if (typeof value !== 'string') return null;
+    const url = new URL(value);
+    return url.origin === 'https://vertexaisearch.cloud.google.com' && url.pathname.startsWith('/grounding-api-redirect/') ? checkedResearchUrl(value, 16384) : null;
   } catch { return null; }
 }
 export function resolveEditorialStrategy(settings?: Pick<ProjectSettings, 'editorialStrategy'>): EditorialStrategy {

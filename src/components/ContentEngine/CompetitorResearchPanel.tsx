@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { CompetitorResearch } from '../../utils/editorialStrategy';
-import { publicResearchUrl } from '../../utils/editorialStrategy';
+import { groundedResearchUrl } from '../../utils/editorialStrategy';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 
 export function CompetitorResearchPanel({ report }: { report: CompetitorResearch }) {
@@ -16,12 +16,12 @@ export function CompetitorResearchPanel({ report }: { report: CompetitorResearch
       <summary className="font-semibold cursor-pointer">{hubText('Analyse und Quellen ansehen')}</summary>
       <div className="prose prose-sm max-w-none mt-3">
         <ReactMarkdown skipHtml components={{
-          a: ({ href, children }) => publicResearchUrl(href) ? <a href={publicResearchUrl(href)!} target="_blank" rel="noreferrer" className="underline text-emerald-800">{children}</a> : <span>{children}</span>,
+          a: ({ href, children }) => groundedResearchUrl(href) ? <a href={groundedResearchUrl(href)!} target="_blank" rel="noreferrer" className="underline text-emerald-800">{children}</a> : <span>{children}</span>,
           img: () => null,
         }}>{report.text}</ReactMarkdown>
       </div>
       <ol className="list-decimal pl-5 mt-3 text-sm space-y-1">
-        {report.sources.map((source, index) => <li key={source.url + index}>{publicResearchUrl(source.url) ? <a href={source.url} target="_blank" rel="noreferrer" className="underline text-emerald-800">{source.title}</a> : source.title}</li>)}
+        {report.sources.map((source, index) => <li key={source.url + index}>{groundedResearchUrl(source.url) ? <a href={source.url} target="_blank" rel="noreferrer" className="underline text-emerald-800">{source.title}</a> : source.title}</li>)}
       </ol>
     </details>
     {!!report.searchSuggestionsHtml && <iframe title={hubText('Google-Suchvorschläge zur Recherche')} srcDoc={suggestionDocument}
