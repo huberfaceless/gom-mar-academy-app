@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createWordPressDraftService, type WordPressStore } from '../server/wordpressDraftAdmin';
 import { automaticWordPressPublication, GOMO_WORDPRESS_ORIGIN as origin } from '../src/utils/wordpressSites';
 const data = new Map<string, any>(); let revision = 0;
-const article: any = { title: 'Online Geld verdienen ab 50', contentMarkdown: '## Ehrlicher Einstieg\n\nEin eigener Artikel.', seoTitle: 'Online Geld verdienen ab 50', metaDescription: 'Seriöser Einstieg ohne Versprechen.', focusKeyword: 'online Geld verdienen', answerSummary: 'Es braucht Zeit und Arbeit.', wordpressSlug: 'online-geld-verdienen' };
+const article: any = { title: 'Online Geld verdienen ab 50', contentMarkdown: '# Online Geld verdienen ab 50\n\n## Ehrlicher Einstieg\n\nEin eigener Artikel.', seoTitle: 'Online Geld verdienen ab 50', metaDescription: 'Seriöser Einstieg ohne Versprechen.', focusKeyword: 'online Geld verdienen', answerSummary: 'Es braucht Zeit und Arbeit.', wordpressSlug: 'online-geld-verdienen' };
 let site = origin;
 const storage: WordPressStore = {
  async content() { return { userId: 'owner', projectSettings: { id: 'business', websiteUrl: site }, blogArticle: article }; },
@@ -55,6 +55,9 @@ const transaction = calls.slice(before); const publishIndex = transaction.findIn
 assert.ok(transaction.slice(0, publishIndex).some(c => !c.method && c.url.includes('posts/42?context=edit')), 'SEO readback precedes public write');
 assert.deepEqual(posts.get(42).meta, { _seopress_titles_title: article.seoTitle, _seopress_titles_desc: article.metaDescription, _seopress_analysis_target_kw: article.focusKeyword }, 'Only the three native SEOPress fields are written');
 assert.deepEqual(posts.get(42).categories, [35]); assert.match(posts.get(42).content, /Das Wichtigste in Kürze/);
+assert.doesNotMatch(posts.get(42).content, /<h1[ >]/i, 'Public export leaves the page H1 to the theme');
+assert.doesNotMatch(posts.get(42).content, />Online Geld verdienen ab 50</, 'The article title is not repeated in the body');
+assert.match(article.contentMarkdown, /^# Online Geld verdienen ab 50/, 'Saved Academy Markdown remains intact');
 const count = writes().length; await service.publish('owner', 'success'); assert.equal(writes().length, count, 'No duplicate or silent overwrite');
 timeout = true; await assert.rejects(service.publish('owner', 'lost-response'), /nicht eindeutig/); assert.equal((await service.status('owner', 'lost-response')).draft?.postStatus, 'publish');
 const uncertainCount = writes().length; await service.publish('owner', 'lost-response'); assert.equal(writes().length, uncertainCount);
