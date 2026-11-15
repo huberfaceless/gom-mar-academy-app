@@ -43,7 +43,9 @@ assert.equal(editorialStrategyPrompt(undefined), '');
 let paidCalls = 0;
 const adapter: any = { models: { generateContent: async (request: any) => {
   paidCalls++; assert.deepEqual(request.config.tools, [{ googleSearch: {} }]);
-  assert.equal(request.config.thinkingConfig.thinkingBudget, 512);
+  assert.equal(request.model, 'gemini-3.8-flash');
+  assert.equal(request.config.thinkingConfig.thinkingLevel, 'LOW');
+  assert.equal(request.config.thinkingConfig.thinkingBudget, undefined, 'Gemini 3 uses a thinking level, not the legacy numeric budget.');
   assert.equal(request.config.maxOutputTokens, 6144);
   assert.equal(request.config.responseMimeType, undefined, 'Grounded research is not forced into JSON.');
   assert.match(request.contents, new RegExp(settings.targetAudience.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
@@ -128,4 +130,4 @@ try {
 } finally { console.warn = originalWarn; }
 assert.match(JSON.stringify(logged), /RESEARCH_QUOTA/); assert.match(JSON.stringify(logged), /RESEARCH_OUTPUT_LIMIT/);
 assert.doesNotMatch(JSON.stringify(logged), /SECRET_KEY|private topic|private prompt|do-not-log/);
-console.log('Recherche-Diagnose: API-/Kontingent-/Timeoutfehler, abgeschnittene Antworten, Denkbudget, lange signierte Google-Quellen und geheimnisfreie Protokolle geprüft.');
+console.log('Recherche-Diagnose: API-/Kontingent-/Timeoutfehler, abgeschnittene Antworten, aktuelle Flash-Modellkonfiguration, lange signierte Google-Quellen und geheimnisfreie Protokolle geprüft.');
