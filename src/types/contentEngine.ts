@@ -29,6 +29,7 @@ export type PublishContentType = 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' 
 export type SchedulerJobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
 export interface ProjectSettings {
+  editorialStrategy?: import('../utils/editorialStrategy').EditorialStrategy;
   blogDefaults?: import('../utils/projectBlogDefaults').ProjectBlogDefaults;
   deletedAt?: string;
   id: string;
@@ -48,6 +49,7 @@ export interface ProjectSettings {
 }
 
 export interface ContentBrief {
+  competitorResearch?: import('../utils/editorialStrategy').CompetitorResearch;
   sourceArticle?: import('../utils/articleCampaign').CampaignArticle;
   mainKeyword: string;
   secondaryKeywords: string[];

@@ -1,3 +1,5 @@
+import { researchBeforeBrief } from './server/competitorResearch.js';
+import { editorialStrategyPrompt } from './src/utils/editorialStrategy.js';
 import { readCampaignWordPressArticles } from './server/campaignWordPressArticles.js';
 import { campaignSourcePrompt } from './src/utils/articleCampaign.js';
 import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from './src/utils/projectBlogDefaults.js';
@@ -2569,7 +2571,10 @@ Erstelle:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `Du bist ein führender SEO- und Content-Stratege für das Projekt "${projectSettings?.name || 'Content Engine'}".
+      const competitorResearch = await researchBeforeBrief(ai, topic, projectSettings);
+
+      const prompt = `${editorialStrategyPrompt(projectSettings, competitorResearch)}
+Du bist ein führender SEO- und Content-Stratege für das Projekt "${projectSettings?.name || 'Content Engine'}".
 Website: ${projectSettings?.websiteUrl || ''}
 Zielgruppe: ${projectSettings?.targetAudience || 'Allgemein'}
 Kern-Nische: ${(projectSettings?.coreTopics || []).join(', ')}
@@ -2621,7 +2626,8 @@ Antworte ausschließlich im folgenden validen JSON-Format:
       const text = response.text || '{}';
       try {
         const parsed = JSON.parse(text);
-        res.json({ success: true, brief: parsed, raw: text });
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('Ungültiges Briefing.');
+        res.json({ success: true, brief: { ...parsed, ...(competitorResearch ? { competitorResearch } : {}) }, raw: text });
       } catch {
         res.json({ success: true, brief: null, raw: text });
       }
@@ -2698,7 +2704,8 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         ? `${content}\n\n[${recommendationLabel(projectSettings?.language)}](<${affiliateLink}>)`
         : content;
 
-      const prompt = `Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel basierend auf folgendem Content Brief:
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel basierend auf folgendem Content Brief:
 Thema: ${topic}
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${brief.targetAudience || projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
@@ -2774,7 +2781,8 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `${campaignSourcePrompt(brief?.sourceArticle)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+${campaignSourcePrompt(brief?.sourceArticle)}
 Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
@@ -2895,7 +2903,8 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `${campaignSourcePrompt(brief?.sourceArticle)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+${campaignSourcePrompt(brief?.sourceArticle)}
 Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
 "${topic}"
 
@@ -2985,7 +2994,8 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `${campaignSourcePrompt(brief?.sourceArticle)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+${campaignSourcePrompt(brief?.sourceArticle)}
 Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
