@@ -27,6 +27,7 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
   const [seoReady, setSeoReady] = useState<boolean | null>(null);
   const [seoError, setSeoError] = useState('');
   const [error, setError] = useState('');
+  const [schemaReady, setSchemaReady] = useState<boolean | null>(null);
   useEffect(() => {
     let cancelled = false;
     void api(contentId, 'status').then(value => { if (!cancelled) setStatus(value); })
@@ -47,15 +48,15 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
     return () => { cancelled = true; };
   }, [contentId, status?.connected, categoryReload, savedCategorySlug]);
   useEffect(() => {
-    if (!status?.connected) { setSeoReady(null); return; }
+    if (!status?.connected) { setSeoReady(null); setSchemaReady(null); return; }
     let cancelled = false;
-    void api(contentId, 'seo').then(value => { if (!cancelled) setSeoReady(value.ready); })
+    void api(contentId, 'seo').then(value => { if (!cancelled) { setSeoReady(value.ready); setSchemaReady(value.schemaReady === true); } })
       .catch(() => { if (!cancelled) setSeoReady(null); });
     return () => { cancelled = true; };
   }, [contentId, status?.connected]);
   const checkSeo = async () => {
     setBusy(true); setSeoError('');
-    try { setSeoReady((await api(contentId, 'seo')).ready); }
+    try { const value = await api(contentId, 'seo'); setSeoReady(value.ready); setSchemaReady(value.schemaReady === true); }
     catch (error) { setSeoError(error instanceof Error ? error.message : hubText('WordPress-Anfrage fehlgeschlagen.')); }
     finally { setBusy(false); }
   };
@@ -74,6 +75,14 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
   const publishNow = status?.siteUrl === GOMO_WORDPRESS_ORIGIN;
   const usesSeopress = status?.seoProvider === 'seopress';
   const published = status?.draft?.postStatus === 'publish';
+  const enableSchema = async () => {
+    setBusy(true); setError(''); setNotice('');
+    try {
+      await api(contentId, 'schema', { method: 'POST' });
+      setNotice(hubText('BlogPosting wurde für diesen Beitrag aktiviert. Bitte den WordPress-Cache leeren und die SEO-Analyse erneut starten.'));
+    } catch (error) { setError(error instanceof Error ? error.message : hubText('WordPress-Anfrage fehlgeschlagen.')); }
+    finally { setBusy(false); }
+  };
   const validCategory = categories.some(c => c.slug === categorySlug);
   const refresh = async () => setStatus(await api(contentId, 'status'));
   const connect = async (event: React.FormEvent) => {
@@ -114,7 +123,13 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
     </form>}
     {status?.connected && <div className="space-y-2 rounded-xl bg-slate-50 p-3 text-sm">
       <p className="font-semibold">{usesSeopress ? seoReady === true ? hubText('SEOPress-Übertragung ist eingerichtet.') : hubText('SEOPress-Übertragung ist noch nicht bestätigt.') : seoReady === true ? hubText('Rank-Math-Übertragung ist eingerichtet.') : hubText('Rank-Math-Übertragung ist noch nicht bestätigt.')}</p>
-      {usesSeopress && <p>{hubText('SEOPress 10.4 verwendet seine vorhandene WordPress-API. Kein zusätzliches SEO-Plugin erforderlich. Bei fehlendem Zugriff bitte SEOPress aktivieren und unter SEO → Erweitert → Sicherheit die Rollensperren für SEO-Metabox und Inhaltsanalyse prüfen.')}</p>}
+      {usesSeopress && <p>{hubText('SEOPress 10.4 überträgt die SEO-Felder über seine vorhandene WordPress-API. Bei fehlendem Zugriff bitte SEOPress aktivieren und unter SEO → Erweitert → Sicherheit die Rollensperren für SEO-Metabox und Inhaltsanalyse prüfen.')}</p>}
+      {usesSeopress && <div className="space-y-2 border-t pt-2">
+        <p className="font-semibold">{schemaReady ? hubText('BlogPosting-Ausgabe ist eingerichtet.') : hubText('BlogPosting-Ausgabe noch nicht eingerichtet.')}</p>
+        <p>{hubText('Einmalig Academy SEO Bridge 1.1.0 in WordPress hochladen, die vorhandene Version ersetzen und aktivieren. Danach SEO-Verbindung prüfen. Die Brücke ergänzt strukturierte Artikeldaten für neue Academy-Beiträge mit SEOPress Free. Vorhandene Artikel werden nicht automatisch geändert.')}</p>
+        <button type="button" disabled={busy} onClick={() => void downloadSeoPlugin()} className="font-semibold underline">{hubText('Academy-Brücke 1.1.0 herunterladen')}</button>
+        {published && schemaReady && <button type="button" disabled={busy} onClick={() => void enableSchema()} className="block font-semibold underline">{hubText('BlogPosting für diesen veröffentlichten Artikel aktivieren')}</button>}
+      </div>}
       {seoReady === false && !usesSeopress && <>
         <p>{hubText('Einmalig das SEO-Zusatzplugin herunterladen und in WordPress unter Plugins → Neues Plugin → Plugin hochladen installieren und aktivieren. Rank Math muss aktiv sein.')}</p>
         <button type="button" disabled={busy} onClick={() => void downloadSeoPlugin()} className="font-semibold underline">{hubText('SEO-Zusatzplugin herunterladen')}</button>

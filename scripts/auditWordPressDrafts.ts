@@ -180,3 +180,5 @@ assert.match(headingExport, /# Beispiel im Code/, 'Code samples remain unchanged
 assert.doesNotMatch(renderWordPressArticle('#  GELD   VERDIENEN ab 50', 'Geld verdienen ab 50'), /<h[12]/);
 assert.match(renderWordPressArticle('# Eigenständiger Abschnitt'), /<h2>Eigenständiger Abschnitt<\/h2>/);
 console.log('WordPress-Überschriften: ein Seitentitel vom Theme, kein doppelter Titel im Inhalt, echte Abschnitte und Code bleiben erhalten.');
+
+await import('./auditWordPressSchema');

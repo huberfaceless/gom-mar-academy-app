@@ -22,6 +22,7 @@ export function inspectBlogSeo(article: BlogArticle, mainKeyword?: string) {
     title: hasKeyword(fields.seoTitle, fields.focusKeyword),
     description: hasKeyword(fields.metaDescription, fields.focusKeyword),
     heading: headings.some(heading => hasKeyword(heading, fields.focusKeyword)),
+    h3: [...content.matchAll(/^###\s+(.+)$/gm)].some(match => hasKeyword(match[1], fields.focusKeyword)),
     occurrences,
     image: Boolean(article.wordpressImage?.id && article.wordpressImage.alt.trim()),
     references: selectedBlogReferences(article.referenceIds).length,
@@ -40,6 +41,21 @@ export function applyKeywordHeading(article: BlogArticle, keyword: string): Blog
   const heading = nonCode(article.contentMarkdown).match(/^(#{2,4})\s+(.+)$/m);
   if (!proposal || !heading) return article;
   return { ...article, contentMarkdown: article.contentMarkdown.slice(0, heading.index!) + proposal + article.contentMarkdown.slice(heading.index! + heading[0].length) };
+}
+/** Reuse a real subsection; if absent, introduce the existing first H2's text as a subsection. */
+export function applyKeywordH3(article: BlogArticle, keyword: string, language = 'de'): BlogArticle {
+  if (!keyword.trim() || /[\r\n#`<>\[\]*\\]/.test(keyword)) return article;
+  const visible = nonCode(article.contentMarkdown);
+  const headings = [...visible.matchAll(/^###\s+(.+)$/gm)];
+  if (headings.some(match => hasKeyword(match[1], keyword))) return article;
+  const first = headings[0];
+  if (first) return { ...article, contentMarkdown: article.contentMarkdown.slice(0, first.index!) + `### ${keyword}: ${first[1]}` + article.contentMarkdown.slice(first.index! + first[0].length) };
+  // Do not manufacture an empty section or modify a heading inside a code block.
+  const section = /^##[ \t]+[^\n]+\n(?:[ \t]*\n)+(?=[^\s#>\-`~|])/m.exec(visible);
+  if (!section) return article;
+  const label = language === 'en' ? 'What you should know' : language === 'pl' ? 'Co warto wiedzieć' : 'Was du wissen solltest';
+  const offset = section.index + section[0].length;
+  return { ...article, contentMarkdown: article.contentMarkdown.slice(0, offset) + `### ${keyword}: ${label}\n\n` + article.contentMarkdown.slice(offset) };
 }
 export function keywordDescriptionProposal(description: string, keyword: string): string {
   if (!keyword.trim() || hasKeyword(description, keyword)) return description;

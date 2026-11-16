@@ -58,6 +58,7 @@ const store: WordPressStore = {
 };
 const connectionCollection = 'academyWordPressConnections';
 const draftCollection = 'academyWordPressDrafts';
+export const BLOGPOSTING_META_KEY = '_gommar_academy_blogposting';
 const keyFor = (...values: string[]) => createHash('sha256').update(JSON.stringify(values)).digest('hex');
 const headingText = (children: React.ReactNode): string => React.Children.toArray(children).map(child =>
   typeof child === 'string' || typeof child === 'number' ? String(child)
@@ -155,6 +156,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
   };
   const confirmPublished = async (uid: string, contentId: string, credential: string, record: Stored) => {
     const post = await wp(`posts/${record.value.postId}?context=edit`, credential);
+    if (record.value.expectedSchema === true && post.meta?.[BLOGPOSTING_META_KEY] !== true) throw new Error('Die BlogPosting-Einstellung konnte nicht bestätigt werden. Bitte WordPress prüfen.');
     if (post.id !== record.value.postId || post.status !== 'publish' || !record.value.expectedMeta || !wordpressSeoKeys(record.value.seoProvider || 'rank-math').every(key => typeof record.value.expectedMeta[key] === 'string' && post.meta?.[key] === record.value.expectedMeta[key])) throw new Error('Die Veröffentlichung ist noch nicht eindeutig bestätigt. Bitte WordPress prüfen und den Status erneut laden.');
     const publishedUrl = publicationUrl(post.link);
     const value = { ...record.value, state: 'confirmed', postStatus: 'publish', publishedUrl, seoStatus: 'saved', updatedAt: new Date().toISOString() };
@@ -162,12 +164,28 @@ export function createWordPressDraftService(storage = store, request: typeof fet
     catch (error) { const latest = await storage.read(draftCollection, mappingId(uid, contentId)); if (latest?.value.postId !== post.id || latest.value.postStatus !== 'publish') throw error; }
     return { postId: post.id, status: 'publish', publishedUrl, seoStatus: 'saved', editUrl: `${siteOrigin}/wp-admin/post.php?post=${post.id}&action=edit` };
   };
-  const seoReady = async (credential: string) => {
+  const seoCapabilities = async (credential: string) => {
     const schema = await wp('posts', credential, { method: 'OPTIONS' });
     const properties = schema?.schema?.properties?.meta?.properties;
-    return seoKeys.every(key => properties?.[key]?.type === 'string' && properties[key].readonly !== true);
+    return { ready: seoKeys.every(key => properties?.[key]?.type === 'string' && properties[key].readonly !== true), schemaReady: properties?.[BLOGPOSTING_META_KEY]?.type === 'boolean' && properties[BLOGPOSTING_META_KEY].readonly !== true };
   };
   const service = {
+    async enableSchema(uid: string, contentId: string) {
+      const { key } = await projectFor(uid, contentId);
+      if (seoProvider !== 'seopress') throw new Error('Die Schema-Ausgabe wird auf dieser Website vom SEO-Plugin verwaltet.');
+      const connection = await storage.read(connectionCollection, key);
+      const record = await storage.read(draftCollection, mappingId(uid, contentId));
+      if (!connection || record?.value.state !== 'confirmed' || record.value.postStatus !== 'publish' || !Number.isSafeInteger(record.value.postId)) throw new Error('Bitte zuerst die bestätigte WordPress-Veröffentlichung laden.');
+      const credential = boundCredential(connection.value);
+      if (!(await seoCapabilities(credential)).schemaReady) throw new Error('Bitte zuerst Academy SEO Bridge 1.1.0 installieren und aktivieren.');
+      const post = await wp(`posts/${record.value.postId}?context=edit`, credential);
+      if (post.id !== record.value.postId || post.status !== 'publish') throw new Error('Der bestätigte Beitrag ist nicht mehr veröffentlicht.');
+      // Explicit opt-in for an existing owned mapping. Never send saved content, slug or SEO fields.
+      if (post.meta?.[BLOGPOSTING_META_KEY] !== true) await wp(`posts/${post.id}`, credential, { method: 'POST', body: JSON.stringify({ meta: { [BLOGPOSTING_META_KEY]: true } }) });
+      const checked = await wp(`posts/${post.id}?context=edit`, credential);
+      if (checked.id !== post.id || checked.status !== 'publish' || checked.meta?.[BLOGPOSTING_META_KEY] !== true) throw new Error('BlogPosting konnte noch nicht bestätigt werden. Bitte den Status in WordPress prüfen.');
+      return { enabled: true };
+    },
     async media(uid: string, contentId: string, search = '') {
       const credential = await connectionFor(uid, contentId);
       if (typeof search !== 'string' || search.length > 100) throw new Error('Ungültige Bildsuche.');
@@ -196,7 +214,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       const { key } = await projectFor(uid, contentId);
       const connection = await storage.read(connectionCollection, key);
       if (!connection) throw new Error('Bitte zuerst WordPress verbinden.');
-      return { ready: await seoReady(boundCredential(connection.value)), provider: seoProvider, requiresBridge: seoProvider === 'rank-math' };
+      return { ...await seoCapabilities(boundCredential(connection.value)), provider: seoProvider, requiresBridge: seoProvider === 'rank-math' };
     },
     async categories(uid: string, contentId: string) {
       const { content, key } = await projectFor(uid, contentId);
@@ -269,9 +287,11 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       const desiredMeta = wordpressSeoMeta(seoProvider, article, content.contentBrief);
       let seoStatus = desiredMeta ? 'unavailable' : 'incomplete';
       let meta: Record<string, string> | null = null;
-      try { if (desiredMeta && await seoReady(credential)) meta = desiredMeta; } catch { /* Drafts remain available; SEO is explicitly reported as unavailable. */ }
+      let schemaReady = false;
+      try { const capabilities = await seoCapabilities(credential); schemaReady = seoProvider === 'seopress' && capabilities.schemaReady; if (desiredMeta && capabilities.ready) meta = desiredMeta; } catch { /* Drafts remain available; SEO is explicitly reported as unavailable. */ }
       if (publishNow) {
         if (!desiredMeta || !meta) throw new Error(`Für die direkte Veröffentlichung müssen SEO-Titel, Beschreibung, Fokuskeyword und die ${seoName}-Verbindung vollständig eingerichtet sein.`);
+        if (!schemaReady) throw new Error('Für BlogPosting bitte die Academy SEO Bridge auf Version 1.1.0 aktualisieren und aktivieren. Der Artikel bleibt in der Academy gespeichert.');
         if (typeof article.answerSummary !== 'string' || !article.answerSummary.trim()) throw new Error('Bitte die GEO-Kurzantwort vor der Veröffentlichung ergänzen.');
         const me = await wp('users/me?context=edit', credential);
         if (!me.capabilities?.publish_posts) throw new Error('Der WordPress-Benutzer darf keine Beiträge veröffentlichen.');
@@ -281,7 +301,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       await storage.write(draftCollection, draftId, lock, previous?.version);
       const claimed = await storage.read(draftCollection, draftId);
       if (!claimed) throw new Error('Die Übertragung konnte nicht sicher gestartet werden.');
-      const body = { ...(article.wordpressSlug ? { slug: article.wordpressSlug } : {}), ...(article.wordpressImage?.featured ? { featured_media: article.wordpressImage.id } : previous?.value.featuredMediaId && currentFeatured === previous.value.featuredMediaId ? { featured_media: 0 } : {}), categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(exportArticle, content.projectSettings.language), article.title), ...(meta ? { meta } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
+      const body = { ...(article.wordpressSlug ? { slug: article.wordpressSlug } : {}), ...(article.wordpressImage?.featured ? { featured_media: article.wordpressImage.id } : previous?.value.featuredMediaId && currentFeatured === previous.value.featuredMediaId ? { featured_media: 0 } : {}), categories: [category.id], title: article.title, content: renderWordPressArticle(blogMarkdownWithSummary(exportArticle, content.projectSettings.language), article.title), ...(meta || schemaReady ? { meta: { ...meta, ...(schemaReady ? { [BLOGPOSTING_META_KEY]: true } : {}) } } : {}), excerpt: article.metaDescription || '', ...(postId ? {} : { status: 'draft' }) };
       const post = await wp(postId ? `posts/${postId}` : 'posts', credential, { method: 'POST', body: JSON.stringify(body) });
       if (!Number.isSafeInteger(post.id) || post.id <= 0 || (postId && post.id !== postId) || post.status !== 'draft' || !Array.isArray(post.categories) || !post.categories.includes(category.id)) throw new Error('WordPress hat keinen eindeutigen Entwurf bestätigt. Bitte direkt in WordPress prüfen.');
       if (meta) {
@@ -295,9 +315,11 @@ export function createWordPressDraftService(storage = store, request: typeof fet
       await storage.write(draftCollection, draftId, confirmed, claimed.version);
       if (publishNow) {
         if (seoStatus !== 'saved') throw new Error('Der Artikel wurde als Entwurf gespeichert. Die SEO-Daten sind noch nicht bestätigt; er wurde nicht veröffentlicht.');
+        const checked = await wp(`posts/${post.id}?context=edit`, credential);
+        if (checked.meta?.[BLOGPOSTING_META_KEY] !== true) throw new Error('Der Artikel bleibt Entwurf: Die BlogPosting-Einstellung wurde von WordPress nicht bestätigt.');
         const saved = await storage.read(draftCollection, draftId);
         if (!saved) throw new Error('Der WordPress-Status konnte nicht bestätigt werden.');
-        await storage.write(draftCollection, draftId, { ...confirmed, state: 'publishing', expectedMeta: meta }, saved.version);
+        await storage.write(draftCollection, draftId, { ...confirmed, state: 'publishing', expectedMeta: meta, expectedSchema: true }, saved.version);
         const publishing = await storage.read(draftCollection, draftId);
         if (!publishing) throw new Error('Die Veröffentlichung konnte nicht sicher gestartet werden.');
         await wp(`posts/${post.id}`, credential, { method: 'POST', body: JSON.stringify({ status: 'publish' }) });
@@ -311,7 +333,7 @@ export function createWordPressDraftService(storage = store, request: typeof fet
 }
 // Resolve only allowlisted origins from the owned saved content, never from an API request host.
 const siteServices = new Map<string, ReturnType<typeof createWordPressDraftService>>();
-export const wordpressDraftService = Object.fromEntries(['media', 'uploadMedia', 'seo', 'categories', 'status', 'connect', 'disconnect', 'transfer', 'publish'].map(method => [method, async (uid: string, contentId: string, ...args: any[]) => {
+export const wordpressDraftService = Object.fromEntries(['media', 'uploadMedia', 'seo', 'enableSchema', 'categories', 'status', 'connect', 'disconnect', 'transfer', 'publish'].map(method => [method, async (uid: string, contentId: string, ...args: any[]) => {
   const content = await store.content(contentId);
   if (!content || content.userId !== uid || content.deletedAt) throw new Error('Dieser Inhaltsablauf ist nicht verfügbar.');
   const origin = wordpressSiteOrigin(content.projectSettings?.websiteUrl);

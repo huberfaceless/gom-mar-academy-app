@@ -42,7 +42,7 @@ assert.equal(source, wordpressSeoBridgeSource);
 assert.match(source, /Plugin Name: GOM-MAR Academy SEO Bridge/);
 assert.match(source, /current_user_can\( 'edit_post', \$post_id \)/);
 assert.match(source, /'context' => array\( 'edit' \)/);
-assert.doesNotMatch(source, /register_rest_route|update_post_meta|wp_head/);
+assert.doesNotMatch(source, /register_rest_route|update_post_meta/);
 
 // Execute the actual preparation route with an isolated AI adapter.
 const server = readFileSync('server.ts', 'utf8');

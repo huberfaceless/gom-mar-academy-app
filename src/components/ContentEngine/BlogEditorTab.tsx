@@ -1,4 +1,5 @@
 import { BlogSeoCheckPanel } from './BlogSeoCheckPanel';
+import { InboundLinkSuggestions } from './InboundLinkSuggestions';
 import { blogMarkdownWithSummary } from '../../utils/blogSeoGeo';
 import { BlogSeoGeoPanel } from './BlogSeoGeoPanel';
 import { WordPressDraftPanel } from './WordPressDraftPanel';
@@ -157,6 +158,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
         {article.internalLinking?.state === 'checked' && <p role="status" className="text-sm text-emerald-800">{article.internalLinking.links.length ? hubText('Passende Artikel wurden geprüft und im Artikel verlinkt.') : hubText('Keine weiteren passenden veröffentlichten Artikel gefunden.')}</p>}
         {article.internalLinking?.state === 'unavailable' && <p role="alert" className="text-sm text-amber-800">{hubText('WordPress-Links konnten nicht geprüft werden. Du kannst die Prüfung erneut starten.')}</p>}
         {linkError && <p role="alert" className="text-sm text-rose-700">{linkError}</p>}
+        <InboundLinkSuggestions article={article} />
       </section>}
       {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} savedCategorySlug={article.wordpressCategorySlug} onSave={wordpress.onSave} onPublished={wordpress.onPublished} />}
 

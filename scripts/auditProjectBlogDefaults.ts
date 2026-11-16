@@ -32,7 +32,7 @@ const brief = { mainKeyword: 'Bauchfett verlieren ab 50', h1: article.title, out
 const prepared = applyProjectBlogDefaults(article, brief, settings);
 assert.equal(prepared.focusKeyword, brief.mainKeyword);
 const checked = inspectBlogSeo(prepared);
-assert.ok(checked.title && checked.description && checked.heading);
+assert.ok(checked.title && checked.description && checked.heading && checked.h3);
 assert.equal(prepared.wordpressSlug, 'bauchfett-verlieren-ab-50');
 assert.equal(prepared.wordpressCategorySlug, 'abnehmen-ab-50');
 assert.equal(prepared.wordpressImage, undefined, 'No image is inherited from another article or a model response');
