@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { BlogArticle } from '../../types/contentEngine';
 import { authenticatedFetch } from '../../services/authenticatedFetch';
 import { BLOG_REFERENCES, isWordPressImageUrl, type BlogReference } from '../../utils/blogReferences';
-import { inspectBlogSeo, keywordHeadingProposal, applyKeywordHeading, keywordDescriptionProposal } from '../../utils/blogSeoCheck';
+import { inspectBlogSeo, keywordHeadingProposal, applyKeywordHeading, applyKeywordH3, keywordDescriptionProposal } from '../../utils/blogSeoCheck';
 import { articleSeoDefaults } from '../../utils/blogSeoGeo';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 
@@ -13,7 +13,7 @@ const jsonRequest = async (url: string, init?: RequestInit) => {
   return value;
 };
 export function BlogSeoCheckPanel({ article, mainKeyword, contentId, defaultFeatured = false, onChange }: { defaultFeatured?: boolean; article: BlogArticle; mainKeyword?: string; contentId?: string; onChange: (value: BlogArticle) => void }) {
-  const { hubText } = useContentHubCopy();
+  const { hubText, language } = useContentHubCopy();
   const check = inspectBlogSeo(article, mainKeyword);
   const fields = articleSeoDefaults(article, { mainKeyword });
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
@@ -52,12 +52,13 @@ export function BlogSeoCheckPanel({ article, mainKeyword, contentId, defaultFeat
     <h3 className="font-bold">{hubText('SEO-Check vor der Übertragung')}</h3>
     <p className="text-sm text-slate-600">{hubText('Hinweise zur Gestaltung, kein Google-Rankingwert. Vorschläge werden erst nach deinem Klick übernommen.')}</p>
     <ul className="space-y-2 text-sm">
-      {[[check.title, 'Fokuskeyword im SEO-Titel'], [check.description, 'Fokuskeyword in der SEO-Beschreibung'], [check.heading, 'Fokuskeyword in einer Zwischenüberschrift'], [check.image, 'Artikelbild mit Alt-Text']].map(([ok, label]) => <li key={String(label)}>{ok ? '✓' : '○'} {hubText(String(label))}</li>)}
+      {[[check.title, 'Fokuskeyword im SEO-Titel'], [check.description, 'Fokuskeyword in der SEO-Beschreibung'], [check.heading, 'Fokuskeyword in einer Zwischenüberschrift'], [check.h3, 'Fokuskeyword in einer H3-Unterüberschrift'], [check.image, 'Artikelbild mit Alt-Text']].map(([ok, label]) => <li key={String(label)}>{ok ? '✓' : '○'} {hubText(String(label))}</li>)}
     </ul>
     <p className="text-sm">{hubText('Nennungen im Artikeltext:')} {check.occurrences}. {hubText('Natürlich formulieren; keine feste Keyword-Dichte erzwingen.')}</p>
     {!check.title && check.keyword && <button type="button" onClick={() => onChange({ ...article, seoTitle: `${check.keyword}: ${fields.seoTitle}`.slice(0, 200) })} className="mr-3 text-sm underline">{hubText('Fokuskeyword im SEO-Titel ergänzen')}</button>}
     {!check.description && check.keyword && <div className="text-sm"><p>{hubText('Vorschlag für die Beschreibung:')} {keywordDescriptionProposal(fields.metaDescription, check.keyword)}</p><button type="button" onClick={() => onChange({ ...article, metaDescription: keywordDescriptionProposal(fields.metaDescription, check.keyword) })} className="underline">{hubText('Beschreibung übernehmen')}</button></div>}
     {!check.heading && heading && <div className="text-sm"><p>{hubText('Vorschlag für die erste Zwischenüberschrift:')} {heading.replace(/^#+ /, '')}</p><button type="button" onClick={() => onChange(applyKeywordHeading(article, check.keyword))} className="underline">{hubText('Zwischenüberschrift übernehmen')}</button></div>}
+    {!check.h3 && check.keyword && <button type="button" onClick={() => onChange(applyKeywordH3(article, check.keyword, language))} className="text-sm underline">{hubText('Fokuskeyword in passender H3 ergänzen')}</button>}
     {contentId && <div className="space-y-2 border-t pt-3">
       <label className="block text-sm font-semibold">{hubText('Kurzer WordPress-URL-Slug')}<input value={article.wordpressSlug || ''} maxLength={80} placeholder={check.suggestedSlug} onChange={e => onChange({ ...article, wordpressSlug: e.target.value })} className="mt-1 w-full rounded-xl border p-2" /></label>
       <button type="button" onClick={() => onChange({ ...article, wordpressSlug: check.suggestedSlug })} className="text-sm underline">{hubText('URL-Vorschlag übernehmen')}: {check.suggestedSlug}</button>

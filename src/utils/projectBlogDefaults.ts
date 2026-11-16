@@ -1,6 +1,6 @@
 import type { BlogArticle, ContentBrief, ProjectSettings } from '../types/contentEngine';
 import { normalizeSeoGeo, seoText } from './blogSeoGeo';
-import { hasKeyword, applyKeywordHeading, keywordDescriptionProposal, suggestedBlogSlug } from './blogSeoCheck';
+import { hasKeyword, applyKeywordHeading, applyKeywordH3, keywordDescriptionProposal, suggestedBlogSlug } from './blogSeoCheck';
 import { suggestVital50Category } from './vital50BlogCategories';
 
 export interface ProjectBlogDefaults {
@@ -11,7 +11,7 @@ export interface ProjectBlogDefaults {
   verifiedSources: boolean;
   imageAsFeatured: boolean;
 }
-export function resolveProjectBlogDefaults(settings?: Pick<ProjectSettings, 'websiteUrl' | 'blogDefaults'>): ProjectBlogDefaults {
+export function resolveProjectBlogDefaults(settings?: Pick<ProjectSettings, 'websiteUrl' | 'blogDefaults' | 'language'>): ProjectBlogDefaults {
   let vital50 = false;
   try { vital50 = new URL(settings?.websiteUrl || '').origin === 'https://vital50.gomo-marketing.at'; } catch { /* Projects without WordPress keep their own content. */ }
   const value = settings?.blogDefaults;
@@ -25,7 +25,7 @@ export function resolveProjectBlogDefaults(settings?: Pick<ProjectSettings, 'web
   };
 }
 /** Applied only to newly generated articles, never silently to existing articles. */
-export function applyProjectBlogDefaults(input: BlogArticle, brief: Partial<ContentBrief>, settings?: Pick<ProjectSettings, 'websiteUrl' | 'blogDefaults'>): BlogArticle {
+export function applyProjectBlogDefaults(input: BlogArticle, brief: Partial<ContentBrief>, settings?: Pick<ProjectSettings, 'websiteUrl' | 'blogDefaults' | 'language'>): BlogArticle {
   const defaults = resolveProjectBlogDefaults(settings);
   const fields = normalizeSeoGeo(input as unknown as Record<string, unknown>, input, brief);
   const keyword = seoText(brief.mainKeyword, 150) || fields.focusKeyword;
@@ -38,7 +38,7 @@ export function applyProjectBlogDefaults(input: BlogArticle, brief: Partial<Cont
   if (defaults.keywordChecks && keyword) {
     if (!hasKeyword(article.seoTitle || '', keyword)) article.seoTitle = `${keyword}: ${article.seoTitle || article.title}`.slice(0, 200);
     article.metaDescription = keywordDescriptionProposal(article.metaDescription || '', keyword);
-    article = applyKeywordHeading(article, keyword);
+    article = applyKeywordH3(applyKeywordHeading(article, keyword), keyword, settings?.language);
   }
   if (defaults.shortUrls) article.wordpressSlug = suggestedBlogSlug(keyword || article.title);
   try {

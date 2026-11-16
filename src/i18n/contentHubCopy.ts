@@ -3,6 +3,21 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "BlogPosting für diesen veröffentlichten Artikel aktivieren": "Enable BlogPosting for this published article",
+  "BlogPosting wurde für diesen Beitrag aktiviert. Bitte den WordPress-Cache leeren und die SEO-Analyse erneut starten.": "BlogPosting was enabled for this post. Clear the WordPress cache and run the SEO analysis again.",
+  "Fokuskeyword in einer H3-Unterüberschrift": "Focus keyword in an H3 subheading",
+  "Fokuskeyword in passender H3 ergänzen": "Add focus keyword to a suitable H3",
+  "BlogPosting-Ausgabe ist eingerichtet.": "BlogPosting output is configured.",
+  "BlogPosting-Ausgabe noch nicht eingerichtet.": "BlogPosting output is not yet configured.",
+  "Einmalig Academy SEO Bridge 1.1.0 in WordPress hochladen, die vorhandene Version ersetzen und aktivieren. Danach SEO-Verbindung prüfen. Die Brücke ergänzt strukturierte Artikeldaten für neue Academy-Beiträge mit SEOPress Free. Vorhandene Artikel werden nicht automatisch geändert.": "Upload Academy SEO Bridge 1.1.0 in WordPress once, replace the existing version and activate it. Then check the SEO connection. The bridge adds structured article data to new Academy posts using SEOPress Free. Existing articles are not changed automatically.",
+  "Academy-Brücke 1.1.0 herunterladen": "Download Academy bridge 1.1.0",
+  "SEOPress 10.4 überträgt die SEO-Felder über seine vorhandene WordPress-API. Bei fehlendem Zugriff bitte SEOPress aktivieren und unter SEO → Erweitert → Sicherheit die Rollensperren für SEO-Metabox und Inhaltsanalyse prüfen.": "SEOPress 10.4 transfers SEO fields through its existing WordPress API. If access is missing, activate SEOPress and check role restrictions for the SEO metabox and content analysis under SEO → Advanced → Security.",
+  "Eingehende interne Links": "Incoming internal links",
+  "Ein bestehender Artikel muss auf diesen neuen Artikel verlinken. Die Academy ändert veröffentlichte Artikel nicht automatisch. Öffne einen passenden Artikel und ergänze dort den folgenden Link als normalen Textlink.": "An existing article must link to this new article. Academy does not automatically change published articles. Open a suitable article and add the following link as a regular text link.",
+  "Noch keine passenden Ausgangsartikel geprüft. Nutze oben „Passende interne Links ergänzen“.": "No suitable source articles checked yet. Use “Add relevant internal links” above.",
+  "Linktext:": "Link text:",
+  "Zieladresse:": "Destination URL:",
+  "Die Vorschläge sind keine Bestätigung, dass bereits ein eingehender Link vorhanden ist.": "Suggestions do not confirm that an incoming link already exists.",
   "SEOPress-Übertragung ist eingerichtet.": "SEOPress transfer is configured.",
   "SEOPress-Übertragung ist noch nicht bestätigt.": "SEOPress transfer has not yet been verified.",
   "SEOPress 10.4 verwendet seine vorhandene WordPress-API. Kein zusätzliches SEO-Plugin erforderlich. Bei fehlendem Zugriff bitte SEOPress aktivieren und unter SEO → Erweitert → Sicherheit die Rollensperren für SEO-Metabox und Inhaltsanalyse prüfen.": "SEOPress 10.4 uses its existing WordPress API. No additional SEO plugin is required. If access is missing, activate SEOPress and check the role restrictions for SEO metaboxes and content analysis under SEO → Advanced → Security.",

@@ -129,3 +129,46 @@ Offizielle Dokumentation: [SEOPress REST API, einschließlich Sicherheitsregeln 
 ## Überschriften beim WordPress-Export
 
 Das WordPress-Theme gibt den Beitragstitel als H1 aus. Die Academy lässt deshalb eine gleichlautende Markdown-H1 im exportierten Artikeltext weg, auch wenn eine GEO-Kurzantwort davorsteht oder der Titel inline formatiert wurde. Andere H1-Abschnitte werden als H2 erhalten. Vorhandene H2, H3, Codebeispiele und der gespeicherte Academy-Text bleiben unverändert. Dies gilt für Vital50-Entwürfe und direkte SEOPress-Veröffentlichungen auf der Hauptwebsite. Bereits öffentliche Artikel werden nicht automatisch geändert: Dort die wiederholte Titelüberschrift im WordPress-Inhalt entfernen und den Beitrag aktualisieren.
+
+
+## BlogPosting mit SEOPress Free (Academy-Brücke 1.1.0)
+
+Die SEO-Felder bleiben native SEOPress-Felder. Für strukturierte Artikeldaten
+Academy SEO Bridge 1.1.0 aus dem WordPress-Bereich der Academy herunterladen,
+in WordPress unter Plugins → Neues Plugin → Plugin hochladen installieren und
+bei vorhandener Version das Ersetzen bestätigen. Aktivieren, danach in der Academy
+„SEO-Verbindung prüfen“. Ein PRO-Abonnement ist dafür nicht erforderlich.
+
+Nur neue bzw. erneut übertragene Entwürfe der Hauptwebsite erhalten das geschützte
+REST-Metafeld `_gommar_academy_blogposting=true`. Vor Veröffentlichung werden
+SEO-Felder und dieser Marker authentifiziert zurückgelesen. Fehlt die Brücke oder
+wird der Marker nicht bestätigt, bleibt der Artikel gespeichert bzw. Entwurf.
+Unklare Publikationsantworten behalten Marker und Metadaten im bestehenden
+Reconciliation-Verfahren. Bereits öffentliche Artikel werden nicht überschrieben
+oder nachträglich automatisch markiert. Für einen bereits bestätigten Academy-Beitrag
+kann der Admin ausdrücklich „BlogPosting für diesen veröffentlichten Artikel aktivieren“
+klicken. Diese Aktion setzt nur den Schema-Marker am vorhandenen zugeordneten
+Beitrag, liest ihn zurück und überträgt keinerlei Artikeltext, SEO-Felder oder URL.
+
+Die Brücke gibt ein BlogPosting im Kopf der einzelnen öffentlichen Beitragsseite
+aus: Titel, kanonischer Beitragslink, echte WordPress-Zeitstempel, Sprache,
+WordPress-Autor, gespeicherte Beschreibung und vorhandenes Beitragsbild.
+Keine erdachten Autorennamen, Bewertungen, Verdienste oder FAQ-Daten. Keine Ausgabe
+auf Archiven, Startseite, Vorschau oder passwortgeschützten Beiträgen. Bei Rank Math
+oder SEOPress PRO bleibt die Schema-Verantwortung beim SEO-Plugin; dort ist der
+Academy-Marker nicht verfügbar. Bei anderen Schema-Plugins oder eigenen Templates
+vor Aktivierung prüfen, dass kein weiteres Article/BlogPosting ausgegeben wird.
+Nach dem Update Cache leeren und eine neue öffentliche Beitragsseite validieren.
+Die bestätigte API-Einstellung allein ersetzt keine Prüfung der gerenderten Seite.
+
+Neue Artikel erhalten bei aktivierten Keyword-Vorgaben eine passende H3 mit Keyword.
+Vorhandene H3 werden bevorzugt; ein fehlender Unterabschnitt wird nur vor bereits
+vorhandenem Fließtext unter einer H2 eingefügt. Keine leeren Abschnitte oder Änderungen
+an Codeblöcken. Bestehende Artikel können den Vorschlag im SEO-Check übernehmen;
+Speicherung bleibt explizit. Es wird keine Keyword-Dichte erzwungen.
+
+Nach bestätigter Veröffentlichung zeigt „Eingehende interne Links“ passende,
+geprüfte ältere Artikel und den Text/die Adresse des neuen Artikels. Dies sind
+Vorschläge, kein Nachweis bereits vorhandener Rückverweise. Der Admin ergänzt einen
+normalen Textlink im älteren Artikel; die Academy bearbeitet ältere öffentliche
+Beiträge nicht automatisch. Danach SEOPress-Analyse neu ausführen.

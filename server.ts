@@ -1207,9 +1207,9 @@ async function startServer() {
       if (action === 'media' && req.method === 'GET') res.json(await wordpressDraftService.media(uid, contentId, String(req.query.search || '')));
       else if (action === 'media' && req.method === 'POST') res.json(await wordpressDraftService.uploadMedia(uid, contentId, req.body?.image));
       else if (action === 'seo' && req.method === 'GET') res.json(await wordpressDraftService.seo(uid, contentId));
+      else if (action === 'schema' && req.method === 'POST') res.json(await wordpressDraftService.enableSchema(uid, contentId));
       else if (action === 'seo-plugin' && req.method === 'GET') {
-        const status = await wordpressDraftService.status(uid, contentId);
-        if (status.seoProvider !== 'rank-math') throw new Error('SEOPress benötigt dieses Rank-Math-Zusatzplugin nicht. Bitte die SEO-Verbindung prüfen.');
+        await wordpressDraftService.status(uid, contentId);
         res.type('application/zip').set('Content-Disposition', 'attachment; filename="gommar-academy-seo.zip"').send(await wordpressSeoBridgeZip());
       }
       else if (action === 'categories' && req.method === 'GET') res.json(await wordpressDraftService.categories(uid, contentId));
@@ -2724,7 +2724,7 @@ Stil & Struktur-Anforderungen:
 - Schreibe einen vollständigen, fundierten Artikel (mind. 1.200 - 1.800 Wörter).
 - Nutze ansprechende Markdown-Formatierung (#, ##, ###, Bulletpoints, fette Schlüsselwörter, Zitate/Infoboxen).
 - Verwende für Vergleiche echte Markdown-Tabellen mit Kopfzeile und Trennzeile. Keine ASCII-Tabellen, Zeichenrahmen oder Textdiagramme in Codeblöcken; verwende stattdessen Tabellen oder Listen.
-- Verwende das Hauptkeyword exakt im SEO-Titel und in der Meta-Beschreibung, in mindestens einer passenden H2-/H3-Zwischenüberschrift und natürlich an passenden Stellen im Fließtext. Erzwinge keine feste Keyword-Dichte.
+- Verwende das Hauptkeyword exakt im SEO-Titel und in der Meta-Beschreibung, in einer passenden H2- und einer passenden H3-Zwischenüberschrift und natürlich an passenden Stellen im Fließtext. Erzwinge keine feste Keyword-Dichte.
 Gespeicherte Projektvorgaben: ${JSON.stringify(blogDefaults)}
 - Baue konkrete Praxisbeispiele und Tipps für den Alltag der Zielgruppe ein.
 - Am Ende ein FAQ-Abschnitt und eine passende Handlungsaufforderung ohne Link.
