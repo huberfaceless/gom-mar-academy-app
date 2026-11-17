@@ -1,6 +1,6 @@
 import { researchBeforeBrief } from './server/competitorResearch.js';
 import { editorialStrategyPrompt } from './src/utils/editorialStrategy.js';
-import { readCampaignWordPressArticles } from './server/campaignWordPressArticles.js';
+import { readCampaignWordPressArticles, readCampaignWordPressArticleUrl } from './server/campaignWordPressArticles.js';
 import { campaignSourcePrompt } from './src/utils/articleCampaign.js';
 import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from './src/utils/projectBlogDefaults.js';
 import { suggestBlogReferences, suggestBlogReferenceReport } from './server/blogReferences.js';
@@ -2557,7 +2557,10 @@ Erstelle:
   app.post('/api/content-engine/campaign-articles', requireVerifiedMember, requireProMember, requireAcademyAdmin, requireContentProjectAccess, async (req, res) => {
     try {
       res.setHeader('Cache-Control', 'no-store');
-      res.json(await readCampaignWordPressArticles(req.body?.projectSettings?.websiteUrl, req.body?.postId, req.body?.page));
+      if (req.body?.articleUrl !== undefined && req.body?.postId !== undefined) throw new Error('Bitte entweder Artikellink oder Artikelkennung angeben.');
+      res.json(req.body?.articleUrl !== undefined
+        ? await readCampaignWordPressArticleUrl(req.body?.projectSettings?.websiteUrl, req.body.articleUrl)
+        : await readCampaignWordPressArticles(req.body?.projectSettings?.websiteUrl, req.body?.postId, req.body?.page));
     } catch (err) { res.status(400).json({ error: err instanceof Error ? err.message : 'Artikel konnten nicht geladen werden.' }); }
   });
 

@@ -73,6 +73,11 @@ jobs:
       - name: Projektentfernung und Schutz vor Wiederauftauchen prüfen
         run: bun run audit:project-removal
 
+      - name: Artikelkampagnen und WordPress-Linkimport prüfen
+        run: |
+          bun scripts/auditArticleCampaign.ts
+          bun scripts/auditCampaignArticleImport.ts
+
       - name: TypeScript pruefen
         run: bun run lint
 
