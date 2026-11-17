@@ -673,7 +673,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
       </button>
       {campaignSettings && <ArticleCampaignModal key={campaignSettings.id} settings={campaignSettings}
         projects={contentProjects.filter(project => project.projectSettings.id === campaignSettings.id)}
-        wordpressAvailable={isAdmin && campaignSettings.websiteUrl.replace(/\/$/, '') === 'https://vital50.gomo-marketing.at'}
+        wordpressAvailable={isAdmin && !!wordpressSiteOrigin(campaignSettings.websiteUrl)}
         onClose={() => setCampaignSettings(null)} onStart={startArticleCampaign} />}
 
       <BlogArticleLibrary
