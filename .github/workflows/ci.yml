@@ -78,6 +78,9 @@ jobs:
           bun scripts/auditArticleCampaign.ts
           bun scripts/auditCampaignArticleImport.ts
 
+      - name: E-Mail-Generator und sichere CRM-Übernahme prüfen
+        run: bun scripts/auditContentEmail.ts
+
       - name: TypeScript pruefen
         run: bun run lint
 

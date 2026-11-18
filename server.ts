@@ -1,3 +1,4 @@
+import { generateContentEmail } from './server/contentEmailGeneration.js';
 import { researchBeforeBrief } from './server/competitorResearch.js';
 import { editorialStrategyPrompt } from './src/utils/editorialStrategy.js';
 import { readCampaignWordPressArticles, readCampaignWordPressArticleUrl } from './server/campaignWordPressArticles.js';
@@ -38,7 +39,7 @@ import {
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
 import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
-import { assertCampaignDeliveryModeUnchanged, loadEmailCampaigns, saveEmailCampaigns } from './server/emailCampaignsAdmin.js';
+import { assertCampaignDeliveryModeUnchanged, loadEmailCampaigns, saveEmailCampaigns, importContentEmailCampaign } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache, hasLessonAudioInCache } from './server/lessonAudioCache.js';
 import { selectAudioLessons, audioSelectionFingerprint, generateSelectedAudio } from './server/lessonAudioSelection.js';
 import { confirmEmailConsent, deleteEmailConsent, loadEmailConsent, requestEmailConsent, withdrawEmailConsent } from './server/emailConsentAdmin.js';
@@ -1306,6 +1307,17 @@ async function startServer() {
     }
   });
 
+  app.post('/api/email/campaigns/from-content', requireVerifiedMember, requireProMember, async (req, res) => {
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
+      res.setHeader('Cache-Control', 'no-store');
+      res.json(await importContentEmailCampaign(FIREBASE_PROJECT_ID, userId, req.body?.batch));
+    } catch (error) {
+      res.status(400).json({ error: error instanceof Error ? error.message : 'E-Mail-Entwurf konnte nicht übernommen werden.' });
+    }
+  });
+
   app.get('/api/email/campaigns/report', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
@@ -2562,6 +2574,16 @@ Erstelle:
         ? await readCampaignWordPressArticleUrl(req.body?.projectSettings?.websiteUrl, req.body.articleUrl)
         : await readCampaignWordPressArticles(req.body?.projectSettings?.websiteUrl, req.body?.postId, req.body?.page));
     } catch (err) { res.status(400).json({ error: err instanceof Error ? err.message : 'Artikel konnten nicht geladen werden.' }); }
+  });
+
+  app.post('/api/content-engine/emails', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
+    try {
+      res.setHeader('Cache-Control', 'no-store');
+      const batch = await generateContentEmail(req.body, request => ai.models.generateContent(request));
+      res.json({ batch });
+    } catch (error) {
+      res.status(400).json({ error: error instanceof Error ? error.message : 'E-Mails konnten nicht erstellt werden.' });
+    }
   });
 
   app.post('/api/content-engine/brief', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {

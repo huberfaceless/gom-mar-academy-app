@@ -7,6 +7,17 @@ const escapeHtml = (value: string) => value
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#39;');
 
+// Keep generated plain-text destinations clickable in the delivered HTML email.
+const linkedEmailText = (body: string) => body.split(/(https?:\/\/[^\s<>"']+)/gi).map((part, index) => {
+  const text = escapeHtml(part);
+  if (index % 2 === 0) return text;
+  try {
+    const url = new URL(part);
+    if (url.protocol === 'http:' || url.protocol === 'https:') return `<a href="${text}" style="color:#4f46e5;text-decoration:underline">${text}</a>`;
+  } catch { /* Invalid addresses remain ordinary escaped text. */ }
+  return text;
+}).join('').replace(/\r\n|\r|\n/g, '<br>');
+
 const emailFrame = (title: string, content: string, footer: string, language: EmailLanguage = 'de') => `<!doctype html>
 <html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:24px;background:#f1f5f9;color:#0f172a;font-family:Arial,sans-serif">
@@ -34,7 +45,7 @@ export const renderCampaignEmailHtml = (
     en: { button: 'Go to the Academy', unsubscribe: 'Unsubscribe from marketing emails' },
     pl: { button: 'Przejdź do Academy', unsubscribe: 'Zrezygnuj z e-maili marketingowych' },
   }[language];
-  return emailFrame(subject, `<div style="overflow-wrap:anywhere;line-height:1.7">${escapeHtml(body).replace(/\r\n|\r|\n/g, '<br>')}</div>
+  return emailFrame(subject, `<div style="overflow-wrap:anywhere;line-height:1.7">${linkedEmailText(body)}</div>
 <p style="margin-top:24px"><a href="https://academy.gomo-marketing.at" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#4f46e5;color:#ffffff;text-decoration:none;font-weight:700">${copy.button}</a></p>
 <p style="margin-top:24px;font-size:13px;line-height:1.5"><a href="${escapeHtml(unsubscribeUrl)}" style="color:#64748b;text-decoration:underline">${copy.unsubscribe}</a></p>`, 'GOM-MAR Academy', language);
 };

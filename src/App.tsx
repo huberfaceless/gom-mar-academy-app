@@ -639,7 +639,7 @@ export default function App() {
           )}
 
           {activeView === 'contentEngine' && canAccessView('contentEngine', user.tier, user.role) && (
-            <ContentEngineView isAdmin={user.role === 'admin'} />
+            <ContentEngineView isAdmin={user.role === 'admin'} onEmailCampaignImported={setCampaigns} />
           )}
 
           {activeView === 'admin' && user.role === 'admin' && (
