@@ -61,7 +61,18 @@ for (const [project, admin, expected] of [[DEFAULT_VITAL50_PROJECT, false, 403],
 for (const endpoint of ['brief', 'blog', 'pins', 'youtube', 'shorts']) {
   assert.ok(server.includes(`app.post('/api/content-engine/${endpoint}', requireVerifiedMember, requireProMember, requireContentProjectAccess,`));
 }
-assert.match(readFileSync('src/App.tsx', 'utf8'), /<ContentEngineView isAdmin=\{user.role === 'admin'\} \/>/);
+// Check the permission expression independently of unrelated component props.
+const appSource = ts.createSourceFile('App.tsx', readFileSync('src/App.tsx', 'utf8'), ts.ScriptTarget.ES2022, true, ts.ScriptKind.TSX);
+let hubAdminExpression: string | undefined;
+function inspectHubPermissions(node: ts.Node) {
+  if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(appSource) === 'ContentEngineView') {
+    const attribute = node.attributes.properties.find(item => ts.isJsxAttribute(item) && item.name.getText(appSource) === 'isAdmin');
+    if (attribute && ts.isJsxAttribute(attribute) && attribute.initializer && ts.isJsxExpression(attribute.initializer)) hubAdminExpression = attribute.initializer.expression?.getText(appSource);
+  }
+  ts.forEachChild(node, inspectHubPermissions);
+}
+inspectHubPermissions(appSource);
+assert.equal(hubAdminExpression, "user.role === 'admin'", 'Die Inhaltszentrale muss die tatsächliche Admin-Rolle erhalten.');
 const rules = readFileSync('firestore.rules', 'utf8');
 assert.match(rules, /function canUseContentProject/);
 assert.match(rules, /canUseContentProject\(resource.data\) && canUseContentProject\(request.resource.data\)/);
