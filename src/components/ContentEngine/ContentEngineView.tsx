@@ -1,3 +1,5 @@
+import type { Campaign } from '../../types';
+import { EmailGeneratorTab } from './EmailGeneratorTab';
 import { automaticWordPressPublication, wordpressSiteOrigin } from '../../utils/wordpressSites';
 import { authenticatedFetch as wordpressFetch } from '../../services/authenticatedFetch';
 import { CompetitorResearchPanel } from './CompetitorResearchPanel';
@@ -27,7 +29,8 @@ import {
   ExternalLink,
   BookOpen,
   CloudCheck,
-  Instagram
+  Instagram,
+  Mail
 } from 'lucide-react';
 import { 
   ProjectSettings, 
@@ -124,7 +127,7 @@ type ContentGenerationRequest =
   | { kind: 'all'; topic: string; settings: ProjectSettings; angle: string }
   | { kind: 'new-blog'; settings: ProjectSettings };
 
-export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = false }) => {
+export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImported?: (campaigns: Campaign[]) => void }> = ({ isAdmin = false, onEmailCampaignImported }) => {
   const { language, hubText } = useContentHubCopy();
   const { user } = useAuth();
   const userId = user?.uid;
@@ -147,7 +150,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   // Generator State
   const [topicInput, setTopicInput] = useState('');
   const [customAngleInput, setCustomAngleInput] = useState('');
-  const [activeTab, setActiveTab] = useState<'brief' | 'blog' | 'pinterest' | 'instagram' | 'youtube' | 'calendar'>('brief');
+  const [activeTab, setActiveTab] = useState<'brief' | 'blog' | 'pinterest' | 'instagram' | 'youtube' | 'email' | 'calendar'>('brief');
 
   // Loading States
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
@@ -155,6 +158,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
   const [isGeneratingBlog, setIsGeneratingBlog] = useState(false);
   const [isGeneratingPinterest, setIsGeneratingPinterest] = useState(false);
   const [isGeneratingYouTube, setIsGeneratingYouTube] = useState(false);
+  const [isProcessingEmail, setIsProcessingEmail] = useState(false);
   const [isDeletingProject, setIsDeletingProject] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(Boolean(userId));
   const [removalRequest, setRemovalRequest] = useState<{ projectId: string; contentId?: string; name: string } | null>(null);
@@ -548,7 +552,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
     else if (request.kind === 'new-blog') void generateAdditionalBlog(topic || '', request.settings, affiliateLink);
   };
 
-  const isBusy = isLoadingData || isDeletingProject || isGeneratingAll || isGeneratingBrief || isGeneratingBlog || isGeneratingPinterest || isGeneratingYouTube;
+  const isBusy = isProcessingEmail || isLoadingData || isDeletingProject || isGeneratingAll || isGeneratingBrief || isGeneratingBlog || isGeneratingPinterest || isGeneratingYouTube;
   const handleRemoveProject = async () => {
     if (!removalRequest || isBusy) return;
     const request = removalRequest;
@@ -615,6 +619,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           <div className="flex min-w-0 w-full sm:w-auto sm:flex-1 items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
             <Building2 className="w-4 h-4 shrink-0 text-emerald-600" />
             <select
+              disabled={isProcessingEmail}
               value={activeProjectSettings.id}
               onChange={(e) => {
                 setSelectedProjectId(e.target.value);
@@ -638,6 +643,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
           </span>
           <button
             type="button"
+            disabled={isProcessingEmail}
             onClick={() => {
               setProjectBeingEdited(activeProjectSettings);
               setIsSettingsModalOpen(true);
@@ -680,9 +686,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
         projects={scopedProjects}
         projectName={activeProjectSettings.name}
         selectedId={activeContentProject?.id}
-        isGenerating={isGeneratingBlog || isGeneratingBrief || isGeneratingAll || isGeneratingPinterest || isGeneratingYouTube}
+        isGenerating={isProcessingEmail || isGeneratingBlog || isGeneratingBrief || isGeneratingAll || isGeneratingPinterest || isGeneratingYouTube}
         onCreate={() => setContentGenerationRequest({ kind: 'new-blog', settings: activeProjectSettings })}
         onSelect={id => {
+          if (isProcessingEmail) return;
           const article = scopedProjects.find(project => project.id === id && project.blogArticle);
           if (article) { setActiveContentProject(article); setActiveTab('blog'); }
         }}
@@ -730,7 +737,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               <button
                 type="button"
                 onClick={() => handleStartBrief()}
-                disabled={isGeneratingBrief || isGeneratingAll}
+                disabled={isProcessingEmail || isGeneratingBrief || isGeneratingAll}
                 className="px-4 sm:px-5 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all disabled:opacity-50"
               >
                 {isGeneratingBrief ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4 text-emerald-400" />}
@@ -740,7 +747,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               <button
                 type="button"
                 onClick={handleGenerateAllInOneClick}
-                disabled={isGeneratingAll || isGeneratingBrief}
+                disabled={isProcessingEmail || isGeneratingAll || isGeneratingBrief}
                 className="px-5 sm:px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl text-xs sm:text-sm font-extrabold shadow-lg shadow-emerald-500/30 flex items-center gap-2 transition-all disabled:opacity-50"
               >
                 {isGeneratingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-300" />}
@@ -799,7 +806,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
             <div className="flex flex-wrap items-center gap-1.5 w-full">
               <button
                 type="button"
-                onClick={() => setActiveTab('brief')}
+                disabled={isProcessingEmail} onClick={() => setActiveTab('brief')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'brief'
                     ? 'bg-emerald-600 text-white shadow-xs'
@@ -813,7 +820,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
               <button
                 type="button"
-                onClick={() => setActiveTab('blog')}
+                disabled={isProcessingEmail} onClick={() => setActiveTab('blog')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'blog'
                     ? 'bg-emerald-600 text-white shadow-xs'
@@ -827,7 +834,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
               <button
                 type="button"
-                onClick={() => setActiveTab('pinterest')}
+                disabled={isProcessingEmail} onClick={() => setActiveTab('pinterest')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'pinterest'
                     ? 'bg-rose-600 text-white shadow-xs'
@@ -841,7 +848,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
               <button
                 type="button"
-                onClick={() => setActiveTab('instagram')}
+                disabled={isProcessingEmail} onClick={() => setActiveTab('instagram')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'instagram'
                     ? 'bg-fuchsia-600 text-white shadow-xs'
@@ -855,7 +862,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
 
               <button
                 type="button"
-                onClick={() => setActiveTab('youtube')}
+                disabled={isProcessingEmail} onClick={() => setActiveTab('youtube')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'youtube'
                     ? 'bg-red-600 text-white shadow-xs'
@@ -867,9 +874,15 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 {activeContentProject.youtubeVideo && <span className="text-[10px] opacity-80">✓</span>}
               </button>
 
+              <button type="button" disabled={isBusy} onClick={() => setActiveTab('email')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 ${activeTab === 'email' ? 'bg-emerald-600 text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
+                <Mail className="w-4 h-4" /><span>{hubText("6. E-Mails")}</span>
+                {activeContentProject.emailBatch && <span>✓</span>}
+              </button>
+
               <button
                 type="button"
-                onClick={() => setActiveTab('calendar')}
+                disabled={isProcessingEmail} onClick={() => setActiveTab('calendar')}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   activeTab === 'calendar'
                     ? 'bg-purple-600 text-white shadow-xs'
@@ -877,7 +890,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
                 }`}
               >
                 <Calendar className="w-4 h-4" />
-                <span>{hubText("6. Kalender & Freigabe")}</span>
+                <span>{hubText("7. Kalender & Freigabe")}</span>
               </button>
             </div>
 
@@ -892,6 +905,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700">
                 <History className="w-3.5 h-3.5 text-slate-400" />
                 <select
+                  disabled={isProcessingEmail}
                   value={activeContentProject.id}
                   onChange={(e) => {
                     const found = scopedProjects.find((p) => p.id === e.target.value);
@@ -1035,6 +1049,17 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean }> = ({ isAdmin = f
               topic={activeContentProject.topic}
               projectSettings={activeContentProject.projectSettings || activeProjectSettings}
             />
+          )}
+
+          {activeTab === 'email' && (
+            <EmailGeneratorTab key={activeContentProject.id} project={activeContentProject} disabled={isBusy}
+              onBusyChange={setIsProcessingEmail} onImported={onEmailCampaignImported}
+              onSave={(batch, campaignId) => {
+                const current = latestContentProjectRef.current;
+                if (!current || current.id !== activeContentProject.id || !userId) return Promise.resolve(false);
+                const { emailCampaignId: _previousImport, ...rest } = current;
+                return handleUpdateActiveProject({ ...rest, emailBatch: batch, ...(campaignId ? { emailCampaignId: campaignId } : {}) });
+              }} />
           )}
 
           {activeTab === 'calendar' && (

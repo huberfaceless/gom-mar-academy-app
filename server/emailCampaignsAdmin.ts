@@ -1,3 +1,4 @@
+import { contentEmailCampaign } from '../src/utils/contentEmail.js';
 import { GoogleAuth } from 'google-auth-library';
 import { fetchFirestoreRead } from './firestoreReadRetry.js';
 
@@ -152,3 +153,27 @@ export const saveEmailCampaigns = async (
   }
   return validatedCampaigns;
 };
+
+// Append against the version read here, so concurrent CRM changes are never lost.
+export async function importContentEmailCampaign(projectId: string, userId: string, batch: unknown,
+  dependencies = { token: getAccessToken, read: fetchFirestoreRead, write: fetch }) {
+  const campaign = contentEmailCampaign(batch);
+  const url = documentUrl(projectId, userId);
+  const headers = { Authorization: `Bearer ${await dependencies.token()}`, 'Content-Type': 'application/json' };
+  const response = await dependencies.read(url, { headers });
+  if (!response.ok && response.status !== 404) throw new Error('E-Mail-Kampagnen konnten nicht geladen werden.');
+  const document = response.status === 404 ? null : await response.json() as FirestoreDocument & { updateTime?: string };
+  const campaigns = validateEmailCampaigns(JSON.parse(document?.fields?.campaignsJson?.stringValue || '[]'));
+  if (campaigns.some(item => item.id === campaign.id)) return { campaigns, campaignId: campaign.id, alreadyExists: true };
+  if (document && !document.updateTime) throw new Error('Die Kampagnenversion konnte nicht geprüft werden.');
+  const next = validateEmailCampaigns([...campaigns, campaign]);
+  const condition = document ? `currentDocument.updateTime=${encodeURIComponent(document.updateTime!)}` : 'currentDocument.exists=false';
+  const saved = await dependencies.write(`${url}?${condition}`, { method: 'PATCH', headers,
+    body: JSON.stringify({ fields: { userId: { stringValue: userId }, campaignsJson: { stringValue: JSON.stringify(next) }, updatedAt: { timestampValue: new Date().toISOString() } } }),
+  });
+  if (!saved.ok) {
+    if ([409, 412].includes(saved.status)) throw new Error('Die Kampagnen wurden inzwischen geändert. Bitte erneut übernehmen.');
+    throw new Error('Der E-Mail-Entwurf konnte nicht übernommen werden. Bitte erneut versuchen.');
+  }
+  return { campaigns: next, campaignId: campaign.id, alreadyExists: false };
+}

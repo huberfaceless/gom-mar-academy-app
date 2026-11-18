@@ -205,6 +205,8 @@ export interface CalendarItem {
 }
 
 export interface CentralContentProject {
+  emailCampaignId?: string;
+  emailBatch?: import('../utils/contentEmail').ContentEmailBatch;
   campaignSource?: import('../utils/articleCampaign').CampaignArticle;
   deletedAt?: string;
   id: string;
