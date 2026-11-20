@@ -126,6 +126,11 @@ jobs:
       - name: Aktuelle Kontorechte und Sitzungswiderruf pruefen
         run: bun scripts/auditMemberSessionAccess.ts
 
+      - name: PRO-Preiswechsel und Bestandsschutz prüfen
+        run: |
+          bun scripts/auditProSubscriptionContract.ts
+          bun scripts/auditProPrice2027.ts
+
       - name: Stripe Managed Payments pruefen
         run: bun run audit:stripe
 

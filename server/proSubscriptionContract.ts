@@ -1,4 +1,7 @@
-export const PRO_CONTRACT_VERSION = 'pro-six-months-2026-10';
+export { proOfferAt, isSixMonthContractVersion } from '../src/config/proPricing.js';
+import { PRO_2026_CONTRACT } from '../src/config/proPricing.js';
+// Legacy contract identity remains stable for existing subscribers.
+export const PRO_CONTRACT_VERSION = PRO_2026_CONTRACT;
 export const PRO_MONTHLY_CENTS = 2990;
 export const PRO_MINIMUM_MONTHS = 6;
 

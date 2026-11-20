@@ -1,5 +1,6 @@
+import { proOfferAt, isSixMonthContractVersion, PRO_CHECKOUT_QUOTE_SECONDS, type ProOffer } from '../src/config/proPricing.js';
 import { isProSalesCountry } from '../src/config/proSalesPolicy.js';
-import { PRO_CONTRACT_VERSION, ordinaryCancellationAt, sixMonthCheckoutEnabled, proTaxMode } from './proSubscriptionContract.js';
+import { ordinaryCancellationAt, sixMonthCheckoutEnabled, proTaxMode } from './proSubscriptionContract.js';
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 
 export const STRIPE_MANAGED_PAYMENTS_API_VERSION = '2026-02-25.preview';
@@ -132,10 +133,13 @@ export const createManagedSubscriptionCheckout = async (input: {
   applicationUrl: string;
   sixMonthContract?: boolean;
   residenceCountry?: string;
+  offer?: ProOffer;
+  productId?: string;
 }): Promise<StripeCheckoutSession> => {
   if (input.sixMonthContract && !isProSalesCountry(input.residenceCountry)) {
     throw new Error('PRO kann derzeit nur mit Wohnsitz in Österreich, Deutschland oder Polen gebucht werden.');
   }
+  const offer = input.offer || proOfferAt();
   const taxMode = input.sixMonthContract ? proTaxMode() : null;
   const params = new URLSearchParams({
     mode: 'subscription',
@@ -151,10 +155,21 @@ export const createManagedSubscriptionCheckout = async (input: {
     'subscription_data[metadata][academy_tier]': 'PRO',
   });
   if (input.sixMonthContract) {
-    params.set('metadata[contract_version]', PRO_CONTRACT_VERSION);
-    params.set('metadata[contract_accepted_at]', new Date().toISOString());
-    params.set('subscription_data[metadata][contract_version]', PRO_CONTRACT_VERSION);
-    params.set('custom_text[submit][message]', '29,90 EUR monatlicher Gesamtpreis; Mindestlaufzeit 6 Monate (179,40 EUR). Kündigung schon jetzt zum Ende der Mindestlaufzeit möglich, danach zum Ende des bezahlten Monats. Gesetzlicher Widerruf bleibt unberührt. Vertragsinformationen: ' + input.applicationUrl + '/terms/');
+    params.set('expires_at', String(Math.floor(Date.parse(offer.quotedAt) / 1000) + PRO_CHECKOUT_QUOTE_SECONDS));
+    params.set('metadata[contract_version]', offer.contractVersion);
+    params.set('metadata[contract_accepted_at]', offer.quotedAt);
+    params.set('subscription_data[metadata][contract_version]', offer.contractVersion);
+    for (const prefix of ['metadata', 'subscription_data[metadata]']) params.set(`${prefix}[monthly_cents]`, String(offer.monthlyCents));
+    if (!offer.introductory) {
+      if (!input.productId) throw new Error('Das Stripe-Produkt für den neuen PRO-Preis fehlt.');
+      params.delete('line_items[0][price]');
+      params.set('line_items[0][price_data][product]', input.productId);
+      params.set('line_items[0][price_data][currency]', 'eur');
+      params.set('line_items[0][price_data][unit_amount]', String(offer.monthlyCents));
+      params.set('line_items[0][price_data][recurring][interval]', 'month');
+      params.set('line_items[0][price_data][tax_behavior]', 'inclusive');
+    }
+    params.set('custom_text[submit][message]', `${(offer.monthlyCents / 100).toFixed(2)} EUR monatlicher Gesamtpreis; Mindestlaufzeit 6 Monate (${(offer.minimumTotalCents / 100).toFixed(2)} EUR). ${offer.introductory ? '29,90 EUR bleiben bei durchgehendem kostenpflichtigem PRO-Abo bestehen.' : 'Nach der Mindestlaufzeit monatliche Fortführung.'} Kündigung frühestens zum Ende der Mindestlaufzeit, danach zum Ende des bezahlten Monats. Gesetzlicher Widerruf bleibt unberührt. Vertragsinformationen: ` + input.applicationUrl + '/terms/');
     params.set('automatic_tax[enabled]', taxMode === 'automatic' ? 'true' : 'false');
     params.set('billing_address_collection', 'required');
     params.set('metadata[residence_country]', input.residenceCountry!);
@@ -277,7 +292,7 @@ export const retrieveStripeSubscription = async (secretKey: string, id: string):
 };
 
 export const scheduleSixMonthCancellation = async (secretKey: string, subscription: StripeCheckoutSession, uid: string): Promise<StripeCheckoutSession> => {
-  if (subscription.metadata?.firebase_uid !== uid || subscription.metadata?.contract_version !== PRO_CONTRACT_VERSION) throw new Error('Dieses Abo gehört nicht zum Sechsmonatstarif.');
+  if (subscription.metadata?.firebase_uid !== uid || !isSixMonthContractVersion(subscription.metadata?.contract_version)) throw new Error('Dieses Abo gehört nicht zum Sechsmonatstarif.');
   if (subscription.status !== 'active' && subscription.status !== 'past_due') throw new Error('Dieses Abo kann nicht vorgemerkt werden.');
   const start = subscription.start_date;
   const end = subscription.current_period_end || subscription.items?.data?.[0]?.current_period_end;
@@ -289,7 +304,7 @@ export const scheduleSixMonthCancellation = async (secretKey: string, subscripti
     `academy-cancel-${subscription.id}-${cancellationAt}`);
 };
 
-export const verifySixMonthConfiguration = async (secretKey: string, requireActivation = true): Promise<{ priceId: string; portalId: string }> => {
+export const verifySixMonthConfiguration = async (secretKey: string, requireActivation = true): Promise<{ priceId: string; portalId: string; productId: string }> => {
   if (requireActivation && !sixMonthCheckoutEnabled()) throw new Error('Der Sechsmonatstarif ist noch nicht aktiviert.');
   const priceId = process.env.STRIPE_PRO_SIX_MONTH_PRICE_ID?.trim();
   const portalId = process.env.STRIPE_PRO_SIX_MONTH_PORTAL_ID?.trim();
@@ -303,7 +318,7 @@ export const verifySixMonthConfiguration = async (secretKey: string, requireActi
   if (!price.active || price.unit_amount !== 2990 || price.currency !== 'eur' || price.tax_behavior !== 'inclusive' || price.recurring?.interval !== 'month' || price.recurring?.interval_count !== 1 || !price.product?.tax_code) throw new Error('Der Preis muss 29,90 EUR monatlicher Gesamtpreis und einen Steuer-Code enthalten und als monatlicher Gesamtpreis konfiguriert sein.');
   if (!portal.active || portal.features?.subscription_cancel?.enabled !== false || portal.features?.subscription_update?.enabled !== false || portal.login_page?.enabled) throw new Error('Das separate Kundenportal darf keine direkte Kündigung, Tarifänderung oder öffentliche Anmeldung anbieten.');
   if (portals.has_more || portals.data?.some((item: { active?: boolean; login_page?: { enabled?: boolean } }) => item.active && item.login_page?.enabled)) throw new Error('Öffentliche Portal-Anmeldelinks müssen für die Mindestlaufzeit deaktiviert sein.');
-  return { priceId, portalId };
+  return { priceId, portalId, productId: price.product.id };
 };
 
 // Invoice payloads differ between Stripe API versions.

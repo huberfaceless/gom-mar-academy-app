@@ -1,3 +1,4 @@
+import { PublicProPriceNotice } from './ProPriceNotice';
 import React, { useState } from 'react';
 import { 
   CheckCircle2, 
@@ -256,6 +257,8 @@ export const PublicLandingView: React.FC<PublicLandingViewProps> = ({
               {introduction.hint}
             </p>
           </div>
+
+          <PublicProPriceNotice />
 
           {/* REAL FIREBASE REGISTRATION CARD */}
           <div id="register-form" className="max-w-xl mx-auto bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden scroll-mt-20">
