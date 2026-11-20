@@ -2615,7 +2615,7 @@ Erstelle:
 
       const competitorResearch = await researchBeforeBrief(ai, topic, projectSettings);
 
-      const prompt = `${editorialStrategyPrompt(projectSettings, competitorResearch)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, competitorResearch, targetUrl)}
 Du bist ein führender SEO- und Content-Stratege für das Projekt "${projectSettings?.name || 'Content Engine'}".
 Website: ${projectSettings?.websiteUrl || ''}
 Zielgruppe: ${projectSettings?.targetAudience || 'Allgemein'}
@@ -2746,7 +2746,7 @@ Antworte ausschließlich im folgenden validen JSON-Format:
         ? `${content}\n\n[${recommendationLabel(projectSettings?.language)}](<${affiliateLink}>)`
         : content;
 
-      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch, affiliateLink)}
 Erstelle einen erstklassigen, suchmaschinenoptimierten und tiefgründigen Blogartikel basierend auf folgendem Content Brief:
 Thema: ${topic}
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
@@ -2823,7 +2823,7 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch, targetUrl)}
 ${campaignSourcePrompt(brief?.sourceArticle)}
 Erstelle genau 5 unterschiedliche Pinterest Pins für das Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
@@ -2945,7 +2945,7 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch, targetUrl)}
 ${campaignSourcePrompt(brief?.sourceArticle)}
 Erstelle ein komplettes, hochprofessionelles YouTube-Videoskript (speziell optimiert für Faceless Channels mit Voiceover & Stock/B-Roll Footage) zum Thema:
 "${topic}"
@@ -3036,7 +3036,7 @@ Antworte im JSON-Format:
       try { targetUrl = resolvePinterestTargetUrl(req.body.targetUrl, projectSettings?.defaultTargetUrl); }
       catch (error) { res.status(400).json({ error: (error as Error).message }); return; }
 
-      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch)}
+      const prompt = `${editorialStrategyPrompt(projectSettings, brief?.competitorResearch, targetUrl)}
 ${campaignSourcePrompt(brief?.sourceArticle)}
 Erstelle 3 virale YouTube Shorts Skripte (Dauer 30-50 Sekunden) aus dem Haupt-Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}

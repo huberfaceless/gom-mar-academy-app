@@ -89,7 +89,16 @@ await handler({ body: { topic: 'Topic', projectSettings: settings } }, response)
 assert.deepEqual(order, ['research']); assert.equal(status, 500); assert.match(result.error, /keine neuen Texte/);
 for (const endpoint of ['blog', 'pins', 'youtube', 'shorts']) {
   const start = server.indexOf(`app.post('/api/content-engine/${endpoint}'`);
-  assert.match(server.slice(start, server.indexOf('const response =', start)), /editorialStrategyPrompt\(projectSettings, brief\?\.competitorResearch\)/);
+  const routeSource = ts.createSourceFile(endpoint + '.ts', server.slice(start, server.indexOf('const response =', start)), ts.ScriptTarget.ES2022, true);
+  let receivesResearch = false;
+  function inspectStrategy(node: ts.Node) {
+    if (ts.isCallExpression(node) && node.expression.getText(routeSource) === 'editorialStrategyPrompt') {
+      receivesResearch = node.arguments[0]?.getText(routeSource) === 'projectSettings' && node.arguments[1]?.getText(routeSource) === 'brief?.competitorResearch';
+    }
+    ts.forEachChild(node, inspectStrategy);
+  }
+  inspectStrategy(routeSource);
+  assert.ok(receivesResearch, endpoint + ': Projekt und gespeicherte Recherche müssen an die Strategie übergeben werden.');
 }
 const panel = renderToStaticMarkup(React.createElement(LanguageProvider, null, React.createElement(CompetitorResearchPanel, { report })));
 assert.match(panel, /Anbieter A/); assert.match(panel, /sandbox="allow-popups allow-popups-to-escape-sandbox"/);

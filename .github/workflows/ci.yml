@@ -126,6 +126,9 @@ jobs:
       - name: Aktuelle Kontorechte und Sitzungswiderruf pruefen
         run: bun scripts/auditMemberSessionAccess.ts
 
+      - name: Preisgrundlage in Academy-Kampagnen prüfen
+        run: bun scripts/auditAcademyCampaignPricing.ts
+
       - name: PRO-Preiswechsel und Bestandsschutz prüfen
         run: |
           bun scripts/auditProSubscriptionContract.ts
