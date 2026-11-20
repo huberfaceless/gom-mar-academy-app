@@ -1,3 +1,5 @@
+import type { ProOffer } from '../config/proPricing';
+export type ProContract = { sixMonthContract: boolean; contractVersion: string; offer: ProOffer };
 import type { ProSalesCountry } from '../config/proSalesPolicy';
 import { auth } from '../firebase/config';
 
@@ -43,7 +45,7 @@ export const openStripeCustomerPortal = async (): Promise<void> => {
   window.location.assign(result.url);
 };
 
-export const loadProContract = async (): Promise<{ sixMonthContract: boolean; contractVersion: string }> => {
+export const loadProContract = async (): Promise<ProContract> => {
   const response = await fetch('/api/payments/contract');
   if (!response.ok) throw new Error('Vertragsinformationen konnten nicht geladen werden.');
   return response.json();

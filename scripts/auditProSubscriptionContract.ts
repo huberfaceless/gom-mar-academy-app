@@ -14,6 +14,8 @@ import { PRO_CONTRACT_VERSION } from '../server/proSubscriptionContract.js';
 import { validateWithdrawal } from '../server/contractWithdrawal.js';
 assert.throws(() => validateWithdrawal({ name: 'A', email: 'a@example.com', contract: 'PRO' }));
 assert.deepEqual(validateWithdrawal({ name: ' A ', email: 'A@example.com', contract: 'PRO', confirm: true }), { name: 'A', email: 'a@example.com', contract: 'PRO' });
+const originalDateNow = Date.now;
+Date.now = () => Date.parse('2026-11-20T12:00:00Z');
 const originalFetch = globalThis.fetch;
 const originalTaxMode = process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE;
 delete process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE;
@@ -68,6 +70,7 @@ try {
   assert.equal(requests.at(-1)!.get('managed_payments[enabled]'), 'true');
   assert.equal(requests.at(-1)!.get('automatic_tax[enabled]'), null, 'Bestandsangebot darf nicht durch Steuerumschaltung verändert werden.');
 } finally {
+  Date.now = originalDateNow;
   globalThis.fetch = originalFetch;
   if (originalTaxMode === undefined) delete process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE;
   else process.env.STRIPE_PRO_SIX_MONTH_TAX_MODE = originalTaxMode;

@@ -16,7 +16,7 @@ import { PRO_SALES_COUNTRIES, isProSalesCountry } from './src/config/proSalesPol
 import { academyPublicUrl, validateDeploymentEnvironment } from './server/deploymentEnvironment.js';
 import { sendProContractConfirmation } from './server/proContractConfirmation.js';
 import { recordWithdrawal, validateWithdrawal } from './server/contractWithdrawal.js';
-import { PRO_CONTRACT_VERSION, addCalendarMonths, sixMonthCheckoutEnabled } from './server/proSubscriptionContract.js';
+import { addCalendarMonths, sixMonthCheckoutEnabled, proOfferAt, isSixMonthContractVersion } from './server/proSubscriptionContract.js';
 import { canUseContentProject } from './src/utils/contentProjectAccess.js';
 import { verifySendgridEventSignature, parseSendgridDeliveryEvents, recordSendgridDeliveryEvents } from './server/sendgridEventWebhook.js';
 import { loadCampaignDeliveryReport } from './server/emailCampaignReportAdmin.js';
@@ -647,13 +647,25 @@ async function startServer() {
     }
     try {
       const sixMonthContract = sixMonthCheckoutEnabled();
-      if (sixMonthContract && req.body?.contractVersion !== PRO_CONTRACT_VERSION) {
-        res.status(400).json({ error: 'Bitte bestätige die Vertragsinformationen zur sechsmonatigen Mindestlaufzeit.' });
+      const offer = proOfferAt();
+      if (!sixMonthContract && !offer.introductory) throw new Error('Der neue PRO-Tarif erfordert die aktivierte Sechsmonatskonfiguration.');
+      if (sixMonthContract && req.body?.contractVersion !== offer.contractVersion) {
+        res.status(400).json({ error: 'Die Vertrags- oder Preisangaben wurden aktualisiert. Bitte lade die Seite neu und bestätige sie erneut.' });
         return;
       }
       if (sixMonthContract && !isProSalesCountry(req.body?.residenceCountry)) {
         res.status(400).json({ error: 'Bitte wähle dein Wohnsitzland. PRO ist derzeit nur in Österreich, Deutschland und Polen verfügbar.' });
         return;
+      }
+      // A temporary loss of PRO access must not replace an ongoing old-price subscription.
+      const existingSubscriptionId = await loadStripeSubscriptionId(FIREBASE_PROJECT_ID, firebaseUser.sub);
+      if (existingSubscriptionId) {
+        const existing = await retrieveStripeSubscription(stripeSecretKey, existingSubscriptionId);
+        if (existing.metadata?.firebase_uid !== firebaseUser.sub) throw new Error('Abozuordnung ungültig.');
+        if (!['canceled', 'incomplete_expired'].includes(existing.status || '')) {
+          res.status(409).json({ error: 'Für dieses Konto besteht bereits ein Abo. Es wird kein zusätzliches Abo angelegt. Bei Zahlungsproblemen kontaktiere bitte huber@gomo-marketing.at.' });
+          return;
+        }
       }
       const configuration = sixMonthContract ? await verifySixMonthConfiguration(stripeSecretKey) : null;
       // New contracts use a new customer so legacy portal links cannot bypass the minimum term.
@@ -662,6 +674,8 @@ async function startServer() {
         secretKey: stripeSecretKey,
         priceId: configuration?.priceId || priceId,
         sixMonthContract,
+        offer,
+        productId: configuration?.productId,
         residenceCountry: sixMonthContract ? req.body.residenceCountry : undefined,
         firebaseUid: firebaseUser.sub,
         customerEmail: firebaseUser.email,
@@ -725,7 +739,7 @@ async function startServer() {
       }
       const subscriptionId = await loadStripeSubscriptionId(FIREBASE_PROJECT_ID, firebaseUser.sub);
       const subscription = subscriptionId ? await retrieveStripeSubscription(stripeSecretKey, subscriptionId) : null;
-      const configuration = subscription?.metadata?.contract_version === PRO_CONTRACT_VERSION
+      const configuration = isSixMonthContractVersion(subscription?.metadata?.contract_version)
         ? await verifySixMonthConfiguration(stripeSecretKey, false) : null;
       const portal = await createStripeBillingPortalSession({
         secretKey: stripeSecretKey,
@@ -758,7 +772,8 @@ async function startServer() {
 
   app.get('/api/payments/contract', (_req, res) => {
     res.setHeader('Cache-Control', 'no-store');
-    res.json({ sixMonthContract: sixMonthCheckoutEnabled(), contractVersion: PRO_CONTRACT_VERSION, allowedCountries: PRO_SALES_COUNTRIES });
+    const offer = proOfferAt();
+    res.json({ sixMonthContract: sixMonthCheckoutEnabled(), contractVersion: offer.contractVersion, offer, allowedCountries: PRO_SALES_COUNTRIES });
   });
 
   app.get('/api/payments/subscription', requireVerifiedMember, async (req, res) => {
@@ -771,7 +786,7 @@ async function startServer() {
       if (!id) { res.json({ sixMonthContract: false }); return; }
       const subscription = await retrieveStripeSubscription(key, id);
       if (subscription.metadata?.firebase_uid !== uid) throw new Error('Abozuordnung ungültig.');
-      const isSixMonth = subscription.metadata?.contract_version === PRO_CONTRACT_VERSION;
+      const isSixMonth = isSixMonthContractVersion(subscription.metadata?.contract_version);
       res.json({ sixMonthContract: isSixMonth,
         minimumTermEndsAt: isSixMonth && subscription.start_date ? new Date(addCalendarMonths(subscription.start_date, 6) * 1000).toISOString() : null,
         cancellationAt: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null });
