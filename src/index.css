@@ -6,7 +6,8 @@ body,
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  overflow-x: hidden;
+  /* clip verhindert horizontales Überlaufen ohne einen eigenen Scrollcontainer. */
+  overflow-x: clip;
 }
 
 @keyframes shimmer {

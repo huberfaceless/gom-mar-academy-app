@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { observeNavigationHeader } from '../utils/stickyNavigation';
+import React, { useEffect, useRef, useState } from 'react';
 import { LogIn, LogOut, ShieldCheck, UserCheck, AlertCircle, UserRound, MessageCircle } from 'lucide-react';
 import { UserProfile } from '../types';
 import gommarLogo from '../assets/images/gommar_logo.jpg';
@@ -23,6 +24,8 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const { user: firebaseUser, authState, logout } = useAuth();
   const { t } = useLanguage();
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => headerRef.current ? observeNavigationHeader(headerRef.current) : undefined, []);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | null>(null);
 
   const isLight = user.theme === 'clean-light' || !user.theme;
@@ -40,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className={`sticky top-0 z-30 ${
+      <header ref={headerRef} className={`sticky top-0 z-30 ${
         isLight 
           ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 text-slate-900' 
           : 'bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-slate-100'
