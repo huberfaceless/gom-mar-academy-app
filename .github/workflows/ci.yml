@@ -102,6 +102,9 @@ jobs:
       - name: WordPress-Entwurfsübertragung prüfen
         run: bun run audit:wordpress
 
+      - name: Nachträgliche Mitglieder-Einwilligung prüfen
+        run: node --import tsx scripts/auditMemberConsentInvitation.ts
+
       - name: CRM-Kontaktspeicherung pruefen
         run: bun run audit:crm-persistence
 

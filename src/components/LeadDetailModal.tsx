@@ -1,3 +1,4 @@
+import { MemberConsentInvitation } from './MemberConsentInvitation';
 import { useLanguage } from '../context/LanguageContext';
 import { adminInterfaceText } from '../i18n/adminInterfaceCopy';
 import React, { useEffect, useState } from 'react';
@@ -607,7 +608,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                 </p>
                 <p className="text-xs text-slate-400">
                   {lead.id.startsWith('member_')
-                    ? adminText("Stand des letzten Mitgliederabgleichs. Beim Versand werden Einwilligung und Abmeldesperre erneut geprüft.")
+                    ? adminText("Der Mitgliedsnachweis wird automatisch aktualisiert. Beim Versand werden Einwilligung und Abmeldesperre erneut geprüft.")
                     : adminText("Die bestätigte Einwilligung und eine mögliche Abmeldesperre werden direkt vom Server geprüft.")}
                 </p>
                 {!lead.id.startsWith('member_') && (
@@ -615,6 +616,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                     {adminText("Status aktualisieren")}
                   </button>
                 )}
+                {lead.id.startsWith('member_') && !canSendMarketingEmail && <MemberConsentInvitation />}
               </section>
 
               {/* Quick Actions Card */}
@@ -739,7 +741,7 @@ export const LeadDetailModal: React.FC<LeadDetailModalProps> = ({
                   {!canSendMarketingEmail && (
                     <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
                       {checkingConsent ? adminText("Einwilligung wird geprüft…") : consentError ? adminText("Der Einwilligungsstatus konnte nicht abgerufen werden. Bitte unter Marketing-Einwilligung den Status aktualisieren.") : lead.id.startsWith('member_')
-                        ? adminText("Dieses Mitglied hat keine bestätigte Marketing-E-Mail-Einwilligung. Es kann sie im eigenen Academy-Profil freiwillig anfordern und per E-Mail bestätigen. Danach Mitglieder erneut abgleichen.")
+                        ? adminText("Dieses Mitglied hat keine bestätigte Marketing-E-Mail-Einwilligung. Unter Marketing-Einwilligung kannst du einen Link und Einladungstext zum persönlichen Weitergeben kopieren.")
                         : <>{adminText("Für diesen Kontakt liegt keine bestätigte Marketing-Einwilligung vor. Der Kontakt kann sich freiwillig über")} <a className="underline" href="/api/email/subscribe" target="_blank" rel="noreferrer">{adminText("diesen Anmeldelink")}</a> {adminText("anmelden und die E-Mail bestätigen. Danach diese Ansicht erneut öffnen.")}</>}
                     </p>
                   )}
