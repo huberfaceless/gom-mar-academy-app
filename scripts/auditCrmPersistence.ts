@@ -62,3 +62,64 @@ assert.equal(refreshed.importedCount, 0, 'Ein weiterer Abgleich darf bestehende 
 assert.equal(refreshed.contacts.filter((contact) => Array.isArray(contact.tags) && contact.tags.includes('E-Mail-Einwilligung')).length, 0, 'Nach Widerruf dürfen keine Einwilligungsmarker bestehen bleiben.');
 
 console.log('CRM-Persistenz geprüft: benutzergetrennt, serverseitig validiert und zentral in Firestore gespeichert.');
+
+// Einwilligung nach dem Import ändern: CRM-Lesen muss den aktuellen Nachweis verwenden,
+// ohne Einwilligungen zu schreiben, Kontakte hinzuzufügen oder Notizen zu verlieren.
+const { refreshCrmMemberConsents, memberContactId } = await import('../server/crmContactsAdmin.js');
+const { GoogleAuth } = await import('google-auth-library');
+const originalFetch = globalThis.fetch;
+const originalGetClient = GoogleAuth.prototype.getClient;
+try {
+  GoogleAuth.prototype.getClient = (async () => ({ getAccessToken: async () => ({ token: 'audit-token' }) })) as unknown as typeof originalGetClient;
+  let granted = true;
+  let pending = false;
+  let consentEmail = members[0].email.toUpperCase();
+  let failRead = false;
+  let reads = 0;
+  globalThis.fetch = (async (input, init) => {
+    assert.equal(init?.method || 'GET', 'GET', 'Einwilligungsaktualisierung darf niemals schreiben.');
+    assert.match(String(input), /academyEmailConsents\/stefan$/, 'Nur gespeicherte Mitglieder prüfen.');
+    reads += 1;
+    if (failRead) return new Response('', { status: 503 });
+    return Response.json({ fields: {
+      granted: { booleanValue: granted }, email: { stringValue: consentEmail },
+      updatedAt: { timestampValue: '2026-11-22T11:00:00Z' },
+      ...(pending ? { confirmationTokenHash: { stringValue: 'audit' }, confirmationExpiresAt: { timestampValue: '2099-01-01T00:00:00Z' } } : {}),
+    } });
+  }) as typeof fetch;
+  const saved: Record<string, unknown> = { ...merged.contacts.find((contact) => contact.id === memberContactId(members[0].uid))!,
+    badge: 'Keine E-Mail-Einwilligung', tags: ['Academy-Mitglied'], timeline: [{ id: 'note', text: 'Eigene Notiz' }], phone: '+43123' };
+  const contacts = [manual, saved];
+  const approved = await refreshCrmMemberConsents('audit', contacts, members);
+  assert.deepEqual(approved.map(contact => contact.id), contacts.map(contact => contact.id), 'Reihenfolge und Kontaktbestand bleiben erhalten.');
+  assert.equal(approved[0], manual, 'Manuelle Kontakte bleiben unverändert.');
+  assert.equal(approved[1].badge, 'E-Mail-Einwilligung aktiv', 'Später bestätigte Einwilligung wird ohne erneuten Import angezeigt.');
+  assert.equal(approved[1].badgeType, 'active');
+  assert.deepEqual(approved[1].timeline, saved.timeline);
+  assert.equal(approved[1].phone, saved.phone);
+  assert.equal(reads, 1, 'Kein unnötiges Prüfen noch nicht importierter Mitglieder.');
+  for (const scenario of ['widerrufen', 'ausstehend', 'andere-adresse', 'deaktiviert', 'unbestaetigt', 'geloescht'] as const) {
+    granted = scenario !== 'widerrufen' && scenario !== 'ausstehend';
+    pending = scenario === 'ausstehend';
+    consentEmail = scenario === 'andere-adresse' ? 'other@example.com' : members[0].email;
+    const currentMembers = scenario === 'geloescht' ? members.slice(1) : members.map((member, index) => index ? member : {
+      ...member, disabled: scenario === 'deaktiviert', emailVerified: scenario !== 'unbestaetigt',
+    });
+    const result = await refreshCrmMemberConsents('audit', approved, currentMembers);
+    assert.equal(result[1].badge, 'Keine E-Mail-Einwilligung', scenario);
+    assert.equal(result[1].badgeType, 'neutral', 'Keine irreführende grüne Einwilligungsanzeige.');
+    assert.ok(!(result[1].tags as string[]).includes('E-Mail-Einwilligung'), scenario);
+  }
+  failRead = true;
+  await assert.rejects(() => refreshCrmMemberConsents('audit', approved, members), /nicht geladen/, 'Lesefehler dürfen keine vermeintlich aktuelle Einwilligung liefern.');
+  assert.equal(saved.badge, 'Keine E-Mail-Einwilligung', 'Gespeicherter Snapshot wurde nicht mutiert.');
+} finally {
+  globalThis.fetch = originalFetch;
+  GoogleAuth.prototype.getClient = originalGetClient;
+}
+assert.match(server, /refreshCrmMemberConsents\(FIREBASE_PROJECT_ID, storedContacts, members\)/);
+assert.match(view, /window\.addEventListener\('focus', refresh\)/);
+assert.match(view, /document\.addEventListener\('visibilitychange', refresh\)/);
+assert.match(view, /window\.clearInterval\(interval\)/);
+assert.match(view, /setSelectedLead\(\(previous\) => previous \? current\.find/);
+console.log('CRM-Einwilligung geprüft: aktuelle Bestätigung, Widerruf, ausstehende Bestätigung, Adresswechsel, deaktiviertes/gelöschtes Konto und Lesefehler; ausschließlich Lesezugriffe.');

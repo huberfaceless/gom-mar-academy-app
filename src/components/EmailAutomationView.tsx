@@ -170,6 +170,36 @@ export const EmailAutomationView: React.FC<EmailAutomationViewProps> = ({
     return () => { cancelled = true; };
   }, [isAdmin]);
 
+  useEffect(() => {
+    if (!isAdmin || mainTab !== 'crm' || isLoadingContacts || isSavingContact || isSyncingMembers) return;
+    let cancelled = false;
+    let refreshing = false;
+    const refresh = async () => {
+      if (document.visibilityState === 'hidden' || refreshing) return;
+      refreshing = true;
+      try {
+        const current = await loadCrmContacts();
+        if (!cancelled) {
+          setContacts(current);
+          setSelectedLead((previous) => previous ? current.find((contact) => contact.id === previous.id) || null : null);
+          setContactsError(null);
+        }
+      } catch (error: unknown) {
+        if (!cancelled) setContactsError(error instanceof Error ? error.message : emailText("CRM-Kontakte konnten nicht geladen werden."));
+      } finally { refreshing = false; }
+    };
+    void refresh();
+    const interval = window.setInterval(() => { void refresh(); }, 60_000);
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', refresh);
+    };
+  }, [isAdmin, mainTab, isLoadingContacts, isSavingContact, isSyncingMembers]);
+
   const handleSelectEmail = (email: EmailMessage) => {
     setSelectedEmail(email);
     setEditTitle(email.title);
