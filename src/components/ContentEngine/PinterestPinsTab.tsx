@@ -222,12 +222,13 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
 
   return (
     <div className="space-y-6">
+      {onGenerate && <button type="button" onClick={onGenerate} disabled={isGenerating} className="rounded-xl bg-rose-700 px-4 py-3 text-sm font-bold text-white disabled:opacity-50">{isGenerating ? hubText('Inhalte werden ergänzt…') : hubText('5 weitere Pinterest-Pins erstellen')}</button>}
       {/* Top Bar with Main Action Engine */}
       <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1">
-              <Pin className="w-3 h-3" />{hubText("5 Pinterest Pins (1080×1620 HD)")}</span>
+              <Pin className="w-3 h-3" />{hubText("Pinterest Pins (1080×1620 HD)")}</span>
             <span className="text-xs text-slate-500 font-medium">{hubText("5 psychologische Blickwinkel für maximale Klicks")}</span>
             {activePin.status === 'published' && (
               <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-teal-100 text-teal-800 flex items-center gap-1 border border-teal-200">

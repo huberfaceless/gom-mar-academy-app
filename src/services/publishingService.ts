@@ -633,6 +633,13 @@ export class PublishingService {
         changed = true;
       }
 
+      if (project.youtubeAdditionalVideos?.some(entry => entry.id === job.contentId)) {
+        project.youtubeAdditionalVideos = project.youtubeAdditionalVideos.map(entry => entry.id === job.contentId
+          ? { ...entry, video: { ...entry.video, status: contentStatus, ...(job.publishedUrl ? { videoUrl: job.publishedUrl } : {}) } }
+          : entry);
+        changed = true;
+      }
+
       // Check Pins
       if (project.pinterestPins) {
         project.pinterestPins = project.pinterestPins.map((pin) => {

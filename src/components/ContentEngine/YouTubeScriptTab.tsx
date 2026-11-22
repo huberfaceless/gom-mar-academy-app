@@ -337,7 +337,7 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
               }`}
             >
               <Smartphone className="w-3.5 h-3.5 text-red-600" />
-              3 Shorts ({shorts.length})
+              {hubText('Kurzvideos')} ({shorts.length})
             </button>
           </div>
 

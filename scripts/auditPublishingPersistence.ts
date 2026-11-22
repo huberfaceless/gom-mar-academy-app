@@ -125,7 +125,7 @@ assert.match(youtubeView, /videoId: result\.videoId/,
   'Die YouTube-Video-ID muss nach dem nicht gelisteten Upload dauerhaft dem Content-Projekt zugeordnet werden.');
 assert.match(calendar, /Zuerst Video hochladen/,
   'Nicht hochgeladene YouTube-Videos müssen in der Inhaltsplanung verständlich blockiert werden.');
-assert.match(calendar, /project\.youtubeVideo\.videoId \|\| getYouTubeVideoId/,
+assert.match(calendar, /video\.videoId \|\| getYouTubeVideoId\(video\.videoUrl\)/,
   'Bestehende nicht gelistete YouTube-Videos müssen anhand ihrer gespeicherten URL planbar bleiben.');
 assert.match(worker, /publishExistingYouTubeVideo/,
   'Der Server-Scheduler muss geplante YouTube-Langvideos veröffentlichen können.');

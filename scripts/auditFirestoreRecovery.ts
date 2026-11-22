@@ -196,6 +196,15 @@ try {
   assert.equal(projectWrites, 1);
   assert.equal(contentProject.youtubeVideo.status, 'published');
   assert.equal(contentProject.calendarItems[0].publishingJobId, 'new-job');
+  contentProject.youtubeAdditionalVideos = [{ id: 'yt_video_extra', video: { videoId: 'extra-upload', status: 'approved' } }];
+  contentProject.calendarItems.push({ id: 'yt_video_extra', status: 'approved' });
+  await api.syncServerPublishingOutcome({ ...youtubeOutcome, contentId: 'yt_video_extra', id: 'extra-job', payload: { metadata: { videoId: 'extra-upload' } }, publishedUrl: 'https://youtu.be/extra-upload' });
+  assert.equal(projectWrites, 2);
+  assert.equal(contentProject.youtubeAdditionalVideos[0].video.status, 'published');
+  assert.equal(contentProject.youtubeVideo.videoUrl, 'https://youtu.be/new-upload');
+  assert.equal(contentProject.calendarItems[1].publishingJobId, 'extra-job');
+  await api.syncServerPublishingOutcome({ ...youtubeOutcome, contentId: 'yt_video_extra', payload: { metadata: { videoId: 'old-extra-upload' } } });
+  assert.equal(projectWrites, 2, 'Alte Ergebnisse dürfen zusätzliche Video-Varianten nicht überschreiben.');
   globalThis.fetch = savedFetch;
   // Verify the actual HTTP endpoint body, including its catch path, without booting Express.
   const source = readFileSync('server.ts', 'utf8');

@@ -234,6 +234,8 @@ export interface CentralContentProject {
   contentBrief?: ContentBrief;
   blogArticle?: BlogArticle;
   pinterestPins: PinterestPin[];
+  instagramPosts?: PinterestPin[];
+  youtubeAdditionalVideos?: { id: string; video: YouTubeVideoData }[];
   youtubeVideo?: YouTubeVideoData;
   youtubeShorts?: YouTubeShort[];
   calendarItems: CalendarItem[];

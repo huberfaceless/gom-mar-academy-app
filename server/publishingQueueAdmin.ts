@@ -323,6 +323,12 @@ export const syncServerPublishingOutcome = async (job: PublishingJob): Promise<v
     project.youtubeVideo.status = contentStatus;
     if (job.publishedUrl) project.youtubeVideo.videoUrl = job.publishedUrl;
   }
+  if (Array.isArray(project.youtubeAdditionalVideos)) {
+    project.youtubeAdditionalVideos = project.youtubeAdditionalVideos.map((entry: any) => entry.id === job.contentId
+      ? { ...entry, video: { ...entry.video, status: contentStatus, ...(job.publishedUrl ? { videoUrl: job.publishedUrl } : {}) } }
+      : entry);
+  }
+
   if (Array.isArray(project.pinterestPins)) {
     project.pinterestPins = project.pinterestPins.map((pin: Record<string, any>) => pin.id === job.contentId
       ? { ...pin, status: contentStatus, publishedPinId: job.externalId || pin.publishedPinId, publishedUrl: job.publishedUrl || pin.publishedUrl }

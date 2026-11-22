@@ -20,6 +20,7 @@ import { BlogArticle } from '../../types/contentEngine';
 import { BlogArticleContent } from './BlogArticleContent';
 
 interface BlogEditorTabProps {
+  hasPinterestPins?: boolean;
   seoGeo?: { imageAsFeatured?: boolean; contentId: string; mainKeyword?: string; onPrepare: () => Promise<void> };
   contentLanguage?: string;
   wordpress?: { available: boolean; onOpen: () => void; onAddInternalLinks: () => Promise<void>; contentId: string };
@@ -37,6 +38,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   onChange,
   onGeneratePinterest,
   isGeneratingPinterest,
+  hasPinterestPins = false,
 }) => {
   const { language, hubText } = useContentHubCopy();
   const [viewMode, setViewMode] = useState<'preview' | 'edit'>('preview');
@@ -144,7 +146,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
             className="max-w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 disabled:opacity-50"
           >
             <Sparkles className="w-4 h-4 shrink-0" />
-            <span>{isGeneratingPinterest ? hubText("Generiere 5 Pinterest Pins...") : hubText("Weiter: 5 Pinterest Pins erzeugen")}</span>
+            <span>{isGeneratingPinterest ? hubText("Generiere 5 Pinterest Pins...") : hasPinterestPins ? hubText('Weiter: Pinterest-Pins öffnen') : hubText("Weiter: 5 Pinterest Pins erzeugen")}</span>
           </button>
         </div>
       </div>

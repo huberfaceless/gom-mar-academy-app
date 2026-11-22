@@ -3,6 +3,18 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Weiter: Pinterest-Pins öffnen": "Next: open Pinterest pins",
+  "3. Pinterest Pins": "3. Pinterest pins",
+  "4. Instagram Beiträge": "4. Instagram posts",
+  "Pinterest Pins (1080×1620 HD)": "Pinterest pins (1080×1620 HD)",
+  "Instagram-Beiträge (1080×1350)": "Instagram posts (1080×1350)",
+  "Instagram-Beiträge": "Instagram posts",
+  "Inhalte werden ergänzt…": "Adding content…",
+  "5 weitere Pinterest-Pins erstellen": "Create 5 more Pinterest pins",
+  "5 weitere Instagram-Beiträge erstellen": "Create 5 more Instagram posts",
+  "Weiteres YouTube-Skript + 3 Shorts erstellen": "Create another YouTube script + 3 Shorts",
+  "YouTube-Skript auswählen": "Select YouTube script",
+  "Kurzvideos": "Short videos",
   "Blogartikel veröffentlichen": "Publish blog article",
   "Veröffentlichungsseite prüfen": "Check publishing website",
   "Im Artikel gespeicherte Webseite:": "Website saved with this article:",

@@ -105,8 +105,9 @@ assert.equal(routes.size, 5);
 for (const [language, expected] of [['de','German'], ['en','English'], ['pl','Polish'], [undefined,'German']] as const) {
   for (const endpoint of ['brief','blog','pins','youtube','shorts']) {
     let result: any; let status = 200;
-    await routes.get('/api/content-engine/' + endpoint)!({ body: {topic:'Ein deutsches Thema',brief:{h1:'Ein deutscher Titel',outline:[]},projectSettings:{language,coreTopics:[]},affiliateLink:'https://example.com/offer'} }, {status(code:number){status=code;return this;},json(value:any){result=value;}});
+    await routes.get('/api/content-engine/' + endpoint)!({ body: {previousTitles:['Bereits verwendeter Titel'],topic:'Ein deutsches Thema',brief:{h1:'Ein deutscher Titel',outline:[]},projectSettings:{language,coreTopics:[]},affiliateLink:'https://example.com/offer'} }, {status(code:number){status=code;return this;},json(value:any){result=value;}});
     assert.equal(status, 200, endpoint);
+    if (['pins', 'youtube', 'shorts'].includes(endpoint)) assert.ok(requests.at(-1).contents.includes('Bereits verwendeter Titel'), 'Vorhandene Titel müssen als Ergänzungskontext beim Modell ankommen.');
     assert.ok(requests.at(-1).config.systemInstruction.includes('Output language: ' + expected), endpoint + ' ignored content language');
     if (endpoint === 'blog') assert.ok(result.article.contentMarkdown.includes('[' + recommendationLabel(language) + ']'));
   }
