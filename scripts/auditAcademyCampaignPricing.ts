@@ -65,5 +65,5 @@ try {
     assert.ok(JSON.parse(request.contents).source.text.includes('immer nur 29,90'),'Source snapshot remains intact; current product facts override its old price claim.');
   }
 }finally{Date.now=originalNow;}
-assert.match(readFileSync('src/components/ContentEngine/ContentEngineView.tsx','utf8'),/<AcademyCampaignPricingPanel/);
+assert.doesNotMatch(readFileSync('src/components/ContentEngine/ContentEngineView.tsx','utf8'),/AcademyCampaignPricingPanel|ProPriceNotice/, 'Die KI-Inhaltszentrale zeigt keinen Buchungs-Preishinweis.');
 console.log('Academy-Kampagne: echte Zieladresse, Projektabgrenzung, zentrale Preisquelle, Jahreswechsel, alle Inhaltsrouten und DE/EN/PL-E-Mails geprüft.');
