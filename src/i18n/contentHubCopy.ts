@@ -3,6 +3,13 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "WordPress & Veröffentlichung": "WordPress & publishing",
+  "WordPress verbinden / veröffentlichen": "Connect WordPress / publish",
+  "Webseite & Blog-Veröffentlichung": "Website & blog publishing",
+  "WordPress verbinden, SEO-Verbindung prüfen und den Blogartikel übertragen.": "Connect WordPress, check the SEO connection and transfer the blog article.",
+  "WordPress-Verbindung": "WordPress connection",
+  "Verbinde die Projekt-Webseite vor der Artikelerstellung. Die Verbindung gilt auch für weitere Artikel dieses Projekts.": "Connect the project website before creating articles. The connection also applies to further articles in this project.",
+  "Erstelle zuerst ein Inhaltsbriefing oder öffne einen gespeicherten Artikel. Danach kannst du WordPress für dieses Projekt verbinden.": "Create a content brief or open a saved article first. Then you can connect WordPress for this project.",
   "6. E-Mails": "6. Emails",
   "7. Kalender & Freigabe": "7. Calendar & approval",
   "E-Mail-Generator": "Email generator",

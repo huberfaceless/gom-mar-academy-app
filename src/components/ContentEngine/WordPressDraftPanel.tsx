@@ -11,7 +11,7 @@ const api = async (id: string, action: string, init: RequestInit = {}) => {
   if (!response.ok) throw new Error(data.error || 'WordPress-Anfrage fehlgeschlagen.');
   return data;
 };
-export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlug?: string; onPublished?: (url: string) => Promise<void>; onSave: (categorySlug: string) => Promise<boolean> }> = ({ contentId, savedCategorySlug, onSave, onPublished }) => {
+export const WordPressDraftPanel: React.FC<{ connectionOnly?: boolean; contentId: string; savedCategorySlug?: string; onPublished?: (url: string) => Promise<void>; onSave: (categorySlug: string) => Promise<boolean> }> = ({ contentId, savedCategorySlug, onSave, onPublished, connectionOnly = false }) => {
   const { hubText } = useContentHubCopy();
   const [status, setStatus] = useState<Status | null>(null);
   const [categories, setCategories] = useState<WordPressCategory[]>([]);
@@ -111,8 +111,9 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
     finally { setBusy(false); }
   };
   return <section aria-label={hubText('WordPress-Entwurf')} className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5">
-    <h3 className="font-bold text-slate-900">{publishNow ? hubText('WordPress · gomo-marketing.at · Sofort veröffentlichen') : `${hubText('WordPress-Entwurf')} · Vital50`}</h3>
-    <p className="text-sm text-slate-600">{publishNow ? hubText('Neue Artikel werden nach erfolgreicher Cloud-Speicherung automatisch veröffentlicht. Bestehende Artikel kannst du hier sofort veröffentlichen. SEO, GEO-Kurzantwort und Kategorie werden mit übertragen.') : hubText('Übertrage diesen Artikel direkt nach Vital50. Die Veröffentlichung erfolgt anschließend in WordPress.')}</p>
+    <h3 className="font-bold text-slate-900">{connectionOnly ? hubText('WordPress-Verbindung') : publishNow ? hubText('WordPress · gomo-marketing.at · Sofort veröffentlichen') : `${hubText('WordPress-Entwurf')} · Vital50`}</h3>
+    <p className="text-sm text-slate-600">{connectionOnly ? hubText('Verbinde die Projekt-Webseite vor der Artikelerstellung. Die Verbindung gilt auch für weitere Artikel dieses Projekts.') : publishNow ? hubText('Neue Artikel werden nach erfolgreicher Cloud-Speicherung automatisch veröffentlicht. Bestehende Artikel kannst du hier sofort veröffentlichen. SEO, GEO-Kurzantwort und Kategorie werden mit übertragen.') : hubText('Übertrage diesen Artikel direkt nach Vital50. Die Veröffentlichung erfolgt anschließend in WordPress.')}</p>
+    {status?.siteUrl && <p className="text-sm font-semibold text-slate-700">{status.siteUrl}</p>}
     {loading && <p role="status">{hubText('Verbindung wird geprüft…')}</p>}
     {status && !status.configured && <p className="text-sm text-amber-800">{hubText('Die WordPress-Verbindung muss zuerst auf dem Academy-Server eingerichtet werden.')}</p>}
     {status?.configured && !status.connected && <form onSubmit={connect} className="flex max-w-xl flex-col gap-3">
@@ -141,7 +142,7 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
       {status.draft?.seoStatus === 'unavailable' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten wurden noch nicht an das SEO-Plugin übertragen. Bitte die SEO-Verbindung einrichten und erneut übertragen.')}</p>}
       {status.draft?.seoStatus === 'unverified' && <p role="alert" className="text-amber-800">{hubText('Der Entwurf wurde gespeichert. Die SEO-Daten konnten nicht eindeutig bestätigt werden. Bitte im WordPress-Entwurf prüfen.')}</p>}
     </div>}
-    {status?.connected && <div className="space-y-2">
+    {status?.connected && !connectionOnly && <div className="space-y-2">
       <label className="block text-sm font-semibold">{hubText('WordPress-Kategorie')}
         <select value={validCategory ? categorySlug : ''} onChange={e => setCategorySlug(e.target.value)} disabled={busy || categoryLoading} className="mt-1 w-full rounded-xl border p-2">
           <option value="">{hubText('Bitte eine Kategorie auswählen.')}</option>
@@ -156,9 +157,9 @@ export const WordPressDraftPanel: React.FC<{ contentId: string; savedCategorySlu
     </div>}
     {status?.connected && <div className="flex flex-wrap items-center gap-3">
       <span className="text-sm font-semibold text-emerald-800">{hubText('WordPress verbunden')}</span>
-      <button type="button" disabled={busy || published || categoryLoading || !validCategory || status.draft?.state === 'pending' || status.draft?.state === 'publishing'} onClick={() => void transfer()} className="rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">
+      {!connectionOnly && <button type="button" disabled={busy || published || categoryLoading || !validCategory || status.draft?.state === 'pending' || status.draft?.state === 'publishing'} onClick={() => void transfer()} className="rounded-xl bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">
         {busy ? hubText('Bitte warten…') : published ? hubText('Veröffentlicht') : publishNow ? hubText('Jetzt auf gomo-marketing.at veröffentlichen') : status.draft?.postId ? hubText('WordPress-Entwurf aktualisieren') : hubText('Als WordPress-Entwurf übertragen')}
-      </button>
+      </button>}
       <button type="button" disabled={busy} onClick={() => void disconnect()} className="text-sm underline disabled:opacity-50">{hubText('Verbindung trennen')}</button>
     </div>}
     {status?.draft?.publishedUrl && <a href={status.draft.publishedUrl} target="_blank" rel="noopener noreferrer" className="block font-semibold text-emerald-800 underline">{hubText("Veröffentlichten Artikel öffnen")}</a>}

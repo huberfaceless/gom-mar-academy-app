@@ -81,6 +81,7 @@ const toScheduledIso = (localDateTime?: string): string => {
 };
 
 interface ContentCalendarTabProps {
+  onOpenWordPress?: () => void;
   project: CentralContentProject;
   onUpdateProject: (updated: CentralContentProject) => void | boolean | Promise<void | boolean>;
 }
@@ -131,6 +132,7 @@ const getTriggerLabel = (trigger: string): string => {
 
 export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
   project,
+  onOpenWordPress,
   onUpdateProject,
 }) => {
   const { language, hubText } = useContentHubCopy();
@@ -778,6 +780,10 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
 
   return (
     <div className="space-y-8">
+      {onOpenWordPress && <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-5">
+        <div><h3 className="font-bold text-slate-900">{hubText('Webseite & Blog-Veröffentlichung')}</h3><p className="text-sm text-slate-600">{hubText('WordPress verbinden, SEO-Verbindung prüfen und den Blogartikel übertragen.')}</p></div>
+        <button type="button" onClick={onOpenWordPress} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">{hubText('WordPress verbinden / veröffentlichen')}</button>
+      </section>}
       {/* Top Banner */}
       <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
