@@ -1,4 +1,3 @@
-import { AcademyCampaignPricingPanel } from './AcademyCampaignPricingPanel';
 import type { Campaign } from '../../types';
 import { EmailGeneratorTab } from './EmailGeneratorTab';
 import { automaticWordPressPublication, wordpressSiteOrigin } from '../../utils/wordpressSites';
@@ -682,8 +681,6 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
         projects={contentProjects.filter(project => project.projectSettings.id === campaignSettings.id)}
         wordpressAvailable={isAdmin && !!wordpressSiteOrigin(campaignSettings.websiteUrl)}
         onClose={() => setCampaignSettings(null)} onStart={startArticleCampaign} />}
-
-      <AcademyCampaignPricingPanel settings={activeContentProject?.projectSettings || activeProjectSettings} targetUrl={activeContentProject?.targetUrl} />
 
       <BlogArticleLibrary
         projects={scopedProjects}
