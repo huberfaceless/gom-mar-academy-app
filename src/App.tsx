@@ -1,3 +1,4 @@
+import { memberConsentDestination } from './utils/memberConsentInvitation';
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { UserProfile, Campaign, StudentRecord, Stage, Lesson, AcademyTier } from './types';
 import { 
@@ -167,6 +168,19 @@ export default function App() {
     isOpen: false,
     mode: 'register',
   });
+
+  const [consentLinkHandled, setConsentLinkHandled] = useState(false);
+  useEffect(() => {
+    if (authLoading || consentLinkHandled || memberConsentDestination(window.location.search) !== 'profile') return;
+    if (!firebaseUser) {
+      setAuthModalState({ isOpen: true, mode: 'login' });
+      return;
+    }
+    if (!firebaseUser.emailVerified || resolvedMembershipUid !== firebaseUser.uid) return;
+    setAuthModalState((previous) => ({ ...previous, isOpen: false }));
+    setActiveView('profile');
+    setConsentLinkHandled(true);
+  }, [authLoading, firebaseUser, resolvedMembershipUid, consentLinkHandled]);
 
   // Legal Modal State (Impressum, Datenschutz, Cookies)
   const [isLegalModalOpen, setIsLegalModalOpen] = useState<boolean>(false);
@@ -546,7 +560,7 @@ export default function App() {
         <main className="flex-1 max-w-4xl mx-auto w-full p-4 lg:p-8 flex items-center justify-center">
           <EmailVerificationView 
             onVerificationSuccess={() => {
-              setActiveView('dashboard');
+              setActiveView(memberConsentDestination(window.location.search));
             }} 
           />
         </main>

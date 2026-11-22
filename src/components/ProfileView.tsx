@@ -1,3 +1,4 @@
+import { memberConsentDestination } from '../utils/memberConsentInvitation';
 import { ProPriceNotice } from './ProPriceNotice';
 import { proPrice } from '../config/proPricing';
 import { useProContract } from '../hooks/useProContract';
@@ -91,6 +92,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   const [proCheckoutError, setProCheckoutError] = useState('');
   const [billingPortalLoading, setBillingPortalLoading] = useState(false);
   const [billingPortalError, setBillingPortalError] = useState('');
+
+  useEffect(() => {
+    if (memberConsentDestination(window.location.search) === 'profile') {
+      document.getElementById('email-consent')?.scrollIntoView({ block: 'center' });
+      document.getElementById('email-consent-title')?.focus({ preventScroll: true });
+    }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -288,10 +296,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         </div>
       )}
 
-      <section className="rounded-3xl border border-indigo-200 bg-white p-6 shadow-sm" aria-labelledby="email-consent-title">
+      <section id="email-consent" className="rounded-3xl border border-indigo-200 bg-white p-6 shadow-sm" aria-labelledby="email-consent-title">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-2">
-            <h3 id="email-consent-title" className="flex items-center gap-2 text-base font-bold text-slate-950">
+            <h3 tabIndex={-1} id="email-consent-title" className="flex items-center gap-2 text-base font-bold text-slate-950">
               <Mail className="h-5 w-5 text-indigo-600" />
               {copy.emailConsentTitle}
             </h3>
