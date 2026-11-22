@@ -122,7 +122,8 @@ export class AIContentService {
     topic: string,
     brief: ContentBrief,
     projectSettings: ProjectSettings,
-    selectedTargetUrl?: string | null
+    selectedTargetUrl?: string | null,
+    options?: { previousTitles?: string[]; channel?: 'pinterest' | 'instagram' }
   ): Promise<PinterestPin[]> {
     const targetUrl = resolvePinterestTargetUrl(selectedTargetUrl, projectSettings.defaultTargetUrl);
     const response = await authenticatedFetch('/api/content-engine/pins', {
@@ -133,6 +134,8 @@ export class AIContentService {
         brief,
         projectSettings,
         targetUrl,
+        previousTitles: options?.previousTitles,
+        channel: options?.channel,
       }),
     });
 
@@ -165,7 +168,8 @@ export class AIContentService {
     topic: string,
     brief: ContentBrief,
     projectSettings: ProjectSettings,
-    selectedTargetUrl?: string | null
+    selectedTargetUrl?: string | null,
+    previousTitles?: string[]
   ): Promise<YouTubeVideoData> {
     const response = await authenticatedFetch('/api/content-engine/youtube', {
       method: 'POST',
@@ -174,6 +178,7 @@ export class AIContentService {
         topic,
         brief,
         projectSettings,
+        previousTitles,
         targetUrl: resolvePinterestTargetUrl(selectedTargetUrl, projectSettings.defaultTargetUrl),
       }),
     });
@@ -216,7 +221,8 @@ export class AIContentService {
     topic: string,
     brief: ContentBrief,
     projectSettings: ProjectSettings,
-    selectedTargetUrl?: string | null
+    selectedTargetUrl?: string | null,
+    previousTitles?: string[]
   ): Promise<YouTubeShort[]> {
     const response = await authenticatedFetch('/api/content-engine/shorts', {
       method: 'POST',
@@ -225,6 +231,7 @@ export class AIContentService {
         topic,
         brief,
         projectSettings,
+        previousTitles,
         targetUrl: resolvePinterestTargetUrl(selectedTargetUrl, projectSettings.defaultTargetUrl),
       }),
     });

@@ -19,10 +19,11 @@ const uploadedVideoId = (video?: { videoId?: string; videoUrl?: string }): strin
 };
 
 /** Historical job outcomes must not overwrite a replacement video's status or calendar link. */
-export const matchesCurrentYouTubeUpload = (job: PublishingJob, project: Pick<CentralContentProject, 'youtubeVideo' | 'youtubeShorts'>): boolean => {
+export const matchesCurrentYouTubeUpload = (job: PublishingJob, project: Pick<CentralContentProject, 'youtubeVideo' | 'youtubeShorts' | 'youtubeAdditionalVideos'>): boolean => {
   if (job.platform !== 'YOUTUBE') return true;
   const video = job.contentId === 'yt_video_main' ? project.youtubeVideo
-    : project.youtubeShorts?.find((short, index) => (short.id || `short_${index}`) === job.contentId);
+    : project.youtubeAdditionalVideos?.find(item => item.id === job.contentId)?.video
+      || project.youtubeShorts?.find((short, index) => (short.id || `short_${index}`) === job.contentId);
   const videoId = uploadedVideoId(video);
   return !!videoId && job.payload?.metadata?.videoId === videoId;
 };

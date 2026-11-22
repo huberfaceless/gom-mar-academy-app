@@ -1,3 +1,4 @@
+import * as additionalSocialContent from '../src/utils/additionalSocialContent';
 import { automaticWordPressPublication, wordpressSiteOrigin } from '../src/utils/wordpressSites';
 import { resolveEditorialStrategy } from '../src/utils/editorialStrategy';
 import { campaignSourcePrompt } from '../src/utils/articleCampaign';
@@ -50,9 +51,10 @@ const AIContentService = {
   },
   async generateContentBrief(topic: string) { requests.push({ kind: 'brief', topic }); return { brief: { h1: topic } }; },
   async generateBlogArticle(topic: string) { requests.push({ kind: 'blog', topic }); return { title: topic }; },
-  async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return []; },
+  async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return [{ id: 'model-pin', title: topic, angle: 'solution', status: 'ai_generated' }]; },
 };
 const context = vm.createContext({ campaignSourcePrompt, contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
+  if (name.endsWith('additionalSocialContent')) return additionalSocialContent;
   if (name.endsWith('wordpressSites')) return { automaticWordPressPublication, wordpressSiteOrigin };
   if (name === 'react') return hookReact;
   if (name.endsWith('pinterestOAuthReturn')) return { readPinterestOAuthReturn: () => null };

@@ -9,6 +9,8 @@ import { renderPinToCanvas } from '../../utils/pinterestCanvasRenderer';
 import { InstagramPublishModal } from './InstagramPublishModal';
 
 interface InstagramPostsTabProps {
+  onGenerate?: () => void;
+  isGenerating?: boolean;
   pins: PinterestPin[];
   onChange?: (pins: PinterestPin[]) => void | boolean | Promise<void | boolean>;
   topic: string;
@@ -19,6 +21,8 @@ interface InstagramPostsTabProps {
 
 export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
   pins,
+  onGenerate,
+  isGenerating = false,
   onChange,
   topic,
   projectSettings,
@@ -46,17 +50,18 @@ export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
       <div className="p-12 text-center bg-white rounded-2xl border border-slate-200 shadow-xs">
         <Instagram className="w-12 h-12 text-slate-300 mx-auto mb-3" />
         <h3 className="text-base font-bold text-slate-700">{hubText("Noch keine Instagram-Beiträge vorhanden")}</h3>
-        <p className="text-xs text-slate-500 mt-1">{hubText("Erstelle zuerst die fünf Grafiken im Pinterest-Bereich.")}</p>
+{onGenerate && <button type="button" onClick={onGenerate} disabled={isGenerating} className="rounded-xl bg-fuchsia-700 px-4 py-3 text-sm font-bold text-white disabled:opacity-50">{isGenerating ? hubText('Inhalte werden ergänzt…') : hubText('5 weitere Instagram-Beiträge erstellen')}</button>}
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
+      {onGenerate && <button type="button" onClick={onGenerate} disabled={isGenerating} className="rounded-xl bg-fuchsia-700 px-4 py-3 text-sm font-bold text-white disabled:opacity-50">{isGenerating ? hubText('Inhalte werden ergänzt…') : hubText('5 weitere Instagram-Beiträge erstellen')}</button>}
       <div className="bg-white p-5 rounded-3xl border border-fuchsia-200 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
           <span className="px-2.5 py-1 rounded-full text-xs font-black bg-fuchsia-100 text-fuchsia-800 border border-fuchsia-200 inline-flex items-center gap-1.5">
-            <Instagram className="w-3.5 h-3.5" />{hubText("5 Instagram-Beiträge (1080×1350)")}</span>
+            <Instagram className="w-3.5 h-3.5" />{hubText("Instagram-Beiträge (1080×1350)")}</span>
           <h2 className="text-xl font-extrabold text-slate-900 mt-2">{hubText("Instagram Beitrags-Set: „")}{topic}“</h2>
           <p className="text-xs text-slate-500 mt-1">{hubText("Feed-Format 4:5 mit vollständiger Grafik, Caption und Hashtags")}</p>
         </div>

@@ -1,3 +1,4 @@
+import { instagramPostsFor, youtubeVideosFor } from '../../utils/additionalSocialContent';
 import { buildSocialCaption } from '../../utils/socialCaption';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
 import { socialEditorialPin, updateSocialEditorialContent, type SocialChannel } from '../../utils/socialEditorialReview';
@@ -360,7 +361,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     });
   });
 
-  (project.pinterestPins || []).forEach((pin, idx) => {
+  instagramPostsFor(project).forEach((pin, idx) => {
     const sourceId = pin.id || `pin_${idx}`;
     const editorialPin = socialEditorialPin(pin, 'instagram');
     const instagramId = `instagram_${sourceId}`;
@@ -387,29 +388,29 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     });
   });
 
-  if (project.youtubeVideo) {
+  youtubeVideosFor(project).forEach(({ id, video }) => {
     items.push({
-      id: 'yt_video_main',
+      id,
       type: 'youtube_video',
       platform: 'YOUTUBE',
       contentType: 'VIDEO',
-      title: `YouTube Video: ${project.youtubeVideo.title}`,
+      title: `YouTube Video: ${video.title}`,
       targetUrl: project.campaignSource?.url || project.blogArticle?.publishedUrl || project.projectSettings.websiteUrl,
-      status: project.youtubeVideo.status || 'ai_generated',
-      scheduledDate: formatLocalDateTime(project.youtubeVideo.scheduledDate, 2),
+      status: video.status || 'ai_generated',
+      scheduledDate: formatLocalDateTime(video.scheduledDate, 2),
       platformLabel: 'YouTube-Langvideo',
       icon: Youtube,
       color: 'text-red-600 bg-red-50 border-red-200',
       payloadData: {
-        title: project.youtubeVideo.title,
-        description: project.youtubeVideo.description,
-        tags: project.youtubeVideo.keywords,
+        title: video.title,
+        description: video.description,
+        tags: video.keywords,
         metadata: {
-          videoId: project.youtubeVideo.videoId || getYouTubeVideoId(project.youtubeVideo.videoUrl),
+          videoId: video.videoId || getYouTubeVideoId(video.videoUrl),
         },
       },
     });
-  }
+  });
 
   (project.youtubeShorts || []).forEach((short, idx) => {
     items.push({
@@ -467,7 +468,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
     }
     if (item.platform !== 'INSTAGRAM') return item.payloadData;
     const sourceIndex = item.payloadData?.metadata?.sourcePinIndex;
-    const sourcePin = typeof sourceIndex === 'number' ? project.pinterestPins[sourceIndex] : undefined;
+    const sourcePin = typeof sourceIndex === 'number' ? instagramPostsFor(project)[sourceIndex] : undefined;
     if (!sourcePin) throw new Error(hubText("Die zugehörige Instagram-Grafik wurde nicht gefunden."));
     return {
       ...item.payloadData,
@@ -522,6 +523,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         youtubeVideo: item.id === 'yt_video_main' && project.youtubeVideo
           ? { ...project.youtubeVideo, status: 'scheduled' }
           : project.youtubeVideo,
+        youtubeAdditionalVideos: project.youtubeAdditionalVideos?.map(entry => entry.id === item.id ? { ...entry, video: { ...entry.video, status: 'scheduled' } } : entry),
         youtubeShorts: project.youtubeShorts?.map((short, idx) => (
           (short.id || `short_${idx}`) === item.id ? { ...short, status: 'scheduled' } : short
         )),
@@ -552,6 +554,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
       updated.pinterestPins = updated.pinterestPins.map((p) => ({ ...p, status: 'approved' }));
     }
     if (updated.youtubeVideo) updated.youtubeVideo.status = 'approved';
+    updated.youtubeAdditionalVideos = updated.youtubeAdditionalVideos?.map(entry => ({ ...entry, video: { ...entry.video, status: 'approved' } }));
     if (updated.youtubeShorts) {
       updated.youtubeShorts = updated.youtubeShorts.map((s) => ({ ...s, status: 'approved' }));
     }
@@ -655,6 +658,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           status: selectedItem?.status || 'ai_generated',
         });
       }
+    } else if (updated.youtubeAdditionalVideos?.some(entry => entry.id === itemId)) {
+      updated.youtubeAdditionalVideos = updated.youtubeAdditionalVideos.map(entry => entry.id === itemId ? { ...entry, video: { ...entry.video, scheduledDate: newDate } } : entry);
     } else if (itemId === 'yt_video_main' && updated.youtubeVideo) {
       updated.youtubeVideo.scheduledDate = newDate;
     } else if (itemId.startsWith('pin_') || updated.pinterestPins.some((p) => p.id === itemId)) {
@@ -703,6 +708,8 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
           status: newStatus,
         });
       }
+    } else if (updated.youtubeAdditionalVideos?.some(entry => entry.id === itemId)) {
+      updated.youtubeAdditionalVideos = updated.youtubeAdditionalVideos.map(entry => entry.id === itemId ? { ...entry, video: { ...entry.video, status: newStatus } } : entry);
     } else if (itemId === 'yt_video_main' && updated.youtubeVideo) {
       updated.youtubeVideo.status = newStatus;
     } else if (itemId.startsWith('pin_') || updated.pinterestPins.some((p) => p.id === itemId)) {
@@ -859,7 +866,7 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
             platformFilter === 'instagram' ? 'bg-fuchsia-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
           }`}
         >
-          Instagram ({project.pinterestPins?.length || 0})
+          Instagram ({instagramPostsFor(project).length})
         </button>
         <button
           type="button"
@@ -1030,11 +1037,13 @@ export const ContentCalendarTab: React.FC<ContentCalendarTabProps> = ({
         })}
       </div>
 
-      {editorialReview && project.pinterestPins.some(pin => pin.id === editorialReview.id) && <SocialEditorialReviewModal
+      {editorialReview && (editorialReview.channel === 'instagram' ? instagramPostsFor(project) : project.pinterestPins).some(pin => pin.id === editorialReview.id) && <SocialEditorialReviewModal
         key={`${editorialReview.channel}_${editorialReview.id}`}
-        pin={project.pinterestPins.find(pin => pin.id === editorialReview.id)!} channel={editorialReview.channel} projectSettings={project.projectSettings}
+        pin={(editorialReview.channel === 'instagram' ? instagramPostsFor(project) : project.pinterestPins).find(pin => pin.id === editorialReview.id)!} channel={editorialReview.channel} projectSettings={project.projectSettings}
         onClose={() => setEditorialReview(null)}
-        onSave={content => onUpdateProject({ ...project, pinterestPins: updateSocialEditorialContent(project.pinterestPins, editorialReview.id, editorialReview.channel, content) })} />}
+        onSave={content => onUpdateProject(editorialReview.channel === 'instagram'
+          ? { ...project, instagramPosts: updateSocialEditorialContent(instagramPostsFor(project), editorialReview.id, 'instagram', content) }
+          : { ...project, pinterestPins: updateSocialEditorialContent(project.pinterestPins, editorialReview.id, 'pinterest', content) })} />}
 
       {/* 🚀 CENTRAL PUBLISHING QUEUE & SCHEDULER MONITOR */}
       <div className="bg-slate-900 text-white p-5 sm:p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">

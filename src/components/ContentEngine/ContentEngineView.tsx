@@ -1,3 +1,6 @@
+import { YouTubeScriptTab } from './YouTubeScriptTab';
+import { instagramPostsFor, youtubeVideosFor, appendSocialPins, appendYouTubeContent, assertGenerationSource, briefForSocial } from '../../utils/additionalSocialContent';
+import { YouTubeCollectionTab } from './YouTubeCollectionTab';
 import { WordPressPublishingDialog } from './WordPressPublishingDialog';
 import type { Campaign } from '../../types';
 import { EmailGeneratorTab } from './EmailGeneratorTab';
@@ -62,7 +65,6 @@ import { createBlogArticleProject } from '../../utils/blogArticleProjects';
 import { AffiliateLinkModal } from './AffiliateLinkModal';
 import { PinterestPinsTab } from './PinterestPinsTab';
 import { InstagramPostsTab } from './InstagramPostsTab';
-import { YouTubeScriptTab } from './YouTubeScriptTab';
 import { ContentCalendarTab } from './ContentCalendarTab';
 import { canUseContentProject } from '../../utils/contentProjectAccess';
 import { selectContentProjectScope } from '../../utils/contentProjectSelection';
@@ -124,7 +126,7 @@ const getSuggestedTopics = (project: ProjectSettings, hubText: (source: string, 
 
 
 type ContentGenerationRequest =
-  | { kind: 'blog' | 'pinterest' | 'youtube'; project: CentralContentProject }
+  | { kind: 'blog' | 'pinterest' | 'instagram' | 'youtube'; project: CentralContentProject }
   | { kind: 'all'; topic: string; settings: ProjectSettings; angle: string }
   | { kind: 'new-blog'; settings: ProjectSettings };
 
@@ -391,11 +393,12 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
   };
 
   // 🚀 Generate 5 Pinterest Pins
-  const handleGeneratePinterest = () => {
-    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'pinterest', project: { ...activeContentProject, projectSettings: activeContentProject.campaignSource ? { ...activeProjectSettings, defaultTargetUrl: activeContentProject.campaignSource.url } : activeProjectSettings } });
+  const handleGeneratePinterest = (channel: 'pinterest' | 'instagram' = 'pinterest') => {
+    if (isBusy) return;
+    if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: channel, project: { ...activeContentProject, projectSettings: activeContentProject.campaignSource ? { ...activeProjectSettings, defaultTargetUrl: activeContentProject.campaignSource.url } : activeProjectSettings } });
   };
 
-  const generatePinterestWithLink = async (project: CentralContentProject, targetUrl: string | null) => {
+  const generatePinterestWithLink = async (project: CentralContentProject, targetUrl: string | null, channel: 'pinterest' | 'instagram' = 'pinterest') => {
     if (!project.contentBrief) return;
     setErrorMsg(null);
     setIsGeneratingPinterest(true);
@@ -403,17 +406,15 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
     try {
       const pins = await AIContentService.generatePinterestPins(
         project.topic,
-        project.contentBrief,
+        briefForSocial(project),
         project.projectSettings,
-        targetUrl
+        targetUrl,
+        { channel, previousTitles: (channel === 'instagram' ? instagramPostsFor(project) : project.pinterestPins).map(pin => pin.title) }
       );
-
-      handleUpdateActiveProject({
-        ...project,
-        pinterestPins: pins,
-        updatedAt: new Date().toISOString(),
-      });
-      setActiveTab('pinterest');
+      const current = latestContentProjectRef.current;
+      assertGenerationSource(current, project);
+      if (!await handleUpdateActiveProject({ ...appendSocialPins(current, channel, pins), updatedAt: new Date().toISOString() })) throw new Error(hubText('Die Cloud-Speicherung konnte nicht bestätigt werden.'));
+      setActiveTab(channel);
     } catch (err: any) {
       setErrorMsg(err.message || hubText("Fehler beim Erstellen der Pinterest-Pins."));
     } finally {
@@ -423,6 +424,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
   // 🚀 Generate YouTube Script & Shorts
   const handleGenerateYouTube = () => {
+    if (isBusy) return;
     if (activeContentProject?.contentBrief) setContentGenerationRequest({ kind: 'youtube', project: { ...activeContentProject, projectSettings: activeContentProject.campaignSource ? { ...activeProjectSettings, defaultTargetUrl: activeContentProject.campaignSource.url } : activeProjectSettings } });
   };
 
@@ -435,24 +437,23 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
       const [video, shorts] = await Promise.all([
         AIContentService.generateYouTubeScript(
           project.topic,
-          project.contentBrief,
+          briefForSocial(project),
           project.projectSettings,
-          targetUrl
+          targetUrl,
+          youtubeVideosFor(project).map(item => item.video.title)
         ),
         AIContentService.generateYouTubeShorts(
           project.topic,
-          project.contentBrief,
+          briefForSocial(project),
           project.projectSettings,
-          targetUrl
+          targetUrl,
+          (project.youtubeShorts || []).map(short => short.title)
         ),
       ]);
 
-      handleUpdateActiveProject({
-        ...project,
-        youtubeVideo: video,
-        youtubeShorts: shorts,
-        updatedAt: new Date().toISOString(),
-      });
+      const current = latestContentProjectRef.current;
+      assertGenerationSource(current, project);
+      if (!await handleUpdateActiveProject({ ...appendYouTubeContent(current, video, shorts), updatedAt: new Date().toISOString() })) throw new Error(hubText('Die Cloud-Speicherung konnte nicht bestätigt werden.'));
       setActiveTab('youtube');
     } catch (err: any) {
       setErrorMsg(err.message || hubText("Fehler beim Erstellen des YouTube-Skripts."));
@@ -549,7 +550,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
     if (!request) return;
     if (request.kind === 'blog') void generateBlogWithLink(request.project, affiliateLink);
     else if (request.kind === 'all') void generateAllWithLink(request, affiliateLink);
-    else if (request.kind === 'pinterest') void generatePinterestWithLink(request.project, affiliateLink);
+    else if (request.kind === 'pinterest' || request.kind === 'instagram') void generatePinterestWithLink(request.project, affiliateLink, request.kind);
     else if (request.kind === 'youtube') void generateYouTubeWithLink(request.project, affiliateLink);
     else if (request.kind === 'new-blog') void generateAdditionalBlog(topic || '', request.settings, affiliateLink);
   };
@@ -852,7 +853,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                 }`}
               >
                 <Pin className="w-4 h-4" />
-                <span>{hubText("3. Pinterest Pins (5)")}</span>
+                <span>{hubText("3. Pinterest Pins")}</span>
                 {activeContentProject.pinterestPins?.length > 0 && <span className="text-[10px] opacity-80">({activeContentProject.pinterestPins.length})</span>}
               </button>
 
@@ -866,8 +867,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                 }`}
               >
                 <Instagram className="w-4 h-4" />
-                <span>{hubText("4. Instagram Beiträge (5)")}</span>
-                {activeContentProject.pinterestPins?.length > 0 && <span className="text-[10px] opacity-80">({activeContentProject.pinterestPins.length})</span>}
+                <span>{hubText("4. Instagram Beiträge")}</span>
+                {instagramPostsFor(activeContentProject).length > 0 && <span className="text-[10px] opacity-80">({instagramPostsFor(activeContentProject).length})</span>}
               </button>
 
               <button
@@ -981,7 +982,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                     blogArticle: updatedArticle,
                   });
                 }}
-                onGeneratePinterest={handleGeneratePinterest}
+                hasPinterestPins={activeContentProject.pinterestPins.length > 0}
+                onGeneratePinterest={() => activeContentProject.pinterestPins.length ? setActiveTab('pinterest') : handleGeneratePinterest()}
                 isGeneratingPinterest={isGeneratingPinterest}
               />
             ) : (
@@ -1007,8 +1009,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
               key={activeContentProject.id}
               userId={userId}
               contentProjectId={activeContentProject.id}
-              onGenerate={handleGeneratePinterest}
-              isGenerating={isGeneratingPinterest}
+              onGenerate={() => handleGeneratePinterest()}
+              isGenerating={isBusy}
               projectTargetUrl={activeContentProject.campaignSource?.url || activeProjectSettings.defaultTargetUrl}
               pins={activeContentProject.pinterestPins || []}
               onChange={(updatedPins) => {
@@ -1025,36 +1027,21 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
           {activeTab === 'instagram' && (
             <InstagramPostsTab
-              onChange={pins => handleUpdateActiveProject({ ...activeContentProject, pinterestPins: pins })}
-              pins={activeContentProject.pinterestPins || []}
+              onGenerate={() => handleGeneratePinterest('instagram')}
+              isGenerating={isBusy}
+              onChange={pins => handleUpdateActiveProject({ ...activeContentProject, instagramPosts: pins })}
+              pins={instagramPostsFor(activeContentProject)}
               topic={activeContentProject.topic}
               projectSettings={activeContentProject.projectSettings || activeProjectSettings}
-              onGenerateYouTube={handleGenerateYouTube}
+              onGenerateYouTube={() => activeContentProject.youtubeVideo ? setActiveTab('youtube') : handleGenerateYouTube()}
               isGeneratingYouTube={isGeneratingYouTube}
             />
           )}
 
           {activeTab === 'youtube' && (
-            <YouTubeScriptTab
-              key={activeContentProject.id}
-              video={activeContentProject.youtubeVideo}
-              shorts={activeContentProject.youtubeShorts}
-              onChangeVideo={(updatedVideo) => {
-                handleUpdateActiveProject({
-                  ...activeContentProject,
-                  youtubeVideo: updatedVideo,
-                });
-              }}
-              onChangeShorts={(updatedShorts) => {
-                handleUpdateActiveProject({
-                  ...activeContentProject,
-                  youtubeShorts: updatedShorts,
-                });
-              }}
-              onGoToCalendar={() => setActiveTab('calendar')}
-              topic={activeContentProject.topic}
-              projectSettings={activeContentProject.projectSettings || activeProjectSettings}
-            />
+            <YouTubeCollectionTab key={activeContentProject.id} project={activeContentProject}
+              onChange={handleUpdateActiveProject} onGenerate={handleGenerateYouTube} busy={isBusy}
+              onGoToCalendar={() => setActiveTab('calendar')} />
           )}
 
           {activeTab === 'email' && (
@@ -1106,7 +1093,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
         <AffiliateLinkModal
           requestTopic={contentGenerationRequest.kind === 'new-blog'}
           initialLink={'project' in contentGenerationRequest ? contentGenerationRequest.project.projectSettings.defaultTargetUrl : contentGenerationRequest.settings.defaultTargetUrl}
-          contentLabel={contentGenerationRequest.kind === 'pinterest' ? 'Pinterest-Pins' : contentGenerationRequest.kind === 'youtube' ? hubText("YouTube und Shorts") : contentGenerationRequest.kind === 'all' ? hubText("Alle Inhalte") : hubText("Blogartikel")}
+          contentLabel={contentGenerationRequest.kind === 'instagram' ? hubText('Instagram-Beiträge') : contentGenerationRequest.kind === 'pinterest' ? 'Pinterest-Pins' : contentGenerationRequest.kind === 'youtube' ? hubText("YouTube und Shorts") : contentGenerationRequest.kind === 'all' ? hubText("Alle Inhalte") : hubText("Blogartikel")}
           onConfirm={handleConfirmAffiliateLink}
           onClose={() => setContentGenerationRequest(null)}
         />
