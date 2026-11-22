@@ -1,3 +1,4 @@
+import { observeNavigationHeader } from '../src/utils/stickyNavigation';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -94,3 +95,55 @@ for (const exit of ['onMouseLeave', 'onBlur', 'onClick']) {
 tip = renderTooltip(); tip.props.onFocus(event); renderTooltip(); listeners.get('resize')!(); renderTooltip(); assert.equal(position, null);
 renderTooltip(false).props.onMouseEnter(event); assert.equal(position, null);
 console.log('Infoblasen geprüft: Maus, Tastaturfokus, Beschriftung, Portalposition, Escape sowie Schließen bei Verlassen, Klick, Scrollen und Größenänderung.');
+
+// overflow-x:hidden macht root zu einem Scrollcontainer und bricht Fenster-Sticky.
+const rootStyles = readFileSync('src/index.css', 'utf8').match(/html,[\s\S]*?#root\s*\{([^}]+)\}/)?.[1] || '';
+assert.match(rootStyles, /overflow-x:\s*clip/);
+assert.doesNotMatch(rootStyles, /overflow(?:-x|-y)?:\s*(hidden|auto|scroll)/);
+const sidebarSource = readFileSync('src/components/Sidebar.tsx', 'utf8');
+assert.match(sidebarSource, /md:sticky/);
+assert.match(sidebarSource, /md:top-\[var\(--academy-header-height,74px\)\]/);
+assert.match(sidebarSource, /md:max-h-\[calc\(100dvh-var\(--academy-header-height,74px\)\)\]/);
+assert.match(sidebarSource, /md:overflow-y-auto/);
+assert.match(readFileSync('src/components/Header.tsx', 'utf8'), /observeNavigationHeader\(headerRef.current\)/);
+const previousWindow = globalThis.window;
+const previousDocument = globalThis.document;
+const previousObserver = globalThis.ResizeObserver;
+try {
+  const variables = new Map<string, string>();
+  const events = new Map<string, () => void>();
+  let resize: () => void;
+  let disconnected = false;
+  let height = 74.2;
+  const header = { getBoundingClientRect: () => ({ height }) } as HTMLElement;
+  globalThis.document = { documentElement: { style: {
+    setProperty: (key: string, value: string) => variables.set(key, value),
+    removeProperty: (key: string) => variables.delete(key),
+  } } } as unknown as Document;
+  globalThis.window = {
+    addEventListener: (name: string, fn: () => void) => events.set(name, fn),
+    removeEventListener: (name: string, fn: () => void) => { if (events.get(name) === fn) events.delete(name); },
+  } as unknown as Window & typeof globalThis;
+  globalThis.ResizeObserver = class {
+    constructor(callback: () => void) { resize = callback; }
+    observe(element: HTMLElement) { assert.equal(element, header); }
+    disconnect() { disconnected = true; }
+  } as unknown as typeof ResizeObserver;
+  let stop = observeNavigationHeader(header);
+  assert.equal(variables.get('--academy-header-height'), '75px');
+  height = 118; resize!();
+  assert.equal(variables.get('--academy-header-height'), '118px', 'Mehrzeilige Kopfzeilen dürfen das Menü nicht überdecken.');
+  height = 96; events.get('resize')!();
+  assert.equal(variables.get('--academy-header-height'), '96px');
+  stop(); assert.ok(disconnected); assert.equal(events.size, 0); assert.equal(variables.size, 0);
+  globalThis.ResizeObserver = undefined;
+  stop = observeNavigationHeader(header);
+  height = 140; events.get('resize')!();
+  assert.equal(variables.get('--academy-header-height'), '140px', 'Fallback ohne ResizeObserver.');
+  stop();
+} finally {
+  globalThis.window = previousWindow;
+  globalThis.document = previousDocument;
+  globalThis.ResizeObserver = previousObserver;
+}
+console.log('Haftendes Seitenmenü geprüft: kein blockierender Root-Scrollcontainer, dynamische Kopfzeilenhöhe, begrenzte Menü-Höhe, internes Scrollen und vollständiges Aufräumen.');

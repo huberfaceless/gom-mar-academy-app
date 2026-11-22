@@ -71,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }
 
   return (
-    <aside aria-label={t('nav.main')} className={`hidden md:flex ${collapsed ? 'md:w-20 p-2' : 'md:w-64 p-4'} bg-white border-r border-slate-200/90 text-slate-700 flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[74px] md:self-start md:max-h-[calc(100dvh-74px)] md:overflow-y-auto scrollbar-thin`}>
+    <aside aria-label={t('nav.main')} className={`hidden md:flex ${collapsed ? 'md:w-20 p-2' : 'md:w-64 p-4'} bg-white border-r border-slate-200/90 text-slate-700 flex-col justify-between shrink-0 shadow-sm md:sticky md:top-[var(--academy-header-height,74px)] md:self-start md:max-h-[calc(100dvh-var(--academy-header-height,74px))] md:overflow-y-auto md:overscroll-y-contain scrollbar-thin`}>
       <div className="sticky top-0 z-10 bg-white pb-3">
         <SidebarTooltip enabled={collapsed} label={t('nav.expand')}>
         <button type="button" onClick={toggleSidebar} aria-expanded={!collapsed} aria-controls="academy-sidebar-navigation"
