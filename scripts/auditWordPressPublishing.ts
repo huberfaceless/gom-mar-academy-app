@@ -140,9 +140,9 @@ assert.match(panelHtml('seopress', true), /Jetzt auf gomo-marketing.at veröffen
 const hubView = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', 'utf8');
 const editorView = readFileSync('src/components/ContentEngine/BlogEditorTab.tsx', 'utf8');
 const calendarView = readFileSync('src/components/ContentEngine/ContentCalendarTab.tsx', 'utf8');
-assert.match(hubView, /isAdmin && wordpressSiteOrigin\(activeProjectSettings.websiteUrl\)/);
+assert.match(hubView, /\{isAdmin && <button type="button"/);
 assert.match(hubView, /<WordPressPublishingDialog/);
-assert.match(hubView, /onOpenWordPress=\{isAdmin && wordpressSiteOrigin/);
+assert.match(hubView, /onOpenWordPress=\{isAdmin \?/);
 assert.match(calendarView, /onClick=\{onOpenWordPress\}/);
 assert.ok(editorView.indexOf('onClick={wordpress.onOpen}') < editorView.indexOf('Blogartikel generiert'), 'Verbindung beim Artikel direkt oben anbieten.');
 assert.doesNotMatch(editorView, /<WordPressDraftPanel/, 'Nur einen zentralen Verbindungs- und Veröffentlichungsdialog verwenden.');

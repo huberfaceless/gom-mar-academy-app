@@ -644,7 +644,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
           </label>
 
           <div className="flex min-w-0 flex-wrap items-center gap-2.5">
-          {isAdmin && wordpressSiteOrigin(activeProjectSettings.websiteUrl) && <button type="button"
+          {isAdmin && <button type="button"
             onClick={() => activeContentProject ? setWordpressContentId(activeContentProject.id) : setErrorMsg(hubText('Erstelle zuerst ein Inhaltsbriefing oder öffne einen gespeicherten Artikel. Danach kannst du WordPress für dieses Projekt verbinden.'))}
             className="rounded-xl bg-emerald-700 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-800">{hubText('WordPress & Veröffentlichung')}</button>}
           <span className="text-xs font-medium text-slate-500">
@@ -963,7 +963,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                     if (!await handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle!, ...fields } })) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
                   },
                 }}
-                wordpress={isAdmin && Boolean(wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl)) ? {
+                wordpress={isAdmin ? {
+                  available: Boolean(wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl)),
                   contentId: activeContentProject.id,
                   onOpen: () => setWordpressContentId(activeContentProject.id),
                   onAddInternalLinks: async () => {
@@ -1071,16 +1072,22 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
             <ContentCalendarTab
               key={activeContentProject.id}
               project={activeContentProject}
-              onOpenWordPress={isAdmin && wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl) ? () => setWordpressContentId(activeContentProject.id) : undefined}
+              onOpenWordPress={isAdmin ? () => setWordpressContentId(activeContentProject.id) : undefined}
               onUpdateProject={handleUpdateActiveProject}
             />
           )}
         </div>
       )}
 
-      {wordpressContentId && isAdmin && activeContentProject?.id === wordpressContentId && wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl) && <WordPressPublishingDialog
+      {wordpressContentId && isAdmin && activeContentProject?.id === wordpressContentId && <WordPressPublishingDialog
         key={wordpressContentId}
         contentId={wordpressContentId}
+        siteUrl={activeContentProject.projectSettings.websiteUrl}
+        onEditProject={() => {
+          setWordpressContentId(null);
+          setProjectBeingEdited(activeProjectSettings);
+          setIsSettingsModalOpen(true);
+        }}
         categorySlug={activeContentProject.blogArticle?.wordpressCategorySlug}
         hasArticle={Boolean(activeContentProject.blogArticle)}
         onClose={() => setWordpressContentId(null)}
