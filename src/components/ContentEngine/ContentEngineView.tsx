@@ -617,8 +617,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
         </div>
 
         {/* Project Selector & Settings */}
-        <div className="flex min-w-0 w-full flex-wrap items-center gap-2.5">
-          <div className="flex min-w-0 w-full sm:w-auto sm:flex-1 items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
+        <div className="grid w-full min-w-0 gap-3">
+          <label className="block w-full min-w-0 space-y-1">
+            <span className="text-xs font-bold text-slate-700">{hubText('Projekt auswählen')}</span>
+            <span className="flex w-full min-w-0 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5">
             <Building2 className="w-4 h-4 shrink-0 text-emerald-600" />
             <select
               disabled={isProcessingEmail}
@@ -638,8 +640,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                 </option>
               ))}
             </select>
-          </div>
+            </span>
+          </label>
 
+          <div className="flex min-w-0 flex-wrap items-center gap-2.5">
           {isAdmin && wordpressSiteOrigin(activeProjectSettings.websiteUrl) && <button type="button"
             onClick={() => activeContentProject ? setWordpressContentId(activeContentProject.id) : setErrorMsg(hubText('Erstelle zuerst ein Inhaltsbriefing oder öffne einen gespeicherten Artikel. Danach kannst du WordPress für dieses Projekt verbinden.'))}
             className="rounded-xl bg-emerald-700 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-800">{hubText('WordPress & Veröffentlichung')}</button>}
@@ -674,6 +678,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
             <Plus className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>{hubText('Neues Projekt')}</span>
           </button>
+          </div>
         </div>
       </div>
 

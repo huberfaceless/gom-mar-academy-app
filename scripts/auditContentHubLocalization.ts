@@ -69,7 +69,7 @@ try {
     const html = render();
     assert.ok(html.includes('Gespeicherter deutscher Titel mit Umlauten'), 'Saved member text must not be translated.');
     assert.ok(html.includes('Mein gespeicherter Artikel.'), 'Saved article bodies must stay intact.');
-    for (const source of ['KI-Inhaltszentrale', 'Welches Thema möchtest du heute erobern?', 'Schritt 1: Briefing', 'Blogartikel in', 'Content Brief fertig', 'Blogartikel generiert', 'Noch keine Instagram-Beiträge vorhanden', 'YouTube verbinden', 'Haupt-Video Skript', 'Content-Planung & Veröffentlichungswarteschlange', 'Projekt-Einstellungen bearbeiten', 'Inhaltssprache', 'Neuen Blogartikel erstellen']) {
+    for (const source of ['KI-Inhaltszentrale', 'Welches Thema möchtest du heute erobern?', 'Schritt 1: Briefing', 'Blogartikel in', 'Content Brief fertig', 'Blogartikel generiert', 'Noch keine Instagram-Beiträge vorhanden', 'YouTube verbinden', 'Haupt-Video Skript', 'Content-Planung & Veröffentlichungswarteschlange', 'Projekt-Einstellungen bearbeiten', 'Projekt auswählen', 'Inhaltssprache', 'Neuen Blogartikel erstellen']) {
       const expected = contentHubText(language, source).replaceAll('&', '&amp;');
       assert.ok(html.includes(expected), language + ': missing ' + expected);
       if (language === 'en') assert.ok(!html.includes(source), 'Untranslated UI: ' + source);

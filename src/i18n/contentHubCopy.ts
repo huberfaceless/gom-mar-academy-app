@@ -3,6 +3,7 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Projekt auswählen": "Select project",
   "WordPress & Veröffentlichung": "WordPress & publishing",
   "WordPress verbinden / veröffentlichen": "Connect WordPress / publish",
   "Webseite & Blog-Veröffentlichung": "Website & blog publishing",
