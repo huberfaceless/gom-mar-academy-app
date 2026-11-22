@@ -3,6 +3,12 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Blogartikel veröffentlichen": "Publish blog article",
+  "Veröffentlichungsseite prüfen": "Check publishing website",
+  "Im Artikel gespeicherte Webseite:": "Website saved with this article:",
+  "Nicht angegeben": "Not specified",
+  "Projekt-Webseite einstellen": "Set project website",
+  "Diese Adresse ist nicht als WordPress-Veröffentlichungsseite eingerichtet. Trage unter Website URL die gewünschte WordPress-Seite ein: https://gomo-marketing.at oder https://vital50.gomo-marketing.at. Die Projekt-Zieladresse für deine Werbung bleibt davon getrennt.": "This address is not configured as a WordPress publishing website. Enter the intended WordPress website under Website URL: https://gomo-marketing.at or https://vital50.gomo-marketing.at. Your project's promotional target URL is separate.",
   "Projekt auswählen": "Select project",
   "WordPress & Veröffentlichung": "WordPress & publishing",
   "WordPress verbinden / veröffentlichen": "Connect WordPress / publish",

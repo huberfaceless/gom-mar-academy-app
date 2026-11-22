@@ -1,3 +1,5 @@
+import { BlogEditorTab } from '../src/components/ContentEngine/BlogEditorTab';
+import { WordPressPublishingDialog } from '../src/components/ContentEngine/WordPressPublishingDialog';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -79,3 +81,40 @@ reply = '{}'; assert.equal((await invoke()).status, 502);
 reply = 'not json'; assert.equal((await invoke()).status, 502);
 assert.match(server, /seo-geo', requireVerifiedMember, requireProMember, requireContentProjectAccess/);
 console.log('SEO/GEO geprüft: editierbare Daten, Fokuskeyword, sichtbare Zusammenfassung, unveränderter Artikel, DE/EN/PL, gültiges Plugin-ZIP und geschützte Vorbereitung aus dem vorhandenen Text.');
+
+// Zwei gleich benannte Geschwister-Schlüssel können bei Updates DOM-Reste duplizieren.
+const editorSource = ts.createSourceFile('BlogEditorTab.tsx', readFileSync('src/components/ContentEngine/BlogEditorTab.tsx', 'utf8'), ts.ScriptTarget.ES2022, true, ts.ScriptKind.TSX);
+const seoKeys: string[] = [];
+function inspectSeoKeys(node: ts.Node) {
+  if (ts.isJsxSelfClosingElement(node) && ['BlogSeoGeoPanel', 'BlogSeoCheckPanel'].includes(node.tagName.getText(editorSource))) {
+    const key = node.attributes.properties.find(attr => ts.isJsxAttribute(attr) && attr.name.getText(editorSource) === 'key');
+    assert.ok(key && ts.isJsxAttribute(key) && key.initializer, 'SEO-Ansichten erhalten getrennte Identitäten.');
+    seoKeys.push((key as ts.JsxAttribute).initializer!.getText(editorSource));
+  }
+  ts.forEachChild(node, inspectSeoKeys);
+}
+inspectSeoKeys(editorSource);
+assert.equal(seoKeys.length, 2);
+assert.equal(new Set(seoKeys).size, 2, 'Gleiche React-Schlüssel für SEO-Eingaben und SEO-Check verhindern.');
+for (const available of [true, false]) {
+  for (const revision of [article, { ...article, seoTitle: 'Geänderter SEO-Titel', metaDescription: 'Neue Beschreibung.' }]) {
+    const renderedEditor = renderToStaticMarkup(React.createElement(LanguageProvider, null, React.createElement(BlogEditorTab, {
+      article: revision, seoGeo: { contentId: 'saved-article', onPrepare: async () => {} },
+      wordpress: { available, contentId: 'saved-article', onOpen() {}, onAddInternalLinks: async () => {} },
+      onChange() {}, onGeneratePinterest() {}, isGeneratingPinterest: false,
+    })));
+    assert.equal((renderedEditor.match(/aria-label="SEO und GEO"/g) || []).length, 1);
+    assert.equal((renderedEditor.match(/aria-label="SEO-Check vor der Übertragung"/g) || []).length, 1);
+    assert.match(renderedEditor, /Blogartikel veröffentlichen/, 'Auch bei fehlender WordPress-Webseite bleibt der Zugang sichtbar.');
+    assert.equal(renderedEditor.includes('Kurzer WordPress-URL-Slug'), available, 'WordPress-Werkzeuge nur für eine unterstützte Webseite aktivieren.');
+  }
+}
+for (const siteUrl of ['', 'https://academy.gomo-marketing.at', 'https://example.com']) {
+  const dialog = renderToStaticMarkup(React.createElement(LanguageProvider, null, React.createElement(WordPressPublishingDialog, {
+    contentId: 'saved-article', siteUrl, hasArticle: true, onEditProject() {}, onClose() {}, onSave: async () => true, onPublished: async () => {},
+  })));
+  assert.match(dialog, /Projekt-Webseite einstellen/);
+  assert.match(dialog, /Veröffentlichungsseite prüfen/);
+  assert.doesNotMatch(dialog, /WordPress-Anwendungspasswort|Jetzt auf gomo-marketing.at veröffentlichen/, 'Keine WordPress-Verbindung zur falschen Domain aufbauen.');
+}
+console.log('Blogeditor geprüft: getrennte React-Schlüssel, genau ein SEO/GEO-Formular, sichtbarer Veröffentlichungszugang und konkrete Hilfe für fehlende/falsche Webseiten.');

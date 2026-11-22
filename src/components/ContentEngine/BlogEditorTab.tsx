@@ -22,7 +22,7 @@ import { BlogArticleContent } from './BlogArticleContent';
 interface BlogEditorTabProps {
   seoGeo?: { imageAsFeatured?: boolean; contentId: string; mainKeyword?: string; onPrepare: () => Promise<void> };
   contentLanguage?: string;
-  wordpress?: { onOpen: () => void; onAddInternalLinks: () => Promise<void>; contentId: string };
+  wordpress?: { available: boolean; onOpen: () => void; onAddInternalLinks: () => Promise<void>; contentId: string };
   article: BlogArticle;
   onChange: (updated: BlogArticle) => void;
   onGeneratePinterest: () => void;
@@ -82,7 +82,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
 
   return (
     <div className="space-y-6">
-      {wordpress && <button type="button" onClick={wordpress.onOpen} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">{hubText('WordPress verbinden / veröffentlichen')}</button>}
+      {wordpress && <button type="button" onClick={wordpress.onOpen} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">{hubText('Blogartikel veröffentlichen')}</button>}
       {/* Action Header */}
       <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-start gap-4">
         <div className="w-full min-w-0 break-words">
@@ -149,9 +149,9 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
         </div>
       </div>
 
-      {seoGeo && <BlogSeoGeoPanel key={seoGeo.contentId} article={article} mainKeyword={seoGeo.mainKeyword} onChange={onChange} onPrepare={seoGeo.onPrepare} />}
-      {seoGeo && <BlogSeoCheckPanel key={seoGeo.contentId} article={article} mainKeyword={seoGeo.mainKeyword} contentId={wordpress?.contentId} defaultFeatured={seoGeo.imageAsFeatured} onChange={onChange} />}
-      {wordpress && <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5" aria-label={hubText('Interne Verlinkung')}>
+      {seoGeo && <BlogSeoGeoPanel key={`seo-fields:${seoGeo.contentId}`} article={article} mainKeyword={seoGeo.mainKeyword} onChange={onChange} onPrepare={seoGeo.onPrepare} />}
+      {seoGeo && <BlogSeoCheckPanel key={`seo-check:${seoGeo.contentId}`} article={article} mainKeyword={seoGeo.mainKeyword} contentId={wordpress?.available ? wordpress.contentId : undefined} defaultFeatured={seoGeo.imageAsFeatured} onChange={onChange} />}
+      {wordpress?.available && <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5" aria-label={hubText('Interne Verlinkung')}>
         <h3 className="font-bold">{hubText('Interne Verlinkung')}</h3>
         <p className="text-sm text-slate-600">{hubText('Die Academy berücksichtigt passende, veröffentlichte Artikel dieser Website und ergänzt bis zu drei erreichbare Links.')}</p>
         <button type="button" disabled={linkBusy} onClick={() => void addInternalLinks()} className="rounded-xl border px-4 py-2 font-semibold disabled:opacity-50">{linkBusy ? hubText('Links werden geprüft…') : hubText('Passende interne Links ergänzen')}</button>
