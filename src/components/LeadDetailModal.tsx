@@ -83,7 +83,7 @@ export interface LeadContact {
   phone: string;
   location: string;
   badge: string;
-  badgeType: 'hot' | 'active' | 'new' | 'cold';
+  badgeType: 'hot' | 'active' | 'new' | 'cold' | 'neutral';
   score: number;
   scoreDescription: string;
   tags: string[];

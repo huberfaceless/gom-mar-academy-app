@@ -151,7 +151,7 @@ export const mergeAcademyMembersIntoCrm = (
       phone: typeof existing?.phone === 'string' ? existing.phone : '—',
       location: typeof existing?.location === 'string' ? existing.location : '—',
       badge: emailConsentGranted ? 'E-Mail-Einwilligung aktiv' : 'Keine E-Mail-Einwilligung',
-      badgeType: 'active',
+      badgeType: emailConsentGranted ? 'active' : 'neutral',
       score: typeof existing?.score === 'number' ? existing.score : 50,
       scoreDescription: emailConsentGranted ? 'Bestätigtes Academy-Mitglied mit dokumentierter E-Mail-Einwilligung.' : 'Bestätigtes Academy-Mitglied ohne Marketing-E-Mail-Einwilligung.',
       tags: emailConsentGranted ? ['Academy-Mitglied', 'E-Mail-Einwilligung', member.tier] : ['Academy-Mitglied', member.tier],
@@ -172,24 +172,52 @@ export const mergeAcademyMembersIntoCrm = (
   return { contacts: [...syncedMemberContacts, ...manualContacts], memberCount: activeMembers.length, consentedCount: activeMembers.filter((item) => item.emailConsentGranted).length, importedCount };
 };
 
+const loadMembersWithEmailConsent = async (
+  projectId: string,
+  candidates: FirebaseMember[],
+): Promise<MemberWithEmailConsent[]> => {
+  const checkedMembers: MemberWithEmailConsent[] = [];
+  for (let offset = 0; offset < candidates.length; offset += 20) {
+    const checked = await Promise.all(candidates.slice(offset, offset + 20).map(async (member) => ({
+      member,
+      consent: await loadEmailConsent(projectId, member.uid),
+    })));
+    for (const { member, consent } of checked) {
+      const emailConsentGranted = member.emailVerified && !member.disabled
+        && consent.granted && consent.email.trim().toLowerCase() === member.email.trim().toLowerCase();
+      checkedMembers.push({ member, consentUpdatedAt: consent.updatedAt, emailConsentGranted });
+    }
+  }
+  return checkedMembers;
+};
+
+// Nur die Anzeige aktualisieren: keine Einwilligung und keinen CRM-Bestand schreiben.
+export const refreshCrmMemberConsents = async (
+  projectId: string,
+  contacts: Record<string, unknown>[],
+  members: FirebaseMember[],
+): Promise<Record<string, unknown>[]> => {
+  const contactIds = new Set(contacts.map((contact) => contact.id));
+  const checked = await loadMembersWithEmailConsent(projectId, members.filter((member) => contactIds.has(memberContactId(member.uid))));
+  const current = new Map(mergeAcademyMembersIntoCrm(checked, contacts).contacts.map((contact) => [contact.id, contact]));
+  // Gelöschte Mitgliedskonten dürfen keinen alten Einwilligungsmarker behalten.
+  return contacts.map((contact) => {
+    if (typeof contact.id !== 'string' || !contact.id.startsWith('member_')) return contact;
+    return current.get(contact.id) || {
+      ...contact,
+      badge: 'Keine E-Mail-Einwilligung', badgeType: 'neutral',
+      tags: Array.isArray(contact.tags) ? contact.tags.filter((tag) => tag !== 'E-Mail-Einwilligung') : [],
+    };
+  });
+};
+
 export const syncAcademyMembersToCrm = async (
   projectId: string,
   adminUserId: string,
   members: FirebaseMember[],
 ) => {
-  const activeMembers: MemberWithEmailConsent[] = [];
   const candidates = members.filter((member) => member.emailVerified && !member.disabled && Boolean(member.email));
-  for (let offset = 0; offset < candidates.length; offset += 20) {
-    const batch = candidates.slice(offset, offset + 20);
-    const checked = await Promise.all(batch.map(async (member) => ({
-      member,
-      consent: await loadEmailConsent(projectId, member.uid),
-    })));
-    for (const { member, consent } of checked) {
-      const emailConsentGranted = consent.granted && consent.email.trim().toLowerCase() === member.email.trim().toLowerCase();
-      activeMembers.push({ member, consentUpdatedAt: emailConsentGranted ? consent.updatedAt : null, emailConsentGranted });
-    }
-  }
+  const activeMembers = await loadMembersWithEmailConsent(projectId, candidates);
   const result = mergeAcademyMembersIntoCrm(activeMembers, await loadCrmContacts(projectId, adminUserId));
   const contacts = await saveCrmContacts(projectId, adminUserId, result.contacts);
   return { ...result, contacts };

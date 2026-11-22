@@ -38,7 +38,7 @@ import {
   updateFirebaseMemberTier,
 } from './server/firebaseMembershipAdmin.js';
 import { deleteCurriculumOverride, listCurriculumOverrides, resetCurriculumOverrides, saveCurriculumOverride } from './server/academyCurriculumAdmin.js';
-import { deleteCrmContact, loadCrmContacts, memberContactId, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
+import { deleteCrmContact, loadCrmContacts, memberContactId, refreshCrmMemberConsents, saveCrmContacts, syncAcademyMembersToCrm } from './server/crmContactsAdmin.js';
 import { assertCampaignDeliveryModeUnchanged, loadEmailCampaigns, saveEmailCampaigns, importContentEmailCampaign } from './server/emailCampaignsAdmin.js';
 import { lessonAudioObjectName, loadLessonAudioFromCache, saveLessonAudioToCache, hasLessonAudioInCache } from './server/lessonAudioCache.js';
 import { selectAudioLessons, audioSelectionFingerprint, generateSelectedAudio } from './server/lessonAudioSelection.js';
@@ -1240,11 +1240,25 @@ async function startServer() {
     }
   });
 
+  const listCrmMembers = async () => {
+    const members = [];
+    let pageToken: string | undefined;
+    for (let page = 0; page < 10; page += 1) {
+      const result = await listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken);
+      members.push(...result.members);
+      pageToken = result.nextPageToken;
+      if (!pageToken) break;
+    }
+    if (pageToken) throw new Error('Die Mitgliederliste ist für einen sicheren Abgleich zu groß.');
+    return members;
+  };
+
   app.get('/api/crm/contacts', requireVerifiedMember, requireAcademyAdmin, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!userId) throw new Error('Firebase-Benutzerkennung fehlt.');
-      const contacts = await loadCrmContacts(FIREBASE_PROJECT_ID, userId);
+      const [storedContacts, members] = await Promise.all([loadCrmContacts(FIREBASE_PROJECT_ID, userId), listCrmMembers()]);
+      const contacts = await refreshCrmMemberConsents(FIREBASE_PROJECT_ID, storedContacts, members);
       res.setHeader('Cache-Control', 'no-store');
       res.json({ contacts });
     } catch (error: unknown) {
@@ -1285,15 +1299,7 @@ async function startServer() {
     try {
       const adminUserId = (req as FirebaseRequest).firebaseUser?.sub;
       if (!adminUserId) throw new Error('Firebase-Benutzerkennung fehlt.');
-      const members = [];
-      let pageToken: string | undefined;
-      for (let page = 0; page < 10; page += 1) {
-        const result = await listFirebaseMembers(FIREBASE_PROJECT_ID, pageToken);
-        members.push(...result.members);
-        pageToken = result.nextPageToken;
-        if (!pageToken) break;
-      }
-      if (pageToken) throw new Error('Die Mitgliederliste ist für einen sicheren Abgleich zu groß.');
+      const members = await listCrmMembers();
       const result = await syncAcademyMembersToCrm(FIREBASE_PROJECT_ID, adminUserId, members);
       console.info('Academy-Mitglieder mit CRM synchronisiert', {
         action: 'academy.crm.members.synced',
