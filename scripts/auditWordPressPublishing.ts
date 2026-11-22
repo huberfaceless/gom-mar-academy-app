@@ -106,11 +106,11 @@ const { readFileSync } = await import('node:fs');
 const { default: vm } = await import('node:vm');
 const { default: ts } = await import('typescript');
 const { contentHubText } = await import('../src/i18n/contentHubCopy');
-const panelHtml = (provider: 'seopress' | 'rank-math', ready: boolean) => {
+const panelHtml = (provider: 'seopress' | 'rank-math', ready: boolean, connectionOnly = false, connected = true) => {
  let slot = 0;
  const fakeReact = { ...React, useEffect() {}, useState(initial: any) {
    const n = slot++;
-   const value = n === 0 ? { connected: true, configured: true, siteUrl: provider === 'seopress' ? origin : 'https://vital50.gomo-marketing.at', seoProvider: provider, draft: null } : n === 7 ? false : n === 11 ? ready : initial;
+   const value = n === 0 ? { connected, configured: true, siteUrl: provider === 'seopress' ? origin : 'https://vital50.gomo-marketing.at', seoProvider: provider, draft: null } : n === 7 ? false : n === 11 ? ready : initial;
    return [value, () => {}];
  } };
  const context = vm.createContext({ exports: {}, require(name: string) {
@@ -120,7 +120,7 @@ const panelHtml = (provider: 'seopress' | 'rank-math', ready: boolean) => {
    return {};
  } });
  vm.runInContext(ts.transpileModule(readFileSync('src/components/ContentEngine/WordPressDraftPanel.tsx', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React, esModuleInterop: true } }).outputText, context);
- return renderToStaticMarkup(React.createElement((context.exports as any).WordPressDraftPanel, { contentId: 'article', onSave: async () => true }));
+ return renderToStaticMarkup(React.createElement((context.exports as any).WordPressDraftPanel, { contentId: 'article', connectionOnly, onSave: async () => true }));
 };
 assert.match(panelHtml('seopress', true), /SEOPress-Übertragung ist eingerichtet/);
 assert.match(panelHtml('seopress', false), /Rollensperren/);
@@ -130,3 +130,20 @@ assert.match(panelHtml('rank-math', false), /SEO-Zusatzplugin herunterladen/);
 console.log('SEO-Anzeige: Hauptwebsite erhält SEOPress-Hinweise ohne Rank-Math-Installation; Vital50 behält seine Einrichtung.');
 
 await import('./auditWordPressSchema');
+
+const setupHtml = panelHtml('seopress', true, true);
+assert.match(setupHtml, /WordPress-Verbindung/);
+assert.match(setupHtml, /gomo-marketing.at/);
+assert.doesNotMatch(setupHtml, /Jetzt auf gomo-marketing.at veröffentlichen|WordPress-Kategorie/, 'Ohne Artikel nur die Verbindung einrichten.');
+assert.match(panelHtml('seopress', false, true, false), /WordPress verbinden/);
+assert.match(panelHtml('seopress', true), /Jetzt auf gomo-marketing.at veröffentlichen/);
+const hubView = readFileSync('src/components/ContentEngine/ContentEngineView.tsx', 'utf8');
+const editorView = readFileSync('src/components/ContentEngine/BlogEditorTab.tsx', 'utf8');
+const calendarView = readFileSync('src/components/ContentEngine/ContentCalendarTab.tsx', 'utf8');
+assert.match(hubView, /isAdmin && wordpressSiteOrigin\(activeProjectSettings.websiteUrl\)/);
+assert.match(hubView, /<WordPressPublishingDialog/);
+assert.match(hubView, /onOpenWordPress=\{isAdmin && wordpressSiteOrigin/);
+assert.match(calendarView, /onClick=\{onOpenWordPress\}/);
+assert.ok(editorView.indexOf('onClick={wordpress.onOpen}') < editorView.indexOf('Blogartikel generiert'), 'Verbindung beim Artikel direkt oben anbieten.');
+assert.doesNotMatch(editorView, /<WordPressDraftPanel/, 'Nur einen zentralen Verbindungs- und Veröffentlichungsdialog verwenden.');
+console.log('WordPress-Zugang geprüft: Projektkopf, Blogartikel und Kalender öffnen denselben Dialog; Verbindung schon mit Briefing möglich, Veröffentlichung benötigt einen Artikel.');

@@ -2,7 +2,6 @@ import { BlogSeoCheckPanel } from './BlogSeoCheckPanel';
 import { InboundLinkSuggestions } from './InboundLinkSuggestions';
 import { blogMarkdownWithSummary } from '../../utils/blogSeoGeo';
 import { BlogSeoGeoPanel } from './BlogSeoGeoPanel';
-import { WordPressDraftPanel } from './WordPressDraftPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useRef, useState } from 'react';
 import { 
@@ -23,7 +22,7 @@ import { BlogArticleContent } from './BlogArticleContent';
 interface BlogEditorTabProps {
   seoGeo?: { imageAsFeatured?: boolean; contentId: string; mainKeyword?: string; onPrepare: () => Promise<void> };
   contentLanguage?: string;
-  wordpress?: { onPublished?: (url: string) => Promise<void>; onAddInternalLinks: () => Promise<void>; contentId: string; onSave: (categorySlug: string) => Promise<boolean> };
+  wordpress?: { onOpen: () => void; onAddInternalLinks: () => Promise<void>; contentId: string };
   article: BlogArticle;
   onChange: (updated: BlogArticle) => void;
   onGeneratePinterest: () => void;
@@ -83,6 +82,7 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
 
   return (
     <div className="space-y-6">
+      {wordpress && <button type="button" onClick={wordpress.onOpen} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">{hubText('WordPress verbinden / veröffentlichen')}</button>}
       {/* Action Header */}
       <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-start gap-4">
         <div className="w-full min-w-0 break-words">
@@ -160,7 +160,6 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
         {linkError && <p role="alert" className="text-sm text-rose-700">{linkError}</p>}
         <InboundLinkSuggestions article={article} />
       </section>}
-      {wordpress && <WordPressDraftPanel key={wordpress.contentId} contentId={wordpress.contentId} savedCategorySlug={article.wordpressCategorySlug} onSave={wordpress.onSave} onPublished={wordpress.onPublished} />}
 
       {/* Editor / Preview Area */}
       {viewMode === 'edit' ? (

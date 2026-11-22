@@ -1,3 +1,4 @@
+import { WordPressPublishingDialog } from './WordPressPublishingDialog';
 import type { Campaign } from '../../types';
 import { EmailGeneratorTab } from './EmailGeneratorTab';
 import { automaticWordPressPublication, wordpressSiteOrigin } from '../../utils/wordpressSites';
@@ -135,6 +136,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
   const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId, isAdmin));
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
+  const [wordpressContentId, setWordpressContentId] = useState<string | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [projectBeingEdited, setProjectBeingEdited] = useState<ProjectSettings | null>(null);
 
@@ -638,6 +640,9 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
             </select>
           </div>
 
+          {isAdmin && wordpressSiteOrigin(activeProjectSettings.websiteUrl) && <button type="button"
+            onClick={() => activeContentProject ? setWordpressContentId(activeContentProject.id) : setErrorMsg(hubText('Erstelle zuerst ein Inhaltsbriefing oder öffne einen gespeicherten Artikel. Danach kannst du WordPress für dieses Projekt verbinden.'))}
+            className="rounded-xl bg-emerald-700 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-800">{hubText('WordPress & Veröffentlichung')}</button>}
           <span className="text-xs font-medium text-slate-500">
             {hubText('Inhaltssprache')}: {hubText(({ de: 'Deutsch', en: 'Englisch', pl: 'Polnisch' })[activeProjectSettings.language || 'de'])}
           </span>
@@ -955,18 +960,13 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                 }}
                 wordpress={isAdmin && Boolean(wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl)) ? {
                   contentId: activeContentProject.id,
+                  onOpen: () => setWordpressContentId(activeContentProject.id),
                   onAddInternalLinks: async () => {
                     const blogArticle = await AIContentService.addInternalLinks(activeContentProject.topic, activeContentProject.contentBrief!, activeContentProject.projectSettings, activeContentProject.blogArticle!);
                     const current = latestContentProjectRef.current;
                     if (!current || current.id !== activeContentProject.id || current.blogArticle?.contentMarkdown !== activeContentProject.blogArticle?.contentMarkdown || current.blogArticle?.title !== activeContentProject.blogArticle?.title) throw new Error(hubText('Der Artikel wurde inzwischen geändert. Bitte die Linkprüfung erneut starten.'));
                     if (!await handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle!, contentMarkdown: blogArticle.contentMarkdown, internalLinking: blogArticle.internalLinking } })) throw new Error(hubText('Bitte den Artikel zuerst erfolgreich in der Cloud speichern.'));
                   },
-                  onPublished: async (url) => {
-                    const current = latestContentProjectRef.current;
-                    if (!current || current.id !== activeContentProject.id || !current.blogArticle) return;
-                    if (!await handleUpdateActiveProject({ ...current, targetUrl: url, projectSettings: { ...current.projectSettings, defaultTargetUrl: url }, blogArticle: { ...current.blogArticle, status: 'published', publishedUrl: url } })) throw new Error('Veröffentlicht, aber Academy-Status konnte nicht gespeichert werden.');
-                  },
-                  onSave: (categorySlug) => handleUpdateActiveProject({ ...activeContentProject, blogArticle: { ...activeContentProject.blogArticle!, wordpressCategorySlug: categorySlug } }),
                 } : undefined}
                 article={activeContentProject.blogArticle}
                 onChange={(updatedArticle) => {
@@ -1066,11 +1066,29 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
             <ContentCalendarTab
               key={activeContentProject.id}
               project={activeContentProject}
+              onOpenWordPress={isAdmin && wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl) ? () => setWordpressContentId(activeContentProject.id) : undefined}
               onUpdateProject={handleUpdateActiveProject}
             />
           )}
         </div>
       )}
+
+      {wordpressContentId && isAdmin && activeContentProject?.id === wordpressContentId && wordpressSiteOrigin(activeContentProject.projectSettings.websiteUrl) && <WordPressPublishingDialog
+        key={wordpressContentId}
+        contentId={wordpressContentId}
+        categorySlug={activeContentProject.blogArticle?.wordpressCategorySlug}
+        hasArticle={Boolean(activeContentProject.blogArticle)}
+        onClose={() => setWordpressContentId(null)}
+        onSave={async (categorySlug) => {
+          const current = latestContentProjectRef.current;
+          if (!current || current.id !== wordpressContentId || !current.blogArticle) return false;
+          return handleUpdateActiveProject({ ...current, blogArticle: { ...current.blogArticle, wordpressCategorySlug: categorySlug } });
+        }}
+        onPublished={async (url) => {
+          const current = latestContentProjectRef.current;
+          if (!current || current.id !== wordpressContentId || !current.blogArticle) return;
+          if (!await handleUpdateActiveProject({ ...current, targetUrl: url, projectSettings: { ...current.projectSettings, defaultTargetUrl: url }, blogArticle: { ...current.blogArticle, status: 'published', publishedUrl: url } })) throw new Error('Veröffentlicht, aber Academy-Status konnte nicht gespeichert werden.');
+        }} />}
 
       {contentGenerationRequest && (
         <AffiliateLinkModal
