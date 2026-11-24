@@ -35,7 +35,7 @@ Refresh-Tokens liegen AES-256-GCM-verschlüsselt und an die Benutzerkennung gebu
 
 Im Briefing erhalten auch die Long-Tail-Suchphrasen diese Zuordnung. Neue automatisch generierte Begriffe außerhalb dieses geprüften Reports bleiben Vorschläge. Die gespeicherten Messwerte werden nicht als allgemeines Marktvolumen ausgegeben und nicht als vollständiger Report in den Long-Tail-Generierungsprompt aufgenommen.
 
-Diese erste Anbindung unterstützt die bewusste Auswahl im Briefing. Bestehende automatische Komplettläufe werden nicht stillschweigend auf einen beliebigen erfolgreichen Website-Suchbegriff umgestellt und weiterhin nicht durch eine universelle Pflichtprüfung blockiert. Neue Themen benötigen weiterhin eine zusätzliche Nachfrageprüfung; **Keyword Planner ist nicht angebunden**. Keine Rankings, Suchvolumen oder Erfolgsgarantien aus Search-Console-Daten ableiten.
+Diese erste Anbindung unterstützt die bewusste Auswahl im Briefing. Bestehende automatische Komplettläufe werden nicht stillschweigend auf einen beliebigen erfolgreichen Website-Suchbegriff umgestellt und weiterhin nicht durch eine universelle Pflichtprüfung blockiert. Neue Themen benötigen weiterhin eine zusätzliche Nachfrageprüfung; der separate **Google Keyword Planner** kann jetzt im Briefing verbunden werden (siehe [keyword-planner.md](keyword-planner.md)). Keine Rankings, Suchvolumen oder Erfolgsgarantien aus Search-Console-Daten ableiten.
 
 ## Validierung
 

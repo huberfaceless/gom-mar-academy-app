@@ -51,6 +51,7 @@ export interface ProjectSettings {
 }
 
 export interface ContentBrief {
+  keywordPlannerReport?: import('../utils/keywordPlanner').KeywordPlannerReport;
   searchConsoleReport?: import('../utils/searchConsoleKeywords').SearchConsoleReport;
   longTailKeywords?: string[];
   competitorResearch?: import('../utils/editorialStrategy').CompetitorResearch;
