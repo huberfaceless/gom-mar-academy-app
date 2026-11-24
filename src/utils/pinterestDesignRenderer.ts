@@ -1,3 +1,4 @@
+import { pinBrandText } from './pinBranding';
 import type { PinterestPin, ProjectSettings } from '../types/contentEngine';
 import { normalizePinDesign, colorContrast } from './pinterestDesign';
 const fontFamily='Arial, "Nimbus Sans", sans-serif';
@@ -35,7 +36,7 @@ export function renderAnalyzedPin(ctx:CanvasRenderingContext2D,width:number,heig
   else photo(ctx,image,145,w,h*.28);
  }
  // Branding and divider have their own reserved space above the headline.
- ctx.fillStyle=design.foreground;ctx.font=`600 25px ${fontFamily}`;ctx.fillText((pin.customBrandText||project.name).slice(0,60),textX,70,content);
+ ctx.fillStyle=design.foreground;ctx.font=`600 25px ${fontFamily}`;ctx.fillText(pinBrandText(pin,project).slice(0,60),textX,70,content);
  ctx.fillStyle=design.accent;ctx.fillRect(m,105,content,10);
  const photoAbove=Boolean(image&&layout!=='bold'&&layout!=='split');
  const y=photoAbove?145+h*.28+105:layout==='split'||layout==='list'?230:h*.28;

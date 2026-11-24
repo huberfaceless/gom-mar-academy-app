@@ -1,3 +1,4 @@
+import { pinBrandText, projectPinWebsite } from './pinBranding';
 import { renderAnalyzedPin } from './pinterestDesignRenderer';
 import { PinterestPin, PinTemplateStyle, PinColorTheme, ProjectSettings } from '../types/contentEngine';
 import JSZip from 'jszip';
@@ -300,12 +301,12 @@ export async function renderPinToCanvas(
   ctx.fillRect(0, 0, width, height);
 
   // 3. Top Branding Header Bar
-  const brandText = pin.customBrandText || projectSettings.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '').toUpperCase() || 'VITAL50.AT';
+  const brandText = pinBrandText(pin, projectSettings);
   const categoryBadge = pin.customBadge || (
     pin.angle === 'problem' ? 'RATGEBER AB 50' :
     pin.angle === 'solution' ? '3-SCHRITTE-LÖSUNG' :
     pin.angle === 'mistake' ? 'DIESEN FEHLER VERMEIDEN' :
-    pin.angle === 'list' ? 'CHECKLISTE & TIPPS' : 'TRANSFORMATION AB 50'
+    pin.angle === 'list' ? 'CHECKLISTE & TIPPS' : 'NEUE PERSPEKTIVE'
   );
 
   // Top pill badge container
@@ -358,12 +359,7 @@ export async function renderPinToCanvas(
     // List Items Box
     const bulletItems = pin.bulletPoints && pin.bulletPoints.length > 0 
       ? pin.bulletPoints 
-      : [
-          'Schritt 1: Stoffwechsel sanft aktivieren',
-          'Schritt 2: Blutzucker-Spitzen stoppen',
-          'Schritt 3: Entzündungen im Körper senken',
-          'Schritt 4: Energie & Vitalität steigern'
-        ];
+      : [pin.subHook || pin.description].filter(Boolean).map(text => text.slice(0, 140));
 
     let listY = endY + 60;
     bulletItems.slice(0, 4).forEach((item, idx) => {
@@ -448,7 +444,7 @@ export async function renderPinToCanvas(
     ctx.fillStyle = palette.highlightBg;
     ctx.font = '800 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText((pin.angleLabel || 'VITAL50 GESUNDHEITSTIPP').toUpperCase(), startX, currentY);
+    ctx.fillText((pin.angleLabel || projectSettings.name || 'RATGEBER').toUpperCase(), startX, currentY);
 
     currentY += 70;
 
@@ -462,7 +458,7 @@ export async function renderPinToCanvas(
     ctx.fillRect(startX, endY + 20, 240, 10);
 
     // Subtitle / SubHook Card
-    const subText = pin.subHook || (pin.description ? pin.description.slice(0, 140) + '...' : 'Wissenschaftlich geprüfte Methoden für mehr Vitalität und Wohlbefinden ab 50.');
+    const subText = pin.subHook || (pin.description ? pin.description.slice(0, 140) + '...' : 'Entdecke die nächsten Schritte zum Thema.');
     const cardY = endY + 70;
 
     drawRoundedRect(ctx, startX, cardY, contentWidth, 200, 28);
@@ -492,11 +488,11 @@ export async function renderPinToCanvas(
   ctx.fillStyle = palette.highlightBg;
   ctx.font = '800 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText('KOSTENLOSER RATGEBER:', 95, bottomCardY + 60);
+  ctx.fillText('MEHR ERFAHREN:', 95, bottomCardY + 60);
 
   ctx.fillStyle = '#ffffff';
   ctx.font = '700 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-  const displayUrl = projectSettings.websiteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') || 'vital50.gomo-marketing.at';
+  const displayUrl = projectPinWebsite(projectSettings);
   ctx.fillText(displayUrl, 95, bottomCardY + 105);
 
   // High-Conversion CTA Button on Right
