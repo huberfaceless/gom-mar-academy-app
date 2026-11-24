@@ -1,3 +1,4 @@
+import { SearchConsoleKeywordsPanel } from './SearchConsoleKeywordsPanel';
 import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React from 'react';
@@ -18,7 +19,7 @@ import { ContentBrief, ProjectSettings } from '../../types/contentEngine';
 interface BriefEditorTabProps {
   projectSettings?: ProjectSettings;
   brief: ContentBrief;
-  onChange: (updatedBrief: ContentBrief) => void;
+  onChange: (updatedBrief: ContentBrief) => unknown;
   onGenerateBlog: () => void;
   isGeneratingBlog: boolean;
 }
@@ -77,8 +78,9 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
         </div>
       </div>
 
-      <LongTailKeywordsPanel value={brief.longTailKeywords} topic={brief.suggestedTitle || brief.h1 || brief.mainKeyword}
-        content={JSON.stringify(brief)} projectSettings={projectSettings}
+      {projectSettings && <SearchConsoleKeywordsPanel project={projectSettings} brief={brief} onChange={onChange} />}
+      <LongTailKeywordsPanel searchConsoleReport={brief.searchConsoleReport} value={brief.longTailKeywords} topic={brief.suggestedTitle || brief.h1 || brief.mainKeyword}
+        content={JSON.stringify({ ...brief, searchConsoleReport: undefined })} projectSettings={projectSettings}
         onChange={longTailKeywords => onChange({ ...brief, longTailKeywords })} />
       {/* Grid with Details */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
