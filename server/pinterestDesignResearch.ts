@@ -1,3 +1,4 @@
+import { loadPublicPin, publicPinUrl } from './pinterestCompetitorSearch.js';
 import { pinterestApiBase } from '../src/utils/pinterestEnvironment.js';
 import { contentLanguageInstruction } from './contentGenerationLanguage.js';
 import { finiteMetric, normalizePinDesign, type PinDesignProfile, type PinDesignReference } from '../src/utils/pinterestDesign.js';
@@ -74,11 +75,14 @@ async function remoteImage(url:string,request:typeof fetch) {
  try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>imageLimit)throw new Error('Das Pin-Bild ist zu groß.');chunks.push(value);}}finally{await reader.cancel();}
  return imagePart(Buffer.concat(chunks),response.headers.get('content-type')?.split(';')[0]||'');
 }
-export interface DesignResearchInput {days?:unknown;pinIds?:unknown;inspirations?:unknown;topic?:unknown;projectSettings?:{language?:unknown;name?:unknown;targetAudience?:unknown}}
+export interface DesignResearchInput {days?:unknown;pinIds?:unknown;competitorPinUrls?:unknown;inspirations?:unknown;topic?:unknown;projectSettings?:{language?:unknown;name?:unknown;targetAudience?:unknown}}
 export async function analyzePinterestDesign(ai:any,token:string|undefined,input:DesignResearchInput,request:typeof fetch=fetch):Promise<PinDesignProfile> {
  const ids=Array.isArray(input.pinIds)?input.pinIds:[];
  const inspirations=Array.isArray(input.inspirations)?input.inspirations:[];
- if(ids.length+inspirations.length<1 || ids.length+inspirations.length>3 || !ids.every(id=>typeof id==='string'&&/^\d{1,30}$/.test(id)) || new Set(ids).size!==ids.length)throw new Error('Bitte ein bis drei unterschiedliche Pin-Bilder auswählen.');
+ const competitorUrls=Array.isArray(input.competitorPinUrls)?input.competitorPinUrls:[];
+ const competitorPins=competitorUrls.map(publicPinUrl);
+ if(competitorPins.some(pin=>!pin)||new Set([...ids.map(id=>`https://www.pinterest.com/pin/${id}/`),...competitorPins]).size!==ids.length+competitorPins.length)throw new Error('Bitte unterschiedliche öffentliche Pinterest-Pins auswählen.');
+ if(ids.length+inspirations.length+competitorPins.length<1 || ids.length+inspirations.length+competitorPins.length>3 || !ids.every(id=>typeof id==='string'&&/^\d{1,30}$/.test(id)) || new Set(ids).size!==ids.length)throw new Error('Bitte ein bis drei unterschiedliche Pin-Bilder auswählen.');
  const topic=safeText(input.topic,500);if(!topic)throw new Error('Bitte ein Thema auswählen.');
  const references:PinDesignReference[]=[];const parts:any[]=[];
  let period:PinDesignProfile['period'];
@@ -87,6 +91,10 @@ export async function analyzePinterestDesign(ai:any,token:string|undefined,input
   const loaded=await loadTopPinDesigns(token,input.days,request);period=loaded.period;
   for(const id of ids){const pin=loaded.pins.find(pin=>pin.id===id);if(!pin)throw new Error('Der ausgewählte Pin ist für dieses Konto nicht auswertbar. Bitte die Liste aktualisieren.');
    references.push(pin);parts.push({text:`Referenz ${references.length}: ${JSON.stringify(pin)}. Messwerte belegen keine Ursache durch das Design.`},await remoteImage(pin.imageUrl!,request));}
+ }
+ for(const url of competitorPins){
+  const pin=await loadPublicPin(url,request);
+  references.push(pin);parts.push({text:`Referenz ${references.length}: Öffentliches Konkurrenz-Designvorbild ohne verifizierte Klickdaten. ${JSON.stringify(pin)}`},await remoteImage(pin.imageUrl!,request));
  }
  for(let index=0;index<inspirations.length;index++){
   const ref=inspirations[index] as any;const match=typeof ref?.imageData==='string'?ref.imageData.match(/^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/):null;
