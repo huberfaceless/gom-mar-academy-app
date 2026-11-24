@@ -1,3 +1,4 @@
+import { searchSuggestionsDocument } from '../src/utils/searchSuggestionsDocument';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -20,6 +21,7 @@ const request:typeof fetch=async(input,init)=>{
 };
 for(const url of ['https://evil.test/pin/123/','https://pinterest.com.evil.test/pin/123/','http://pinterest.com/pin/123/','https://a:b@pinterest.com/pin/123/','https://pinterest.com:8443/pin/123/','https://pinterest.com/search/pins/','https://127.0.0.1/pin/123/','https://pin.it/123','https://pinterest.com/pin/not-a-pin/'])assert.equal(publicPinUrl(url),null);
 assert.equal(publicPinUrl('https://de.pinterest.com/pin/123456789/?tracking=1'),pinUrl);
+assert.equal(publicPinUrl('https://www.pinterest.com/pin/affiliate-marketing-ideen--123456789/'),pinUrl);
 assert.equal(publicPinMetadata(head,pinUrl)?.title,'Business & Design');
 assert.equal(publicPinMetadata(head.replace('</head>','<meta property="og:see_also" content="https://gomo-marketing.at/article/"></head>'),pinUrl,new Set(['gomo-marketing.at'])),null,'Known own-site destinations are excluded from competitor results');
 assert.equal(publicPinMetadata(head.replace(imageUrl,'https://evil.test/picture.png'),pinUrl),null);
@@ -31,8 +33,10 @@ const maliciousRedirect:typeof fetch=async(input)=>{forbiddenFetches++;assert.ok
 assert.equal(await resolvePinSource('https://vertexaisearch.cloud.google.com/grounding-api-redirect/test',maliciousRedirect),null);assert.equal(forbiddenFetches,1);
 await assert.rejects(()=>loadPublicPin(pinUrl,async()=>new Response(null,{status:302,headers:{location:'https://evil.test/'}})),/nicht.*lesbar/);
 await assert.rejects(()=>loadPublicPin(pinUrl,async()=>new Response('Sign in',{status:403})),/nicht.*lesbar/);
-await assert.rejects(()=>loadPublicPin(pinUrl,async()=>new Response('<head>'+(' '.repeat(600000))+head,{headers:{'content-type':'text/html'}})),/nicht.*lesbar/);
+await assert.rejects(()=>loadPublicPin(pinUrl,async()=>new Response('<head>'+(' '.repeat(4*1024*1024))+head,{headers:{'content-type':'text/html'}})),/nicht.*lesbar/);
 assert.equal((await loadPublicPin(pinUrl,request)).kind,'competitor');
+const longHead=head.replace('<head>','<head><script>'+(' '.repeat(1400000))+'</script>');
+assert.equal((await loadPublicPin(pinUrl,async()=>new Response(longHead,{headers:{'content-type':'text/html'}}))).imageUrl,imageUrl,'Real Pinterest heads can place Open Graph metadata after 1.3 MB');
 
 let generation:any;
 const searchResponse={text:'A hallucinated URL https://www.pinterest.com/pin/999/ should never be trusted.',candidates:[{finishReason:'STOP',groundingMetadata:{webSearchQueries:['site:pinterest.com/pin/ online business'],groundingChunks:[{web:{uri:pinUrl}},{web:{uri:pinUrl}},{web:{uri:'https://evil.test/'}},{web:{uri:'https://www.pinterest.com/boards/'}}],searchEntryPoint:{renderedContent:'<div>Google attribution</div>'}}}]};
@@ -40,7 +44,10 @@ const ai={models:{generateContent:async(input:any)=>{generation=input;return sea
 const report=await searchCompetitorPins(ai,{query:'Online Business ab 50'},request);
 assert.equal(report.pins.length,1);assert.equal(report.pins[0]?.pinUrl,pinUrl);assert.equal(report.pins[0]?.outboundClicks,undefined);
 assert.ok(generation.config.tools[0].googleSearch);assert.ok(report.searchSuggestionsHtml.includes('Google'));
-assert.ok(!requests.some(url=>url.includes('/999/')),'Model text cannot fabricate search results');
+assert.ok(!report.pins.some(pin=>pin.pinUrl?.includes('/999/')),'Unverified model candidates cannot become results');
+const textCandidate=await searchCompetitorPins({models:{generateContent:async()=>({...searchResponse,text:pinUrl,candidates:[{finishReason:'STOP',groundingMetadata:{...searchResponse.candidates[0].groundingMetadata,groundingChunks:[]}}]})}},{query:'Business'},request);
+assert.equal(textCandidate.pins.length,1,'A mentioned candidate must independently pass public canonical and image checks');
+assert.equal(textCandidate.groundedPinCount,0);assert.equal(textCandidate.candidateCount,1);
 await assert.rejects(()=>searchCompetitorPins(ai,{query:'x'},request),/3 bis 250/);
 await assert.rejects(()=>searchCompetitorPins({models:{generateContent:async()=>({candidates:[{finishReason:'STOP',groundingMetadata:{groundingChunks:[]}}]})}},{query:'Business'},request),/keine abgeschlossene/);
 const empty=await searchCompetitorPins({models:{generateContent:async()=>({...searchResponse,candidates:[{finishReason:'STOP',groundingMetadata:{...searchResponse.candidates[0].groundingMetadata,groundingChunks:[]}}]})}},{query:'Unknown topic'},request);
@@ -57,9 +64,9 @@ await assert.rejects(()=>analyzePinterestDesign(ai,undefined,{competitorPinUrls:
 await assert.rejects(()=>analyzePinterestDesign(ai,undefined,{competitorPinUrls:[pinUrl,pinUrl,pinUrl,pinUrl],topic:'Business'},request));
 
 // Actual UI event handlers: search, select a competitor, analyze, persist; no own-account request.
-const slots:any[]=[];let cursor=0;let saved:any;const apiCalls:any[]=[];
+const slots:any[]=[];let cursor=0;let saved:any;const apiCalls:any[]=[];let currentReport:any=report;
 const react={createElement:(type:unknown,props:any,...children:unknown[])=>({type,props:{...props,children}}),useState(value:any){const i=cursor++;if(!(i in slots))slots[i]=value;return[slots[i],(next:any)=>{slots[i]=next;}];},useRef(value:any){const i=cursor++;if(!(i in slots))slots[i]={current:value};return slots[i];},useEffect(){}};
-const ctx=vm.createContext({exports:{},URL,Date,console,require(name:string){if(name==='react')return react;if(name.endsWith('useContentHubCopy'))return{useContentHubCopy:()=>({hubText:(value:string)=>value})};if(name.endsWith('authenticatedFetch'))return{authenticatedFetch:async(url:string,options:any)=>{const body=JSON.parse(options.body);apiCalls.push({url,body});return{ok:true,json:async()=>url.endsWith('competitors')?report:{profile}};}};return{};}});
+const ctx=vm.createContext({exports:{},URL,Date,console,require(name:string){if(name==='react')return react;if(name.endsWith('searchSuggestionsDocument'))return{searchSuggestionsDocument};if(name.endsWith('useContentHubCopy'))return{useContentHubCopy:()=>({hubText:(value:string)=>value})};if(name.endsWith('authenticatedFetch'))return{authenticatedFetch:async(url:string,options:any)=>{const body=JSON.parse(options.body);apiCalls.push({url,body});return{ok:true,json:async()=>url.endsWith('competitors')?currentReport:{profile}};}};return{};}});
 vm.runInContext(ts.transpileModule(readFileSync('src/components/ContentEngine/PinterestDesignPanel.tsx','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.React,esModuleInterop:true}}).outputText,ctx);
 const render=()=>{cursor=0;return ctx.exports.PinterestDesignPanel({project:{id:'academy',name:'Academy'},topic:'Online Business',onSave:async(value:any)=>{saved=value;return true;}});};
 const find=(node:any,test:(n:any)=>boolean):any=>{if(Array.isArray(node)){for(const child of node){const result=find(child,test);if(result)return result;}}else if(node&&typeof node==='object'){if(test(node))return node;return find(node.props?.children,test);}};
@@ -70,6 +77,11 @@ find(tree,n=>n.type==='input'&&n.props.type==='checkbox').props.onChange({target
 find(render(),n=>n.type==='button'&&n.props.children.includes('Ausgewählte Bilder analysieren und Designvorgaben speichern')).props.onClick();await new Promise(setImmediate);
 assert.deepEqual(apiCalls[1].body.competitorPinUrls,[pinUrl]);assert.equal(apiCalls[1].body.pinIds.length,0);assert.equal(saved.pinterestDesignProfile.references[0].kind,'competitor');
 assert.ok(apiCalls.every(call=>!call.url.includes('top-pins')));
+currentReport={...report,pins:[],candidateCount:0};find(render(),n=>n.type==='button'&&n.props.children.includes('Konkurrenz-Pins suchen')).props.onClick();await new Promise(setImmediate);
+assert.match(find(render(),n=>n.props?.role==='status').props.children.join(''),/keine prüfbaren Pin-Links/);
+currentReport={...report,pins:[],candidateCount:2,unreadable:2};find(render(),n=>n.type==='button'&&n.props.children.includes('Konkurrenz-Pins suchen')).props.onClick();await new Promise(setImmediate);
+assert.match(find(render(),n=>n.props?.role==='status').props.children.join(''),/Pin-Links gefunden/);
+const pinterestLink=find(render(),n=>n.type==='a'&&n.props.children.includes('Auf Pinterest weitersuchen'));assert.equal(pinterestLink.props.target,'_blank');assert.ok(pinterestLink.props.href.includes('Online%20Business'));
 console.log('Konkurrenz-Pins geprüft: belegte Suchquellen, sichere öffentliche Bilder, keine erfundenen Messwerte, echte Bildanalyse, Auswahl und Speicherung ohne Pinterest-Kontozugriff.');
 
 // Server route rejects missing membership, invalid topics and sandbox before invoking search.
@@ -83,3 +95,20 @@ await handler({body:{query:'Business'}},res);assert.equal(status,401);assert.equ
 await handler({body:{query:'x'},firebaseUser:{sub:'member'}},res);assert.equal(status,400);assert.equal(searches,0);
 res.locals.pinterestEnvironment='sandbox';await handler({body:{query:'Business'},firebaseUser:{sub:'member'}},res);assert.equal(status,400);assert.equal(searches,0);
 res.locals.pinterestEnvironment='production';status=200;await handler({body:{query:'Business'},firebaseUser:{sub:'member'}},res);assert.equal(status,200);assert.equal(searches,1);
+
+// Google destinations must open a fresh tab, never navigate the embedded source frame.
+const suggestions=searchSuggestionsDocument('<style>.chip{color:blue}</style><a href="https://www.google.com/search?q=business" target="_self">Google</a><a href="https://www.google.com/search?q=pins">Pins</a>');
+assert.equal((suggestions.match(/target="_blank"/g)||[]).length,3);assert.doesNotMatch(suggestions,/target="_self"/);assert.ok(suggestions.includes('sandbox')===false);assert.ok(suggestions.includes('.chip{color:blue}'));
+
+// Public oEmbed supplies a thumbnail when Pinterest streams no usable page metadata.
+let embedReads=0;
+const embedRequest:typeof fetch=async(input)=>{
+ if(String(input).includes('/oembed.json?')){embedReads++;return Response.json({provider_name:'Pinterest',title:'Öffentliches Vorbild',html:`<iframe src="https://assets.pinterest.com/ext/embed.html?id=123456789&amp;src=oembed"></iframe>`,thumbnail_url:imageUrl});}
+ return new Response('<head></head><body>Public pin</body>',{headers:{'content-type':'text/html'}});
+};
+assert.equal((await loadPublicPin(pinUrl,embedRequest)).imageUrl,imageUrl);assert.equal(embedReads,1);
+await assert.rejects(()=>loadPublicPin(pinUrl,async(input)=>String(input).includes('/oembed.json?')?Response.json({provider_name:'Pinterest',html:'<iframe src="https://assets.pinterest.com/ext/embed.html?id=999"></iframe>',thumbnail_url:imageUrl}):new Response('',{headers:{'content-type':'text/html'}})),/nicht.*lesbar/);
+const ownHead=head.replace('</head>','<meta property="og:see_also" content="https://gomo-marketing.at/article/"></head>');let ownEmbed=0;
+await assert.rejects(()=>loadPublicPin(pinUrl,async(input)=>{if(String(input).includes('oembed'))ownEmbed++;return new Response(ownHead,{headers:{'content-type':'text/html'}});},new Set(['gomo-marketing.at'])),/nicht.*lesbar/);assert.equal(ownEmbed,0,'oEmbed does not reintroduce known own-site destinations');
+const streamedHead='<head></head><body>'+(' '.repeat(1400000))+head+'</body>';
+assert.equal((await loadPublicPin(pinUrl,async()=>new Response(streamedHead,{headers:{'content-type':'text/html'}}))).imageUrl,imageUrl,'Streamed metadata after the head remains usable');

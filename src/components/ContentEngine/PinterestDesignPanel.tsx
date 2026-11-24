@@ -1,3 +1,4 @@
+import { searchSuggestionsDocument } from '../../utils/searchSuggestionsDocument';
 import React, { useEffect, useRef, useState } from 'react';
 import type { ProjectSettings } from '../../types/contentEngine';
 import type { PinDesignProfile, PinDesignReference } from '../../utils/pinterestDesign';
@@ -31,7 +32,7 @@ export function PinterestDesignPanel({project,topic,onSave}:{project:ProjectSett
  const [selected,setSelected]=useState<string[]>([]);const [inspirations,setInspirations]=useState<Inspiration[]>([]);
  const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');
  const [query,setQuery]=useState(topic);
- const [competitors,setCompetitors]=useState<{pins:PinDesignReference[];searchedAt:string;searchSuggestionsHtml:string;unreadable:number}|null>(null);
+ const [competitors,setCompetitors]=useState<{pins:PinDesignReference[];searchedAt:string;searchSuggestionsHtml:string;unreadable:number;candidateCount?:number;groundedPinCount?:number;sourceCount?:number;searchQueries?:string[]}|null>(null);
  const [competitorSelection,setCompetitorSelection]=useState<string[]>([]);
  const [pinLink,setPinLink]=useState('');
  const latest=useRef({project,topic,onSave,days,query});latest.current={project,topic,onSave,days,query};
@@ -40,7 +41,7 @@ export function PinterestDesignPanel({project,topic,onSave}:{project:ProjectSett
   const initial=source();const data=await request('competitors',{environment:'production',query,projectSettings:project});
   if(!mounted.current)return;if(initial!==source())throw new Error(hubText('Das Projekt oder Thema wurde geändert. Bitte erneut starten.'));
   setCompetitors(data);setCompetitorSelection([]);
-  if(!data.pins?.length)setNotice(hubText('Keine öffentlich lesbaren Pin-Bilder gefunden. Bitte den Suchbegriff ändern, einen konkreten Pin-Link ergänzen oder ein Designvorbild hochladen.'));
+  if(!data.pins?.length)setNotice(hubText(data.candidateCount>0?'Pin-Links gefunden, aber ihre Bilder konnten öffentlich nicht gelesen werden. Bitte einen anderen Pin wählen oder ein Designvorbild hochladen.':'Die Websuche hat keine prüfbaren Pin-Links geliefert. Bitte mit einem kürzeren Suchbegriff erneut suchen oder Pinterest direkt öffnen.'));
  });
  const mounted=useRef(true);useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
  useEffect(()=>{setQuery(topic);setCompetitors(null);setCompetitorSelection([]);setSelected([]);setPins([]);setPeriod(null);setInspirations([]);setPinLink('');setError('');setNotice('');},[project.id,topic]);
@@ -83,17 +84,20 @@ export function PinterestDesignPanel({project,topic,onSave}:{project:ProjectSett
     <p className="text-xs text-slate-500">{hubText('Öffentliche Websuche, keine vollständige Pinterest-Suche. Nur gefundene Pins mit lesbarem Bild werden angeboten. Eine Pinterest-Verbindung ist dafür nicht nötig.')}</p>
     {competitors&&<>
      <p className="text-xs">{hubText('Zuletzt gesucht')}: {new Date(competitors.searchedAt).toLocaleString()} · {competitors.pins.length} {hubText('Designvorbilder')}{competitors.unreadable>0?` · ${competitors.unreadable} ${hubText('öffentlich nicht lesbar')}`:''}</p>
+     {!competitors.pins.length&&<p className="text-xs text-slate-600">{hubText('Geprüfte Pin-Links')}: {competitors.candidateCount??0} · {hubText('Nicht lesbare Pin-Bilder')}: {competitors.unreadable}</p>}
+     {!!competitors.searchQueries?.length&&<p className="text-xs text-slate-600">{hubText('Verwendete Suchbegriffe')}: {competitors.searchQueries.join(' · ')}</p>}
      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{competitors.pins.map(pin=><label key={pin.id} className="space-y-2 rounded-xl border p-3 text-sm">
       <div className="flex items-start gap-2"><input type="checkbox" checked={competitorSelection.includes(pin.pinUrl!)} disabled={busy||(!competitorSelection.includes(pin.pinUrl!)&&total>=3)} onChange={event=>setCompetitorSelection(event.target.checked?[...competitorSelection,pin.pinUrl!]:competitorSelection.filter(url=>url!==pin.pinUrl))}/><strong>{pin.title}</strong></div>
       <img src={pin.imageUrl} alt={pin.title} loading="lazy" referrerPolicy="no-referrer" className="h-56 w-full rounded-lg object-contain"/>
       <p className="text-xs text-slate-500">{hubText('Designvorbild ohne Klicknachweis')}</p>
       <a href={pin.pinUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline">{hubText('Pin ansehen')}</a>
      </label>)}</div>
-     <iframe title={hubText('Google-Suchvorschläge zur Pin-Recherche')} srcDoc={'<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src https: data:; font-src https:; base-uri \'none\'; form-action \'none\'">'+competitors.searchSuggestionsHtml} sandbox="allow-popups allow-popups-to-escape-sandbox" referrerPolicy="no-referrer" className="h-40 w-full border-0"/>
+     <iframe title={hubText('Google-Suchvorschläge zur Pin-Recherche')} srcDoc={searchSuggestionsDocument(competitors.searchSuggestionsHtml)} sandbox="allow-popups allow-popups-to-escape-sandbox" referrerPolicy="no-referrer" className="h-40 w-full border-0"/>
     </>}
+    <a href={`https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-emerald-700 underline">{hubText('Auf Pinterest weitersuchen')}</a>
     <details className="text-sm"><summary className="cursor-pointer font-bold">{hubText('Konkreten Konkurrenz-Pin ergänzen')}</summary>
      <label className="mt-2 block">{hubText('Vollständiger Pinterest-Pin-Link')}<input type="url" value={pinLink} disabled={busy} onChange={event=>setPinLink(event.target.value)} placeholder="https://www.pinterest.com/pin/…/" className="mt-1 w-full rounded-xl border p-2"/></label>
-     <button type="button" disabled={busy||total>=3||!pinLink.trim()} className="mt-2 rounded-xl border px-3 py-2" onClick={()=>{try{const url=new URL(pinLink);if(url.protocol!=='https:'||!/(^|\.)pinterest\.(com|de|at|co\.uk)$/.test(url.hostname)||url.username||url.password||url.port||!/^\/pin\/\d{1,30}\/?$/.test(url.pathname))throw new Error();const canonical=`https://www.pinterest.com${url.pathname.replace(/\/?$/,'/')}`;if(!competitorSelection.includes(canonical))setCompetitorSelection([...competitorSelection,canonical]);setPinLink('');setError('');}catch{setError(hubText('Bitte den vollständigen Link zu einem öffentlichen Pinterest-Pin angeben.'));}}}>{hubText('Pin-Link auswählen')}</button>
+     <button type="button" disabled={busy||total>=3||!pinLink.trim()} className="mt-2 rounded-xl border px-3 py-2" onClick={()=>{try{const url=new URL(pinLink);if(url.protocol!=='https:'||!/(^|\.)pinterest\.(com|de|at|co\.uk)$/.test(url.hostname)||url.username||url.password||url.port||!/^\/pin\/(?:[^/]{1,250}--)?\d{1,30}\/?$/.test(url.pathname))throw new Error();const id=url.pathname.match(/(\d{1,30})\/?$/)![1];const canonical=`https://www.pinterest.com/pin/${id}/`;if(!competitorSelection.includes(canonical))setCompetitorSelection([...competitorSelection,canonical]);setPinLink('');setError('');}catch{setError(hubText('Bitte den vollständigen Link zu einem öffentlichen Pinterest-Pin angeben.'));}}}>{hubText('Pin-Link auswählen')}</button>
     </details>
     {competitorSelection.filter(url=>!competitors?.pins.some(pin=>pin.pinUrl===url)).map(url=><div key={url} className="flex flex-wrap items-center gap-2 text-xs"><a href={url} target="_blank" rel="noopener noreferrer" className="underline">{url}</a><button type="button" disabled={busy} onClick={()=>setCompetitorSelection(competitorSelection.filter(item=>item!==url))}>{hubText('Entfernen')}</button><span>{hubText('Bild wird vor der Analyse geprüft.')}</span></div>)}
    </section>

@@ -1,3 +1,4 @@
+import { searchSuggestionsDocument } from '../../utils/searchSuggestionsDocument';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { CompetitorResearch } from '../../utils/editorialStrategy';
@@ -7,7 +8,7 @@ import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 export function CompetitorResearchPanel({ report }: { report: CompetitorResearch }) {
   const { language, hubText } = useContentHubCopy();
   // Provider HTML stays in an opaque sandbox; it never enters the Academy DOM.
-  const suggestionDocument = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src https: data:; font-src https:; base-uri \'none\'; form-action \'none\'">' + report.searchSuggestionsHtml;
+  const suggestionDocument = searchSuggestionsDocument(report.searchSuggestionsHtml);
   return <section className="rounded-2xl bg-white border border-emerald-200 p-5 space-y-3">
     <h2 className="font-bold text-emerald-900">{hubText('Mitbewerber-Recherche vor der Erstellung')}</h2>
     <p className="text-xs text-slate-600">{hubText('Stand:')}{' '}{new Date(report.checkedAt).toLocaleString(language)} · {report.audience}</p>
