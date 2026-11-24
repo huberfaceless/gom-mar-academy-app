@@ -13,13 +13,34 @@ export function researchPeriod(days: unknown, now=new Date()) {
  const start=new Date(end.getTime()-(Number(days)-1)*86400000);
  return{start:start.toISOString().slice(0,10),end:end.toISOString().slice(0,10)};
 }
+/** Return useful upstream diagnostics without reflecting credentials or arbitrary URLs. */
+export function pinterestAnalyticsFailure(status:number,data:unknown,accessToken:string): Error {
+ const body=data && typeof data==='object'?data as Record<string,unknown>:{};
+ const code=typeof body.code==='number' && Number.isFinite(body.code) ? String(body.code)
+  : typeof body.code==='string' && /^[A-Za-z0-9_-]{1,60}$/.test(body.code) ? body.code : '';
+ let detail=typeof body.message==='string'?body.message:'';
+ if(accessToken){detail=detail.split(accessToken).join('[entfernt]').split(encodeURIComponent(accessToken)).join('[entfernt]');}
+ detail=detail.replace(/<[^>]*>/g,'').replace(/Bearer\s+[^\s,;]+/gi,'Bearer [entfernt]')
+  .replace(/((?:access[_-]?token|refresh[_-]?token|client[_-]?secret|authorization|password|secret|token)["']?\s*[:=]\s*["']?)[^"'\s,;]+/gi,'$1[entfernt]')
+  .replace(/https?:\/\/[^\s]+/gi,'[Adresse entfernt]').replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,350);
+ const reason=status===401?'Die Pinterest-Verbindung wurde abgelehnt. Bitte Pinterest erneut verbinden.'
+  :status===403?'Pinterest hat den Analytics-Zugriff nicht freigegeben. Bitte Business-Konto und App-Berechtigungen prüfen.'
+  :status===429?'Pinterest begrenzt derzeit die Anfragen. Bitte später erneut versuchen.'
+  :status>=500?'Pinterest ist vorübergehend nicht erreichbar. Bitte später erneut versuchen.'
+  :status===400?'Pinterest hat die Analytics-Anfrage als ungültig abgelehnt.'
+  :'Pinterest-Klickdaten konnten nicht geladen werden.';
+ return new Error(`${reason} (HTTP ${status}${code?`, Pinterest-Code ${code}`:''})${detail?` ${detail}`:''}`);
+}
 export async function loadTopPinDesigns(accessToken:string,days:unknown=30,request:typeof fetch=fetch,now=new Date()) {
  const period=researchPeriod(days,now);
- const query=new URLSearchParams({start_date:period.start,end_date:period.end,sort_by:'OUTBOUND_CLICK',metric_types:'IMPRESSION,OUTBOUND_CLICK',content_type:'ORGANIC',num_of_pins:'50',created_in_last_n_days:'90'});
- const response=await request(`${pinterestApiBase('production')}/user_account/analytics/top_pins?${query}`,{headers:{Authorization:`Bearer ${accessToken}`},signal:AbortSignal.timeout(15000)});
- if(!response.ok)throw new Error(response.status===403?'Pinterest hat den Analytics-Zugriff nicht freigegeben. Bitte Business-Konto und App-Berechtigungen prüfen.':'Pinterest-Klickdaten konnten nicht geladen werden.');
- const data=await response.json();
- if(!Array.isArray(data.pins))throw new Error('Pinterest hat keine auswertbare Pin-Liste geliefert.');
+ // Pinterest only permits 30 for this creation-age filter. It is independent of the reporting period.
+ const query=new URLSearchParams({start_date:period.start,end_date:period.end,sort_by:'OUTBOUND_CLICK',metric_types:'IMPRESSION,OUTBOUND_CLICK',content_type:'ORGANIC',num_of_pins:'50',created_in_last_n_days:'30'});
+ let response:Response;
+ try {response=await request(`${pinterestApiBase('production')}/user_account/analytics/top_pins?${query}`,{headers:{Authorization:`Bearer ${accessToken}`},signal:AbortSignal.timeout(15000)});}
+ catch {throw new Error('Pinterest konnte wegen eines Verbindungsfehlers oder Zeitlimits nicht abgefragt werden. Bitte erneut versuchen.');}
+ const data=await response.json().catch(()=>null);
+ if(!response.ok)throw pinterestAnalyticsFailure(response.status,data,accessToken);
+ if(!Array.isArray(data?.pins))throw new Error('Pinterest hat keine auswertbare Pin-Liste geliefert.');
  const ids=new Set<string>();
  const rows=data.pins.filter((row:any)=>row && typeof row==='object' && typeof row.pin_id==='string' && /^\d{1,30}$/.test(row.pin_id)&&!ids.has(row.pin_id)&&Boolean(ids.add(row.pin_id))).slice(0,50);
  // Only hydrate ten measured candidates; no search results or competitor counts are invented.

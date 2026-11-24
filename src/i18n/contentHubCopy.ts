@@ -16,7 +16,7 @@ export const contentHubEnglish: Record<string, string> = {
   "Tage": "days",
   "Klickstarke Pins meines Kontos laden": "Load top pins from my account",
   "Pinterest verbinden": "Connect Pinterest",
-  "Organische Kontodaten, nach ausgehenden Klicks sortiert. Maximal zehn verfügbare Bild-Pins aus den Top 50, erstellt in den letzten 90 Tagen. Fehlende Messwerte bleiben unbekannt. Neue Freigaben oder ein Business-Konto können erforderlich sein.": "Organic account data sorted by outbound clicks. Up to ten available image pins from the top 50, created in the past 90 days. Missing metrics remain unknown. Additional access approval or a business account may be required.",
+  "Organische Kontodaten, nach ausgehenden Klicks sortiert. Maximal zehn verfügbare Bild-Pins aus den Top 50, erstellt in den letzten 30 Tagen. Fehlende Messwerte bleiben unbekannt. Neue Freigaben oder ein Business-Konto können erforderlich sein.": "Organic account data sorted by outbound clicks. Up to ten available image pins from the top 50, created in the past 30 days. Missing metrics remain unknown. Additional access approval or a business account may be required.",
   "Ausgehende Klicks": "Outbound clicks",
   "Impressionen": "Impressions",
   "Klickrate": "Click rate",

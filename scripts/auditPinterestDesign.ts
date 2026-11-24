@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import { build } from 'esbuild';
-import { loadTopPinDesigns, analyzePinterestDesign, pinterestImageUrl, researchPeriod } from '../server/pinterestDesignResearch';
+import { loadTopPinDesigns, analyzePinterestDesign, pinterestImageUrl, researchPeriod, pinterestAnalyticsFailure } from '../server/pinterestDesignResearch';
 import { colorContrast, normalizePinDesign, normalizePinDesignProfile, pinDesignPrompt } from '../src/utils/pinterestDesign';
 import { renderAnalyzedPin } from '../src/utils/pinterestDesignRenderer';
 import { createOnlineBusinessProject } from '../src/utils/contentStorage';
@@ -24,6 +24,7 @@ let deny=false;let huge=false;
 const fakeFetch:typeof fetch=async(input,init)=>{
  const url=String(input);calls.push({url,init});
  if(url.includes('/analytics/top_pins')){
+  if(new URL(url).searchParams.get('created_in_last_n_days')!=='30')return Response.json({code:1,message:'created_in_last_n_days must be 30'},{status:400});
   if(deny)return new Response('{}',{status:403});
   return Response.json({pins:[null,{pin_id:'11',metrics:{IMPRESSION:1000,OUTBOUND_CLICK:30},data_status:{IMPRESSION:'READY'}},{pin_id:'22',metrics:{IMPRESSION:10,OUTBOUND_CLICK:2}},{pin_id:'33',metrics:{}},{pin_id:'11',metrics:{IMPRESSION:5,OUTBOUND_CLICK:1}},{pin_id:'https://evil.test'}]});
  }
@@ -34,8 +35,25 @@ const fakeFetch:typeof fetch=async(input,init)=>{
 const report=await loadTopPinDesigns('server-token',30,fakeFetch,now);
 assert.equal(report.pins.length,3);assert.equal(report.pins[0].id,'11');assert.equal(report.pins[0].outboundRate,0.03);
 assert.equal(report.pins[2].impressions,null);assert.equal(report.pins[2].outboundRate,null,'Missing counts never become zero or a fake CTR');
-const query=new URL(calls[0].url);assert.equal(query.hostname,'api.pinterest.com');assert.equal(query.searchParams.get('content_type'),'ORGANIC');assert.equal(query.searchParams.get('sort_by'),'OUTBOUND_CLICK');assert.equal(query.searchParams.get('num_of_pins'),'50');
+const query=new URL(calls[0].url);assert.equal(query.hostname,'api.pinterest.com');assert.equal(query.searchParams.get('content_type'),'ORGANIC');assert.equal(query.searchParams.get('sort_by'),'OUTBOUND_CLICK');assert.equal(query.searchParams.get('num_of_pins'),'50');assert.equal(query.searchParams.get('created_in_last_n_days'),'30');
 assert.ok(calls.every(call=>(call.init?.headers as any).Authorization==='Bearer server-token'));
+// Creation age and metric window are independent. Pinterest's enum permits only 30.
+for(const days of [30,60,90]) {
+ const count=calls.length;await loadTopPinDesigns('server-token',days,fakeFetch,now);
+ const requestUrl=new URL(calls[count].url);const expected=researchPeriod(days,now);
+ assert.equal(requestUrl.searchParams.get('created_in_last_n_days'),'30');
+ assert.equal(requestUrl.searchParams.get('start_date'),expected.start);assert.equal(requestUrl.searchParams.get('end_date'),expected.end);
+}
+for(const [status,expected] of [[400,/ungültig/],[401,/erneut verbinden/],[403,/App-Berechtigungen/],[429,/begrenzt/],[503,/vorübergehend/]] as const) {
+ const failure=pinterestAnalyticsFailure(status,{code:1,message:'Invalid field created_in_last_n_days, token=private-value; Bearer private-bearer https://example.test/?access_token=private-url'},'server-token');
+ assert.match(failure.message,expected);assert.ok(failure.message.includes('HTTP '+status));assert.match(failure.message,/Pinterest-Code 1/);
+ assert.doesNotMatch(failure.message,/private-value|private-bearer|private-url/);
+}
+const quoted=pinterestAnalyticsFailure(400,{message:'client_secret":"quoted-secret" accessToken="camel-secret"'},'server-token');assert.doesNotMatch(quoted.message,/quoted-secret|camel-secret/);
+const exposed=pinterestAnalyticsFailure(400,{code:'INVALID_PARAMETERS',message:'Parameter invalid, server-token'},'server-token');assert.match(exposed.message,/INVALID_PARAMETERS/);assert.doesNotMatch(exposed.message,/server-token/);
+await assert.rejects(()=>loadTopPinDesigns('server-token',30,async()=>Response.json({code:1,message:'created_in_last_n_days must be 30'},{status:400}),now),/HTTP 400.*created_in_last_n_days/);
+await assert.rejects(()=>loadTopPinDesigns('server-token',30,async()=>new Response('<html>upstream unavailable</html>',{status:503}),now),/HTTP 503/);
+await assert.rejects(()=>loadTopPinDesigns('server-token',30,async()=>{throw new Error('network contains server-token');},now),/Verbindungsfehlers oder Zeitlimits/);
 deny=true;await assert.rejects(()=>loadTopPinDesigns('server-token',30,fakeFetch),/Analytics-Zugriff/);deny=false;
 const design={layout:'split' as const,background:'#ffffff',foreground:'#eeeeee',accent:'#047857',alignment:'left' as const,headingSize:'large' as const};
 assert.ok(colorContrast(normalizePinDesign(design)!.background,normalizePinDesign(design)!.foreground)>=4.5);
