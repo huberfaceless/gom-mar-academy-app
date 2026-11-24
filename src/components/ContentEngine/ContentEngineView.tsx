@@ -1,3 +1,4 @@
+import { PinterestDesignPanel } from './PinterestDesignPanel';
 import { YouTubeScriptTab } from './YouTubeScriptTab';
 import { instagramPostsFor, youtubeVideosFor, appendSocialPins, appendYouTubeContent, assertGenerationSource, briefForSocial } from '../../utils/additionalSocialContent';
 import { YouTubeCollectionTab } from './YouTubeCollectionTab';
@@ -299,9 +300,10 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
     }
 
     let contentSaved = true;
-    if (activeContentProject && activeContentProject.projectSettings.id === updatedSettings.id) {
+    const currentProject = latestContentProjectRef.current;
+    if (currentProject && currentProject.projectSettings.id === updatedSettings.id) {
       contentSaved = await handleUpdateActiveProject({
-        ...activeContentProject,
+        ...currentProject,
         projectSettings: updatedSettings,
       });
     }
@@ -309,6 +311,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
     if (settingsSaved && contentSaved) {
       setSaveNotice(hubText('Projekt „{0}“ wurde erfolgreich gespeichert.', updatedSettings.name));
     }
+    return settingsSaved && contentSaved;
   };
 
   // 🚀 Start Workflow: 1. Generate Brief
@@ -1007,6 +1010,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
           )}
 
           {activeTab === 'pinterest' && (
+            <div className="space-y-4">
+            <PinterestDesignPanel key={activeContentProject.id} project={activeProjectSettings} topic={activeContentProject.topic} onSave={handleSaveProjectSettings} />
             <PinterestPinsTab
               key={activeContentProject.id}
               userId={userId}
@@ -1025,6 +1030,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
               topic={activeContentProject.topic}
               projectSettings={activeContentProject.projectSettings || activeProjectSettings}
             />
+            </div>
           )}
 
           {activeTab === 'instagram' && (

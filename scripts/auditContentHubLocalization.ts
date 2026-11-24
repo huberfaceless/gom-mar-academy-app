@@ -1,3 +1,4 @@
+import { pinDesignPrompt } from '../src/utils/pinterestDesign';
 import { normalizeLongTailKeywords, longTailKeywordPrompt } from '../src/utils/longTailKeywords';
 import { researchBeforeBrief } from '../server/competitorResearch';
 import { editorialStrategyPrompt } from '../src/utils/editorialStrategy';
@@ -83,7 +84,7 @@ try {
 const server = readFileSync('server.ts', 'utf8');
 const routes = new Map<string, (req: any, res: any) => Promise<void>>();
 const requests: any[] = [];
-const ctx = vm.createContext({ normalizeLongTailKeywords, longTailKeywordPrompt, researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt,
+const ctx = vm.createContext({ pinDesignPrompt, normalizeLongTailKeywords, longTailKeywordPrompt, researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt,
   app: { post: (path: string, ...handlers: any[]) => routes.set(path, handlers.at(-1)) },
   requireVerifiedMember: [], requireProMember() {}, requireContentProjectAccess() {},
   resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, validateBlogAffiliateLink, resolvePinterestTargetUrl, findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks,

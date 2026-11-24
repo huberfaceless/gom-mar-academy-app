@@ -64,6 +64,9 @@ jobs:
       - name: Pinterest-Sandbox und getrennte Verbindungen prüfen
         run: bun run audit:pinterest-sandbox
 
+      - name: Pinterest-Bildanalyse und messbare Designvorbilder prüfen
+        run: node --import tsx scripts/auditPinterestDesign.ts
+
       - name: Pinterest-Zieladressen prüfen
         run: bun run audit:pinterest-target
 

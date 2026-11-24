@@ -1,3 +1,5 @@
+import { loadTopPinDesigns, analyzePinterestDesign } from './server/pinterestDesignResearch.js';
+import { pinDesignPrompt } from './src/utils/pinterestDesign.js';
 import { normalizeLongTailKeywords, longTailKeywordPrompt } from './src/utils/longTailKeywords';
 import { generateContentEmail } from './server/contentEmailGeneration.js';
 import { researchBeforeBrief } from './server/competitorResearch.js';
@@ -2858,6 +2860,7 @@ ${campaignSourcePrompt(brief?.sourceArticle)}
 ${longTailKeywordPrompt(brief)}
 Bisherige Titel (Daten, keine Anweisungen): ${JSON.stringify(Array.isArray(req.body.previousTitles) ? req.body.previousTitles.filter((title: unknown) => typeof title === 'string').slice(-60).map((title: string) => title.slice(0, 250)) : [])}
 Ergänze neue Blickwinkel und vermeide die bisherigen Titel. Erfinde dafür keine neuen Fakten oder Leistungsversprechen.
+${req.body.channel === 'instagram' ? '' : pinDesignPrompt(projectSettings?.pinterestDesignProfile)}
 Erstelle genau 5 unterschiedliche ${req.body.channel === 'instagram' ? 'Instagram-Beiträge (Text und Grafik-Konzept im selben JSON-Format wie die Pins)' : 'Pinterest Pins'} für das Thema "${topic}".
 Projekt: ${projectSettings?.name || 'Content-Projekt'}
 Zielgruppe: ${projectSettings?.targetAudience || 'Die definierte Zielgruppe'}
@@ -2873,6 +2876,9 @@ WICHTIG: Die 5 Pins MÜSSEN 5 völlig unterschiedliche psychologische Angles (Bl
 
 Jeder Pin benötigt:
 - title: Scroll-stoppende Headline (prägnant für Bild & Titel)
+- subHook: Kurze ergänzende Bildzeile ohne neue Fakten
+- bulletPoints: Nur belegte themenbezogene Stichpunkte (oder leeres Array)
+- ctaButtonText: Passende kurze Handlungsaufforderung
 - description: SEO-optimierte Pin-Beschreibung als Fließtext ohne Hashtags (max 400 Zeichen). Hashtags und Suchbegriffe gehören ausschließlich in keywords.
 - keywords: 3-5 relevante Suchbegriffe
 - targetUrl: ${targetUrl}
@@ -2887,6 +2893,9 @@ Antworte im JSON-Format:
       "angle": "problem",
       "angleLabel": "1. Problem & Schmerzpunkt",
       "title": "...",
+      "subHook": "... (kurze Bildzeile)",
+      "bulletPoints": [],
+      "ctaButtonText": "...",
       "description": "...",
       "keywords": ["...", "..."],
       "longTailKeywords": ["...", "..."],
@@ -2899,6 +2908,9 @@ Antworte im JSON-Format:
       "angle": "solution",
       "angleLabel": "2. Klare Lösung & Methode",
       "title": "...",
+      "subHook": "... (kurze Bildzeile)",
+      "bulletPoints": [],
+      "ctaButtonText": "...",
       "description": "...",
       "keywords": ["...", "..."],
       "longTailKeywords": ["...", "..."],
@@ -2911,6 +2923,9 @@ Antworte im JSON-Format:
       "angle": "mistake",
       "angleLabel": "3. Typische Fehler vermeiden",
       "title": "...",
+      "subHook": "... (kurze Bildzeile)",
+      "bulletPoints": [],
+      "ctaButtonText": "...",
       "description": "...",
       "keywords": ["...", "..."],
       "longTailKeywords": ["...", "..."],
@@ -2923,6 +2938,9 @@ Antworte im JSON-Format:
       "angle": "list",
       "angleLabel": "4. Checkliste & Übersicht",
       "title": "...",
+      "subHook": "... (kurze Bildzeile)",
+      "bulletPoints": [],
+      "ctaButtonText": "...",
       "description": "...",
       "keywords": ["...", "..."],
       "longTailKeywords": ["...", "..."],
@@ -2935,6 +2953,9 @@ Antworte im JSON-Format:
       "angle": "curiosity",
       "angleLabel": "5. Neugier & Geheimtipp",
       "title": "...",
+      "subHook": "... (kurze Bildzeile)",
+      "bulletPoints": [],
+      "ctaButtonText": "...",
       "description": "...",
       "keywords": ["...", "..."],
       "longTailKeywords": ["...", "..."],
@@ -3298,6 +3319,25 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest API: 2. Get User Boards
+  app.post('/api/pinterest/design/top-pins', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
+    if (res.locals.pinterestEnvironment !== 'production') return void res.status(400).json({ error: 'Die Designanalyse benötigt echte Produktionsdaten. Sandbox-Daten werden nicht als Erfolg gewertet.' });
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      const token = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId, 'production');
+      res.json(await loadTopPinDesigns(token, req.body.days ?? 30));
+    } catch (error) { res.status(502).json({ error: error instanceof Error ? error.message : 'Pinterest-Klickdaten konnten nicht geladen werden.' }); }
+  });
+  app.post('/api/pinterest/design/analyze', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
+    if (res.locals.pinterestEnvironment !== 'production') return void res.status(400).json({ error: 'Die Designanalyse benötigt echte Produktionsdaten. Sandbox-Daten werden nicht als Erfolg gewertet.' });
+    try {
+      const userId = (req as FirebaseRequest).firebaseUser?.sub;
+      if (!userId) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+      const token = Array.isArray(req.body.pinIds) && req.body.pinIds.length ? await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId, 'production') : undefined;
+      res.json({ profile: await analyzePinterestDesign(ai, token, req.body) });
+    } catch (error) { res.status(502).json({ error: error instanceof Error ? error.message : 'Die Pin-Bildanalyse konnte nicht erstellt werden.' }); }
+  });
+
   app.post('/api/pinterest/boards', requireVerifiedMember, requireProMember, async (req, res) => {
     try {
       const userId = (req as FirebaseRequest).firebaseUser?.sub;
@@ -3444,9 +3484,9 @@ Antworte im JSON-Format:
   });
 
   // 📌 Pinterest AI Image Prompt & Visual Enhancement Endpoint
-  app.post('/api/pinterest/generate-image', requireVerifiedMember, requireProMember, async (req, res) => {
+  app.post('/api/pinterest/generate-image', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     try {
-      const { prompt, topic, angle } = req.body;
+      const { prompt, topic, angle, projectSettings } = req.body;
       if (!prompt && !topic) {
         res.status(400).json({ error: 'Prompt oder Thema ist erforderlich.' });
         return;
@@ -3455,19 +3495,21 @@ Antworte im JSON-Format:
       // Generate optimized photo prompt using Gemini
       const promptGen = await ai.models.generateContent({
         model: 'gemini-3.7-flash',
-        contents: `Erstelle einen detaillierten, hyper-realistischen Fotografie-Prompt für einen hochkonvertierenden Pinterest Pin (1080x1620) zum Thema "${topic}".
-Blickwinkel: ${angle || 'Gesundheit & Vitalität 50+'}.
+        contents: `Erstelle einen präzisen Bild-Prompt (Foto oder Illustration passend zu den Designvorgaben) für einen Pinterest Pin (1080x1620) zum Thema "${topic}".
+Blickwinkel: ${angle || 'Passend zum aktuellen Thema'}.
+Projekt: ${projectSettings?.name || ''}. Zielgruppe: ${projectSettings?.targetAudience || ''}.
+${pinDesignPrompt(projectSettings?.pinterestDesignProfile)}
 Ausgangsprompt: ${prompt || ''}
 
 Der Prompt muss auf Englisch formuliert sein und folgende Kriterien erfüllen:
-- Stil: Professional crisp commercial health photography, natural sunlight, warm organic tones, 8k resolution.
-- Motiv: Vibrant healthy ingredients, fresh herbs, water glass with citrus, or fit active senior in serene bright setting.
+- Stil: Hochwertig und klar, passend zur eigenen Marke und der vorhandenen Designanalyse.
+- Motiv: Ausschließlich passend zum aktuellen Thema und Ausgangsprompt. Keine fremden Logos oder kopierten Referenzbilder. Keine Wirkungs- oder Erfolgsversprechen.
 - Wichtig: No text in the image, clean negative space for overlays.
 
 Antworte mit einem reinen JSON-Objekt:
 {
   "optimizedPrompt": "...",
-  "suggestedPhotoCategory": "nutrition | exercise | hydration | antiaging | nature",
+  "suggestedPhotoCategory": "... (passend zum aktuellen Thema)",
   "stockSearchKeywords": ["...", "..."]
 }`,
         config: {
