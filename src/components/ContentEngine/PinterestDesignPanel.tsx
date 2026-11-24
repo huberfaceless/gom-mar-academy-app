@@ -65,7 +65,7 @@ export function PinterestDesignPanel({project,topic,onSave}:{project:ProjectSett
     <button type="button" disabled={busy} onClick={()=>void load()} className="rounded-xl bg-emerald-700 px-4 py-2 text-sm font-bold text-white disabled:opacity-50">{hubText('Klickstarke Pins meines Kontos laden')}</button>
     <button type="button" disabled={busy} onClick={()=>void run(()=>pinterestService.startOAuth('production'))} className="rounded-xl border px-4 py-2 text-sm font-bold">{hubText('Pinterest verbinden')}</button>
    </div>
-   <p className="text-xs text-slate-500">{hubText('Organische Kontodaten, nach ausgehenden Klicks sortiert. Maximal zehn verfügbare Bild-Pins aus den Top 50, erstellt in den letzten 90 Tagen. Fehlende Messwerte bleiben unbekannt. Neue Freigaben oder ein Business-Konto können erforderlich sein.')}</p>
+   <p className="text-xs text-slate-500">{hubText('Organische Kontodaten, nach ausgehenden Klicks sortiert. Maximal zehn verfügbare Bild-Pins aus den Top 50, erstellt in den letzten 30 Tagen. Fehlende Messwerte bleiben unbekannt. Neue Freigaben oder ein Business-Konto können erforderlich sein.')}</p>
    {period && <p className="text-xs">{period.start} – {period.end}</p>}
    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{pins.map(pin=><label key={pin.id} className="space-y-2 rounded-xl border p-3 text-sm">
     <div className="flex items-start gap-2"><input type="checkbox" checked={selected.includes(pin.id)} disabled={busy||(!selected.includes(pin.id)&&selected.length+inspirations.length>=3)} onChange={e=>setSelected(e.target.checked?[...selected,pin.id]:selected.filter(id=>id!==pin.id))}/><strong>{pin.title}</strong></div>

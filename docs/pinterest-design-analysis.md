@@ -12,7 +12,9 @@ Bestehende Pins, IDs, Termine, Veröffentlichungsergebnisse und separate Instagr
 ## Daten und Grenzen
 
 - Der serverseitige Aufruf verwendet den Token des angemeldeten Mitglieds. Kontofremde Token oder behauptete Klickzahlen werden nicht akzeptiert.
-- Pinterest `user_account/analytics/top_pins`: organische Daten, sortiert nach ausgehenden Klicks, bis zu 50 Ergebnisse. Für bis zu zehn Kandidaten werden verfügbare Pin-Bilder geladen. Erstellungsfilter: letzte 90 Tage. Berichtszeitraum: volle UTC-Tage bis gestern.
+- Pinterest `user_account/analytics/top_pins`: organische Daten, sortiert nach ausgehenden Klicks, bis zu 50 Ergebnisse. Für bis zu zehn Kandidaten werden verfügbare Pin-Bilder geladen. Erstellungsfilter: letzte 30 Tage. Berichtszeitraum: volle UTC-Tage bis gestern.
+- Der Erstellungsfilter ist unabhängig vom Messzeitraum: Pinterest erlaubt hier nur `created_in_last_n_days=30`; der Berichtszeitraum bleibt auf 30/60/90 Tage wählbar.
+- Fehler zeigen HTTP-Status, gegebenenfalls Pinterest-Code und eine bereinigte Fehlermeldung. Token, Zugangsdaten und URLs werden nicht zurückgespiegelt.
 - Klickrate = ausgehende Klicks / Impressionen. Fehlende Werte bleiben unbekannt. Unter 100 Impressionen zeigt die Oberfläche eine geringe Datenbasis an; diese Grenze ist kein Signifikanztest.
 - Sandbox-Daten werden nicht für eine Erfolgsanalyse verwendet. Business-Konto, App-Freigabe und passende Pinterest-Berechtigungen sind Voraussetzung für Kontometriken. Eine fehlende Freigabe wird als Fehler angezeigt, nicht durch erfundene Daten ersetzt.
 - Hochgeladene Vorbilder können auch ohne Analytics-Verbindung analysiert werden. Ihnen werden keine verifizierten Klickdaten zugeschrieben.
