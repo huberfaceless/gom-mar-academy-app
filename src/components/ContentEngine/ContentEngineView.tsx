@@ -936,10 +936,11 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
           {/* Active Tab View */}
           {activeTab === 'brief' && activeContentProject.contentBrief && (
-            <BriefEditorTab
+            <BriefEditorTab key={activeContentProject.id}
+              projectSettings={activeContentProject.projectSettings}
               brief={activeContentProject.contentBrief}
               onChange={(updatedBrief) => {
-                handleUpdateActiveProject({
+                return handleUpdateActiveProject({
                   ...activeContentProject,
                   contentBrief: updatedBrief,
                 });
@@ -951,7 +952,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
           {activeTab === 'blog' && (
             activeContentProject.blogArticle ? (
-              <BlogEditorTab
+              <BlogEditorTab key={activeContentProject.id}
+                projectSettings={activeContentProject.projectSettings}
                 contentLanguage={activeContentProject.projectSettings.language}
                 seoGeo={{
                   contentId: activeContentProject.id,
@@ -977,7 +979,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
                 } : undefined}
                 article={activeContentProject.blogArticle}
                 onChange={(updatedArticle) => {
-                  handleUpdateActiveProject({
+                  return handleUpdateActiveProject({
                     ...activeContentProject,
                     blogArticle: updatedArticle,
                   });

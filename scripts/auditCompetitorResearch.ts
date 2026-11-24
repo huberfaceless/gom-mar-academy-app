@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords, longTailKeywordPrompt } from '../src/utils/longTailKeywords';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -67,7 +68,7 @@ const visit = (node: ts.Node) => {
 }; visit(ast); assert.ok(route);
 let handler: any, failResearch = false;
 const order: string[] = [];
-const context = vm.createContext({ Error, console: { error() {} }, researchBeforeBrief, editorialStrategyPrompt, contentLanguageInstruction, recommendationLabel, campaignSourcePrompt, resolvePinterestTargetUrl,
+const context = vm.createContext({ normalizeLongTailKeywords, longTailKeywordPrompt, Error, console: { error() {} }, researchBeforeBrief, editorialStrategyPrompt, contentLanguageInstruction, recommendationLabel, campaignSourcePrompt, resolvePinterestTargetUrl,
   requireVerifiedMember() {}, requireProMember() {}, requireContentProjectAccess() {},
   app: { post(_path: string, ...handlers: any[]) { handler = handlers.at(-1); } },
   ai: { models: { generateContent: async (request: any) => {

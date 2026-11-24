@@ -50,6 +50,7 @@ export interface ProjectSettings {
 }
 
 export interface ContentBrief {
+  longTailKeywords?: string[];
   competitorResearch?: import('../utils/editorialStrategy').CompetitorResearch;
   sourceArticle?: import('../utils/articleCampaign').CampaignArticle;
   mainKeyword: string;
@@ -70,6 +71,7 @@ export interface ContentBrief {
 }
 
 export interface BlogArticle {
+  longTailKeywords?: string[];
   referenceCheck?: 'checked' | 'unavailable' | 'disabled';
   wordpressSlug?: string;
   referenceIds?: string[];
@@ -101,6 +103,7 @@ export type PinTemplateStyle =
 export type PinColorTheme = 'emerald' | 'teal' | 'coral' | 'amber' | 'berry' | 'dark' | 'ocean';
 
 export interface PinterestPin {
+  longTailKeywords?: string[];
   instagramContent?: import('../utils/socialEditorialReview').SocialEditorialContent;
   id: string;
   angle: PinAngle;
@@ -159,6 +162,7 @@ export interface YouTubeChapter {
 }
 
 export interface YouTubeVideoData {
+  longTailKeywords?: string[];
   title: string;
   description: string;
   keywords: string[];
@@ -182,6 +186,7 @@ export interface YouTubeVideoData {
 }
 
 export interface YouTubeShort {
+  longTailKeywords?: string[];
   id: string;
   shortNumber: number;
   title: string;

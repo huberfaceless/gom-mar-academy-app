@@ -1,3 +1,4 @@
+import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
 import { updateSocialEditorialContent } from '../../utils/socialEditorialReview';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
@@ -160,7 +161,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
       ...newPins[selectedPinIndex],
       ...updatedField,
     };
-    onChange(newPins);
+    return onChange(newPins);
   };
 
   const handleDownloadCurrentPin = async () => {
@@ -599,6 +600,9 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
             </p>
           </div>
 
+          <LongTailKeywordsPanel key={activePin.id} value={activePin.longTailKeywords} topic={activePin.title}
+            content={[activePin.title, activePin.description].join('\n')} projectSettings={projectSettings}
+            onChange={longTailKeywords => handleUpdateActivePin({ longTailKeywords })} />
           {/* Keywords / Tags */}
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">SEO Hashtags</label>

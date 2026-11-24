@@ -1,3 +1,4 @@
+import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { buildSocialCaption } from '../../utils/socialCaption';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
 import { socialEditorialPin, updateSocialEditorialContent } from '../../utils/socialEditorialReview';
@@ -122,6 +123,9 @@ export const InstagramPostsTab: React.FC<InstagramPostsTabProps> = ({
             <p className="text-xs font-black text-slate-500 uppercase mb-2">{hubText("Caption und Hashtags")}</p>
             <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">{buildSocialCaption(activePin.description, activePin.keywords).slice(0, 2200)}</p>
           </div>
+          {onChange && <LongTailKeywordsPanel key={sourcePin.id} value={sourcePin.longTailKeywords} topic={activePin.title}
+            content={[activePin.title, activePin.description].join('\n')} projectSettings={projectSettings}
+            onChange={longTailKeywords => onChange(pins.map(pin => pin.id === sourcePin.id ? { ...pin, longTailKeywords } : pin))} />}
           {onChange && <button type="button" onClick={() => setReviewing(true)} className="w-full rounded-xl border border-fuchsia-600 p-3 font-bold text-fuchsia-800">{hubText('Inhalt prüfen und bearbeiten')}</button>}
           {reviewing && onChange && <SocialEditorialReviewModal pin={sourcePin} channel="instagram" projectSettings={projectSettings}
             onClose={() => setReviewing(false)} onSave={content => onChange(updateSocialEditorialContent(pins, sourcePin.id, 'instagram', content))} />}

@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords, longTailKeywordPrompt } from '../src/utils/longTailKeywords';
 import { researchBeforeBrief } from '../server/competitorResearch';
 import { editorialStrategyPrompt } from '../src/utils/editorialStrategy';
 import { campaignSourcePrompt } from '../src/utils/articleCampaign';
@@ -44,7 +45,7 @@ let handler: (req: any, res: any) => Promise<void>;
 let modelReply: any = { pins: Array.from({ length: 5 }, () => ({ title: 'Test', targetUrl: 'https://invented.example/' })) };
 let lastPrompt = '';
 let aiCalls = 0; let credentialCalls = 0; let platformCalls = 0; let sent: any;
-const context = vm.createContext({ researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt, contentLanguageInstruction, recommendationLabel,
+const context = vm.createContext({ normalizeLongTailKeywords, longTailKeywordPrompt, researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt, contentLanguageInstruction, recommendationLabel,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } }, requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {},
   resolvePinterestTargetUrl, pinterestApiBase, FIREBASE_PROJECT_ID: 'test',
   loadPinterestAccessToken: async () => { credentialCalls++; return 'isolated-test-token'; },

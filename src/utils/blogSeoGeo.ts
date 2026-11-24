@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords } from './longTailKeywords';
 import { selectedBlogReferences, isWordPressImageUrl } from './blogReferences';
 import type { BlogArticle, ContentBrief } from '../types/contentEngine';
 
@@ -36,6 +37,7 @@ export function normalizeSeoGeo(value: Record<string, unknown>, article: BlogArt
     metaDescription: seoText(value.metaDescription, 500) || fallback.metaDescription,
     focusKeyword: seoText(value.focusKeyword, 150) || fallback.focusKeyword,
     answerSummary: seoText(value.answerSummary, 1200) || fallback.answerSummary,
+    longTailKeywords: normalizeLongTailKeywords(value.longTailKeywords ?? article.longTailKeywords ?? brief?.longTailKeywords),
   };
 }
 export function blogMarkdownWithSummary(article: Pick<BlogArticle, 'contentMarkdown' | 'answerSummary' | 'wordpressImage' | 'referenceIds'>, language = 'de'): string {

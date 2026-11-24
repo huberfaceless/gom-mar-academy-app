@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords } from '../utils/longTailKeywords';
 import { splitSocialCaption } from '../utils/socialCaption';
 import { 
   ProjectSettings, 
@@ -45,7 +46,7 @@ export class AIContentService {
       throw new Error('Ungültiges Antwortformat vom Server erhalten.');
     }
 
-    return { brief: data.brief, rawText: data.raw };
+    return { brief: { ...data.brief, longTailKeywords: normalizeLongTailKeywords(data.brief.longTailKeywords) }, rawText: data.raw };
   }
 
   /**
@@ -85,6 +86,7 @@ export class AIContentService {
       referenceCheck: data.article.referenceCheck,
       seoTitle: data.article.seoTitle,
       focusKeyword: data.article.focusKeyword,
+      longTailKeywords: normalizeLongTailKeywords(data.article.longTailKeywords ?? brief.longTailKeywords),
       answerSummary: data.article.answerSummary,
       internalLinking: data.article.internalLinking,
       title: data.article.title || brief.suggestedTitle || brief.h1,
@@ -96,13 +98,24 @@ export class AIContentService {
     };
   }
 
-  static async prepareSeoGeo(article: BlogArticle, brief: ContentBrief, projectSettings: ProjectSettings): Promise<Pick<BlogArticle, 'seoTitle' | 'metaDescription' | 'focusKeyword' | 'answerSummary'>> {
+  static async prepareSeoGeo(article: BlogArticle, brief: ContentBrief, projectSettings: ProjectSettings): Promise<Pick<BlogArticle, 'seoTitle' | 'metaDescription' | 'focusKeyword' | 'answerSummary' | 'longTailKeywords'>> {
     const response = await authenticatedFetch('/api/content-engine/seo-geo', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ article, brief, projectSettings }),
     });
     const data = await response.json();
     if (!response.ok || !data.fields) throw new Error(data.error || 'SEO- und GEO-Daten konnten nicht vorbereitet werden.');
     return data.fields;
+  }
+
+  static async suggestLongTailKeywords(topic: string, content: string, projectSettings: ProjectSettings): Promise<string[]> {
+    const response = await authenticatedFetch('/api/content-engine/long-tail-keywords', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ topic, content, projectSettings }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Long-Tail-Keywords konnten nicht erstellt werden.');
+    const keywords = normalizeLongTailKeywords(data.longTailKeywords);
+    if (!keywords.length) throw new Error('Long-Tail-Keywords konnten nicht erstellt werden.');
+    return keywords;
   }
 
   static async addInternalLinks(topic: string, brief: ContentBrief, projectSettings: ProjectSettings, article: BlogArticle): Promise<BlogArticle> {
@@ -151,6 +164,7 @@ export class AIContentService {
       id: `pin_${Date.now()}_${idx + 1}`,
       angle: p.angle || 'solution',
       angleLabel: p.angleLabel || `Pin ${idx + 1}`,
+      longTailKeywords: normalizeLongTailKeywords(p.longTailKeywords),
       title: p.title || `${topic} - Tipp ${idx + 1}`,
       ...splitSocialCaption(p.description || '', Array.isArray(p.keywords) ? p.keywords : []),
       targetUrl,
@@ -194,6 +208,7 @@ export class AIContentService {
     }
 
     return {
+      longTailKeywords: normalizeLongTailKeywords(data.video.longTailKeywords),
       title: data.video.title || topic,
       description: data.video.description || '',
       keywords: Array.isArray(data.video.keywords) ? data.video.keywords : [],
@@ -247,6 +262,7 @@ export class AIContentService {
     return rawShorts.map((s: any, idx: number) => ({
       id: `short_${Date.now()}_${idx + 1}`,
       shortNumber: s.shortNumber || idx + 1,
+      longTailKeywords: normalizeLongTailKeywords(s.longTailKeywords),
       title: s.title || `Short #${idx + 1}: ${topic}`,
       hook: s.hook || '',
       scriptText: s.scriptText || '',
