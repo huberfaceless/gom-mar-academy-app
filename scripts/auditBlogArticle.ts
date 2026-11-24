@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords, longTailKeywordPrompt } from '../src/utils/longTailKeywords';
 import { researchBeforeBrief } from '../server/competitorResearch';
 import { editorialStrategyPrompt } from '../src/utils/editorialStrategy';
 import { resolveProjectBlogDefaults, applyProjectBlogDefaults } from '../src/utils/projectBlogDefaults';
@@ -49,7 +50,7 @@ let calls = 0; let prompt = '';
 let internalReportOverride: any = null;
 let modelMarkdown = 'Ein hilfreicher Artikel.';
 let modelSeo: Record<string, string> = {};
-const context = vm.createContext({ researchBeforeBrief, editorialStrategyPrompt, resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
+const context = vm.createContext({ normalizeLongTailKeywords, longTailKeywordPrompt, researchBeforeBrief, editorialStrategyPrompt, resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, findWordPressInternalLinks: (...args: Parameters<typeof findWordPressInternalLinks>) => internalReportOverride || findWordPressInternalLinks(...args), appendWordPressInternalLinks, removeUnverifiedInternalLinks,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } },
   requireVerifiedMember: [], requireProMember: () => {}, requireContentProjectAccess: () => {}, validateBlogAffiliateLink,
   ai: { models: { generateContent: async (request: any) => { calls++; prompt = request.contents; return { text: JSON.stringify({ title: 'Test', contentMarkdown: modelMarkdown, ...modelSeo }) }; } } }, console,

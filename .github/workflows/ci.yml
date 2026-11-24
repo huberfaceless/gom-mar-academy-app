@@ -67,6 +67,9 @@ jobs:
       - name: Pinterest-Zieladressen prüfen
         run: bun run audit:pinterest-target
 
+      - name: Long-Tail-Keywords in allen Inhaltsformaten prüfen
+        run: node --import tsx scripts/auditLongTailKeywords.ts
+
       - name: Zusätzliche Social-Inhalte prüfen
         run: node --import tsx scripts/auditAdditionalSocialContent.ts
 

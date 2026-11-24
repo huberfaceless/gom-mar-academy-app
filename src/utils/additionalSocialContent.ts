@@ -42,12 +42,14 @@ export const updateYouTubeVideo = (project: CentralContentProject, id: string, v
 
 export function briefForSocial(project: CentralContentProject) {
   if (!project.contentBrief) throw new Error('Bitte zuerst ein Inhaltsbriefing erstellen.');
-  if (!project.blogArticle?.publishedUrl) return project.contentBrief;
+  const brief = project.blogArticle?.longTailKeywords === undefined ? project.contentBrief
+    : { ...project.contentBrief, longTailKeywords: project.blogArticle.longTailKeywords };
+  if (!project.blogArticle?.publishedUrl) return brief;
   try {
-    return attachCampaignSource(project.contentBrief, {
+    return attachCampaignSource(brief, {
       title: project.blogArticle.title,
       contentMarkdown: project.blogArticle.contentMarkdown,
       url: project.blogArticle.publishedUrl,
     });
-  } catch { return project.contentBrief; }
+  } catch { return brief; }
 }

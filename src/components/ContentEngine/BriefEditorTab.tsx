@@ -1,3 +1,4 @@
+import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React from 'react';
 import { 
@@ -12,9 +13,10 @@ import {
   Copy,
   Check
 } from 'lucide-react';
-import { ContentBrief } from '../../types/contentEngine';
+import { ContentBrief, ProjectSettings } from '../../types/contentEngine';
 
 interface BriefEditorTabProps {
+  projectSettings?: ProjectSettings;
   brief: ContentBrief;
   onChange: (updatedBrief: ContentBrief) => void;
   onGenerateBlog: () => void;
@@ -23,6 +25,7 @@ interface BriefEditorTabProps {
 
 export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
   brief,
+  projectSettings,
   onChange,
   onGenerateBlog,
   isGeneratingBlog,
@@ -74,6 +77,9 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
         </div>
       </div>
 
+      <LongTailKeywordsPanel value={brief.longTailKeywords} topic={brief.suggestedTitle || brief.h1 || brief.mainKeyword}
+        content={JSON.stringify(brief)} projectSettings={projectSettings}
+        onChange={longTailKeywords => onChange({ ...brief, longTailKeywords })} />
       {/* Grid with Details */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Metadata & SEO (1 col) */}

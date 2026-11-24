@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords, longTailKeywordPrompt } from '../src/utils/longTailKeywords';
 import { editorialStrategyPrompt } from '../src/utils/editorialStrategy';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -52,7 +53,7 @@ const ast = ts.createSourceFile('server.ts', server, ts.ScriptTarget.ES2022, tru
 let handler: (req: any, res: any) => Promise<void>;
 let sourceCalls = 0, internalCalls = 0;
 let unavailable = false;
-const context = vm.createContext({ editorialStrategyPrompt, resolveProjectBlogDefaults, applyProjectBlogDefaults, validateBlogAffiliateLink, contentLanguageInstruction, recommendationLabel, appendWordPressInternalLinks, removeUnverifiedInternalLinks,
+const context = vm.createContext({ normalizeLongTailKeywords, longTailKeywordPrompt, editorialStrategyPrompt, resolveProjectBlogDefaults, applyProjectBlogDefaults, validateBlogAffiliateLink, contentLanguageInstruction, recommendationLabel, appendWordPressInternalLinks, removeUnverifiedInternalLinks,
   app: { post: (_path: string, ...args: any[]) => { handler = args.at(-1); } }, requireVerifiedMember: [], requireProMember: [], requireContentProjectAccess: [],
   suggestBlogReferenceReport: async () => { sourceCalls++; return { state: unavailable ? 'unavailable' : 'checked', sources: unavailable ? [] : [{ id: 'at-adipositas' }, { id: 'at-bewegung' }, { id: 'at-stress' }] }; },
   findWordPressInternalLinks: async () => { internalCalls++; return { state: 'checked', links: [], checkedAt: new Date().toISOString() }; },

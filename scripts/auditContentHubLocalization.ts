@@ -1,3 +1,4 @@
+import { normalizeLongTailKeywords, longTailKeywordPrompt } from '../src/utils/longTailKeywords';
 import { researchBeforeBrief } from '../server/competitorResearch';
 import { editorialStrategyPrompt } from '../src/utils/editorialStrategy';
 import { campaignSourcePrompt } from '../src/utils/articleCampaign';
@@ -37,9 +38,9 @@ import { AffiliateLinkModal } from './src/components/ContentEngine/AffiliateLink
 import { createOnlineBusinessProject } from './src/utils/contentStorage';
 const savedTopic = 'Gespeicherter deutscher Titel mit Umlauten';
 const settings = { ...createOnlineBusinessProject('audit'), language: 'en' };
-const brief = {mainKeyword: savedTopic, secondaryKeywords: [], searchIntent: 'informational', targetAudience: 'Menschen 50+', suggestedTitle: savedTopic, h1: savedTopic, metaDescription: '', outline: [], faqTopics: [], internalLinkingSuggestions: [], cta: ''};
-const article = {title:savedTopic, contentMarkdown:'Mein gespeicherter Artikel.', wordCount:4, readingTimeMinutes:1, status:'draft'};
-const video = {title:savedTopic, description:'', keywords:[], script:{hook:'',intro:'',mainBody:[],cta:'',outro:''},chapters:[],thumbnailConcept:{headline:'',visualDescription:'',imagePrompt:''},status:'draft'};
+const brief = {longTailKeywords:['Online Geld verdienen ohne Kamera'],mainKeyword: savedTopic, secondaryKeywords: [], searchIntent: 'informational', targetAudience: 'Menschen 50+', suggestedTitle: savedTopic, h1: savedTopic, metaDescription: '', outline: [], faqTopics: [], internalLinkingSuggestions: [], cta: ''};
+const article = {longTailKeywords:['Online Geld verdienen ohne Kamera'],title:savedTopic, contentMarkdown:'Mein gespeicherter Artikel.', wordCount:4, readingTimeMinutes:1, status:'draft'};
+const video = {longTailKeywords:['Online Geld verdienen ohne Kamera'],title:savedTopic, description:'', keywords:[], script:{hook:'',intro:'',mainBody:[],cta:'',outro:''},chapters:[],thumbnailConcept:{headline:'',visualDescription:'',imagePrompt:''},status:'draft'};
 const project = {id:'audit',topic:savedTopic,projectSettings:settings,contentBrief:brief,blogArticle:article,youtubeVideo:video,pinterestPins:[],calendarItems:[],createdAt:'2026-10-21T10:00:00Z'};
 export function render() { return renderToStaticMarkup(<LanguageProvider><>
 <ContentEngineView />
@@ -69,7 +70,7 @@ try {
     const html = render();
     assert.ok(html.includes('Gespeicherter deutscher Titel mit Umlauten'), 'Saved member text must not be translated.');
     assert.ok(html.includes('Mein gespeicherter Artikel.'), 'Saved article bodies must stay intact.');
-    for (const source of ['KI-Inhaltszentrale', 'Welches Thema möchtest du heute erobern?', 'Schritt 1: Briefing', 'Blogartikel in', 'Content Brief fertig', 'Blogartikel generiert', 'Noch keine Instagram-Beiträge vorhanden', 'YouTube verbinden', 'Haupt-Video Skript', 'Content-Planung & Veröffentlichungswarteschlange', 'Projekt-Einstellungen bearbeiten', 'Projekt auswählen', 'Inhaltssprache', 'Neuen Blogartikel erstellen']) {
+    for (const source of ['Long-Tail-Keywords', 'Keywords kopieren', 'KI-Inhaltszentrale', 'Welches Thema möchtest du heute erobern?', 'Schritt 1: Briefing', 'Blogartikel in', 'Content Brief fertig', 'Blogartikel generiert', 'Noch keine Instagram-Beiträge vorhanden', 'YouTube verbinden', 'Haupt-Video Skript', 'Content-Planung & Veröffentlichungswarteschlange', 'Projekt-Einstellungen bearbeiten', 'Projekt auswählen', 'Inhaltssprache', 'Neuen Blogartikel erstellen']) {
       const expected = contentHubText(language, source).replaceAll('&', '&amp;');
       assert.ok(html.includes(expected), language + ': missing ' + expected);
       if (language === 'en') assert.ok(!html.includes(source), 'Untranslated UI: ' + source);
@@ -82,7 +83,7 @@ try {
 const server = readFileSync('server.ts', 'utf8');
 const routes = new Map<string, (req: any, res: any) => Promise<void>>();
 const requests: any[] = [];
-const ctx = vm.createContext({ researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt,
+const ctx = vm.createContext({ normalizeLongTailKeywords, longTailKeywordPrompt, researchBeforeBrief, editorialStrategyPrompt, campaignSourcePrompt,
   app: { post: (path: string, ...handlers: any[]) => routes.set(path, handlers.at(-1)) },
   requireVerifiedMember: [], requireProMember() {}, requireContentProjectAccess() {},
   resolveProjectBlogDefaults, applyProjectBlogDefaults, suggestBlogReferenceReport, normalizeSeoGeo, contentLanguageInstruction, recommendationLabel, validateBlogAffiliateLink, resolvePinterestTargetUrl, findWordPressInternalLinks, appendWordPressInternalLinks, removeUnverifiedInternalLinks,
@@ -107,6 +108,7 @@ for (const [language, expected] of [['de','German'], ['en','English'], ['pl','Po
     let result: any; let status = 200;
     await routes.get('/api/content-engine/' + endpoint)!({ body: {previousTitles:['Bereits verwendeter Titel'],topic:'Ein deutsches Thema',brief:{h1:'Ein deutscher Titel',outline:[]},projectSettings:{language,coreTopics:[]},affiliateLink:'https://example.com/offer'} }, {status(code:number){status=code;return this;},json(value:any){result=value;}});
     assert.equal(status, 200, endpoint);
+    assert.ok(requests.at(-1).contents.includes('longTailKeywords'), endpoint + ': long-tail generation contract is missing');
     if (['pins', 'youtube', 'shorts'].includes(endpoint)) assert.ok(requests.at(-1).contents.includes('Bereits verwendeter Titel'), 'Vorhandene Titel müssen als Ergänzungskontext beim Modell ankommen.');
     assert.ok(requests.at(-1).config.systemInstruction.includes('Output language: ' + expected), endpoint + ' ignored content language');
     if (endpoint === 'blog') assert.ok(result.article.contentMarkdown.includes('[' + recommendationLabel(language) + ']'));

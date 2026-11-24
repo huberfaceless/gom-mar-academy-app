@@ -3,6 +3,16 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Long-Tail-Keywords": "Long-tail keywords",
+  "Long-Tail-Keywords bearbeiten": "Edit long-tail keywords",
+  "Konkrete Suchphrasen, eine pro Zeile. Vorschläge ohne gemessenes Suchvolumen. Änderungen hier schreiben bestehende Texte nicht um.": "Specific search phrases, one per line. Suggestions without measured search volume. Editing this list does not rewrite existing content.",
+  "Noch keine Long-Tail-Keywords hinterlegt.": "No long-tail keywords saved yet.",
+  "Long-Tail-Keywords erstellen": "Generate long-tail keywords",
+  "Long-Tail-Keywords werden erstellt…": "Generating long-tail keywords…",
+  "Long-Tail-Keywords konnten nicht erstellt werden.": "Could not generate long-tail keywords.",
+  "Der Inhalt wurde inzwischen geändert. Bitte erneut erstellen.": "The content has changed. Please generate again.",
+  "Bitte die Änderungen zuerst erfolgreich speichern.": "Please save the changes successfully first.",
+  "Keywords kopieren": "Copy keywords",
   "Weiter: Pinterest-Pins öffnen": "Next: open Pinterest pins",
   "3. Pinterest Pins": "3. Pinterest pins",
   "4. Instagram Beiträge": "4. Instagram posts",

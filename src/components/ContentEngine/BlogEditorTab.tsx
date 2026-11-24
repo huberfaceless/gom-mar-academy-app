@@ -1,3 +1,4 @@
+import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { BlogSeoCheckPanel } from './BlogSeoCheckPanel';
 import { InboundLinkSuggestions } from './InboundLinkSuggestions';
 import { blogMarkdownWithSummary } from '../../utils/blogSeoGeo';
@@ -16,10 +17,11 @@ import {
   ExternalLink,
   CheckCircle2
 } from 'lucide-react';
-import { BlogArticle } from '../../types/contentEngine';
+import { BlogArticle, ProjectSettings } from '../../types/contentEngine';
 import { BlogArticleContent } from './BlogArticleContent';
 
 interface BlogEditorTabProps {
+  projectSettings?: ProjectSettings;
   hasPinterestPins?: boolean;
   seoGeo?: { imageAsFeatured?: boolean; contentId: string; mainKeyword?: string; onPrepare: () => Promise<void> };
   contentLanguage?: string;
@@ -32,6 +34,7 @@ interface BlogEditorTabProps {
 
 export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
   article,
+  projectSettings,
   seoGeo,
   contentLanguage = 'de',
   wordpress,
@@ -151,6 +154,8 @@ export const BlogEditorTab: React.FC<BlogEditorTabProps> = ({
         </div>
       </div>
 
+      <LongTailKeywordsPanel value={article.longTailKeywords} topic={article.title} content={article.contentMarkdown}
+        projectSettings={projectSettings} onChange={longTailKeywords => onChange({ ...article, longTailKeywords })} />
       {seoGeo && <BlogSeoGeoPanel key={`seo-fields:${seoGeo.contentId}`} article={article} mainKeyword={seoGeo.mainKeyword} onChange={onChange} onPrepare={seoGeo.onPrepare} />}
       {seoGeo && <BlogSeoCheckPanel key={`seo-check:${seoGeo.contentId}`} article={article} mainKeyword={seoGeo.mainKeyword} contentId={wordpress?.available ? wordpress.contentId : undefined} defaultFeatured={seoGeo.imageAsFeatured} onChange={onChange} />}
       {wordpress?.available && <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5" aria-label={hubText('Interne Verlinkung')}>

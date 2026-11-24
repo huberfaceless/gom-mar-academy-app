@@ -1,3 +1,4 @@
+import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import { youtubeUploadTitle } from '../../utils/youtubeUploadTitle';
 import React, { useState, useEffect, useRef } from 'react';
@@ -702,6 +703,9 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
               )}
             </div>
 
+            <LongTailKeywordsPanel value={video.longTailKeywords} topic={video.title}
+              content={JSON.stringify({ title: video.title, description: video.description, script: video.script })}
+              projectSettings={projectSettings} onChange={longTailKeywords => onChangeVideo({ ...video, longTailKeywords })} />
             {/* 3. Keywords & Tags */}
             <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-2">
               <div className="flex items-center justify-between">
@@ -763,6 +767,9 @@ export const YouTubeScriptTab: React.FC<YouTubeScriptTabProps> = ({
                   />
                 </div>
 
+                <LongTailKeywordsPanel value={short.longTailKeywords} topic={short.title}
+                  content={[short.title, short.description, short.scriptText].join('\n')} projectSettings={projectSettings}
+                  onChange={longTailKeywords => onChangeShorts(shorts.map(item => item.id === short.id ? { ...item, longTailKeywords } : item))} />
                 {/* 3-Second Hook */}
                 <div className="p-3 bg-red-50/80 rounded-2xl border border-red-200">
                   <label className="block text-[10px] font-black text-red-900 uppercase mb-1">{hubText("⚡ 3-Sekunden Hook:")}</label>
