@@ -3,6 +3,8 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Smaragd": "Emerald",
+  "z.B. Dein nächster Schritt – einfach erklärt.": "e.g. Your next step, explained simply.",
   "Pin-Links gefunden, aber ihre Bilder konnten öffentlich nicht gelesen werden. Bitte einen anderen Pin wählen oder ein Designvorbild hochladen.": "Pin links were found, but their images could not be read publicly. Choose another pin or upload a design reference.",
   "Die Websuche hat keine prüfbaren Pin-Links geliefert. Bitte mit einem kürzeren Suchbegriff erneut suchen oder Pinterest direkt öffnen.": "The web search returned no verifiable pin links. Search again with a shorter phrase or open Pinterest directly.",
   "Geprüfte Pin-Links": "Checked pin links",

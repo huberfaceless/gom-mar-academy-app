@@ -1,3 +1,4 @@
+import { pinBrandText } from '../../utils/pinBranding';
 import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
 import { updateSocialEditorialContent } from '../../utils/socialEditorialReview';
@@ -77,7 +78,7 @@ const TEMPLATE_OPTIONS: { id: PinTemplateStyle; label: string; icon: string }[] 
 ];
 
 const THEME_OPTIONS: { id: PinColorTheme; label: string; colorHex: string }[] = [
-  { id: 'emerald', label: 'Vital50 Emerald', colorHex: '#059669' },
+  { id: 'emerald', label: 'Smaragd', colorHex: '#059669' },
   { id: 'teal', label: 'Deep Teal', colorHex: '#0d9488' },
   { id: 'coral', label: 'Warm Coral', colorHex: '#ea580c' },
   { id: 'amber', label: 'Amber Gold', colorHex: '#d97706' },
@@ -87,14 +88,14 @@ const THEME_OPTIONS: { id: PinColorTheme; label: string; colorHex: string }[] = 
 ];
 
 const DEFAULT_PROJECT_SETTINGS: ProjectSettings = {
-  id: 'vital50',
-  name: 'Vital50',
-  websiteUrl: 'https://vital50.gomo-marketing.at/',
+  id: 'unconfigured',
+  name: 'Mein Projekt',
+  websiteUrl: '',
   targetAudience: 'Menschen 50+',
-  coreTopics: ['Gesundheit', 'Ernährung', 'Abnehmen ab 50'],
+  coreTopics: [],
   language: 'de',
-  defaultCta: 'Kostenlose Anleitung holen',
-  defaultTargetUrl: 'https://vital50.gomo-marketing.at/',
+  defaultCta: 'Mehr erfahren',
+  defaultTargetUrl: '',
   brandVoice: 'Einfühlsam, seriös, motivierend',
   createdAt: '2026-01-01T00:00:00.000Z',
 };
@@ -491,7 +492,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
                 <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Branding Zeile oben")}</label>
                 <input
                   type="text"
-                  value={activePin.customBrandText || 'VITAL50.AT'}
+                  value={pinBrandText(activePin, projectSettings)}
                   onChange={(e) => handleUpdateActivePin({ customBrandText: e.target.value })}
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:bg-white focus:border-emerald-500 outline-hidden"
                 />
@@ -518,7 +519,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
               <input
                 type="text"
                 value={activePin.subHook || ''}
-                placeholder={hubText("z.B. Warum Diäten scheitern & was den Stoffwechsel sofort aktiviert...")}
+                placeholder={hubText("z.B. Dein nächster Schritt – einfach erklärt.")}
                 onChange={(e) => handleUpdateActivePin({ subHook: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-emerald-500 outline-hidden"
               />

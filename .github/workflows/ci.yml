@@ -67,6 +67,9 @@ jobs:
       - name: Pinterest-Bildanalyse und messbare Designvorbilder prüfen
         run: node --import tsx scripts/auditPinterestDesign.ts
 
+      - name: Projektbezogenes Pin-Branding prüfen
+        run: node --import tsx scripts/auditPinterestBranding.ts
+
       - name: Öffentliche Pinterest-Konkurrenzsuche prüfen
         run: node --import tsx scripts/auditPinterestCompetitors.ts
 
