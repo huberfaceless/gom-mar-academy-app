@@ -436,9 +436,10 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5 flex items-center gap-1">
                 <LayoutTemplate className="w-3.5 h-3.5 text-emerald-600" />{hubText("Grafik-Template")}</label>
+              {activePin.design && <p className="text-xs text-emerald-800">{hubText('Designanalyse aktiv. Die Auswahl einer Standard-Vorlage oder eines Farbthemas ersetzt dieses analysierte Layout für den aktuellen Pin.')}</p>}
               <select
                 value={activePin.templateStyle || 'vital50_clean'}
-                onChange={(e) => handleUpdateActivePin({ templateStyle: e.target.value as PinTemplateStyle })}
+                onChange={(e) => handleUpdateActivePin({ templateStyle: e.target.value as PinTemplateStyle, design: undefined })}
                 className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:border-emerald-500 outline-hidden cursor-pointer"
               >
                 {TEMPLATE_OPTIONS.map((t) => (
@@ -459,7 +460,7 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
                     <button
                       key={th.id}
                       type="button"
-                      onClick={() => handleUpdateActivePin({ colorTheme: th.id })}
+                      onClick={() => handleUpdateActivePin({ colorTheme: th.id, design: undefined })}
                       title={hubText(th.label)}
                       className={`w-7 h-7 rounded-full transition-all border-2 cursor-pointer ${
                         isSelected ? 'scale-115 border-slate-900 shadow-md ring-2 ring-slate-400' : 'border-white hover:scale-105 opacity-80 hover:opacity-100'
@@ -631,7 +632,8 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
 
 
       {/* Pinterest Background Image Picker Modal */}
-      <PinterestImagePickerModal
+      <PinterestImagePickerModal key={activePin.id}
+        projectSettings={projectSettings}
         isOpen={isImagePickerOpen}
         onClose={() => setIsImagePickerOpen(false)}
         currentImageUrl={activePin.imageUrl}

@@ -1,3 +1,4 @@
+import type { ProjectSettings } from '../../types/contentEngine';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState } from 'react';
 import { 
@@ -14,6 +15,7 @@ import { CURATED_HEALTH_PHOTOS } from '../../utils/pinterestCanvasRenderer';
 import { pinterestService } from '../../services/pinterestService';
 
 interface PinterestImagePickerModalProps {
+  projectSettings?: ProjectSettings;
   isOpen: boolean;
   onClose: () => void;
   currentImageUrl?: string;
@@ -25,6 +27,7 @@ interface PinterestImagePickerModalProps {
 
 export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps> = ({
   isOpen,
+  projectSettings,
   onClose,
   currentImageUrl,
   topic,
@@ -33,9 +36,9 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
   onSelectImage,
 }) => {
   const { language, hubText } = useContentHubCopy();
-  const [selectedUrl, setSelectedUrl] = useState<string>(currentImageUrl || CURATED_HEALTH_PHOTOS[0].url);
+  const [selectedUrl, setSelectedUrl] = useState<string>(currentImageUrl || (projectSettings?.pinterestDesignProfile ? '' : CURATED_HEALTH_PHOTOS[0].url));
   const [customUrlInput, setCustomUrlInput] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'curated' | 'upload' | 'ai'>('curated');
+  const [activeTab, setActiveTab] = useState<'curated' | 'upload' | 'ai'>(projectSettings?.pinterestDesignProfile ? 'upload' : 'curated');
   
   // AI Optimization
   const [isOptimizing, setIsOptimizing] = useState<boolean>(false);
@@ -60,7 +63,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
 
   const handleOptimizePrompt = async () => {
     setIsOptimizing(true);
-    const res = await pinterestService.optimizeImagePrompt(topic, imagePrompt, angle);
+    const res = await pinterestService.optimizeImagePrompt(topic, imagePrompt, angle, projectSettings);
     setIsOptimizing(false);
     if (res.success && res.optimizedPrompt) {
       setOptimizedPrompt(res.optimizedPrompt);
@@ -262,6 +265,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
           <button
             type="button"
             onClick={handleApply}
+            disabled={!selectedUrl}
             className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors"
           >{hubText("Bild für diesen Pin übernehmen")}</button>
         </div>

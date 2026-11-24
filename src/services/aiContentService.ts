@@ -1,3 +1,4 @@
+import { normalizePinDesignProfile } from '../utils/pinterestDesign';
 import { normalizeLongTailKeywords } from '../utils/longTailKeywords';
 import { splitSocialCaption } from '../utils/socialCaption';
 import { 
@@ -159,6 +160,7 @@ export class AIContentService {
 
     const data = await response.json();
     const rawPins = data.pins || [];
+    const designProfile = options?.channel === 'instagram' ? null : normalizePinDesignProfile(projectSettings.pinterestDesignProfile);
 
     return rawPins.map((p: any, idx: number) => ({
       id: `pin_${Date.now()}_${idx + 1}`,
@@ -166,6 +168,10 @@ export class AIContentService {
       angleLabel: p.angleLabel || `Pin ${idx + 1}`,
       longTailKeywords: normalizeLongTailKeywords(p.longTailKeywords),
       title: p.title || `${topic} - Tipp ${idx + 1}`,
+      subHook: typeof p.subHook === 'string' ? p.subHook.slice(0, 160) : '',
+      bulletPoints: Array.isArray(p.bulletPoints) ? p.bulletPoints.filter((v: unknown) => typeof v === 'string').slice(0, 4).map((v: string) => v.slice(0, 100)) : [],
+      ctaButtonText: typeof p.ctaButtonText === 'string' ? p.ctaButtonText.slice(0, 70) : projectSettings.defaultCta,
+      ...(designProfile ? { design: designProfile.variants[idx % designProfile.variants.length], designAnalysisAt: designProfile.analyzedAt } : {}),
       ...splitSocialCaption(p.description || '', Array.isArray(p.keywords) ? p.keywords : []),
       targetUrl,
       board: p.board || projectSettings.pinterestBoardDefault || projectSettings.name,

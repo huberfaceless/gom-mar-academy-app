@@ -1,5 +1,5 @@
 import { type PinterestEnvironment } from '../utils/pinterestEnvironment';
-import { PinterestAccountConfig, PinterestBoard, PinterestPin } from '../types/contentEngine';
+import { PinterestAccountConfig, PinterestBoard, PinterestPin, ProjectSettings } from '../types/contentEngine';
 import { authenticatedFetch } from './authenticatedFetch';
 
 const PINTEREST_STORAGE_KEY = 'gommar_pinterest_account_config';
@@ -131,12 +131,12 @@ export const pinterestService = {
   /**
    * Optimize Image Prompt with AI
    */
-  async optimizeImagePrompt(topic: string, prompt: string, angle?: string): Promise<{ success: boolean; optimizedPrompt?: string; stockKeywords?: string[] }> {
+  async optimizeImagePrompt(topic: string, prompt: string, angle?: string, projectSettings?: ProjectSettings): Promise<{ success: boolean; optimizedPrompt?: string; stockKeywords?: string[] }> {
     try {
       const res = await authenticatedFetch('/api/pinterest/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic, prompt, angle }),
+        body: JSON.stringify({ topic, prompt, angle, projectSettings }),
       });
       const data = await res.json();
       if (res.ok && data.data) {

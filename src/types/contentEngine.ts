@@ -29,6 +29,7 @@ export type PublishContentType = 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' 
 export type SchedulerJobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
 export interface ProjectSettings {
+  pinterestDesignProfile?: import('../utils/pinterestDesign').PinDesignProfile;
   wordpressAutoPublish?: boolean;
   editorialStrategy?: import('../utils/editorialStrategy').EditorialStrategy;
   blogDefaults?: import('../utils/projectBlogDefaults').ProjectBlogDefaults;
@@ -103,6 +104,8 @@ export type PinTemplateStyle =
 export type PinColorTheme = 'emerald' | 'teal' | 'coral' | 'amber' | 'berry' | 'dark' | 'ocean';
 
 export interface PinterestPin {
+  design?: import('../utils/pinterestDesign').PinDesign;
+  designAnalysisAt?: string;
   longTailKeywords?: string[];
   instagramContent?: import('../utils/socialEditorialReview').SocialEditorialContent;
   id: string;

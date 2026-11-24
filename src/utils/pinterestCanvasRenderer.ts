@@ -1,3 +1,4 @@
+import { renderAnalyzedPin } from './pinterestDesignRenderer';
 import { PinterestPin, PinTemplateStyle, PinColorTheme, ProjectSettings } from '../types/contentEngine';
 import JSZip from 'jszip';
 import { pinterestTrackingUrl } from './pinterestTargetUrl';
@@ -250,11 +251,14 @@ export async function renderPinToCanvas(
   const templateStyle: PinTemplateStyle = pin.templateStyle || 'vital50_clean';
 
   // 1. Draw Background Image or Fallback Gradient
-  const bgUrl = options.customBgUrl || pin.imageUrl || CURATED_HEALTH_PHOTOS[0].url;
+  const bgUrl = options.customBgUrl || pin.imageUrl || (pin.design ? '' : CURATED_HEALTH_PHOTOS[0].url);
+  let backgroundImage: HTMLImageElement | undefined;
   let hasImage = false;
 
   try {
+    if (!bgUrl) throw new Error('Kein Bild gewählt.');
     const bgImg = await loadImage(bgUrl);
+    backgroundImage = bgImg;
     // Draw image centered and cover
     const hRatio = canvas.width / bgImg.width;
     const vRatio = canvas.height / bgImg.height;
@@ -272,6 +276,8 @@ export async function renderPinToCanvas(
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
   }
+
+  if (renderAnalyzedPin(ctx, width, height, pin, projectSettings, backgroundImage)) return;
 
   // 2. High-Contrast Overlay Gradient
   const overlayGrad = ctx.createLinearGradient(0, 0, 0, height);
