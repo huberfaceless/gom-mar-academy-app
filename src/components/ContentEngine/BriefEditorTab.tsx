@@ -1,3 +1,4 @@
+import { KeywordPlannerPanel } from './KeywordPlannerPanel';
 import { SearchConsoleKeywordsPanel } from './SearchConsoleKeywordsPanel';
 import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
@@ -79,8 +80,9 @@ export const BriefEditorTab: React.FC<BriefEditorTabProps> = ({
       </div>
 
       {projectSettings && <SearchConsoleKeywordsPanel project={projectSettings} brief={brief} onChange={onChange} />}
-      <LongTailKeywordsPanel searchConsoleReport={brief.searchConsoleReport} value={brief.longTailKeywords} topic={brief.suggestedTitle || brief.h1 || brief.mainKeyword}
-        content={JSON.stringify({ ...brief, searchConsoleReport: undefined })} projectSettings={projectSettings}
+      {projectSettings && <KeywordPlannerPanel project={projectSettings} brief={brief} onChange={onChange} />}
+      <LongTailKeywordsPanel keywordPlannerReport={brief.keywordPlannerReport} searchConsoleReport={brief.searchConsoleReport} value={brief.longTailKeywords} topic={brief.suggestedTitle || brief.h1 || brief.mainKeyword}
+        content={JSON.stringify({ ...brief, searchConsoleReport: undefined, keywordPlannerReport: undefined })} projectSettings={projectSettings}
         onChange={longTailKeywords => onChange({ ...brief, longTailKeywords })} />
       {/* Grid with Details */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -78,6 +78,8 @@ jobs:
 
       - name: Search-Console-Anbindung und echte Keyword-Daten prüfen
         run: node --import tsx scripts/auditSearchConsole.ts
+      - name: Keyword Planner prüfen
+        run: node --import tsx scripts/auditKeywordPlanner.ts
 
       - name: Long-Tail-Keywords in allen Inhaltsformaten prüfen
         run: node --import tsx scripts/auditLongTailKeywords.ts

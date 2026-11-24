@@ -1,3 +1,4 @@
+import { registerKeywordPlannerRoutes } from './server/keywordPlannerRoutes.js';
 import { registerSearchConsoleRoutes } from './server/searchConsoleRoutes.js';
 import { searchCompetitorPins } from './server/pinterestCompetitorSearch.js';
 import { loadTopPinDesigns, analyzePinterestDesign } from './server/pinterestDesignResearch.js';
@@ -1091,6 +1092,7 @@ async function startServer() {
     });
   });
 
+  registerKeywordPlannerRoutes(app, [requireVerifiedMember, requireProMember].flat(), requireContentProjectAccess, FIREBASE_PROJECT_ID, ACADEMY_PUBLIC_URL);
   registerSearchConsoleRoutes(app, [requireVerifiedMember, requireProMember].flat(), requireContentProjectAccess, FIREBASE_PROJECT_ID, ACADEMY_PUBLIC_URL);
 
   app.get('/api/youtube/status', requireVerifiedMember, requireProMember, async (req, res) => {

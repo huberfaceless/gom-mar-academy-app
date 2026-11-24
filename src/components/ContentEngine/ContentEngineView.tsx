@@ -138,7 +138,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
   const pinterestReturn = readPinterestOAuthReturn(userId);
 
   const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId, isAdmin));
-  const searchConsoleReturnId = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('searchConsole') ? sessionStorage.getItem('gommar_search_console_project') : null;
+  const searchConsoleReturnId = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('keywordPlanner') ? sessionStorage.getItem('gommar_keyword_planner_project') : typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('searchConsole') ? sessionStorage.getItem('gommar_search_console_project') : null;
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects.find(project => project.id === searchConsoleReturnId)?.id || projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
   const [wordpressContentId, setWordpressContentId] = useState<string | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);

@@ -1,3 +1,4 @@
+import { plannerEvidence, type KeywordPlannerReport } from '../../utils/keywordPlanner';
 import { keywordDataStatus, type SearchConsoleReport } from '../../utils/searchConsoleKeywords';
 import React, { useEffect, useRef, useState } from 'react';
 import type { ProjectSettings } from '../../types/contentEngine';
@@ -5,8 +6,8 @@ import { AIContentService } from '../../services/aiContentService';
 import { normalizeLongTailKeywords } from '../../utils/longTailKeywords';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 
-export function LongTailKeywordsPanel({ value, topic, content, projectSettings, searchConsoleReport, onChange }: {
-  searchConsoleReport?: SearchConsoleReport; value?: string[]; topic: string; content: string; projectSettings?: ProjectSettings;
+export function LongTailKeywordsPanel({ value, topic, content, projectSettings, searchConsoleReport, keywordPlannerReport, onChange }: {
+  keywordPlannerReport?: KeywordPlannerReport; searchConsoleReport?: SearchConsoleReport; value?: string[]; topic: string; content: string; projectSettings?: ProjectSettings;
   onChange: (keywords: string[]) => unknown;
 }) {
   const { hubText } = useContentHubCopy();
@@ -38,9 +39,10 @@ export function LongTailKeywordsPanel({ value, topic, content, projectSettings, 
   return <section className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4" aria-label={hubText('Long-Tail-Keywords')}>
     <h4 className="text-sm font-bold">{hubText('Long-Tail-Keywords')}</h4>
     <p className="text-xs text-slate-600">{hubText('Konkrete Suchphrasen, eine pro Zeile. Vorschläge ohne gemessenes Suchvolumen. Änderungen hier schreiben bestehende Texte nicht um.')}</p>
-    {!searchConsoleReport && <span className="inline-block rounded-full bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900">{hubText('KI-Vorschlag')}</span>}
-    {searchConsoleReport && <ul className="space-y-1 text-xs">{normalizeLongTailKeywords(text.split('\n')).map(keyword=>{const status=keywordDataStatus(keyword,searchConsoleReport,projectSettings?.websiteUrl||'');return <li key={keyword}>{keyword} · <span className="font-semibold">{hubText(status==='data'?'Suchdaten vorhanden':status==='unchecked'?'Noch ungeprüft':'KI-Vorschlag')}</span></li>;})}</ul>}
+    {!searchConsoleReport && !keywordPlannerReport && <span className="inline-block rounded-full bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900">{hubText('KI-Vorschlag')}</span>}
+    {(searchConsoleReport || keywordPlannerReport) && <ul className="space-y-1 text-xs">{normalizeLongTailKeywords(text.split('\n')).map(keyword=>{const status=keywordDataStatus(keyword,searchConsoleReport,projectSettings?.websiteUrl||'');const demand=plannerEvidence(keyword,keywordPlannerReport?.language===projectSettings?.language?keywordPlannerReport:undefined,projectSettings?.websiteUrl||'');return <li key={keyword}>{keyword} · <span className="font-semibold">{hubText(demand==='estimate'?'Google-Suchvolumenschätzung vorhanden':demand==='variant'?'Zusammengefasste Variante':status==='data'?'Suchdaten vorhanden':'Noch ungeprüft')}</span></li>;})}</ul>}
     {searchConsoleReport&&<p className="text-xs text-slate-500">{searchConsoleReport.source} · {searchConsoleReport.startDate} – {searchConsoleReport.endDate}</p>}
+    {keywordPlannerReport&&<p className="text-xs text-slate-500">{keywordPlannerReport.source} · {keywordPlannerReport.startDate} – {keywordPlannerReport.endDate} · {keywordPlannerReport.countries.join(', ')}</p>}
     <textarea aria-label={hubText('Long-Tail-Keywords bearbeiten')} value={text} rows={4} maxLength={1600} disabled={busy}
       placeholder={hubText('Noch keine Long-Tail-Keywords hinterlegt.')}
       onChange={event => { setText(event.target.value); setCopied(false); }}
