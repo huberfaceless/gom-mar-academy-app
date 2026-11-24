@@ -1,3 +1,4 @@
+import { searchCompetitorPins } from './server/pinterestCompetitorSearch.js';
 import { loadTopPinDesigns, analyzePinterestDesign } from './server/pinterestDesignResearch.js';
 import { pinDesignPrompt } from './src/utils/pinterestDesign.js';
 import { normalizeLongTailKeywords, longTailKeywordPrompt } from './src/utils/longTailKeywords';
@@ -3327,6 +3328,13 @@ Antworte im JSON-Format:
       const token = await loadPinterestAccessToken(FIREBASE_PROJECT_ID, userId, 'production');
       res.json(await loadTopPinDesigns(token, req.body.days ?? 30));
     } catch (error) { res.status(502).json({ error: error instanceof Error ? error.message : 'Pinterest-Klickdaten konnten nicht geladen werden.' }); }
+  });
+  app.post('/api/pinterest/design/competitors', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
+    if (res.locals.pinterestEnvironment !== 'production') return void res.status(400).json({ error: 'Bitte die Produktionsumgebung für öffentliche Designvorbilder verwenden.' });
+    if (!(req as FirebaseRequest).firebaseUser?.sub) return void res.status(401).json({ error: 'Mitglied konnte nicht bestätigt werden.' });
+    if (typeof req.body.query !== 'string' || req.body.query.trim().length < 3 || req.body.query.length > 250) return void res.status(400).json({ error: 'Bitte ein Suchthema mit 3 bis 250 Zeichen eingeben.' });
+    try { res.json(await searchCompetitorPins(ai, req.body)); }
+    catch (error) { res.status(502).json({ error: error instanceof Error ? error.message : 'Die öffentliche Pin-Suche konnte nicht ausgeführt werden.' }); }
   });
   app.post('/api/pinterest/design/analyze', requireVerifiedMember, requireProMember, requireContentProjectAccess, async (req, res) => {
     if (res.locals.pinterestEnvironment !== 'production') return void res.status(400).json({ error: 'Die Designanalyse benötigt echte Produktionsdaten. Sandbox-Daten werden nicht als Erfolg gewertet.' });

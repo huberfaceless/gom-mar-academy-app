@@ -7,7 +7,7 @@ export interface PinDesign {
   headingSize: 'large' | 'medium';
 }
 export interface PinDesignReference {
-  kind: 'account' | 'inspiration';
+  kind: 'account' | 'inspiration' | 'competitor';
   id: string;
   title: string;
   imageUrl?: string;
@@ -50,7 +50,7 @@ export function normalizePinDesignProfile(value: unknown): PinDesignProfile | nu
   if(v.version!==1 || !Array.isArray(v.variants))return null;
   const variants=v.variants.slice(0,3).map(normalizePinDesign).filter((item):item is PinDesign=>Boolean(item));
   if(!variants.length)return null;
-  return {version:1,analyzedAt:text(v.analyzedAt,40),references:Array.isArray(v.references)?v.references.filter(ref=>ref && typeof ref==='object').slice(0,3).map(ref=>({kind:ref.kind==='account'?'account':'inspiration',id:text(ref.id,100),title:text(ref.title,200),
+  return {version:1,analyzedAt:text(v.analyzedAt,40),references:Array.isArray(v.references)?v.references.filter(ref=>ref && typeof ref==='object').slice(0,3).map(ref=>({kind:ref.kind==='account'?'account':ref.kind==='competitor'?'competitor':'inspiration',id:text(ref.id,100),title:text(ref.title,200),...(ref.kind==='competitor' && /^https:\/\/www\.pinterest\.com\/pin\/\d{1,30}\/$/.test(ref.pinUrl||'')?{pinUrl:ref.pinUrl}:{}),
     ...(ref.kind==='account'?{impressions:finiteMetric(ref.impressions),outboundClicks:finiteMetric(ref.outboundClicks),outboundRate:finiteMetric(ref.outboundRate)}:{})})):[],
     observations:Array.isArray(v.observations)?v.observations.map(x=>text(x,600)).filter(Boolean).slice(0,8):[],imageGuidance:text(v.imageGuidance,1200),variants,
     ...(v.period && /^\d{4}-\d{2}-\d{2}$/.test(v.period.start) && /^\d{4}-\d{2}-\d{2}$/.test(v.period.end)?{period:{start:v.period.start,end:v.period.end}}:{})};

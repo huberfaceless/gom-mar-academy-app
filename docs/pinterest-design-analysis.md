@@ -27,3 +27,16 @@ Die KI bekommt echte Bilddaten. Konto-Bilder stammen ausschließlich von `https:
 Gespeichert werden Quellverweise/Messbezug, Beobachtungen und drei kontrollierte Designvarianten. Hochgeladene Referenzbilder werden nicht im Projekt gespeichert oder als neues Pin-Bild wiederverwendet. Für neue Pins gelten eigene Inhalte, Marke und Bildauswahl. Der Renderer berücksichtigt die Varianten bei Vorschau, PNG-/ZIP-Export und Veröffentlichung und korrigiert unlesbare Textkontraste.
 
 Prüfung: `node --import tsx scripts/auditPinterestDesign.ts` (keine echten Pinterest- oder KI-Aufrufe).
+
+
+## Öffentliche Konkurrenz-Pins
+
+Im Designpanel zuerst „Konkurrenz-Pins suchen“ verwenden. Das aktuelle Thema wird vorbelegt, der Suchbegriff bleibt editierbar. Die Suche nutzt die vorhandene Google-Websuche über Gemini, ohne Pinterest-OAuth. Sie bietet maximal zehn tatsächlich gefundene und öffentlich lesbare einzelne Pins zur Auswahl. Suchzeitpunkt, Originalquelle und isolierte Google-Quellenanzeige bleiben sichtbar. Bekannte Zieladressen der eigenen Projektwebsite werden anhand vorhandener öffentlicher Metadaten ausgeschlossen; die Identität jedes Creators lässt sich damit nicht vollständig überprüfen.
+
+Dies ist keine vollständige Pinterest-Suche und keine Rangliste erfolgreicher Konkurrenz. Ausgehende Klicks und Impressionen fremder Pins sind unbekannt. Keine Treffer oder öffentliche Lesesperren werden sichtbar gemeldet; es werden keine Ersatz-URLs oder Bilder erfunden. Alternativ kann ein konkreter öffentlicher Pin-Link ergänzt oder ein Designvorbild hochgeladen werden. Keine Anmeldesperren umgehen.
+
+Maximal drei Referenzen insgesamt (Konkurrenz-Pins, eigene gemessene Pins, Uploads). Die Analyse lädt öffentliche Pin-Metadaten und Bilddaten erneut serverseitig. Clientseitig übergebene Bildadressen und angebliche Fremdmetriken werden nicht übernommen. Es werden nur sichere Pinterest-Pin-URLs und i.pinimg.com-Bilder geladen; Redirects, Head- und Bildgrößen sind begrenzt. Suchantworttext allein gilt nicht als URL-Beleg. Google-Quellenlinks werden nur über den bekannten Grounding-Redirect aufgelöst.
+
+Gespeichert werden Gestaltungsvorgaben und Quellenreferenzen. Künftige Pin-Generierungen verwenden die vorhandene Varianten-/Canvas-Pipeline. Die Vorbildbilder werden nicht als eigene Pin-Bilder veröffentlicht.
+
+Prüfung: `node --import tsx scripts/auditPinterestCompetitors.ts` prüft belegte Suchquellen, sichere Abrufe, leere Treffer, echte Bilddaten im Analyseaufruf, fehlende Fremdmetriken und die tatsächlichen UI-Handler für Suche, Auswahl und Speicherung. API/Modellantworten sind dabei simuliert; Suchabdeckung und öffentliche Lesbarkeit können sich produktiv ändern.
