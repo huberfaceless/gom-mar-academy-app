@@ -152,7 +152,7 @@ export default function App() {
       setActiveView('contentEngine');
     }
   }, [firebaseUser, resolvedMembershipUid, user.tier, user.role]);
-  const [activeView, setActiveView] = useState<string>('dashboard');
+  const [activeView, setActiveView] = useState<string>(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('searchConsole') ? 'contentEngine' : 'dashboard');
   useEffect(() => { setBrowserErrorView(activeView); }, [activeView]);
   const [membershipGate, setMembershipGate] = useState<{
     isOpen: boolean;

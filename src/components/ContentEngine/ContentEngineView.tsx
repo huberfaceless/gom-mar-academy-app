@@ -138,7 +138,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
   const pinterestReturn = readPinterestOAuthReturn(userId);
 
   const [projects, setProjects] = useState<ProjectSettings[]>(loadAllProjectSettings(userId, isAdmin));
-  const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
+  const searchConsoleReturnId = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('searchConsole') ? sessionStorage.getItem('gommar_search_console_project') : null;
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(projects.find(project => project.id === searchConsoleReturnId)?.id || projects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
   const [wordpressContentId, setWordpressContentId] = useState<string | null>(null);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [projectBeingEdited, setProjectBeingEdited] = useState<ProjectSettings | null>(null);
@@ -149,7 +150,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
   const [contentProjects, setContentProjects] = useState<CentralContentProject[]>(loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin)));
   const [selectedContentProject, setActiveContentProject] = useState<CentralContentProject | null>(() => {
     const list = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
-    return list.length > 0 ? list[0] : null;
+    return list.find(project => project.projectSettings.id === searchConsoleReturnId) || (list.length > 0 ? list[0] : null);
   });
 
   // Generator State
@@ -180,9 +181,9 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
       const localProjects = loadAllProjectSettings(userId, isAdmin);
       const localContent = loadAllContentProjects(userId).filter(project => canUseContentProject(project.projectSettings, isAdmin));
       setProjects(localProjects);
-      setSelectedProjectId(localProjects.find(p => p.id === pinterestReturn?.projectId)?.id || localProjects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
+      setSelectedProjectId(localProjects.find(p => p.id === (pinterestReturn?.projectId || searchConsoleReturnId))?.id || localProjects[0]?.id || createStarterProjects(userId, isAdmin)[0].id);
       setContentProjects(localContent);
-      setActiveContentProject(localContent.find(p => p.id === pinterestReturn?.contentProjectId) || localContent[0] || null);
+      setActiveContentProject(localContent.find(p => p.id === pinterestReturn?.contentProjectId) || localContent.find(p => p.projectSettings.id === searchConsoleReturnId) || localContent[0] || null);
       if (pinterestReturn) setActiveTab('pinterest');
       try {
         await FirestoreContentService.syncLocalDataToFirestore(userId, isAdmin);
@@ -194,8 +195,8 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
         if (cancelled) return;
         if (firestoreProjects) {
           setProjects(firestoreProjects);
-          if (firestoreProjects.some(p => p.id === pinterestReturn?.projectId)) {
-            setSelectedProjectId(pinterestReturn!.projectId);
+          if (firestoreProjects.some(p => p.id === (pinterestReturn?.projectId || searchConsoleReturnId))) {
+            setSelectedProjectId(pinterestReturn?.projectId || searchConsoleReturnId!);
           } else if (!firestoreProjects.some((p) => p.id === selectedProjectId)) {
             setSelectedProjectId(firestoreProjects[0]?.id || '');
           }
@@ -203,6 +204,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
         setContentProjects((firestoreContent || []).filter(project => canUseContentProject(project.projectSettings, isAdmin)));
         setActiveContentProject(firestoreContent?.find(project => project.id === pinterestReturn?.contentProjectId && canUseContentProject(project.projectSettings, isAdmin))
+          || firestoreContent?.find(project => project.projectSettings.id === searchConsoleReturnId && canUseContentProject(project.projectSettings, isAdmin))
           || firestoreContent?.find(project => canUseContentProject(project.projectSettings, isAdmin)) || null);
       } catch (err) {
         console.warn('Could not load content from Firestore, keeping local fallback:', err);
