@@ -1,3 +1,4 @@
+import { isVital50Project } from './contentProjectAccess';
 import { renderBottomLeftPin } from './pinterestBottomLeftRenderer';
 import { pinBrandText, projectPinWebsite } from './pinBranding';
 import { renderAnalyzedPin } from './pinterestDesignRenderer';
@@ -253,7 +254,7 @@ export async function renderPinToCanvas(
   const templateStyle: PinTemplateStyle = pin.templateStyle || 'vital50_clean';
 
   // 1. Draw Background Image or Fallback Gradient
-  const bgUrl = options.customBgUrl || pin.imageUrl || (pin.design || projectSettings.pinterestTextPosition === 'bottom-left' ? '' : CURATED_HEALTH_PHOTOS[0].url);
+  const bgUrl = options.customBgUrl || pin.imageUrl || (isVital50Project(projectSettings) && !pin.design && projectSettings.pinterestTextPosition !== 'bottom-left' ? CURATED_HEALTH_PHOTOS[0].url : '');
   let backgroundImage: HTMLImageElement | undefined;
   let hasImage = false;
 
