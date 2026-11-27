@@ -115,7 +115,7 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                Website URL
+                {hubText("Website für Analyse & Markenbezug")}
               </label>
               <input
                 type="url"
@@ -183,11 +183,11 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Projekt-Zieladresse für alle Inhalte")}</label>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">{hubText("Standard-Link für Empfehlungen und Werbung")}</label>
               <input
                 type="url"
                 maxLength={2048}
-                aria-label={hubText("Projekt-Zieladresse für alle Inhalte")}
+                aria-label={hubText("Standard-Link für Empfehlungen und Werbung")}
                 aria-invalid={Boolean(linkError)}
                 aria-describedby="project-link-help"
                 placeholder={hubText("https://deine-zielseite.at (optional)")}
