@@ -3,6 +3,12 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Für WeAreReal passen Motive mit Menschen im Gespräch, gemeinsamem Lernen oder Zusammenarbeit. Wähle ein eigenes Bild oder bereite unter KI-Prompt ein passendes Motiv vor.": "For WeAreReal, choose people in conversation, learning together or collaborating. Select your own image or prepare a suitable motif under AI prompt.",
+  "Wähle ein eigenes Bild passend zu deinem Projektthema oder bereite unter KI-Prompt ein Motiv vor. Es wird kein fremdes Standardfoto vorausgewählt.": "Choose your own image for your project topic or prepare a motif under AI prompt. No unrelated stock photo is preselected.",
+  "Ausgewähltes Hintergrundbild": "Selected background image",
+  "Noch kein Hintergrundbild ausgewählt": "No background image selected yet",
+  "Wähle ein Hintergrundbild passend zu deinem Projektthema.": "Choose a background image that matches your project topic.",
+  "Erstelle einen fotorealistischen Bild-Prompt passend zum aktiven Projekt, Thema und seiner Zielgruppe. Der Prompt erzeugt hier noch kein Bild.": "Prepare a photorealistic image prompt for the active project, topic and audience. The prompt does not generate an image here.",
   "Für die Keyword-Recherche ist keine eigene Website erforderlich. Kundennummer, Suchbegriffe, Sprache und Zielregionen genügen.": "Keyword research does not require your own website. Your customer ID, keywords, language and target regions are sufficient.",
   "Search Console – optional": "Search Console – optional",
   "Ohne eigene Website ist hier nichts einzurichten. Nutze unten den Google Keyword Planner für deine Keyword-Recherche. Dein Empfehlungslink bleibt davon unabhängig.": "Without your own website, there is nothing to set up here. Use Google Keyword Planner below for keyword research. Your referral link is independent of this.",

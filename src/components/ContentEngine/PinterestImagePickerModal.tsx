@@ -1,3 +1,4 @@
+import { isVital50Project } from '../../utils/contentProjectAccess';
 import type { ProjectSettings } from '../../types/contentEngine';
 import { useContentHubCopy } from '../../i18n/useContentHubCopy';
 import React, { useState } from 'react';
@@ -36,9 +37,10 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
   onSelectImage,
 }) => {
   const { language, hubText } = useContentHubCopy();
-  const [selectedUrl, setSelectedUrl] = useState<string>(currentImageUrl || (projectSettings?.pinterestDesignProfile ? '' : CURATED_HEALTH_PHOTOS[0].url));
+  const hasHealthGallery = isVital50Project(projectSettings);
+  const [selectedUrl, setSelectedUrl] = useState<string>(currentImageUrl || (hasHealthGallery && !projectSettings?.pinterestDesignProfile ? CURATED_HEALTH_PHOTOS[0].url : ''));
   const [customUrlInput, setCustomUrlInput] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'curated' | 'upload' | 'ai'>(projectSettings?.pinterestDesignProfile ? 'upload' : 'curated');
+  const [activeTab, setActiveTab] = useState<'curated' | 'upload' | 'ai'>(hasHealthGallery && !projectSettings?.pinterestDesignProfile ? 'curated' : 'upload');
   
   // AI Optimization
   const [isOptimizing, setIsOptimizing] = useState<boolean>(false);
@@ -101,7 +103,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
 
         {/* Tab Buttons */}
         <div className="flex border-b border-slate-200 bg-slate-50 px-5 pt-3 gap-2">
-          <button
+          {hasHealthGallery && <button
             type="button"
             onClick={() => setActiveTab('curated')}
             className={`px-4 py-2.5 text-xs font-bold rounded-t-xl border-b-2 transition-all ${
@@ -109,7 +111,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
                 ? 'bg-white text-emerald-700 border-emerald-600 shadow-xs'
                 : 'text-slate-500 border-transparent hover:text-slate-800'
             }`}
-          >{hubText("🖼️ Kuratierte Vital50 HD-Fotos")}</button>
+          >{hubText("🖼️ Kuratierte Vital50 HD-Fotos")}</button>}
           <button
             type="button"
             onClick={() => setActiveTab('upload')}
@@ -132,7 +134,13 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
 
         {/* Content */}
         <div className="p-6 space-y-4 overflow-y-auto flex-1">
-          {activeTab === 'curated' && (
+          {!hasHealthGallery && <p className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-900">
+            {projectSettings?.promotionPreset === 'wearereal'
+              ? hubText('Für WeAreReal passen Motive mit Menschen im Gespräch, gemeinsamem Lernen oder Zusammenarbeit. Wähle ein eigenes Bild oder bereite unter KI-Prompt ein passendes Motiv vor.')
+              : hubText('Wähle ein eigenes Bild passend zu deinem Projektthema oder bereite unter KI-Prompt ein Motiv vor. Es wird kein fremdes Standardfoto vorausgewählt.')}
+          </p>}
+          {selectedUrl && <img src={selectedUrl} alt={hubText('Ausgewähltes Hintergrundbild')} className="max-h-40 max-w-full rounded-xl object-contain" />}
+          {hasHealthGallery && activeTab === 'curated' && (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
               {CURATED_HEALTH_PHOTOS.map((photo) => {
                 const isSelected = selectedUrl === photo.url;
@@ -216,7 +224,7 @@ export const PinterestImagePickerModal: React.FC<PinterestImagePickerModalProps>
                 <Sparkles className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-bold text-emerald-900">{hubText("Optimierter Fotografie-Prompt für Bild-KI")}</h4>
-                  <p className="text-xs text-emerald-700 mt-0.5">{hubText("Generiere professionelle fotorealistische Prompts für Midjourney, Imagen oder DALL-E, abgestimmt auf die Zielgruppe 50+.")}</p>
+                  <p className="text-xs text-emerald-700 mt-0.5">{hubText("Erstelle einen fotorealistischen Bild-Prompt passend zum aktiven Projekt, Thema und seiner Zielgruppe. Der Prompt erzeugt hier noch kein Bild.")}</p>
                 </div>
               </div>
 

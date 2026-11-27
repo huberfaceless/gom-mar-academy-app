@@ -1,3 +1,4 @@
+import { isVital50Project } from '../../utils/contentProjectAccess';
 import { pinBrandText } from '../../utils/pinBranding';
 import { LongTailKeywordsPanel } from './LongTailKeywordsPanel';
 import { SocialEditorialReviewModal } from './SocialEditorialReviewModal';
@@ -393,14 +394,14 @@ export const PinterestPinsTab: React.FC<PinterestPinsTabProps> = ({
             </div>
             <div className="flex items-center gap-2">
               <div className="w-12 h-16 rounded-lg overflow-hidden border border-slate-300 shrink-0 bg-slate-200">
-                <img
+                {activePin.imageUrl || isVital50Project(projectSettings) ? <img
                   src={activePin.imageUrl || CURATED_HEALTH_PHOTOS[0].url}
-                  alt="Background"
+                  alt={hubText('Ausgewähltes Hintergrundbild')}
                   className="w-full h-full object-cover"
-                />
+                /> : <ImageIcon className="h-full w-full p-2 text-slate-400" aria-label={hubText('Noch kein Hintergrundbild ausgewählt')} />}
               </div>
               <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
-                {activePin.imagePrompt || hubText("Kuriertes Vital50 HD-Gesundheitsfoto mit optimalem Kontrast für Pinterest.")}
+                {activePin.imagePrompt || hubText("Wähle ein Hintergrundbild passend zu deinem Projektthema.")}
               </p>
             </div>
           </div>

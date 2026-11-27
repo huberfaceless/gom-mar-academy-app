@@ -1,3 +1,9 @@
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { LanguageProvider } from '../src/context/LanguageContext';
+import { PinterestImagePickerModal } from '../src/components/ContentEngine/PinterestImagePickerModal';
+import * as projectAccess from '../src/utils/contentProjectAccess';
+import { createWeAreRealProject } from '../src/utils/wearerealPromotion';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import ts from 'typescript';
@@ -18,7 +24,7 @@ assert.equal(projectPinWebsite({...business,websiteUrl:'https://user:password@ex
 
 // Render the real editor component and invoke the actual branding field handler.
 const react={createElement:(type:unknown,props:any,...children:unknown[])=>({type,props:{...props,children}}),useState:(value:any)=>[value,()=>{}],useRef:(value:any)=>({current:value}),useEffect(){}};
-const context=vm.createContext({exports:{},require(name:string){if(name==='react')return react;if(name.endsWith('pinterestCanvasRenderer'))return{CURATED_HEALTH_PHOTOS};if(name.endsWith('pinBranding'))return{pinBrandText};if(name.endsWith('pinterestTargetUrl'))return target;if(name.endsWith('useContentHubCopy'))return{useContentHubCopy:()=>({language:'de',hubText:(value:string)=>value})};return{};}});
+const context=vm.createContext({exports:{},require(name:string){if(name==='react')return react;if(name.endsWith('contentProjectAccess'))return projectAccess;if(name.endsWith('pinterestCanvasRenderer'))return{CURATED_HEALTH_PHOTOS};if(name.endsWith('pinBranding'))return{pinBrandText};if(name.endsWith('pinterestTargetUrl'))return target;if(name.endsWith('useContentHubCopy'))return{useContentHubCopy:()=>({language:'de',hubText:(value:string)=>value})};return{};}});
 vm.runInContext(ts.transpileModule(readFileSync('src/components/ContentEngine/PinterestPinsTab.tsx','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.React,esModuleInterop:true}}).outputText,context);
 let changes=0;let updated:PinterestPin[]=[];
 const editor=(project:ProjectSettings,current=pin)=>context.exports.PinterestPinsTab({pins:[current],projectSettings:project,topic:'Business',onChange:(value:PinterestPin[])=>{changes++;updated=value;},onOpenInstagram(){}});
@@ -46,3 +52,21 @@ try{
  drawn.length=0;await renderPinToCanvas(canvas,{...pin,customBrandText:'Meine eigene Marke'},business);assert.ok(drawn.includes('✨ Meine eigene Marke'));
 }finally{if(oldImage===undefined)delete(globalThis as any).Image;else globalThis.Image=oldImage;}
 console.log('Pin-Branding geprüft: aktives Projekt in Editor und allen Canvas-Layouts, Projektwechsel, Website-Fallback und manuelle Markenangaben ohne fremde Gesundheits- oder Gratisversprechen.');
+
+// Project-aware picker: no health gallery, no preselected unrelated background.
+const picker=(projectSettings:ProjectSettings,currentImageUrl?:string)=>renderToStaticMarkup(React.createElement(LanguageProvider,null,React.createElement(PinterestImagePickerModal,{isOpen:true,projectSettings,currentImageUrl,topic:'Verbindung',angle:'curiosity',imagePrompt:'People in conversation',onClose(){},onSelectImage(){}})));
+for(const project of [business,createWeAreRealProject('owner')]){
+ const html=picker(project);
+ assert.ok(html.includes('Bild vom Computer hochladen'));
+ assert.ok(!html.includes('Kuratierte Vital50 HD-Fotos'));
+ assert.ok(!html.includes(CURATED_HEALTH_PHOTOS[0].url.replace(/&/g,'&amp;')));
+ assert.match(html,/disabled=""[^>]*>Bild für diesen Pin übernehmen/);
+}
+assert.ok(picker(vital).includes('Kuratierte Vital50 HD-Fotos'));
+assert.ok(picker(vital).includes(CURATED_HEALTH_PHOTOS[0].url.replace(/&/g,'&amp;')));
+const ownImage='data:image/png;base64,iVBORw0KGgo=';
+assert.ok(picker(business,ownImage).includes(ownImage),'An explicitly selected image remains available.');
+const editorHtml=editor(business);
+assert.equal(find(editorHtml,node=>node.type==='img'&&node.props.src===CURATED_HEALTH_PHOTOS[0].url),undefined);
+assert.ok(find(editor(business,{...pin,imageUrl:ownImage}),node=>node.type==='img'&&node.props.src===ownImage));
+console.log('Projektbezogene Bildauswahl geprüft: Gesundheitsgalerie nur für Vital50, andere Projekte ohne fremde Vorauswahl, Upload und explizite Bilder erhalten.');
