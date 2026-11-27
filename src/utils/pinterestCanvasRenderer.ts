@@ -1,3 +1,4 @@
+import { renderBottomLeftPin } from './pinterestBottomLeftRenderer';
 import { pinBrandText, projectPinWebsite } from './pinBranding';
 import { renderAnalyzedPin } from './pinterestDesignRenderer';
 import { PinterestPin, PinTemplateStyle, PinColorTheme, ProjectSettings } from '../types/contentEngine';
@@ -252,7 +253,7 @@ export async function renderPinToCanvas(
   const templateStyle: PinTemplateStyle = pin.templateStyle || 'vital50_clean';
 
   // 1. Draw Background Image or Fallback Gradient
-  const bgUrl = options.customBgUrl || pin.imageUrl || (pin.design ? '' : CURATED_HEALTH_PHOTOS[0].url);
+  const bgUrl = options.customBgUrl || pin.imageUrl || (pin.design || projectSettings.pinterestTextPosition === 'bottom-left' ? '' : CURATED_HEALTH_PHOTOS[0].url);
   let backgroundImage: HTMLImageElement | undefined;
   let hasImage = false;
 
@@ -277,6 +278,8 @@ export async function renderPinToCanvas(
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
   }
+
+  if (projectSettings.pinterestTextPosition === 'bottom-left') { renderBottomLeftPin(ctx, width, height, pin, projectSettings); return; }
 
   if (renderAnalyzedPin(ctx, width, height, pin, projectSettings, backgroundImage)) return;
 

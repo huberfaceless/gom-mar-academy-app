@@ -1,0 +1,15 @@
+# WeAreReal-Projekt und Mini-Storytelling
+
+Administratoren öffnen in der KI-Inhaltszentrale den Button **WeAreReal-Projekt**. Beim ersten Mal öffnet er eine eigene Projektvorlage; erst „Einstellungen speichern“ legt diese über die bestehende lokale und Cloud-Speicherung an. Später wählt derselbe Button das vorhandene Projekt aus. Keine automatische Einfügung bei Mitgliedern, keine Änderungen an deren Links, keine Überschreibung vorhandener Kampagnen.
+
+Die Vorlage enthält den bestätigten Link `https://wearereal.com/de/tribe/wearereal?real=2002708`, eine leere eigene Website, deaktivierte WordPress-Sofortveröffentlichung, fünf Community-Themen und Mini-Storytelling. Die Quellenangabe ist in den Projekteinstellungen sichtbar. Die redaktionelle Grundlage ist das als Advertorial gekennzeichnete Forbes.at-Stück vom 5.11.2026, abgerufen am 27.11.2026. Die bewusst begrenzte Zusammenfassung wird mit diesem Stand im Code hinterlegt; keine laufende automatische Faktenprüfung. Eine geänderte bestätigte Kampagnen-Zieladresse hat Vorrang. Die Vorlage bietet keine Preise, Vergütungen oder Mitgliederzahlen als Werbefakten an.
+
+Mini-Stories verwenden Alltagsszene, Spannung, Wendepunkt und Einladung. Ohne vom Nutzer gelieferte belegte Erlebnisse werden Szenen ausdrücklich hypothetisch erzählt. Die Vorgaben gelten im gemeinsamen Prompt für Briefing, Artikel, Pinterest/Instagram, YouTube und Shorts sowie im E-Mail-Generator. Kanallimits bleiben bestehen. Vorhandene Texte werden nicht umgeschrieben; die KI-Ausgabe bleibt vor einer Veröffentlichung zu prüfen.
+
+## Pin-Layout
+
+Im Admin-Pinterest-Editor werden die Einstellungen aller ausgewählten Projekte bei der Darstellung mit `pinterestTextPosition: bottom-left` ergänzt. Das Vorschau-Objekt bleibt stabil; es wird keine Cloud-Massenmigration ausgeführt. Bei explizitem Speichern eines Adminprojekts wird die Vorgabe auch in den Projektvorgaben gespeichert. Die feste Position ist im Admin-Einstellungsdialog sichtbar. Mitglieder behalten ihre bisherigen Layouts und können die Position in ihren eigenen Projekten optional aktivieren.
+
+Der gemeinsame Canvas-Renderer zeichnet Branding, optionalen Badge, Headline, Teaser und CTA ausschließlich linksbündig im unteren Bildbereich, auch wenn eine analysierte Vorlage Zentrierung vorsieht. Bild und Farb-Hintergrund bleiben erhalten; ein dunkler Verlauf sorgt für Lesbarkeit. Ohne ausgewähltes Bild gibt es einen Farbverlauf statt eines fremden Gesundheits-Stockfotos. Die Vorgabe gilt in Vorschau, PNG, ZIP sowie neu erzeugten Veröffentlichungsbildern. Bereits gespeicherte bzw. eingeplante `imageBase64`-Dateien und bereits veröffentlichte Pins werden nicht rückwirkend verändert; dafür muss das Bild gezielt erneut erzeugt werden.
+
+Validierung: `scripts/auditWeAreRealPromotion.ts` prüft Quelleneinordnung, Prompt-Nutzung, Linkerhalt und die echte Canvas-Verzweigung mit aufgezeichneten Zeichenkoordinaten. `auditContentTopicContinuity.ts` prüft das reale Admin-UI zum Öffnen der Vorlage und deren Trennung von vorhandenen Kampagnen. Kein Versand und keine Social-Veröffentlichung als Test.

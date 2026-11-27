@@ -1,3 +1,4 @@
+import * as wearerealPromotion from '../src/utils/wearerealPromotion';
 import * as additionalSocialContent from '../src/utils/additionalSocialContent';
 import { automaticWordPressPublication, wordpressSiteOrigin } from '../src/utils/wordpressSites';
 import { resolveEditorialStrategy } from '../src/utils/editorialStrategy';
@@ -54,6 +55,7 @@ const AIContentService = {
   async generatePinterestPins(topic: string) { requests.push({ kind: 'pinterest', topic }); return [{ id: 'model-pin', title: topic, angle: 'solution', status: 'ai_generated' }]; },
 };
 const context = vm.createContext({ campaignSourcePrompt, contentLanguageInstruction, recommendationLabel, exports: {}, console, require(name: string) {
+  if (name.endsWith('wearerealPromotion')) return wearerealPromotion;
   if (name.endsWith('additionalSocialContent')) return additionalSocialContent;
   if (name.endsWith('wordpressSites')) return { automaticWordPressPublication, wordpressSiteOrigin };
   if (name === 'react') return hookReact;
@@ -82,7 +84,8 @@ vm.runInContext(ts.transpileModule(readFileSync('src/components/ContentEngine/Co
 }).outputText, context);
 const View = (context.exports as any).ContentEngineView;
 let tree: any;
-const render = () => { for (let n = 0; n < 10; n++) { dirty = false; cursor = 0; effects = []; tree = View({ isAdmin: true }); for (const effect of effects) effect(); if (!dirty) return; } throw new Error('Instabile Hooks'); };
+let adminRole = true;
+const render = () => { for (let n = 0; n < 10; n++) { dirty = false; cursor = 0; effects = []; tree = View({ isAdmin: adminRole }); for (const effect of effects) effect(); if (!dirty) return; } throw new Error('Instabile Hooks'); };
 const find = (predicate: (node: any) => boolean, node: any): any => {
   if (Array.isArray(node)) { for (const child of node) { const found = find(predicate, child); if (found) return found; } }
   else if (node && typeof node === 'object') { if (predicate(node)) return node; return node.props?.children ? find(predicate, node.props.children) : undefined; }
@@ -101,6 +104,8 @@ component('BlogEditorTab').props.onGeneratePinterest(); render();
 component('AffiliateLinkModal').props.onConfirm(null); await new Promise(setImmediate); render();
 assert.deepEqual(requests.at(-1), { kind: 'pinterest', topic: first.topic });
 assert.equal(component('PinterestPinsTab').props.topic, first.topic);
+assert.equal(component('PinterestPinsTab').props.projectSettings.pinterestTextPosition, 'bottom-left', 'Admin pins use the fixed position even for existing projects.');
+assert.equal(first.projectSettings.pinterestTextPosition, undefined, 'Preview does not mutate existing project data.');
 component('PinterestPinsTab').props.onGenerate(); render();
 component('AffiliateLinkModal').props.onConfirm(null); await new Promise(setImmediate); render();
 assert.deepEqual(requests.at(-1), { kind: 'pinterest', topic: first.topic });
@@ -168,3 +173,16 @@ publicationEvents.length = 0; cloudFails = false; publicationFails = false; sett
 component('BlogArticleLibrary').props.onCreate(); render();
 component('AffiliateLinkModal').props.onConfirm(null, 'Automatik bewusst ausgeschaltet'); await new Promise(setImmediate); render();
 assert.deepEqual(publicationEvents.map(e => e.kind), ['save'], 'Explicit opt-out prevents publication');
+
+// The admin opens a separate, unsaved WeAreReal preset instead of overwriting a project.
+signedIn = true; render();
+const weAreReal = find(n => n.type === 'button' && JSON.stringify(n.props.children).includes('WeAreReal-Projekt'), tree);
+assert.ok(weAreReal);
+weAreReal.props.onClick(); render();
+const presetModal = find(n => n.props?.project?.promotionPreset === 'wearereal' && n.props?.isOpen === true, tree);
+assert.ok(presetModal);
+assert.equal(presetModal.props.project.defaultTargetUrl, wearerealPromotion.WEAREREAL_REFERRAL_URL);
+assert.ok(saved.every(project => project.projectSettings.promotionPreset !== 'wearereal'), 'Opening a preset does not overwrite saved campaigns.');
+
+adminRole = false; render();
+assert.equal(find(n => n.type === 'button' && JSON.stringify(n.props.children).includes('WeAreReal-Projekt'), tree), undefined, 'Referral preset button belongs to the admin interface only.');
