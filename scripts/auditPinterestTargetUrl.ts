@@ -115,7 +115,7 @@ assert.ok(dialogHtml.includes('Mit Projekt-Link erstellen'));
 assert.ok(dialogHtml.includes('Andere Adresse für diese Inhalte'));
 assert.ok(dialogHtml.includes('checked=""'));
 const settingsHtml = renderToStaticMarkup(React.createElement(ProjectSettingsModal, { isOpen: true, project: { defaultTargetUrl: selected, coreTopics: [] } as any, onSave() {}, onClose() {} }));
-assert.ok(settingsHtml.includes('Projekt-Zieladresse für alle Inhalte'));
+assert.ok(settingsHtml.includes('Standard-Link für Empfehlungen und Werbung'));
 assert.ok(settingsHtml.includes('Briefing, Blog, Pinterest, YouTube und Shorts'));
 
 // Actual browser service must ignore model-suggested destinations as well.
