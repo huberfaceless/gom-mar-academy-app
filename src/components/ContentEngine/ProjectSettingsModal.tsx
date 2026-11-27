@@ -1,3 +1,4 @@
+import { WEAREREAL_SOURCE_URL } from '../../utils/wearerealPromotion';
 import { automaticWordPressPublication, wordpressSiteOrigin, GOMO_WORDPRESS_ORIGIN } from '../../utils/wordpressSites';
 import { publicResearchUrl, resolveEditorialStrategy } from '../../utils/editorialStrategy';
 import { resolveProjectBlogDefaults } from '../../utils/projectBlogDefaults';
@@ -8,6 +9,7 @@ import { resolvePinterestTargetUrl } from '../../utils/pinterestTargetUrl';
 import { ProjectSettings } from '../../types/contentEngine';
 
 interface ProjectSettingsModalProps {
+  fixedPinPosition?: boolean;
   isOpen: boolean;
   onClose: () => void;
   project: ProjectSettings;
@@ -16,6 +18,7 @@ interface ProjectSettingsModalProps {
 
 export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
   isOpen,
+  fixedPinPosition = false,
   onClose,
   project,
   onSave,
@@ -247,6 +250,23 @@ export const ProjectSettingsModal: React.FC<ProjectSettingsModalProps> = ({
             {hubText("Neue Blogartikel sofort auf gomo-marketing.at veröffentlichen")}
             <span className="mt-2 block text-slate-600">{hubText("Nach der Erstellung und Cloud-Speicherung öffentlich veröffentlichen, einschließlich SEO-Daten, GEO-Kurzantwort und Kategorie. Die WordPress- und SEOPress-Verbindung müssen eingerichtet sein.")}</span>
           </label>}
+          <fieldset className="space-y-3 rounded-xl border border-slate-200 p-4">
+            <legend className="px-1 text-sm font-bold">{hubText('Storytelling & Pin-Textposition')}</legend>
+            {formData.promotionPreset === 'wearereal' && <p className="text-xs text-slate-600">
+              {hubText('WeAreReal: Gemeinschaft, Vertrauen, Wissensaustausch und Zusammenarbeit. Quelle: Advertorial auf Forbes.at vom 5. November 2026; keine unabhängige Forbes-Empfehlung.')}<br />
+              <a href={WEAREREAL_SOURCE_URL} target="_blank" rel="noopener noreferrer" className="underline">{hubText('Quellenartikel öffnen')}</a>
+            </p>}
+            <label className="flex items-start gap-2 text-sm">
+              <input type="checkbox" checked={formData.storytelling === true} onChange={event => setFormData({ ...formData, storytelling: event.target.checked })} />
+              {hubText('Mini-Stories: Alltagsszene, Spannung, Wendepunkt und Einladung')}
+            </label>
+            <p className="text-xs text-slate-600">{hubText('Wiedererkennen und Neugier wecken, ohne erfundene Erfahrungen oder Mitgliederstimmen. Gilt für neu erzeugte Inhalte.')}</p>
+            <label className="flex items-start gap-2 text-sm">
+              <input type="checkbox" disabled={fixedPinPosition} checked={fixedPinPosition || formData.pinterestTextPosition === 'bottom-left'} onChange={event => { const next = { ...formData }; if (event.target.checked) next.pinterestTextPosition = 'bottom-left'; else delete next.pinterestTextPosition; setFormData(next); }} />
+              {hubText('Pin-Texte immer linksbündig unten platzieren')}
+            </label>
+            <p className="text-xs text-slate-600">{hubText('Feste Position in Vorschau und Bildexport, auch bei analysierten Designvorlagen. Wird beim Rendern mit diesen Projektvorgaben angewendet.')}</p>
+          </fieldset>
           <fieldset className="space-y-3 rounded-xl border border-emerald-200 p-4">
             <legend className="px-1 text-sm font-bold">{hubText('Recherche und redaktionelle Strategie')}</legend>
             <label className="flex items-start gap-2 text-sm">

@@ -1,3 +1,4 @@
+import { createWeAreRealProject, WEAREREAL_TOPICS } from '../../utils/wearerealPromotion';
 import { PinterestDesignPanel } from './PinterestDesignPanel';
 import { YouTubeScriptTab } from './YouTubeScriptTab';
 import { instagramPostsFor, youtubeVideosFor, appendSocialPins, appendYouTubeContent, assertGenerationSource, briefForSocial } from '../../utils/additionalSocialContent';
@@ -87,6 +88,7 @@ const SUGGESTED_TOPICS_ONLINE_BUSINESS = [
 ];
 
 const getSuggestedTopics = (project: ProjectSettings, hubText: (source: string, ...values: unknown[]) => string): string[] => {
+  if (project.promotionPreset === 'wearereal') return WEAREREAL_TOPICS;
   if (project.id === DEFAULT_VITAL50_PROJECT.id) {
     return SUGGESTED_TOPICS_VITAL50;
   }
@@ -221,6 +223,12 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
   const { scopedProjects, activeProject: activeContentProject } = selectContentProjectScope(
     contentProjects.filter(project => canUseContentProject(project.projectSettings, isAdmin)), activeProjectSettings.id, selectedContentProject?.id,
   );
+  const pinterestSourceSettings = activeContentProject?.projectSettings || activeProjectSettings;
+  const pinterestRenderRef = useRef({ source: pinterestSourceSettings, isAdmin, settings: isAdmin ? { ...pinterestSourceSettings, pinterestTextPosition: 'bottom-left' as const } : pinterestSourceSettings });
+  if (pinterestRenderRef.current.source !== pinterestSourceSettings || pinterestRenderRef.current.isAdmin !== isAdmin) {
+    pinterestRenderRef.current = { source: pinterestSourceSettings, isAdmin, settings: isAdmin ? { ...pinterestSourceSettings, pinterestTextPosition: 'bottom-left' } : pinterestSourceSettings };
+  }
+  const pinterestRenderSettings = pinterestRenderRef.current.settings;
   const suggestedTopics = getSuggestedTopics(activeProjectSettings, hubText).map(topic => hubText(topic));
 
   // Restore the selected article's topic without overwriting an independently edited draft.
@@ -276,6 +284,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
   };
 
   const handleSaveProjectSettings = async (updatedSettings: ProjectSettings) => {
+    if (isAdmin) updatedSettings = { ...updatedSettings, pinterestTextPosition: 'bottom-left' };
     if (!canUseContentProject(updatedSettings, isAdmin)) {
       setErrorMsg(hubText("Vital50 steht ausschließlich Administratoren zur Verfügung."));
       return;
@@ -601,7 +610,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
       {saveNotice && <p role="status" className="text-emerald-700">{saveNotice}</p>}
       {errorMsg && <p role="alert" className="text-red-700">{errorMsg}</p>}
       <button type="button" onClick={openNewProject} className="rounded-xl bg-emerald-600 px-4 py-2 font-bold text-white">{hubText('Neues Projekt anlegen')}</button>
-      <ProjectSettingsModal isOpen={isSettingsModalOpen} project={projectBeingEdited || activeProjectSettings} onClose={() => setIsSettingsModalOpen(false)} onSave={handleSaveProjectSettings} />
+      <ProjectSettingsModal fixedPinPosition={isAdmin} isOpen={isSettingsModalOpen} project={projectBeingEdited || activeProjectSettings} onClose={() => setIsSettingsModalOpen(false)} onSave={handleSaveProjectSettings} />
     </section>
   );
 
@@ -653,6 +662,13 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
           {isAdmin && <button type="button"
             onClick={() => activeContentProject ? setWordpressContentId(activeContentProject.id) : setErrorMsg(hubText('Erstelle zuerst ein Inhaltsbriefing oder öffne einen gespeicherten Artikel. Danach kannst du WordPress für dieses Projekt verbinden.'))}
             className="rounded-xl bg-emerald-700 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-800">{hubText('WordPress & Veröffentlichung')}</button>}
+          {isAdmin && <button type="button" disabled={isBusy || isLoadingData}
+            onClick={() => {
+              const existing = visibleProjects.find(project => project.promotionPreset === 'wearereal');
+              if (existing) { setSelectedProjectId(existing.id); setTopicInput(''); setCustomAngleInput(''); }
+              else if (userId) { setProjectBeingEdited(createWeAreRealProject(userId)); setIsSettingsModalOpen(true); }
+            }}
+            className="rounded-xl border border-emerald-300 px-3 py-2 text-xs font-bold text-emerald-800 disabled:opacity-50">{hubText('WeAreReal-Projekt')}</button>}
           <span className="text-xs font-medium text-slate-500">
             {hubText('Inhaltssprache')}: {hubText(({ de: 'Deutsch', en: 'Englisch', pl: 'Polnisch' })[activeProjectSettings.language || 'de'])}
           </span>
@@ -1030,7 +1046,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
               }}
               onOpenInstagram={() => setActiveTab('instagram')}
               topic={activeContentProject.topic}
-              projectSettings={activeContentProject.projectSettings || activeProjectSettings}
+              projectSettings={pinterestRenderSettings}
             />
             </div>
           )}
@@ -1130,6 +1146,7 @@ export const ContentEngineView: React.FC<{ isAdmin?: boolean; onEmailCampaignImp
 
       {/* Project Settings Modal */}
       <ProjectSettingsModal
+        fixedPinPosition={isAdmin}
         isOpen={isSettingsModalOpen}
         onClose={() => setIsSettingsModalOpen(false)}
         project={projectBeingEdited || activeProjectSettings}

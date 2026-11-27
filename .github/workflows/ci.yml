@@ -70,6 +70,9 @@ jobs:
       - name: Projektbezogenes Pin-Branding prüfen
         run: node --import tsx scripts/auditPinterestBranding.ts
 
+      - name: WeAreReal-Storytelling und untere Pin-Texte prüfen
+        run: node --import tsx scripts/auditWeAreRealPromotion.ts
+
       - name: Öffentliche Pinterest-Konkurrenzsuche prüfen
         run: node --import tsx scripts/auditPinterestCompetitors.ts
 

@@ -29,6 +29,9 @@ export type PublishContentType = 'ARTICLE' | 'PIN' | 'INSTAGRAM_POST' | 'VIDEO' 
 export type SchedulerJobStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
 export interface ProjectSettings {
+  promotionPreset?: 'wearereal';
+  storytelling?: boolean;
+  pinterestTextPosition?: 'bottom-left';
   pinterestDesignProfile?: import('../utils/pinterestDesign').PinDesignProfile;
   wordpressAutoPublish?: boolean;
   editorialStrategy?: import('../utils/editorialStrategy').EditorialStrategy;
