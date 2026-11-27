@@ -95,3 +95,10 @@ try{
  assert.equal(JSON.parse(Buffer.from(state.split('.')[0],'base64url').toString()).uid,'real-member');
  assert.match(headers['Set-Cookie'],/HttpOnly; Secure; SameSite=Lax/);assert.equal(Object.keys(started).join(','),'authorizationUrl');
 }finally{for(const [key,value] of savedEnv){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+
+// No property action or warning is offered without an own website.
+activeProject={...activeProject,websiteUrl:''};
+const noWebsiteTree=render();
+assert.ok(find(noWebsiteTree,n=>n.type==='h3'&&n.props.children.includes('Search Console – optional')));
+assert.equal(find(noWebsiteTree,n=>n.type==='button'),undefined);
+assert.equal(find(noWebsiteTree,n=>n.props?.role==='alert'),undefined);

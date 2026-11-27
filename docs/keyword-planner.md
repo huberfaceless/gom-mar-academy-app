@@ -1,5 +1,7 @@
 # Google Keyword Planner im Inhaltsbriefing
 
+**Eine eigene Website ist nicht erforderlich.** Leere oder fehlende Projekt-Websites werden im Keyword Planner akzeptiert; eine angegebene Website bleibt validiert und wird nur zur Zuordnung gespeicherter Reports verwendet. Google erhält die Suchbegriffe, Sprache und Regionen, keine Website als Seed. Website-lose Reports bleiben sichtbar und zur Keyword-Auswahl nutzbar. Search Console zeigt bei fehlender Website stattdessen einen optionalen Hinweis und bietet keine Property-Abfrage an.
+
 Zusätzlich zu Search Console zeigt **Nachfrage neuer Themen prüfen** Google-Ads-Suchvolumenschätzungen. Zwei manuelle Modi:
 
 - **Vorhandene Keywords prüfen:** bis zu 50 Haupt-/Long-Tail-Suchphrasen über `generateKeywordHistoricalMetrics`.

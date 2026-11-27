@@ -3,6 +3,9 @@ import { LanguageCode } from './translations';
 // Only interface copy belongs here. Saved articles, project names and member input
 // are never passed through this dictionary.
 export const contentHubEnglish: Record<string, string> = {
+  "Für die Keyword-Recherche ist keine eigene Website erforderlich. Kundennummer, Suchbegriffe, Sprache und Zielregionen genügen.": "Keyword research does not require your own website. Your customer ID, keywords, language and target regions are sufficient.",
+  "Search Console – optional": "Search Console – optional",
+  "Ohne eigene Website ist hier nichts einzurichten. Nutze unten den Google Keyword Planner für deine Keyword-Recherche. Dein Empfehlungslink bleibt davon unabhängig.": "Without your own website, there is nothing to set up here. Use Google Keyword Planner below for keyword research. Your referral link is independent of this.",
   "Ohne ausgewiesene Suchvolumenschätzung": "No reported search volume estimate",
   "Monatswerte ansehen": "View monthly estimates",
   "Nachfrageprüfung mit Google Keyword Planner": "Demand check with Google Keyword Planner",
