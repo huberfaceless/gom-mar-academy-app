@@ -11,6 +11,7 @@ const env={KEYWORD_PLANNER_OAUTH_CLIENT_ID:'test-client',KEYWORD_PLANNER_OAUTH_C
 let now=new Date('2026-11-24T12:00:00Z');
 const input={websiteUrl:'https://gomo-marketing.at/',customerId:'123-456-7890',loginCustomerId:'',language:'de',countries:['DE','AT'],mode:'historical',keywords:['online business aufbauen','online business erstellen','kein messwert']};
 assert.equal(utils.normalizePlannerInput(input).customerId,'1234567890');
+for(const websiteUrl of ['', '   ', undefined, null]) assert.equal(utils.normalizePlannerInput({...input,websiteUrl}).websiteUrl,'');
 assert.deepEqual(utils.plannerPeriod(now),{startDate:'2025-11-01',endDate:'2026-10-31',startYear:2025,startMonth:'NOVEMBER',endYear:2026,endMonth:'OCTOBER'});
 assert.equal(utils.plannerPeriod(new Date('2027-01-01')).endDate,'2026-12-31');
 for(const patch of [{customerId:'123\r\nInjected'},{countries:[]},{countries:['US']},{mode:'mutate'},{keywords:Array(51).fill('x')},{mode:'ideas',keywords:Array(21).fill('x')},{keywords:['x'.repeat(81)]},{keywords:['']},{language:'xx'},{websiteUrl:'javascript:alert(1)'}])assert.throws(()=>utils.normalizePlannerInput({...input,...patch}));
@@ -38,6 +39,21 @@ await assert.rejects(()=>service.query('db','member',{...input,mode:'ideas'}),/3
 now=new Date(now.getTime()+31000);await service.query('db','member',{...input,mode:'ideas',loginCustomerId:'999-999-9999'});assert.equal((calls.at(-1)!.init?.headers as any)['login-customer-id'],'9999999999');
 queryStatus=403;now=new Date(now.getTime()+31000);await assert.rejects(()=>service.query('db','member',{...input,keywords:['other']}),e=>e instanceof Error&&e.message.includes('Basic')&&!e.message.includes('private-access'));
 queryStatus=200;empty=true;now=new Date(now.getTime()+31000);assert.deepEqual((await service.query('db','member',{...input,keywords:['missing']})).rows,[]);
+// Both real service branches accept keyword-only projects, keep estimates and never send a website seed.
+empty=false;now=new Date(now.getTime()+31000);
+const noSiteReport=await service.query('db','member',{...input,websiteUrl:''});
+assert.equal(noSiteReport.websiteUrl,'');assert.equal(noSiteReport.rows[0].averageMonthlySearches,500);
+assert.equal(utils.plannerEvidence('online business aufbauen',noSiteReport,''),'estimate');
+assert.equal(utils.plannerEvidence('online business erstellen',noSiteReport,''),'variant');
+assert.equal(utils.plannerEvidence('online business aufbauen',noSiteReport,input.websiteUrl),'unknown');
+assert.equal(utils.plannerEvidence('online business aufbauen',report,''),'unknown');
+now=new Date(now.getTime()+31000);
+const noSiteIdeas=await service.query('db','member',{...input,websiteUrl:undefined,mode:'ideas'});
+assert.equal(noSiteIdeas.websiteUrl,'');assert.equal(noSiteIdeas.rows[0].averageMonthlySearches,500);
+const seedPayload=JSON.parse(String(calls.at(-1)!.init?.body));
+assert.deepEqual(seedPayload.keywordSeed.keywords,utils.normalizePlannerInput(input).keywords);
+assert.equal('urlSeed' in seedPayload,false);assert.equal('keywordAndUrlSeed' in seedPayload,false);
+assert.equal('websiteUrl' in seedPayload,false);
 await service.disconnect('db','member');await assert.rejects(()=>service.query('db','member',input),/verbinden/);
 const routes=new Map<string,any[]>(),guard=()=>{},projectGuard=()=>{};let received:any;
 const app={get:(p:string,...h:any[])=>routes.set('GET '+p,h),post:(p:string,...h:any[])=>routes.set('POST '+p,h),delete:(p:string,...h:any[])=>routes.set('DELETE '+p,h)};
@@ -47,8 +63,8 @@ let status=200,result:any;const res={setHeader(){},status(n:number){status=n;ret
 await routes.get('POST /api/keyword-planner/query')!.at(-1)({firebaseUser:{sub:'actual'},body:{...input,userId:'forged',projectSettings:{websiteUrl:input.websiteUrl,language:'de'}}},res);assert.equal(received[1],'actual');assert.equal(result.report.source,'Google Keyword Planner');await routes.get('GET /api/keyword-planner/status')!.at(-1)({body:{userId:'forged'}},res);assert.equal(status,401);
 // Execute real panel handlers with isolated React state and API responses.
 const slots:any[]=[{configured:true,connected:true}],react={createElement:(type:any,props:any,...children:any[])=>({type,props:{...props,children}}),useState(value:any){const i=cursor++;if(!(i in slots))slots[i]=value;return[slots[i],(next:any)=>{slots[i]=next;}];},useRef(value:any){const i=cursor++;if(!(i in slots))slots[i]={current:value};return slots[i];},useEffect(){}};
-let cursor=0,brief:any={mainKeyword:'original',h1:'Original title',outline:[{h2:'Original'}],longTailKeywords:[],keywordPlannerReport:report},project:any={id:'business',websiteUrl:input.websiteUrl,language:'de'},confirm=true,defer=false,pending:any;
-const ctx=vm.createContext({exports:{},Date,console,require(name:string){if(name==='react')return react;if(name.endsWith('keywordPlanner'))return utils;if(name.endsWith('searchConsoleKeywords'))return searchUtils;if(name.endsWith('useContentHubCopy'))return{useContentHubCopy:()=>({hubText:(s:string)=>s})};if(name.endsWith('authenticatedFetch'))return{authenticatedFetch:async(_path:string,options:any)=>{assert.equal(JSON.parse(options.body).projectSettings.id,'business');return{ok:true,json:async()=>defer?new Promise(resolve=>{pending=resolve;}):{report}};}};return{};}});
+let cursor=0,brief:any={mainKeyword:'original',h1:'Original title',outline:[{h2:'Original'}],longTailKeywords:[],keywordPlannerReport:report},project:any={id:'business',websiteUrl:input.websiteUrl,language:'de'},confirm=true,defer=false,pending:any,responseReport=report;
+const ctx=vm.createContext({exports:{},Date,console,require(name:string){if(name==='react')return react;if(name.endsWith('keywordPlanner'))return utils;if(name.endsWith('searchConsoleKeywords'))return searchUtils;if(name.endsWith('useContentHubCopy'))return{useContentHubCopy:()=>({hubText:(s:string)=>s})};if(name.endsWith('authenticatedFetch'))return{authenticatedFetch:async(_path:string,options:any)=>{assert.equal(JSON.parse(options.body).projectSettings.id,'business');return{ok:true,json:async()=>defer?new Promise(resolve=>{pending=resolve;}):{report:responseReport}};}};return{};}});
 vm.runInContext(ts.transpileModule(readFileSync('src/components/ContentEngine/KeywordPlannerPanel.tsx','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.React,esModuleInterop:true}}).outputText,ctx);
 const render=()=>{cursor=0;return ctx.exports.KeywordPlannerPanel({project,brief,onChange:async(next:any)=>{if(!confirm)return false;brief=next;return true;}});};
 const find=(node:any,test:(n:any)=>boolean):any=>{if(Array.isArray(node)){for(const child of node){const found=find(child,test);if(found)return found;}}else if(node&&typeof node==='object'){if(test(node))return node;return find(node.props?.children,test);}};
@@ -57,5 +73,14 @@ button('Als Hauptkeyword wählen').props.onClick();await new Promise(setImmediat
 button('Als Long-Tail übernehmen').props.onClick();await new Promise(setImmediate);assert.equal(brief.longTailKeywords[0],'online business aufbauen');
 confirm=false;button('Google-Nachfragedaten laden').props.onClick();await new Promise(setImmediate);assert.ok(find(render(),n=>n.props?.role==='alert'&&n.props.children.includes('Die Cloud-Speicherung konnte nicht bestätigt werden.')));
 confirm=true;defer=true;button('Google-Nachfragedaten laden').props.onClick();await new Promise(setImmediate);project={...project,id:'different'};render();pending({report});await new Promise(setImmediate);assert.ok(find(render(),n=>n.props?.role==='alert'&&n.props.children.includes('Das Projekt oder Thema wurde geändert. Bitte erneut starten.')));
+// A website-less returned report remains visible, selectable and saved in the real panel.
+project={...project,id:'business',websiteUrl:''};brief={...brief,mainKeyword:'original',keywordPlannerReport:undefined};
+responseReport=noSiteReport;defer=false;confirm=true;
+button('Google-Nachfragedaten laden').props.onClick();await new Promise(setImmediate);
+assert.equal(brief.keywordPlannerReport.websiteUrl,'');
+assert.ok(button('Als Hauptkeyword wählen'),'Report without a website is displayed');
+button('Als Hauptkeyword wählen').props.onClick();await new Promise(setImmediate);
+assert.equal(brief.mainKeyword,'online business aufbauen');
+assert.ok(find(render(),n=>n.type==='span'&&n.props.children.includes('Google-Suchvolumenschätzung vorhanden')));
 const panel=readFileSync('src/components/ContentEngine/KeywordPlannerPanel.tsx','utf8');for(const match of panel.matchAll(/\bt\('([^']+)'\)/g))assert.ok(contentHubEnglish[match[1]],'Missing English: '+match[1]);
 console.log('Keyword Planner: OAuth, Kontentrennung, echte API-Payloads, Schätzungen, Cache, Guards und UI-Speicherung geprüft.');

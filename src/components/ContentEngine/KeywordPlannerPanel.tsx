@@ -1,8 +1,7 @@
 import React,{useEffect,useRef,useState} from 'react';
 import type {ContentBrief,ProjectSettings} from '../../types/contentEngine';
 import {authenticatedFetch} from '../../services/authenticatedFetch';
-import {plannerEvidence,type KeywordPlannerReport,type PlannerCountry,type PlannerMode} from '../../utils/keywordPlanner';
-import {searchConsoleWebsite} from '../../utils/searchConsoleKeywords';
+import {plannerWebsite,plannerEvidence,type KeywordPlannerReport,type PlannerCountry,type PlannerMode} from '../../utils/keywordPlanner';
 import {useContentHubCopy} from '../../i18n/useContentHubCopy';
 async function api(path:string,body?:unknown,method?:string){const res=await authenticatedFetch('/api/keyword-planner/'+path,{method:method||(body?'POST':'GET'),...(body?{headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{})});const data=await res.json();if(!res.ok)throw new Error(data.error||'Keyword-Abfrage fehlgeschlagen.');return data;}
 export function KeywordPlannerPanel({project,brief,onChange}:{project:ProjectSettings;brief:ContentBrief;onChange:(brief:ContentBrief)=>unknown}){
@@ -14,13 +13,14 @@ export function KeywordPlannerPanel({project,brief,onChange}:{project:ProjectSet
  useEffect(()=>{let active=true;setConnection(null);setError('');setNotice('');setCustomerId(brief.keywordPlannerReport?.customerId||'');setLoginCustomerId(brief.keywordPlannerReport?.loginCustomerId||'');setCountries(brief.keywordPlannerReport?.countries||['DE','AT']);setKeywords([brief.mainKeyword,...(brief.longTailKeywords||[])].filter(Boolean).slice(0,50).join('\n'));const returned=new URLSearchParams(window.location.search).get('keywordPlanner');if(returned==='error')setError(t('Google-Ads-Verbindung nicht bestätigt. Bitte erneut verbinden.'));api('status').then(data=>{if(active)setConnection(data);}).catch(()=>{if(active)setError(t('Google-Ads-Verbindungsstatus konnte nicht geladen werden.'));});return()=>{active=false;};},[project.id,project.websiteUrl,project.language]);
  const run=async(action:()=>Promise<void>)=>{if(busy)return;setBusy(true);setError('');setNotice('');try{await action();}catch(err){if(mounted.current)setError(t(err instanceof Error?err.message:'Keyword-Abfrage fehlgeschlagen.'));}finally{if(mounted.current)setBusy(false);}};
  const save=async(next:ContentBrief)=>{if(await latest.current.onChange(next)===false)throw new Error('Die Cloud-Speicherung konnte nicht bestätigt werden.');};
- let report:KeywordPlannerReport|undefined;try{if(brief.keywordPlannerReport&&searchConsoleWebsite(brief.keywordPlannerReport.websiteUrl)===searchConsoleWebsite(project.websiteUrl)&&brief.keywordPlannerReport.language===project.language)report=brief.keywordPlannerReport;}catch{/* A report for another website cannot substantiate this project. */}
+ let report:KeywordPlannerReport|undefined;try{if(brief.keywordPlannerReport&&plannerWebsite(brief.keywordPlannerReport.websiteUrl)===plannerWebsite(project.websiteUrl)&&brief.keywordPlannerReport.language===project.language)report=brief.keywordPlannerReport;}catch{/* A report for another website cannot substantiate this project. */}
  const evidence=plannerEvidence(brief.mainKeyword,report,project.websiteUrl);
  const label=evidence==='estimate'?'Google-Suchvolumenschätzung vorhanden':evidence==='variant'?'Zusammengefasste Variante':'Nachfrage noch ungeprüft';
  const load=()=>run(async()=>{const initial=source();const data=await api('query',{projectSettings:project,customerId,loginCustomerId,countries,mode,keywords:keywords.split('\n').map(k=>k.trim()).filter(Boolean)});if(!mounted.current)return;if(initial!==source())throw new Error('Das Projekt oder Thema wurde geändert. Bitte erneut starten.');await save({...latest.current.brief,keywordPlannerReport:data.report});if(mounted.current)setNotice(t('Keyword-Daten gespeichert. Wähle passende Begriffe bewusst aus.'));});
  return <section className="rounded-2xl border border-blue-200 bg-white p-5 space-y-3" aria-label={t('Nachfrageprüfung mit Google Keyword Planner')}>
   <h3 className="font-bold">{t('Nachfrage neuer Themen prüfen')}</h3><span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-bold">{t(label)}</span>
   <p className="text-xs text-slate-600">{t('Google Keyword Planner liefert Suchvolumenschätzungen unabhängig von deiner bisherigen Website-Sichtbarkeit. Ähnliche Varianten können zusammengefasst sein. Anzeigenwettbewerb ist keine SEO-Schwierigkeit. Fehlende Werte bedeuten nicht null Nachfrage.')}</p>
+  <p className="text-xs text-slate-600">{t('Für die Keyword-Recherche ist keine eigene Website erforderlich. Kundennummer, Suchbegriffe, Sprache und Zielregionen genügen.')}</p>
   <p className="text-xs">{t('Aktuelles Hauptkeyword')}: <strong>{brief.mainKeyword}</strong></p>
   {!connection&&<p className="text-xs">{t('Google-Verbindung wird geprüft…')}</p>}
   {connection&&!connection.configured&&<p className="text-sm">{t('Google Keyword Planner benötigt die einmalige Server- und OAuth-Einrichtung.')}</p>}
